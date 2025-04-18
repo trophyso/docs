@@ -1,33 +1,82 @@
 ---
-title: "Authentication"
-description: "Example section for showcasing API endpoints"
+title: Authentication
+description: Integrate securely with the API using account-level API keys transmitted in the `X-API-KEY` header.
+subtitle: Integrate securely with the API using account-level API keys transmitted in the `X-API-KEY` header.
 ---
 
+## API Keys
+
+Every account can create a maximum of 3 API keys from the [Integration Page](https://app.trophy.so/integration). If you've already signed up, you'll have created one during onboarding.
+
+Trophy keeps track of and displays when each API key in your account was created and when it was last used so you can easily keep track of usage.
+
+<Frame>
+  <img height="200" noZoom src="../assets/api/authentication/api_keys.png" />
+</Frame>
+
+### Anatomy of an API key
+
+Each API key is made up of 2 parts seperated by a period:
+
+```bash
+{prefix}•{body}
+```
+
+- The _prefix_ is the first 8 characters. It's readable and will always stay the same so it's easily recognisable.
+- The _body_ is the secret part, and is only shown to you once when you create the key.
+
 <Note>
-  If you're not looking to build API reference documentation, you can delete
-  this section by removing the api-reference folder.
+  When using the API, both parts of your API key must be sent in the `X-API-KEY`
+  header.
 </Note>
 
-## Welcome
+### Authenticating Requests
 
-There are two ways to build API documentation: [OpenAPI](https://mintlify.com/docs/api-playground/openapi/setup) and [MDX components](https://mintlify.com/docs/api-playground/mdx/configuration). For the starter kit, we are using the following OpenAPI specification.
+When making requests to the API, make sure to include **both** parts of your API key in the `X-API-KEY` header as in this example:
 
-<Card
-  title="Plant Store Endpoints"
-  icon="leaf"
-  href="https://github.com/mintlify/starter/blob/main/api-reference/openapi.json"
->
-  View the OpenAPI specification file
-</Card>
-
-## Authentication
-
-All API endpoints are authenticated using Bearer tokens and picked up from the specification file.
-
-```json
-"security": [
-  {
-    "bearerAuth": []
-  }
-]
+```bash
+curl https://app.trophy.so/api/users/<userId>/metrics/<key> \
+     -H "X-API-KEY: ********.***********************"
 ```
+
+If you do not pass an API key, or your API key is invalid, you'll receive a `401` response code.
+
+## Managing API keys
+
+There are a few different operations you can perform on API keys from within your Trophy dashboard to manage your integration.
+
+<Frame>
+  <img
+    height="200"
+    noZoom
+    src="../assets/api/authentication/api_key_options.png"
+  />
+</Frame>
+
+### Rotating keys
+
+API keys can be rotated if you want to change them for any reason. At the point of rotation, the original API key will no longer function and any requests still using it will begin receiving `401` responses immediately.
+
+<Note>
+  Note that when rotating keys, both the prefix and the body will change.
+</Note>
+
+### Revoking keys
+
+API keys can also be revoked entirely at which point they become _Inactive_. At the point of revokation, the API key will no longer function and any requests still using it will begin receiving `401` responses immediately.
+
+Once revoked you can re-activate the API key at any time.
+
+<Note>
+  Neither the prefix or the body of the key change when revoked or re-activated.
+</Note>
+
+### Deleting API keys
+
+If you're 100% sure you no longer need an API key, they can be deleted.
+
+<Error>Once API keys are deleted, they cannot be recovered.</Error>
+
+## Get Support
+
+Want to get in touch with the Trophy team? Reach out to us via [email](mailto:support@trophy.so). We're here to help!
