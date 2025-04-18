@@ -57,10 +57,28 @@
             ]
           },
           {
-            "group": "API Explorer",
-            "openapi": {
-              "source": "/api-reference/openapi.yml"
-            }
+            "group": "Achievements",
+            "pages": [
+              "api-reference/endpoints/achievements/mark-an-achievement-as-completed"
+            ]
+          },
+          {
+            "group": "Metrics",
+            "pages": [
+              "api-reference/endpoints/metrics/send-a-metric-change-event"
+            ]
+          },
+          {
+            "group": "Users",
+            "pages": [
+              "api-reference/endpoints/users/identify-a-new-user",
+              "api-reference/endpoints/users/get-a-single-user",
+              "api-reference/endpoints/users/update-a-user",
+              "api-reference/endpoints/users/get-all-metrics-for-a-user",
+              "api-reference/endpoints/users/get-a-single-metric-for-a-user",
+              "api-reference/endpoints/users/get-a-users-completed-achievements",
+              "api-reference/endpoints/users/get-a-users-streak-status"
+            ]
           }
         ]
       }

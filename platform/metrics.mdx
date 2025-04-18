@@ -1,72 +1,152 @@
 ---
 title: Metrics
-description: "Welcome to the home of your new documentation"
+description: Learn how to track user interactions using Trophy Metrics. Track any user interaction and trigger automated gamification flows with just a few lines of code.
+subtitle: Metrics are flexible data primitives that can be used to track any user interaction and drive a wide range of gamified features.
 icon: box
 ---
 
-<img
-  className="block dark:hidden"
-  src="/images/hero-light.png"
-  alt="Hero Light"
-/>
-<img
-  className="hidden dark:block"
-  src="/images/hero-dark.png"
-  alt="Hero Dark"
-/>
+## What are Metrics?
 
-## Setting up
+All gamification features are centered around user interactions. At Trophy, we use the term **Metrics** to refer to the data objects that reflect those interactions within the platform.
 
-The first step to world-class documentation is setting up your editing environments.
+Metrics are un-opinionated, meaning they can be used to track absolutely any user interaction you can think of. Examples could include:
 
-<CardGroup cols={2}>
-  <Card
-    title="Edit Your Docs"
-    icon="pen-to-square"
-    href="https://mintlify.com/docs/quickstart"
-  >
-    Get your docs set up locally for easy development
-  </Card>
-  <Card
-    title="Preview Changes"
-    icon="image"
-    href="https://mintlify.com/docs/development"
-  >
-    Preview your changes before you push to make sure they're perfect
-  </Card>
-</CardGroup>
+- Followers on social media platforms
+- Tasks completed
+- Miles ran
+- Lessons completed
 
-## Make it yours
+Metrics are the building blocks of the infrastructure that powers Trophy's gamification features. Each user interaction that relates to a metric is stored as an [Event](/platform/events).
 
-Update your docs to your brand and add valuable content for the best user conversion.
+Events are stored and processed in chronological order. At any particular point in time, the combined state of all of a user's events reflects their overall progress on your platform.
 
-<CardGroup cols={2}>
-  <Card
-    title="Customize Style"
-    icon="palette"
-    href="https://mintlify.com/docs/settings/global"
-  >
-    Customize your docs to your company's colors and brands
-  </Card>
-  <Card
-    title="Reference APIs"
-    icon="code"
-    href="https://mintlify.com/docs/api-playground/openapi"
-  >
-    Automatically generate endpoints from an OpenAPI spec
-  </Card>
-  <Card
-    title="Add Components"
-    icon="screwdriver-wrench"
-    href="https://mintlify.com/docs/content/components/accordions"
-  >
-    Build interactive features and designs to guide your users
-  </Card>
-  <Card
-    title="Get Inspiration"
-    icon="stars"
-    href="https://mintlify.com/customers"
-  >
-    Check out our showcase of our favorite documentation
-  </Card>
-</CardGroup>
+## Key Attributes
+
+Here we describe the key attributes that allow you to create metrics to best fit your use case.
+
+### Units
+
+You can easily assign units to metrics in the dashboard for either:
+
+- Arbitrary numbers (tasks, posts, messages etc.)
+- Currencies ($, £, €)
+
+## Creating Metrics
+
+To create a Metric, head over to the [Metrics](https://app.trophy.so/metrics) page within Trophy and hit the **New Metric** button:
+
+<Frame>
+  <video
+    autoPlay
+    muted
+    loop
+    playsInline
+    className="w-full aspect-video"
+    src="../assets/platform/metrics/create_new_metric.mp4"
+  ></video>
+</Frame>
+
+<Steps>
+  <Step title="Enter a name">
+    Choose a name for the metric.
+  </Step>
+
+  <Step title="Choose an emoji">
+    Choose an emoji that will be made available for display in emails and will represent the metric in other areas of Trophy.
+  </Step>
+  
+  <Step title="Hit save">
+    Save the new metric.
+  </Step>
+</Steps>
+
+## Metric Analytics
+
+Trophy has a built-in analytics dashboard for each metric you create. It shows you:
+
+- The total value of all tracked events against the metric
+- The number of users actively making progress against the metric
+- The metric's [Trophy Retention Impact Score](#trophy-retention-impact-score)
+- The metric's [Achievment Completion Chart](#achievment-completion-chart)
+- The metric's [Streak Progress Analytics](#streak-progress-analytics)
+
+<Frame>
+  <img
+    height="200"
+    noZoom
+    src="../assets/platform/metrics/metric_analytics.png"
+  />
+</Frame>
+
+### Trophy Retention Impact Score
+
+By default, Trophy only enrolls 90% of your users in any emails. It leaves the other 10% out as a 'control cohort'.
+
+Trophy then automatically tracks the 14-day retention of the two cohorts and compares them, resulting in the Trophy Impact Score.
+
+<Frame>
+  <img
+    height="200"
+    noZoom
+    src="../assets/platform/metrics/trophy_impact_score.png"
+  />
+</Frame>
+
+The Trophy Impact Score reflects the percentage difference in 14-day retention between the control cohort and the rest of your userbase.
+
+<Tip>
+  An Impact Score of 5% means that users enrolled in gamification features are
+  5% more likely to be using your platform after 14 days than the control
+  cohort.
+</Tip>
+
+### Achievement Completion Chart
+
+The achievement completion chart shows the current state of the userbase in terms of the number of users who have completed each achievement that you've configured against this metric.
+
+[Learn more about achievements](/platform/achievements).
+
+<Frame>
+  <img
+    height="200"
+    noZoom
+    src="../assets/platform/metrics/achievement_completions.png"
+  />
+</Frame>
+
+### Streak Progress Analytics
+
+The Streak analytics charts show important information about streaks if they are enabled for this metric, including:
+
+- The average length of streaks
+- The number of active streaks
+- The streak retention impact (reflects the increase in retention of users who are on a streak compared to those who aren't)
+
+[Learn more about streaks](/platform/streaks).
+
+<Frame>
+  <img
+    height="200"
+    noZoom
+    src="../assets/platform/metrics/streak_analytics.png"
+  />
+</Frame>
+
+## Frequently Asked Questions
+
+<AccordionGroup>
+  <Accordion title="How many metrics can I create?">
+    As many as you want!
+  </Accordion>
+
+    <Accordion title="Can Trophy control my UI when events are tracked?">
+    No, metrics are purely server-side and only support the business logic around achievements, streaks and other workflows like sending emails.
+
+    They don't control any in-app UI, but our APIs provide all the data you need to build whatever UI you want.
+    </Accordion>
+
+</AccordionGroup>
+
+## Get Support
+
+Want to get in touch with the Trophy team? Reach out to us via [email](mailto:support@trophy.so). We're here to help!

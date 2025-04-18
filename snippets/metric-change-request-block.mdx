@@ -1,0 +1,106 @@
+<CodeGroup>
+```bash cURL
+curl -X POST https://app.trophy.so/api/metrics/words-written/event \
+     -H "X-API-KEY: <apiKey>" \
+     -H "Content-Type: application/json" \
+     -d '{
+  "user": {
+    "id": "18",
+    "email": "user@example.com",
+    "tz": "Europe/London"
+  },
+  "value": 750
+}'
+```
+
+```typescript Node
+trophy.metrics.event("words-written", {
+  user: {
+    id: "18",
+    email: "jk.rowling@harrypotter.com",
+    tz: "Europe/London",
+  },
+  value: 750,
+});
+```
+
+```python Python
+client.metrics.event(
+    key="words-written",
+    user=EventRequestUser(
+        id="18",
+        email="jk.rowling@harrypotter.com",
+        tz="Europe/London",
+    ),
+    value=750.0,
+)
+```
+
+```php PHP
+$user = new EventRequestUser([
+    'id' => '18',
+    'email' => 'jk.rowling@harrypotter.com'
+]);
+
+$request = new MetricsEventRequest([
+    'user' => $user,
+    'value' => 750
+]);
+
+$trophy->metrics->event("words-written", $request);
+```
+
+```java Java
+MetricsEventRequest request = MetricsEventRequest.builder()
+      .user(
+        EventRequestUser.builder()
+          .id("18")
+          .email("jk.rowling@harrypotter.com")
+          .build()
+      )
+      .value(750)
+      .build();
+
+EventResponse response = client.metrics().event("words-written", request);
+```
+
+```go Go
+response, err := client.Metrics.Event(
+    context.TODO(),
+    "words-written",
+    &api.MetricsEventRequest{
+        User: &api.EventRequestUser{
+            Id: "18",
+            Email: "jk.rowling@harrypotter.com",
+        },
+        Value: 750,
+    },
+)
+```
+
+```csharp C#
+var user = new EventRequestUser {
+   Id = "18",
+   Email = "jk.rowling@harrypotter.com"
+};
+
+var request = new MetricsEventRequest {
+   User = user,
+   Value = 750
+};
+
+await trophy.Metrics.EventAsync("words-written", request);
+```
+
+```ruby Ruby
+result = client.metrics.event(
+  :key => 'words-written',
+  :user => {
+    :id => '18',
+    :email => 'jk.rowling@harrypotter.com'
+  },
+  :value => 750
+)
+```
+
+</CodeGroup>

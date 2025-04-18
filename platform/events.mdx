@@ -1,72 +1,49 @@
 ---
 title: Events
-description: "Welcome to the home of your new documentation"
+description: Events are data objects that record continual user interactions against metrics in Trophy.
+subtitle: Events are data objects that record continual user interactions against metrics in Trophy.
 icon: radio
 ---
 
-<img
-  className="block dark:hidden"
-  src="/images/hero-light.png"
-  alt="Hero Light"
-/>
-<img
-  className="hidden dark:block"
-  src="/images/hero-dark.png"
-  alt="Hero Dark"
-/>
+import MetricChangeRequestBlock from "/snippets/metric-change-request-block.mdx";
+import MetricChangeResponseBlock from "/snippets/metric-change-response-block.mdx";
 
-## Setting up
+## What are Events?
 
-The first step to world-class documentation is setting up your editing environments.
+Events store information about individual user interactions that are tracked against [Metrics](/platform/metrics) in Trophy. One event corresponds to a single interaction made by a single user.
 
-<CardGroup cols={2}>
-  <Card
-    title="Edit Your Docs"
-    icon="pen-to-square"
-    href="https://mintlify.com/docs/quickstart"
-  >
-    Get your docs set up locally for easy development
-  </Card>
-  <Card
-    title="Preview Changes"
-    icon="image"
-    href="https://mintlify.com/docs/development"
-  >
-    Preview your changes before you push to make sure they're perfect
-  </Card>
-</CardGroup>
+When you [integrate metrics](#tracking-metric-events) into your platform, you're setting up your platform to continuously stream events to your Trophy metrics for each user interaction. These interactions then drive all the gamification features you set up around these metrics.
 
-## Make it yours
+## Key attributes
 
-Update your docs to your brand and add valuable content for the best user conversion.
+### Metric-backed
 
-<CardGroup cols={2}>
-  <Card
-    title="Customize Style"
-    icon="palette"
-    href="https://mintlify.com/docs/settings/global"
-  >
-    Customize your docs to your company's colors and brands
-  </Card>
-  <Card
-    title="Reference APIs"
-    icon="code"
-    href="https://mintlify.com/docs/api-playground/openapi"
-  >
-    Automatically generate endpoints from an OpenAPI spec
-  </Card>
-  <Card
-    title="Add Components"
-    icon="screwdriver-wrench"
-    href="https://mintlify.com/docs/content/components/accordions"
-  >
-    Build interactive features and designs to guide your users
-  </Card>
-  <Card
-    title="Get Inspiration"
-    icon="stars"
-    href="https://mintlify.com/customers"
-  >
-    Check out our showcase of our favorite documentation
-  </Card>
-</CardGroup>
+Each event increases or decreases a specific metric that you've configured in Trophy for a specific user.
+
+### Value
+
+The value of an event is the numerical amount that will be added to the user's total metric count as a result of the user interaction it relates to. The value can be positive or negative, and can be a whole number or a decimal.
+
+## Tracking Metric Events
+
+Each metric has a unique `key` which you can use to reference and track events against it in your code. You can find the `key` in the metric settings page.
+
+To start tracking user interactions as events against your Trophy metrics, use the [Metrics API](/api-reference/endpoints/metrics/send-a-metric-change-event) or one of our type-safe [Client SDKs](/api-reference/client-libraries) supported in most major programming languages.
+
+Here's an example where a fictional book-writing platform is using a metric to track the number of words written by each author. Each time an author edits their book, the platform sends an event to Trophy telling it how many words they wrote:
+
+<MetricChangeRequestBlock />
+
+Any [Achievements](/platform/achievements), [Streaks](/platform/streaks) or other gamification features that have been set up against this metric will be automatically processed, and the response will contain any updates to the users progress that are a direct result of the event occurring:
+
+<MetricChangeResponseBlock />
+
+With custom code, this response data can then be used to drive any in-app experience you wish including:
+
+- Triggering in-app notifications
+- Sound effects
+- Animations
+
+## Get Support
+
+Want to get in touch with the Trophy team? Reach out to us via [email](mailto:support@trophy.so). We're here to help!

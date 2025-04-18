@@ -1,72 +1,191 @@
 ---
 title: Achievements
-description: "Welcome to the home of your new documentation"
+description: Learn how to use Achievements in a gamified product experience with Trophy.
+subtitle: Use multi-stage and one-off achievements to reward users for continued progress and give them a roadmap for success on your platform.
 icon: trophy
 ---
 
-<img
-  className="block dark:hidden"
-  src="/images/hero-light.png"
-  alt="Hero Light"
-/>
-<img
-  className="hidden dark:block"
-  src="/images/hero-dark.png"
-  alt="Hero Dark"
-/>
+import MetricChangeResponseBlock from "/snippets/metric-change-response-block.mdx";
 
-## Setting up
+## What Are Achievements?
 
-The first step to world-class documentation is setting up your editing environments.
+Achievements are rewards that users can unlock as they use your platform. They can be used to reward users for making continued progress along core user journeys, or to motivate users to explore more nascent features.
 
-<CardGroup cols={2}>
-  <Card
-    title="Edit Your Docs"
-    icon="pen-to-square"
-    href="https://mintlify.com/docs/quickstart"
-  >
-    Get your docs set up locally for easy development
-  </Card>
-  <Card
-    title="Preview Changes"
-    icon="image"
-    href="https://mintlify.com/docs/development"
-  >
-    Preview your changes before you push to make sure they're perfect
-  </Card>
-</CardGroup>
+No matter the type of achievement, they work best when designed to incentivize users to take actions that are likely to lead to increased retention. So before jumping in, have a think about what those actions might be in your context.
 
-## Make it yours
+Here we'll have a look of the types of achievements you can build with Trophy, the different ways to use them, and how to integrate them into your platform.
 
-Update your docs to your brand and add valuable content for the best user conversion.
+## Achievement Types
 
-<CardGroup cols={2}>
-  <Card
-    title="Customize Style"
-    icon="palette"
-    href="https://mintlify.com/docs/settings/global"
-  >
-    Customize your docs to your company's colors and brands
-  </Card>
-  <Card
-    title="Reference APIs"
-    icon="code"
-    href="https://mintlify.com/docs/api-playground/openapi"
-  >
-    Automatically generate endpoints from an OpenAPI spec
-  </Card>
-  <Card
-    title="Add Components"
-    icon="screwdriver-wrench"
-    href="https://mintlify.com/docs/content/components/accordions"
-  >
-    Build interactive features and designs to guide your users
-  </Card>
-  <Card
-    title="Get Inspiration"
-    icon="stars"
-    href="https://mintlify.com/customers"
-  >
-    Check out our showcase of our favorite documentation
-  </Card>
-</CardGroup>
+Trophy offers two types of achievements, [Multi-stage](#multi-stage) and [One-Off](#one-off), detailed below.
+
+### Multi-stage
+
+Multi-stage achievements are tied to [Metrics](/platform/metrics) and are best used when you want to incentivize users to take the same action over and over again.
+
+Let's take the example of a book-writing platform that uses Trophy to encourage users to write more often with multi-stage achievements as follows:
+
+- 1,000 words
+- 2,500 words
+- 5,000 words
+- 10,000 words
+- 25,000 words
+- 50,000 words
+
+In this case you would create a metric called _Words Written_ and create achievements against the metric for each milestone.
+
+Since these achievements are directly tied to the _Words Written_ metric, Trophy will automatically track when users unlock these achievements as they [increment the metric](/platform/events#tracking-metric-events).
+
+When achievements are unlocked, Trophy includes information about the unlocked achievements in the [Event API](/api-reference/endpoints/metrics/send-a-metric-change-event) response, and automatically triggers [Emails](/platform/emails) if configured.
+
+<MetricChangeResponseBlock />
+
+### One-off
+
+One-off achievements can only be completed once and are useful for rewarding users for taking specific actions.
+
+Common examples include:
+
+- A user completing their profile after signing up
+- A user linking their social account to a platform
+- A user sharing their product experience on social media
+
+One-off achievements serve as an easy way to reward users for completing any action that you think is important for retention.
+
+Just like multi-stage achievements, one-off achievements can also trigger automated [Emails](/platform/emails#achievement-emails) if configured.
+
+## Creating Achievements
+
+To create new achievements, head to the [achievements page](https://app.trophy.so/achievements) in the Trophy dashboard and hit the **New Achievement** button:
+
+<Frame>
+  <video
+    autoPlay
+    muted
+    loop
+    playsInline
+    className="w-full aspect-video"
+    src="../assets/platform/achievements/create_new_achievement.mp4"
+  ></video>
+</Frame>
+
+<Steps>
+  <Step title="Choose a metric">
+    If you want to assign this achievement to a metric for use as part of multi-stage achievements, then choose a metric. Otherwise continue to the next step.
+  </Step>
+
+<Step title="Enter a metric value">
+  If you're assigning this achievement to a metric as part of multi-stage
+  achievements then choose the value of the metric that should unlock this
+  Achievement. Otherwise continue to the next step.
+</Step>
+
+<Step title="Choose a name">
+  Choose a name for the achievement. This will be made available for use in
+  emails and other areas of Trophy where appropriate. If you're assigning this
+  achievement to a metric as part of multi-stage achievements this is optional
+  and defaults to `[count] [metric]` e.g. "100 words written".
+</Step>
+
+<Step title="Choose a key">
+  Choose a key for the achievement. This is a unique string that you'll use to
+  refer to the achievement when using APIs. Not required for multi-stage
+  achievements.
+</Step>
+
+<Step title="Upload a badge _Optional_">
+  You can upload and assign a badge to the achievement that will be made
+  available in emails and other areas of Trophy where appropriate.
+</Step>
+
+<Step title="Hit save">
+  Save the new achievement.
+</Step>
+</Steps>
+
+## Completing Achievements
+
+If you're using Multi-stage Achievements, there's no need to explicitly _complete_ Achievements.
+
+Once you've [integrated](/platform/events#tracking-metric-events) the Metric into your platform, all achievements linked to it will be automatically tracked.
+
+However if you're using any one-off achievements, you will have to mark them as completed for each user as appropriate.
+
+To do this, you can use the [Complete Achievement API](/api-reference/endpoints/achievements/mark-an-achievement-as-completed) using the `key` of the achievement you want to complete.
+
+This will return back a response that contains details of the achievement that was completed that can be used in any post-completion workflows, like showing an in-app notification.
+
+```json Response
+{
+  "completionId": "0040fe51-6bce-4b44-b0ad-bddc4e123534",
+  "achievement": {
+    "id": "5100fe51-6bce-6j44-b0hs-bddc4e123682",
+    "name": "Finish onboarding",
+    "badgeUrl": "https://example.com/badge.png",
+    "key": "finish-onboarding",
+    "achievedAt": "2021-01-01T00:00:00Z"
+  }
+}
+```
+
+## Using Badges
+
+<Frame>
+  <video
+    autoPlay
+    muted
+    loop
+    playsInline
+    className="w-full aspect-video"
+    src="../assets/platform/achievements/upload_badge.mp4"
+  ></video>
+</Frame>
+
+A badge can be uploaded and assigned to any achievement in Trophy. Trophy will host the image for you and return the URL back to you in relevant API responses to be used as the `src` property in `<img>` tags.
+
+```json Response {6}
+{
+  "completionId": "0040fe51-6bce-4b44-b0ad-bddc4e123534",
+  "achievement": {
+    "id": "5100fe51-6bce-6j44-b0hs-bddc4e123682",
+    "name": "Finish onboarding",
+    "badgeUrl": "https://example.com/badge.png",
+    "key": "finish-onboarding",
+    "achievedAt": "2021-01-01T00:00:00Z"
+  }
+}
+```
+
+## Achievement Analytics
+
+If you have multi-stage acheivements set up for any of your [Metrics](/home/platform/metrics), then the metric analytics page displays a chart that shows you the current progress of all Users as follows:
+
+<Frame>
+  <img
+    height="200"
+    noZoom
+    src="../assets/platform/metrics/achievement_completions.png"
+  />
+</Frame>
+
+## Frequently Asked Questions
+
+<AccordionGroup>
+  <Accordion title="Should I use multi-stage or one-off achievements?">
+    Use multi-stage achievements for rewarding users for taking the same action over and over again, and to incentivise them to do it more.
+
+    Use one-off achievements when you want to reward users for taking specific actions that they only need to take once.
+
+  </Accordion>
+
+    <Accordion title="What achievements should I create?">
+    Achievements, like all gamification, offer the best retention when tightly aligned to the user's core reason for using your platform.
+
+    Only you'll know what's best here.
+    </Accordion>
+
+</AccordionGroup>
+
+## Get Support
+
+Want to get in touch with the Trophy team? Reach out to us via [email](mailto:support@trophy.so). We're here to help!
