@@ -1,56 +1,66 @@
 {
   "$schema": "https://mintlify.com/docs.json",
   "theme": "mint",
-  "name": "Mint Starter Kit",
-  "colors": {
-    "primary": "#16A34A",
-    "light": "#07C983",
-    "dark": "#15803D"
+  "name": "Trophy Documentation",
+  "icons": {
+    "library": "lucide"
   },
-  "favicon": "/favicon.svg",
+  "colors": {
+    "primary": "#4CC74A",
+    "light": "#4CC74A",
+    "dark": "#4CC74A"
+  },
+  "favicon": "/favicon.ico",
   "navigation": {
     "tabs": [
       {
-        "tab": "Guides",
+        "tab": "Home",
         "groups": [
           {
-            "group": "Get Started",
+            "group": "Getting Started",
             "pages": [
-              "introduction",
-              "quickstart",
-              "development"
+              "getting-started/introduction",
+              "getting-started/quickstart"
             ]
           },
           {
-            "group": "Essentials",
+            "group": "Platform",
             "pages": [
-              "essentials/markdown",
-              "essentials/code",
-              "essentials/images",
-              "essentials/settings",
-              "essentials/navigation",
-              "essentials/reusable-snippets"
+              "platform/overview",
+              "platform/metrics",
+              "platform/events",
+              "platform/users",
+              "platform/achievements",
+              "platform/streaks",
+              "platform/emails"
+            ]
+          },
+          {
+            "group": "Experimentation",
+            "pages": [
+              "experimentation/overview",
+              "experimentation/trophy-impact-score"
             ]
           }
         ]
       },
       {
-        "tab": "API Reference",
+        "tab": "API Definition",
         "groups": [
           {
-            "group": "API Documentation",
+            "group": "Overview",
             "pages": [
-              "api-reference/introduction"
+              "api-reference/introduction",
+              "api-reference/authentication",
+              "api-reference/rate-limiting",
+              "api-reference/client-libraries"
             ]
           },
           {
-            "group": "Endpoint Examples",
-            "pages": [
-              "api-reference/endpoint/get",
-              "api-reference/endpoint/create",
-              "api-reference/endpoint/delete",
-              "api-reference/endpoint/webhook"
-            ]
+            "group": "API Explorer",
+            "openapi": {
+              "source": "/api-reference/openapi.yml"
+            }
           }
         ]
       }
@@ -58,45 +68,47 @@
     "global": {
       "anchors": [
         {
-          "anchor": "Documentation",
-          "href": "https://mintlify.com/docs",
-          "icon": "book-open-cover"
+          "anchor": "GitHub",
+          "href": "https://github.com/trophyso",
+          "icon": "github"
         },
         {
-          "anchor": "Community",
-          "href": "https://mintlify.com/community",
-          "icon": "slack"
+          "anchor": "Status",
+          "href": "https://status.trophy.so",
+          "icon": "radio-tower"
         },
         {
-          "anchor": "Blog",
-          "href": "https://mintlify.com/blog",
-          "icon": "newspaper"
+          "anchor": "Help",
+          "href": "mailto:support@trophy.so",
+          "icon": "life-buoy"
         }
       ]
     }
   },
   "logo": {
-    "light": "/logo/light.svg",
-    "dark": "/logo/dark.svg"
+    "light": "/logo/logo_light.svg",
+    "dark": "/logo/logo_dark.svg",
+    "href": "https://trophy.so"
   },
   "navbar": {
     "links": [
       {
-        "label": "Support",
-        "href": "mailto:hi@mintlify.com"
+        "label": "Dashboard",
+        "href": "https://app.trophy.so"
       }
     ],
     "primary": {
       "type": "button",
-      "label": "Dashboard",
-      "href": "https://dashboard.mintlify.com"
+      "label": "Start for free",
+      "href": "https://app.trophy.so/sign-up?utm_source=docs&utm_medium=navbar-links"
     }
   },
   "footer": {
     "socials": {
-      "x": "https://x.com/mintlify",
-      "github": "https://github.com/mintlify",
-      "linkedin": "https://linkedin.com/company/mintlify"
+      "x": "https://x.com/trophylabs",
+      "github": "https://github.com/trophyso",
+      "youtube": "https://youtube.com/@trophylabsinc",
+      "linkedin": "https://linkedin.com/company/trophylabs"
     }
   }
 }

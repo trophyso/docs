@@ -1,0 +1,952 @@
+openapi: 3.1.0
+info:
+  title: Trophy
+  version: '1.0.4'
+paths:
+  /achievements/{key}/complete:
+    post:
+      description: Mark an achievement as completed for a user.
+      operationId: achievements_complete
+      tags:
+        - Achievements
+      parameters:
+        - name: key
+          in: path
+          description: Unique reference of the achievement as set when created.
+          required: true
+          schema:
+            type: string
+          example: finish-onboarding
+      responses:
+        "201":
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/AchievementCompletionResponse"
+              examples:
+                Successful operation:
+                  value:
+                    completionId: 0040fe51-6bce-4b44-b0ad-bddc4e123534
+                    achievement:
+                      id: 5100fe51-6bce-6j44-b0hs-bddc4e123682
+                      name: Finish onboarding
+                      badgeUrl: https://example.com/badge.png
+                      key: finish-onboarding
+                      achievedAt: "2021-01-01T00:00:00Z"
+        "401":
+          description: "Unauthorized"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorBody"
+        "404":
+          description: "Achievement Not Found"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorBody"
+        "422":
+          description: "Unprocessible Entity"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorBody"
+      summary: Mark an achievement as completed
+      security:
+        - ApiKeyAuth: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                user:
+                  $ref: "#/components/schemas/UpsertedUser"
+                  description: The user that completed the achievement.
+              required:
+                - user
+            examples:
+              Successful operation:
+                value:
+                  user:
+                    $ref: "#/components/schemas/User"
+  /metrics/{key}/event:
+    post:
+      description: Increment or decrement the value of a metric for a user.
+      operationId: metrics_event
+      tags:
+        - Metrics
+      parameters:
+        - name: key
+          in: path
+          description: Unique reference of the metric as set when created.
+          required: true
+          schema:
+            type: string
+          example: words-written
+      responses:
+        "201":
+          description: Created event
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/EventResponse"
+              examples:
+                Successful operation:
+                  value:
+                    metricId: d01dcbcb-d51e-4c12-b054-dc811dcdc623
+                    eventId: 0040fe51-6bce-4b44-b0ad-bddc4e123534
+                    total: 750
+                    achievements:
+                      - metricId: 5100fe51-6bce-6j44-b0hs-bddc4e123682
+                        completed:
+                          - id: 5100fe51-6bce-6j44-b0hs-bddc4e123682
+                            metricId: 5100fe51-6bce-6j44-b0hs-bddc4e123682
+                            metricName: words written
+                            metricValue: 500
+                            name: 500 words written
+                            achievedAt: "2020-01-01T00:00:00Z"
+                    currentStreak:
+                      length: 1
+                      frequency: daily
+                      started: "2025-04-02"
+                      periodStart: "2025-03-31"
+                      periodEnd: "2025-04-05"
+                      expires: "2025-04-12"
+        "400":
+          description: "Bad Request"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorBody"
+        "401":
+          description: "Unauthorized"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorBody"
+        "422":
+          description: "Unprocessible Entity"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorBody"
+      summary: Send a metric change event
+      security:
+        - ApiKeyAuth: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                user:
+                  $ref: "#/components/schemas/UpsertedUser"
+                  description: The user that triggered the event.
+                value:
+                  type: number
+                  format: double
+                  description: >-
+                    The value to add to the user's current total for the given
+                    metric.
+                  example: 750
+              required:
+                - user
+                - value
+            examples:
+              Successful operation:
+                value:
+                  user:
+                    email: user@example.com
+                    tz: Europe/London
+                    id: "18"
+                  value: 750
+  /users:
+    post:
+      description: Identify a new user.
+      operationId: users_create
+      tags:
+        - Users
+      summary: Identify a new user
+      security:
+        - ApiKeyAuth: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              $ref: "#/components/schemas/UpsertedUser"
+              description: The user object.
+      responses:
+        "201":
+          description: Identified user
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/User"
+                examples:
+                  Successful operation:
+                    value:
+                      id: user-id
+                      email: user@example.com
+                      tz: Europe/London
+                      subscribedToEmails: true
+                      created: "2021-01-01T00:00:00Z"
+                      updated: "2021-01-01T00:00:00Z"
+        "400":
+          description: "Bad Request"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorBody"
+        "422":
+          description: "Unprocessible Entity"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorBody"
+        "401":
+          description: "Unauthorized"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorBody"
+  /users/{id}:
+    get:
+      description: Get a single user.
+      operationId: users_get
+      tags:
+        - Users
+      summary: Get a single user
+      parameters:
+        - name: id
+          in: path
+          description: ID of the user to get.
+          required: true
+          schema:
+            type: string
+          example: userId
+      security:
+        - ApiKeyAuth: []
+      responses:
+        "200":
+          description: Found user
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/User"
+                examples:
+                  Successful operation:
+                    value:
+                      id: user-id
+                      email: user@example.com
+                      tz: Europe/London
+                      subscribedToEmails: true
+                      created: "2021-01-01T00:00:00Z"
+                      updated: "2021-01-01T00:00:00Z"
+        "400":
+          description: "Bad Request"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorBody"
+        "422":
+          description: "Unprocessible Entity"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorBody"
+        "401":
+          description: "Unauthorized"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorBody"
+    patch:
+      description: Update a user.
+      operationId: users_update
+      tags:
+        - Users
+      summary: Update a user
+      security:
+        - ApiKeyAuth: []
+      parameters:
+        - name: id
+          in: path
+          description: ID of the user to update.
+          required: true
+          schema:
+            type: string
+          example: id
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/UpdatedUser"
+              description: The user object.
+            example:
+              id: user-id
+              email: user@example.com
+              tz: Europe/London
+      responses:
+        "200":
+          description: Updated user
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/User"
+                examples:
+                  Successful operation:
+                    value:
+                      id: user-id
+                      email: user@example.com
+                      tz: Europe/London
+                      subscribedToEmails: true
+                      created: "2021-01-01T00:00:00Z"
+                      updated: "2021-01-01T00:00:00Z"
+        "400":
+          description: "Bad Request"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorBody"
+        "422":
+          description: "Unprocessible Entity"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorBody"
+        "401":
+          description: "Unauthorized"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorBody"
+  /users/{id}/metrics:
+    get:
+      description: Get a single user's progress against all active metrics.
+      operationId: users_allMetrics
+      tags:
+        - Users
+      parameters:
+        - name: id
+          in: path
+          description: ID of the user
+          required: true
+          schema:
+            type: string
+          example: userId
+      responses:
+        "200":
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/MetricResponse"
+              examples:
+                Successful operation:
+                  value:
+                    - id: d01dcbcb-d51e-4c12-b054-dc811dcdc623
+                      key: words-written
+                      name: Words written
+                      emoji: 📝
+                      status: active
+                      streakFrequency: daily
+                      current: 4500
+                      achievements:
+                        - id: abe3120f-5ca9-4344-92c8-5b891643a04b
+                          name: Novice Writer
+                          metricId: d01dcbcb-d51e-4c12-b054-dc811dcdc623
+                          metricValue: 500
+                          achievedAt: "2021-01-01T00:00:00Z"
+                          badgeUrl: https://example.com/badge1.png
+                        - id: 8a07f2d0-9c72-4de1-bf92-9530ae82b4b6
+                          name: Intermediate Writer
+                          metricId: d01dcbcb-d51e-4c12-b054-dc811dcdc623
+                          metricValue: 1000
+                          achievedAt: "2021-01-02T00:00:00Z"
+                          badgeUrl: https://example.com/badge2.png
+                        - id: 2090d038-aa04-4048-ab2e-e2b7bf2d3b9f
+                          name: Expert Writer
+                          metricId: d01dcbcb-d51e-4c12-b054-dc811dcdc623
+                          metricValue: 2000
+                          achievedAt: null
+        '401':
+          description: 'Unauthorized'
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorBody"
+        "404":
+          description: "User Not Found"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorBody"
+        "422":
+          description: "Unprocessible Entity"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorBody"
+      summary: Get all metrics for a user
+      security:
+        - ApiKeyAuth: []
+  /users/{id}/metrics/{key}:
+    get:
+      description: Get a user's progress against a single active metric.
+      operationId: users_singleMetric
+      tags:
+        - Users
+      parameters:
+        - name: id
+          in: path
+          description: ID of the user.
+          required: true
+          schema:
+            type: string
+          example: userId
+        - name: key
+          in: path
+          description: Unique key of the metric.
+          required: true
+          schema:
+            type: string
+          example: key
+      responses:
+        "200":
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/MetricResponse"
+              examples:
+                Successful operation:
+                  value:
+                    id: d01dcbcb-d51e-4c12-b054-dc811dcdc623
+                    key: words-written
+                    name: Words written
+                    emoji: 📝
+                    status: active
+                    streakFrequency: daily
+                    current: 1500
+                    achievements:
+                      - id: abe3120f-5ca9-4344-92c8-5b891643a04b
+                        name: Novice Writer
+                        metricId: d01dcbcb-d51e-4c12-b054-dc811dcdc623
+                        metricValue: 500
+                        achievedAt: "2021-01-01T00:00:00Z"
+                      - id: 8a07f2d0-9c72-4de1-bf92-9530ae82b4b6
+                        name: Intermediate Writer
+                        metricId: d01dcbcb-d51e-4c12-b054-dc811dcdc623
+                        metricValue: 1000
+                        achievedAt: "2021-01-02T00:00:00Z"
+                      - id: 2090d038-aa04-4048-ab2e-e2b7bf2d3b9f
+                        name: Expert Writer
+                        metricId: d01dcbcb-d51e-4c12-b054-dc811dcdc623
+                        metricValue: 2000
+                        achievedAt: null
+                        badgeUrl: https://example.com/badge.png
+        "401":
+          description: 'Unauthorized'
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorBody"
+        "404":
+          description: "Not Found"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorBody"
+        "422":
+          description: "Unprocessible Entity"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorBody"
+      summary: Get a single metric for a user
+      security:
+        - ApiKeyAuth: []
+  /users/{id}/achievements:
+    get:
+      description: Get all of a user's completed achievements.
+      operationId: users_allAchievements
+      tags:
+        - Users
+      parameters:
+        - name: id
+          in: path
+          description: ID of the user.
+          required: true
+          schema:
+            type: string
+          example: userId
+      responses:
+        "200":
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/MultiStageAchievementResponse"
+              examples:
+                Successful operation:
+                  value:
+                    - id: d01dcbcb-d51e-4c12-b054-dc811dcdc625
+                      key: completed-onboarding
+                      name: Completed Onboarding
+                      achievedAt: "2021-01-01T00:00:00Z"
+                      badgeUrl: https://example.com/badge2.png
+                    - id: d01dcbcb-d51e-4c12-b054-dc811dcdc623
+                      key: novice-writer
+                      metricId: d01dcbcb-d51e-4c12-b054-dc811dcdc619
+                      metricValue: 500
+                      metricName: words written
+                      name: Novice Writer
+                      achievedAt: "2021-02-01T00:00:00Z"
+                      badgeUrl: https://example.com/badge1.png
+                    - id: d01dcbcb-d51e-4c12-b054-dc811dcdc624
+                      key: intermediate-writer
+                      metricId: d01dcbcb-d51e-4c12-b054-dc811dcdc619
+                      metricValue: 1000
+                      metricName: words written
+                      name: Intermediate Writer
+                      achievedAt: "2021-03-01T00:00:00Z"
+                      badgeUrl: https://example.com/badge2.png
+        "401":
+          description: "Unauthorized"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorBody"
+        "404":
+          description: "Not Found"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorBody"
+        "422":
+          description: "Unprocessible Entity"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorBody"
+      summary: Get a user's completed achievements
+      security:
+        - ApiKeyAuth: []
+  /users/{id}/streak:
+    get:
+      description: Get a user's streak data.
+      operationId: users_streak
+      tags:
+        - Users
+      parameters:
+        - name: id
+          in: path
+          description: ID of the user.
+          required: true
+          schema:
+            type: string
+          example: userId
+        - in: query
+          name: historyPeriods
+          schema:
+            type: integer
+            default: 7
+          description: >-
+            The number of past streak periods to include in the streakHistory field of the 
+            response.
+      responses:
+        '200':
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                type: object
+                $ref: '#/components/schemas/StreakResponse'
+              examples:
+                Successful operation:
+                  value:
+                    length: 1
+                    frequency: weekly
+                    started: '2025-04-02'
+                    periodStart: '2025-03-31'
+                    periodEnd: '2025-04-05'
+                    expires: '2025-04-12'
+        '401':
+          description: 'Unauthorized'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorBody'
+        '404':
+          description: 'Not Found'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorBody'
+        '422':
+          description: 'Unprocessible Entity'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorBody'
+      summary: Get a user's streak status
+      security:
+        - ApiKeyAuth: [ ]
+components:
+  schemas:
+    MetricStatus:
+      title: MetricStatus
+      type: string
+      enum:
+        - archived
+        - active
+      description: The status of the achievement.
+    StreakFrequency:
+      title: StreakFrequency
+      type: string
+      enum:
+        - daily
+        - weekly
+        - monthly
+        - yearly
+    BaseStreakResponse:
+      title: Streak Response
+      type: object
+      properties:
+        length:
+          type: integer
+          description: The length of the user's current streak.
+        frequency:
+          $ref: "#/components/schemas/StreakFrequency"
+          description: The frequency of the streak.
+        started:
+          type: string
+          format: date
+          description: The date the streak started.
+        periodStart:
+          type: string
+          format: date
+          description: The start date of the current streak period.
+        periodEnd:
+          type: string
+          format: date
+          description: The end date of the current streak period.
+        expires:
+          type: string
+          format: date
+          description: The date the streak will expire if the user does not increment a metric.
+      required:
+        - length
+        - frequency
+    IncrementMetricStreakResponse:
+      title: Streak Response (Increment Metric)
+      type: object
+      description: An object representing the user's streak after incrementing a metric.
+      allOf:
+        - $ref: "#/components/schemas/BaseStreakResponse"
+        - type: object
+          properties:
+            extended:
+              type: boolean
+              description: Whether this metric event increased the user's streak length.
+    StreakResponse:
+      title: Streak Response
+      type: object
+      description: An object representing the user's streak.
+      allOf:
+          - $ref: "#/components/schemas/BaseStreakResponse"
+          - type: object
+            properties:
+              streakHistory:
+                type: array
+                description: >-
+                  A list of the user's past streak periods up through the current period. Each
+                  period includes the start and end dates and the length of the streak.
+                items:
+                  type: object
+                  description: >-
+                    An object representing a past streak period.
+                  properties:
+                    periodStart:
+                      type: string
+                      format: date
+                      description: The date this streak period started.
+                      example: "2025-03-31"
+                    periodEnd:
+                      type: string
+                      format: date
+                      description: The date this streak period ended.
+                      example: "2025-04-05"
+                    length:
+                      type: integer
+                      description: The length of the user's streak during this period.
+                      example: 1
+                  required:
+                    - periodStart
+                    - periodEnd
+                    - length
+    MultiStageAchievementResponse:
+      title: MultiStageAchievementResponse
+      type: object
+      properties:
+        id:
+          type: string
+          description: The unique ID of the achievement.
+        name:
+          type: string
+          nullable: true
+          description: The name of this achievement.
+        badgeUrl:
+          type: string
+          nullable: true
+          description: >-
+            The URL of the badge image for the achievement, if one has been
+            uploaded.
+        metricId:
+          type: string
+          nullable: true
+          description: The ID of the metric associated with this achievement, if any.
+        metricValue:
+          type: number
+          format: double
+          nullable: true
+          description: >-
+            The value of the metric required to complete the achievement, if
+            this achievement is associated with a metric.
+        metricName:
+          type: string
+          nullable: true
+          description: The name of the metric associated with this achievement, if any.
+        key:
+          type: string
+          nullable: true
+          description: The key used to reference this achievement in the API.
+        achievedAt:
+          type: string
+          format: date-time
+          nullable: true
+          description: The date and time the achievement was completed, in ISO 8601 format.
+      required:
+        - id
+    OneOffAchievementResponse:
+      title: OneOffAchievementResponse
+      type: object
+      properties:
+        id:
+          type: string
+          description: The unique ID of the achievement.
+        name:
+          type: string
+          nullable: true
+          description: The name of this achievement.
+        badgeUrl:
+          type: string
+          nullable: true
+          description: >-
+            The URL of the badge image for the achievement, if one has been
+            uploaded.
+        key:
+          type: string
+          nullable: true
+          description: The key used to reference this achievement in the API.
+        achievedAt:
+          type: string
+          format: date-time
+          nullable: true
+          description: The date and time the achievement was completed, in ISO 8601 format.
+      required:
+        - id
+    MetricResponse:
+      title: MetricResponse
+      type: object
+      properties:
+        id:
+          type: string
+          description: The unique ID of the metric.
+          example: d01dcbcb-d51e-4c12-b054-dc811dcdc623
+        key:
+          type: string
+          description: The unique key of the metric.
+          example: words-written
+        name:
+          type: string
+          description: The name of the metric.
+          example: Words written
+        emoji:
+          type: string
+          description: The emoji to represent the metric.
+          example: 📝
+        status:
+          $ref: "#/components/schemas/MetricStatus"
+          description: The status of the metric.
+        current:
+          type: number
+          format: double
+          description: The user's current total for the metric.
+          example: 1500
+        achievements:
+          type: array
+          items:
+            $ref: "#/components/schemas/MultiStageAchievementResponse"
+          description: >-
+            A list of the metric's achievements and the user's progress towards
+            each.
+      required:
+        - id
+        - key
+        - name
+        - emoji
+        - status
+        - current
+        - achievements
+    UpdatedUser:
+      title: Updated User
+      type: object
+      description: An object with editable user fields.
+      properties:
+        email:
+          type: string
+          nullable: true
+          description: The user's email address. Required if subscribeToEmails is true.
+          example: user@example.com
+        name:
+          type: string
+          nullable: true
+          description: The name to refer to the user by in emails.
+          example: User
+        tz:
+          type: string
+          nullable: true
+          description: The user's timezone (used for email scheduling).
+          example: Europe/London
+        subscribeToEmails:
+          type: boolean
+          nullable: true
+          default: true
+          description: Whether the user should receive Trophy-powered emails. Cannot be false if an email is provided.
+          example: true
+    UpsertedUser:
+      title: Upserted User
+      type: object
+      description: An object with editable user fields.
+      allOf:
+        - $ref: "#/components/schemas/UpdatedUser"
+        - type: object
+          properties:
+            id:
+              type: string
+              description: The ID of the user in your database. Must be a string.
+              example: user-id
+          required:
+            - id
+    User:
+      title: User
+      type: object
+      description: A user of your application.
+      allOf:
+        - $ref: "#/components/schemas/UpsertedUser"
+        - type: object
+          properties:
+            control:
+              type: boolean
+              description: Whether the user is in the control group, meaning they do not receive emails or other communications from Trophy.
+              example: false
+            created:
+              type: string
+              format: date-time
+              description: The date and time the user was created, in ISO 8601 format.
+              example: "2021-01-01T00:00:00Z"
+            updated:
+              type: string
+              format: date-time
+              description: The date and time the user was last updated, in ISO 8601 format.
+              example: "2021-01-01T00:00:00Z"
+    ErrorBody:
+      title: ErrorBody
+      type: object
+      properties:
+        error:
+          type: string
+      required:
+        - error
+    AchievementCompletionResponse:
+      title: AchievementCompletionResponse
+      type: object
+      properties:
+        completionId:
+          type: string
+          description: The unique ID of the completion.
+          example: 0040fe51-6bce-4b44-b0ad-bddc4e123534
+        achievement:
+          $ref: "#/components/schemas/OneOffAchievementResponse"
+      required:
+        - completionId
+        - achievement
+    EventResponseMetricsItem:
+      title: EventResponseMetricsItem
+      type: object
+      properties:
+        metricId:
+          type: string
+          nullable: true
+          description: The ID of the metric.
+        completed:
+          type: array
+          items:
+            $ref: "#/components/schemas/MultiStageAchievementResponse"
+          nullable: true
+          description: >-
+            A list of any new achievements that the user has now completed as a
+            result of this event being submitted.
+    EventResponse:
+      title: EventResponse
+      type: object
+      properties:
+        eventId:
+          type: string
+          description: The unique ID of the event.
+          example: 0040fe51-6bce-4b44-b0ad-bddc4e123534
+        metricId:
+          type: string
+          description: The unique ID of the metric that was updated.
+          example: d01dcbcb-d51e-4c12-b054-dc811dcdc623
+        total:
+          type: number
+          format: double
+          description: The user's new total progress against the metric.
+          example: 750
+        achievements:
+          type: array
+          items:
+            $ref: "#/components/schemas/EventResponseMetricsItem"
+          nullable: true
+          description: Changes to achievements as a result of this event.
+        currentStreak:
+          $ref: "#/components/schemas/IncrementMetricStreakResponse"
+          nullable: true
+          description: >-
+            The user's current streak for the metric, if the metric has streaks
+            enabled.
+      required:
+        - eventId
+        - metricId
+        - total
+  securitySchemes:
+    ApiKeyAuth:
+      type: apiKey
+      in: header
+      name: X-API-KEY
+servers:
+  - url: https://app.trophy.so/api
+    description: Default
