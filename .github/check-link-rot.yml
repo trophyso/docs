@@ -1,0 +1,15 @@
+# .github/workflows/check-link-rot.yml
+name: Check Link Rot
+
+on:
+  pull_request:
+    types: [opened, synchronize]
+
+jobs:
+  check-link-rot:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - uses: actions/setup-node@v3
+      - run: npm i -g mintlify
+      - run: mintlify broken-links
