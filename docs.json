@@ -51,6 +51,42 @@
         ]
       },
       {
+        "tab": "Guides",
+        "groups": [
+          {
+            "group": "Overview",
+            "pages": ["guides/overview"]
+          },
+          {
+            "group": "Example Apps",
+            "pages": [
+              "guides/example-apps/overview",
+              "guides/example-apps/example-fitness-app",
+              "guides/example-apps/example-learning-app",
+              "guides/example-apps/example-productivity-app"
+            ]
+          },
+          {
+            "group": "Tutorials",
+            "pages": [
+              "guides/tutorials/overview",
+              "guides/tutorials/how-to-build-a-streaks-feature",
+              "guides/tutorials/how-to-build-an-achievements-feature",
+              "guides/tutorials/how-to-build-automated-usage-digests",
+              "guides/tutorials/how-to-build-automated-win-back-campaigns"
+            ]
+          },
+          {
+            "group": "UI Components",
+            "pages": [
+              "guides/ui-components/overview",
+              "guides/ui-components/git-style-tracker",
+              "guides/ui-components/trophy-cabinet"
+            ]
+          }
+        ]
+      },
+      {
         "tab": "API Definition",
         "groups": [
           {
