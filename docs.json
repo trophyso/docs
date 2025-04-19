@@ -16,6 +16,11 @@
       "dark": "#181818"
     }
   },
+  "seo": {
+    "metatags": {
+      "og:image": "/assets/og.png"
+    }
+  },
   "favicon": "/favicon.ico",
   "navigation": {
     "tabs": [
