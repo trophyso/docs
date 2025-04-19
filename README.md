@@ -1,12 +1,6 @@
-# Mintlify Starter Kit
+# Trophy Documentation
 
-Click on `Use this template` to copy the Mintlify starter kit. The starter kit contains examples including
-
-- Guide pages
-- Navigation
-- Customizations
-- API Reference pages
-- Use of popular components
+Our documentation is built on top of [Mintlify](mintlify.com). We welcome contributions for fixing small issues such as typos and for adding new or updating existing content that you think would help others.
 
 ### Development
 
@@ -22,12 +16,8 @@ Run the following command at the root of your documentation (where docs.json is)
 mintlify dev
 ```
 
-### Publishing Changes
+### Structure
 
-Install our Github App to auto propagate changes from your repo to your deployment. Changes will be deployed to production automatically after pushing to the default branch. Find the link to install on your dashboard. 
+Our docs are written in [MDX](https://mdxjs.com/), which if you haven't used it before is a bit if markdown and React had a baby.
 
-#### Troubleshooting
-
-- Mintlify dev isn't running - Run `mintlify install` it'll re-install dependencies.
-- Page loads as a 404 - Make sure you are running in a folder with `docs.json`
-
+See the [full guide](https://mintlify.com/docs/content/components) from Mintlify on writing MDX and the components that are available for how best to contribute.
