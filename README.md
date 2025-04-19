@@ -1,6 +1,6 @@
 # Trophy Documentation
 
-Our documentation is built on top of [Mintlify](mintlify.com). We welcome contributions for fixing small issues such as typos and for adding new or updating existing content that you think would help others.
+Our documentation is built on top of [Mintlify](https://mintlify.com). We welcome contributions for fixing small issues such as typos and for adding new or updating existing content that you think would help others.
 
 ### Development
 
