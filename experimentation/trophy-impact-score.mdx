@@ -1,72 +1,50 @@
 ---
 title: Trophy Impact Score
-description: "Welcome to the home of your new documentation"
+description: Learn how Trophy measures its own effectiveness against a control cohort.
+subtitle: Learn how Trophy measures its own effectiveness against a control cohort.
 icon: percent
 ---
 
-<img
-  className="block dark:hidden"
-  src="/images/hero-light.png"
-  alt="Hero Light"
-/>
-<img
-  className="hidden dark:block"
-  src="/images/hero-dark.png"
-  alt="Hero Dark"
-/>
+## What Is The Trophy Impact Score?
 
-## Setting up
+By default, Trophy only enrolls 90% of your users in any gamification emails. It leaves the other 10% out as a 'control cohort'.
 
-The first step to world-class documentation is setting up your editing environments.
+Trophy then automatically tracks the 14-day retention of the two cohorts and compares them, resulting in the Trophy Impact Score.
 
-<CardGroup cols={2}>
-  <Card
-    title="Edit Your Docs"
-    icon="pen-to-square"
-    href="https://mintlify.com/docs/quickstart"
-  >
-    Get your docs set up locally for easy development
-  </Card>
-  <Card
-    title="Preview Changes"
-    icon="image"
-    href="https://mintlify.com/docs/development"
-  >
-    Preview your changes before you push to make sure they're perfect
-  </Card>
-</CardGroup>
+<Frame>
+  <img
+    height="200"
+    width="50%"
+    noZoom
+    src="../assets/experimentation/trophy_impact_score/chart.png"
+  />
+</Frame>
 
-## Make it yours
+The Trophy Impact Score reflects the percentage difference in 14-day retention between the control cohort and the rest of your userbase.
 
-Update your docs to your brand and add valuable content for the best user conversion.
+<Tip>
+  An Impact Score of 5% means that users enrolled in gamification features are
+  5% more likely to be using your platform after 14 days than the control
+  cohort.
+</Tip>
 
-<CardGroup cols={2}>
-  <Card
-    title="Customize Style"
-    icon="palette"
-    href="https://mintlify.com/docs/settings/global"
-  >
-    Customize your docs to your company's colors and brands
-  </Card>
-  <Card
-    title="Reference APIs"
-    icon="code"
-    href="https://mintlify.com/docs/api-playground/openapi"
-  >
-    Automatically generate endpoints from an OpenAPI spec
-  </Card>
-  <Card
-    title="Add Components"
-    icon="screwdriver-wrench"
-    href="https://mintlify.com/docs/content/components/accordions"
-  >
-    Build interactive features and designs to guide your users
-  </Card>
-  <Card
-    title="Get Inspiration"
-    icon="stars"
-    href="https://mintlify.com/customers"
-  >
-    Check out our showcase of our favorite documentation
-  </Card>
-</CardGroup>
+## Customizing the control ratio
+
+If you'd prefer to use a different ratio of control to non-control users then you can do so on the [Integration](https://app.trophy.so/integration) page.
+
+Use the slider to change the percentage of your userbase that will be set as control users and opted out of gamification emails.
+
+<Frame>
+  <video
+    autoPlay
+    muted
+    loop
+    playsInline
+    className="w-full aspect-15/4"
+    src="../assets/experimentation/trophy_impact_score/control_ratio.mp4"
+  ></video>
+</Frame>
+
+## Get Support
+
+Want to get in touch with the Trophy team? Reach out to us via [email](mailto:support@trophy.so). We're here to help!
