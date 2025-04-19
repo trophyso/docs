@@ -77,7 +77,7 @@
               "api-reference/endpoints/users/get-all-metrics-for-a-user",
               "api-reference/endpoints/users/get-a-single-metric-for-a-user",
               "api-reference/endpoints/users/get-a-users-completed-achievements",
-              "api-reference/endpoints/users/get-a-users-streak-status"
+              "api-reference/endpoints/users/get-a-users-streak"
             ]
           }
         ]

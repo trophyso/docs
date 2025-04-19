@@ -1,7 +1,7 @@
 openapi: 3.1.0
 info:
   title: Trophy
-  version: '1.0.4'
+  version: "1.0.4"
 paths:
   /achievements/{key}/complete:
     post:
@@ -378,8 +378,8 @@ paths:
                           metricId: d01dcbcb-d51e-4c12-b054-dc811dcdc623
                           metricValue: 2000
                           achievedAt: null
-        '401':
-          description: 'Unauthorized'
+        "401":
+          description: "Unauthorized"
           content:
             application/json:
               schema:
@@ -455,7 +455,7 @@ paths:
                         achievedAt: null
                         badgeUrl: https://example.com/badge.png
         "401":
-          description: 'Unauthorized'
+          description: "Unauthorized"
           content:
             application/json:
               schema:
@@ -566,43 +566,43 @@ paths:
             The number of past streak periods to include in the streakHistory field of the 
             response.
       responses:
-        '200':
+        "200":
           description: Successful operation
           content:
             application/json:
               schema:
                 type: object
-                $ref: '#/components/schemas/StreakResponse'
+                $ref: "#/components/schemas/StreakResponse"
               examples:
                 Successful operation:
                   value:
                     length: 1
                     frequency: weekly
-                    started: '2025-04-02'
-                    periodStart: '2025-03-31'
-                    periodEnd: '2025-04-05'
-                    expires: '2025-04-12'
-        '401':
-          description: 'Unauthorized'
+                    started: "2025-04-02"
+                    periodStart: "2025-03-31"
+                    periodEnd: "2025-04-05"
+                    expires: "2025-04-12"
+        "401":
+          description: "Unauthorized"
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ErrorBody'
-        '404':
-          description: 'Not Found'
+                $ref: "#/components/schemas/ErrorBody"
+        "404":
+          description: "Not Found"
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ErrorBody'
-        '422':
-          description: 'Unprocessible Entity'
+                $ref: "#/components/schemas/ErrorBody"
+        "422":
+          description: "Unprocessible Entity"
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ErrorBody'
-      summary: Get a user's streak status
+                $ref: "#/components/schemas/ErrorBody"
+      summary: Get a user's streak
       security:
-        - ApiKeyAuth: [ ]
+        - ApiKeyAuth: []
 components:
   schemas:
     MetricStatus:
@@ -665,37 +665,37 @@ components:
       type: object
       description: An object representing the user's streak.
       allOf:
-          - $ref: "#/components/schemas/BaseStreakResponse"
-          - type: object
-            properties:
-              streakHistory:
-                type: array
+        - $ref: "#/components/schemas/BaseStreakResponse"
+        - type: object
+          properties:
+            streakHistory:
+              type: array
+              description: >-
+                A list of the user's past streak periods up through the current period. Each
+                period includes the start and end dates and the length of the streak.
+              items:
+                type: object
                 description: >-
-                  A list of the user's past streak periods up through the current period. Each
-                  period includes the start and end dates and the length of the streak.
-                items:
-                  type: object
-                  description: >-
-                    An object representing a past streak period.
-                  properties:
-                    periodStart:
-                      type: string
-                      format: date
-                      description: The date this streak period started.
-                      example: "2025-03-31"
-                    periodEnd:
-                      type: string
-                      format: date
-                      description: The date this streak period ended.
-                      example: "2025-04-05"
-                    length:
-                      type: integer
-                      description: The length of the user's streak during this period.
-                      example: 1
-                  required:
-                    - periodStart
-                    - periodEnd
-                    - length
+                  An object representing a past streak period.
+                properties:
+                  periodStart:
+                    type: string
+                    format: date
+                    description: The date this streak period started.
+                    example: "2025-03-31"
+                  periodEnd:
+                    type: string
+                    format: date
+                    description: The date this streak period ended.
+                    example: "2025-04-05"
+                  length:
+                    type: integer
+                    description: The length of the user's streak during this period.
+                    example: 1
+                required:
+                  - periodStart
+                  - periodEnd
+                  - length
     MultiStageAchievementResponse:
       title: MultiStageAchievementResponse
       type: object
