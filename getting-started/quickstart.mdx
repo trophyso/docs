@@ -5,6 +5,8 @@ description: Get up and running with Trophy in under 10 minutes
 
 import SdkInstallCommand from "/snippets/sdk-install-command.mdx";
 import AddEnvVarBlock from "/snippets/add-env-var-block.mdx";
+import MetricChangeRequestBlock from "/snippets/metric-change-request-block.mdx";
+import MetricChangeResponseBlock from "/snippets/metric-change-response-block.mdx";
 
 Here you'll integrate your backend web application with Trophy and start building your first gamified feature.
 
@@ -31,7 +33,68 @@ Here you'll integrate your backend web application with Trophy and start buildin
     Make sure to pass this API key to the Trophy SDK or to your API client to authenticate.
 
   </Step>
-  <Step title="Create your first Metric">
-    Nearly all gamification features in Trophy, like [Achievements](/platform/achievements), [Streaks](/platform/streaks) and [Emails](/platform/emails), are driven by [Metrics](/platform/metrics). Here you'll create your first metric to help you get started.
+  <Step title="Create your first metric">
+    All gamification features, like [Achievements](/platform/achievements), [Streaks](/platform/streaks) and [Emails](/platform/emails), are driven by user interactions. In Trophy, you use [Metrics](/platform/metrics) to define those interactions and [Events](/platform/events) to track them. 
+    
+    Here you'll create your first metric to get started. In thr Trophy dashboard, head into the [metrics page](https://app.trophy.so/metrics) and hit the _New Metric_ button:
+
+    <Frame>
+      <video
+        autoPlay
+        muted
+        loop
+        playsInline
+        className="w-full aspect-video"
+        src="../assets/platform/metrics/create_new_metric.mp4"
+      ></video>
+    </Frame>
+
+    Give the metric a name and hit _Save_.
+
+  </Step>
+  <Step title="Integrate the metric into your backend">
+    Once you've created your metric, head to the configure tab and copy it's unique API reference key.
+
+    <Frame>
+      <video
+        autoPlay
+        muted
+        loop
+        playsInline
+        className="w-full aspect-video"
+        src="../assets/quick-start/copy_metric_key.mp4"
+      ></video>
+    </Frame>
+
+    To track an event against this metric when a user interacts with your product, call the [metric change event API](/api-reference/endpoints/metrics/send-a-metric-change-event), passing along details of the user that made the interaction. In this example the metric key would be `words-written`:
+
+    <MetricChangeRequestBlock />
+
+    By making this call, you're telling Trophy that a specific user made an interaction with your product. As a result, Trophy will process any gamification features that you've configured against the metric automatically.
+
+  </Step>
+  <Step title="Continue building your gamification experience">
+    With a metric integrated into your backend, you're ready to start adding gamification features to your product.
+    
+    Follow the links below to learn more about each feature you can build with Trophy:
+
+    <CardGroup>
+      <Card title="Achievements" icon="trophy" href="/platform/achievements">
+        Reward users for continued progress or taking specific actions.
+      </Card>
+      <Card title="Streaks" icon="flame" href="/platform/streaks">
+        Motivate users to continue using your platform over time.
+      </Card>
+      <Card title="Emails" icon="mail" href="/platform/emails">
+        Encourage and congratulate users to keep them coming back.
+      </Card>
+    </CardGroup>
+
+    Or, explore our [ready-made APIs](/api-reference/introduction) that support building any in-app gamification UI you want.
+
   </Step>
 </Steps>
+
+## Get Support
+
+Want to get in touch with the Trophy team? Reach out to us via [email](mailto:support@trophy.so). We're here to help!
