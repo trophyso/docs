@@ -47,6 +47,15 @@
               "experimentation/overview",
               "experimentation/trophy-impact-score"
             ]
+          },
+          {
+            "group": "Account",
+            "pages": [
+              "account/overview",
+              "account/members",
+              "account/branding",
+              "account/billing"
+            ]
           }
         ]
       },
