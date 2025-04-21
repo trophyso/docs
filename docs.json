@@ -16,7 +16,7 @@
       "dark": "#181818"
     }
   },
-  "favicon": "/favicon.ico",
+  "favicon": "/assets/favicon.ico",
   "seo": {
     "metatags": {
       "og:description": "Learn how to add gamification experiences to your app with Trophy.",
