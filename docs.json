@@ -1,7 +1,7 @@
 {
   "$schema": "https://mintlify.com/docs.json",
   "theme": "mint",
-  "name": "Trophy Documentation",
+  "name": "Trophy Docs",
   "icons": {
     "library": "lucide"
   },
@@ -17,6 +17,12 @@
     }
   },
   "favicon": "/favicon.ico",
+  "seo": {
+    "metatags": {
+      "og:description": "Learn how to add gamification experiences to your app with Trophy.",
+      "og:image": "/assets/og.png"
+    }
+  },
   "navigation": {
     "tabs": [
       {
