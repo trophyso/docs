@@ -70,42 +70,68 @@
       },
       {
         "tab": "Guides",
-        "groups": [
+        "dropdowns": [
           {
-            "group": "Overview",
-            "pages": ["guides/overview"]
-          },
-          {
-            "group": "Example Apps",
-            "pages": [
-              "guides/example-apps/overview",
-              "guides/example-apps/example-fitness-app",
-              "guides/example-apps/example-learning-app",
-              "guides/example-apps/example-productivity-app"
+            "dropdown": "Example Apps",
+            "description": "Ready-to-use example apps",
+            "icon": "rocket",
+            "groups": [
+              {
+                "group": "Getting Started",
+                "pages": ["guides/example-apps/overview"]
+              },
+              {
+                "group": "Example Apps",
+                "pages": [
+                  "guides/example-apps/example-fitness-app",
+                  "guides/example-apps/example-learning-app",
+                  "guides/example-apps/example-productivity-app"
+                ]
+              }
             ]
           },
           {
-            "group": "Tutorials",
-            "pages": [
-              "guides/tutorials/overview",
-              "guides/tutorials/how-to-build-a-streaks-feature",
-              "guides/tutorials/how-to-build-an-achievements-feature",
-              "guides/tutorials/how-to-build-automated-usage-digests",
-              "guides/tutorials/how-to-build-automated-win-back-campaigns"
+            "dropdown": "Tutorials",
+            "description": "Gamification how-to guides",
+            "icon": "book-text",
+            "groups": [
+              {
+                "group": "Getting Started",
+                "pages": ["guides/tutorials/overview"]
+              },
+              {
+                "group": "Tutorials",
+                "pages": [
+                  "guides/tutorials/how-to-build-a-streaks-feature",
+                  "guides/tutorials/how-to-build-an-achievements-feature",
+                  "guides/tutorials/how-to-build-automated-usage-digests",
+                  "guides/tutorials/how-to-build-automated-win-back-campaigns"
+                ]
+              }
             ]
           },
           {
-            "group": "UI Components",
-            "pages": [
-              "guides/ui-components/overview",
-              "guides/ui-components/git-style-tracker",
-              "guides/ui-components/trophy-cabinet"
+            "dropdown": "UI Components",
+            "description": "UI Component library",
+            "icon": "layout-panel-left",
+            "groups": [
+              {
+                "group": "Getting Started",
+                "pages": ["guides/ui-components/overview"]
+              },
+              {
+                "group": "UI Components",
+                "pages": [
+                  "guides/ui-components/git-style-tracker",
+                  "guides/ui-components/trophy-cabinet"
+                ]
+              }
             ]
           }
         ]
       },
       {
-        "tab": "API Definition",
+        "tab": "API Reference",
         "groups": [
           {
             "group": "Overview",
