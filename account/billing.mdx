@@ -1,10 +1,51 @@
 ---
 title: Billing
-description: Trophy documentation for gamification APIs, quickstart guides and tutorials.
+description: Learn how Trophy tracks usage and how to manage invoices.
 icon: gauge
 ---
 
-...
+## Usage-based Billing
+
+Trophy follows a monthly usage-based pricing model where customers only pay for the _units_ of usage they consume. For Trophy a _unit_ of usage corresponds to a single **Monthly Active User (MAU)**.
+
+## Monthly Active Users (MAUs)
+
+Trophy defines an MAU as a single user that is involved in at least one API call in a given month. You'll be charged a flat rate per MAU, that diminishes the more MAUs you have. Here's full details of the model:
+
+| MAUs          | Cost per MAU ($) |
+| ------------- | ---------------- |
+| < 1,000       | -                |
+| 1,000 - 5,000 | 0.02             |
+| 5,000+        | 0.01             |
+
+<Note>
+  Bear in mind **you never pay for churned users**. If a user signs up to your
+  product in a given month, but doesn't use it again in subsequent months, you
+  only pay for that user in the first month, and never again.
+</Note>
+
+You can estimate your monthly cost based on your current MAUs using our [calculator](https://www.trophy.so/pricing), but here are some common examples:
+
+| MAUs    | Cost ($) |
+| ------- | -------- |
+| 1,000   | 49       |
+| 5,000   | 129      |
+| 10,000  | 179      |
+| 50,000  | 579      |
+| 100,000 | 1079     |
+
+## Custom Contracts
+
+If you have more than 50,000 MAUs and would like to discuss custom contracts to suit your business needs then please [get in touch](mailto:hello@trophy.so) and we'll be happy to help.
+
+## Frequently Asked Questions
+
+<AccordionGroup>
+  <Accordion title="When will I be charged?">
+    We equalize billing over the month and charge all customers on the 1st of
+    the month in arreas.
+  </Accordion>
+</AccordionGroup>
 
 ## Get Support
 
