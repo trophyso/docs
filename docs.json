@@ -19,7 +19,7 @@
   "favicon": "/assets/favicon.ico",
   "seo": {
     "metatags": {
-      "og:description": "Learn how to add gamification experiences to your app with Trophy.",
+      "og:description": "Trophy is a developer-friendly platform for building gamified product experiences in any mobile or web app. Add features like achievements and streaks in hours, not months.",
       "og:image": "/assets/og.png"
     }
   },
