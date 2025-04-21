@@ -1,7 +1,7 @@
 {
   "$schema": "https://mintlify.com/docs.json",
   "theme": "mint",
-  "name": "Trophy Documentation",
+  "name": "Trophy Docs",
   "icons": {
     "library": "lucide"
   },
@@ -16,12 +16,16 @@
       "dark": "#181818"
     }
   },
+  "fonts": {
+    "family": "Montserrat"
+  },
+  "favicon": "/assets/favicon.ico",
   "seo": {
     "metatags": {
+      "og:description": "Trophy is a developer-friendly platform for building gamified product experiences in any mobile or web app. Add features like achievements and streaks in hours, not months.",
       "og:image": "/assets/og.png"
     }
   },
-  "favicon": "/favicon.ico",
   "navigation": {
     "tabs": [
       {
@@ -51,6 +55,15 @@
             "pages": [
               "experimentation/overview",
               "experimentation/trophy-impact-score"
+            ]
+          },
+          {
+            "group": "Account",
+            "pages": [
+              "account/overview",
+              "account/members",
+              "account/branding",
+              "account/billing"
             ]
           }
         ]
