@@ -16,6 +16,9 @@
       "dark": "#181818"
     }
   },
+  "fonts": {
+    "family": "Montserrat"
+  },
   "favicon": "/assets/favicon.ico",
   "seo": {
     "metatags": {
