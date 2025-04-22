@@ -1,10 +1,93 @@
 ---
-title: Learning Platform
-description: Learn how to use Trophy to build practical solutions to common gamification use cases.
-subtitle: Learn how to use Trophy to build practical solutions to common gamification use cases.
+title: Example Learning Platform
+description: An example learning platform that uses Trophy for gamification.
+subtitle: Use this example gamified learning application as a quick start for your next ed-tech project or for inspiration for your current platform.
 ---
 
-...
+## Motivation
+
+Gamification is a core part of any educational platform. When done right, it's proven by platform like Duolingo to consistently engage students and boost retention.
+
+This example app serves as a template for a web application that provides students a way to practice flashcards. Feel free to use this example app to start a new ed-tech project, or just as inspiration.
+
+Check out the [live demo](https://example.com) here (TBD).
+
+## Tech Stack
+
+The tech stack for this example learning platform is as follows:
+
+- NextJS 15 (React 19)
+- Shadcn/Ui
+- LottieFiles Animations
+- Lucide Icons
+- (TBD) Sound effect library
+
+And of course, it uses Trophy for gamification.
+
+Here we let you choose your own data storage provider and just include in-memory data for simplicity.
+
+## Gamification Strategy
+
+We've built Trophy into this example learning app to demonstrate how beneficial it is for educational platforms, and how easy it is to build gamification experiences with Trophy.
+
+Here's a breakdown of the gamification features used in this example project.
+
+### Multi-stage Acheivements
+
+This example learning app uses multi-stage achievements based on the following milestones:
+
+- 10 flashcards viewed
+- 50 flashcards viewed
+- 100 flashcards viewed
+- 250 flashcards viewed
+- 500 flashcards viewed
+
+Each time they reach a milestone:
+
+- A new badge appears in their account
+- They receive an in-app notification
+- They hear a sound effect
+
+### One-off Achievements
+
+This learning platform also makes use of a few one-off achievements. Unlike multi-stage acheivements, the following achievements are only unlocked once by each user:
+
+- Profile Completed - Unlocked when a user completes their profile
+
+### Daily Streaks
+
+The example project also uses daily streaks where users must view at least one flashcard a day to keep their streak. For each consequtive day the user views at least one flashcard, their streak increases. But if they miss a day, they lose their streak and have to start over.
+
+The users current streak is displayed in their profile and each time they successfully extend their streak the following occurs:
+
+- They recieve an in-app notification
+- They hear a sound effect
+
+### Automated Email Sequences
+
+Emails are automtically sent to users to support the following use cases:
+
+- Congratulating users when they unlock new achievements
+- Summarizing progress on a weekly basis
+
+## Trophy Setup
+
+To make all this gamification possible, and to save time on writing custom code, this example app makes use of Trophy's gamification platform.
+
+To replicate the same features, the following Trophy resources are required:
+
+| Trophy Resource    | Name                  | Notes            |
+| ------------------ | --------------------- | ---------------- |
+| Metric             | Flashcards Completed  | -                |
+| Achievement        | 10 Flashcards Viewed  | Linked to metric |
+| Achievement        | 50 Flashcards Viewed  | Linked to metric |
+| Achievement        | 100 Flashcards Viewed | Linked to metric |
+| Achievement        | 250 Flashcards Viewed | Linked to metric |
+| Achievement        | 500 Flashcards Viewed | Linked to metric |
+| Achievement        | Profile Completed     | -                |
+| Daily Streak       | -                     | Linked to metric |
+| Achievement Emails | -                     | Switched On      |
+| Recap Emails       | -                     | Switched On      |
 
 ## Get Support
 
