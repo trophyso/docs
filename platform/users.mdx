@@ -44,6 +44,12 @@ Additionally, you can tell Trophy about any of the following key attributes and 
   local clock.
 </ParamField>
 
+<ParamField path="subscribeToEmails" type="boolean" default="true">
+  If you've configured any Trophy [Emails](/platform/emails), then they'll only
+  be sent to a user when this field is true. Note: If you don't provide an
+  `email`, attempting to set this field to true will result in an error.
+</ParamField>
+
 ## Identifying Users
 
 When you tell Trophy about a User in your platform, we call this **identification**. There are two ways you can identify users with Trophy, [inline](#inline-identification) and [explicit](#explicit-identification) identification.
@@ -78,8 +84,8 @@ flowchart LR
     E@{ shape: rounded, label: "Process event" }
     F@{ shape: framed-circle }
     A-->B
-    B-->C
-    B-->D
+    B-- Yes --->C
+    B-- No --->D
     C-->E
     D-->E
     E-->F
