@@ -84,7 +84,7 @@
                 "group": "Example Apps",
                 "pages": [
                   "guides/example-apps/example-fitness-app",
-                  "guides/example-apps/example-learning-app",
+                  "guides/example-apps/example-study-platform",
                   "guides/example-apps/example-productivity-app"
                 ]
               }
@@ -102,6 +102,7 @@
               {
                 "group": "Tutorials",
                 "pages": [
+                  "guides/tutorials/how-to-build-a-gamified-study-platform",
                   "guides/tutorials/how-to-build-a-streaks-feature",
                   "guides/tutorials/how-to-build-an-achievements-feature",
                   "guides/tutorials/how-to-build-automated-usage-digests",

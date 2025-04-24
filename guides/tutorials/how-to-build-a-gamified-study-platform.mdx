@@ -1,0 +1,273 @@
+---
+title: How To Build A Gamified Study Platform
+description: Follow along as we build out a gamified study platform using Trophy with achievements, a daily streak and engaging automated email campaigns.
+subtitle: Follow along as we build out a gamified study platform using Trophy.
+---
+
+In this tutorial I build out an example study platform using Trophy for gamification.
+
+If you want to just skip to the end then feel free to check out the [template repository](https://github.com/trophyso/example-study-platform) or the [live demo (TBD)](https://example.com).
+
+## Tech Stack
+
+- NextJS 15 (React 19)
+- Shadcn/Ui
+- LottieFiles for animations
+- Lucide for iconography
+- (TBD) for sound effects
+- Trophy for gamification
+
+## Pre-requisites
+
+- A Trophy account
+
+## Setup & Installation
+
+<Tip>
+  Want to skip the setup? Head straight to the [next section](#setting-up-data).
+</Tip>
+
+First we need to create a new NextJS project:
+
+```bash
+npx create-next-app@latest
+```
+
+Feel free to configure this new project however you like but for the purposes of this tutorial I pretty much stuck with the defaults:
+
+```bash
+What is your project named? my-app
+Would you like to use TypeScript? Yes
+Would you like to use ESLint? Yes
+Would you like to use Tailwind CSS? Yes
+Would you like your code inside a `src/` directory? Yes
+Would you like to use App Router? (recommended) Yes
+Would you like to use Turbopack for `next dev`?  Yes
+Would you like to customize the import alias (`@/*` by default)? No
+```
+
+Next, I initialized a new install of everyones favourite UI library, shadcn/ui:
+
+```bash
+npx shadcn@latest init
+```
+
+I ran into a warning with React 19, which [looks to be a common issue](https://ui.shadcn.com/docs/react-19) when initializing with `npm`:
+
+```bash
+It looks like you are using React 19.
+Some packages may fail to install due to peer dependency issues in npm (see https://ui.shadcn.com/react-19).
+
+? How would you like to proceed? › - Use arrow-keys. Return to submit.
+❯   Use --force
+    Use --legacy-peer-deps
+```
+
+For the purposes of this tutorial I chose `--force` but you should use whichever setting you feel suits your requirements.
+
+## Setting up data
+
+For the purposes of this tutorial, we're going to be using some simple types with an in-memory data store. In a production application you'd probably want to consider storing this information in a database.
+
+Here we'll have a very simple type that stores information about each flashcard where we'll use the `front` property to store questions that the student wants to learn the answer to, and the `back` property to store the answers to each question:
+
+```ts src/types/flashcard.ts
+export interface Flashcard {
+  id: string;
+  front: string;
+  back: string;
+}
+```
+
+Then to get us started we'll store a few flashcards in memory centered around learning capital cities:
+
+```ts src/data.ts [expandable]
+import { Flashcard } from "./types/flashcard";
+
+export const flashcards: Flashcard[] = [
+  {
+    id: "1",
+    front: "What is the capital of France?",
+    back: "Paris",
+  },
+  {
+    id: "2",
+    front: "What is the capital of Germany?",
+    back: "Berlin",
+  },
+  {
+    id: "3",
+    front: "What is the capital of Italy?",
+    back: "Rome",
+  },
+  {
+    id: "4",
+    front: "What is the capital of Spain?",
+    back: "Madrid",
+  },
+  {
+    id: "5",
+    front: "What is the capital of Portugal?",
+    back: "Lisbon",
+  },
+  {
+    id: "6",
+    front: "What is the capital of Greece?",
+    back: "Athens",
+  },
+  {
+    id: "7",
+    front: "What is the capital of Turkey?",
+    back: "Ankara",
+  },
+  {
+    id: "8",
+    front: "What is the capital of Poland?",
+    back: "Warsaw",
+  },
+  {
+    id: "9",
+    front: "What is the capital of Romania?",
+    back: "Bucharest",
+  },
+  {
+    id: "10",
+    front: "What is the capital of Bulgaria?",
+    back: "Sofia",
+  },
+  {
+    id: "11",
+    front: "What is the capital of Hungary?",
+    back: "Budapest",
+  },
+  {
+    id: "12",
+    front: "What is the capital of Czechia?",
+    back: "Prague",
+  },
+  {
+    id: "13",
+    front: "What is the capital of Slovakia?",
+    back: "Bratislava",
+  },
+  {
+    id: "14",
+    front: "What is the capital of Croatia?",
+    back: "Zagreb",
+  },
+  {
+    id: "15",
+    front: "What is the capital of Serbia?",
+    back: "Belgrade",
+  },
+  {
+    id: "16",
+    front: "What is the capital of Montenegro?",
+    back: "Podgorica",
+  },
+  {
+    id: "17",
+    front: "What is the capital of North Macedonia?",
+    back: "Skopje",
+  },
+  {
+    id: "18",
+    front: "What is the capital of Kosovo?",
+    back: "Pristina",
+  },
+  {
+    id: "19",
+    front: "What is the capital of Albania?",
+    back: "Tirana",
+  },
+  {
+    id: "20",
+    front: "What is the capital of Bosnia and Herzegovina?",
+    back: "Sarajevo",
+  },
+];
+```
+
+## Basic Flashcard Layout
+
+With some basic data set up, we need to add a way for users to flick through their flashcards.
+
+For this we'll use the Carousel and the Card components from shadcn/ui and for that we need to add these to our project:
+
+```bash
+npx shadcn@latest add carousel card
+```
+
+Then, we'll add a new `<Flashcards />` component that combines these into a working solution, specifying that we can pass along any list of `Flashcard` objects as props
+
+```tsx src/app/flashcards.tsx [expandable]
+import {
+  Carousel,
+  CarouselContent,
+  CarouselItem,
+  CarouselPrevious,
+  CarouselNext,
+} from "@/components/ui/carousel";
+import { Card, CardContent } from "@/components/ui/card";
+import { Flashcard } from "@/types/flashcard";
+
+interface Props {
+  flashcards: Flashcard[];
+}
+
+export default function Flashcards({ flashcards }: Props) {
+  return (
+    <Carousel className="w-full max-w-md">
+      <CarouselContent>
+        {flashcards.map((flashcard) => (
+          <CarouselItem key={flashcard.id}>
+            <div className="p-1">
+              <Card>
+                <CardContent className="flex items-center justify-center p-6">
+                  <span className="text-4xl text-center font-semibold">
+                    {flashcard.front}
+                  </span>
+                </CardContent>
+              </Card>
+            </div>
+          </CarouselItem>
+        ))}
+      </CarouselContent>
+      <CarouselPrevious />
+      <CarouselNext />
+    </Carousel>
+  );
+}
+```
+
+Then we'll update our `page.tsx` file to display our `<Flashcards />` component, passing in our example data:
+
+```tsx src/app/page.tsx
+import { flashcards } from "@/data";
+import Flashcards from "./flashcards";
+
+export default function Home() {
+  return (
+    <div className="flex flex-col items-center justify-center h-screen">
+      <Flashcards flashcards={flashcards} />
+    </div>
+  );
+}
+```
+
+At the end of this step, you should have a working flashcard UI that allows you to flick through each flashcard in our cities data set.
+
+<Frame>
+  <video
+    autoPlay
+    muted
+    loop
+    playsInline
+    className="w-full aspect-video"
+    src="../../assets/guides/example-apps/example-study-app/basic-flashcard-ui.mp4"
+  ></video>
+</Frame>
+
+## Get Support
+
+Want to get in touch with the Trophy team? Reach out to us via [email](mailto:support@trophy.so). We're here to help!
