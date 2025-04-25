@@ -24,7 +24,8 @@ If you want to just skip to the end then feel free to check out the [template re
 ## Setup & Installation
 
 <Tip>
-  Want to skip the setup? Head straight to the [next section](#setting-up-data).
+  Want to skip the setup? Head straight to the [next
+  section](#setting-up-flashcard-data).
 </Tip>
 
 First we need to create a new NextJS project:
@@ -65,14 +66,14 @@ Some packages may fail to install due to peer dependency issues in npm (see http
 
 For the purposes of this tutorial I chose `--force` but you should use whichever setting you feel suits your requirements.
 
-## Setting up data
+## Setting Up Flashcard Data
 
 For the purposes of this tutorial, we're going to be using some simple types with an in-memory data store. In a production application you'd probably want to consider storing this information in a database.
 
 Here we'll have a very simple type that stores information about each flashcard where we'll use the `front` property to store questions that the student wants to learn the answer to, and the `back` property to store the answers to each question:
 
 ```ts src/types/flashcard.ts
-export interface Flashcard {
+export interface IFlashcard {
   id: string;
   front: string;
   back: string;
@@ -82,9 +83,9 @@ export interface Flashcard {
 Then to get us started we'll store a few flashcards in memory centered around learning capital cities:
 
 ```ts src/data.ts [expandable]
-import { Flashcard } from "./types/flashcard";
+import { IFlashcard } from "./types/flashcard";
 
-export const flashcards: Flashcard[] = [
+export const flashcards: IFlashcard[] = [
   {
     id: "1",
     front: "What is the capital of France?",
@@ -209,10 +210,10 @@ import {
   CarouselNext,
 } from "@/components/ui/carousel";
 import { Card, CardContent } from "@/components/ui/card";
-import { Flashcard } from "@/types/flashcard";
+import { IFlashcard } from "@/types/flashcard";
 
 interface Props {
-  flashcards: Flashcard[];
+  flashcards: IFlashcard[];
 }
 
 export default function Flashcards({ flashcards }: Props) {
@@ -268,6 +269,252 @@ At the end of this step, you should have a working flashcard UI that allows you 
   ></video>
 </Frame>
 
+## Flipping Flashcards
+
+Now this is great, but it's not much use as a study app right now as there's no way to see if you got it right! We need to add a way to flip flashcards over and check our answer...
+
+To make this simpler, we'll first create a `<Flashcard />` component that will be responsible for all the logic for each flashcard:
+
+```tsx src/app/flashcard.tsx [expandable]
+import { Card, CardContent } from "@/components/ui/card";
+import { CarouselItem } from "@/components/ui/carousel";
+import { IFlashcard } from "@/types/flashcard";
+
+interface Props {
+  flashcard: IFlashcard;
+}
+
+export default function Flashcard({ flashcard }: Props) {
+  return (
+    <CarouselItem key={flashcard.id}>
+      <div className="p-1">
+        <Card>
+          <CardContent className="flex items-center justify-center p-6">
+            <span className="text-4xl text-center font-semibold">
+              {flashcard.front}
+            </span>
+          </CardContent>
+        </Card>
+      </div>
+    </CarouselItem>
+  );
+}
+```
+
+Then we'll simplify our `<Flashcards />` component to instead just render out a list of the individual `<Flashcard />` components:
+
+```tsx src/app/flashcards.tsx [expandable]
+import {
+  Carousel,
+  CarouselContent,
+  CarouselPrevious,
+  CarouselNext,
+} from "@/components/ui/carousel";
+import { IFlashcard } from "@/types/flashcard";
+import Flashcard from "./flashcard";
+
+interface Props {
+  flashcards: IFlashcard[];
+}
+
+export default function Flashcards({ flashcards }: Props) {
+  return (
+    <Carousel className="w-full max-w-md">
+      <CarouselContent>
+        {flashcards.map((flashcard) => (
+          <Flashcard key={flashcard.id} flashcard={flashcard} />
+        ))}
+      </CarouselContent>
+      <CarouselPrevious />
+      <CarouselNext />
+    </Carousel>
+  );
+}
+```
+
+Now we're ready to add interactivity to each flashcard. Here's what we'll do:
+
+- First, we'll add a `side` state variable that will hold the current side of the flashcard that's showing.
+- Next, we'll add an `onClick` handler to the `<Card />` component that will update the `side` state to `back` when clicked if the front of the card is currently showing.
+- Finally, we'll conditional render the text in the `<Card />` based on the value of the `side` state variable.
+
+Here's the finished file:
+
+```tsx src/app/flashcard.tsx [expandable] {10,12-16,21,24}
+import { Card, CardContent } from "@/components/ui/card";
+import { CarouselItem } from "@/components/ui/carousel";
+import { IFlashcard } from "@/types/flashcard";
+
+interface Props {
+  flashcard: IFlashcard;
+}
+
+export default function Flashcard({ flashcard }: Props) {
+  const [side, setSide] = useState<"front" | "back">("front");
+
+  const handleCardClick = () => {
+    if (side === "front") {
+      setSide("back");
+    }
+  };
+
+  return (
+    <CarouselItem key={flashcard.id}>
+      <div className="p-1">
+        <Card onClick={handleCardClick}>
+          <CardContent className="flex items-center justify-center p-6">
+            <span className="text-4xl text-center font-semibold">
+              {side === "front" ? flashcard.front : flashcard.back}
+            </span>
+          </CardContent>
+        </Card>
+      </div>
+    </CarouselItem>
+  );
+}
+```
+
+Then, we'll use [Motion](https://motion.dev) to add a neat flip animation to the card when we click on it. For this we first need to install the package into our project:
+
+```bash
+npm install motion
+```
+
+If you think about it, when you flip a flashcard, you tend to do it in the Y-axis. So here we'll use a `<motion.div />` with an light spring animation in the y-axis to create the effect:
+
+```tsx src/app/flashcard.tsx [expandable] {7-8,26-37}
+"use client";
+
+import { Card, CardContent } from "@/components/ui/card";
+import { CarouselItem } from "@/components/ui/carousel";
+import { IFlashcard } from "@/types/flashcard";
+import { useState } from "react";
+import { motion } from "motion/react";
+import styles from "./flashcard.module.css";
+
+interface Props {
+  flashcard: IFlashcard;
+}
+
+export default function Flashcard({ flashcard }: Props) {
+  const [side, setSide] = useState<"front" | "back">("front");
+
+  const handleCardClick = () => {
+    if (side === "front") {
+      setSide("back");
+    }
+  };
+
+  return (
+    <CarouselItem key={flashcard.id}>
+      <div className="p-1">
+        <motion.div
+          onClick={handleCardClick}
+          className="cursor-pointer"
+          animate={{ rotateY: side === "front" ? 0 : 180 }}
+          transition={{ duration: 1, type: "spring" }}
+          style={{ perspective: "1000px" }}
+        >
+          <Card className={`relative w-full h-[200px] ${styles.card}`}>
+            <CardContent
+              className={`flex items-center justify-center p-6 absolute w-full h-full ${styles.backface_hidden}`}
+            >
+              <span className="text-4xl text-center font-semibold">
+                {side === "front" ? flashcard.front : flashcard.back}
+              </span>
+            </CardContent>
+          </Card>
+        </motion.div>
+      </div>
+    </CarouselItem>
+  );
+}
+```
+
+You'll notice we also added a couple of styles here. These do a couple of things:
+
+- Ensure that when a `<Card />` is flipping, the 'backface' isn't visible during the animation with `backface-visibility: hidden;`
+- As the `<Card />` component is a child of the `<motion.div />`, usually it would appear flat when it's parent rotates in 3D. Adding `transform-style: preserve-3d;` to the `<Card />` ensures it keeps it's 3D effect when it's parent animates.
+
+```css src/app/flashcard.module.css
+.backface-hidden {
+  backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
+}
+
+.card {
+  transform-style: preserve-3d;
+  -webkit-transform-style: preserve-3d;
+}
+```
+
+## A Flippin' Bug!
+
+Sweet! Our project is now starting to feel like a real study tool! However the keen eyed (or maybe not so keen!) will notice there's one major bug here. When we flip a card over, the answer on the back appears in reverse 😢...
+
+<Frame>
+  <video
+    autoPlay
+    muted
+    loop
+    playsInline
+    className="w-full aspect-video"
+    src="../../assets/guides/example-apps/example-study-app/flipping-flashcards.mp4"
+  ></video>
+</Frame>
+
+I you think about it, when you write a flashcard, you actually write the answer on the back in the opposite direction to the question on the front.
+
+And as we're using `motion` to literally flip over our card in the Y-axis, we need to make sure we write our answers backwards as well.
+
+First, we'll add a little CSS snippet to handle writing text backwards:
+
+```css src/app/flascard.module.css {11-14}
+.backface-hidden {
+  backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
+}
+
+.card {
+  transform-style: preserve-3d;
+  -webkit-transform-style: preserve-3d;
+}
+
+.flipped_text {
+  transform: scaleX(-1);
+  transform-origin: center;
+}
+```
+
+Then we'll conditionally add this style to our card text based on which side of the card is showing:
+
+```tsx src/app/flashcard.tsx
+<span
+  className={`text-4xl text-center font-semibold ${
+    side === "back" ? styles.flipped_text : ""
+  }`}
+>
+  {side === "front" ? flashcard.front : flashcard.back}
+</span>
+```
+
+Ok awesome. Now when we flip over a card the answer on the back should read properly when flipped over:
+
+<Frame>
+  <video
+    autoPlay
+    muted
+    loop
+    playsInline
+    className="w-full aspect-video"
+    src="../../assets/guides/example-apps/example-study-app/flipping-flashcards-fixed.mp4"
+  ></video>
+</Frame>
+
 ## Get Support
 
 Want to get in touch with the Trophy team? Reach out to us via [email](mailto:support@trophy.so). We're here to help!
+
+```
+
+```
