@@ -4,18 +4,20 @@ description: Follow along as we build out a gamified study platform using Trophy
 subtitle: Follow along as we build out a gamified study platform using Trophy.
 ---
 
-In this tutorial I build out an example study platform using Trophy for gamification.
+import MetricChangeRequestBlock from "/snippets/metric-change-request-block.mdx";
+
+In this tutorial we'll build an example study platform using Trophy for gamification.
 
 If you want to just skip to the end then feel free to check out the [template repository](https://github.com/trophyso/example-study-platform) or the [live demo (TBD)](https://example.com).
 
 ## Tech Stack
 
 - NextJS 15 (React 19)
-- Shadcn/Ui
-- LottieFiles for animations
-- Lucide for iconography
+- [Shadcn/Ui](https://ui.shadcn.com)
+- [Motion](https://motion.dev/) for animations
+- [Lucide](https://lucide.dev/) for iconography
 - (TBD) for sound effects
-- Trophy for gamification
+- [Trophy](https://trophy.so) for gamification
 
 ## Pre-requisites
 
@@ -498,7 +500,7 @@ Then we'll conditionally add this style to our card text based on which side of 
 </span>
 ```
 
-Ok awesome. Now when we flip over a card the answer on the back should read properly when flipped over:
+Ok awesome. Now when we flip over a card the answer on the back should read in the right direction:
 
 <Frame>
   <video
@@ -513,10 +515,412 @@ Ok awesome. Now when we flip over a card the answer on the back should read prop
 
 ## Tracking Progress
 
+The next step is to add some UI to show the user how many flashcards they've looked at, and how many in the set they have left. We'll use a simple progress bar to achieve this.
+
+Before we can start tracking this level of information, we need to set up tracking for a new state variable that holds the index of the flashcard the user is currently looking at. We'll use the [carousel api](https://ui.shadcn.com/docs/components/carousel#api) to hook into the functionality here and keep our state variable up to date:
+
+```tsx src/app/flashcards.tsx [expandable] {1,8,19-34,37}
+"use client";
+
+import {
+  Carousel,
+  CarouselContent,
+  CarouselPrevious,
+  CarouselNext,
+  type CarouselApi,
+} from "@/components/ui/carousel";
+import { IFlashcard } from "@/types/flashcard";
+import Flashcard from "./flashcard";
+import { useEffect, useState } from "react";
+
+interface Props {
+  flashcards: IFlashcard[];
+}
+
+export default function Flashcards({ flashcards }: Props) {
+  const [flashIndex, setFlashIndex] = useState(0);
+  const [api, setApi] = useState<CarouselApi>();
+
+  useEffect(() => {
+    if (!api) {
+      return;
+    }
+
+    // Initialize the flash index
+    setFlashIndex(api.selectedScrollSnap() + 1);
+
+    // Update the flash index when the carousel is scrolled
+    api.on("select", () => {
+      setFlashIndex(api.selectedScrollSnap() + 1);
+    });
+  }, [api]);
+
+  return (
+    <Carousel className="w-full" setApi={setApi}>
+      <CarouselContent>
+        {flashcards.map((flashcard) => (
+          <Flashcard key={flashcard.id} flashcard={flashcard} />
+        ))}
+      </CarouselContent>
+      <CarouselPrevious />
+      <CarouselNext />
+    </Carousel>
+  );
+}
+```
+
+Then we need to add the `<Progress />` component from shadcn/ui to our project:
+
+```bash
+npx shadcn@latest add progress
+```
+
+Finally we can add a progress bar above the carousel:
+
+```tsx [expandable] {13,38-39,49}
+"use client";
+
+import {
+  Carousel,
+  CarouselContent,
+  CarouselPrevious,
+  CarouselNext,
+  type CarouselApi,
+} from "@/components/ui/carousel";
+import { IFlashcard } from "@/types/flashcard";
+import Flashcard from "./flashcard";
+import { useEffect, useState } from "react";
+import { Progress } from "@/components/ui/progress";
+
+interface Props {
+  flashcards: IFlashcard[];
+}
+
+export default function Flashcards({ flashcards }: Props) {
+  const [flashIndex, setFlashIndex] = useState(0);
+  const [api, setApi] = useState<CarouselApi>();
+
+  useEffect(() => {
+    if (!api) {
+      return;
+    }
+
+    // Initialize the flash index
+    setFlashIndex(api.selectedScrollSnap() + 1);
+
+    // Update the flash index when the carousel is scrolled
+    api.on("select", () => {
+      setFlashIndex(api.selectedScrollSnap() + 1);
+    });
+  }, [api]);
+
+  return (
+    <div className="flex flex-col items-center justify-center gap-4 max-w-md">
+      <Progress value={(flashIndex / flashcards.length) * 100} />
+      <Carousel className="w-full" setApi={setApi}>
+        <CarouselContent>
+          {flashcards.map((flashcard) => (
+            <Flashcard key={flashcard.id} flashcard={flashcard} />
+          ))}
+        </CarouselContent>
+        <CarouselPrevious />
+        <CarouselNext />
+      </Carousel>
+    </div>
+  );
+}
+```
+
+Sweet! Now things are really starting to come together.
+
+<Frame>
+  <video
+    autoPlay
+    muted
+    loop
+    playsInline
+    className="w-full aspect-video"
+    src="../../assets/guides/example-apps/example-study-app/progress-tracking.mp4"
+  ></video>
+</Frame>
+
+Now the real fun begins...
+
+## Adding Gamification
+
+In this section we'll be adding the following gamification elements to the flashcard project:
+
+- Achievements for completing:
+  - 10 flashcards
+  - 50 flashcards
+  - 100 flashcards
+  - 250 flashcards
+- Daily streak for completing at least one flashcard a day.
+- Automated emails for:
+  - Achievement unlocked
+  - Weekly progress summaries
+
+This might sound like a lot, but would you be surprised if I told you you could build all this in less than 10 lines of code?
+
+Yup, you can. [Trophy](https://trophy.so) makes it super easy to build these features with a few lines of integration code.
+
+So, let's get started...
+
+### How Trophy Works
+
+First off, we need a new [Trophy account](https://app.trophy.so/sign-up). Then we can start to piece together the various parts of our gamification experience.
+
+In Trophy, [Metrics](/platform/metrics) represent different interactions users can make and can be configured to drive features like [Achievements](/platform/achievements), [Streaks](/home/streaks) and [Emails](/platform/emails).
+
+```mermaid
+flowchart TD
+    A@{ shape: rounded, label: "Metrics" }
+    B@{ shape: rounded, label: "Achievements" }
+    C@{ shape: rounded, label: "Streaks" }
+    D@{ shape: rounded, label: "Emails" }
+    A-->B
+    A-->C
+    A-->D
+```
+
+In Trophy we track user interactions by sending [Events](/platform/events) from our code to Trophy against a specific metric.
+
+When events are recorded for a specific user, any achievements linked to the specified metric will be unlocked if the requirements are met, daily streaks will be automated calculated and kept up to date, and any configured emails will be scheduled.
+
+Recording an event against a metric for a specific user makes use of Trophy's [metric event API](/api-reference/endpoints/metrics/send-a-metric-change-event), which in practice looks like this:
+
+<MetricChangeRequestBlock />
+
+That's how in just a few lines of code we can power a whole suite of gamification features. However, before we can start sending events, we need to set up our new Trophy account.
+
+### Setting Up Trophy
+
+Here's how we'll setup our Trophy account for our study app:
+
+- First, we'll set up a _Flashcards Viewed_ metric
+- Next, we'll setup achievements linked to this metric
+- Then, we'll configure a daily streak linked to this metric
+- Finally, we'll configure automated email sequences for this metric
+
+Let's get into it...
+
+<AccordionGroup>
+  <Accordion title="Create the metric" icon="box">
+    Head into the Trophy [metrics page](https://app.trophy.so/metrics) and create a new metric, making sure to specify `flashcards-viewed` as the metric `key`. This is what we'll use to reference the metric in our code when sending events.
+
+    <Frame>
+      <video
+        autoPlay
+        muted
+        loop
+        playsInline
+        className="w-full aspect-video"
+        src="../../assets/guides/example-apps/example-study-app/create-metric.mp4"
+      ></video>
+    </Frame>
+
+  </Accordion>
+
+<Accordion title="Create achievements" icon="trophy">
+  Next, create one achievement for each of the following milestones:
+  - 10 flashcards (Elementary)
+  - 50 flashcards (Novice)
+  - 100 flashcards (Scholar)
+  - 250 flashcards (Expert)
+
+{" "}
+
+<Frame>
+  <img
+    height="200"
+    width="100%"
+    noZoom
+    src="../../assets/guides/example-apps/example-study-app/achievements.png"
+  />
+</Frame>
+
+</Accordion>
+
+<Accordion title="Configure daily streak" icon="flame">
+  Next, head into the [streaks page](https://app.trophy.so/streaks) and set up a daily streak.
+
+    <Frame>
+      <video
+        autoPlay
+        muted
+        loop
+        playsInline
+        className="w-full aspect-video"
+        src="../../assets/guides/example-apps/example-study-app/configure-streak.mp4"
+      ></video>
+    </Frame>
+
+</Accordion>
+
+  <Accordion title="Configure emails" icon="mail">
+  Lastly, head into the [emails page](https://app.trophy.so/emails) and turn on the two types of emails we want.
+  - Achievement unlocked emails
+  - Recap emails (weekly)
+
+Trophy also gives us a preview of the emails which is nice. Plus, feel free to configure a nice logo and brand colors in the [branding page](https://app.trophy.so/branding). These settings are automatically used in all emails sent by Trophy.
+
+{" "}
+
+<Frame>
+  <video
+    autoPlay
+    muted
+    loop
+    playsInline
+    className="w-full aspect-video"
+    src="../../assets/guides/example-apps/example-study-app/configure-emails.mp4"
+  ></video>
+</Frame>
+
+{" "}
+
+<Note>
+  Before you can start sending emails, you'll need to [configure your sending
+  address](/platform/emails#setting-up-emails) with Trophy.
+</Note>
+
+  </Accordion>
+</AccordionGroup>
+
+### Integrating Trophy Into Our App
+
+First we need to grab our account API key from the Trophy [integration page](https://app.trophy.so/integration) and add this as a **server-side only** environment variable.
+
+<Warning>
+  Make sure you **don't** expose your API key in client-side code
+</Warning>
+
+```bash .env.local
+TROPHY_API_KEY='*******'
+```
+
+Next, we'll install the Trophy SDK:
+
+```bash
+npm install @trophyso/node
+```
+
+Then whenever a user views a flashcard, we simply send an event to Trophy with details of the user that performed the action (which we'll mock), and the number of flashcards they viewed (1 in this case).
+
+In NextJS we'll do this with a server action that makes the call to Trophy to send the event, and we'll call this action when the user moves to the next flashcard in the carousel.
+
+First, create the server action:
+
+```tsx src/app/actions.ts [expandable]
+"use server";
+
+import { TrophyApiClient } from "@trophyso/node";
+import { EventResponse } from "@trophyso/node/api";
+
+// Set up Trophy SDK with API key
+const trophy = new TrophyApiClient({
+  apiKey: process.env.TROPHY_API_KEY as string,
+});
+
+/**
+ * Track a flashcard viewed event in Trophy
+ * @returns The event response from Trophy
+ */
+export async function viewFlashcard(): Promise<EventResponse | null> {
+  try {
+    return await trophy.metrics.event("flashcards-viewed", {
+      user: {
+        // Mock email
+        email: "user@example.com",
+
+        // Mock timezone
+        tz: "Europe/London",
+
+        // Mock user ID
+        id: "18",
+      },
+
+      // Event represents a single user viewing 1 flashcard
+      value: 1,
+    });
+  } catch (error) {
+    console.error(error);
+    return null;
+  }
+}
+```
+
+The call it when the user views the next flashcard:
+
+```tsx src/app/flashcards.tsx [expandable] {14,36-37}
+"use client";
+
+import {
+  Carousel,
+  CarouselContent,
+  CarouselPrevious,
+  CarouselNext,
+  type CarouselApi,
+} from "@/components/ui/carousel";
+import { IFlashcard } from "@/types/flashcard";
+import Flashcard from "./flashcard";
+import { useEffect, useState } from "react";
+import { Progress } from "@/components/ui/progress";
+import { viewFlashcard } from "./actions";
+
+interface Props {
+  flashcards: IFlashcard[];
+}
+
+export default function Flashcards({ flashcards }: Props) {
+  const [flashIndex, setFlashIndex] = useState(0);
+  const [api, setApi] = useState<CarouselApi>();
+
+  useEffect(() => {
+    if (!api) {
+      return;
+    }
+
+    // Initialize the flash index
+    setFlashIndex(api.selectedScrollSnap() + 1);
+
+    api.on("select", () => {
+      // Update the flash index when the carousel is scrolled
+      setFlashIndex(api.selectedScrollSnap() + 1);
+
+      // Track the flashcard viewed event
+      viewFlashcard();
+    });
+  }, [api]);
+
+  return (
+    <div className="flex flex-col items-center justify-center gap-4 max-w-md">
+      <Progress value={(flashIndex / flashcards.length) * 100} />
+      <Carousel className="w-full" setApi={setApi}>
+        <CarouselContent>
+          {flashcards.map((flashcard) => (
+            <Flashcard key={flashcard.id} flashcard={flashcard} />
+          ))}
+        </CarouselContent>
+        <CarouselPrevious />
+        <CarouselNext />
+      </Carousel>
+    </div>
+  );
+}
+```
+
+We can validate this is working by checking the Trophy [dashboard](https://app.trophy.so) which should show our first user tracked in the _Top Users_ table:
+
+<Frame>
+  <img
+    height="200"
+    width="100%"
+    noZoom
+    src="../../assets/guides/example-apps/example-study-app/top-users.png"
+  />
+</Frame>
+
 ## Get Support
 
 Want to get in touch with the Trophy team? Reach out to us via [email](mailto:support@trophy.so). We're here to help!
-
-```
-
-```
