@@ -5,6 +5,7 @@ subtitle: Follow along as we build out a gamified study platform using Trophy.
 ---
 
 import MetricChangeRequestBlock from "/snippets/metric-change-request-block.mdx";
+import MetricChangeResponseBlock from "/snippets/metric-change-response-block.mdx";
 
 In this tutorial we'll build an example study platform using Trophy for gamification.
 
@@ -730,6 +731,12 @@ Let's get into it...
 
 {" "}
 
+<Tip>
+  Free free to download and use this library of badges (ready made for this
+  example app):
+  [flashcard_badges.zip](../../assets/guides/example-apps/example-study-app/flashcard_badges.zip)
+</Tip>
+
 <Frame>
   <img
     height="200"
@@ -787,7 +794,7 @@ Trophy also gives us a preview of the emails which is nice. Plus, feel free to c
   </Accordion>
 </AccordionGroup>
 
-### Integrating Trophy Into Our App
+### Integrating Trophy SDK
 
 First we need to grab our account API key from the Trophy [integration page](https://app.trophy.so/integration) and add this as a **server-side only** environment variable.
 
@@ -920,6 +927,19 @@ We can validate this is working by checking the Trophy [dashboard](https://app.t
     src="../../assets/guides/example-apps/example-study-app/top-users.png"
   />
 </Frame>
+
+Next, we'll add some UI to show off our gamification features in practice.
+
+### Adding Gamification UI
+
+The response to the API call that we make to track events in Trophy helpfully gives us back any changes to the users progress as a result of that event:
+
+<MetricChangeResponseBlock />
+
+This makes it really easy for us to react to changes in the users progress and do whatever we want. In this example, eaech time Trophy tells us a user has unlocked a new achievement, or extended their streak we'll:
+
+- Show a pop-up toast
+- Play a sound effect
 
 ## Get Support
 
