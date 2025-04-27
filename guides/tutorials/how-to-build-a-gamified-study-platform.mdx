@@ -1272,9 +1272,117 @@ Now the first time a user views a flashcard each day, they'll see one of our str
 
 Gamification is first and foremost about increasing user retention. The best way to do this is to make the features we build as engaging as possible. A great way to do this that's often overlooked is with sound effects.
 
-Here we'll add distinct sound effects for each case where we show a toast to further engage the user.
+Here we'll add two distinct sound effects for each case where we show a toast to further engage the user. This helps distinguish the different toasts and helps users build up an expectation of what each sound means.
 
-For this we'll make use of the [use-sound package](https://github.com/joshwcomeau/use-sound) for React, using free sounds from [freesound.org](https://freesound.org/).
+For this we'll make use of the [HTML5 Audio API](https://developer.mozilla.org/en-US/docs/Web/API/Web_Audio_API) and use sounds from [freesounds.org](https://freesounds.org).
+
+<Tip>
+  The sounds used in this example are in the repository in the `public/sounds`
+  directory. Feel free to use them or pick others you like!
+</Tip>
+
+To load the sound files into our application, we'll create a ref for each one, then we simply call the `play()` method on each when we want to actually play the sound:
+
+```tsx src/app/flashcards.tsx [expandable] {24-27,49-51,72-74}
+"use client";
+
+import {
+  Carousel,
+  CarouselContent,
+  CarouselPrevious,
+  CarouselNext,
+  type CarouselApi,
+} from "@/components/ui/carousel";
+import { IFlashcard } from "@/types/flashcard";
+import Flashcard from "./flashcard";
+import { useEffect, useState, useRef } from "react";
+import { Progress } from "@/components/ui/progress";
+import { viewFlashcard } from "./actions";
+import { toast } from "@/lib/toast";
+
+interface Props {
+  flashcards: IFlashcard[];
+}
+
+export default function Flashcards({ flashcards }: Props) {
+  const [flashIndex, setFlashIndex] = useState(0);
+  const [api, setApi] = useState<CarouselApi>();
+  const achievementSound = useRef(
+    new Audio("/sounds/achievement_unlocked.mp3")
+  );
+  const streakSound = useRef(new Audio("/sounds/streak_extended.mp3"));
+
+  useEffect(() => {
+    if (!api) {
+      return;
+    }
+
+    // Initialize the flash index
+    setFlashIndex(api.selectedScrollSnap() + 1);
+
+    api.on("select", async () => {
+      // Update flashIndex when the carousel is scrolled
+      setFlashIndex(api.selectedScrollSnap() + 1);
+
+      // Track the flashcard viewed event
+      const response = await viewFlashcard();
+
+      if (!response) {
+        return;
+      }
+
+      if (response.achievements?.length) {
+        // Play the achievement sound only once for all new achievements
+        achievementSound.current.currentTime = 0;
+        achievementSound.current.play();
+
+        // Show toasts if the user has unlocked any new achievements
+        response.achievements.forEach((metricAchievements) => {
+          if (metricAchievements.completed?.length) {
+            metricAchievements.completed.forEach((achievement) => {
+              toast({
+                title: achievement.name as string,
+                description: `Congratulations! You've viewed ${achievement.metricValue} flashcards!`,
+                image: {
+                  src: achievement.badgeUrl as string,
+                  alt: achievement.name as string,
+                },
+              });
+            });
+          }
+        });
+      }
+
+      if (response.currentStreak?.extended) {
+        // Play the streak sound
+        streakSound.current.currentTime = 0;
+        streakSound.current.play();
+
+        // Show toast if the user has extended their streak
+        toast({
+          title: "You're on a roll!",
+          description: `Keep going to keep your ${response.currentStreak.length} day streak!`,
+        });
+      }
+    });
+  }, [api]);
+
+  return (
+    <div className="flex flex-col items-center justify-center gap-4 max-w-md">
+      <Progress value={(flashIndex / flashcards.length) * 100} />
+      <Carousel className="w-full" setApi={setApi}>
+        <CarouselContent>
+          {flashcards.map((flashcard) => (
+            <Flashcard key={flashcard.id} flashcard={flashcard} />
+          ))}
+        </CarouselContent>
+        <CarouselPrevious />
+        <CarouselNext />
+      </Carousel>
+    </div>
+  );
+}
+```
 
 ## Get Support
 
