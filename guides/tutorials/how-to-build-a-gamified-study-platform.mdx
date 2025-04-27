@@ -857,7 +857,7 @@ export async function viewFlashcard(): Promise<EventResponse | null> {
 }
 ```
 
-The call it when the user views the next flashcard:
+Then call it when the user views the next flashcard:
 
 ```tsx src/app/flashcards.tsx [expandable] {14,36-37}
 "use client";
@@ -930,16 +930,351 @@ We can validate this is working by checking the Trophy [dashboard](https://app.t
 
 Next, we'll add some UI to show off our gamification features in practice.
 
-### Adding Gamification UI
+### Adding Gamification UX
 
 The response to the API call that we make to track events in Trophy helpfully gives us back any changes to the users progress as a result of that event:
 
 <MetricChangeResponseBlock />
 
-This makes it really easy for us to react to changes in the users progress and do whatever we want. In this example, eaech time Trophy tells us a user has unlocked a new achievement, or extended their streak we'll:
+This includes:
+
+- The `achievements` array which is a list of newly unlocked achievements as a result of the event.
+- The `currentStreak` object which is the users most up to date streak data.
+
+This makes it really easy for us to react to changes in the users progress and do whatever we want. In this example, each time Trophy tells us a user has unlocked a new achievement, or extended their streak we'll:
 
 - Show a pop-up toast
 - Play a sound effect
+
+#### Achievement Unlocked Toasts
+
+First, we'll show a toast when users unlock new achievements. For this we need to add the sonner component from shadcn/ui to our project:
+
+```bash
+npx shadcn@latest add sonner
+```
+
+Then we'll create the `<Toast />` UI component we need to display toasts and a `toast()` utility function to trigger them:
+
+```tsx src/lib/toast.tsx [expandable]
+"use client";
+
+import React from "react";
+import { toast as sonnerToast } from "sonner";
+import Image from "next/image";
+
+interface ToastProps {
+  id: string | number;
+  title: string;
+  description: string;
+  image?: {
+    src: string;
+    alt: string;
+  };
+}
+
+/**
+ * A fully custom toast that still maintains the animations and interactions.
+ * @param toast - The toast to display.
+ * @returns The toast component.
+ */
+export function toast(toast: Omit<ToastProps, "id">) {
+  return sonnerToast.custom((id) => (
+    <Toast
+      id={id}
+      title={toast.title}
+      description={toast.description}
+      image={toast.image}
+    />
+  ));
+}
+
+/**
+ * A fully custom toast that still maintains the animations and interactions.
+ * @param props - The toast to display.
+ * @returns The toast component.
+ */
+export function Toast(props: ToastProps) {
+  const { title, description, image } = props;
+
+  return (
+    <div className="flex rounded-lg bg-white shadow-lg ring-1 ring-black/5 w-full md:max-w-[364px] items-center p-4">
+      {image && (
+        <div className="mr-4 flex-shrink-0">
+          <Image
+            src={image.src}
+            alt={image.alt}
+            width={40}
+            height={40}
+            className="rounded-md"
+          />
+        </div>
+      )}
+      <div className="flex flex-1 items-center">
+        <div className="w-full">
+          <p className="text-sm font-medium text-gray-900">{title}</p>
+          <p className="mt-1 text-sm text-gray-500">{description}</p>
+        </div>
+      </div>
+    </div>
+  );
+}
+```
+
+Next, we need to update the `page.tsx` file with the main `<Toaster />` component. This is the component from `sonner` which is responsible for displaying our toasts on the screen when we trigger them:
+
+```tsx src/app/page.tsx {3,9}
+import { flashcards } from "@/data";
+import Flashcards from "./flashcards";
+import { Toaster } from "@/components/ui/sonner";
+
+export default function Home() {
+  return (
+    <div className="flex flex-col items-center justify-center h-screen">
+      <Flashcards flashcards={flashcards} />
+      <Toaster />
+    </div>
+  );
+}
+```
+
+Next, to make sure NextJS shows our badges, we need to configure Trophy's image host as a trusted domain:
+
+```ts next.config.ts {4-11}
+import type { NextConfig } from "next";
+
+const nextConfig: NextConfig = {
+  images: {
+    remotePatterns: [
+      {
+        protocol: "https",
+        hostname: "lookmizerpsrsczvtlwh.supabase.co",
+      },
+    ],
+  },
+};
+
+export default nextConfig;
+```
+
+And finally, we update our `<Flashcards />` component to read the response from Trophy and display toasts for any unlocked achievements:
+
+```tsx src/app/flashcards.tsx [expandable] {15,33,38-61}
+"use client";
+
+import {
+  Carousel,
+  CarouselContent,
+  CarouselPrevious,
+  CarouselNext,
+  type CarouselApi,
+} from "@/components/ui/carousel";
+import { IFlashcard } from "@/types/flashcard";
+import Flashcard from "./flashcard";
+import { useEffect, useState } from "react";
+import { Progress } from "@/components/ui/progress";
+import { viewFlashcard } from "./actions";
+import { toast } from "@/lib/toast";
+
+interface Props {
+  flashcards: IFlashcard[];
+}
+
+export default function Flashcards({ flashcards }: Props) {
+  const [flashIndex, setFlashIndex] = useState(0);
+  const [api, setApi] = useState<CarouselApi>();
+
+  useEffect(() => {
+    if (!api) {
+      return;
+    }
+
+    // Initialize the flash index
+    setFlashIndex(api.selectedScrollSnap() + 1);
+
+    api.on("select", async () => {
+      // Update flashIndex when the carousel is scrolled
+      setFlashIndex(api.selectedScrollSnap() + 1);
+
+      // Track the flashcard viewed event
+      const response = await viewFlashcard();
+
+      if (!response) {
+        return;
+      }
+
+      // Show toast if the user has unlocked any new achievements
+      if (response.achievements?.length) {
+        response.achievements.forEach((metricAchievements) => {
+          if (metricAchievements.completed?.length) {
+            metricAchievements.completed.forEach((achievement) => {
+              toast({
+                title: achievement.name as string,
+                description: `Congratulations! You've viewed ${achievement.metricValue} flashcards!`,
+                image: {
+                  src: achievement.badgeUrl as string,
+                  alt: achievement.name as string,
+                },
+              });
+            });
+          }
+        });
+      }
+    });
+  }, [api]);
+
+  return (
+    <div className="flex flex-col items-center justify-center gap-4 max-w-md">
+      <Progress value={(flashIndex / flashcards.length) * 100} />
+      <Carousel className="w-full" setApi={setApi}>
+        <CarouselContent>
+          {flashcards.map((flashcard) => (
+            <Flashcard key={flashcard.id} flashcard={flashcard} />
+          ))}
+        </CarouselContent>
+        <CarouselPrevious />
+        <CarouselNext />
+      </Carousel>
+    </div>
+  );
+}
+```
+
+To see this in action, all we need to do is unlock our first achievement by viewing 10 flashcards:
+
+<Frame>
+  <video
+    autoPlay
+    muted
+    loop
+    playsInline
+    className="w-full aspect-video"
+    src="../../assets/guides/example-apps/example-study-app/displaying-toasts.mp4"
+  ></video>
+</Frame>
+
+#### Streak Extended Toasts
+
+We'll use the same methods to show similar toasts when a user extendeds their streak. As we've set up a daily streak in Trophy, this will trigger the first time a user views a flashcard each day.
+
+<Tip>
+  If we wanted to experiment with a different streak cadence, like a weekly
+  streak, then none of this code changes - the great thing about Trophy is
+  everything can be configured from within the dashboard and doesn't require any
+  code changes.
+</Tip>
+
+All we need to do is read the `currentStreak.extended` property from Trophy and handle showing another toast with a new `if` statement:
+
+```tsx src/app/flashcards.tsx [expandable] {62-69}
+"use client";
+
+import {
+  Carousel,
+  CarouselContent,
+  CarouselPrevious,
+  CarouselNext,
+  type CarouselApi,
+} from "@/components/ui/carousel";
+import { IFlashcard } from "@/types/flashcard";
+import Flashcard from "./flashcard";
+import { useEffect, useState } from "react";
+import { Progress } from "@/components/ui/progress";
+import { viewFlashcard } from "./actions";
+import { toast } from "@/lib/toast";
+
+interface Props {
+  flashcards: IFlashcard[];
+}
+
+export default function Flashcards({ flashcards }: Props) {
+  const [flashIndex, setFlashIndex] = useState(0);
+  const [api, setApi] = useState<CarouselApi>();
+
+  useEffect(() => {
+    if (!api) {
+      return;
+    }
+
+    // Initialize the flash index
+    setFlashIndex(api.selectedScrollSnap() + 1);
+
+    api.on("select", async () => {
+      // Update flashIndex when the carousel is scrolled
+      setFlashIndex(api.selectedScrollSnap() + 1);
+
+      // Track the flashcard viewed event
+      const response = await viewFlashcard();
+
+      if (!response) {
+        return;
+      }
+
+      // Show toast if the user has unlocked any new achievements
+      if (response.achievements?.length) {
+        response.achievements.forEach((metricAchievements) => {
+          if (metricAchievements.completed?.length) {
+            metricAchievements.completed.forEach((achievement) => {
+              toast({
+                title: achievement.name as string,
+                description: `Congratulations! You've viewed ${achievement.metricValue} flashcards!`,
+                image: {
+                  src: achievement.badgeUrl as string,
+                  alt: achievement.name as string,
+                },
+              });
+            });
+          }
+        });
+      }
+
+      // Show toast if user has extended their streak
+      if (response.currentStreak?.extended) {
+        toast({
+          title: "You're on a roll!",
+          description: `Keep going to keep your ${response.currentStreak.length} day streak!`,
+        });
+      }
+    });
+  }, [api]);
+
+  return (
+    <div className="flex flex-col items-center justify-center gap-4 max-w-md">
+      <Progress value={(flashIndex / flashcards.length) * 100} />
+      <Carousel className="w-full" setApi={setApi}>
+        <CarouselContent>
+          {flashcards.map((flashcard) => (
+            <Flashcard key={flashcard.id} flashcard={flashcard} />
+          ))}
+        </CarouselContent>
+        <CarouselPrevious />
+        <CarouselNext />
+      </Carousel>
+    </div>
+  );
+}
+```
+
+Now the first time a user views a flashcard each day, they'll see one of our streak extended toasts:
+
+<Frame>
+  <video
+    autoPlay
+    muted
+    loop
+    playsInline
+    className="w-full aspect-video"
+    src="../../assets/guides/example-apps/example-study-app/streak-toasts.mp4"
+  ></video>
+</Frame>
+
+#### Sound Effects
+
+Gamification is first and foremost about increasing user retention. The best way to do this is to make the features we build as engaging as possible. A great way to do this that's often overlooked is with sound effects.
+
+Here we'll add distinct sound effects for each case where we show a toast to further engage the user.
+
+For this we'll make use of the [use-sound package](https://github.com/joshwcomeau/use-sound) for React, using free sounds from [freesound.org](https://freesound.org/).
 
 ## Get Support
 
