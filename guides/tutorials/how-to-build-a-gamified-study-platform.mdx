@@ -1282,7 +1282,7 @@ For this we'll make use of the [HTML5 Audio API](https://developer.mozilla.org/e
 
 To load the sound files into our application, we'll create a ref for each one, then we simply call the `play()` method on each when we want to actually play the sound:
 
-```tsx src/app/flashcards.tsx [expandable] {24-27,49-51,72-74}
+```tsx src/app/flashcards.tsx [expandable] {25-31,53-57,77-81}
 "use client";
 
 import {
@@ -1306,10 +1306,14 @@ interface Props {
 export default function Flashcards({ flashcards }: Props) {
   const [flashIndex, setFlashIndex] = useState(0);
   const [api, setApi] = useState<CarouselApi>();
-  const achievementSound = useRef(
-    new Audio("/sounds/achievement_unlocked.mp3")
-  );
-  const streakSound = useRef(new Audio("/sounds/streak_extended.mp3"));
+
+  const achievementSound = useRef<HTMLAudioElement | null>(null);
+  const streakSound = useRef<HTMLAudioElement | null>(null);
+
+  useEffect(() => {
+    achievementSound.current = new Audio("/sounds/achievement_unlocked.mp3");
+    streakSound.current = new Audio("/sounds/streak_extended.mp3");
+  }, []);
 
   useEffect(() => {
     if (!api) {
@@ -1332,8 +1336,10 @@ export default function Flashcards({ flashcards }: Props) {
 
       if (response.achievements?.length) {
         // Play the achievement sound only once for all new achievements
-        achievementSound.current.currentTime = 0;
-        achievementSound.current.play();
+        if (achievementSound.current) {
+          achievementSound.current.currentTime = 0;
+          achievementSound.current.play();
+        }
 
         // Show toasts if the user has unlocked any new achievements
         response.achievements.forEach((metricAchievements) => {
@@ -1354,8 +1360,10 @@ export default function Flashcards({ flashcards }: Props) {
 
       if (response.currentStreak?.extended) {
         // Play the streak sound
-        streakSound.current.currentTime = 0;
-        streakSound.current.play();
+        if (streakSound.current) {
+          streakSound.current.currentTime = 0;
+          streakSound.current.play();
+        }
 
         // Show toast if the user has extended their streak
         toast({
