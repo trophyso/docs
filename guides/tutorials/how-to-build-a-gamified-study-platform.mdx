@@ -1528,7 +1528,7 @@ interface Props {
 
 export default function StudyJourney({ achievements, streak }: Props) {
   return (
-    <div className="absolute top-10 right-10 z-50">
+    <div className="absolute top-10 right-10 z-50 cursor-pointer">
       <Dialog>
         <DialogTrigger>
           <div className="h-12 w-12 cursor-pointer duration-100 border-1 border-gray-300 shadow-sm transition-all rounded-full relative hover:bg-gray-100">
@@ -1550,7 +1550,7 @@ export default function StudyJourney({ achievements, streak }: Props) {
               <div className="relative h-24 w-24">
                 <svg className="h-full w-full" viewBox="0 0 100 100">
                   <circle
-                    className="stroke-gray-200"
+                    className="stroke-primary/20"
                     strokeWidth="10"
                     fill="transparent"
                     r="45"
@@ -1558,7 +1558,7 @@ export default function StudyJourney({ achievements, streak }: Props) {
                     cy="50"
                   />
                   <circle
-                    className="stroke-gray-900 transition-all"
+                    className="stroke-primary transition-all"
                     strokeWidth="10"
                     strokeLinecap="round"
                     fill="transparent"
@@ -1570,7 +1570,7 @@ export default function StudyJourney({ achievements, streak }: Props) {
                   />
                 </svg>
                 <div className="absolute inset-0 flex items-center justify-center">
-                  <span className="text-2xl font-bold">
+                  <span className="text-2xl font-bold text-primary">
                     {streak?.length || 0}
                   </span>
                 </div>
@@ -1606,12 +1606,12 @@ export default function StudyJourney({ achievements, streak }: Props) {
                   <div
                     key={i}
                     className={`h-10 w-10 rounded-lg ${
-                      day.length > 0 ? "bg-gray-900" : "bg-gray-100"
+                      day.length > 0 ? "bg-primary" : "bg-primary/20"
                     } flex items-center justify-center`}
                   >
                     <Flame
                       className={`h-6 w-6 ${
-                        day.length > 0 ? "text-white" : "text-gray-300"
+                        day.length > 0 ? "text-white" : "text-primary"
                       }`}
                     />
                   </div>
