@@ -93,7 +93,7 @@
           {
             "dropdown": "Tutorials",
             "description": "Gamification how-to guides",
-            "icon": "book-text",
+            "icon": "graduation-cap",
             "groups": [
               {
                 "group": "Getting Started",
