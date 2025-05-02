@@ -1398,7 +1398,7 @@ The last peice of UI we'll add will be a dialog to display the user's study prog
 
 First, we'll add a couple of new server actions to fetch the users streak and achievements from Trophy. As we're using a daily sterak here, we'll fetch the last 14 days of streak data from Trophy to give us enough to work with in our UI:
 
-```tsx src/app/actions [expandable] {6-7,10-11,24,33,45-58,60-73}
+```tsx src/app/actions.ts [expandable] {6-7,10-11,24,33,45-58,60-73}
 "use server";
 
 import { TrophyApiClient } from "@trophyso/node";
@@ -1495,15 +1495,21 @@ export default async function Home() {
 }
 ```
 
-Then we'll create a new `<StudyJourney />` component that takes in the achievements and streak data as props and renders it nicely in a dialog. Before adding this we need to add the shadcn/ui dialog component to our project:
+Then we'll create a new `<StudyJourney />` component that takes in the achievements and streak data as props and renders it nicely in a dialog. Before adding this we need to add the shadcn/ui `dialog` component to our project, and while we're at it, we'll add the `seperator` component too:
 
 ```bash
-npx shadcn@latest add dialog
+npx shadcn@latest add dialog separator
 ```
 
-Then we can use this as a base for our study journey component:
+We'll also need `dayjs` to help us with displaying dates nicely as well:
 
-```tsx src/app/study-journey [expandable]
+```bash
+npm i dayjs
+```
+
+Now we have everything we need to build our study journey component:
+
+```tsx src/app/study-journey.tsx [expandable]
 import { Separator } from "@/components/ui/separator";
 import {
   MultiStageAchievementResponse,
@@ -1527,8 +1533,16 @@ interface Props {
 }
 
 export default function StudyJourney({ achievements, streak }: Props) {
+  const sundayOffset = 7 - ((new Date().getDay() + 6) % 7);
+
+  const adjustedStreakHistory =
+    streak?.streakHistory?.slice(
+      sundayOffset - 1,
+      streak.streakHistory.length
+    ) || Array(14).fill(null);
+
   return (
-    <div className="absolute top-10 right-10 z-50">
+    <div className="absolute top-10 right-10 z-50 cursor-pointer">
       <Dialog>
         <DialogTrigger>
           <div className="h-12 w-12 cursor-pointer duration-100 border-1 border-gray-300 shadow-sm transition-all rounded-full relative hover:bg-gray-100">
@@ -1550,7 +1564,7 @@ export default function StudyJourney({ achievements, streak }: Props) {
               <div className="relative h-24 w-24">
                 <svg className="h-full w-full" viewBox="0 0 100 100">
                   <circle
-                    className="stroke-gray-200"
+                    className="stroke-primary/20"
                     strokeWidth="10"
                     fill="transparent"
                     r="45"
@@ -1558,7 +1572,7 @@ export default function StudyJourney({ achievements, streak }: Props) {
                     cy="50"
                   />
                   <circle
-                    className="stroke-gray-900 transition-all"
+                    className="stroke-primary transition-all"
                     strokeWidth="10"
                     strokeLinecap="round"
                     fill="transparent"
@@ -1570,7 +1584,7 @@ export default function StudyJourney({ achievements, streak }: Props) {
                   />
                 </svg>
                 <div className="absolute inset-0 flex items-center justify-center">
-                  <span className="text-2xl font-bold">
+                  <span className="text-2xl font-bold text-primary">
                     {streak?.length || 0}
                   </span>
                 </div>
@@ -1602,20 +1616,33 @@ export default function StudyJourney({ achievements, streak }: Props) {
                 ))}
               </div>
               <div className="grid grid-cols-7 gap-1">
-                {streak?.streakHistory?.map((day, i) => (
-                  <div
-                    key={i}
-                    className={`h-10 w-10 rounded-lg ${
-                      day.length > 0 ? "bg-gray-900" : "bg-gray-100"
-                    } flex items-center justify-center`}
-                  >
-                    <Flame
-                      className={`h-6 w-6 ${
-                        day.length > 0 ? "text-white" : "text-gray-300"
-                      }`}
-                    />
-                  </div>
-                ))}
+                {adjustedStreakHistory.map((day, i) => {
+                  if (day === null) {
+                    return (
+                      <div
+                        key={i}
+                        className="h-10 w-10 rounded-lg bg-white border border-gray-200 flex items-center justify-center"
+                      >
+                        <Flame className="h-6 w-6 text-gray-200" />
+                      </div>
+                    );
+                  }
+
+                  return (
+                    <div
+                      key={i}
+                      className={`h-10 w-10 rounded-lg ${
+                        day.length > 0 ? "bg-primary" : "bg-primary/10"
+                      } flex items-center justify-center`}
+                    >
+                      <Flame
+                        className={`h-6 w-6 ${
+                          day.length > 0 ? "text-white" : "text-primary/30"
+                        }`}
+                      />
+                    </div>
+                  );
+                })}
               </div>
             </div>
           </div>
