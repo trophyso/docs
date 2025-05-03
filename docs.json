@@ -75,59 +75,23 @@
             "dropdown": "Example Apps",
             "description": "Ready-to-use example apps",
             "icon": "rocket",
-            "groups": [
-              {
-                "group": "Getting Started",
-                "pages": ["guides/example-apps/overview"]
-              },
-              {
-                "group": "Example Apps",
-                "pages": [
-                  "guides/example-apps/example-fitness-app",
-                  "guides/example-apps/example-study-platform",
-                  "guides/example-apps/example-productivity-app"
-                ]
-              }
-            ]
+            "pages": ["guides/example-apps/example-study-platform"]
           },
           {
             "dropdown": "Tutorials",
             "description": "Gamification how-to guides",
             "icon": "graduation-cap",
-            "groups": [
-              {
-                "group": "Getting Started",
-                "pages": ["guides/tutorials/overview"]
-              },
-              {
-                "group": "Tutorials",
-                "pages": [
-                  "guides/tutorials/how-to-build-a-gamified-study-platform",
-                  "guides/tutorials/how-to-build-a-streaks-feature",
-                  "guides/tutorials/how-to-build-an-achievements-feature",
-                  "guides/tutorials/how-to-build-automated-usage-digests",
-                  "guides/tutorials/how-to-build-automated-win-back-campaigns"
-                ]
-              }
-            ]
+            "pages": ["guides/tutorials/how-to-build-a-gamified-study-platform"]
           },
           {
             "dropdown": "UI Components",
             "description": "UI Component library",
             "icon": "layout-panel-left",
-            "groups": [
-              {
-                "group": "Getting Started",
-                "pages": ["guides/ui-components/overview"]
-              },
-              {
-                "group": "UI Components",
-                "pages": [
-                  "guides/ui-components/git-style-tracker",
-                  "guides/ui-components/trophy-cabinet"
-                ]
-              }
-            ]
+            "pages": [
+              "guides/ui-components/git-style-tracker",
+              "guides/ui-components/trophy-cabinet"
+            ],
+            "hidden": true
           }
         ]
       },

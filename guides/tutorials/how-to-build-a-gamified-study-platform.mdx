@@ -7,13 +7,24 @@ subtitle: Follow along as we build out a gamified study platform using Trophy.
 import MetricChangeRequestBlock from "/snippets/metric-change-request-block.mdx";
 import MetricChangeResponseBlock from "/snippets/metric-change-response-block.mdx";
 
-In this tutorial we'll build an example study platform using Trophy for gamification.
+In this tutorial we'll build an example study platform using Trophy for gamification. If you want to just skip to the end then feel free to check out the [template repository](https://github.com/trophyso/example-study-platform) or the [live demo](https://study.examples.trophy.so).
 
-If you want to just skip to the end then feel free to check out the [template repository](https://github.com/trophyso/example-study-platform) or the [live demo (TBD)](https://example.com).
+## Table of Contents
+
+- [Tech Stack](#tech-stack)
+- [Pre-requisites](#pre-requisites)
+- [Setup & Installation](#setup--installation)
+- [Setting up Flashcard Data](#setting-up-flashcard-data)
+- [Basic Flashcard Layout](#basic-flashcard-layout)
+- [Flipping Flashcards](#flipping-flashcards)
+- [A Flippin' Bug](#a-flippin-bug)
+- [Tracking Progress](#tracking-progress)
+- [Adding Gamification](#adding-gamification)
+- [The Result](#the-result)
 
 ## Tech Stack
 
-- NextJS 15 (React 19)
+- [NextJS 15](https://nextjs.org/docs) (React 19)
 - [Shadcn/Ui](https://ui.shadcn.com)
 - [Lucide](https://lucide.dev/icons) for iconography
 - [Motion](https://motion.dev/) for animations
@@ -22,13 +33,13 @@ If you want to just skip to the end then feel free to check out the [template re
 
 ## Pre-requisites
 
-- A Trophy account
+- A Trophy account (don't worry we'll set this up as we go along...)
 
 ## Setup & Installation
 
 <Tip>
   Want to skip the setup? Head straight to [the fun
-  part](#basic-flashcard-layout).
+  part](#setting-up-flashcard-data).
 </Tip>
 
 First we need to create a new NextJS project:
@@ -50,7 +61,7 @@ Would you like to use Turbopack for `next dev`?  Yes
 Would you like to customize the import alias (`@/*` by default)? No
 ```
 
-Next, I initialized a new install of everyones favourite UI library, shadcn/ui:
+Next, we'll initialize a new install of everyones favourite UI library, shadcn/ui:
 
 ```bash
 npx shadcn@latest init
@@ -67,7 +78,7 @@ Some packages may fail to install due to peer dependency issues in npm (see http
     Use --legacy-peer-deps
 ```
 
-For the purposes of this tutorial I chose `--force` but you should use whichever setting you feel suits your requirements.
+For the purposes of this tutorial I chose `--force` but you should choose whichever setting you feel suits your requirements.
 
 ## Setting Up Flashcard Data
 
@@ -196,13 +207,13 @@ export const flashcards: IFlashcard[] = [
 
 With some basic data set up, we need to add a way for users to flick through their flashcards.
 
-For this we'll use the Carousel and the Card components from shadcn/ui and for that we need to add these to our project:
+For this we'll use the `carousel` and `card` components from shadcn/ui so we need to add these to our project:
 
 ```bash
 npx shadcn@latest add carousel card
 ```
 
-Then, we'll add a new `<Flashcards />` component that combines these into a working solution, specifying that we can pass along any list of `Flashcard` objects as props
+Then, we'll create a new `<Flashcards />` component that combines these into a working solution, specifying that we can pass along any list of `IFlashcard` objects as props
 
 ```tsx src/app/flashcards.tsx [expandable]
 import {
@@ -244,7 +255,7 @@ export default function Flashcards({ flashcards }: Props) {
 }
 ```
 
-Then we'll update our `page.tsx` file to display our `<Flashcards />` component, passing in our example data:
+Then we'll update our `page.tsx` file to display our `<Flashcards />` component, passing in our example flashcard data:
 
 ```tsx src/app/page.tsx
 import { flashcards } from "@/data";
@@ -274,7 +285,7 @@ At the end of this step, you should have a working flashcard UI that allows you 
 
 ## Flipping Flashcards
 
-Now this is great, but it's not much use as a study app right now as there's no way to see if you got it right! We need to add a way to flip flashcards over and check our answer...
+Now this is great, but it's not much use as a study app right now as there's no way to see if you got the answer right! We need to add a way to flip flashcards over and check our answer...
 
 To make this simpler, we'll first create a `<Flashcard />` component that will be responsible for all the logic for each flashcard:
 
@@ -338,7 +349,7 @@ export default function Flashcards({ flashcards }: Props) {
 Now we're ready to add interactivity to each flashcard. Here's what we'll do:
 
 - First, we'll add a `side` state variable that will hold the current side of the flashcard that's showing.
-- Next, we'll add an `onClick` handler to the `<Card />` component that will update the `side` state to `back` when clicked if the front of the card is currently showing.
+- Next, we'll add an `onClick()` callback to the `<Card />` component that will update the `side` state to `back` when clicked if the front of the card is currently showing.
 - Finally, we'll conditional render the text in the `<Card />` based on the value of the `side` state variable.
 
 Here's the finished file:
@@ -383,7 +394,7 @@ Then, we'll use [Motion](https://motion.dev) to add a neat flip animation to the
 npm install motion
 ```
 
-If you think about it, when you flip a flashcard, you tend to do it in the Y-axis. So here we'll use a `<motion.div />` with an light spring animation in the y-axis to create the effect:
+If you think about it, when you flip a flashcard, you tend to do it in the Y-axis. So here we'll use a `<motion.div />` with a light spring animation in the y-axis to create the effect:
 
 ```tsx src/app/flashcard.tsx [expandable] {7-8,26-37}
 "use client";
@@ -453,7 +464,7 @@ You'll notice we also added a couple of styles here. These do a couple of things
 
 ## A Flippin' Bug!
 
-Sweet! Our project is now starting to feel like a real study tool! However the keen eyed (or maybe not so keen!) will notice there's one major bug here. When we flip a card over, the answer on the back appears in reverse 😢...
+Sweet! Our project is now starting to feel like a real study tool! However the keen eyed (or maybe not so keen...) will notice there's one major bug here. When we flip a card over, the answer on the back appears in reverse 😢...
 
 <Frame>
   <video
@@ -570,7 +581,7 @@ export default function Flashcards({ flashcards }: Props) {
 }
 ```
 
-Then we need to add the `<Progress />` component from shadcn/ui to our project:
+Then we need to add the `progress` component from shadcn/ui to our project:
 
 ```bash
 npx shadcn@latest add progress
@@ -663,7 +674,7 @@ In this section we'll be adding the following gamification elements to the flash
 
 This might sound like a lot, but would you be surprised if I told you you could build all this in less than 10 lines of code?
 
-Yup, you can. [Trophy](https://trophy.so) makes it super easy to build these features with a few lines of integration code.
+Yup, you can. Trophy makes it super easy to build these features with a few lines of integration code.
 
 So, let's get started...
 
@@ -671,22 +682,26 @@ So, let's get started...
 
 First off, we need a new [Trophy account](https://app.trophy.so/sign-up). Then we can start to piece together the various parts of our gamification experience.
 
-In Trophy, [Metrics](/platform/metrics) represent different interactions users can make and can be configured to drive features like [Achievements](/platform/achievements), [Streaks](/home/streaks) and [Emails](/platform/emails).
+In Trophy, [Metrics](/platform/metrics) represent different interactions users can make and can drive features like [Achievements](/platform/achievements), [Streaks](/home/streaks) and [Emails](/platform/emails).
 
 ```mermaid
 flowchart TD
-    A@{ shape: rounded, label: "Metrics" }
-    B@{ shape: rounded, label: "Achievements" }
-    C@{ shape: rounded, label: "Streaks" }
-    D@{ shape: rounded, label: "Emails" }
-    A-->B
-    A-->C
-    A-->D
+    A@{ shape: rounded, label: "Events" }
+    B@{ shape: rounded, label: "Metrics" }
+    C@{ shape: rounded, label: "Achievements" }
+    D@{ shape: rounded, label: "Streaks" }
+    E@{ shape: rounded, label: "Emails" }
+    A-.->B
+    B-->C
+    B-->D
+    B-->E
 ```
 
 In Trophy we track user interactions by sending [Events](/platform/events) from our code to Trophy against a specific metric.
 
 When events are recorded for a specific user, any achievements linked to the specified metric will be unlocked if the requirements are met, daily streaks will be automated calculated and kept up to date, and any configured emails will be scheduled.
+
+This is what makes building gamified experiences with Trophy so easy, is does all the work for you behind the scenes.
 
 Recording an event against a metric for a specific user makes use of Trophy's [metric event API](/api-reference/endpoints/metrics/send-a-metric-change-event), which in practice looks like this:
 
@@ -732,8 +747,8 @@ Let's get into it...
 {" "}
 
 <Tip>
-  Free free to download and use this library of badges (ready made for this
-  example app):
+  Free free to download and use this zip of badges (ready made for this example
+  app):
   [flashcard_badges.zip](../../assets/guides/example-apps/example-study-app/flashcard_badges.zip)
 </Tip>
 
@@ -788,7 +803,8 @@ Trophy also gives us a preview of the emails which is nice. Plus, feel free to c
 
 <Note>
   Before you can start sending emails, you'll need to [configure your sending
-  address](/platform/emails#setting-up-emails) with Trophy.
+  address](/platform/emails#setting-up-emails) with Trophy. But this can be done
+  later on if preferred.
 </Note>
 
   </Accordion>
@@ -796,7 +812,7 @@ Trophy also gives us a preview of the emails which is nice. Plus, feel free to c
 
 ### Integrating Trophy SDK
 
-First we need to grab our account API key from the Trophy [integration page](https://app.trophy.so/integration) and add this as a **server-side only** environment variable.
+First we need to grab our API key from the Trophy [integration page](https://app.trophy.so/integration) and add this as a **server-side only** environment variable.
 
 <Warning>
   Make sure you **don't** expose your API key in client-side code
@@ -939,7 +955,7 @@ The response to the API call that we make to track events in Trophy helpfully gi
 This includes:
 
 - The `achievements` array which is a list of newly unlocked achievements as a result of the event.
-- The `currentStreak` object which is the users most up to date streak data.
+- The `currentStreak` object which is the users most up to date streak data after the event has taken place.
 
 This makes it really easy for us to react to changes in the users progress and do whatever we want. In this example, each time Trophy tells us a user has unlocked a new achievement, or extended their streak we'll:
 
@@ -948,7 +964,7 @@ This makes it really easy for us to react to changes in the users progress and d
 
 #### Achievement Unlocked Toasts
 
-First, we'll show a toast when users unlock new achievements. For this we need to add the sonner component from shadcn/ui to our project:
+First, we'll show a toast when users unlock new achievements. For this we need to add the `sonner` component from shadcn/ui to our project:
 
 ```bash
 npx shadcn@latest add sonner
@@ -1725,7 +1741,7 @@ export default async function Home() {
   ></video>
 </Frame>
 
-## The result
+## The Result
 
 Congrats! If you're reading this you made it to the end of the tutorial and built yourself a fully-funtioning study platform. Of course there's loads more we could do to this, so here's a few ideas:
 
