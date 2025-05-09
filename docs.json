@@ -75,16 +75,16 @@
         "tab": "Guides",
         "dropdowns": [
           {
-            "dropdown": "Example Apps",
-            "description": "Ready-to-use example apps",
-            "icon": "rocket",
-            "pages": ["guides/example-apps/example-study-platform"]
-          },
-          {
             "dropdown": "Tutorials",
             "description": "Gamification how-to guides",
             "icon": "graduation-cap",
             "pages": ["guides/tutorials/how-to-build-a-gamified-study-platform"]
+          },
+          {
+            "dropdown": "Example Apps",
+            "description": "Ready-to-use example apps",
+            "icon": "rocket",
+            "pages": ["guides/example-apps/example-study-platform"]
           },
           {
             "dropdown": "UI Components",
