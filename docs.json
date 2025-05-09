@@ -19,7 +19,10 @@
   "fonts": {
     "family": "Montserrat"
   },
-  "favicon": "/favicon.ico",
+  "favicon": {
+    "light": "/assets/logomark_light.svg",
+    "dark": "/assets/logomark_dark.svg"
+  },
   "seo": {
     "metatags": {
       "og:description": "Trophy is a developer-friendly platform for building gamified product experiences in any mobile or web app. Add features like achievements and streaks in hours, not months.",
