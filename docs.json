@@ -20,8 +20,8 @@
     "family": "Montserrat"
   },
   "favicon": {
-    "light": "/assets/favicon_light.ico",
-    "dark": "/assets/favicon_dark.ico"
+    "light": "/favicon_light.ico",
+    "dark": "/favicon_dark.ico"
   },
   "seo": {
     "metatags": {
