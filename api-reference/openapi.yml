@@ -71,7 +71,7 @@ paths:
               Successful operation:
                 value:
                   user:
-                    $ref: "#/components/schemas/User"
+                    id: user-id
   /metrics/{key}/event:
     post:
       description: Increment or decrement the value of a metric for a user.
