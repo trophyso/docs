@@ -54,38 +54,25 @@ All the progress tracking is done by Trophy behind the scenes to keep focus on b
 
 The example project also uses daily streaks where users must look at least one flashcard a day to keep their streak. For each consecutive day the user looks at least one flashcard, their streak increases. But if they miss a day, they lose their streak and have to start over.
 
-Again, Trophy handles all the streak tracking and calculations behind the scenes to keep focus on the experience. Each time a user successfully extends their streak the following happens:
+Again, Trophy handles all the streak tracking and calculations behind the scenes to keep focus on the experience, including handling global timezones. Each time a user successfully extends their streak the following happens:
 
 - An in-app notification is shown
 - A sound effect is played
 
 ### Automated Email Sequences
 
-The example app also has emails automtically sent to users to based on the following use cases:
+The example app also has emails automatically sent to users to based on the following use cases:
 
 - Congratulating users when they unlock new achievements
 - Summarizing progress on a weekly basis
 
-Again, Trophy handles all the tricky parts around scheduling and sending emails and keeps focus on our core application.
+Again, Trophy handles all the tricky parts around scheduling and sending emails from a custom domain using the proper inbox-friendly syntax (<table> not <div>) and keeps focus on our core application.
 
 ## Trophy Setup
 
-To make all this possible, the [tutorial](/guides/tutorials/how-to-build-a-gamified-study-platform) walks through creating the following resources in a new Trophy account.
+To make all this possible, the [tutorial](/guides/tutorials/how-to-build-a-gamified-study-platform) walks through creating the necessary resources in a new Trophy account.
 
-| Trophy Resource    | Name                  | Notes            |
-| ------------------ | --------------------- | ---------------- |
-| Metric             | Flashcards Completed  | -                |
-| Achievement        | 10 Flashcards Viewed  | Linked to metric |
-| Achievement        | 50 Flashcards Viewed  | Linked to metric |
-| Achievement        | 100 Flashcards Viewed | Linked to metric |
-| Achievement        | 250 Flashcards Viewed | Linked to metric |
-| Achievement        | 500 Flashcards Viewed | Linked to metric |
-| Achievement        | Profile Completed     | -                |
-| Daily Streak       | -                     | Linked to metric |
-| Achievement Emails | -                     | Switched On      |
-| Recap Emails       | -                     | Switched On      |
-
-Follow the [Quick Start](/getting-started/quickstart) guide to get your Trophy account set up and start building out this example.
+If instead you just want to get started building your own gamification experience, follow the [quick start guide](/getting-started/quickstart).
 
 ## Get Support
 
