@@ -27,7 +27,7 @@ Recap emails are sent to users on a pre-defined frequency to summarize progress.
 
 ### Reactivation Emails
 
-As Trophy monitors usage across your entire userbase, it can tell when your users are looking like they are becoming inactive. To encourage them to become active again, Trophy can send automated win-back emails to them.
+As Trophy monitors usage across your entire userbase, it can detect when users become inactive and send automated win-back emails to encourage them to return.
 
 Emails are sent as follows:
 
@@ -76,7 +76,7 @@ To create a new email template, follow the steps below.
     Within the Emails page, you'll find the
     [Configure](https://app.trophy.so/emails/configure) tab which is where all
     your email templates live, as well as the configuration for deciding which
-    template to use against each trigger.
+    template to use for each type.
   </Step>
   <Step title="Hit the Add Template button">
     Choose an existing template to start from based on your use case, or create a new template from scratch.
@@ -110,7 +110,7 @@ To create a new email template, follow the steps below.
 
 ### Block Types
 
-Trophy's email builder supports a number of block types suited to various use cases. It has all the basic components you'd expect like H1, H2, images etc that we call [Basic Blocks](#basic-blocks), and more powerful components that leverage Trophy's user tracking data and are designed to suit common gamification use cases. We call these [Smart Blocks](#smart-blocks).
+Trophy's email builder supports a number of different block types that serve different purposes. All the basic components you'd expect to find in an email editor like paragraphs, headers, and images are called [Basic Blocks](#basic-blocks). There is also a set of more powerful components like charts and streaks that leverage Trophy's user activity data and gamification features. These are called [Smart Blocks](#smart-blocks).
 
 <Frame>
   <img
@@ -142,7 +142,7 @@ Trophy also has a powerful conditional rendering system powered by the _Conditio
 
 By nesting any other block inside a conditional block and setting up the conditions logic, you can create almost any email design that will show different blocks in emails based on the evaluation of conditions at send time.
 
-If you're familiar with the `if/else if/else` logical operators then this will feel very famililar to you. Otherwise here's a quick diagram to explain how it works.
+If you're familiar with the `if/else` logical operators then this will feel very famililar to you. Otherwise here's a quick diagram to explain how it works.
 
 ```mermaid
 flowchart LR
@@ -158,7 +158,7 @@ flowchart LR
     D-- No --->F
 ```
 
-Here's an example of this is an action where we use the _Has Active Streak_ variable to conditionally show the recipient their current streak (one of Trophy's built-in [Smart Blocks](#smart-blocks)) when they are on one. If the recipient isn't on a streak at the time the email is sent, then a simple message is displayed instead.
+One common use case for the conditional block is to conditionally show a user their streak (one of Trophy's built-in [Smart Blocks](#smart-blocks)) and some streak-related motivational text only if they have an active streak. If the recipient isn't on a streak at the time the email is sent, then a simple message is displayed instead.
 
 <Frame>
   <img
@@ -169,13 +169,13 @@ Here's an example of this is an action where we use the _Has Active Streak_ vari
   />
 </Frame>
 
-This creates a powerful framework to design emails based on highly relevent and personalized user data and can be used to create a wide-range of emails for common gamification use cases.
+This creates a powerful framework to design emails based on highly relevant and personalized user data and can be used to create a wide-range of emails for common gamification use cases.
 
 #### Smart Blocks
 
 Smart blocks are powerful components designed to support common gamification use cases and integrate with all of Trophy's features including metrics, achievements and streaks.
 
-You can find all smart blocks in the _Recommended Blocks_ section and are always recognizable by the <Icon icon="zap" /> icon.
+You can find all smart blocks in the _Recommended Blocks_ section, and they are always recognizable by the <Icon icon="zap" /> icon.
 
 <Frame>
   <video
@@ -231,7 +231,7 @@ Where achievements have badges, these will be automatically shown, as well as th
 {" "}
 
 <Accordion title="Progress Chart" icon="zap">
-  The progress chart block shows the recipients progress against a particular metric over the last 3 [aggregation periods](#aggregation-period).
+  The progress chart block shows the recipient's progress against a particular metric over the last 3 [aggregation periods](#aggregation-period).
 
   <Frame>
       <video
@@ -246,9 +246,9 @@ Where achievements have badges, these will be automatically shown, as well as th
 </Accordion>
 
   <Accordion title="Streak" icon="zap">
-    The streak block displays the recipients current streak according to your accounts streak settings.
+    The streak block displays the recipient's current streak according to your account's streak settings.
     
-    For daily streaks, a calendar block is shown displaying the last months streak history. Weekly and monthly streaks display the last 7 periods of streak history.
+    For daily streaks, a calendar block is shown displaying the last month's streak history. Weekly and monthly streaks display the last 7 periods of streak history.
 
     <Frame>
       <video
@@ -266,9 +266,9 @@ Where achievements have badges, these will be automatically shown, as well as th
 
 ### Email Variables
 
-Trophy provides an expansive set of dynamic variables that are useful for designing highly relevant and personalized emails. Variables bring context from your Trophy account, the recipients progress data, and email specific settings to your email templates.
+Trophy provides an expansive set of dynamic variables that are useful for designing highly relevant and personalized emails. Variables bring context from your Trophy account, the recipient's progress data, and email specific settings to your email templates.
 
-Email variables can be inserted by typing `{{` in any block that support text entry like H1, H2 and H3, paragraphs and buttons and searching for your chosen variable. The editor will insert the variable code for you.
+Email variables can be inserted by typing `{{` in any block that supports rich text, like headers, paragraphs, and buttons, and searching for your chosen variable. The editor will insert the variable code for you.
 
 <Tip>You can also use variables in email subject lines.</Tip>
 
@@ -318,13 +318,13 @@ See below for a full list of all email variables supported by the email builder:
       The percentage increase (or decrease) in the recipient's metric total as compared to the last [Aggregation Period](#aggregation-period). For example if the recipent has doubled their metric total within the aggregation period, `percentChange` would show +100. We leave it up to you to display a '%' sign if required.
     </ResponseField>
     <ResponseField name="<key>.changeThisPeriod" type="number">
-      The absolute increase (or decrease) in the recipient's metric total as compared to the last [Aggregation Period](#aggregation-period). For example if the recipents metric total has increased from 500 to 750 `changeThisPeriod`, would show 250.
+      The absolute increase (or decrease) in the recipient's metric total as compared to the last [Aggregation Period](#aggregation-period). For example if the recipents metric total has increased from 500 to 750, `changeThisPeriod` would show 250.
     </ResponseField>
 
   </Expandable>
 </ResponseField>
 <ResponseField name="streak" type="object">
-  Variables related to the recipients streak.
+  Variables related to the recipient's streak.
 
   <Expandable title="variables">
     <ResponseField name="active" type="boolean">
@@ -472,6 +472,11 @@ The email editor offers rich text formatting including bold, italics, [hyperlink
 
 It also supports more complex text formatting use cases based on the [Mustache](https://mustache.github.io/mustache.5.html) specification with the most common use case being to conditionally show text based on the value of [Email Variables](#email-variables).
 
+<Tip>
+  If you need more complex conditional formatting, or aren't familiar with
+  Mustache, consider using [Conditional Blocks](#conditional-blocks) instead.
+</Tip>
+
 Here's an example where we show text if the email recipient has an active streak or not:
 
 ```
@@ -511,7 +516,7 @@ On the [Configure](https://app.trophy.so/emails/configure) page you'll find a co
 
 ### Aggregation Period
 
-The aggregation period controls the timeframe over which blocks like the [progress chart] track usage. It also controls the frequency at which [Recap Emails](#recap-emails) are sent. Possible values are daily, weekly, monthly or yearly.
+The aggregation period controls the timeframe over which blocks like the [Progress Chart](#progress-chart) track usage. It also controls the frequency at which [Recap Emails](#recap-emails) are sent. Possible values are daily, weekly, monthly or yearly.
 
 ### Font Style
 
