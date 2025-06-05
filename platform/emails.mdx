@@ -14,41 +14,20 @@ Trophy supports 3 types of emails, each of which is designed to suit a common sc
 All emails are optional, but all three can be used simultaneously and can be controlled from the [Emails](https://app.trophy.so/emails/configure) page in the Trophy dashboard.
 
 <Frame>
-  <video
-    autoPlay
-    muted
-    loop
-    playsInline
-    className="w-full aspect-video"
-    src="../assets/platform/emails/configure_emails.mp4"
-  ></video>
+  <img height="200" noZoom src="../assets/platform/emails/email_types.png" />
 </Frame>
 
 ### Achievement Emails
 
 Achievement emails are sent to users each time they unlock an [Achievement](/platform/achievements).
 
-If the achievement has a badge assigned to it, then it will be shown in the email along with the name of the achievement and a chart that shows users how far to the next achievement they are:
-
-<Frame>
-  <img
-    height="200"
-    noZoom
-    src="../assets/platform/emails/achievement_emails.png"
-  />
-</Frame>
-
 ### Recap Emails
 
-Recap emails summarize a users progress over a specified time frame. Recap Emails can be configured to be sent daily, weekly, monthly or yearly depending on your use case.
-
-<Frame>
-  <img height="200" noZoom src="../assets/platform/emails/recap_emails.png" />
-</Frame>
+Recap emails are sent to users on a pre-defined frequency to summarize progress. Recap Emails can be configured to be sent daily, weekly, monthly or yearly depending on your use case.
 
 ### Reactivation Emails
 
-As Trophy monitors usage across your entire userbase, it can tell when your users are looking like they are becoming inactive. To encourage them to become active again, Trophy can send automated win-back emails to them.
+As Trophy monitors usage across your entire userbase, it can detect when users become inactive and send automated win-back emails to encourage them to return.
 
 Emails are sent as follows:
 
@@ -58,31 +37,496 @@ Emails are sent as follows:
 - After 14 days of inactivity
 - After 30 days of inactivity
 
-The design of the emails is a simple statement of current progress followed by a call-to-action to continue:
+## Designing Emails
+
+Trophy has a fully-featured block-based email builder that allows you to design templates, controlling all email copy and subject lines. Within the [Emails](https://app.trophy.so/emails/configure) page you can create templates and assign them to the 3 different [Email Types](#types-of-emails).
+
+<Tip>
+  When you create an email template, it can simulatenously be used across as
+  many email types as you want. So if you want your emails to be simple, just
+  having one email template might be enough. Otherwise, general best practice is
+  creating one template for each type of email you want to send.
+</Tip>
+
+<Frame>
+  <video
+    autoPlay
+    muted
+    loop
+    playsInline
+    className="w-full aspect-15/4"
+    src="../assets/platform/emails/designing_emails.mp4"
+  ></video>
+</Frame>
+
+### Default Templates
+
+By default, Trophy provides 3 email templates that are good starting points for the different [Email Types](#types-of-emails) that Trophy offers. The default templates can't be changed, but you can duplicate and customize these as you wish.
+
+<Tip>
+  You can also create blank templates if you just want to start from scratch.
+</Tip>
+
+### Creating A New Template
+
+To create a new email template, follow the steps below.
+
+<Steps>
+  <Step title="Head to the Emails page">
+    Within the Emails page, you'll find the
+    [Configure](https://app.trophy.so/emails/configure) tab which is where all
+    your email templates live, as well as the configuration for deciding which
+    template to use for each type.
+  </Step>
+  <Step title="Hit the Add Template button">
+    Choose an existing template to start from based on your use case, or create a new template from scratch.
+
+    <Frame>
+      <img
+        height="200"
+        width="100%"
+        noZoom
+        src="../assets/platform/emails/choose_template.png"
+      />
+    </Frame>
+
+  </Step>
+  <Step title="Design your new template">
+    Use the block-based editor to design your email template.
+
+    <Frame>
+      <video
+        autoPlay
+        muted
+        loop
+        playsInline
+        className="w-full aspect-15/4"
+        src="../assets/platform/emails/designing_emails.mp4"
+      ></video>
+    </Frame>
+
+  </Step>
+</Steps>
+
+### Block Types
+
+Trophy's email builder supports a number of different block types that serve different purposes. All the basic components you'd expect to find in an email editor like paragraphs, headers, and images are called [Basic Blocks](#basic-blocks). There is also a set of more powerful components like charts and streaks that leverage Trophy's user activity data and gamification features. These are called [Smart Blocks](#smart-blocks).
 
 <Frame>
   <img
     height="200"
-    width="50%"
+    width="100%"
     noZoom
-    src="../assets/platform/emails/reactivation_emails.png"
+    src="../assets/platform/emails/block_types_dialog.png"
   />
 </Frame>
 
-## Send-time Optimization
+#### Basic Blocks
 
-By default all emails sent by Trophy are sent at 17:00PM ET, however sending emails to users based on their local timezone usually results in better engagement rates.
+Here's the full list of un-opinionated basic blocks that Trophy supports:
 
-That's why if through [User Identification](/platform/users#param-tz) you specify a timezone for each user, Trophy will optimize the send-time for you.
+- **Paragraph** - Good for short or longer text snippets.
+- **H1, H2, H3** - Useful for headings of varying sizes.
+- **Button** - Creates a call to action for users to take in emails.
+- **Card** - Can nest other blocks, focusing attention.
+- **Divider** - Good for seperating content into logical sections.
+- **Emoji** - Include any supported emoji, controlling size.
+- **Image** - Upload any image and Trophy will render it in emails.
+- **Spacer** - Good for giving blocks room to stand out.
+- **Columns** - Useful for creating up to 3-column layouts with any content.
+- **Logo** - Will render your organization's logo, set on the [Branding](https://app.trophy.so/branding) page.
 
-## Designing Emails
+#### Conditional Blocks
 
-Trophy currently takes care of all copy and design for you, however you can configure your brand colors and logo in the [Branding](https://app.trophy.so/branding) page in the Trophy dashboard.
+Trophy also has a powerful conditional rendering system powered by the _Conditional_ block type.
+
+By nesting any other block inside a conditional block and setting up the conditions logic, you can create almost any email design that will show different blocks in emails based on the evaluation of conditions at send time.
+
+If you're familiar with the `if/else` logical operators then this will feel very famililar to you. Otherwise here's a quick diagram to explain how it works.
+
+```mermaid
+flowchart LR
+    B@{ shape: diamond, label: "First condition true?" }
+    C@{ shape: rounded, label: "Show first block" }
+    D@{ shape: diamond, label: "Second condition true?" }
+    E@{ shape: rounded, label: "Show second block" }
+    F@{ shape: rounded, label: "Show default block" }
+
+    B-- Yes --->C
+    B-- No --->D
+    D-- Yes --->E
+    D-- No --->F
+```
+
+One common use case for the conditional block is to conditionally show a user their streak (one of Trophy's built-in [Smart Blocks](#smart-blocks)) and some streak-related motivational text only if they have an active streak. If the recipient isn't on a streak at the time the email is sent, then a simple message is displayed instead.
+
+<Frame>
+  <img
+    height="100"
+    width="50%"
+    noZoom
+    src="../assets/platform/emails/conditional_block.png"
+  />
+</Frame>
+
+This creates a powerful framework to design emails based on highly relevant and personalized user data and can be used to create a wide-range of emails for common gamification use cases.
+
+#### Smart Blocks
+
+Smart blocks are powerful components designed to support common gamification use cases and integrate with all of Trophy's features including metrics, achievements and streaks.
+
+You can find all smart blocks in the _Recommended Blocks_ section, and they are always recognizable by the <Icon icon="zap" /> icon.
+
+<Frame>
+  <video
+    autoPlay
+    muted
+    loop
+    playsInline
+    className="w-full aspect-video"
+    src="../assets/platform/emails/smart_blocks.mp4"
+  ></video>
+</Frame>
+
+Read more about the use case of each smart block:
+
+<AccordionGroup>
+  <Accordion title="Achievement Progress Chart" icon="zap">
+    The achievement progress chart block displays a chart with bars for up to five achievements for a particular metric, highlighting any that the recipient has unlocked.
+    
+    Choose the metric to display achievements for using the metric selector.
+
+    <Frame>
+      <video
+        autoPlay
+        muted
+        loop
+        playsInline
+        className="w-full aspect-video"
+        src="../assets/platform/emails/achievement_progress_block.mp4"
+      ></video>
+    </Frame>
+
+  </Accordion>
+
+{" "}
+
+<Accordion title="Achievements Unlocked" icon="zap">
+  The achievements unlocked block displays the achievement the recipient has unlocked. This is only useful in the context of achievement unlocked emails. If the recipient hasn't unlocked any achievements, then this block won't show in emails.
+
+Where achievements have badges, these will be automatically shown, as well as the name of the achievement.
+
+  <Frame>
+      <video
+        autoPlay
+        muted
+        loop
+        playsInline
+        className="w-full aspect-video"
+        src="../assets/platform/emails/achievements_unlocked_block.mp4"
+      ></video>
+    </Frame>
+</Accordion>
+
+{" "}
+
+<Accordion title="Progress Chart" icon="zap">
+  The progress chart block shows the recipient's progress against a particular metric over the last 3 [aggregation periods](#aggregation-period).
+
+  <Frame>
+      <video
+        autoPlay
+        muted
+        loop
+        playsInline
+        className="w-full aspect-video"
+        src="../assets/platform/emails/progress_chart_block.mp4"
+      ></video>
+    </Frame>
+</Accordion>
+
+  <Accordion title="Streak" icon="zap">
+    The streak block displays the recipient's current streak according to your account's streak settings.
+    
+    For daily streaks, a calendar block is shown displaying the last month's streak history. Weekly and monthly streaks display the last 7 periods of streak history.
+
+    <Frame>
+      <video
+        autoPlay
+        muted
+        loop
+        playsInline
+        className="w-full aspect-video"
+        src="../assets/platform/emails/streak_block.mp4"
+      ></video>
+    </Frame>
+
+  </Accordion>
+</AccordionGroup>
+
+### Email Variables
+
+Trophy provides an expansive set of dynamic variables that are useful for designing highly relevant and personalized emails. Variables bring context from your Trophy account, the recipient's progress data, and email specific settings to your email templates.
+
+Email variables can be inserted by typing `{{` in any block that supports rich text, like headers, paragraphs, and buttons, and searching for your chosen variable. The editor will insert the variable code for you.
+
+<Tip>You can also use variables in email subject lines.</Tip>
+
+<Frame>
+  <video
+    autoPlay
+    muted
+    loop
+    playsInline
+    className="w-full aspect-video"
+    src="../assets/platform/emails/using_variables.mp4"
+  ></video>
+</Frame>
+
+See below for a full list of all email variables supported by the email builder:
+
+<ResponseField name="user" type="object">
+  Variables related to the recipient of the email.
+
+  <Expandable title="variables">
+    <ResponseField name="name" type="string">
+      The full name of the user, if set.
+    </ResponseField>
+
+  </Expandable>
+</ResponseField>
+<ResponseField name="metrics" type="object">
+    Variables referencing data from metrics within your Trophy account.
+
+    In all metric variables, `key` relates to the unique reference you set for the metric when created. You can find this in the details page for each metric.
+
+    <Tip>
+    Variables for a metric called 'Words written' with a `key` of `words` would be accessed with a `metrics.words` prefix. For example `metrics.words.percentile`.
+    </Tip>
+
+  <Expandable title="variables">
+    <ResponseField name="<key>.percentile" type="number">
+      Indicates where the recipient's all time metric total ranks compared to all other tracked users. For example, if a user is in the 90th percentile, their all time metric total is higher than 90% of users that have at least one event recorded against the metric.
+    </ResponseField>
+    <ResponseField name="<key>.percentileThisPeriod" type="number">
+      The recipent's percentile within the most recent [Aggregation Period](#aggregation-period).
+    </ResponseField>
+    <ResponseField name="<key>.currentTotal" type="number">
+      The recipient's current total value of all events recorded against the metric.
+    </ResponseField>
+    <ResponseField name="<key>.percentChange" type="string">
+      The percentage increase (or decrease) in the recipient's metric total as compared to the last [Aggregation Period](#aggregation-period). For example if the recipent has doubled their metric total within the aggregation period, `percentChange` would show +100. We leave it up to you to display a '%' sign if required.
+    </ResponseField>
+    <ResponseField name="<key>.changeThisPeriod" type="number">
+      The absolute increase (or decrease) in the recipient's metric total as compared to the last [Aggregation Period](#aggregation-period). For example if the recipents metric total has increased from 500 to 750, `changeThisPeriod` would show 250.
+    </ResponseField>
+
+  </Expandable>
+</ResponseField>
+<ResponseField name="streak" type="object">
+  Variables related to the recipient's streak.
+
+  <Expandable title="variables">
+    <ResponseField name="active" type="boolean">
+      `true` if the recipient has an active streak, `false` otherwise.
+    </ResponseField>
+    <ResponseField name="extended" type="boolean">
+      `true` if the recipient has extended their streak within the current streak period, `false` otherwise.
+    </ResponseField>
+    <ResponseField name="length" type="number">
+      The number of consequtive periods that the user has kept their streak. 0 if the user does not have an active streak.
+    </ResponseField>
+    <ResponseField name="daysSinceExtended" type="number">
+      The number of days since the user last extended their streak. 0 if the user has an active streak.
+    </ResponseField>
+
+  </Expandable>
+</ResponseField>
+<ResponseField name="period" type="object">
+  Variables related to the current setting of the data [Aggregation Period](#aggregation-period).
+
+  <Expandable title="variables">
+    <ResponseField name="dateRange" type="string">
+      The string representation of the current aggregation period. For example 'June 1 - June 7'.
+    </ResponseField>
+
+  </Expandable>
+</ResponseField>
+<ResponseField name="achievement" type="object">
+  <Note>
+    Only relevant in the context of [Achievement Emails](#achievement-emails).
+  </Note>
+
+  <Expandable title="variables">
+    <ResponseField name="name" type="string">
+      The `name` of the unlocked achievement that triggered the email.
+    </ResponseField>
+    <ResponseField name="isLastAchievement" type="boolean">
+      `true` if the achievement the recipent unlocked is the last achievement for it's metric, `false` otherwise.
+    </ResponseField>
+    <ResponseField name="percentToNextAchievement" type="number">
+      The percentage progress that the recipent has made to the next achievement against the same metric. 100 if `isLastAchievement` is true.
+    </ResponseField>
+
+  </Expandable>
+</ResponseField>
+<ResponseField name="reactivation" type="object">
+  <Note>
+    Only relevant in the context of [Reactivation Emails](#reactivation-emails).
+  </Note>
+  <Expandable title="variables">
+    <ResponseField name="name" type="number">
+      Trophy sends 5 reactivation emails over 30 days. This is the number of the current email in the sequence. Useful for displaying different email content throughout the sequence.
+    </ResponseField>
+
+  </Expandable>
+</ResponseField>
+
+### Text Variations
+
+Variations can be used to add randomness to text within emails sent by Trophy. This prevents emails from getting boring and helps improve open and click rates.
+
+Any block that supports text entry inculding H1, H2, H3 and paragraph support variations.
+
+<Tip>You can also use variations to add randomness to email subject lines.</Tip>
+
+To create a variation click the _Add Variation_ button on any block that supports them.
+
+<Frame>
+  <video
+    autoPlay
+    muted
+    loop
+    playsInline
+    className="w-full aspect-video"
+    src="../assets/platform/emails/creating_variations.mp4"
+  ></video>
+</Frame>
 
 <Note>
-  Soon we'll be releasing a block-based email builder that will allow you to
-  have full control over the design and copy used in all emails sent by Trophy.
+  Variations do not support A/B testing yet, but this is on our roadmap so stay
+  tuned...
 </Note>
+
+### Using The Editor
+
+The email template editor is a blank canvas for designing emails that look great in the inbox. Using pre-configured [Blocks](#block-types) makes it really easy to create email templates that suit common gamification use cases. Here we'll walk through how to best use the editor to create awesome looking emails.
+
+#### Adding Blocks
+
+To add a new block an email template hit the <Icon icon="square-slash" /> key, this will open the block selection dialog where you can choose the block you want to add.
+
+<Frame>
+  <video
+    autoPlay
+    muted
+    loop
+    playsInline
+    className="w-full aspect-video"
+    src="../assets/platform/emails/add_new_block_slash.mp4"
+  ></video>
+</Frame>
+
+Or if you want to add a block immediately after another block, use the block menu.
+
+<Frame>
+  <video
+    autoPlay
+    muted
+    loop
+    playsInline
+    className="w-full aspect-video"
+    src="../assets/platform/emails/add_new_block_by_block_menu.mp4"
+  ></video>
+</Frame>
+
+#### Arranging Blocks
+
+Blocks can be dragged up and down using the block menu.
+
+<Frame>
+  <video
+    autoPlay
+    muted
+    loop
+    playsInline
+    className="w-full aspect-video"
+    src="../assets/platform/emails/arranging_blocks.mp4"
+  ></video>
+</Frame>
+
+#### Text Formatting
+
+The email editor offers rich text formatting including bold, italics, [hyperlinks](https://www.youtube.com/watch?v=dQw4w9WgXcQ) and `code` formatting.
+
+<Frame>
+  <video
+    autoPlay
+    muted
+    loop
+    playsInline
+    className="w-full aspect-video"
+    src="../assets/platform/emails/rich_text_formatting.mp4"
+  ></video>
+</Frame>
+
+It also supports more complex text formatting use cases based on the [Mustache](https://mustache.github.io/mustache.5.html) specification with the most common use case being to conditionally show text based on the value of [Email Variables](#email-variables).
+
+<Tip>
+  If you need more complex conditional formatting, or aren't familiar with
+  Mustache, consider using [Conditional Blocks](#conditional-blocks) instead.
+</Tip>
+
+Here's an example where we show text if the email recipient has an active streak or not:
+
+```
+{{#streak.active}}
+  You're on a streak!
+{{/streak.active}}
+```
+
+Additionally, the editor support pluralization. In the below example we show different text based on if the value of the `metrics.words.currentTotal` is `1` (singular) or greater than `1` (plural).
+
+```
+{{#plural}}
+  {{metrics.words.currentTotal}} words written
+{{/plural}}
+{{#singular}}
+  {{metrics.words.currentTotal}} word written
+{{/singular}}
+```
+
+<Note>
+  For `#plural` and `#singular` to work, the first entry must be a number
+  variable.
+</Note>
+
+## Email Customization
+
+On the [Configure](https://app.trophy.so/emails/configure) page you'll find a couple of different settings you can control to manage email design across your Trophy account.
+
+<Frame>
+  <img
+    height="200"
+    width="75%"
+    noZoom
+    src="../assets/platform/emails/email_customization_settings.png"
+  />
+</Frame>
+
+### Aggregation Period
+
+The aggregation period controls the timeframe over which blocks like the [Progress Chart](#progress-chart) track usage. It also controls the frequency at which [Recap Emails](#recap-emails) are sent. Possible values are daily, weekly, monthly or yearly.
+
+### Font Style
+
+Changes the font style used across all email templates. Additional styles are pulled from your Trophy account's [Branding](https://app.trophy.so/branding) settings.
+
+## Send-time Optimization
+
+By default all emails sent by Trophy are sent at **17:00PM ET**, however sending emails to users based on their local timezone usually results in better engagement rates.
+
+That's why if through [User Identification](/platform/users#param-tz) you specify a timezone for each user, Trophy will optimize the send-time for you.
 
 ## Setting up Emails
 
