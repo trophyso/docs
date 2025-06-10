@@ -333,7 +333,7 @@ paths:
   /users/{id}/metrics:
     get:
       description: Get a single user's progress against all active metrics.
-      operationId: users_allMetrics
+      operationId: users_all_metrics
       tags:
         - Users
       parameters:
@@ -406,7 +406,7 @@ paths:
   /users/{id}/metrics/{key}:
     get:
       description: Get a user's progress against a single active metric.
-      operationId: users_singleMetric
+      operationId: users_single_metric
       tags:
         - Users
       parameters:
@@ -483,7 +483,7 @@ paths:
   /users/{id}/achievements:
     get:
       description: Get all of a user's completed achievements.
-      operationId: users_allAchievements
+      operationId: users_all_achievements
       tags:
         - Users
       parameters:
