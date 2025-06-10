@@ -30,6 +30,7 @@ paths:
                     completionId: 0040fe51-6bce-4b44-b0ad-bddc4e123534
                     achievement:
                       id: 5100fe51-6bce-6j44-b0hs-bddc4e123682
+                      trigger: api
                       name: Finish onboarding
                       badgeUrl: https://example.com/badge.png
                       key: finish-onboarding
@@ -101,8 +102,10 @@ paths:
                     total: 750
                     achievements:
                       - metricId: 5100fe51-6bce-6j44-b0hs-bddc4e123682
+                        trigger: metric
                         completed:
                           - id: 5100fe51-6bce-6j44-b0hs-bddc4e123682
+                            trigger: metric
                             metricId: 5100fe51-6bce-6j44-b0hs-bddc4e123682
                             metricName: words written
                             metricValue: 500
@@ -356,24 +359,25 @@ paths:
                     - id: d01dcbcb-d51e-4c12-b054-dc811dcdc623
                       key: words-written
                       name: Words written
-                      emoji: 📝
                       status: active
-                      streakFrequency: daily
                       current: 4500
                       achievements:
                         - id: abe3120f-5ca9-4344-92c8-5b891643a04b
+                          trigger: metric
                           name: Novice Writer
                           metricId: d01dcbcb-d51e-4c12-b054-dc811dcdc623
                           metricValue: 500
                           achievedAt: '2021-01-01T00:00:00Z'
                           badgeUrl: https://example.com/badge1.png
                         - id: 8a07f2d0-9c72-4de1-bf92-9530ae82b4b6
+                          trigger: metric
                           name: Intermediate Writer
                           metricId: d01dcbcb-d51e-4c12-b054-dc811dcdc623
                           metricValue: 1000
                           achievedAt: '2021-01-02T00:00:00Z'
                           badgeUrl: https://example.com/badge2.png
                         - id: 2090d038-aa04-4048-ab2e-e2b7bf2d3b9f
+                          trigger: metric
                           name: Expert Writer
                           metricId: d01dcbcb-d51e-4c12-b054-dc811dcdc623
                           metricValue: 2000
@@ -433,22 +437,23 @@ paths:
                     id: d01dcbcb-d51e-4c12-b054-dc811dcdc623
                     key: words-written
                     name: Words written
-                    emoji: 📝
                     status: active
-                    streakFrequency: daily
                     current: 1500
                     achievements:
                       - id: abe3120f-5ca9-4344-92c8-5b891643a04b
+                        trigger: metric
                         name: Novice Writer
                         metricId: d01dcbcb-d51e-4c12-b054-dc811dcdc623
                         metricValue: 500
                         achievedAt: '2021-01-01T00:00:00Z'
                       - id: 8a07f2d0-9c72-4de1-bf92-9530ae82b4b6
+                        trigger: metric
                         name: Intermediate Writer
                         metricId: d01dcbcb-d51e-4c12-b054-dc811dcdc623
                         metricValue: 1000
                         achievedAt: '2021-01-02T00:00:00Z'
                       - id: 2090d038-aa04-4048-ab2e-e2b7bf2d3b9f
+                        trigger: metric
                         name: Expert Writer
                         metricId: d01dcbcb-d51e-4c12-b054-dc811dcdc623
                         metricValue: 2000
@@ -497,16 +502,18 @@ paths:
               schema:
                 type: array
                 items:
-                  $ref: '#/components/schemas/MultiStageAchievementResponse'
+                  $ref: '#/components/schemas/AchievementResponse'
               examples:
                 Successful operation:
                   value:
                     - id: d01dcbcb-d51e-4c12-b054-dc811dcdc625
+                      trigger: api
                       key: completed-onboarding
                       name: Completed Onboarding
                       achievedAt: '2021-01-01T00:00:00Z'
                       badgeUrl: https://example.com/badge2.png
                     - id: d01dcbcb-d51e-4c12-b054-dc811dcdc623
+                      trigger: metric
                       key: novice-writer
                       metricId: d01dcbcb-d51e-4c12-b054-dc811dcdc619
                       metricValue: 500
@@ -515,11 +522,10 @@ paths:
                       achievedAt: '2021-02-01T00:00:00Z'
                       badgeUrl: https://example.com/badge1.png
                     - id: d01dcbcb-d51e-4c12-b054-dc811dcdc624
-                      key: intermediate-writer
-                      metricId: d01dcbcb-d51e-4c12-b054-dc811dcdc619
-                      metricValue: 1000
-                      metricName: words written
-                      name: Intermediate Writer
+                      trigger: streak
+                      key: 3-day-streak
+                      streakLength: 3
+                      name: 3-Day Streak
                       achievedAt: '2021-03-01T00:00:00Z'
                       badgeUrl: https://example.com/badge2.png
         '401':
@@ -718,8 +724,8 @@ components:
                   - periodStart
                   - periodEnd
                   - length
-    MultiStageAchievementResponse:
-      title: MultiStageAchievementResponse
+    BaseAchievementResponse:
+      title: BaseAchievementResponse
       type: object
       properties:
         id:
@@ -727,68 +733,85 @@ components:
           description: The unique ID of the achievement.
         name:
           type: string
-          nullable: true
           description: The name of this achievement.
         badgeUrl:
           type: string
-          nullable: true
           description: >-
             The URL of the badge image for the achievement, if one has been
             uploaded.
+        key:
+          type: string
+          description: The key used to reference this achievement in the API.
+        achievedAt:
+          type: string
+          format: date-time
+          description: The date and time the achievement was completed, in ISO 8601 format.
+      required:
+        - id
+        - trigger
+        - name
+    MetricAchievementResponse:
+      title: MetricAchievementResponse
+      type: object
+      allOf:
+        - $ref: '#/components/schemas/BaseAchievementResponse'
+        - type: object
+      properties:
+        trigger:
+          type: string
+          description: The trigger of the achievement, in this case always 'metric'.
         metricId:
           type: string
-          nullable: true
           description: The ID of the metric associated with this achievement, if any.
         metricValue:
           type: number
           format: double
-          nullable: true
           description: >-
             The value of the metric required to complete the achievement, if
             this achievement is associated with a metric.
         metricName:
           type: string
-          nullable: true
           description: The name of the metric associated with this achievement, if any.
-        key:
-          type: string
-          nullable: true
-          description: The key used to reference this achievement in the API.
-        achievedAt:
-          type: string
-          format: date-time
-          nullable: true
-          description: The date and time the achievement was completed, in ISO 8601 format.
       required:
-        - id
-    OneOffAchievementResponse:
-      title: OneOffAchievementResponse
+        - trigger
+        - metricId
+        - metricValue
+        - metricName
+    ApiAchievementResponse:
+      title: ApiAchievementResponse
       type: object
+      allOf:
+        - $ref: '#/components/schemas/BaseAchievementResponse'
+        - type: object
       properties:
-        id:
+        trigger:
           type: string
-          description: The unique ID of the achievement.
-        name:
-          type: string
-          nullable: true
-          description: The name of this achievement.
-        badgeUrl:
-          type: string
-          nullable: true
-          description: >-
-            The URL of the badge image for the achievement, if one has been
-            uploaded.
-        key:
-          type: string
-          nullable: true
-          description: The key used to reference this achievement in the API.
-        achievedAt:
-          type: string
-          format: date-time
-          nullable: true
-          description: The date and time the achievement was completed, in ISO 8601 format.
+          description: The trigger of the achievement, in this case always 'api'.
       required:
-        - id
+        - trigger
+    AchievementResponse:
+      title: AchievementResponse
+      type: object
+      oneOf:
+        - $ref: '#/components/schemas/MetricAchievementResponse'
+        - $ref: '#/components/schemas/StreakAchievementResponse'
+        - $ref: '#/components/schemas/ApiAchievementResponse'
+    StreakAchievementResponse:
+      title: StreakAchievementResponse
+      type: object
+      allOf:
+        - $ref: '#/components/schemas/BaseAchievementResponse'
+        - type: object
+      properties:
+        trigger:
+          type: string
+          description: The trigger of the achievement, in this case always 'streak'.
+        streakLength:
+          type: integer
+          description: The length of the streak required to complete the achievement.
+      required:
+        - trigger
+        - streakLength
     MetricResponse:
       title: MetricResponse
       type: object
@@ -805,10 +828,6 @@ components:
           type: string
           description: The name of the metric.
           example: Words written
-        emoji:
-          type: string
-          description: The emoji to represent the metric.
-          example: 📝
         status:
           $ref: '#/components/schemas/MetricStatus'
           description: The status of the metric.
@@ -820,7 +839,7 @@ components:
         achievements:
           type: array
           items:
-            $ref: '#/components/schemas/MultiStageAchievementResponse'
+            $ref: '#/components/schemas/MetricAchievementResponse'
           description: >-
             A list of the metric's achievements and the user's progress towards
             each.
@@ -828,7 +847,6 @@ components:
         - id
         - key
         - name
-        - emoji
         - status
         - current
         - achievements
@@ -839,22 +857,18 @@ components:
       properties:
         email:
           type: string
-          nullable: true
           description: The user's email address. Required if subscribeToEmails is true.
           example: user@example.com
         name:
           type: string
-          nullable: true
           description: The name to refer to the user by in emails.
           example: User
         tz:
           type: string
-          nullable: true
           description: The user's timezone (used for email scheduling).
           example: Europe/London
         subscribeToEmails:
           type: boolean
-          nullable: true
           default: true
           description: Whether the user should receive Trophy-powered emails. Cannot be false if an email is provided.
           example: true
@@ -911,7 +925,7 @@ components:
           description: The unique ID of the completion.
           example: 0040fe51-6bce-4b44-b0ad-bddc4e123534
         achievement:
-          $ref: '#/components/schemas/OneOffAchievementResponse'
+          $ref: '#/components/schemas/ApiAchievementResponse'
       required:
         - completionId
         - achievement
@@ -919,18 +933,23 @@ components:
       title: EventResponseMetricsItem
       type: object
       properties:
+        trigger:
+          type: string
+          description: The trigger of the achievement, in this case either 'metric' or 'streak'.
         metricId:
           type: string
-          nullable: true
-          description: The ID of the metric.
+          description: The ID of the metric that these achievements are associated with, if any.
         completed:
           type: array
           items:
-            $ref: '#/components/schemas/MultiStageAchievementResponse'
-          nullable: true
+            oneOf:
+              - $ref: '#/components/schemas/MetricAchievementResponse'
+              - $ref: '#/components/schemas/StreakAchievementResponse'
           description: >-
             A list of any new achievements that the user has now completed as a
             result of this event being submitted.
+      required:
+        - completed
     EventResponse:
       title: EventResponse
       type: object
@@ -952,11 +971,9 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/EventResponseMetricsItem'
-          nullable: true
           description: Changes to achievements as a result of this event.
         currentStreak:
           $ref: '#/components/schemas/IncrementMetricStreakResponse'
-          nullable: true
           description: >-
             The user's current streak for the metric, if the metric has streaks
             enabled.
