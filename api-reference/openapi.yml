@@ -5,7 +5,7 @@ info:
 paths:
   /achievements/{key}/complete:
     post:
-      description: Mark an achievement as completed for a user.
+      description: Mark an achievement as completed for a user
       operationId: achievements_complete
       tags:
         - Achievements
