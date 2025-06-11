@@ -731,6 +731,9 @@ components:
         name:
           type: string
           description: The name of this achievement.
+        trigger:
+          type: string
+          description: The trigger of the achievement, either 'metric', 'streak', or 'api'.
         badgeUrl:
           type: string
           description: >-
