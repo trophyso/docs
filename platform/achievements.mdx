@@ -1,7 +1,7 @@
 ---
 title: Achievements
 description: Learn how to use Achievements in a gamified product experience with Trophy.
-"og:description": Use multi-stage and one-off achievements to rewards users for continued progress and to encourage them to discover new parts of your app.
+"og:description": Use multi-stage, one-off and streak achievements to rewards users for continued progress and to encourage them to discover new parts of your app.
 icon: trophy
 ---
 
@@ -17,13 +17,13 @@ Here we'll have a look of the types of achievements you can build with Trophy, t
 
 ## Achievement Types
 
-Trophy offers two types of achievements, [Multi-stage](#multi-stage) and [One-Off](#one-off), detailed below.
+Trophy offers three types of achievements, [Metric](#metric-achievements), [Standalone](#standalone-achievements) and [Streak achievements](#streak-achievements), detailed below.
 
-### Multi-stage
+### Metric Achievements
 
-Multi-stage achievements are tied to [Metrics](/platform/metrics) and are best used when you want to incentivize users to take the same action over and over again.
+Metric achievements are tied to [Metrics](/platform/metrics) and are best used when you want to incentivize users to take the same action over and over again.
 
-Let's take the example of a book-writing platform that uses Trophy to encourage users to write more often with multi-stage achievements as follows:
+Let's take the example of a book-writing platform that uses Trophy to encourage users to write more often with metric achievements as follows:
 
 - 1,000 words
 - 2,500 words
@@ -36,13 +36,13 @@ In this case you would create a metric called _Words Written_ and create achieve
 
 Since these achievements are directly tied to the _Words Written_ metric, Trophy will automatically track when users unlock these achievements as they [increment the metric](/platform/events#tracking-metric-events).
 
-When achievements are unlocked, Trophy includes information about the unlocked achievements in the [Event API](/api-reference/endpoints/metrics/send-a-metric-change-event) response, and automatically triggers [Emails](/platform/emails) if configured.
+When achievements are unlocked, Trophy includes information about the unlocked achievements in the [Event API](/api-reference/endpoints/metrics/send-a-metric-change-event) response, and automatically triggers [Achievement Emails](/platform/emails#achievement-emails) if configured.
 
 <MetricChangeResponseBlock />
 
-### One-off
+### Standalone Achievements
 
-One-off achievements can only be completed once and are useful for rewarding users for taking specific actions.
+Standalone achievements can only be completed once and are useful for rewarding users for taking specific actions.
 
 Common examples include:
 
@@ -50,9 +50,17 @@ Common examples include:
 - A user linking their social account to a platform
 - A user sharing their product experience on social media
 
-One-off achievements serve as an easy way to reward users for completing any action that you think is important for retention.
+Standalone achievements serve as an easy way to reward users for completing any action that you think is important for retention.
 
-Just like multi-stage achievements, one-off achievements can also trigger automated [Emails](/platform/emails#achievement-emails) if configured.
+Just like metric achievements, standalone achievements can also trigger automated [Achievement Emails](/platform/emails#achievement-emails) if configured.
+
+### Streak Achievements
+
+Streak achievements are directly tied to a user's [Streak](/platform/streaks) and are automatically unlocked when users reach a particular streak length.
+
+You can create as many streak achievements as you like for increasing lengths of streak, for example 7 days, 30 days and 365 days to motivate users to use your app more and more.
+
+Just like metric and standalone achievements, you can add a custom name and assign a badge to streak achievements.
 
 ## Creating Achievements
 
@@ -70,32 +78,36 @@ To create new achievements, head to the [achievements page](https://app.trophy.s
 </Frame>
 
 <Steps>
-  <Step title="Choose a metric">
-    If you want to assign this achievement to a metric for use as part of multi-stage achievements, then choose a metric. Otherwise continue to the next step.
-  </Step>
-
-<Step title="Enter a metric value">
-  If you're assigning this achievement to a metric as part of multi-stage
-  achievements then choose the value of the metric that should unlock this
-  Achievement. Otherwise continue to the next step.
+<Step title="Enter a name">
+  Enter a name for the achievement. This will be returned from APIs and made available for use in emails and other areas of Trophy where appropriate.
 </Step>
 
-<Step title="Choose a name">
-  Choose a name for the achievement. This will be made available for use in
-  emails and other areas of Trophy where appropriate. If you're assigning this
-  achievement to a metric as part of multi-stage achievements this is optional
-  and defaults to `[count] [metric]` e.g. "100 words written".
+<Step title="Choose a trigger type">
+  Choose how you want this achievement to be unlocked.
+  
+- Choosing **Metric** will mean the achievement will be automatically unlocked when the user's total reaches the achievement trigger value.
+
+- Choosing **Streak** will mean the achievement will be automatically unlocked when the user's streak length reaches the achievement trigger value.
+
+- Choosing **API Call** will mean the achievement will only be unlocked when explicitly marked as completed by your code through an API call.
+
 </Step>
 
-<Step title="Choose a key">
-  Choose a key for the achievement. This is a unique string that you'll use to
-  refer to the achievement when using APIs. Not required for multi-stage
-  achievements.
+<Step title="Set up trigger">
+  Once you've chosen the trigger type for the achievement, you need to set up the trigger settings.
+
+- If you chose the **Metric** trigger, you'll need to choose the metric and the user's total value that should unlock the achievement when reached.
+
+- If you chose the **Streak** trigger, you'll need to set the streak length that should unlock the achievement.
+
+- If you chose the **API Call** trigger, you'll need to choose a unique reference `key` you'll use the complete the achievement via the [API](/api-reference/endpoints/achievements/mark-an-achievement-as-completed).
+
 </Step>
 
 <Step title="Upload a badge _Optional_">
-  You can upload and assign a badge to the achievement that will be made
-  available in emails and other areas of Trophy where appropriate.
+  You can upload and assign a badge to the achievement that will be returned in
+  API responses and made available in emails and other areas of Trophy where
+  appropriate.
 </Step>
 
 <Step title="Hit save">
@@ -105,13 +117,11 @@ To create new achievements, head to the [achievements page](https://app.trophy.s
 
 ## Completing Achievements
 
-If you're using Multi-stage Achievements, there's no need to explicitly _complete_ Achievements.
+If you're using metric achievements, there's no need to explicitly _complete_ achievements. Once you've set up [metric tracking](/platform/events#tracking-metric-events) in your code, all achievements linked to the metric will be automatically tracked.
 
-Once you've [integrated](/platform/events#tracking-metric-events) the Metric into your platform, all achievements linked to it will be automatically tracked.
+Similarly, if you're using streak achievements, all achievements related to the user's streak will automatically be unlocked when a user reaches the respective streak length.
 
-However if you're using any one-off achievements, you will have to mark them as completed for each user as appropriate.
-
-To do this, you can use the [Complete Achievement API](/api-reference/endpoints/achievements/mark-an-achievement-as-completed) using the `key` of the achievement you want to complete.
+However if you're using any standalone achievements, you will have to mark them as completed for each user as appropriate. To do this, you can use the [Complete Achievement API](/api-reference/endpoints/achievements/mark-an-achievement-as-completed) using the `key` of the achievement you want to complete.
 
 This will return back a response that contains details of the achievement that was completed that can be used in any post-completion workflows, like showing an in-app notification.
 
@@ -171,10 +181,12 @@ If you have multi-stage acheivements set up for any of your [Metrics](/platform/
 ## Frequently Asked Questions
 
 <AccordionGroup>
-  <Accordion title="Should I use multi-stage or one-off achievements?">
-    Use multi-stage achievements for rewarding users for taking the same action over and over again, and to incentivise them to do it more.
+  <Accordion title="What type of achievements should I use?">
+    Use metric achievements for rewarding users for taking the same action over and over again, and to incentivise them to do it more.
 
-    Use one-off achievements when you want to reward users for taking specific actions that they only need to take once.
+    Use streak achievements for rewarding users for keeping their streak.
+
+    Use standalone achievements when you want to reward users for taking specific actions that they only need to take once.
 
   </Accordion>
 
