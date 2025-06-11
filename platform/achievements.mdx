@@ -17,13 +17,13 @@ Here we'll have a look of the types of achievements you can build with Trophy, t
 
 ## Achievement Types
 
-Trophy offers three types of achievements, [Multi-stage](#multi-stage-achievements), [One-off](#one-off-achievements) and [Streak achievements](#streak-achievements), detailed below.
+Trophy offers three types of achievements, [Metric](#metric-achievements), [Standalone](#standalone-achievements) and [Streak achievements](#streak-achievements), detailed below.
 
-### Multi-stage Achievements
+### Metric Achievements
 
-Multi-stage achievements are tied to [Metrics](/platform/metrics) and are best used when you want to incentivize users to take the same action over and over again.
+Metric achievements are tied to [Metrics](/platform/metrics) and are best used when you want to incentivize users to take the same action over and over again.
 
-Let's take the example of a book-writing platform that uses Trophy to encourage users to write more often with multi-stage achievements as follows:
+Let's take the example of a book-writing platform that uses Trophy to encourage users to write more often with metric achievements as follows:
 
 - 1,000 words
 - 2,500 words
@@ -36,13 +36,13 @@ In this case you would create a metric called _Words Written_ and create achieve
 
 Since these achievements are directly tied to the _Words Written_ metric, Trophy will automatically track when users unlock these achievements as they [increment the metric](/platform/events#tracking-metric-events).
 
-When achievements are unlocked, Trophy includes information about the unlocked achievements in the [Event API](/api-reference/endpoints/metrics/send-a-metric-change-event) response, and automatically triggers [Emails](/platform/emails) if configured.
+When achievements are unlocked, Trophy includes information about the unlocked achievements in the [Event API](/api-reference/endpoints/metrics/send-a-metric-change-event) response, and automatically triggers [Achievement Emails](/platform/emails#achievement-emails) if configured.
 
 <MetricChangeResponseBlock />
 
-### One-off Achievements
+### Standalone Achievements
 
-One-off achievements can only be completed once and are useful for rewarding users for taking specific actions.
+Standalone achievements can only be completed once and are useful for rewarding users for taking specific actions.
 
 Common examples include:
 
@@ -50,9 +50,9 @@ Common examples include:
 - A user linking their social account to a platform
 - A user sharing their product experience on social media
 
-One-off achievements serve as an easy way to reward users for completing any action that you think is important for retention.
+Standalone achievements serve as an easy way to reward users for completing any action that you think is important for retention.
 
-Just like multi-stage achievements, one-off achievements can also trigger automated [Emails](/platform/emails#achievement-emails) if configured.
+Just like metric achievements, standalone achievements can also trigger automated [Achievement Emails](/platform/emails#achievement-emails) if configured.
 
 ### Streak Achievements
 
@@ -60,7 +60,7 @@ Streak achievements are directly tied to a user's [Streak](/platform/streaks) an
 
 You can create as many streak achievements as you like for increasing lengths of streak, for example 7 days, 30 days and 365 days to motivate users to use your app more and more.
 
-Just like multi-stage and one-off achievements, you can add a custom name and assign a badge to streak achievements.
+Just like metric and standalone achievements, you can add a custom name and assign a badge to streak achievements.
 
 ## Creating Achievements
 
@@ -117,13 +117,11 @@ To create new achievements, head to the [achievements page](https://app.trophy.s
 
 ## Completing Achievements
 
-If you're using multi-stage Achievements, there's no need to explicitly _complete_ Achievements. Once you've set up [metric tracking](/platform/events#tracking-metric-events) in your code, all achievements linked to the metric will be automatically tracked.
+If you're using metric achievements, there's no need to explicitly _complete_ achievements. Once you've set up [metric tracking](/platform/events#tracking-metric-events) in your code, all achievements linked to the metric will be automatically tracked.
 
 Similarly, if you're using streak achievements, all achievements related to the user's streak will automatically be unlocked when a user reaches the respective streak length.
 
-However if you're using any one-off achievements, you will have to mark them as completed for each user as appropriate.
-
-To do this, you can use the [Complete Achievement API](/api-reference/endpoints/achievements/mark-an-achievement-as-completed) using the `key` of the achievement you want to complete.
+However if you're using any standalone achievements, you will have to mark them as completed for each user as appropriate. To do this, you can use the [Complete Achievement API](/api-reference/endpoints/achievements/mark-an-achievement-as-completed) using the `key` of the achievement you want to complete.
 
 This will return back a response that contains details of the achievement that was completed that can be used in any post-completion workflows, like showing an in-app notification.
 
@@ -184,11 +182,11 @@ If you have multi-stage acheivements set up for any of your [Metrics](/platform/
 
 <AccordionGroup>
   <Accordion title="What type of achievements should I use?">
-    Use multi-stage achievements for rewarding users for taking the same action over and over again, and to incentivise them to do it more.
+    Use metric achievements for rewarding users for taking the same action over and over again, and to incentivise them to do it more.
 
     Use streak achievements for rewarding users for keeping their streak.
 
-    Use one-off achievements when you want to reward users for taking specific actions that they only need to take once.
+    Use standalone achievements when you want to reward users for taking specific actions that they only need to take once.
 
   </Accordion>
 
