@@ -101,16 +101,13 @@ paths:
                     eventId: 0040fe51-6bce-4b44-b0ad-bddc4e123534
                     total: 750
                     achievements:
-                      - metricId: 5100fe51-6bce-6j44-b0hs-bddc4e123682
+                      - id: 5100fe51-6bce-6j44-b0hs-bddc4e123682
                         trigger: metric
-                        completed:
-                          - id: 5100fe51-6bce-6j44-b0hs-bddc4e123682
-                            trigger: metric
-                            metricId: 5100fe51-6bce-6j44-b0hs-bddc4e123682
-                            metricName: words written
-                            metricValue: 500
-                            name: 500 words written
-                            achievedAt: '2020-01-01T00:00:00Z'
+                        metricId: 5100fe51-6bce-6j44-b0hs-bddc4e123682
+                        metricName: words written
+                        metricValue: 500
+                        name: 500 words written
+                        achievedAt: '2020-01-01T00:00:00Z'
                     currentStreak:
                       length: 1
                       frequency: daily
@@ -724,8 +721,8 @@ components:
                   - periodStart
                   - periodEnd
                   - length
-    BaseAchievementResponse:
-      title: BaseAchievementResponse
+    AchievementResponse:
+      title: AchievementResponse
       type: object
       properties:
         id:
@@ -739,79 +736,31 @@ components:
           description: >-
             The URL of the badge image for the achievement, if one has been
             uploaded.
-        key:
-          type: string
-          description: The key used to reference this achievement in the API.
         achievedAt:
           type: string
           format: date-time
           description: The date and time the achievement was completed, in ISO 8601 format.
-      required:
-        - id
-        - trigger
-        - name
-    MetricAchievementResponse:
-      title: MetricAchievementResponse
-      type: object
-      allOf:
-        - $ref: '#/components/schemas/BaseAchievementResponse'
-        - type: object
-      properties:
-        trigger:
+        key:
           type: string
-          description: The trigger of the achievement, in this case always 'metric'.
+          description: The key used to reference this achievement in the API (only applicable if trigger = 'api')
+        streakLength:
+          type: integer
+          description: The length of the streak required to complete the achievement (only applicable if trigger = 'streak')
         metricId:
           type: string
-          description: The ID of the metric associated with this achievement, if any.
+          description: The ID of the metric associated with this achievement (only applicable if trigger = 'metric')
         metricValue:
           type: number
           format: double
           description: >-
-            The value of the metric required to complete the achievement, if
-            this achievement is associated with a metric.
+            The value of the metric required to complete the achievement (only applicable if trigger = 'metric')
         metricName:
           type: string
-          description: The name of the metric associated with this achievement, if any.
+          description: The name of the metric associated with this achievement (only applicable if trigger = 'metric')
       required:
+        - id
         - trigger
-        - metricId
-        - metricValue
-        - metricName
-    ApiAchievementResponse:
-      title: ApiAchievementResponse
-      type: object
-      allOf:
-        - $ref: '#/components/schemas/BaseAchievementResponse'
-        - type: object
-      properties:
-        trigger:
-          type: string
-          description: The trigger of the achievement, in this case always 'api'.
-      required:
-        - trigger
-    AchievementResponse:
-      title: AchievementResponse
-      type: object
-      oneOf:
-        - $ref: '#/components/schemas/MetricAchievementResponse'
-        - $ref: '#/components/schemas/StreakAchievementResponse'
-        - $ref: '#/components/schemas/ApiAchievementResponse'
-    StreakAchievementResponse:
-      title: StreakAchievementResponse
-      type: object
-      allOf:
-        - $ref: '#/components/schemas/BaseAchievementResponse'
-        - type: object
-      properties:
-        trigger:
-          type: string
-          description: The trigger of the achievement, in this case always 'streak'.
-        streakLength:
-          type: integer
-          description: The length of the streak required to complete the achievement.
-      required:
-        - trigger
-        - streakLength
+        - name
     MetricResponse:
       title: MetricResponse
       type: object
@@ -839,7 +788,7 @@ components:
         achievements:
           type: array
           items:
-            $ref: '#/components/schemas/MetricAchievementResponse'
+            $ref: '#/components/schemas/AchievementResponse'
           description: >-
             A list of the metric's achievements and the user's progress towards
             each.
@@ -925,31 +874,10 @@ components:
           description: The unique ID of the completion.
           example: 0040fe51-6bce-4b44-b0ad-bddc4e123534
         achievement:
-          $ref: '#/components/schemas/ApiAchievementResponse'
+          $ref: '#/components/schemas/AchievementResponse'
       required:
         - completionId
         - achievement
-    EventResponseMetricsItem:
-      title: EventResponseMetricsItem
-      type: object
-      properties:
-        trigger:
-          type: string
-          description: The trigger of the achievement, in this case either 'metric' or 'streak'.
-        metricId:
-          type: string
-          description: The ID of the metric that these achievements are associated with, if any.
-        completed:
-          type: array
-          items:
-            oneOf:
-              - $ref: '#/components/schemas/MetricAchievementResponse'
-              - $ref: '#/components/schemas/StreakAchievementResponse'
-          description: >-
-            A list of any new achievements that the user has now completed as a
-            result of this event being submitted.
-      required:
-        - completed
     EventResponse:
       title: EventResponse
       type: object
@@ -970,8 +898,8 @@ components:
         achievements:
           type: array
           items:
-            $ref: '#/components/schemas/EventResponseMetricsItem'
-          description: Changes to achievements as a result of this event.
+            $ref: '#/components/schemas/AchievementResponse'
+          description: Achievements completed as a result of this event.
         currentStreak:
           $ref: '#/components/schemas/IncrementMetricStreakResponse'
           description: >-
