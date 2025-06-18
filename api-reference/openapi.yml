@@ -3,6 +3,71 @@ info:
   title: Trophy
   version: '1.0.4'
 paths:
+  /achievements:
+    get:
+      description: Get all achievements and their completion stats.
+      operationId: achievements
+      tags:
+        - Achievements
+      responses:
+        '200':
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/AchievementWithStatsResponse'
+              examples:
+                Successful operation:
+                  value:
+                    - id: 5100fe51-6bce-6j44-b0hs-bddc4e123682
+                      trigger: api
+                      name: Finish onboarding
+                      description: Complete the onboarding process.
+                      badgeUrl: https://example.com/badge.png
+                      key: finish-onboarding
+                      completions: 8
+                      completedPercentage: 80
+                    - id: 5100fe51-6bce-6j44-b0hs-bddc4e123683
+                      trigger: metric
+                      name: 500 words written
+                      description: Write 500 words in the app.
+                      badgeUrl: https://example.com/badge.png
+                      metricId: 5100fe51-6bce-6j44-b0hs-bddc4e123683
+                      metricName: words written
+                      metricValue: 500
+                      completions: 6
+                      completedPercentage: 60
+                    - id: 5100fe51-6bce-6j44-b0hs-bddc4e123684
+                      trigger: streak
+                      name: 10 days of exercise
+                      description: Exercise at least once a day for 10 days in a row.
+                      badgeUrl: https://example.com/badge.png
+                      streakLength: 10
+                      completions: 2
+                      completedPercentage: 20
+        '401':
+          description: 'Unauthorized'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorBody'
+        '404':
+          description: 'Achievements not found'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorBody'
+        '422':
+          description: 'Unprocessible Entity'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorBody'
+      summary: Get all achievements and their completion stats
+      security:
+        - ApiKeyAuth: []
   /achievements/{key}/complete:
     post:
       description: Mark an achievement as completed for a user.
@@ -32,6 +97,7 @@ paths:
                       id: 5100fe51-6bce-6j44-b0hs-bddc4e123682
                       trigger: api
                       name: Finish onboarding
+                      description: Complete the onboarding process.
                       badgeUrl: https://example.com/badge.png
                       key: finish-onboarding
                       achievedAt: '2021-01-01T00:00:00Z'
@@ -107,6 +173,7 @@ paths:
                         metricName: words written
                         metricValue: 500
                         name: 500 words written
+                        description: Write 500 words in the app.
                         achievedAt: '2020-01-01T00:00:00Z'
                     currentStreak:
                       length: 1
@@ -477,6 +544,116 @@ paths:
       summary: Get a single metric for a user
       security:
         - ApiKeyAuth: []
+  /users/{id}/metrics/{key}/event-summary:
+    get:
+      description: Get a summary of metric events over time for a user.
+      operationId: users_metric_event_summary
+      tags:
+        - Users
+      parameters:
+        - name: id
+          in: path
+          description: ID of the user.
+          required: true
+          schema:
+            type: string
+          example: userId
+        - name: key
+          in: path
+          description: Unique key of the metric.
+          required: true
+          schema:
+            type: string
+          example: words-written
+        - name: aggregation
+          in: query
+          description: The time period over which to aggregate the event data.
+          required: true
+          schema:
+            type: string
+            enum:
+              - daily
+              - weekly
+              - monthly
+          example: daily
+        - name: startDate
+          in: query
+          description: The start date for the data range in YYYY-MM-DD format. The startDate must be before the endDate, and the date range must not exceed 400 days.
+          required: true
+          schema:
+            type: string
+            format: date
+          example: '2024-01-01'
+        - name: endDate
+          in: query
+          description: The end date for the data range in YYYY-MM-DD format. The endDate must be after the startDate, and the date range must not exceed 400 days.
+          required: true
+          schema:
+            type: string
+            format: date
+          example: '2024-01-31'
+      responses:
+        '200':
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    date:
+                      type: string
+                      format: date
+                      description: The date of the data point. For weekly or monthly aggregations, this is the first date of the period.
+                      example: '2024-01-01'
+                    total:
+                      type: number
+                      format: double
+                      description: The user's total for this metric at the end of this date.
+                      example: 100
+                    change:
+                      type: number
+                      format: double
+                      description: The change in the user's total for this metric during this period.
+                      example: 50
+                  required:
+                    - date
+                    - total
+                    - change
+              examples:
+                Successful operation:
+                  value:
+                    - date: '2024-01-01'
+                      total: 100
+                      change: 100
+                    - date: '2024-01-02'
+                      total: 300
+                      change: 200
+                    - date: '2024-01-03'
+                      total: 600
+                      change: 300
+        '401':
+          description: 'Unauthorized'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorBody'
+        '404':
+          description: 'Not Found'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorBody'
+        '422':
+          description: 'Unprocessible Entity'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorBody'
+      summary: Get a summary of metric events over time
+      security:
+        - ApiKeyAuth: []
   /users/{id}/achievements:
     get:
       description: Get all of a user's completed achievements.
@@ -499,7 +676,7 @@ paths:
               schema:
                 type: array
                 items:
-                  $ref: '#/components/schemas/AchievementResponse'
+                  $ref: '#/components/schemas/CompletedAchievementResponse'
               examples:
                 Successful operation:
                   value:
@@ -734,15 +911,14 @@ components:
         trigger:
           type: string
           description: The trigger of the achievement, either 'metric', 'streak', or 'api'.
+        description:
+          type: string
+          description: The description of this achievement.
         badgeUrl:
           type: string
           description: >-
             The URL of the badge image for the achievement, if one has been
             uploaded.
-        achievedAt:
-          type: string
-          format: date-time
-          description: The date and time the achievement was completed, in ISO 8601 format.
         key:
           type: string
           description: The key used to reference this achievement in the API (only applicable if trigger = 'api')
@@ -764,6 +940,31 @@ components:
         - id
         - trigger
         - name
+    CompletedAchievementResponse:
+      title: AchievementResponse
+      type: object
+      allOf:
+        - $ref: '#/components/schemas/AchievementResponse'
+        - type: object
+          properties:
+            achievedAt:
+              type: string
+              format: date-time
+              description: The date and time the achievement was completed, in ISO 8601 format.
+    AchievementWithStatsResponse:
+      title: AchievementWithStatsResponse
+      type: object
+      allOf:
+        - $ref: '#/components/schemas/AchievementResponse'
+        - type: object
+          properties:
+            completions:
+              type: integer
+              description: The number of users who have completed this achievement.
+            completedPercentage:
+              type: number
+              format: double
+              description: The percentage of all users who have completed this achievement.
     MetricResponse:
       title: MetricResponse
       type: object
@@ -791,7 +992,7 @@ components:
         achievements:
           type: array
           items:
-            $ref: '#/components/schemas/AchievementResponse'
+            $ref: '#/components/schemas/CompletedAchievementResponse'
           description: >-
             A list of the metric's achievements and the user's progress towards
             each.
@@ -877,7 +1078,7 @@ components:
           description: The unique ID of the completion.
           example: 0040fe51-6bce-4b44-b0ad-bddc4e123534
         achievement:
-          $ref: '#/components/schemas/AchievementResponse'
+          $ref: '#/components/schemas/CompletedAchievementResponse'
       required:
         - completionId
         - achievement
@@ -901,7 +1102,7 @@ components:
         achievements:
           type: array
           items:
-            $ref: '#/components/schemas/AchievementResponse'
+            $ref: '#/components/schemas/CompletedAchievementResponse'
           description: Achievements completed as a result of this event.
         currentStreak:
           $ref: '#/components/schemas/IncrementMetricStreakResponse'
