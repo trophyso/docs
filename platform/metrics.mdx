@@ -7,18 +7,20 @@ icon: box
 
 ## What are Metrics?
 
-All gamification features are centered around user interactions. At Trophy, we use the term **Metrics** to refer to the data objects that reflect those interactions within the platform.
+All gamification features are centered around user interactions. At Trophy, we use the term **Metrics** to refer to the data objects that model those interactions within your web or mobile app.
 
 Metrics are un-opinionated, meaning they can be used to model absolutely any user interaction you can think of. Examples could include:
 
-- Followers on social media platforms
+- Followers, likes or posts
 - Tasks completed
 - Miles ran
 - Lessons completed
+- Words written
+- ...
 
 Metrics are the building blocks of the infrastructure that powers Trophy's gamification features. Each user interaction that relates to a metric is stored as an [Event](/platform/events).
 
-Events are stored and processed in chronological order. At any particular point in time, the combined state of all of a user's events reflects their overall progress on your platform.
+Events are stored and processed in chronological order. At any particular point in time, the combined state of a user's event history reflects their overall progress on your platform.
 
 ## Key Attributes
 
@@ -50,13 +52,13 @@ To create a Metric, head over to the [Metrics](https://app.trophy.so/metrics) pa
   <Step title="Enter a name">
     Choose a name for the metric.
   </Step>
-
-  <Step title="Choose an emoji">
-    Choose an emoji that will be made available for display in emails and will represent the metric in other areas of Trophy.
-  </Step>
   
   <Step title="Hit save">
     Save the new metric.
+  </Step>
+
+   <Step title="Configure settings">
+    Configure additional settigns like metric units or currency if applicable on the metric configure page.
   </Step>
 </Steps>
 
@@ -68,7 +70,6 @@ Trophy has a built-in analytics dashboard for each metric you create. It shows y
 - The number of users actively making progress against the metric
 - The metric's [Trophy Retention Impact Score](#trophy-retention-impact-score)
 - The metric's [Achievment Completion Chart](#achievment-completion-chart)
-- The metric's [Streak Progress Analytics](#streak-progress-analytics)
 
 <Frame>
   <img
@@ -111,24 +112,6 @@ The achievement completion chart shows the current state of the userbase in term
     height="200"
     noZoom
     src="../assets/platform/metrics/achievement_completions.png"
-  />
-</Frame>
-
-### Streak Progress Analytics
-
-The Streak analytics charts show important information about streaks if they are enabled for this metric, including:
-
-- The average length of streaks
-- The number of active streaks
-- The streak retention impact (reflects the increase in retention of users who are on a streak compared to those who aren't)
-
-[Learn more about streaks](/platform/streaks).
-
-<Frame>
-  <img
-    height="200"
-    noZoom
-    src="../assets/platform/metrics/streak_analytics.png"
   />
 </Frame>
 

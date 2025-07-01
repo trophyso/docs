@@ -1,6 +1,6 @@
 ---
 title: Users
-description: Learn how to track interactions across your whole userbase using Trophy. Track any user interaction and trigger automated gamification flows in just a few lines of code.
+description: Learn how to track interactions across your userbase using Trophy.
 "og:description": Users are the people that use your platform. Learn how to tell Trophy about them.
 icon: users
 ---
@@ -16,7 +16,10 @@ Users in Trophy have a number of attributes, some are required while others are 
 
 Every user you tell Trophy about must have an `id`, this is what identifies them as a unique person.
 
-To make things simple, Trophy lets you use your own id that you already have in your database instead of needing to manage another one just for Trophy.
+<Tip>
+  To make things simple, Trophy lets you use your own `id` that you already have
+  in your database instead of needing to manage another one just for Trophy.
+</Tip>
 
 <ParamField path="id" type="string" required={true}>
   This is the ID of the user in **your** database.
@@ -117,8 +120,10 @@ In this case, you can tell Trophy about new users using the [User Identification
 <IdentifyUserRequestBlock />
 
 <Tip>
-  Even if you use explicit identification, the metrics API will always create
-  new and update existing users to ensure your whole userbase is always tracked.
+  Even if you use explicit identification, the [metric tracking
+  API](/api-reference/endpoints/metrics/send-a-metric-change-event) will always
+  create new and update existing users to ensure your user data is always in
+  sync.
 </Tip>
 
 ## Keeping Users Up To Date
@@ -133,7 +138,7 @@ To fetch the details of a user that you've already identified with Trophy, use t
 
 This will return the full details of the user along with the `control` attribute that you can use to conditionally enroll users in any gamification features. Learn more about [Experimentation](/experimentation/overview).
 
-```json Response
+```json Response {3}
 {
   "id": "user-id",
   "control": false,

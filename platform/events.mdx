@@ -1,7 +1,7 @@
 ---
 title: Events
-description: Events are data objects that record continual user interactions against metrics in Trophy.
-"og:description": Events are data objects that record continual user interactions against metrics in Trophy.
+description: Events are data objects that represent individual user interactions against metrics in Trophy.
+"og:description": Events are data objects that represent individual user interactions against metrics in Trophy.
 icon: radio
 ---
 
@@ -10,7 +10,7 @@ import MetricChangeResponseBlock from "/snippets/metric-change-response-block.md
 
 ## What are Events?
 
-Events store information about individual user interactions that are tracked against [Metrics](/platform/metrics) in Trophy. One event corresponds to a single interaction made by a single user.
+Events represent individual user interactions against [Metrics](/platform/metrics) in Trophy. One event corresponds to a single interaction made by a single user.
 
 When you [integrate metrics](#tracking-metric-events) into your platform, you're setting up your platform to continuously stream events to your Trophy metrics for each user interaction. These interactions then drive all the gamification features you set up around these metrics.
 
@@ -18,7 +18,7 @@ When you [integrate metrics](#tracking-metric-events) into your platform, you're
 
 ### Metric-backed
 
-Each event increases or decreases a specific metric that you've configured in Trophy for a specific user.
+Each event increases or decreases the total value of a specific metric that you've configured in Trophy for a specific user.
 
 ### Value
 
@@ -34,17 +34,25 @@ Here's an example where a fictional book-writing platform is using a metric to t
 
 <MetricChangeRequestBlock />
 
-Any [Achievements](/platform/achievements), [Streaks](/platform/streaks) or other gamification features that have been set up against this metric will be automatically processed, and the response will contain any updates to the users progress that are a direct result of the event occurring:
+Any [Achievements](/platform/achievements), [Streaks](/platform/streaks) or [Points](/platform/points) that have been set up against this metric will be automatically processed, and the response will contain any updates to the users progress that are a direct result of the event occurring:
 
 <MetricChangeResponseBlock />
 
-With custom code, this response data can then be used to drive any in-app experience you wish including:
+In this example the response includes the following:
+
+- Newly unlocked achievements as a result of the event
+- The users latest streak as result of the event
+- Any points awards as a result of the event
+
+With a little bit of custom code, this response data can be used to drive any in-app experience you wish including:
 
 - Triggering in-app notifications
 - Sound effects
 - Animations
 
-Watch Charlie integrate metric tracking into a simple NextJS application using the NodeJS SDK:
+Additionally, any [Emails](/platform/emails) configured to track the metric will be scheduled automatically by Trophy.
+
+Watch Charlie integrate metric tracking into a simple NextJS application using the Trophy [NodeJS SDK](/api-reference/client-libraries):
 
 <Frame>
   <iframe

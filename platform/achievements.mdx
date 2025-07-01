@@ -11,7 +11,14 @@ import MetricChangeResponseBlock from "/snippets/metric-change-response-block.md
 
 Achievements are rewards that users can unlock as they use your platform. They can be used to reward users for making continued progress along core user journeys, or to motivate users to explore more nascent features.
 
-No matter the type of achievement, they work best when designed to incentivize users to take actions that are likely to lead to increased retention. So before jumping in, have a think about what those actions might be in your context.
+Achievements work best when designed to incentivize users to take actions that
+are likely to lead to increased retention.
+
+<Tip>
+  Use Trophy's [metric analytics](/platform/metrics#metric-analytics) to compare
+  the retention of each user interaction, then configure acheivements around
+  these interactions to maximize retention impact.
+</Tip>
 
 Here we'll have a look of the types of achievements you can build with Trophy, the different ways to use them, and how to integrate them into your platform.
 
@@ -144,7 +151,9 @@ This will return back a response that contains details of the achievement that w
   "completionId": "0040fe51-6bce-4b44-b0ad-bddc4e123534",
   "achievement": {
     "id": "5100fe51-6bce-6j44-b0hs-bddc4e123682",
+    "trigger": "api",
     "name": "Finish onboarding",
+    "description": "Complete the onboarding process.",
     "badgeUrl": "https://example.com/badge.png",
     "key": "finish-onboarding",
     "achievedAt": "2021-01-01T00:00:00Z"
@@ -167,12 +176,14 @@ This will return back a response that contains details of the achievement that w
 
 A badge can be uploaded and assigned to any achievement in Trophy. Trophy will host the image for you and return the URL back to you in relevant API responses to be used as the `src` property in `<img>` tags.
 
-```json Response {6}
+```json Response {8}
 {
   "completionId": "0040fe51-6bce-4b44-b0ad-bddc4e123534",
   "achievement": {
     "id": "5100fe51-6bce-6j44-b0hs-bddc4e123682",
+    "trigger": "api",
     "name": "Finish onboarding",
+    "description": "Complete the onboarding process.",
     "badgeUrl": "https://example.com/badge.png",
     "key": "finish-onboarding",
     "achievedAt": "2021-01-01T00:00:00Z"
@@ -207,8 +218,9 @@ If you have multi-stage acheivements set up for any of your [Metrics](/platform/
     <Accordion title="What achievements should I create?">
     Achievements, like all gamification, offer the best retention when tightly aligned to the user's core reason for using your platform.
 
-    Only you'll know what's best here.
-    </Accordion>
+    Use Trophy's [metric analytics](/platform/metrics#metric-analytics) to compare the retention of each user interaction, then configure acheivements around these interactions to maximize retention impact.
+
+</Accordion>
 
 </AccordionGroup>
 
