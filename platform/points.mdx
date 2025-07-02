@@ -51,9 +51,9 @@ To create a new points trigger, head to the [points](https://app.trophy.so/point
   
 - Choosing **Metric** will mean points will be automatically awarded to users incrementally as they increase their metric total for a particular metric.
 
-- Choosing **Streak** will mean points will be automatically awarded to users when their streak reaches a specific length.
+- Choosing **Streak** will mean points will be automatically awarded to users eaech time their streak is increased by a specific length.
 
-- Choosing **Achievement** will mean points will be automatically awarded to users when they unlock a specific achievement.
+- Choosing **Achievement** will mean points will be automatically awarded to users when they complete a specific achievement.
 
 </Step>
 
@@ -62,9 +62,9 @@ To create a new points trigger, head to the [points](https://app.trophy.so/point
 
 - If you chose the **Metric** trigger, you'll need to choose the metric, the threshold amount at which to award points, and number of points to award each time the user's total metric value increases by the threshold amount.
 
-- If you chose the **Streak** trigger, you'll need to set the streak length that should award points and the number of points to award to user's when they reach this streak length.
+- If you chose the **Streak** trigger, you'll need to set the streak length that should award points and the number of points to award to user's each time their streak is increased by this length.
 
-- If you chose the **Achievement** trigger, you'll need to choose the acheivement that should award points when unlocked and the number of points to award.
+- If you chose the **Achievement** trigger, you'll need to choose the achievement that should award points when completed and the number of points to award.
 
 </Step>
 
@@ -75,9 +75,9 @@ To create a new points trigger, head to the [points](https://app.trophy.so/point
 
 ## Balancing Points
 
-Running an effective points system means ensuring correct balancing. Balancing means making sure users don't earn points too fast or slow. Failure to achieve balancing can result in points fatigue, or boredom which both lead to disengagement with the feature.
+Running an effective points system requires finding the optimal pace at which users earn points. Too fast, and users will get points fatigue, rendering them useless. Too slow, and users may get bored and churn.
 
-Use Trophy's points preview tool to test how points triggers work in practice.
+Trophy's preview tool can model different scenarios to help you determine how frequently users should earn points.
 
 <Frame>
   <video
@@ -96,7 +96,7 @@ There are a few ways to use Trophy to fetch and display points in your app.
 
 Firstly, any points awarded to users are returned in the response when sending metric change events using the (metric change event API](/api-reference/endpoints/metrics/send-a-metric-change-event).
 
-The response includes the users total points, how many points were awarded as a result of the event, and the details of the specific triggers that fired.
+The response includes the user's total points, how many points were awarded as a result of the event, and the details of the specific triggers that fired.
 
 <MetricChangeResponseBlock />
 
@@ -104,11 +104,11 @@ Additionally there are a number of APIs that can be used to fetch and display po
 
 ## Points Analytics
 
-Trophy has built in analytics to track points awards across your users in real time including:
+Trophy has built-in analytics to track points awards across your users in real time including:
 
 - Total points earned by all users over time
 - Most points earned by a single user
-- Average points earned in first 14 days (useful for understanding new user retention patterns and the impact of points)
+- Average points earned in the first 14 days (useful for understanding new user retention patterns and the impact of points)
 - A breakdown on the most commonly awarded points triggers
 
 <Frame>
