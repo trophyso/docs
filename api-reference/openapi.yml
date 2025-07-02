@@ -130,7 +130,7 @@ paths:
               type: object
               properties:
                 user:
-                  $ref: '#/components/schemas/UpsertedUser'
+                  $ref: '#/components/schemas/UpdatedUser'
                   description: The user that completed the achievement.
               required:
                 - user
@@ -138,7 +138,10 @@ paths:
               Successful operation:
                 value:
                   user:
-                    $ref: '#/components/schemas/User'
+                    id: user-id
+                    email: user@example.com
+                    tz: Europe/London
+                    subscribedToEmails: true
   /metrics/{key}/event:
     post:
       description: Increment or decrement the value of a metric for a user.
