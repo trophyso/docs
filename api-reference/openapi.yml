@@ -6,7 +6,7 @@ paths:
   /achievements:
     get:
       description: Get all achievements and their completion stats.
-      operationId: achievements
+      operationId: achievements_all
       tags:
         - Achievements
       responses:
@@ -944,7 +944,7 @@ components:
         - trigger
         - name
     CompletedAchievementResponse:
-      title: AchievementResponse
+      title: CompletedAchievementResponse
       type: object
       allOf:
         - $ref: '#/components/schemas/AchievementResponse'
