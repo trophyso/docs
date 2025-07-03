@@ -808,6 +808,287 @@ paths:
       summary: Get a user's streak status
       security:
         - ApiKeyAuth: []
+  /users/{id}/points:
+    get:
+      description: Get a user's points.
+      operationId: users_points
+      tags:
+        - Users
+      parameters:
+        - name: id
+          in: path
+          description: ID of the user.
+          required: true
+          schema:
+            type: string
+          example: userId
+        - in: query
+          name: awards
+          schema:
+            type: integer
+            default: 10
+            minimum: 1
+            maximum: 100
+          description: The number of recent point awards to return.
+      responses:
+        '200':
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GetUserPointsResponse'
+              examples:
+                Successful operation:
+                  value:
+                    total: 100
+                    awards:
+                      - id: 0040fe51-6bce-4b44-b0ad-bddc4e123534
+                        awarded: 10
+                        trigger:
+                          id: 0040fe51-6bce-4b44-b0ad-bddc4e123534
+                          type: metric
+                          points: 10
+                          metricName: words written
+                          metricThreshold: 1000
+        '401':
+          description: 'Unauthorized'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorBody'
+        '404':
+          description: 'Not Found'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorBody'
+        '422':
+          description: 'Unprocessible Entity'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorBody'
+      summary: Get a user's points data
+      security:
+        - ApiKeyAuth: []
+  /users/{id}/points/event-summary:
+    get:
+      description: Get a summary of points awards over time for a user.
+      operationId: users_points_event_summary
+      tags:
+        - Users
+      parameters:
+        - name: id
+          in: path
+          description: ID of the user.
+          required: true
+          schema:
+            type: string
+          example: userId
+        - name: aggregation
+          in: query
+          description: The time period over which to aggregate the event data.
+          required: true
+          schema:
+            type: string
+            enum:
+              - daily
+              - weekly
+              - monthly
+          example: daily
+        - name: startDate
+          in: query
+          description: The start date for the data range in YYYY-MM-DD format. The startDate must be before the endDate, and the date range must not exceed 400 days.
+          required: true
+          schema:
+            type: string
+            format: date
+          example: '2024-01-01'
+        - name: endDate
+          in: query
+          description: The end date for the data range in YYYY-MM-DD format. The endDate must be after the startDate, and the date range must not exceed 400 days.
+          required: true
+          schema:
+            type: string
+            format: date
+          example: '2024-01-31'
+      responses:
+        '200':
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    date:
+                      type: string
+                      format: date
+                      description: The date of the data point. For weekly or monthly aggregations, this is the first date of the period.
+                      example: '2024-01-01'
+                    total:
+                      type: number
+                      format: double
+                      description: The user's total points at the end of this date.
+                      example: 100
+                    change:
+                      type: number
+                      format: double
+                      description: The change in the user's total points during this period.
+                      example: 50
+                  required:
+                    - date
+                    - total
+                    - change
+              examples:
+                Successful operation:
+                  value:
+                    - date: '2024-01-01'
+                      total: 100
+                      change: 100
+                    - date: '2024-01-02'
+                      total: 300
+                      change: 200
+                    - date: '2024-01-03'
+                      total: 600
+                      change: 300
+        '401':
+          description: 'Unauthorized'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorBody'
+        '404':
+          description: 'Not Found'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorBody'
+        '422':
+          description: 'Unprocessible Entity'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorBody'
+      summary: Get a summary of points events over time
+      security:
+        - ApiKeyAuth: []
+  /points/summary:
+    get:
+      description: Get a breakdown of the number of users with points in each range.
+      operationId: points_summary
+      tags:
+        - Points
+      responses:
+        '200':
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PointsSummaryResponse'
+              examples:
+                Successful operation:
+                  value:
+                    - from: 0
+                      to: 0
+                      users: 5012
+                    - from: 1
+                      to: 100
+                      users: 1501
+                    - from: 101
+                      to: 200
+                      users: 1007
+                    - from: 201
+                      to: 300
+                      users: 584
+                    - from: 301
+                      to: 400
+                      users: 201
+                    - from: 401
+                      to: 500
+                      users: 102
+                    - from: 501
+                      to: 600
+                      users: 25
+                    - from: 601
+                      to: 700
+                      users: 0
+                    - from: 701
+                      to: 800
+                      users: 0
+                    - from: 801
+                      to: 900
+                      users: 0
+                    - from: 901
+                      to: 1000
+                      users: 0
+        '401':
+          description: 'Unauthorized'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorBody'
+        '404':
+          description: 'Not Found'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorBody'
+      summary: Get a breakdown of users by points
+      security:
+        - ApiKeyAuth: []
+  /points/triggers:
+    get:
+      description: Get all points triggers.
+      operationId: points_triggers
+      tags:
+        - Points
+      responses:
+        '200':
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/PointsTriggerResponse'
+              examples:
+                Successful operation:
+                  value:
+                    - id: 0040fe51-6bce-4b44-b0ad-bddc4e123534
+                      type: metric
+                      points: 10
+                      status: active
+                      metricId: 0040fe51-6bce-4b44-b0ad-bddc4e123534
+                      metricName: words written
+                      metricThreshold: 1000
+                      created: '2021-01-01T00:00:00Z'
+                      updated: '2021-01-01T00:00:00Z'
+                    - id: 0040fe51-6bce-4b44-b0ad-bddc4e123536
+                      type: streak
+                      points: 10
+                      status: active
+                      streakLengthThreshold: 7
+                      created: '2021-01-01T00:00:00Z'
+                      updated: '2021-01-01T00:00:00Z'
+                    - id: 0040fe51-6bce-4b44-b0ad-bddc4e123535
+                      type: achievement
+                      points: 50
+                      status: active
+                      achievementId: 0040fe51-6bce-4b44-b0ad-bddc4e123535
+                      achievementName: finish onboarding
+                      created: '2021-01-01T00:00:00Z'
+                      updated: '2021-01-01T00:00:00Z'
+        '401':
+          description: 'Unauthorized'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorBody'
+      summary: Get all points triggers
+      security:
+        - ApiKeyAuth: []
 components:
   schemas:
     MetricStatus:
@@ -854,10 +1135,10 @@ components:
       required:
         - length
         - frequency
-    IncrementMetricStreakResponse:
-      title: Streak Response (Increment Metric)
+    MetricEventStreakResponse:
+      title: Streak Response (Metric Event)
       type: object
-      description: An object representing the user's streak after incrementing a metric.
+      description: An object representing the user's streak after sending a metric event.
       allOf:
         - $ref: '#/components/schemas/BaseStreakResponse'
         - type: object
@@ -901,6 +1182,67 @@ components:
                   - periodStart
                   - periodEnd
                   - length
+    PointsTrigger:
+      title: PointsTrigger
+      type: object
+      properties:
+        id:
+          type: string
+          description: The ID of the trigger
+        type:
+          type: string
+          description: The type of trigger
+          enum: ['metric', 'achievement', 'streak']
+        points:
+          type: number
+          description: The points awarded by this trigger.
+        metricName:
+          type: string
+          description: If the trigger has type 'metric', the name of the metric
+        metricThreshold:
+          type: number
+          description: If the trigger has type 'metric', the threshold of the metric that triggers the points
+        streakLengthThreshold:
+          type: number
+          description: If the trigger has type 'streak', the threshold of the streak that triggers the points
+        achievementName:
+          type: string
+          description: If the trigger has type 'achievement', the name of the achievement
+    PointsAward:
+      title: PointsAward
+      type: object
+      properties:
+        id:
+          type: string
+          description: The ID of the trigger award
+        awarded:
+          type: number
+          description: The points awarded by this trigger
+        trigger:
+          $ref: '#/components/schemas/PointsTrigger'
+    GetUserPointsResponse:
+      title: GetUserPointsResponse
+      type: object
+      properties:
+        total:
+          type: number
+          description: The user's total points
+        awards:
+          type: array
+          description: Array of trigger awards that added points.
+          items:
+            $ref: '#/components/schemas/PointsAward'
+    MetricEventPointsResponse:
+      title: MetricEventPointsResponse
+      type: object
+      allOf:
+        - $ref: '#/components/schemas/GetUserPointsResponse'
+        - type: object
+          properties:
+            added:
+              type: number
+              description: The points added by this event.
+              example: 10
     AchievementResponse:
       title: AchievementResponse
       type: object
@@ -913,7 +1255,8 @@ components:
           description: The name of this achievement.
         trigger:
           type: string
-          description: The trigger of the achievement, either 'metric', 'streak', or 'api'.
+          enum: ['metric', 'streak', 'api']
+          description: The trigger of the achievement.
         description:
           type: string
           description: The description of this achievement.
@@ -939,6 +1282,11 @@ components:
         metricName:
           type: string
           description: The name of the metric associated with this achievement (only applicable if trigger = 'metric')
+        currentStreak:
+          $ref: '#/components/schemas/MetricEventStreakResponse'
+          description: >-
+            The user's current streak for the metric, if the metric has streaks
+            enabled.
       required:
         - id
         - trigger
@@ -1108,14 +1456,86 @@ components:
             $ref: '#/components/schemas/CompletedAchievementResponse'
           description: Achievements completed as a result of this event.
         currentStreak:
-          $ref: '#/components/schemas/IncrementMetricStreakResponse'
+          $ref: '#/components/schemas/MetricEventStreakResponse'
           description: >-
             The user's current streak for the metric, if the metric has streaks
             enabled.
+        points:
+          $ref: '#/components/schemas/PointsAward'
+          description: >-
+            The points added by this event, and a breakdown of the points
+            awards that added points.
       required:
         - eventId
         - metricId
         - total
+    PointsRange:
+      title: PointsRange
+      type: object
+      properties:
+        from:
+          type: number
+          description: The start of the points range. Inclusive.
+        to:
+          type: number
+          description: The end of the points range. Inclusive.
+        users:
+          type: number
+          description: The number of users in this points range.
+    PointsSummaryResponse:
+      title: PointsSummaryResponse
+      type: array
+      description: >-
+        A list of eleven points ranges, with the first starting and ending at 0,
+        and the remaining 10 being calculated as 10 equally sized ranges from 1
+        to the greatest number of points a user has, rounded up to the nearest
+        power of 10.
+      items:
+        $ref: '#/components/schemas/PointsRange'
+    PointsTriggerResponse:
+      title: PointsTriggerResponse
+      type: object
+      properties:
+        id:
+          type: string
+          description: The unique ID of the trigger.
+        type:
+          type: string
+          enum: ['metric', 'achievement', 'streak']
+          description: The type of trigger.
+        points:
+          type: number
+          description: The points awarded by this trigger.
+        status:
+          type: string
+          enum: ['active', 'archived']
+          description: The status of the trigger.
+        achievementId:
+          type: string
+          description: The unique ID of the achievement associated with this trigger, if the trigger is an achievement.
+        metricId:
+          type: string
+          description: The unique ID of the metric associated with this trigger, if the trigger is a metric.
+        metricThreshold:
+          type: number
+          description: The amount that a user must increase the metric to earn the points, if the trigger is a metric.
+        streakLengthThreshold:
+          type: number
+          description: The number of consecutive streak periods that a user must complete to earn the points, if the trigger is a streak.
+        metricName:
+          type: string
+          description: The name of the metric associated with this trigger, if the trigger is a metric.
+        achievementName:
+          type: string
+          description: The name of the achievement associated with this trigger, if the trigger is an achievement.
+        created:
+          type: string
+          format: date-time
+          description: The date and time the trigger was created, in ISO 8601 format.
+        updated:
+          type: string
+          format: date-time
+          description: The date and time the trigger was last updated, in ISO 8601 format.
   securitySchemes:
     ApiKeyAuth:
       type: apiKey
