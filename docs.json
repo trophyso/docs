@@ -25,7 +25,7 @@
   },
   "seo": {
     "metatags": {
-      "og:description": "Trophy is a developer-friendly platform for building gamified product experiences in any mobile or web app. Add features like achievements and streaks in hours, not months.",
+      "og:description": "Trophy is a developer-friendly platform for building gamified product experiences that retain users in any mobile or web app. Add features like achievements, streaks and points systems and deliver personalized progress report and reactivation emails with no code.",
       "og:image": "/assets/og.png"
     }
   },
@@ -50,6 +50,7 @@
               "platform/users",
               "platform/achievements",
               "platform/streaks",
+              "platform/points",
               "platform/emails"
             ]
           },
@@ -124,6 +125,13 @@
             ]
           },
           {
+            "group": "Points",
+            "pages": [
+              "api-reference/endpoints/points/get-points-summary",
+              "api-reference/endpoints/points/get-all-points-triggers"
+            ]
+          },
+          {
             "group": "Users",
             "pages": [
               "api-reference/endpoints/users/identify-a-new-user",
@@ -133,7 +141,9 @@
               "api-reference/endpoints/users/get-a-single-metric-for-a-user",
               "api-reference/endpoints/users/get-a-single-metric-event-summary-for-a-user",
               "api-reference/endpoints/users/get-a-users-completed-achievements",
-              "api-reference/endpoints/users/get-a-users-streak"
+              "api-reference/endpoints/users/get-a-users-streak",
+              "api-reference/endpoints/users/get-a-users-points",
+              "api-reference/endpoints/users/get-a-users-points-summary"
             ]
           }
         ]

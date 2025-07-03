@@ -1,17 +1,25 @@
 ---
 title: Achievements
 description: Learn how to use Achievements in a gamified product experience with Trophy.
-"og:description": Use multi-stage, one-off and streak achievements to rewards users for continued progress and to encourage them to discover new parts of your app.
+"og:description": Use metric, standalone and streak achievements to rewards users for continued progress and to encourage them to discover new parts of your app.
 icon: trophy
 ---
 
 import MetricChangeResponseBlock from "/snippets/metric-change-response-block.mdx";
+import AllAchievementsResponseBlock from "/snippets/all-achievements-response-block.mdx";
 
 ## What Are Achievements?
 
 Achievements are rewards that users can unlock as they use your platform. They can be used to reward users for making continued progress along core user journeys, or to motivate users to explore more nascent features.
 
-No matter the type of achievement, they work best when designed to incentivize users to take actions that are likely to lead to increased retention. So before jumping in, have a think about what those actions might be in your context.
+Achievements work best when designed to incentivize users to take actions that
+are likely to lead to increased retention.
+
+<Tip>
+  Use Trophy's [metric analytics](/platform/metrics#metric-analytics) to compare
+  the retention of each user interaction, then configure achievements around
+  these interactions to maximize retention impact.
+</Tip>
 
 Here we'll have a look of the types of achievements you can build with Trophy, the different ways to use them, and how to integrate them into your platform.
 
@@ -144,7 +152,9 @@ This will return back a response that contains details of the achievement that w
   "completionId": "0040fe51-6bce-4b44-b0ad-bddc4e123534",
   "achievement": {
     "id": "5100fe51-6bce-6j44-b0hs-bddc4e123682",
+    "trigger": "api",
     "name": "Finish onboarding",
+    "description": "Complete the onboarding process.",
     "badgeUrl": "https://example.com/badge.png",
     "key": "finish-onboarding",
     "achievedAt": "2021-01-01T00:00:00Z"
@@ -167,12 +177,14 @@ This will return back a response that contains details of the achievement that w
 
 A badge can be uploaded and assigned to any achievement in Trophy. Trophy will host the image for you and return the URL back to you in relevant API responses to be used as the `src` property in `<img>` tags.
 
-```json Response {6}
+```json Response {8}
 {
   "completionId": "0040fe51-6bce-4b44-b0ad-bddc4e123534",
   "achievement": {
     "id": "5100fe51-6bce-6j44-b0hs-bddc4e123682",
+    "trigger": "api",
     "name": "Finish onboarding",
+    "description": "Complete the onboarding process.",
     "badgeUrl": "https://example.com/badge.png",
     "key": "finish-onboarding",
     "achievedAt": "2021-01-01T00:00:00Z"
@@ -180,13 +192,55 @@ A badge can be uploaded and assigned to any achievement in Trophy. Trophy will h
 }
 ```
 
-## Achievement Analytics
+## Displaying Achievements
 
-If you have multi-stage acheivements set up for any of your [Metrics](/platform/metrics), then the metric analytics page displays a chart that shows you the current progress of all Users as follows:
+Trophy has a number of APIs that support displaying achievements within your applications. Here we'll look at the different ways to use them and the types of UI's you can build.
+
+<Tip>
+  Take a look at our [examples center](https://examples.trophy.so) for live
+  demos of APIs in practice.
+</Tip>
+
+### All Achievements
+
+To display a high-level overview of all achievements users can complete, use the [all achievements endpoint](/api-reference/endpoints/achievements/all-achievements). Use this data to build UI that gives users an idea of the progression pathways within your application.
+
+<Frame>
+  <video
+    autoPlay
+    muted
+    loop
+    playsInline
+    className="w-full aspect-video"
+    src="../assets/platform/achievements/displaying_trophy_cabinet.mp4"
+  ></video>
+</Frame>
+
+The all achievements endpoint returns a list of all achievements within your Trophy account along with details of 'rarity' (the percentage of users who have completed each achievement) as follows:
+
+<AllAchievementsResponseBlock />
+
+### User Achievements
+
+If instead you're building user-specific UI elements, then use the [user achievements endpoint](/api-reference/endpoints/users/get-a-users-completed-achievements) to get only the achievements a specific user has completed.
+
+Use this data to display achievements against a user's profile for example.
 
 <Frame>
   <img
     height="200"
+    noZoom
+    src="../assets/platform/achievements/user_achievements.png"
+  />
+</Frame>
+
+## Achievement Analytics
+
+If you have achievements set up for any of your [Metrics](/platform/metrics), then the metric analytics page displays a chart that shows you the current progress of all Users as follows:
+
+<Frame>
+  <img
+    width="50%"
     noZoom
     src="../assets/platform/metrics/achievement_completions.png"
   />
@@ -207,8 +261,9 @@ If you have multi-stage acheivements set up for any of your [Metrics](/platform/
     <Accordion title="What achievements should I create?">
     Achievements, like all gamification, offer the best retention when tightly aligned to the user's core reason for using your platform.
 
-    Only you'll know what's best here.
-    </Accordion>
+    Use Trophy's [metric analytics](/platform/metrics#metric-analytics) to compare the retention of each user interaction, then configure achievements around these interactions to maximize retention impact.
+
+</Accordion>
 
 </AccordionGroup>
 

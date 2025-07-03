@@ -11,7 +11,13 @@ import MetricChangeResponseBlock from "/snippets/metric-change-response-block.md
 
 A streak is a period of consecutive days, weeks or months that a user has performed a key action on your platform. Streaks have been shown to meaningfully increase retention, particularly when the user action being tracked aligns with the core value of your product.
 
-Streaks are **global** to your platform, meaning that each user has a single streak that can be updated by incrementing [Metrics](/platform/metrics). You can decide which metrics should update a user's streak when incremented.
+<Tip>
+  Use Trophy's [metric analytics](/platform/metrics#metric-analytics) to compare
+  the retention of each user interaction, then configure streaks around these
+  interactions to maximize retention impact.
+</Tip>
+
+Streaks are **global** to your platform, meaning that each user has a single streak across all interactions. You can decide which [Metrics](/platform/metrics) should contribute a user's streak on the [streaks configure](https://staging-app.trophy.so/streaks/configure) page.
 
 ## Key Attributes
 
@@ -19,13 +25,13 @@ Streaks are **global** to your platform, meaning that each user has a single str
 
 Streaks can be configured to be daily, weekly or monthly. This means that a user must increment a metric at least once every calendar day, week or month to maintain their streak.
 
-Trophy will automatically compute streak data for all streak frequencies, which means you can change the frequency at any time while maintaining users' streaks. Just note that changing the frequency may be confusing for users, and may lead to lost streaks (e.g. if you change from weekly to daily).
+Trophy will automatically compute streak data for all streak frequencies, which means you can change the frequency at any time while maintaining users' streaks. Just note that changing the frequency may be confusing for users, so best to communicate any changes ahead of time.
 
 ### Streak Metrics
 
-You can choose which metrics should update a user's streak when incremented.
+You can choose which metrics should contribute to a user's streak
 
-For example, if your platform is a language learning app, you might want to track a user's streak based on the number of lessons completed, while also tracking a metric for the number of words learned that doesn't affect the streak. In this case, you would set the lessons completed metric to update the user's streak.
+For example, if your platform is a language learning app, you might want to track a user's streak based on the number of lessons completed, while also tracking a metric for the number of words learned that doesn't affect streaks. In this case, you would configure the lessons completed metric to contribute to streak's but not the words learned metric.
 
 <Callout intent="info">
   Regardless of whether streaks are enabled or disabled, Trophy will still
@@ -45,9 +51,12 @@ Trophy automatically calculates streaks for all users when users
 
 ## Displaying Streaks
 
-If you have [Emails](/platform/emails) configured, Trophy will automatically include streak information in the emails sent to users, as a means of encouraging users to keep using your product.
+Trophy exposes streak data in two ways, which can be used to build UI elements within your applications and display streaks to users.
 
-However, Trophy also returns streak data back to you to display in your app however you like. Trophy exposes streak data in two ways:
+<Tip>
+  Take a look at our [examples center](https://examples.trophy.so) for live
+  demos of APIs in practice.
+</Tip>
 
 ### Metric Event Response
 
@@ -55,6 +64,11 @@ When you [increment a metric](/platform/events#tracking-metric-events) for a use
 streak (if streaks are enabled).
 
 <MetricChangeResponseBlock />
+
+This can be used to transactionally trigger UI/UX elements including:
+
+- Showing in-app pop-ups
+- Playing sound effects
 
 ### User Streaks API
 
@@ -109,6 +123,16 @@ This will return the current streak for a single user, along with their recent s
   ]
 }
 ```
+
+Use this data to display a user's streak history within your application.
+
+<Frame>
+  <img
+    height="200"
+    noZoom
+    src="../assets/platform/streaks/displaying_streaks.png"
+  />
+</Frame>
 
 ## Get Support
 

@@ -1,0 +1,124 @@
+---
+title: Points
+description: Learn how to build points-based systems using Trophy
+"og:description": Use points systems to reward users for in-app actions.
+icon: sparkle
+---
+
+import MetricChangeResponseBlock from "/snippets/metric-change-response-block.mdx";
+
+## What is a Points system?
+
+Points systems are used to reward users for taking actions in your product. When rewards are closely aligned with user incentives, they can be a powerful retention feature.
+
+<Tip>
+  Use Trophy's [metric analytics](/platform/metrics#metric-analytics) to compare
+  the retention of each user interaction, then configure points around these
+  interactions to maximize retention impact.
+</Tip>
+
+Use Trophy to create sophisticated points systems driven by real user interactions with no custom code.
+
+## Creating Triggers
+
+Points can be awarded as a result of user interactions tracked by Trophy including:
+
+- Awarding points as users increment [Metrics](/platform/metrics) e.g. "earn 10 points for every mile ran".
+- Awarding points for reaching [Streak](/platform/streaks) milestones e.g. reaching 7-day, 14-day and 30-day streaks.
+- Awarding points for unlocking [Achievements](/platform/achievements).
+
+<Frame>
+  <video
+    autoPlay
+    muted
+    loop
+    playsInline
+    className="w-full aspect-video"
+    src="../assets/platform/points/create_trigger.mp4"
+  ></video>
+</Frame>
+
+To create a new points trigger, head to the [points](https://app.trophy.so/points/configure/new) page in the Trophy dashboard and follow the steps below:
+
+<Tip>
+  All new points triggers are created as 'Inactive' to allow testing and
+  balancing before deployment to production.
+</Tip>
+
+<Steps>
+<Step title="Choose a trigger type">
+  Choose how you want points to be awarded.
+  
+- Choosing **Metric** will mean points will be automatically awarded to users incrementally as they increase their metric total for a particular metric.
+
+- Choosing **Streak** will mean points will be automatically awarded to users eaech time their streak is increased by a specific length.
+
+- Choosing **Achievement** will mean points will be automatically awarded to users when they complete a specific achievement.
+
+</Step>
+
+<Step title="Set up trigger">
+  Once you've chosen the points trigger type, you need to set up the trigger settings.
+
+- If you chose the **Metric** trigger, you'll need to choose the metric, the threshold amount at which to award points, and number of points to award each time the user's total metric value increases by the threshold amount.
+
+- If you chose the **Streak** trigger, you'll need to set the streak length that should award points and the number of points to award to user's each time their streak is increased by this length.
+
+- If you chose the **Achievement** trigger, you'll need to choose the achievement that should award points when completed and the number of points to award.
+
+</Step>
+
+<Step title="Hit save">
+  Save the new points trigger.
+</Step>
+</Steps>
+
+## Balancing Points
+
+Running an effective points system requires finding the optimal pace at which users earn points. Too fast, and users will get points fatigue, rendering them useless. Too slow, and users may get bored and churn.
+
+Trophy's preview tool can model different scenarios to help you determine how frequently users should earn points.
+
+<Frame>
+  <video
+    autoPlay
+    muted
+    loop
+    playsInline
+    className="w-full aspect-video"
+    src="../assets/platform/points/points_preview.mp4"
+  ></video>
+</Frame>
+
+## Displaying Points
+
+There are a few ways to use Trophy to fetch and display points in your app.
+
+Firstly, any points awarded to users are returned in the response when sending metric change events using the (metric change event API](/api-reference/endpoints/metrics/send-a-metric-change-event).
+
+The response includes the user's total points, how many points were awarded as a result of the event, and the details of the specific triggers that fired.
+
+<MetricChangeResponseBlock />
+
+Additionally there are a number of APIs that can be used to fetch and display points data in the API. Check the full [API reference](/api-reference/introduction) for details.
+
+## Points Analytics
+
+Trophy has built-in analytics to track points awards across your users in real time including:
+
+- Total points earned by all users over time
+- Most points earned by a single user
+- Average points earned in the first 14 days (useful for understanding new user retention patterns and the impact of points)
+- A breakdown on the most commonly awarded points triggers
+
+<Frame>
+  <img
+    height="200"
+    noZoom
+    src="../assets/platform/points/points_analytics.png"
+  />
+</Frame>
+
+## Get Support
+
+Want to get in touch with the Trophy team? Reach out to us via [email](mailto:support@trophy.so). We're here to help!

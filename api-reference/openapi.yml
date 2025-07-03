@@ -1,7 +1,7 @@
 openapi: 3.1.0
 info:
   title: Trophy
-  version: '1.0.4'
+  version: "1.0.4"
 paths:
   /achievements:
     get:
@@ -10,14 +10,14 @@ paths:
       tags:
         - Achievements
       responses:
-        '200':
+        "200":
           description: Successful operation
           content:
             application/json:
               schema:
                 type: array
                 items:
-                  $ref: '#/components/schemas/AchievementWithStatsResponse'
+                  $ref: "#/components/schemas/AchievementWithStatsResponse"
               examples:
                 Successful operation:
                   value:
@@ -47,24 +47,24 @@ paths:
                       streakLength: 10
                       completions: 2
                       completedPercentage: 20
-        '401':
-          description: 'Unauthorized'
+        "401":
+          description: "Unauthorized"
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ErrorBody'
-        '404':
-          description: 'Achievements not found'
+                $ref: "#/components/schemas/ErrorBody"
+        "404":
+          description: "Achievements not found"
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ErrorBody'
-        '422':
-          description: 'Unprocessible Entity'
+                $ref: "#/components/schemas/ErrorBody"
+        "422":
+          description: "Unprocessible Entity"
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ErrorBody'
+                $ref: "#/components/schemas/ErrorBody"
       summary: Get all achievements and their completion stats
       security:
         - ApiKeyAuth: []
@@ -83,12 +83,12 @@ paths:
             type: string
           example: finish-onboarding
       responses:
-        '201':
+        "201":
           description: Successful operation
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/AchievementCompletionResponse'
+                $ref: "#/components/schemas/AchievementCompletionResponse"
               examples:
                 Successful operation:
                   value:
@@ -100,25 +100,25 @@ paths:
                       description: Complete the onboarding process.
                       badgeUrl: https://example.com/badge.png
                       key: finish-onboarding
-                      achievedAt: '2021-01-01T00:00:00Z'
-        '401':
-          description: 'Unauthorized'
+                      achievedAt: "2021-01-01T00:00:00Z"
+        "401":
+          description: "Unauthorized"
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ErrorBody'
-        '404':
-          description: 'Achievement Not Found'
+                $ref: "#/components/schemas/ErrorBody"
+        "404":
+          description: "Achievement Not Found"
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ErrorBody'
-        '422':
-          description: 'Unprocessible Entity'
+                $ref: "#/components/schemas/ErrorBody"
+        "422":
+          description: "Unprocessible Entity"
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ErrorBody'
+                $ref: "#/components/schemas/ErrorBody"
       summary: Mark an achievement as completed
       security:
         - ApiKeyAuth: []
@@ -130,7 +130,7 @@ paths:
               type: object
               properties:
                 user:
-                  $ref: '#/components/schemas/UpdatedUser'
+                  $ref: "#/components/schemas/UpdatedUser"
                   description: The user that completed the achievement.
               required:
                 - user
@@ -157,12 +157,12 @@ paths:
             type: string
           example: words-written
       responses:
-        '201':
+        "201":
           description: Created event
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/EventResponse'
+                $ref: "#/components/schemas/EventResponse"
               examples:
                 Successful operation:
                   value:
@@ -177,32 +177,32 @@ paths:
                         metricValue: 500
                         name: 500 words written
                         description: Write 500 words in the app.
-                        achievedAt: '2020-01-01T00:00:00Z'
+                        achievedAt: "2020-01-01T00:00:00Z"
                     currentStreak:
                       length: 1
                       frequency: daily
-                      started: '2025-04-02'
-                      periodStart: '2025-03-31'
-                      periodEnd: '2025-04-05'
-                      expires: '2025-04-12'
-        '400':
-          description: 'Bad Request'
+                      started: "2025-04-02"
+                      periodStart: "2025-03-31"
+                      periodEnd: "2025-04-05"
+                      expires: "2025-04-12"
+        "400":
+          description: "Bad Request"
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ErrorBody'
-        '401':
-          description: 'Unauthorized'
+                $ref: "#/components/schemas/ErrorBody"
+        "401":
+          description: "Unauthorized"
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ErrorBody'
-        '422':
-          description: 'Unprocessible Entity'
+                $ref: "#/components/schemas/ErrorBody"
+        "422":
+          description: "Unprocessible Entity"
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ErrorBody'
+                $ref: "#/components/schemas/ErrorBody"
       summary: Send a metric change event
       security:
         - ApiKeyAuth: []
@@ -214,7 +214,7 @@ paths:
               type: object
               properties:
                 user:
-                  $ref: '#/components/schemas/UpsertedUser'
+                  $ref: "#/components/schemas/UpsertedUser"
                   description: The user that triggered the event.
                 value:
                   type: number
@@ -232,7 +232,7 @@ paths:
                   user:
                     email: user@example.com
                     tz: Europe/London
-                    id: '18'
+                    id: "18"
                   value: 750
   /users:
     post:
@@ -249,15 +249,15 @@ paths:
           application/json:
             schema:
               type: object
-              $ref: '#/components/schemas/UpsertedUser'
+              $ref: "#/components/schemas/UpsertedUser"
               description: The user object.
       responses:
-        '201':
+        "201":
           description: Identified user
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/User'
+                $ref: "#/components/schemas/User"
                 examples:
                   Successful operation:
                     value:
@@ -265,26 +265,26 @@ paths:
                       email: user@example.com
                       tz: Europe/London
                       subscribedToEmails: true
-                      created: '2021-01-01T00:00:00Z'
-                      updated: '2021-01-01T00:00:00Z'
-        '400':
-          description: 'Bad Request'
+                      created: "2021-01-01T00:00:00Z"
+                      updated: "2021-01-01T00:00:00Z"
+        "400":
+          description: "Bad Request"
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ErrorBody'
-        '422':
-          description: 'Unprocessible Entity'
+                $ref: "#/components/schemas/ErrorBody"
+        "422":
+          description: "Unprocessible Entity"
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ErrorBody'
-        '401':
-          description: 'Unauthorized'
+                $ref: "#/components/schemas/ErrorBody"
+        "401":
+          description: "Unauthorized"
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ErrorBody'
+                $ref: "#/components/schemas/ErrorBody"
   /users/{id}:
     get:
       description: Get a single user.
@@ -303,12 +303,12 @@ paths:
       security:
         - ApiKeyAuth: []
       responses:
-        '200':
+        "200":
           description: Found user
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/User'
+                $ref: "#/components/schemas/User"
                 examples:
                   Successful operation:
                     value:
@@ -316,26 +316,26 @@ paths:
                       email: user@example.com
                       tz: Europe/London
                       subscribedToEmails: true
-                      created: '2021-01-01T00:00:00Z'
-                      updated: '2021-01-01T00:00:00Z'
-        '400':
-          description: 'Bad Request'
+                      created: "2021-01-01T00:00:00Z"
+                      updated: "2021-01-01T00:00:00Z"
+        "400":
+          description: "Bad Request"
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ErrorBody'
-        '422':
-          description: 'Unprocessible Entity'
+                $ref: "#/components/schemas/ErrorBody"
+        "422":
+          description: "Unprocessible Entity"
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ErrorBody'
-        '401':
-          description: 'Unauthorized'
+                $ref: "#/components/schemas/ErrorBody"
+        "401":
+          description: "Unauthorized"
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ErrorBody'
+                $ref: "#/components/schemas/ErrorBody"
     patch:
       description: Update a user.
       operationId: users_update
@@ -357,19 +357,19 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/UpdatedUser'
+              $ref: "#/components/schemas/UpdatedUser"
               description: The user object.
             example:
               id: user-id
               email: user@example.com
               tz: Europe/London
       responses:
-        '200':
+        "200":
           description: Updated user
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/User'
+                $ref: "#/components/schemas/User"
                 examples:
                   Successful operation:
                     value:
@@ -377,26 +377,26 @@ paths:
                       email: user@example.com
                       tz: Europe/London
                       subscribedToEmails: true
-                      created: '2021-01-01T00:00:00Z'
-                      updated: '2021-01-01T00:00:00Z'
-        '400':
-          description: 'Bad Request'
+                      created: "2021-01-01T00:00:00Z"
+                      updated: "2021-01-01T00:00:00Z"
+        "400":
+          description: "Bad Request"
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ErrorBody'
-        '422':
-          description: 'Unprocessible Entity'
+                $ref: "#/components/schemas/ErrorBody"
+        "422":
+          description: "Unprocessible Entity"
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ErrorBody'
-        '401':
-          description: 'Unauthorized'
+                $ref: "#/components/schemas/ErrorBody"
+        "401":
+          description: "Unauthorized"
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ErrorBody'
+                $ref: "#/components/schemas/ErrorBody"
   /users/{id}/metrics:
     get:
       description: Get a single user's progress against all active metrics.
@@ -412,14 +412,14 @@ paths:
             type: string
           example: userId
       responses:
-        '200':
+        "200":
           description: Successful operation
           content:
             application/json:
               schema:
                 type: array
                 items:
-                  $ref: '#/components/schemas/MetricResponse'
+                  $ref: "#/components/schemas/MetricResponse"
               examples:
                 Successful operation:
                   value:
@@ -434,14 +434,14 @@ paths:
                           name: Novice Writer
                           metricId: d01dcbcb-d51e-4c12-b054-dc811dcdc623
                           metricValue: 500
-                          achievedAt: '2021-01-01T00:00:00Z'
+                          achievedAt: "2021-01-01T00:00:00Z"
                           badgeUrl: https://example.com/badge1.png
                         - id: 8a07f2d0-9c72-4de1-bf92-9530ae82b4b6
                           trigger: metric
                           name: Intermediate Writer
                           metricId: d01dcbcb-d51e-4c12-b054-dc811dcdc623
                           metricValue: 1000
-                          achievedAt: '2021-01-02T00:00:00Z'
+                          achievedAt: "2021-01-02T00:00:00Z"
                           badgeUrl: https://example.com/badge2.png
                         - id: 2090d038-aa04-4048-ab2e-e2b7bf2d3b9f
                           trigger: metric
@@ -449,24 +449,24 @@ paths:
                           metricId: d01dcbcb-d51e-4c12-b054-dc811dcdc623
                           metricValue: 2000
                           achievedAt: null
-        '401':
-          description: 'Unauthorized'
+        "401":
+          description: "Unauthorized"
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ErrorBody'
-        '404':
-          description: 'User Not Found'
+                $ref: "#/components/schemas/ErrorBody"
+        "404":
+          description: "User Not Found"
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ErrorBody'
-        '422':
-          description: 'Unprocessible Entity'
+                $ref: "#/components/schemas/ErrorBody"
+        "422":
+          description: "Unprocessible Entity"
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ErrorBody'
+                $ref: "#/components/schemas/ErrorBody"
       summary: Get all metrics for a user
       security:
         - ApiKeyAuth: []
@@ -492,12 +492,12 @@ paths:
             type: string
           example: key
       responses:
-        '200':
+        "200":
           description: Successful operation
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/MetricResponse'
+                $ref: "#/components/schemas/MetricResponse"
               examples:
                 Successful operation:
                   value:
@@ -512,13 +512,13 @@ paths:
                         name: Novice Writer
                         metricId: d01dcbcb-d51e-4c12-b054-dc811dcdc623
                         metricValue: 500
-                        achievedAt: '2021-01-01T00:00:00Z'
+                        achievedAt: "2021-01-01T00:00:00Z"
                       - id: 8a07f2d0-9c72-4de1-bf92-9530ae82b4b6
                         trigger: metric
                         name: Intermediate Writer
                         metricId: d01dcbcb-d51e-4c12-b054-dc811dcdc623
                         metricValue: 1000
-                        achievedAt: '2021-01-02T00:00:00Z'
+                        achievedAt: "2021-01-02T00:00:00Z"
                       - id: 2090d038-aa04-4048-ab2e-e2b7bf2d3b9f
                         trigger: metric
                         name: Expert Writer
@@ -526,24 +526,24 @@ paths:
                         metricValue: 2000
                         achievedAt: null
                         badgeUrl: https://example.com/badge.png
-        '401':
-          description: 'Unauthorized'
+        "401":
+          description: "Unauthorized"
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ErrorBody'
-        '404':
-          description: 'Not Found'
+                $ref: "#/components/schemas/ErrorBody"
+        "404":
+          description: "Not Found"
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ErrorBody'
-        '422':
-          description: 'Unprocessible Entity'
+                $ref: "#/components/schemas/ErrorBody"
+        "422":
+          description: "Unprocessible Entity"
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ErrorBody'
+                $ref: "#/components/schemas/ErrorBody"
       summary: Get a single metric for a user
       security:
         - ApiKeyAuth: []
@@ -586,7 +586,7 @@ paths:
           schema:
             type: string
             format: date
-          example: '2024-01-01'
+          example: "2024-01-01"
         - name: endDate
           in: query
           description: The end date for the data range in YYYY-MM-DD format. The endDate must be after the startDate, and the date range must not exceed 400 days.
@@ -594,9 +594,9 @@ paths:
           schema:
             type: string
             format: date
-          example: '2024-01-31'
+          example: "2024-01-31"
       responses:
-        '200':
+        "200":
           description: Successful operation
           content:
             application/json:
@@ -609,7 +609,7 @@ paths:
                       type: string
                       format: date
                       description: The date of the data point. For weekly or monthly aggregations, this is the first date of the period.
-                      example: '2024-01-01'
+                      example: "2024-01-01"
                     total:
                       type: number
                       format: double
@@ -627,33 +627,33 @@ paths:
               examples:
                 Successful operation:
                   value:
-                    - date: '2024-01-01'
+                    - date: "2024-01-01"
                       total: 100
                       change: 100
-                    - date: '2024-01-02'
+                    - date: "2024-01-02"
                       total: 300
                       change: 200
-                    - date: '2024-01-03'
+                    - date: "2024-01-03"
                       total: 600
                       change: 300
-        '401':
-          description: 'Unauthorized'
+        "401":
+          description: "Unauthorized"
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ErrorBody'
-        '404':
-          description: 'Not Found'
+                $ref: "#/components/schemas/ErrorBody"
+        "404":
+          description: "Not Found"
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ErrorBody'
-        '422':
-          description: 'Unprocessible Entity'
+                $ref: "#/components/schemas/ErrorBody"
+        "422":
+          description: "Unprocessible Entity"
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ErrorBody'
+                $ref: "#/components/schemas/ErrorBody"
       summary: Get a summary of metric events over time
       security:
         - ApiKeyAuth: []
@@ -672,14 +672,14 @@ paths:
             type: string
           example: userId
       responses:
-        '200':
+        "200":
           description: Successful operation
           content:
             application/json:
               schema:
                 type: array
                 items:
-                  $ref: '#/components/schemas/CompletedAchievementResponse'
+                  $ref: "#/components/schemas/CompletedAchievementResponse"
               examples:
                 Successful operation:
                   value:
@@ -687,7 +687,7 @@ paths:
                       trigger: api
                       key: completed-onboarding
                       name: Completed Onboarding
-                      achievedAt: '2021-01-01T00:00:00Z'
+                      achievedAt: "2021-01-01T00:00:00Z"
                       badgeUrl: https://example.com/badge2.png
                     - id: d01dcbcb-d51e-4c12-b054-dc811dcdc623
                       trigger: metric
@@ -696,33 +696,33 @@ paths:
                       metricValue: 500
                       metricName: words written
                       name: Novice Writer
-                      achievedAt: '2021-02-01T00:00:00Z'
+                      achievedAt: "2021-02-01T00:00:00Z"
                       badgeUrl: https://example.com/badge1.png
                     - id: d01dcbcb-d51e-4c12-b054-dc811dcdc624
                       trigger: streak
                       key: 3-day-streak
                       streakLength: 3
                       name: 3-Day Streak
-                      achievedAt: '2021-03-01T00:00:00Z'
+                      achievedAt: "2021-03-01T00:00:00Z"
                       badgeUrl: https://example.com/badge2.png
-        '401':
-          description: 'Unauthorized'
+        "401":
+          description: "Unauthorized"
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ErrorBody'
-        '404':
-          description: 'Not Found'
+                $ref: "#/components/schemas/ErrorBody"
+        "404":
+          description: "Not Found"
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ErrorBody'
-        '422':
-          description: 'Unprocessible Entity'
+                $ref: "#/components/schemas/ErrorBody"
+        "422":
+          description: "Unprocessible Entity"
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ErrorBody'
+                $ref: "#/components/schemas/ErrorBody"
       summary: Get a user's completed achievements
       security:
         - ApiKeyAuth: []
@@ -749,62 +749,62 @@ paths:
             The number of past streak periods to include in the streakHistory field of the 
             response.
       responses:
-        '200':
+        "200":
           description: Successful operation
           content:
             application/json:
               schema:
                 type: object
-                $ref: '#/components/schemas/StreakResponse'
+                $ref: "#/components/schemas/StreakResponse"
               examples:
                 Successful operation:
                   value:
                     length: 1
                     frequency: weekly
-                    started: '2025-04-02'
-                    periodStart: '2025-03-31'
-                    periodEnd: '2025-04-05'
-                    expires: '2025-04-12'
+                    started: "2025-04-02"
+                    periodStart: "2025-03-31"
+                    periodEnd: "2025-04-05"
+                    expires: "2025-04-12"
                     streakHistory:
-                      - periodStart: '2025-03-30'
-                        periodEnd: '2025-04-05'
+                      - periodStart: "2025-03-30"
+                        periodEnd: "2025-04-05"
                         length: 1
-                      - periodStart: '2025-04-06'
-                        periodEnd: '2025-04-12'
+                      - periodStart: "2025-04-06"
+                        periodEnd: "2025-04-12"
                         length: 2
-                      - periodStart: '2025-04-13'
-                        periodEnd: '2025-04-19'
+                      - periodStart: "2025-04-13"
+                        periodEnd: "2025-04-19"
                         length: 3
-                      - periodStart: '2025-04-20'
-                        periodEnd: '2025-04-26'
+                      - periodStart: "2025-04-20"
+                        periodEnd: "2025-04-26"
                         length: 0
-                      - periodStart: '2025-04-27'
-                        periodEnd: '2025-05-03'
+                      - periodStart: "2025-04-27"
+                        periodEnd: "2025-05-03"
                         length: 1
-                      - periodStart: '2025-05-04'
-                        periodEnd: '2025-05-10'
+                      - periodStart: "2025-05-04"
+                        periodEnd: "2025-05-10"
                         length: 2
-                      - periodStart: '2025-05-11'
-                        periodEnd: '2025-05-17'
+                      - periodStart: "2025-05-11"
+                        periodEnd: "2025-05-17"
                         length: 3
-        '401':
-          description: 'Unauthorized'
+        "401":
+          description: "Unauthorized"
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ErrorBody'
-        '404':
-          description: 'Not Found'
+                $ref: "#/components/schemas/ErrorBody"
+        "404":
+          description: "Not Found"
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ErrorBody'
-        '422':
-          description: 'Unprocessible Entity'
+                $ref: "#/components/schemas/ErrorBody"
+        "422":
+          description: "Unprocessible Entity"
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ErrorBody'
+                $ref: "#/components/schemas/ErrorBody"
       summary: Get a user's streak status
       security:
         - ApiKeyAuth: []
@@ -831,12 +831,12 @@ paths:
             maximum: 100
           description: The number of recent point awards to return.
       responses:
-        '200':
+        "200":
           description: Successful operation
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/GetUserPointsResponse'
+                $ref: "#/components/schemas/GetUserPointsResponse"
               examples:
                 Successful operation:
                   value:
@@ -850,24 +850,24 @@ paths:
                           points: 10
                           metricName: words written
                           metricThreshold: 1000
-        '401':
-          description: 'Unauthorized'
+        "401":
+          description: "Unauthorized"
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ErrorBody'
-        '404':
-          description: 'Not Found'
+                $ref: "#/components/schemas/ErrorBody"
+        "404":
+          description: "Not Found"
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ErrorBody'
-        '422':
-          description: 'Unprocessible Entity'
+                $ref: "#/components/schemas/ErrorBody"
+        "422":
+          description: "Unprocessible Entity"
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ErrorBody'
+                $ref: "#/components/schemas/ErrorBody"
       summary: Get a user's points data
       security:
         - ApiKeyAuth: []
@@ -903,7 +903,7 @@ paths:
           schema:
             type: string
             format: date
-          example: '2024-01-01'
+          example: "2024-01-01"
         - name: endDate
           in: query
           description: The end date for the data range in YYYY-MM-DD format. The endDate must be after the startDate, and the date range must not exceed 400 days.
@@ -911,9 +911,9 @@ paths:
           schema:
             type: string
             format: date
-          example: '2024-01-31'
+          example: "2024-01-31"
       responses:
-        '200':
+        "200":
           description: Successful operation
           content:
             application/json:
@@ -926,7 +926,7 @@ paths:
                       type: string
                       format: date
                       description: The date of the data point. For weekly or monthly aggregations, this is the first date of the period.
-                      example: '2024-01-01'
+                      example: "2024-01-01"
                     total:
                       type: number
                       format: double
@@ -944,33 +944,33 @@ paths:
               examples:
                 Successful operation:
                   value:
-                    - date: '2024-01-01'
+                    - date: "2024-01-01"
                       total: 100
                       change: 100
-                    - date: '2024-01-02'
+                    - date: "2024-01-02"
                       total: 300
                       change: 200
-                    - date: '2024-01-03'
+                    - date: "2024-01-03"
                       total: 600
                       change: 300
-        '401':
-          description: 'Unauthorized'
+        "401":
+          description: "Unauthorized"
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ErrorBody'
-        '404':
-          description: 'Not Found'
+                $ref: "#/components/schemas/ErrorBody"
+        "404":
+          description: "Not Found"
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ErrorBody'
-        '422':
-          description: 'Unprocessible Entity'
+                $ref: "#/components/schemas/ErrorBody"
+        "422":
+          description: "Unprocessible Entity"
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ErrorBody'
+                $ref: "#/components/schemas/ErrorBody"
       summary: Get a summary of points events over time
       security:
         - ApiKeyAuth: []
@@ -981,12 +981,12 @@ paths:
       tags:
         - Points
       responses:
-        '200':
+        "200":
           description: Successful operation
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/PointsSummaryResponse'
+                $ref: "#/components/schemas/PointsSummaryResponse"
               examples:
                 Successful operation:
                   value:
@@ -1023,18 +1023,18 @@ paths:
                     - from: 901
                       to: 1000
                       users: 0
-        '401':
-          description: 'Unauthorized'
+        "401":
+          description: "Unauthorized"
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ErrorBody'
-        '404':
-          description: 'Not Found'
+                $ref: "#/components/schemas/ErrorBody"
+        "404":
+          description: "Not Found"
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ErrorBody'
+                $ref: "#/components/schemas/ErrorBody"
       summary: Get a breakdown of users by points
       security:
         - ApiKeyAuth: []
@@ -1045,14 +1045,14 @@ paths:
       tags:
         - Points
       responses:
-        '200':
+        "200":
           description: Successful operation
           content:
             application/json:
               schema:
                 type: array
                 items:
-                  $ref: '#/components/schemas/PointsTriggerResponse'
+                  $ref: "#/components/schemas/PointsTriggerResponse"
               examples:
                 Successful operation:
                   value:
@@ -1063,29 +1063,29 @@ paths:
                       metricId: 0040fe51-6bce-4b44-b0ad-bddc4e123534
                       metricName: words written
                       metricThreshold: 1000
-                      created: '2021-01-01T00:00:00Z'
-                      updated: '2021-01-01T00:00:00Z'
+                      created: "2021-01-01T00:00:00Z"
+                      updated: "2021-01-01T00:00:00Z"
                     - id: 0040fe51-6bce-4b44-b0ad-bddc4e123536
                       type: streak
                       points: 10
                       status: active
                       streakLengthThreshold: 7
-                      created: '2021-01-01T00:00:00Z'
-                      updated: '2021-01-01T00:00:00Z'
+                      created: "2021-01-01T00:00:00Z"
+                      updated: "2021-01-01T00:00:00Z"
                     - id: 0040fe51-6bce-4b44-b0ad-bddc4e123535
                       type: achievement
                       points: 50
                       status: active
                       achievementId: 0040fe51-6bce-4b44-b0ad-bddc4e123535
                       achievementName: finish onboarding
-                      created: '2021-01-01T00:00:00Z'
-                      updated: '2021-01-01T00:00:00Z'
-        '401':
-          description: 'Unauthorized'
+                      created: "2021-01-01T00:00:00Z"
+                      updated: "2021-01-01T00:00:00Z"
+        "401":
+          description: "Unauthorized"
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ErrorBody'
+                $ref: "#/components/schemas/ErrorBody"
       summary: Get all points triggers
       security:
         - ApiKeyAuth: []
@@ -1114,7 +1114,7 @@ components:
           type: integer
           description: The length of the user's current streak.
         frequency:
-          $ref: '#/components/schemas/StreakFrequency'
+          $ref: "#/components/schemas/StreakFrequency"
           description: The frequency of the streak.
         started:
           type: string
@@ -1140,7 +1140,7 @@ components:
       type: object
       description: An object representing the user's streak after sending a metric event.
       allOf:
-        - $ref: '#/components/schemas/BaseStreakResponse'
+        - $ref: "#/components/schemas/BaseStreakResponse"
         - type: object
           properties:
             extended:
@@ -1151,7 +1151,7 @@ components:
       type: object
       description: An object representing the user's streak.
       allOf:
-        - $ref: '#/components/schemas/BaseStreakResponse'
+        - $ref: "#/components/schemas/BaseStreakResponse"
         - type: object
           properties:
             streakHistory:
@@ -1168,12 +1168,12 @@ components:
                     type: string
                     format: date
                     description: The date this streak period started.
-                    example: '2025-03-31'
+                    example: "2025-03-31"
                   periodEnd:
                     type: string
                     format: date
                     description: The date this streak period ended.
-                    example: '2025-04-05'
+                    example: "2025-04-05"
                   length:
                     type: integer
                     description: The length of the user's streak during this period.
@@ -1192,7 +1192,7 @@ components:
         type:
           type: string
           description: The type of trigger
-          enum: ['metric', 'achievement', 'streak']
+          enum: ["metric", "achievement", "streak"]
         points:
           type: number
           description: The points awarded by this trigger.
@@ -1219,7 +1219,7 @@ components:
           type: number
           description: The points awarded by this trigger
         trigger:
-          $ref: '#/components/schemas/PointsTrigger'
+          $ref: "#/components/schemas/PointsTrigger"
     GetUserPointsResponse:
       title: GetUserPointsResponse
       type: object
@@ -1231,12 +1231,12 @@ components:
           type: array
           description: Array of trigger awards that added points.
           items:
-            $ref: '#/components/schemas/PointsAward'
+            $ref: "#/components/schemas/PointsAward"
     MetricEventPointsResponse:
       title: MetricEventPointsResponse
       type: object
       allOf:
-        - $ref: '#/components/schemas/GetUserPointsResponse'
+        - $ref: "#/components/schemas/GetUserPointsResponse"
         - type: object
           properties:
             added:
@@ -1255,7 +1255,7 @@ components:
           description: The name of this achievement.
         trigger:
           type: string
-          enum: ['metric', 'streak', 'api']
+          enum: ["metric", "streak", "api"]
           description: The trigger of the achievement.
         description:
           type: string
@@ -1283,7 +1283,7 @@ components:
           type: string
           description: The name of the metric associated with this achievement (only applicable if trigger = 'metric')
         currentStreak:
-          $ref: '#/components/schemas/MetricEventStreakResponse'
+          $ref: "#/components/schemas/MetricEventStreakResponse"
           description: >-
             The user's current streak for the metric, if the metric has streaks
             enabled.
@@ -1295,7 +1295,7 @@ components:
       title: CompletedAchievementResponse
       type: object
       allOf:
-        - $ref: '#/components/schemas/AchievementResponse'
+        - $ref: "#/components/schemas/AchievementResponse"
         - type: object
           properties:
             achievedAt:
@@ -1306,7 +1306,7 @@ components:
       title: AchievementWithStatsResponse
       type: object
       allOf:
-        - $ref: '#/components/schemas/AchievementResponse'
+        - $ref: "#/components/schemas/AchievementResponse"
         - type: object
           properties:
             completions:
@@ -1333,7 +1333,7 @@ components:
           description: The name of the metric.
           example: Words written
         status:
-          $ref: '#/components/schemas/MetricStatus'
+          $ref: "#/components/schemas/MetricStatus"
           description: The status of the metric.
         current:
           type: number
@@ -1343,7 +1343,7 @@ components:
         achievements:
           type: array
           items:
-            $ref: '#/components/schemas/CompletedAchievementResponse'
+            $ref: "#/components/schemas/CompletedAchievementResponse"
           description: >-
             A list of the metric's achievements and the user's progress towards
             each.
@@ -1381,7 +1381,7 @@ components:
       type: object
       description: An object with editable user fields.
       allOf:
-        - $ref: '#/components/schemas/UpdatedUser'
+        - $ref: "#/components/schemas/UpdatedUser"
         - type: object
           properties:
             id:
@@ -1395,7 +1395,7 @@ components:
       type: object
       description: A user of your application.
       allOf:
-        - $ref: '#/components/schemas/UpsertedUser'
+        - $ref: "#/components/schemas/UpsertedUser"
         - type: object
           properties:
             control:
@@ -1406,12 +1406,12 @@ components:
               type: string
               format: date-time
               description: The date and time the user was created, in ISO 8601 format.
-              example: '2021-01-01T00:00:00Z'
+              example: "2021-01-01T00:00:00Z"
             updated:
               type: string
               format: date-time
               description: The date and time the user was last updated, in ISO 8601 format.
-              example: '2021-01-01T00:00:00Z'
+              example: "2021-01-01T00:00:00Z"
     ErrorBody:
       title: ErrorBody
       type: object
@@ -1429,7 +1429,7 @@ components:
           description: The unique ID of the completion.
           example: 0040fe51-6bce-4b44-b0ad-bddc4e123534
         achievement:
-          $ref: '#/components/schemas/CompletedAchievementResponse'
+          $ref: "#/components/schemas/CompletedAchievementResponse"
       required:
         - completionId
         - achievement
@@ -1453,15 +1453,15 @@ components:
         achievements:
           type: array
           items:
-            $ref: '#/components/schemas/CompletedAchievementResponse'
+            $ref: "#/components/schemas/CompletedAchievementResponse"
           description: Achievements completed as a result of this event.
         currentStreak:
-          $ref: '#/components/schemas/MetricEventStreakResponse'
+          $ref: "#/components/schemas/MetricEventStreakResponse"
           description: >-
             The user's current streak for the metric, if the metric has streaks
             enabled.
         points:
-          $ref: '#/components/schemas/PointsAward'
+          $ref: "#/components/schemas/PointsAward"
           description: >-
             The points added by this event, and a breakdown of the points
             awards that added points.
@@ -1491,7 +1491,7 @@ components:
         to the greatest number of points a user has, rounded up to the nearest
         power of 10.
       items:
-        $ref: '#/components/schemas/PointsRange'
+        $ref: "#/components/schemas/PointsRange"
     PointsTriggerResponse:
       title: PointsTriggerResponse
       type: object
@@ -1501,14 +1501,14 @@ components:
           description: The unique ID of the trigger.
         type:
           type: string
-          enum: ['metric', 'achievement', 'streak']
+          enum: ["metric", "achievement", "streak"]
           description: The type of trigger.
         points:
           type: number
           description: The points awarded by this trigger.
         status:
           type: string
-          enum: ['active', 'archived']
+          enum: ["active", "archived"]
           description: The status of the trigger.
         achievementId:
           type: string
