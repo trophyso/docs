@@ -993,7 +993,7 @@ import Image from "next/image";
 interface ToastProps {
   id: string | number;
   title: string;
-  description: string;
+  description?: string;
   image?: {
     src: string;
     alt: string;
@@ -1040,7 +1040,9 @@ export function Toast(props: ToastProps) {
       <div className="flex flex-1 items-center">
         <div className="w-full">
           <p className="text-sm font-medium text-gray-900">{title}</p>
-          <p className="mt-1 text-sm text-gray-500">{description}</p>
+          {description && (
+            <p className="mt-1 text-sm text-gray-500">{description}</p>
+          )}
         </div>
       </div>
     </div>
@@ -1086,7 +1088,7 @@ export default nextConfig;
 
 And finally, we update our `<Flashcards />` component to read the response from Trophy and display toasts for any unlocked achievements:
 
-```tsx src/app/flashcards.tsx [expandable] {15,33,38-61}
+```tsx src/app/flashcards.tsx [expandable] {15,33,38-56}
 "use client";
 
 import {
@@ -1130,23 +1132,17 @@ export default function Flashcards({ flashcards }: Props) {
         return;
       }
 
-      // Show toast if the user has unlocked any new achievements
-      if (response.achievements?.length) {
-        response.achievements.forEach((metricAchievements) => {
-          if (metricAchievements.completed?.length) {
-            metricAchievements.completed.forEach((achievement) => {
-              toast({
-                title: achievement.name as string,
-                description: `Congratulations! You've viewed ${achievement.metricValue} flashcards!`,
-                image: {
-                  src: achievement.badgeUrl as string,
-                  alt: achievement.name as string,
-                },
-              });
-            });
-          }
+      // Show toasts if the user has unlocked any new achievements
+      response.achievements.forEach((achievement) => {
+        toast({
+          title: achievement.name as string,
+          description: achievement.description,
+          image: {
+            src: achievement.badgeUrl as string,
+            alt: achievement.name as string,
+          },
         });
-      }
+      });
     });
   }, [api]);
 
@@ -1193,7 +1189,7 @@ We'll use the same methods to show similar toasts when a user extendeds their st
 
 All we need to do is read the `currentStreak.extended` property from Trophy and handle showing another toast with a new `if` statement:
 
-```tsx src/app/flashcards.tsx [expandable] {62-69}
+```tsx src/app/flashcards.tsx [expandable] {56-63}
 "use client";
 
 import {
@@ -1237,23 +1233,17 @@ export default function Flashcards({ flashcards }: Props) {
         return;
       }
 
-      // Show toast if the user has unlocked any new achievements
-      if (response.achievements?.length) {
-        response.achievements.forEach((metricAchievements) => {
-          if (metricAchievements.completed?.length) {
-            metricAchievements.completed.forEach((achievement) => {
-              toast({
-                title: achievement.name as string,
-                description: `Congratulations! You've viewed ${achievement.metricValue} flashcards!`,
-                image: {
-                  src: achievement.badgeUrl as string,
-                  alt: achievement.name as string,
-                },
-              });
-            });
-          }
+      // Show toasts if the user has unlocked any new achievements
+      response.achievements.forEach((achievement) => {
+        toast({
+          title: achievement.name as string,
+          description: achievement.description,
+          image: {
+            src: achievement.badgeUrl as string,
+            alt: achievement.name as string,
+          },
         });
-      }
+      });
 
       // Show toast if user has extended their streak
       if (response.currentStreak?.extended) {
@@ -1310,7 +1300,7 @@ For this we'll make use of the [HTML5 Audio API](https://developer.mozilla.org/e
 
 To load the sound files into our application, we'll create a ref for each one, then we simply call the `play()` method on each when we want to actually play the sound:
 
-```tsx src/app/flashcards.tsx [expandable] {25-31,53-57,77-81}
+```tsx src/app/flashcards.tsx [expandable] {25-31,53-57,73-77}
 "use client";
 
 import {
@@ -1370,19 +1360,15 @@ export default function Flashcards({ flashcards }: Props) {
         }
 
         // Show toasts if the user has unlocked any new achievements
-        response.achievements.forEach((metricAchievements) => {
-          if (metricAchievements.completed?.length) {
-            metricAchievements.completed.forEach((achievement) => {
-              toast({
-                title: achievement.name as string,
-                description: `Congratulations! You've viewed ${achievement.metricValue} flashcards!`,
-                image: {
-                  src: achievement.badgeUrl as string,
-                  alt: achievement.name as string,
-                },
-              });
-            });
-          }
+        response.achievements.forEach((achievement) => {
+          toast({
+            title: achievement.name as string,
+            description: achievement.description,
+            image: {
+              src: achievement.badgeUrl as string,
+              alt: achievement.name as string,
+            },
+          });
         });
       }
 
