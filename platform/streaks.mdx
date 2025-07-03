@@ -51,7 +51,12 @@ Trophy automatically calculates streaks for all users when users
 
 ## Displaying Streaks
 
-Trophy exposes streak data in two ways:
+Trophy exposes streak data in two ways, which can be used to build UI elements within your applications and display streaks to users.
+
+<Tip>
+  Take a look at our [examples center](https://examples.trophy.so) for live
+  demos of APIs in practice.
+</Tip>
 
 ### Metric Event Response
 
@@ -59,6 +64,11 @@ When you [increment a metric](/platform/events#tracking-metric-events) for a use
 streak (if streaks are enabled).
 
 <MetricChangeResponseBlock />
+
+This can be used to transactionally trigger UI/UX elements including:
+
+- Showing in-app pop-ups
+- Playing sound effects
 
 ### User Streaks API
 
@@ -113,6 +123,16 @@ This will return the current streak for a single user, along with their recent s
   ]
 }
 ```
+
+Use this data to display a user's streak history within your application.
+
+<Frame>
+  <img
+    height="200"
+    noZoom
+    src="../assets/platform/streaks/displaying_streaks.png"
+  />
+</Frame>
 
 ## Get Support
 
