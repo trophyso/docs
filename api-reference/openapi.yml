@@ -976,15 +976,7 @@ paths:
         - ApiKeyAuth: []
   /points/summary:
     get:
-      description: >-
-        Get a breakdown of the number of users with points in each range.
-        The ranges are inclusive of the start and end values. The response will
-        always include eleven ranges, with the first starting and ending at 0,
-        and the remaining 10 being calculated as 10 equally sized ranges from
-        1 to the greatest number of points a user has, rounded up to the nearest
-        power of 10. For example, if the greatest number of points a user has is
-        4300, the ranges will be 0-0, 1-1000, 1001-2000, 2001-3000, 3001-4000,
-        4001-5000, 5001-6000, 6001-7000, 7001-8000, 8001-9000, and 9001-10000.
+      description: Get a breakdown of the number of users with points in each range.
       operationId: points_summary
       tags:
         - Points
@@ -1263,7 +1255,8 @@ components:
           description: The name of this achievement.
         trigger:
           type: string
-          description: The trigger of the achievement, either 'metric', 'streak', or 'api'.
+          enum: ["metric", "streak", "api"]
+          description: The trigger of the achievement.
         description:
           type: string
           description: The description of this achievement.
@@ -1482,16 +1475,21 @@ components:
       properties:
         from:
           type: number
-          description: The start of the points range.
+          description: The start of the points range. Inclusive.
         to:
           type: number
-          description: The end of the points range.
+          description: The end of the points range. Inclusive.
         users:
           type: number
           description: The number of users in this points range.
     PointsSummaryResponse:
       title: PointsSummaryResponse
       type: array
+      description: >-
+        A list of eleven points ranges, with the first starting and ending at 0,
+        and the remaining 10 being calculated as 10 equally sized ranges from 1
+        to the greatest number of points a user has, rounded up to the nearest
+        power of 10.
       items:
         $ref: "#/components/schemas/PointsRange"
     PointsTriggerResponse:
