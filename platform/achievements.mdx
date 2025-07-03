@@ -6,6 +6,7 @@ icon: trophy
 ---
 
 import MetricChangeResponseBlock from "/snippets/metric-change-response-block.mdx";
+import AllAchievementsResponseBlock from "/snippets/all-achievements-response-block.mdx";
 
 ## What Are Achievements?
 
@@ -191,13 +192,55 @@ A badge can be uploaded and assigned to any achievement in Trophy. Trophy will h
 }
 ```
 
+## Displaying Achievements
+
+Trophy has a number of APIs that support displaying achievements within your applications. Here we'll look at the different ways to use them and the types of UI's you can build.
+
+<Tip>
+  Take a look at our [examples center](https://examples.trophy.so) for live
+  demos of APIs in practice.
+</Tip>
+
+### All Achievements
+
+To display a high-level overview of all achievements users can complete, use the [all achievements endpoint](/api-reference/endpoints/achievements/all-achievements). Use this data to build UI that gives users an idea of the progression pathways within your application.
+
+<Frame>
+  <video
+    autoPlay
+    muted
+    loop
+    playsInline
+    className="w-full aspect-video"
+    src="../assets/platform/achievements/displaying_trophy_cabinet.mp4"
+  ></video>
+</Frame>
+
+The all achievements endpoint returns a list of all achievements within your Trophy account along with details of 'rarity' (the percentage of users who have completed each achievement) as follows:
+
+<AllAchievementsResponseBlock />
+
+### User Achievements
+
+If instead you're building user-specific UI elements, then use the [user achievements endpoint](/api-reference/endpoints/users/get-a-users-completed-achievements) to get only the achievements a specific user has completed.
+
+Use this data to display achievements against a user's profile for example.
+
+<Frame>
+  <img
+    height="200"
+    noZoom
+    src="../assets/platform/achievements/user_achievements.png"
+  />
+</Frame>
+
 ## Achievement Analytics
 
 If you have achievements set up for any of your [Metrics](/platform/metrics), then the metric analytics page displays a chart that shows you the current progress of all Users as follows:
 
 <Frame>
   <img
-    height="200"
+    width="50%"
     noZoom
     src="../assets/platform/metrics/achievement_completions.png"
   />
