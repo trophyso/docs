@@ -94,13 +94,77 @@ Trophy's preview tool can model different scenarios to help you determine how fr
 
 There are a few ways to use Trophy to fetch and display points in your app.
 
-Firstly, any points awarded to users are returned in the response when sending metric change events using the (metric change event API](/api-reference/endpoints/metrics/send-a-metric-change-event).
+<Frame>
+  <video
+    autoPlay
+    muted
+    loop
+    playsInline
+    className="w-full aspect-video"
+    src="../assets/platform/points/displaying_points.mp4"
+  ></video>
+</Frame>
 
-The response includes the user's total points, how many points were awarded as a result of the event, and the details of the specific triggers that fired.
+### Triggering Transactional UI
+
+Firstly, any points awarded to users as a result of a metric change event are returned in the response when using the (metric change event API](/api-reference/endpoints/metrics/send-a-metric-change-event).
+
+The response includes the user's new total points, how many points were awarded as a result of the event, and the details of the specific points triggers that fired.
 
 <MetricChangeResponseBlock />
 
-Additionally there are a number of APIs that can be used to fetch and display points data in the API. Check the full [API reference](/api-reference/introduction) for details.
+This makes it really simple to read the response and trigger any of the following transactional UI in your application:
+
+- Displaying in-app notifications and pop-ups
+- Playing sound effects
+
+### Displaying User's Points
+
+Trophy also has APIs that allow you fetch user's points data whenever you want.
+
+First, the [user points API](api-reference/endpoints/users/get-a-users-points) returns the user's total points and up to 100 of the most recent events that awarded points to the user.
+
+You can use this API to display the user's total points anywhere in your platform as well as a 'Latest awards' section or similar.
+
+<Frame>
+  <img height="200" noZoom src="../assets/platform/points/points_awards.png" />
+</Frame>
+
+Then, the [user points summary API](/api-reference/endpoints/users/get-a-users-points-summary) can be used to fetch historical points data for a particular user.
+
+Data can be aggregated daily, weekly or monthly between a start and end date. Use this API to display points progress charts to users over any timeframe.
+
+<Frame>
+  <img
+    height="200"
+    noZoom
+    src="../assets/platform/points/user_points_summary.png"
+  />
+</Frame>
+
+### Displaying Aggregate Data
+
+Additionally there are a number of APIs that can be used to fetch and display points data at the account level.
+
+First, the [points summary API](/api-reference/endpoints/points/get-points-summary) returns aggregate points data across your entire user base.
+
+Use this data to display a histogram of points and show users how they compare to others on the platform.
+
+<Frame>
+  <img height="200" noZoom src="../assets/platform/points/points_summary.png" />
+</Frame>
+
+Finally, the [points triggers API](/api-reference/endpoints/points/get-all-points-triggers) returns data about the active triggers that award points to users in your Trophy account.
+
+Use this API to show users how they can earn points on your platform. Any new triggers you add will automatically be returned from this API helping to reduce code changes in your platform, and shifting operations to Trophy.
+
+<Frame>
+  <img
+    height="200"
+    noZoom
+    src="../assets/platform/points/points_triggers.png"
+  />
+</Frame>
 
 ## Points Analytics
 
