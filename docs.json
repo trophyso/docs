@@ -29,6 +29,11 @@
       "og:image": "/assets/og.png"
     }
   },
+  "integrations": {
+    "ga4": {
+      "measurementId": "G-R146N3CQHE"
+    }
+  },
   "navigation": {
     "tabs": [
       {
