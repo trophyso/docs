@@ -337,8 +337,8 @@ paths:
               schema:
                 $ref: "#/components/schemas/ErrorBody"
     put:
-      description: Upsert a user.
-      operationId: users_upsert
+      description: Identify a user.
+      operationId: users_identify
       tags:
         - Users
       summary: Identify a user
