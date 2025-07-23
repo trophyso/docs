@@ -29,6 +29,11 @@
       "og:image": "/assets/og.png"
     }
   },
+  "integrations": {
+    "ga4": {
+      "measurementId": "G-R146N3CQHE"
+    }
+  },
   "navigation": {
     "tabs": [
       {
@@ -134,7 +139,8 @@
           {
             "group": "Users",
             "pages": [
-              "api-reference/endpoints/users/identify-a-new-user",
+              "api-reference/endpoints/users/identify-a-user",
+              "api-reference/endpoints/users/create-a-user",
               "api-reference/endpoints/users/get-a-single-user",
               "api-reference/endpoints/users/update-a-user",
               "api-reference/endpoints/users/get-all-metrics-for-a-user",

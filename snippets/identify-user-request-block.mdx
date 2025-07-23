@@ -1,15 +1,14 @@
 <CodeGroup>
 ```bash cURL
-curl --request POST \
-  --url https://app.trophy.so/api/users \
+curl --request PUT \
+  --url https://app.trophy.so/api/users/{id} \
   --header 'Content-Type: application/json' \
   --header 'X-API-KEY: <api-key>' \
   --data '{
   "email": "user@example.com",
   "name": "User",
   "tz": "Europe/London",
-  "subscribeToEmails": true,
-  "id": "user-id"
+  "subscribeToEmails": true
 }'
 ```
 </CodeGroup>

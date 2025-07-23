@@ -76,6 +76,8 @@ In this case, if this is the user's first interaction (i.e. they are a new user)
 
 However if Trophy finds an existing record with the same `id`, then Trophy will update any details of the user that are passed through.
 
+In other words, inline identification is by means of an `UPSERT` operation.
+
 <br />
 
 ```mermaid
@@ -107,24 +109,27 @@ This is why we recommend starting with inline identification first, then explori
 
 ### Explicit Identification
 
-Explicit identification is when you write code in your application that explicitly identifies users and updates their attributes, and is useful if you want complete control over how and when that happens.
+Explicit identification is when you write code in your application that explicitly tells Trophy about users seperate from any metric interactions. This is useful if you want complete control over how and when Trophy learns about your users.
 
 Scenarios where you might want to use explicit identification might be:
 
 - You want to tell Trophy about new users immediately on sign-up, before they increment a metric
+- You track a lot of metrics in Trophy, and don't want to repeat inline identification code.
 - You want to only tell Trophy about a specific cohort of users, of which you control the conditions around
-- The system that manages your users is seperate to the system you want to gamify using Trophy
 
-In this case, you can tell Trophy about new users using the [User Identification API](/api-reference/endpoints/users/identify-a-new-user).
+In this case, you can tell Trophy about new users using the [User Identification API](/api-reference/endpoints/users/identify-a-user).
 
 <IdentifyUserRequestBlock />
 
 <Tip>
-  Even if you use explicit identification, the [metric tracking
-  API](/api-reference/endpoints/metrics/send-a-metric-change-event) will always
-  create new and update existing users to ensure your user data is always in
-  sync.
+  Just like in inline identification, explicit identifcation also works by means
+  of an `UPSERT` operation meaning all user attributes are kept in sync with
+  Trophy automatically.
 </Tip>
+
+## Creating Users
+
+To explicitly create a new user in Trophy, use the [Create User API](/api-reference/endpoints/users/create-a-user).
 
 ## Keeping Users Up To Date
 
