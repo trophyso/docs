@@ -236,11 +236,11 @@ paths:
                   value: 750
   /users:
     post:
-      description: Identify a new user.
+      description: Create a new user.
       operationId: users_create
       tags:
         - Users
-      summary: Identify a new user
+      summary: Create a new user
       security:
         - ApiKeyAuth: []
       requestBody:
@@ -337,17 +337,17 @@ paths:
               schema:
                 $ref: '#/components/schemas/ErrorBody'
     put:
-      description: Upsert a user (create or update).
-      operationId: users_upsert
+      description: Identify a user.
+      operationId: users_identify
       tags:
         - Users
-      summary: Upsert a user
+      summary: Identify a user
       security:
         - ApiKeyAuth: []
       parameters:
         - name: id
           in: path
-          description: ID of the user to upsert.
+          description: ID of the user to identify.
           required: true
           schema:
             type: string
@@ -360,7 +360,6 @@ paths:
               $ref: '#/components/schemas/UpdatedUser'
               description: The user object.
             example:
-              id: user-id
               email: user@example.com
               tz: Europe/London
       responses:
