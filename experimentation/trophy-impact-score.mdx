@@ -7,7 +7,13 @@ icon: percent
 
 ## What Is The Trophy Impact Score?
 
-By default, Trophy only enrolls 90% of your users in any gamification emails. It leaves the other 10% out as a 'control cohort'.
+Trophy has a built-in A/B testing feature that allows you to test the impact of your gamification features on retention and engagement.
+
+Through manipulating the [Control Ratio](#customizing-the-control-ratio), you can assign a certain percentage of your users to a 'control cohort'. Each new user that you tell Trophy about will be automatically assigned to the control cohort or not based on this setting.
+
+Trophy then exposes the `control` attribute through the [GET user API](/api-reference/endpoints/users/get-a-single-user#response-control) to allow developers to hide gamification UI and features from users in the control cohort.
+
+Similarly, if you use the [Emails](/platform/emails) feature, Trophy only sends emails to users who are not in the control cohort.
 
 Trophy then automatically tracks the 14-day retention of the two cohorts and compares them, resulting in the Trophy Impact Score.
 
@@ -28,11 +34,13 @@ The Trophy Impact Score reflects the percentage difference in 14-day retention b
   cohort.
 </Tip>
 
-## Customizing the control ratio
+## Customizing The Control Ratio
+
+By default, Trophy will use a 90/10 ratio of non-control/control users. However, you can customize this as you wish.
 
 If you'd prefer to use a different ratio of control to non-control users then you can do so on the [Integration](https://app.trophy.so/integration) page.
 
-Use the slider to change the percentage of your userbase that will be set as control users and opted out of gamification emails.
+Use the slider to change the percentage of your userbase that will be set as control users and opted out of gamification features.
 
 <Frame>
   <video

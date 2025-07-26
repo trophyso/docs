@@ -9,9 +9,9 @@ Trophy can send automated emails to users based on key triggers without requirin
 
 ## Types Of Emails
 
-Trophy supports 3 types of emails, each of which is designed to suit a common scenario in building gamification experiences.
+Trophy supports 4 types of emails, each of which is designed to suit a common scenario in building gamification experiences.
 
-All emails are optional, but all three can be used simultaneously and can be controlled from the [Emails](https://app.trophy.so/emails/configure) page in the Trophy dashboard.
+All emails are optional, but all four can be used simultaneously and can be controlled from the [Emails](https://app.trophy.so/emails/configure) page in the Trophy dashboard.
 
 <Frame>
   <img height="200" noZoom src="../assets/platform/emails/email_types.png" />
@@ -36,6 +36,10 @@ Emails are sent as follows:
 - After 7 days of inactivity
 - After 14 days of inactivity
 - After 30 days of inactivity
+
+### Streak Reminder Emails
+
+Streak reminder emails are automatically sent to users up to 4 hours before they are about to lose their [Streak](/platform/streaks).
 
 ## Designing Emails
 
@@ -530,30 +534,41 @@ Additionally, the editor support pluralization. In the below example we show dif
 
 ## Email Customization
 
-On the [Configure](https://app.trophy.so/emails/configure) page you'll find a couple of different settings you can control to manage email design across your Trophy account.
+### Aggregation Period
 
 <Frame>
   <img
     height="200"
     width="75%"
     noZoom
-    src="../assets/platform/emails/email_customization_settings.png"
+    src="../assets/platform/emails/aggregation_period_setting.png"
   />
 </Frame>
 
-### Aggregation Period
+The aggregation period controls the timeframe over which blocks like the [Progress Chart](#progress-chart) display usage. It also controls the frequency at which [Recap Emails](#recap-emails) are sent. Possible values are daily, weekly, monthly or yearly.
 
-The aggregation period controls the timeframe over which blocks like the [Progress Chart](#progress-chart) track usage. It also controls the frequency at which [Recap Emails](#recap-emails) are sent. Possible values are daily, weekly, monthly or yearly.
+Head into the [Integration](https://app.trophy.so/integration) page to manage this setting.
 
 ### Font Style
 
-Changes the font style used across all email templates. Additional styles are pulled from your Trophy account's [Branding](https://app.trophy.so/branding) settings.
+On the [email configure page](https://app.trophy.so/emails/configure), you'll find a setting to change the font style used in all emails.
+
+<Frame>
+  <img
+    height="200"
+    width="75%"
+    noZoom
+    src="../assets/platform/emails/aggregation_period_setting.png"
+  />
+</Frame>
+
+Other email styles are pulled from your Trophy account's [Branding](https://app.trophy.so/branding) settings.
 
 ## Send-time Optimization
 
-By default all emails sent by Trophy are sent at **17:00PM ET**, however sending emails to users based on their local timezone usually results in better engagement rates.
+In most cases, emails sent by Trophy are sent at **17:00PM ET**, however sending emails to users based on their local timezone usually results in better engagement rates.
 
-That's why if through [User Identification](/platform/users#param-tz) you specify a timezone for each user, Trophy will optimize the send-time for you.
+That's why if through [User Identification](/platform/users#param-tz) you specify a timezone for each user, Trophy will optimize the send-time for you by sending emails to users at 17:00PM in their local timezone.
 
 ## Setting up Emails
 
