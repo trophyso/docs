@@ -1445,6 +1445,13 @@ components:
           type: string
           description: The user's timezone (used for email scheduling).
           example: Europe/London
+        deviceTokens:
+          type: array
+          description: The user's device tokens, used for push notifications.
+          items:
+            type: string
+            description: The device token.
+          example: ['token1', 'token2']
         subscribeToEmails:
           type: boolean
           default: true
