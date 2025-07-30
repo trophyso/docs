@@ -1455,7 +1455,7 @@ components:
         subscribeToEmails:
           type: boolean
           default: true
-          description: Whether the user should receive Trophy-powered emails. Cannot be false if an email is provided.
+          description: Whether the user should receive Trophy-powered emails. If false, Trophy will not store the user's email address.
           example: true
     UpsertedUser:
       title: Upserted User
