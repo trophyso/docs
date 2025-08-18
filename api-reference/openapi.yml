@@ -208,6 +208,25 @@ paths:
                       periodStart: "2025-03-31"
                       periodEnd: "2025-04-05"
                       expires: "2025-04-12"
+                    points:
+                      xp:
+                        id: 0040fe51-6bce-4b44-b0ad-bddc4e123534
+                        name: XP
+                        description: null
+                        badgeUrl: null
+                        total: 10
+                        added: 10
+                        awards:
+                          - id: 0040fe51-6bce-4b44-b0ad-bddc4e123534
+                            awarded: 10
+                            date: "2021-01-01T00:00:00Z"
+                            total: 10
+                            trigger:
+                              id: 0040fe51-6bce-4b44-b0ad-bddc4e123534
+                              type: metric
+                              metricName: words written
+                              metricThreshold: 100
+                              points: 10
         "400":
           description: "Bad Request"
           content:
@@ -264,7 +283,13 @@ paths:
                     email: user@example.com
                     tz: Europe/London
                     id: "18"
+                    attributes:
+                      department: engineering
+                      role: developer
                   value: 750
+                  attributes:
+                    category: writing
+                    source: mobile-app
   /users:
     post:
       description: Create a new user.
@@ -299,7 +324,8 @@ paths:
                     created: "2021-01-01T00:00:00Z"
                     updated: "2021-01-01T00:00:00Z"
                     attributes:
-                      department: Engineering
+                      department: engineering
+                      role: developer
         "400":
           description: "Bad Request"
           content:
@@ -352,7 +378,8 @@ paths:
                     created: "2021-01-01T00:00:00Z"
                     updated: "2021-01-01T00:00:00Z"
                     attributes:
-                      department: Engineering
+                      department: engineering
+                      role: developer
         "400":
           description: "Bad Request"
           content:
@@ -397,6 +424,9 @@ paths:
             example:
               email: user@example.com
               tz: Europe/London
+              attributes:
+                department: engineering
+                role: developer
       responses:
         "200":
           description: Upserted user
@@ -458,6 +488,9 @@ paths:
               id: user-id
               email: user@example.com
               tz: Europe/London
+              attributes:
+                department: engineering
+                role: developer
       responses:
         "200":
           description: Updated user
@@ -1622,8 +1655,8 @@ components:
             type: string
           description: User attributes as key-value pairs. Keys must match existing user attributes set up in the Trophy dashboard.
           example:
-            department: Engineering
-            role: Developer
+            department: engineering
+            role: developer
     UpsertedUser:
       title: Upserted User
       type: object
