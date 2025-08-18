@@ -139,7 +139,15 @@ Custom user attributes can be used to personalize achievements, customize the wa
   </Card>
 </CardGroup>
 
-## Data Aggregation and Filtering
+#### Data Aggregation and Filtering
+
+You can use custom user attributes to aggregate and filter data returned from some APIs to support a wide range of gamification use cases. In all cases, attributes are included in the `userAttributes` query parameter using a consistent schema:
+
+`?userAttributes=city:london,subscription-plan:pro`
+
+Here's a list of all APIs that support the `userAttributes` query parameter:
+
+- [Points Summary](/api-reference/endpoints/points/get-points-summary)
 
 #### Segmented Analytics
 
