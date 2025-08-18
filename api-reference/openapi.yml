@@ -28,7 +28,7 @@ paths:
                       badgeUrl: https://example.com/badge.png
                       key: finish-onboarding
                       completions: 8
-                      completedPercentage: 80
+                      rarity: 80
                     - id: 5100fe51-6bce-6j44-b0hs-bddc4e123683
                       trigger: metric
                       name: 500 words written
@@ -38,7 +38,7 @@ paths:
                       metricName: words written
                       metricValue: 500
                       completions: 6
-                      completedPercentage: 60
+                      rarity: 60
                       userAttributes:
                         - key: plan-type
                           value: premium
@@ -54,7 +54,7 @@ paths:
                       badgeUrl: https://example.com/badge.png
                       streakLength: 10
                       completions: 2
-                      completedPercentage: 20
+                      rarity: 20
                       userAttributes:
                         - key: plan-type
                           value: premium
@@ -761,7 +761,7 @@ paths:
   /users/{id}/achievements:
     get:
       description: Get a user's achievements.
-      operationId: users_all_achievements
+      operationId: users_achievements
       tags:
         - Users
       parameters:
@@ -1513,7 +1513,7 @@ components:
             completions:
               type: integer
               description: The number of users who have completed this achievement.
-            completedPercentage:
+            rarity:
               type: number
               format: double
               description: The percentage of all users who have completed this achievement.

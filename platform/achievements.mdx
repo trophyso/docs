@@ -104,14 +104,26 @@ To create new achievements, head to the [achievements page](https://app.trophy.s
   Enter a name for the achievement. This will be returned from APIs and made available for use in emails and other areas of Trophy where appropriate.
 </Step>
 
+<Step title="Enter a description (Optional)">
+  Enter a short description of the achievement. This will be returned from APIs
+  and made available for use in emails and other areas of Trophy where
+  appropriate.
+</Step>
+
+<Step title="Upload a badge (Optional)">
+  You can upload and assign a badge to the achievement that will be returned in
+  API responses and made available in emails and other areas of Trophy where
+  appropriate.
+</Step>
+
 <Step title="Choose a trigger type">
   Choose how you want this achievement to be unlocked.
   
-- Choosing **Metric** will mean the achievement will be automatically unlocked when the user's total reaches the achievement trigger value.
+- Choosing **Metric** will mean the achievement will be automatically unlocked when the user's metric total reaches the achievement trigger value.
 
 - Choosing **Streak** will mean the achievement will be automatically unlocked when the user's streak length reaches the achievement trigger value.
 
-- Choosing **API Call** will mean the achievement will only be unlocked when explicitly marked as completed by your code through an API call.
+- Choosing **API Call** will mean the achievement will only be unlocked when explicitly marked as completed by your code through a request to the [complete achievement API](/api-reference/endpoints/achievements/mark-an-achievement-as-completed).
 
 </Step>
 
@@ -126,10 +138,13 @@ To create new achievements, head to the [achievements page](https://app.trophy.s
 
 </Step>
 
-<Step title="Upload a badge _Optional_">
-  You can upload and assign a badge to the achievement that will be returned in
-  API responses and made available in emails and other areas of Trophy where
-  appropriate.
+<Step title="Add attribute filters (Optional)">
+  You can assign _attribute filters_ to an achievement to further restrict who can unlock them and when.
+
+- To limit a **Metric** achievement to only apply to events with specific [custom event attributes](/platform/events#custom-event-attributes), select an attribute and enter a value in the **Event Attribute** section.
+
+- To limit any type of achievement to only apply to a user with one or more specific [custom user attributes](/platform/users#custom-user-attributes), add attributes and the desired values in the **User Attributes** section.
+
 </Step>
 
 <Step title="Hit save">
@@ -216,15 +231,18 @@ To display a high-level overview of all achievements users can complete, use the
   ></video>
 </Frame>
 
-The all achievements endpoint returns a list of all achievements within your Trophy account along with details of 'rarity' (the percentage of users who have completed each achievement) as follows:
+The all achievements endpoint returns a list of all achievements within your Trophy account. Each achievement returned also includes `completions` (the number of users who have compelted the acheivement) and `rarity` (the percentage of users who have completed the achievement) as follows:
 
 <AllAchievementsResponseBlock />
 
 ### User Achievements
 
-If instead you're building user-specific UI elements, then use the [user achievements endpoint](/api-reference/endpoints/users/get-a-users-completed-achievements) to get only the achievements a specific user has completed.
+If instead you're building user-specific UI elements, then use the [user achievements endpoint](/api-reference/endpoints/users/get-a-users-completed-achievements) to return achievements a specific user has completed.
 
-Use this data to display achievements against a user's profile for example.
+<Tip>
+  You can also include achievements that a user has yet to complete by including
+  the query parameter `includeIncomplete=true`.
+</Tip>
 
 <Frame>
   <img
