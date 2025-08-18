@@ -152,6 +152,70 @@ To create new achievements, head to the [achievements page](https://app.trophy.s
 </Step>
 </Steps>
 
+## Managing Achievements
+
+Trophy has built in tools to help you test and control which achievements can be unlocked, by who and when, without affecting production.
+
+### Achievement Statuses
+
+Here's an overview of the different achievement statuses and what they mean.
+
+**Inactive**
+
+All achievements are created as inactive. Inactive achievements can't be completed and aren't returned in any achievement APIs. Users won't see them until you make them active.
+
+**Active**
+
+When you make an achievement active, it makes it 'live'. Users can complete it and it will be returned from all achievement APIs.
+
+**Locked**
+
+When you lock an achievement, users who haven't unlocked it yet won't be able to unlock it anymore, but users who have already unlocked it won't be affected.
+
+Locked acheivements are only returned in APIs for users who have already achieved them.
+
+**Archived**
+
+Archvied achievements can't be completed and aren't returned in any achievement APIs.
+
+<Warning>
+  Once you archive an achievement it disapears from Trophy so be sure to only
+  archive achievements that you no longer need.
+</Warning>
+
+Archived achievements can be restored by [contacting support](#get-support).
+
+### Acheivement Workflow
+
+Achievements can be moved through different statuses according to the following workfow:
+
+```mermaid
+flowchart LR
+    A@{ shape: rounded, label: "Inactive" }
+    B@{ shape: rounded, label: "Active" }
+    C@{ shape: rounded, label: "Active" }
+    D@{ shape: rounded, label: "Locked" }
+    E@{ shape: rounded, label: "Archived" }
+    F@{ shape: rounded, label: "Locked" }
+    G@{ shape: rounded, label: "Active" }
+    H@{ shape: rounded, label: "Archived" }
+    A-->B
+    C-->D
+    D-->E
+    C-->E
+    F-->G
+    F-->H
+    style A fill:#FDFDEA,stroke:#F7F0D5
+    style B fill:#F2FAF7,stroke:#E2F6E6
+    style C fill:#F2FAF7,stroke:#E2F6E6
+    style D fill:#eee,stroke:#ddd
+    style E fill:#ddd,stroke:#ccc
+    style F fill:#eee,stroke:#ddd
+    style G fill:#F2FAF7,stroke:#E2F6E6
+    style H fill:#ddd,stroke:#ccc
+
+```
+
 ## Completing Achievements
 
 If you're using metric achievements, there's no need to explicitly _complete_ achievements. Once you've set up [metric tracking](/platform/events#tracking-metric-events) in your code, all achievements linked to the metric will be automatically tracked.
