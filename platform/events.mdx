@@ -82,6 +82,59 @@ Here's an example of an event payload where the values of two attributes, `devic
 }
 ```
 
+### Using Attributes
+
+Custom event attributes can be used to power more advanced triggers for achievements and points and can be used in email templates to customize copy and to control the data shown in charts.
+
+#### Advanced Feature Triggers
+
+Custom event attributes can be used to set up achievements or points triggers that only track events with specific attribute values. Follow the links to the relevant pages below to learn more.
+
+<CardGroup>
+  <Card title="Achievement Triggers" icon="trophy">
+    Configure achievements that can only be unlocked by events with certain
+    attribute values.
+  </Card>
+  <Card title="Points Triggers" icon="sparkle">
+    Set up points triggers to only award points from events with specific
+    attribute values.
+  </Card>
+</CardGroup>
+
+#### Email Customization
+
+If you use any Trophy [Emails](/platform/emails), event attributes can be used to customize the data shown in certain email blocks.
+
+Firstly, when using metric-based variables in email copy you can use event attributes to further control what data the variable refrences.
+
+For example here's a case where we use an email variable to tell users what their total number of workouts they've done on different gym equipment is using a metric 'Workouts' and an attribute 'Equipment':
+
+<Frame>
+  <video
+    autoPlay
+    muted
+    loop
+    playsInline
+    className="w-full aspect-15/4"
+    src="../assets/platform/events/using_attributes_in_emails.mp4"
+  ></video>
+</Frame>
+
+Secondly, here's an example where we add a chart to an email that shows users how many workouts they've done on a bike over time:
+
+<Frame>
+  <video
+    autoPlay
+    muted
+    loop
+    playsInline
+    className="w-full aspect-15/4"
+    src="../assets/platform/events/using_attributes_in_email_charts.mp4"
+  ></video>
+</Frame>
+
+There's a huge number of possibilities here, so get creative!
+
 ## Tracking Metric Events
 
 Each metric has a unique `key` which you can use to reference and track events against it in your code. You can find the `key` in the metric settings page.
