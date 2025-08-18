@@ -9,6 +9,16 @@ paths:
       operationId: achievements_all
       tags:
         - Achievements
+      x-codeSamples:
+        - lang: javascript
+          source: |
+            import { TrophyApiClient } from '@trophyso/node';
+
+            const trophy = new TrophyApiClient({
+              apiKey: 'YOUR_API_KEY'
+            });
+
+            const response = await trophy.achievements.all();
       responses:
         "200":
           description: Successful operation
@@ -79,6 +89,20 @@ paths:
       operationId: achievements_complete
       tags:
         - Achievements
+      x-codeSamples:
+        - lang: javascript
+          source: |
+            import { TrophyApiClient } from '@trophyso/node';
+
+            const trophy = new TrophyApiClient({
+              apiKey: 'YOUR_API_KEY'
+            });
+
+            const response = await trophy.achievements.complete("achievement-key", {
+              user: {
+                id: "user-id",
+              }
+            });
       parameters:
         - name: key
           in: path
@@ -153,7 +177,7 @@ paths:
               type: object
               properties:
                 user:
-                  $ref: "#/components/schemas/UpdatedUser"
+                  $ref: "#/components/schemas/UpsertedUser"
                   description: The user that completed the achievement.
               required:
                 - user
@@ -171,6 +195,33 @@ paths:
       operationId: metrics_event
       tags:
         - Metrics
+      x-codeSamples:
+        - lang: javascript
+          source: |
+            import { TrophyApiClient } from '@trophyso/node';
+
+            const trophy = new TrophyApiClient({
+              apiKey: 'YOUR_API_KEY'
+            });
+
+            const response = await trophy.metrics.event({
+              key: 'words-written',
+              user: {
+                id: 'user-id',
+                email: 'user@example.com',
+                tz: 'Europe/London',
+                subscribedToEmails: true,
+                attributes: {
+                  department: 'engineering',
+                  role: 'developer'
+                }
+              },
+              value: 750,
+              attributes: {
+                category: 'writing',
+                source: 'mobile-app'
+              }
+            });
       parameters:
         - name: key
           in: path
@@ -296,6 +347,25 @@ paths:
       operationId: users_create
       tags:
         - Users
+      x-codeSamples:
+        - lang: javascript
+          source: |
+            import { TrophyApiClient } from '@trophyso/node';
+
+            const trophy = new TrophyApiClient({
+              apiKey: 'YOUR_API_KEY'
+            });
+
+            const response = await trophy.users.create({
+              id: 'user-id',
+              email: 'user@example.com',
+              tz: 'Europe/London',
+              subscribedToEmails: true,
+              attributes: {
+                department: 'engineering',
+                role: 'developer'
+              }
+            });
       summary: Create a new user
       security:
         - ApiKeyAuth: []
@@ -350,6 +420,16 @@ paths:
       operationId: users_get
       tags:
         - Users
+      x-codeSamples:
+        - lang: javascript
+          source: |
+            import { TrophyApiClient } from '@trophyso/node';
+
+            const trophy = new TrophyApiClient({
+              apiKey: 'YOUR_API_KEY'
+            });
+
+            const response = await trophy.users.get("user-id");
       summary: Get a single user
       parameters:
         - name: id
@@ -403,6 +483,23 @@ paths:
       operationId: users_identify
       tags:
         - Users
+      x-codeSamples:
+        - lang: javascript
+          source: |
+            import { TrophyApiClient } from '@trophyso/node';
+
+            const trophy = new TrophyApiClient({
+              apiKey: 'YOUR_API_KEY'
+            });
+
+            const response = await trophy.users.identify("user-id", {
+              email: 'user@example.com',
+              tz: 'Europe/London',
+              attributes: {
+                department: 'engineering',
+                role: 'developer'
+              }
+            });
       summary: Identify a user
       security:
         - ApiKeyAuth: []
@@ -466,6 +563,23 @@ paths:
       operationId: users_update
       tags:
         - Users
+      x-codeSamples:
+        - lang: javascript
+          source: |
+            import { TrophyApiClient } from '@trophyso/node';
+
+            const trophy = new TrophyApiClient({
+              apiKey: 'YOUR_API_KEY'
+            });
+
+            const response = await trophy.users.update("user-id", {
+              email: 'user@example.com',
+              tz: 'Europe/London',
+              attributes: {
+                department: 'engineering',
+                role: 'developer'
+              }
+            });
       summary: Update a user
       security:
         - ApiKeyAuth: []
@@ -537,6 +651,16 @@ paths:
       operationId: users_all_metrics
       tags:
         - Users
+      x-codeSamples:
+        - lang: javascript
+          source: |
+            import { TrophyApiClient } from '@trophyso/node';
+
+            const trophy = new TrophyApiClient({
+              apiKey: 'YOUR_API_KEY'
+            });
+
+            const response = await trophy.users.allMetrics("user-id", "words-written");
       parameters:
         - name: id
           in: path
@@ -610,6 +734,16 @@ paths:
       operationId: users_single_metric
       tags:
         - Users
+      x-codeSamples:
+        - lang: javascript
+          source: |
+            import { TrophyApiClient } from '@trophyso/node';
+
+            const trophy = new TrophyApiClient({
+              apiKey: 'YOUR_API_KEY'
+            });
+
+            const response = await trophy.users.singleMetric("user-id", "words-written");
       parameters:
         - name: id
           in: path
@@ -687,6 +821,20 @@ paths:
       operationId: users_metric_event_summary
       tags:
         - Users
+      x-codeSamples:
+        - lang: javascript
+          source: |
+            import { TrophyApiClient } from '@trophyso/node';
+
+            const trophy = new TrophyApiClient({
+              apiKey: 'YOUR_API_KEY'
+            });
+
+            const response = await trophy.users.metricEventSummary("user-id", "words-written", {
+              aggregation: "daily",
+              startDate: "2024-01-01",
+              endDate: "2024-01-31"
+            });
       parameters:
         - name: id
           in: path
@@ -797,6 +945,29 @@ paths:
       operationId: users_achievements
       tags:
         - Users
+      x-codeSamples:
+        - lang: javascript
+          label: Get a user's completed achievements
+          source: |
+            import { TrophyApiClient } from '@trophyso/node';
+
+            const trophy = new TrophyApiClient({
+              apiKey: 'YOUR_API_KEY'
+            });
+
+            const response = await trophy.users.achievements("user-id");
+        - lang: javascript
+          label: Get a user's achievements (include incomplete)
+          source: |
+            import { TrophyApiClient } from '@trophyso/node';
+
+            const trophy = new TrophyApiClient({
+              apiKey: 'YOUR_API_KEY'
+            });
+
+            const response = await trophy.users.achievements("user-id", {
+              includeIncomplete: true
+            });
       parameters:
         - name: id
           in: path
@@ -831,6 +1002,8 @@ paths:
                       name: Completed Onboarding
                       achievedAt: "2021-01-01T00:00:00Z"
                       badgeUrl: https://example.com/badge2.png
+                      completions: 10
+                      rarity: 90.13
                     - id: d01dcbcb-d51e-4c12-b054-dc811dcdc623
                       trigger: metric
                       key: novice-writer
@@ -840,6 +1013,8 @@ paths:
                       name: Novice Writer
                       achievedAt: "2021-02-01T00:00:00Z"
                       badgeUrl: https://example.com/badge1.png
+                      completions: 8
+                      rarity: 22.98
                     - id: d01dcbcb-d51e-4c12-b054-dc811dcdc624
                       trigger: streak
                       key: 3-day-streak
@@ -847,6 +1022,8 @@ paths:
                       name: 3-Day Streak
                       achievedAt: "2021-03-01T00:00:00Z"
                       badgeUrl: https://example.com/badge2.png
+                      completions: 12
+                      rarity: 89.52
         "401":
           description: "Unauthorized"
           content:
@@ -874,6 +1051,18 @@ paths:
       operationId: users_streak
       tags:
         - Users
+      x-codeSamples:
+        - lang: javascript
+          source: |
+            import { TrophyApiClient } from '@trophyso/node';
+
+            const trophy = new TrophyApiClient({
+              apiKey: 'YOUR_API_KEY'
+            });
+
+            const response = await trophy.users.streak("user-id", {
+              historyPeriods: 14
+            });
       parameters:
         - name: id
           in: path
@@ -956,6 +1145,16 @@ paths:
       operationId: users_points
       tags:
         - Users
+      x-codeSamples:
+        - lang: javascript
+          source: |
+            import { TrophyApiClient } from '@trophyso/node';
+
+            const trophy = new TrophyApiClient({
+              apiKey: 'YOUR_API_KEY'
+            });
+
+            const response = await trophy.users.points("user-id", "points-system-key");
       parameters:
         - name: id
           in: path
@@ -1032,6 +1231,20 @@ paths:
       operationId: users_points_event_summary
       tags:
         - Users
+      x-codeSamples:
+        - lang: javascript
+          source: |
+            import { TrophyApiClient } from '@trophyso/node';
+
+            const trophy = new TrophyApiClient({
+              apiKey: 'YOUR_API_KEY'
+            });
+
+            const response = await trophy.users.pointsEventSummary("user-id", "points-system-key", {
+              aggregation: "daily",
+              startDate: "2024-01-01",
+              endDate: "2024-01-31"
+            });
       parameters:
         - name: id
           in: path
@@ -1142,6 +1355,18 @@ paths:
       operationId: points_summary
       tags:
         - Points
+      x-codeSamples:
+        - lang: javascript
+          source: |
+            import { TrophyApiClient } from '@trophyso/node';
+
+            const trophy = new TrophyApiClient({
+              apiKey: 'YOUR_API_KEY'
+            });
+
+            const response = await trophy.points.summary("points-system-key", {
+              userAttributes: "plan-type:premium,region:us-east"
+            });
       parameters:
         - name: key
           in: path
@@ -1227,6 +1452,16 @@ paths:
       operationId: points_system
       tags:
         - Points
+      x-codeSamples:
+        - lang: javascript
+          source: |
+            import { TrophyApiClient } from '@trophyso/node';
+
+            const trophy = new TrophyApiClient({
+              apiKey: 'YOUR_API_KEY'
+            });
+
+            const response = await trophy.points.system("points-system-key");
       parameters:
         - name: key
           in: path

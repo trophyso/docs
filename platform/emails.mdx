@@ -14,7 +14,14 @@ Trophy supports 4 types of emails, each of which is designed to suit a common sc
 All emails are optional, but all four can be used simultaneously and can be controlled from the [Emails](https://app.trophy.so/emails/configure) page in the Trophy dashboard.
 
 <Frame>
-  <img height="200" noZoom src="../assets/platform/emails/email_types.png" />
+  <video
+    autoPlay
+    muted
+    loop
+    playsInline
+    className="w-full aspect-15/4"
+    src="../assets/platform/emails/email_types.mp4"
+  ></video>
 </Frame>
 
 - **Achievement emails** are sent to users each time they unlock an [Achievement](/platform/achievements).
@@ -227,7 +234,7 @@ The **Reactivation** trigger sends win-back emails to users after they become in
 <Frame>
   <img
     height="200"
-    width="100%"
+    width="30%"
     noZoom
     src="../assets/platform/emails/reactivation_emails.png"
   />
@@ -532,21 +539,13 @@ Where achievements have badges, these will be automatically shown, as well as th
 
 ### Email Variables
 
-Trophy provides an expansive set of dynamic variables that are useful for designing highly relevant and personalized emails. Variables bring context from your Trophy account, the recipient's progress data, and email specific settings to your email templates.
+Trophy provides an expansive set of email variables that can be used to insert highly relevant and personalized copy into the body of emails and subject lines.
 
-<Frame>
-  <iframe
-    width="560"
-    height="315"
-    src="https://www.youtube.com/embed/EHUm1ZUYLeM?si=zUuu9zD8VB0STi-H"
-    title="YouTube video player"
-    frameborder="0"
-    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-    allowfullscreen
-  ></iframe>
-</Frame>
+Variables bring context from your Trophy account, the recipient's progress data, and email specific settings to your email templates.
 
-Email variables can be inserted by typing `{{` in any block that supports rich text, like headers, paragraphs, and buttons, and searching for your chosen variable. The editor will insert the variable code for you.
+Email variables can be inserted by typing `@` in any block that supports rich text, like headers, paragraphs, and buttons, and searching for your chosen variable.
+
+This will open up the variable editor window where you can configure variables as in the demo below.
 
 <Tip>You can also use variables in email subject lines.</Tip>
 
@@ -557,108 +556,132 @@ Email variables can be inserted by typing `{{` in any block that supports rich t
     loop
     playsInline
     className="w-full aspect-video"
-    src="../assets/platform/emails/using_variables.mp4"
+    src="../assets/platform/emails/email_variables_demo.mp4"
   ></video>
 </Frame>
 
-See below for a full list of all email variables supported by the email builder:
+See below for a full list of all email variables supported by the email builder, broken down by category.
 
-<ResponseField name="user" type="object">
-  Variables related to the recipient of the email.
+<AccordionGroup>
+<Accordion title="User">
+Variables related to the recipient of the email.
 
-  <Expandable title="variables">
-    <ResponseField name="name" type="string">
-      The full name of the user, if set.
-    </ResponseField>
+- **Name**: The recipient's name, if set
 
-  </Expandable>
-</ResponseField>
-<ResponseField name="metrics" type="object">
-    Variables referencing data from metrics within your Trophy account.
+Additionally all [custom user attributes](/platform/users#custom-user-attributes) are available as email variables.
 
-    In all metric variables, `key` relates to the unique reference you set for the metric when created. You can find this in the details page for each metric.
+</Accordion>
+<Accordion title="Metrics">
+  Variables related to the recipients tracked event data againt metrics.
 
-    <Tip>
-    Variables for a metric called 'Words written' with a `key` of `words` would be accessed with a `metrics.words` prefix. For example `metrics.words.percentile`.
-    </Tip>
+Each Trophy metric supports the following email variables:
 
-  <Expandable title="variables">
-    <ResponseField name="<key>.percentile" type="number">
-      Indicates where the recipient's all time metric total ranks compared to all other tracked users. For example, if a user is in the 90th percentile, their all time metric total is higher than 90% of users that have at least one event recorded against the metric.
-    </ResponseField>
-    <ResponseField name="<key>.percentileThisPeriod" type="number">
-      The recipent's percentile within the most recent [Aggregation Period](#aggregation-period).
-    </ResponseField>
-    <ResponseField name="<key>.currentTotal" type="number">
-      The recipient's current total value of all events recorded against the metric.
-    </ResponseField>
-    <ResponseField name="<key>.percentChange" type="string">
-      The percentage increase (or decrease) in the recipient's metric total as compared to the last [Aggregation Period](#aggregation-period). For example if the recipent has doubled their metric total within the aggregation period, `percentChange` would show +100. We leave it up to you to display a '%' sign if required.
-    </ResponseField>
-    <ResponseField name="<key>.changeThisPeriod" type="number">
-      The absolute increase (or decrease) in the recipient's metric total as compared to the last [Aggregation Period](#aggregation-period). For example if the recipents metric total has increased from 500 to 750, `changeThisPeriod` would show 250.
-    </ResponseField>
+- **Metric Name**: The name of the metric
+- **Metric Units**: The metric's units
+- **Current Total**: The sum of all the recipients event values to date
+- **Change This Period**: Absolute change in the recipients current total in the current aggregation period
+- **Change This Period (%)**: Percent change in the recipients current total in the current aggregation period
+- **Percentile (All Time)**: The recipients current total compared to all other users for all time
+- **Percentile (This Period)**: The recipients current total compared to all other users in the current aggregion period
 
-  </Expandable>
-</ResponseField>
-<ResponseField name="streak" type="object">
+Additionally, the **Highest** and **Lowest** dynamic aliases support the same set of variables. When using these aliases, Trophy will pick the metric where the recipient has either the highest or lowest current total at send time.
+
+When using metric variables, you also have the option of filtering the data that any of the above variables reference through a [custom event attribute](/platform/events#custom-event-attributes).
+
+    </Accordion>
+
+<Accordion title="Points">
+
+Similarly to metrics, each points system has the following variables that can be used to add dynamic data to email copy:
+
+- **Current Total**: The recipients total points
+- **Change This Period**: Absolute change in the recipients total points in the current aggregation period
+- **Change This Period (%)**: Percent change in the recipients total points in the current aggregation period
+- **Percentile (All Time)**: The recipients total points compared to all other users for all time
+- **Percentile (This Period)**: The recipients total points compared to all other users in the current aggregion period
+
+.
+
+</Accordion>
+<Accordion title="Achievements">
+  <Note>
+  These variables are only relevant for [achievement emails](#achievement-emails).
+  </Note>
+
+When configuring a template for use with achievement emails, the following variables are available:
+
+- **Is Final Achievement**: If the achievement triggering the email is part of a series of metric achievements, this is true when the achievment is the final achievement in the series
+- **Percent To Next Achievement**: If the achievement triggering the email is part of a series of metric achievements, this is the percentage until the user unlocks the next achievment in the series
+- **Achievement Name**: The name of the achievement that triggered the email
+- **Achievement Description**: The description of the achievement that triggered the email
+
+.
+
+  </Accordion>
+<Accordion title="Streak">
   Variables related to the recipient's streak.
 
-  <Expandable title="variables">
-    <ResponseField name="active" type="boolean">
-      `true` if the recipient has an active streak, `false` otherwise.
-    </ResponseField>
-    <ResponseField name="extended" type="boolean">
-      `true` if the recipient has extended their streak within the current streak period, `false` otherwise.
-    </ResponseField>
-    <ResponseField name="length" type="number">
-      The number of consequtive periods that the user has kept their streak. 0 if the user does not have an active streak.
-    </ResponseField>
-    <ResponseField name="daysSinceExtended" type="number">
-      The number of days since the user last extended their streak. 0 if the user has an active streak.
-    </ResponseField>
+- **Has Active Streak**: True if the recipient has an active streak at the time the email is sent, false otherwise
+- **Streak Length**: The length of the recipient's current streak
+- **Streak Extended**: True if the recipient's streak was extended, false otherwise
+- **Days Since Last Extended**: The number of days since the user last extended their streak
 
-  </Expandable>
-</ResponseField>
-<ResponseField name="period" type="object">
-  Variables related to the current setting of the data [Aggregation Period](#aggregation-period).
+.
 
-  <Expandable title="variables">
-    <ResponseField name="dateRange" type="string">
-      The string representation of the current aggregation period. For example 'June 1 - June 7'.
-    </ResponseField>
-
-  </Expandable>
-</ResponseField>
-<ResponseField name="achievement" type="object">
+</Accordion>
+<Accordion title="Reactivation">
   <Note>
-    Only relevant in the context of [Achievement Emails](#achievement-emails).
+  These variables are only relevant for [reactivation emails](#reactivation-emails).
   </Note>
 
-  <Expandable title="variables">
-    <ResponseField name="name" type="string">
-      The `name` of the unlocked achievement that triggered the email.
-    </ResponseField>
-    <ResponseField name="isLastAchievement" type="boolean">
-      `true` if the achievement the recipent unlocked is the last achievement for it's metric, `false` otherwise.
-    </ResponseField>
-    <ResponseField name="percentToNextAchievement" type="number">
-      The percentage progress that the recipent has made to the next achievement against the same metric. 100 if `isLastAchievement` is true.
-    </ResponseField>
+- **Message Number**: The number of the message in the reactivation sequence (1-5)
 
-  </Expandable>
-</ResponseField>
-<ResponseField name="reactivation" type="object">
-  <Note>
-    Only relevant in the context of [Reactivation Emails](#reactivation-emails).
+.
+
+</Accordion>
+<Accordion title="Aggregation Period">
+    <Note>
+  These variables are only relevant for [recap emails](#recap-emails).
   </Note>
-  <Expandable title="variables">
-    <ResponseField name="name" type="number">
-      Trophy sends 5 reactivation emails over 30 days. This is the number of the current email in the sequence. Useful for displaying different email content throughout the sequence.
-    </ResponseField>
 
-  </Expandable>
-</ResponseField>
+- **Current Period Date Range**: The start and end dates of the current aggregation period
+
+.
+
+</Accordion>
+</AccordionGroup>
+
+#### Advanced Usage
+
+There are a couple of additional options to consider when using emails variables.
+
+**Prefix & Suffix**
+
+You can provide a prefix and suffix for text variables like the recipients name, or the name of a particular metric.
+
+<Frame>
+  <img
+    height="200"
+    width="75%"
+    noZoom
+    src="../assets/platform/emails/advanced_variables_prefix_suffix.png"
+  />
+</Frame>
+
+If the value of the variable fails to render when the email is sent, then Trophy won't display the variable or the prefix or suffix to keep emails clean.
+
+**Singular & Plural**
+
+When using numeric variables like the recipients current points total or metric total, you can also provide a singular and plural suffix to accompany it.
+
+<Frame>
+  <img
+    height="200"
+    width="75%"
+    noZoom
+    src="../assets/platform/emails/advanced_usage_singular_plural.png"
+  />
+</Frame>
 
 ### Text Variations
 
@@ -759,37 +782,6 @@ The email editor offers rich text formatting including bold, italics, [hyperlink
     src="../assets/platform/emails/rich_text_formatting.mp4"
   ></video>
 </Frame>
-
-It also supports more complex text formatting use cases based on the [Mustache](https://mustache.github.io/mustache.5.html) specification with the most common use case being to conditionally show text based on the value of [Email Variables](#email-variables).
-
-<Tip>
-  If you need more complex conditional formatting, or aren't familiar with
-  Mustache, consider using [Conditional Blocks](#conditional-blocks) instead.
-</Tip>
-
-Here's an example where we show text if the email recipient has an active streak or not:
-
-```
-{{#streak.active}}
-  You're on a streak!
-{{/streak.active}}
-```
-
-Additionally, the editor support pluralization. In the below example we show different text based on if the value of the `metrics.words.currentTotal` is `1` (singular) or greater than `1` (plural).
-
-```
-{{#plural}}
-  {{metrics.words.currentTotal}} words written
-{{/plural}}
-{{#singular}}
-  {{metrics.words.currentTotal}} word written
-{{/singular}}
-```
-
-<Note>
-  For `#plural` and `#singular` to work, the first entry must be a number
-  variable.
-</Note>
 
 ### Font Style
 
