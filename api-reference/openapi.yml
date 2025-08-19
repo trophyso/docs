@@ -9,6 +9,16 @@ paths:
       operationId: achievements_all
       tags:
         - Achievements
+      x-codeSamples:
+        - lang: javascript
+          source: |
+            import { TrophyApiClient } from '@trophyso/node';
+
+            const trophy = new TrophyApiClient({
+              apiKey: 'YOUR_API_KEY'
+            });
+
+            const response = await trophy.achievements.all();
       responses:
         '200':
           description: Successful operation
@@ -28,7 +38,7 @@ paths:
                       badgeUrl: https://example.com/badge.png
                       key: finish-onboarding
                       completions: 8
-                      completedPercentage: 80
+                      rarity: 80
                     - id: 5100fe51-6bce-6j44-b0hs-bddc4e123683
                       trigger: metric
                       name: 500 words written
@@ -38,7 +48,15 @@ paths:
                       metricName: words written
                       metricValue: 500
                       completions: 6
-                      completedPercentage: 60
+                      rarity: 60
+                      userAttributes:
+                        - key: plan-type
+                          value: premium
+                        - key: region
+                          value: us-east
+                      eventAttribute:
+                        key: source
+                        value: mobile-app
                     - id: 5100fe51-6bce-6j44-b0hs-bddc4e123684
                       trigger: streak
                       name: 10 days of exercise
@@ -46,15 +64,12 @@ paths:
                       badgeUrl: https://example.com/badge.png
                       streakLength: 10
                       completions: 2
-                      completedPercentage: 20
+                      rarity: 20
+                      userAttributes:
+                        - key: plan-type
+                          value: premium
         '401':
           description: 'Unauthorized'
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ErrorBody'
-        '404':
-          description: 'Achievements not found'
           content:
             application/json:
               schema:
@@ -74,6 +89,20 @@ paths:
       operationId: achievements_complete
       tags:
         - Achievements
+      x-codeSamples:
+        - lang: javascript
+          source: |
+            import { TrophyApiClient } from '@trophyso/node';
+
+            const trophy = new TrophyApiClient({
+              apiKey: 'YOUR_API_KEY'
+            });
+
+            const response = await trophy.achievements.complete("achievement-key", {
+              user: {
+                id: "user-id",
+              }
+            });
       parameters:
         - name: key
           in: path
@@ -101,6 +130,24 @@ paths:
                       badgeUrl: https://example.com/badge.png
                       key: finish-onboarding
                       achievedAt: '2021-01-01T00:00:00Z'
+                    points:
+                      points-system-key:
+                        id: 0040fe51-6bce-4b44-b0ad-bddc4e123534
+                        name: XP
+                        description: null
+                        badgeUrl: null
+                        total: 10
+                        added: 10
+                        awards:
+                          - id: 0040fe51-6bce-4b44-b0ad-bddc4e123534
+                            awarded: 10
+                            date: '2021-01-01T00:00:00Z'
+                            total: 10
+                            trigger:
+                              id: 0040fe51-6bce-4b44-b0ad-bddc4e123534
+                              type: achievement
+                              achievementName: Finish onboarding
+                              points: 10
         '401':
           description: 'Unauthorized'
           content:
@@ -130,7 +177,7 @@ paths:
               type: object
               properties:
                 user:
-                  $ref: '#/components/schemas/UpdatedUser'
+                  $ref: '#/components/schemas/UpsertedUser'
                   description: The user that completed the achievement.
               required:
                 - user
@@ -148,6 +195,33 @@ paths:
       operationId: metrics_event
       tags:
         - Metrics
+      x-codeSamples:
+        - lang: javascript
+          source: |
+            import { TrophyApiClient } from '@trophyso/node';
+
+            const trophy = new TrophyApiClient({
+              apiKey: 'YOUR_API_KEY'
+            });
+
+            const response = await trophy.metrics.event({
+              key: 'words-written',
+              user: {
+                id: 'user-id',
+                email: 'user@example.com',
+                tz: 'Europe/London',
+                subscribedToEmails: true,
+                attributes: {
+                  department: 'engineering',
+                  role: 'developer'
+                }
+              },
+              value: 750,
+              attributes: {
+                category: 'writing',
+                source: 'mobile-app'
+              }
+            });
       parameters:
         - name: key
           in: path
@@ -185,6 +259,25 @@ paths:
                       periodStart: '2025-03-31'
                       periodEnd: '2025-04-05'
                       expires: '2025-04-12'
+                    points:
+                      xp:
+                        id: 0040fe51-6bce-4b44-b0ad-bddc4e123534
+                        name: XP
+                        description: null
+                        badgeUrl: null
+                        total: 10
+                        added: 10
+                        awards:
+                          - id: 0040fe51-6bce-4b44-b0ad-bddc4e123534
+                            awarded: 10
+                            date: '2021-01-01T00:00:00Z'
+                            total: 10
+                            trigger:
+                              id: 0040fe51-6bce-4b44-b0ad-bddc4e123534
+                              type: metric
+                              metricName: words written
+                              metricThreshold: 100
+                              points: 10
         '400':
           description: 'Bad Request'
           content:
@@ -223,6 +316,14 @@ paths:
                     The value to add to the user's current total for the given
                     metric.
                   example: 750
+                attributes:
+                  type: object
+                  additionalProperties:
+                    type: string
+                  description: Event attributes as key-value pairs. Keys must match existing event attributes set up in the Trophy dashboard.
+                  example:
+                    category: writing
+                    source: mobile-app
               required:
                 - user
                 - value
@@ -233,13 +334,38 @@ paths:
                     email: user@example.com
                     tz: Europe/London
                     id: '18'
+                    attributes:
+                      department: engineering
+                      role: developer
                   value: 750
+                  attributes:
+                    category: writing
+                    source: mobile-app
   /users:
     post:
       description: Create a new user.
       operationId: users_create
       tags:
         - Users
+      x-codeSamples:
+        - lang: javascript
+          source: |
+            import { TrophyApiClient } from '@trophyso/node';
+
+            const trophy = new TrophyApiClient({
+              apiKey: 'YOUR_API_KEY'
+            });
+
+            const response = await trophy.users.create({
+              id: 'user-id',
+              email: 'user@example.com',
+              tz: 'Europe/London',
+              subscribedToEmails: true,
+              attributes: {
+                department: 'engineering',
+                role: 'developer'
+              }
+            });
       summary: Create a new user
       security:
         - ApiKeyAuth: []
@@ -258,15 +384,18 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/User'
-                examples:
-                  Successful operation:
-                    value:
-                      id: user-id
-                      email: user@example.com
-                      tz: Europe/London
-                      subscribedToEmails: true
-                      created: '2021-01-01T00:00:00Z'
-                      updated: '2021-01-01T00:00:00Z'
+              examples:
+                Successful operation:
+                  value:
+                    id: user-id
+                    email: user@example.com
+                    tz: Europe/London
+                    subscribedToEmails: true
+                    created: '2021-01-01T00:00:00Z'
+                    updated: '2021-01-01T00:00:00Z'
+                    attributes:
+                      department: engineering
+                      role: developer
         '400':
           description: 'Bad Request'
           content:
@@ -291,6 +420,16 @@ paths:
       operationId: users_get
       tags:
         - Users
+      x-codeSamples:
+        - lang: javascript
+          source: |
+            import { TrophyApiClient } from '@trophyso/node';
+
+            const trophy = new TrophyApiClient({
+              apiKey: 'YOUR_API_KEY'
+            });
+
+            const response = await trophy.users.get("user-id");
       summary: Get a single user
       parameters:
         - name: id
@@ -309,15 +448,18 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/User'
-                examples:
-                  Successful operation:
-                    value:
-                      id: user-id
-                      email: user@example.com
-                      tz: Europe/London
-                      subscribedToEmails: true
-                      created: '2021-01-01T00:00:00Z'
-                      updated: '2021-01-01T00:00:00Z'
+              examples:
+                Successful operation:
+                  value:
+                    id: user-id
+                    email: user@example.com
+                    tz: Europe/London
+                    subscribedToEmails: true
+                    created: '2021-01-01T00:00:00Z'
+                    updated: '2021-01-01T00:00:00Z'
+                    attributes:
+                      department: engineering
+                      role: developer
         '400':
           description: 'Bad Request'
           content:
@@ -341,6 +483,23 @@ paths:
       operationId: users_identify
       tags:
         - Users
+      x-codeSamples:
+        - lang: javascript
+          source: |
+            import { TrophyApiClient } from '@trophyso/node';
+
+            const trophy = new TrophyApiClient({
+              apiKey: 'YOUR_API_KEY'
+            });
+
+            const response = await trophy.users.identify("user-id", {
+              email: 'user@example.com',
+              tz: 'Europe/London',
+              attributes: {
+                department: 'engineering',
+                role: 'developer'
+              }
+            });
       summary: Identify a user
       security:
         - ApiKeyAuth: []
@@ -362,6 +521,9 @@ paths:
             example:
               email: user@example.com
               tz: Europe/London
+              attributes:
+                department: engineering
+                role: developer
       responses:
         '200':
           description: Upserted user
@@ -401,6 +563,23 @@ paths:
       operationId: users_update
       tags:
         - Users
+      x-codeSamples:
+        - lang: javascript
+          source: |
+            import { TrophyApiClient } from '@trophyso/node';
+
+            const trophy = new TrophyApiClient({
+              apiKey: 'YOUR_API_KEY'
+            });
+
+            const response = await trophy.users.update("user-id", {
+              email: 'user@example.com',
+              tz: 'Europe/London',
+              attributes: {
+                department: 'engineering',
+                role: 'developer'
+              }
+            });
       summary: Update a user
       security:
         - ApiKeyAuth: []
@@ -423,6 +602,9 @@ paths:
               id: user-id
               email: user@example.com
               tz: Europe/London
+              attributes:
+                department: engineering
+                role: developer
       responses:
         '200':
           description: Updated user
@@ -469,6 +651,16 @@ paths:
       operationId: users_all_metrics
       tags:
         - Users
+      x-codeSamples:
+        - lang: javascript
+          source: |
+            import { TrophyApiClient } from '@trophyso/node';
+
+            const trophy = new TrophyApiClient({
+              apiKey: 'YOUR_API_KEY'
+            });
+
+            const response = await trophy.users.allMetrics("user-id", "words-written");
       parameters:
         - name: id
           in: path
@@ -542,6 +734,16 @@ paths:
       operationId: users_single_metric
       tags:
         - Users
+      x-codeSamples:
+        - lang: javascript
+          source: |
+            import { TrophyApiClient } from '@trophyso/node';
+
+            const trophy = new TrophyApiClient({
+              apiKey: 'YOUR_API_KEY'
+            });
+
+            const response = await trophy.users.singleMetric("user-id", "words-written");
       parameters:
         - name: id
           in: path
@@ -619,6 +821,20 @@ paths:
       operationId: users_metric_event_summary
       tags:
         - Users
+      x-codeSamples:
+        - lang: javascript
+          source: |
+            import { TrophyApiClient } from '@trophyso/node';
+
+            const trophy = new TrophyApiClient({
+              apiKey: 'YOUR_API_KEY'
+            });
+
+            const response = await trophy.users.metricEventSummary("user-id", "words-written", {
+              aggregation: "daily",
+              startDate: "2024-01-01",
+              endDate: "2024-01-31"
+            });
       parameters:
         - name: id
           in: path
@@ -725,10 +941,33 @@ paths:
         - ApiKeyAuth: []
   /users/{id}/achievements:
     get:
-      description: Get all of a user's completed achievements.
-      operationId: users_all_achievements
+      description: Get a user's achievements.
+      operationId: users_achievements
       tags:
         - Users
+      x-codeSamples:
+        - lang: javascript
+          label: Get a user's completed achievements
+          source: |
+            import { TrophyApiClient } from '@trophyso/node';
+
+            const trophy = new TrophyApiClient({
+              apiKey: 'YOUR_API_KEY'
+            });
+
+            const response = await trophy.users.achievements("user-id");
+        - lang: javascript
+          label: Get a user's achievements (include incomplete)
+          source: |
+            import { TrophyApiClient } from '@trophyso/node';
+
+            const trophy = new TrophyApiClient({
+              apiKey: 'YOUR_API_KEY'
+            });
+
+            const response = await trophy.users.achievements("user-id", {
+              includeIncomplete: true
+            });
       parameters:
         - name: id
           in: path
@@ -737,6 +976,14 @@ paths:
           schema:
             type: string
           example: userId
+        - name: includeIncomplete
+          in: query
+          description: When set to 'true', returns both completed and incomplete achievements for the user. When omitted or set to any other value, returns only completed achievements.
+          required: false
+          schema:
+            type: string
+            enum: ['true']
+          example: 'true'
       responses:
         '200':
           description: Successful operation
@@ -755,6 +1002,8 @@ paths:
                       name: Completed Onboarding
                       achievedAt: '2021-01-01T00:00:00Z'
                       badgeUrl: https://example.com/badge2.png
+                      completions: 10
+                      rarity: 90.13
                     - id: d01dcbcb-d51e-4c12-b054-dc811dcdc623
                       trigger: metric
                       key: novice-writer
@@ -764,6 +1013,8 @@ paths:
                       name: Novice Writer
                       achievedAt: '2021-02-01T00:00:00Z'
                       badgeUrl: https://example.com/badge1.png
+                      completions: 8
+                      rarity: 22.98
                     - id: d01dcbcb-d51e-4c12-b054-dc811dcdc624
                       trigger: streak
                       key: 3-day-streak
@@ -771,6 +1022,8 @@ paths:
                       name: 3-Day Streak
                       achievedAt: '2021-03-01T00:00:00Z'
                       badgeUrl: https://example.com/badge2.png
+                      completions: 12
+                      rarity: 89.52
         '401':
           description: 'Unauthorized'
           content:
@@ -789,7 +1042,7 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/ErrorBody'
-      summary: Get a user's completed achievements
+      summary: Get a user's achievements
       security:
         - ApiKeyAuth: []
   /users/{id}/streak:
@@ -798,6 +1051,18 @@ paths:
       operationId: users_streak
       tags:
         - Users
+      x-codeSamples:
+        - lang: javascript
+          source: |
+            import { TrophyApiClient } from '@trophyso/node';
+
+            const trophy = new TrophyApiClient({
+              apiKey: 'YOUR_API_KEY'
+            });
+
+            const response = await trophy.users.streak("user-id", {
+              historyPeriods: 14
+            });
       parameters:
         - name: id
           in: path
@@ -874,12 +1139,22 @@ paths:
       summary: Get a user's streak status
       security:
         - ApiKeyAuth: []
-  /users/{id}/points:
+  /users/{id}/points/{key}:
     get:
-      description: Get a user's points.
+      description: Get a user's points for a specific points system.
       operationId: users_points
       tags:
         - Users
+      x-codeSamples:
+        - lang: javascript
+          source: |
+            import { TrophyApiClient } from '@trophyso/node';
+
+            const trophy = new TrophyApiClient({
+              apiKey: 'YOUR_API_KEY'
+            });
+
+            const response = await trophy.users.points("user-id", "points-system-key");
       parameters:
         - name: id
           in: path
@@ -888,6 +1163,13 @@ paths:
           schema:
             type: string
           example: userId
+        - name: key
+          in: path
+          description: Key of the points system.
+          required: true
+          schema:
+            type: string
+          example: points-system-key
         - in: query
           name: awards
           schema:
@@ -906,6 +1188,10 @@ paths:
               examples:
                 Successful operation:
                   value:
+                    id: 0040fe51-6bce-4b44-b0ad-bddc4e123534
+                    name: XP
+                    description: null
+                    badgeUrl: null
                     total: 100
                     awards:
                       - id: 0040fe51-6bce-4b44-b0ad-bddc4e123534
@@ -939,12 +1225,26 @@ paths:
       summary: Get a user's points data
       security:
         - ApiKeyAuth: []
-  /users/{id}/points/event-summary:
+  /users/{id}/points/{key}/event-summary:
     get:
-      description: Get a summary of points awards over time for a user.
+      description: Get a summary of points awards over time for a user for a specific points system.
       operationId: users_points_event_summary
       tags:
         - Users
+      x-codeSamples:
+        - lang: javascript
+          source: |
+            import { TrophyApiClient } from '@trophyso/node';
+
+            const trophy = new TrophyApiClient({
+              apiKey: 'YOUR_API_KEY'
+            });
+
+            const response = await trophy.users.pointsEventSummary("user-id", "points-system-key", {
+              aggregation: "daily",
+              startDate: "2024-01-01",
+              endDate: "2024-01-31"
+            });
       parameters:
         - name: id
           in: path
@@ -953,6 +1253,13 @@ paths:
           schema:
             type: string
           example: userId
+        - name: key
+          in: path
+          description: Key of the points system.
+          required: true
+          schema:
+            type: string
+          example: points-system-key
         - name: aggregation
           in: query
           description: The time period over which to aggregate the event data.
@@ -1042,12 +1349,39 @@ paths:
       summary: Get a summary of points events over time
       security:
         - ApiKeyAuth: []
-  /points/summary:
+  /points/{key}/summary:
     get:
       description: Get a breakdown of the number of users with points in each range.
       operationId: points_summary
       tags:
         - Points
+      x-codeSamples:
+        - lang: javascript
+          source: |
+            import { TrophyApiClient } from '@trophyso/node';
+
+            const trophy = new TrophyApiClient({
+              apiKey: 'YOUR_API_KEY'
+            });
+
+            const response = await trophy.points.summary("points-system-key", {
+              userAttributes: "plan-type:premium,region:us-east"
+            });
+      parameters:
+        - name: key
+          in: path
+          description: Key of the points system.
+          required: true
+          schema:
+            type: string
+          example: points-system-key
+        - name: userAttributes
+          in: query
+          description: Optional colon-delimited user attribute filters in the format attributeKey:value,attributeKey:value. Only users matching ALL specified attributes will be included in the points breakdown.
+          required: false
+          schema:
+            type: string
+          example: plan-type:premium,region:us-east
       responses:
         '200':
           description: Successful operation
@@ -1103,58 +1437,102 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/ErrorBody'
+        '422':
+          description: 'Unprocessible Entity'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorBody'
       summary: Get a breakdown of users by points
       security:
         - ApiKeyAuth: []
-  /points/triggers:
+  /points/{key}:
     get:
-      description: Get all points triggers.
-      operationId: points_triggers
+      description: Get a points system with all its triggers.
+      operationId: points_system
       tags:
         - Points
+      x-codeSamples:
+        - lang: javascript
+          source: |
+            import { TrophyApiClient } from '@trophyso/node';
+
+            const trophy = new TrophyApiClient({
+              apiKey: 'YOUR_API_KEY'
+            });
+
+            const response = await trophy.points.system("points-system-key");
+      parameters:
+        - name: key
+          in: path
+          description: Key of the points system.
+          required: true
+          schema:
+            type: string
+          example: points-system-key
       responses:
         '200':
           description: Successful operation
           content:
             application/json:
               schema:
-                type: array
-                items:
-                  $ref: '#/components/schemas/PointsTriggerResponse'
+                $ref: '#/components/schemas/PointsSystemResponse'
               examples:
                 Successful operation:
                   value:
-                    - id: 0040fe51-6bce-4b44-b0ad-bddc4e123534
-                      type: metric
-                      points: 10
-                      status: active
-                      metricId: 0040fe51-6bce-4b44-b0ad-bddc4e123534
-                      metricName: words written
-                      metricThreshold: 1000
-                      created: '2021-01-01T00:00:00Z'
-                      updated: '2021-01-01T00:00:00Z'
-                    - id: 0040fe51-6bce-4b44-b0ad-bddc4e123536
-                      type: streak
-                      points: 10
-                      status: active
-                      streakLengthThreshold: 7
-                      created: '2021-01-01T00:00:00Z'
-                      updated: '2021-01-01T00:00:00Z'
-                    - id: 0040fe51-6bce-4b44-b0ad-bddc4e123535
-                      type: achievement
-                      points: 50
-                      status: active
-                      achievementId: 0040fe51-6bce-4b44-b0ad-bddc4e123535
-                      achievementName: finish onboarding
-                      created: '2021-01-01T00:00:00Z'
-                      updated: '2021-01-01T00:00:00Z'
+                    id: 0040fe51-6bce-4b44-b0ad-bddc4e123534
+                    name: XP System
+                    description: Experience points for user engagement
+                    badgeUrl: https://example.com/badge.png
+                    triggers:
+                      - id: 0040fe51-6bce-4b44-b0ad-bddc4e123534
+                        type: metric
+                        points: 10
+                        status: active
+                        metricId: 0040fe51-6bce-4b44-b0ad-bddc4e123534
+                        metricName: words written
+                        metricThreshold: 1000
+                        userAttributes:
+                          - key: plan-type
+                            value: premium
+                          - key: region
+                            value: us-east
+                        eventAttribute:
+                          key: source
+                          value: mobile-app
+                        created: '2021-01-01T00:00:00Z'
+                        updated: '2021-01-01T00:00:00Z'
+                      - id: 0040fe51-6bce-4b44-b0ad-bddc4e123536
+                        type: streak
+                        points: 10
+                        status: active
+                        streakLengthThreshold: 7
+                        created: '2021-01-01T00:00:00Z'
+                        updated: '2021-01-01T00:00:00Z'
+                      - id: 0040fe51-6bce-4b44-b0ad-bddc4e123535
+                        type: achievement
+                        points: 50
+                        status: active
+                        achievementId: 0040fe51-6bce-4b44-b0ad-bddc4e123535
+                        achievementName: finish onboarding
+                        userAttributes:
+                          - key: plan-type
+                            value: premium
+                        created: '2021-01-01T00:00:00Z'
+                        updated: '2021-01-01T00:00:00Z'
         '401':
           description: 'Unauthorized'
           content:
             application/json:
               schema:
                 $ref: '#/components/schemas/ErrorBody'
-      summary: Get all points triggers
+        '404':
+          description: 'Points system not found'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorBody'
+      summary: Get a points system with its triggers
       security:
         - ApiKeyAuth: []
 components:
@@ -1298,6 +1676,18 @@ components:
       title: GetUserPointsResponse
       type: object
       properties:
+        id:
+          type: string
+          description: The ID of the points system
+        name:
+          type: string
+          description: The name of the points system
+        description:
+          type: string
+          description: The description of the points system
+        badgeUrl:
+          type: string
+          description: The URL of the badge image for the points system
         total:
           type: number
           description: The user's total points
@@ -1306,6 +1696,11 @@ components:
           description: Array of trigger awards that added points.
           items:
             $ref: '#/components/schemas/PointsAward'
+      required:
+        - id
+        - name
+        - total
+        - awards
     MetricEventPointsResponse:
       title: MetricEventPointsResponse
       type: object
@@ -1386,10 +1781,42 @@ components:
             completions:
               type: integer
               description: The number of users who have completed this achievement.
-            completedPercentage:
+            rarity:
               type: number
               format: double
               description: The percentage of all users who have completed this achievement.
+            userAttributes:
+              type: array
+              description: User attribute filters that must be met for this achievement to be completed. Only present if the achievement has user attribute filters configured.
+              items:
+                type: object
+                properties:
+                  key:
+                    type: string
+                    description: The key of the user attribute.
+                    example: plan-type
+                  value:
+                    type: string
+                    description: The value of the user attribute.
+                    example: premium
+                required:
+                  - key
+                  - value
+            eventAttribute:
+              type: object
+              description: Event attribute filter that must be met for this achievement to be completed. Only present if the achievement has an event filter configured.
+              properties:
+                key:
+                  type: string
+                  description: The key of the event attribute.
+                  example: source
+                value:
+                  type: string
+                  description: The value of the event attribute.
+                  example: mobile-app
+              required:
+                - key
+                - value
     MetricResponse:
       title: MetricResponse
       type: object
@@ -1457,6 +1884,14 @@ components:
           default: true
           description: Whether the user should receive Trophy-powered emails. If false, Trophy will not store the user's email address.
           example: true
+        attributes:
+          type: object
+          additionalProperties:
+            type: string
+          description: User attributes as key-value pairs. Keys must match existing user attributes set up in the Trophy dashboard.
+          example:
+            department: engineering
+            role: developer
     UpsertedUser:
       title: Upserted User
       type: object
@@ -1511,6 +1946,12 @@ components:
           example: 0040fe51-6bce-4b44-b0ad-bddc4e123534
         achievement:
           $ref: '#/components/schemas/CompletedAchievementResponse'
+        points:
+          type: object
+          additionalProperties:
+            $ref: '#/components/schemas/MetricEventPointsResponse'
+          description: >-
+            A map of points systems by key that were affected by this achievement completion.
       required:
         - completionId
         - achievement
@@ -1542,10 +1983,11 @@ components:
             The user's current streak for the metric, if the metric has streaks
             enabled.
         points:
-          $ref: '#/components/schemas/MetricEventPointsResponse'
+          type: object
+          additionalProperties:
+            $ref: '#/components/schemas/MetricEventPointsResponse'
           description: >-
-            The points added by this event, and a breakdown of the points
-            awards that added points.
+            A map of points systems by key that were affected by this event.
       required:
         - eventId
         - metricId
@@ -1609,6 +2051,38 @@ components:
         achievementName:
           type: string
           description: The name of the achievement associated with this trigger, if the trigger is an achievement.
+        userAttributes:
+          type: array
+          description: User attribute filters that must be met for this trigger to activate. Only present if the trigger has user attribute filters configured.
+          items:
+            type: object
+            properties:
+              key:
+                type: string
+                description: The key of the user attribute.
+                example: plan-type
+              value:
+                type: string
+                description: The value of the user attribute.
+                example: premium
+            required:
+              - key
+              - value
+        eventAttribute:
+          type: object
+          description: Event attribute filter that must be met for this trigger to activate. Only present if the trigger has an event filter configured.
+          properties:
+            key:
+              type: string
+              description: The key of the event attribute.
+              example: source
+            value:
+              type: string
+              description: The required value of the event attribute.
+              example: mobile-app
+          required:
+            - key
+            - value
         created:
           type: string
           format: date-time
@@ -1617,6 +2091,31 @@ components:
           type: string
           format: date-time
           description: The date and time the trigger was last updated, in ISO 8601 format.
+    PointsSystemResponse:
+      title: PointsSystemResponse
+      type: object
+      properties:
+        id:
+          type: string
+          description: The unique ID of the points system.
+        name:
+          type: string
+          description: The name of the points system.
+        description:
+          type: string
+          description: The description of the points system.
+        badgeUrl:
+          type: string
+          description: The URL of the badge image for the points system, if one has been uploaded.
+        triggers:
+          type: array
+          description: Array of active triggers for this points system.
+          items:
+            $ref: '#/components/schemas/PointsTriggerResponse'
+      required:
+        - id
+        - name
+        - triggers
   securitySchemes:
     ApiKeyAuth:
       type: apiKey
