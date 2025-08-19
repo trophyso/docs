@@ -1,7 +1,7 @@
 ---
 title: Achievements
 description: Learn how to use Achievements in a gamified product experience with Trophy.
-"og:description": Use metric, standalone and streak achievements to rewards users for continued progress and to encourage them to discover new parts of your app.
+"og:description": Use metric, API and streak achievements to rewards users for continued progress and to encourage them to discover new parts of your app.
 icon: trophy
 ---
 
@@ -39,7 +39,7 @@ Watch Charlie run walk through using achievements in a NextJS application:
 
 ## Achievement Types
 
-Trophy offers three types of achievements, [Metric](#metric-achievements), [Standalone](#standalone-achievements) and [Streak achievements](#streak-achievements), detailed below.
+Trophy offers three types of achievements, [Metric](#metric-achievements), [API](#api-achievements) and [Streak achievements](#streak-achievements), detailed below.
 
 ### Metric Achievements
 
@@ -62,9 +62,9 @@ When achievements are unlocked, Trophy includes information about the unlocked a
 
 <MetricChangeResponseBlock />
 
-### Standalone Achievements
+### API Achievements
 
-Standalone achievements can only be completed once and are useful for rewarding users for taking specific actions.
+API achievements can only be completed once and are useful for rewarding users for taking specific actions.
 
 Common examples include:
 
@@ -72,9 +72,9 @@ Common examples include:
 - A user linking their social account to a platform
 - A user sharing their product experience on social media
 
-Standalone achievements serve as an easy way to reward users for completing any action that you think is important for retention.
+API achievements serve as an easy way to reward users for completing any action that you think is important for retention.
 
-Just like metric achievements, standalone achievements can also trigger automated [Achievement Emails](/platform/emails#achievement-emails) if configured.
+Just like metric achievements, API achievements can also trigger automated [Achievement Emails](/platform/emails#achievement-emails) if configured.
 
 ### Streak Achievements
 
@@ -82,7 +82,7 @@ Streak achievements are directly tied to a user's [Streak](/platform/streaks) an
 
 You can create as many streak achievements as you like for increasing lengths of streak, for example 7 days, 30 days and 365 days to motivate users to use your app more and more.
 
-Just like metric and standalone achievements, you can add a custom name and assign a badge to streak achievements.
+Just like metric and API achievements, you can add a custom name and assign a badge to streak achievements.
 
 ## Creating Achievements
 
@@ -104,14 +104,26 @@ To create new achievements, head to the [achievements page](https://app.trophy.s
   Enter a name for the achievement. This will be returned from APIs and made available for use in emails and other areas of Trophy where appropriate.
 </Step>
 
+<Step title="Enter a description (Optional)">
+  Enter a short description of the achievement. This will be returned from APIs
+  and made available for use in emails and other areas of Trophy where
+  appropriate.
+</Step>
+
+<Step title="Upload a badge (Optional)">
+  You can upload and assign a badge to the achievement that will be returned in
+  API responses and made available in emails and other areas of Trophy where
+  appropriate.
+</Step>
+
 <Step title="Choose a trigger type">
   Choose how you want this achievement to be unlocked.
   
-- Choosing **Metric** will mean the achievement will be automatically unlocked when the user's total reaches the achievement trigger value.
+- Choosing **Metric** will mean the achievement will be automatically unlocked when the user's metric total reaches the achievement trigger value.
 
 - Choosing **Streak** will mean the achievement will be automatically unlocked when the user's streak length reaches the achievement trigger value.
 
-- Choosing **API Call** will mean the achievement will only be unlocked when explicitly marked as completed by your code through an API call.
+- Choosing **API Call** will mean the achievement will only be unlocked when explicitly marked as completed by your code through a request to the [complete achievement API](/api-reference/endpoints/achievements/mark-an-achievement-as-completed).
 
 </Step>
 
@@ -126,10 +138,13 @@ To create new achievements, head to the [achievements page](https://app.trophy.s
 
 </Step>
 
-<Step title="Upload a badge _Optional_">
-  You can upload and assign a badge to the achievement that will be returned in
-  API responses and made available in emails and other areas of Trophy where
-  appropriate.
+<Step title="Add attribute filters (Optional)">
+  You can assign _attribute filters_ to an achievement to further restrict who can unlock them and when.
+
+- To limit a **Metric** achievement to only apply to events with specific [custom event attributes](/platform/events#custom-event-attributes), select an attribute and enter a value in the **Event Attribute** section.
+
+- To limit any type of achievement to only apply to a user with one or more specific [custom user attributes](/platform/users#custom-user-attributes), add attributes and the desired values in the **User Attributes** section.
+
 </Step>
 
 <Step title="Hit save">
@@ -137,13 +152,77 @@ To create new achievements, head to the [achievements page](https://app.trophy.s
 </Step>
 </Steps>
 
+## Managing Achievements
+
+Trophy has built in tools to help you test and control which achievements can be unlocked, by who and when, without affecting production.
+
+### Achievement Statuses
+
+Here's an overview of the different achievement statuses and what they mean.
+
+**Inactive**
+
+All achievements are created as inactive. Inactive achievements can't be completed and aren't returned in any achievement APIs. Users won't see them until you make them active.
+
+**Active**
+
+When you make an achievement active, it makes it 'live'. Users can complete it and it will be returned from all achievement APIs.
+
+**Locked**
+
+When you lock an achievement, users who haven't unlocked it yet won't be able to unlock it anymore, but users who have already unlocked it won't be affected.
+
+Locked acheivements are only returned in APIs for users who have already achieved them.
+
+**Archived**
+
+Archvied achievements can't be completed and aren't returned in any achievement APIs.
+
+<Warning>
+  Once you archive an achievement it disapears from Trophy so be sure to only
+  archive achievements that you no longer need.
+</Warning>
+
+Archived achievements can be restored by [contacting support](#get-support).
+
+### Acheivement Workflow
+
+Achievements can be moved through different statuses according to the following workfow:
+
+```mermaid
+flowchart LR
+    A@{ shape: rounded, label: "Inactive" }
+    B@{ shape: rounded, label: "Active" }
+    C@{ shape: rounded, label: "Active" }
+    D@{ shape: rounded, label: "Locked" }
+    E@{ shape: rounded, label: "Archived" }
+    F@{ shape: rounded, label: "Locked" }
+    G@{ shape: rounded, label: "Active" }
+    H@{ shape: rounded, label: "Archived" }
+    A-->B
+    C-->D
+    D-->E
+    C-->E
+    F-->G
+    F-->H
+    style A fill:#FDFDEA,stroke:#F7F0D5
+    style B fill:#F2FAF7,stroke:#E2F6E6
+    style C fill:#F2FAF7,stroke:#E2F6E6
+    style D fill:#eee,stroke:#ddd
+    style E fill:#ddd,stroke:#ccc
+    style F fill:#eee,stroke:#ddd
+    style G fill:#F2FAF7,stroke:#E2F6E6
+    style H fill:#ddd,stroke:#ccc
+
+```
+
 ## Completing Achievements
 
 If you're using metric achievements, there's no need to explicitly _complete_ achievements. Once you've set up [metric tracking](/platform/events#tracking-metric-events) in your code, all achievements linked to the metric will be automatically tracked.
 
 Similarly, if you're using streak achievements, all achievements related to the user's streak will automatically be unlocked when a user reaches the respective streak length.
 
-However if you're using any standalone achievements, you will have to mark them as completed for each user as appropriate. To do this, you can use the [Complete Achievement API](/api-reference/endpoints/achievements/mark-an-achievement-as-completed) using the `key` of the achievement you want to complete.
+However if you're using any API achievements, you will have to mark them as completed for each user as appropriate. To do this, you can use the [Complete Achievement API](/api-reference/endpoints/achievements/mark-an-achievement-as-completed) using the `key` of the achievement you want to complete.
 
 This will return back a response that contains details of the achievement that was completed that can be used in any post-completion workflows, like showing an in-app notification.
 
@@ -161,6 +240,28 @@ This will return back a response that contains details of the achievement that w
   }
 }
 ```
+
+## Backdating Achievements
+
+By default, whenever you move an achievement to 'Active' [status](#managing-achievements), Trophy will check if any existing users meet the requirements of the achievment and complete it for them behind the scenes.
+
+This means when you release new achievments into production, or edit an existing live achievement, backdating will happen automatically.
+
+<Note>
+  When achievements are completed in this way, users don't receive any
+  notifications this has happened. This is to prevent changes to your
+  achievements in Trophy resulting in users getting lots of notifications.
+</Note>
+
+You can check how many users have completed achievements at any time on the [acheivements page](https://app.trophy.so/achievements) in the Trophy dashboard. The _Users_ column in the acheivements can update during backdating.
+
+<Frame>
+  <img
+    height="200"
+    noZoom
+    src="../assets/platform/achievements/check_user_completions.png"
+  />
+</Frame>
 
 ## Using Badges
 
@@ -216,15 +317,18 @@ To display a high-level overview of all achievements users can complete, use the
   ></video>
 </Frame>
 
-The all achievements endpoint returns a list of all achievements within your Trophy account along with details of 'rarity' (the percentage of users who have completed each achievement) as follows:
+The all achievements endpoint returns a list of all achievements within your Trophy account. Each achievement returned also includes `completions` (the number of users who have compelted the acheivement) and `rarity` (the percentage of users who have completed the achievement) as follows:
 
 <AllAchievementsResponseBlock />
 
 ### User Achievements
 
-If instead you're building user-specific UI elements, then use the [user achievements endpoint](/api-reference/endpoints/users/get-a-users-completed-achievements) to get only the achievements a specific user has completed.
+If instead you're building user-specific UI elements, then use the [user achievements endpoint](/api-reference/endpoints/users/get-a-users-completed-achievements) to return achievements a specific user has completed.
 
-Use this data to display achievements against a user's profile for example.
+<Tip>
+  You can also include achievements that a user has yet to complete by including
+  the query parameter `includeIncomplete=true`.
+</Tip>
 
 <Frame>
   <img
@@ -254,7 +358,7 @@ If you have achievements set up for any of your [Metrics](/platform/metrics), th
 
     Use streak achievements for rewarding users for keeping their streak.
 
-    Use standalone achievements when you want to reward users for taking specific actions that they only need to take once.
+    Use API achievements when you want to reward users for taking specific actions that they only need to take once.
 
   </Accordion>
 

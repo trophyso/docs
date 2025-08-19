@@ -14,22 +14,216 @@ Trophy supports 4 types of emails, each of which is designed to suit a common sc
 All emails are optional, but all four can be used simultaneously and can be controlled from the [Emails](https://app.trophy.so/emails/configure) page in the Trophy dashboard.
 
 <Frame>
-  <img height="200" noZoom src="../assets/platform/emails/email_types.png" />
+  <video
+    autoPlay
+    muted
+    loop
+    playsInline
+    className="w-full aspect-15/4"
+    src="../assets/platform/emails/email_types.mp4"
+  ></video>
 </Frame>
 
-### Achievement Emails
+- **Achievement emails** are sent to users each time they unlock an [Achievement](/platform/achievements).
+- **Recap emails** are sent to users on a pre-defined frequency to summarize progress. Recap Emails can be configured to be sent daily, weekly, monthly or yearly depending on your use case.
+- **Reactivation emails** are sent to users after they become inactive with the goal of bringing them back to your app.
+- **Streak emails** are automatically sent to users reminding them to extend their [Streak](/platform/streaks).
 
-Achievement emails are sent to users each time they unlock an [Achievement](/platform/achievements).
+## Sending Emails
 
-### Recap Emails
+To start sending emails with Trophy, you'll need to verify your domain and enable email triggers.
 
-Recap emails are sent to users on a pre-defined frequency to summarize progress. Recap Emails can be configured to be sent daily, weekly, monthly or yearly depending on your use case.
+### Domain Verification
 
-### Reactivation Emails
+Trophy supports sending emails from your own domain out-of-the-box. There are two ways to set this up, Single Sender Verification and DNS Verification.
 
-As Trophy monitors usage across your entire userbase, it can detect when users become inactive and send automated win-back emails to encourage them to return.
+All domain settings can be found in the [Domains](https://app.trophy.so/emails/domains) page in the Trophy dashboard.
 
-Emails are sent as follows:
+<Tip>
+  If you're looking to get set up quickly we recommend starting with Single
+  Sender Verification then setting up DNS Verification when you're ready to move
+  to production.
+</Tip>
+
+<CardGroup cols={2}>
+  <Card
+    title="Sender Verification"
+    icon="check"
+    href="#sender-verification-basic"
+  >
+    Quickly verify a single email address
+  </Card>
+  <Card title="DNS Verification" icon="lock" href="#dns-verification-advanced">
+    Recommended for production use
+  </Card>
+</CardGroup>
+
+#### Sender Verification (Basic)
+
+During onboarding you'll be prompted to set up Sender Verification. This is a super simple way to quickly verify a single email address that you want to use with Trophy without needing to change any code or DNS settings.
+
+You'll be prompted to enter the email address, from name and reply-to email that you'd like Trophy to use when sending emails:
+
+<Frame>
+  <img
+    height="200"
+    width="75%"
+    noZoom
+    src="../assets/platform/emails/sender_verification.jpg"
+  />
+</Frame>
+
+Trophy will send a verification email to that address. Simply click the link in the email to let Trophy know what you own the address and you'll be good to go.
+
+<Note>
+  The email you receive will come from our email provider, Postmark. So keep an
+  eye out for 'Postmark Support' in your inbox!
+</Note>
+
+Sender Verification is great for getting started but is limited in that you won't benefit from your existing email reputation and can only send emails from one address.
+
+Also, if you want to change the address in the future, you'll have to go through Sender Verification again which you can do in the [settings screen](https://app.trophy.so/integration?tab=domains).
+
+#### DNS Verification (Advanced)
+
+<Tip>Recommended for production use</Tip>
+
+For production use we recommend DNS Verification. Once set up, this allows you to configure Trophy to send emails from any address on your domain. So if you want to change the address in future, you won't need to verify again.
+
+Completing DNS verification also gives you the full benefits of any existing domain reputation and is the best way to make sure your emails avoid the spam folder.
+
+This does however require adding a couple of new entries into your DNS to allow Trophy to verify you own the domain.
+
+Follow the steps below to set up DNS verification:
+
+<Steps>
+<Step title="Head to the Emails page">
+    Within the Emails page, you'll find the [Domains](https://app.trophy.so/emails/domains) tab which is where you'll configure everything related to the email domain Trophy will use to send emails on your behalf.
+</Step>
+
+<Step title="Configure your domain">
+    Head down to the DNS Verification section and enter the domain you want to set up with Trophy.
+
+    You can also also configure a custom Return Path. This is where Trophy will forward notifications of bounced emails to help you investigate deliverability issues:
+
+    <Frame>
+      <img
+        height="200"
+        width="75%"
+        noZoom
+        src="../assets/platform/emails/dns-verification-1.png"
+      />
+    </Frame>
+
+</Step>
+
+<Step title="Set up your DNS records">
+
+    Once you've entered your email domain, Trophy will provide you with details for two new DNS records that you'll need to add to your DNS provider.
+
+    <Frame>
+      <img
+        height="200"
+        width="75%"
+        noZoom
+        src="../assets/platform/emails/dns-verification-2.png"
+      />
+    </Frame>
+
+    - First is the **DKIM** record which is used by inbox providers like Google to verify the authenticity of emails. Enter the name and value provided as a new **TXT** record in your DNS provider.
+    - Second is the **Return Path** record. This is used to forward notifications of email bounces to your domain. Enter the name and value provided as a new **CNAME** record in your DNS provider.
+
+    Here are the pages for the most common DNS providers on how to set up new records:
+
+    <AccordionGroup>
+      <Accordion title='GoDaddy'>
+          [Add a TXT record](https://www.godaddy.com/en-uk/help/add-a-txt-record-19232)
+          [Add a CNAME record](https://www.godaddy.com/en-uk/help/add-a-cname-record-19236)
+      </Accordion>
+      <Accordion title='Cloudflare'>
+          [Add DNS records](https://developers.cloudflare.com/dns/manage-dns-records/how-to/create-dns-records/#create-dns-records)
+      </Accordion>
+      <Accordion title="NameCheap">
+          [Add a CNAME record](https://www.namecheap.com/support/knowledgebase/article.aspx/9646/2237/how-to-create-a-cname-record-for-your-domain/)
+          [Add a TXT record](https://www.namecheap.com/support/knowledgebase/article.aspx/317/2237how-do-i-add-txtspfdkimdmarc-records-for-my-domain/#:~:text=this%20guide%20.-,DKIM%20records,-DKIM%20(DomainKeys%20Identified))
+      </Accordion>
+    </AccordionGroup>
+
+    <Warning>Note: If you're using a proxy like Cloudflare, make sure to turn  it off for these records or Trophy won't be able to properly verify them.</Warning>
+
+</Step>
+
+<Step title="Verify DNS records">
+
+    Once you've added the two records into your DNS settings, hit the refresh icon and Trophy will attempt to verify the records for you.
+
+    Usually Trophy can verify records within a few minutes but bear in mind that DNS changes can take up to a few hours to fully propogate.
+
+    If you see the following alert, the records may not have propogated yet, or there may be an issue with your setup.
+
+    <Frame>
+      <img
+        height="200"
+        width="75%"
+        noZoom
+        src="../assets/platform/emails/dns-verification-3.png"
+      />
+    </Frame>
+
+    Once you're sure everything's set up correctly in your DNS provider, hit refresh and Trophy will attempt to verify your DNS records once again.
+
+    As soon as you see the following message, you know everything's verified:
+
+    <Frame>
+      <img
+        height="200"
+        width="75%"
+        noZoom
+        src="../assets/platform/emails/dns-verification-4.png"
+      />
+    </Frame>
+
+</Step>
+
+<Step title="Configure your sending address">
+
+    Once your DNS records are verified, it's time to choose the email address you want to send emails from. Note that now you've fully verified your domain, you can change this address whenever you like without impacting deliverability.
+
+    Simply enter the email address you want Trophy to send from, the name to show to users in the inbox when they receive emails and a support email address they can use to contact you if needed:
+
+    <Frame>
+      <img
+        height="200"
+        width="75%"
+        noZoom
+        src="../assets/platform/emails/dns-verification-5.png"
+      />
+    </Frame>
+
+</Step>
+
+</Steps>
+
+### Email Triggers
+
+You can manage email triggers on the [Email Configuration](https://app.trophy.so/emails/configure) page of the Trophy dashboard. There, you'll see a list of triggers that can be turned on or off:
+
+#### Recap Emails
+
+The **Recap** trigger sends daily, weekly, or monthly progress reports to users. You can change the frequency of these emails on the [Integration](https://app.trophy.so/integration) page using the **Aggregation Period** setting.
+
+<Frame>
+  <img
+    height="200"
+    width="100%"
+    noZoom
+    src="../assets/platform/emails/recap_emails.png"
+  />
+</Frame>
+
+#### Reactivation Emails
+
+The **Reactivation** trigger sends win-back emails to users after they become inactive. These emails are sent according to the following timeline:
 
 - After 3 days of inactivity
 - After 5 days of inactivity
@@ -37,9 +231,80 @@ Emails are sent as follows:
 - After 14 days of inactivity
 - After 30 days of inactivity
 
-### Streak Reminder Emails
+<Frame>
+  <img
+    height="200"
+    width="30%"
+    noZoom
+    src="../assets/platform/emails/reactivation_emails.png"
+  />
+</Frame>
 
-Streak reminder emails are automatically sent to users up to 4 hours before they are about to lose their [Streak](/platform/streaks).
+#### Streak Emails
+
+The **Streak** trigger sends an email to each user before their streak expires. These emails are sent according to the streak frequency you configured on the [Streaks page](https://app.trophy.so/streaks):
+
+- If your app uses a **daily streak**, this email will send four hours before the end of the day (in each user's timezone).
+- For **weekly streaks**, it will send on Friday morning.
+- For **monthly streaks**, it will send on the 25th of the month.
+
+<Frame>
+  <img
+    height="200"
+    width="50%"
+    noZoom
+    src="../assets/platform/emails/streak_emails.png"
+  />
+</Frame>
+
+#### Achievement Emails
+
+The **Achievement** trigger sends an email congratulating users when they complete an [achievements](/platform/achievements) you've configured in Trophy. These emails send between 5-9PM on the day the achievement is completed, or the next day at 5PM if it is past 9PM when the user completes the achievement.
+
+<Frame>
+  <img
+    height="200"
+    width="75%"
+    noZoom
+    src="../assets/platform/emails/achievement_emails.png"
+  />
+</Frame>
+
+#### Email Templates
+
+For each trigger, you can assign an **Email Template** that the trigger uses. You can leave this set to _Trophy Default_ or [design your own email templates](#designing-emails) right in the Trophy dashboard.
+
+<Frame>
+  <img
+    height="200"
+    width="100%"
+    noZoom
+    src="../assets/platform/emails/streak_trigger.png"
+  />
+</Frame>
+
+<Tip>
+  For **Achievement Emails**, you can configure a different template for each
+  type of achievement. For example, you could have a different template for API
+  achievements, streak achievements, and each metric with metric achievements.
+</Tip>
+
+#### Limiting Emails to Specific Types of Users
+
+Each email trigger can be limited to users with specific [custom user attribute](/platform/users#custom-user-attributes) values. For each attribute you'd like to restrict the email to, click the Plus icon next to the **User Filters** header for the email trigger, then select the attribute and enter the desired value. Only users that have **all** specified attribute values will receive emails from this trigger.
+
+<Frame>
+  <img
+    height="200"
+    width="100%"
+    noZoom
+    src="../assets/platform/emails/recap_trigger.png"
+  />
+</Frame>
+
+#### Time Zones
+
+If you specify a timezone for each user through [User Identification](/platform/users#param-tz), Trophy will use that local time zone to schedule emails according to the logic specified above. If you do not provide time zones for the users you identify, Trophy will default to Eastern Time.
 
 ## Designing Emails
 
@@ -273,21 +538,13 @@ Where achievements have badges, these will be automatically shown, as well as th
 
 ### Email Variables
 
-Trophy provides an expansive set of dynamic variables that are useful for designing highly relevant and personalized emails. Variables bring context from your Trophy account, the recipient's progress data, and email specific settings to your email templates.
+Trophy provides an expansive set of email variables that can be used to insert highly relevant and personalized copy into the body of emails and subject lines.
 
-<Frame>
-  <iframe
-    width="560"
-    height="315"
-    src="https://www.youtube.com/embed/EHUm1ZUYLeM?si=zUuu9zD8VB0STi-H"
-    title="YouTube video player"
-    frameborder="0"
-    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-    allowfullscreen
-  ></iframe>
-</Frame>
+Variables bring context from your Trophy account, the recipient's progress data, and email specific settings to your email templates.
 
-Email variables can be inserted by typing `{{` in any block that supports rich text, like headers, paragraphs, and buttons, and searching for your chosen variable. The editor will insert the variable code for you.
+Email variables can be inserted by typing `@` in any block that supports rich text, like headers, paragraphs, and buttons, and searching for your chosen variable.
+
+This will open up the variable editor window where you can configure variables as in the demo below.
 
 <Tip>You can also use variables in email subject lines.</Tip>
 
@@ -298,108 +555,132 @@ Email variables can be inserted by typing `{{` in any block that supports rich t
     loop
     playsInline
     className="w-full aspect-video"
-    src="../assets/platform/emails/using_variables.mp4"
+    src="../assets/platform/emails/email_variables_demo.mp4"
   ></video>
 </Frame>
 
-See below for a full list of all email variables supported by the email builder:
+See below for a full list of all email variables supported by the email builder, broken down by category.
 
-<ResponseField name="user" type="object">
-  Variables related to the recipient of the email.
+<AccordionGroup>
+<Accordion title="User">
+Variables related to the recipient of the email.
 
-  <Expandable title="variables">
-    <ResponseField name="name" type="string">
-      The full name of the user, if set.
-    </ResponseField>
+- **Name**: The recipient's name, if set
 
-  </Expandable>
-</ResponseField>
-<ResponseField name="metrics" type="object">
-    Variables referencing data from metrics within your Trophy account.
+Additionally all [custom user attributes](/platform/users#custom-user-attributes) are available as email variables.
 
-    In all metric variables, `key` relates to the unique reference you set for the metric when created. You can find this in the details page for each metric.
+</Accordion>
+<Accordion title="Metrics">
+  Variables related to the recipients tracked event data againt metrics.
 
-    <Tip>
-    Variables for a metric called 'Words written' with a `key` of `words` would be accessed with a `metrics.words` prefix. For example `metrics.words.percentile`.
-    </Tip>
+Each Trophy metric supports the following email variables:
 
-  <Expandable title="variables">
-    <ResponseField name="<key>.percentile" type="number">
-      Indicates where the recipient's all time metric total ranks compared to all other tracked users. For example, if a user is in the 90th percentile, their all time metric total is higher than 90% of users that have at least one event recorded against the metric.
-    </ResponseField>
-    <ResponseField name="<key>.percentileThisPeriod" type="number">
-      The recipent's percentile within the most recent [Aggregation Period](#aggregation-period).
-    </ResponseField>
-    <ResponseField name="<key>.currentTotal" type="number">
-      The recipient's current total value of all events recorded against the metric.
-    </ResponseField>
-    <ResponseField name="<key>.percentChange" type="string">
-      The percentage increase (or decrease) in the recipient's metric total as compared to the last [Aggregation Period](#aggregation-period). For example if the recipent has doubled their metric total within the aggregation period, `percentChange` would show +100. We leave it up to you to display a '%' sign if required.
-    </ResponseField>
-    <ResponseField name="<key>.changeThisPeriod" type="number">
-      The absolute increase (or decrease) in the recipient's metric total as compared to the last [Aggregation Period](#aggregation-period). For example if the recipents metric total has increased from 500 to 750, `changeThisPeriod` would show 250.
-    </ResponseField>
+- **Metric Name**: The name of the metric
+- **Metric Units**: The metric's units
+- **Current Total**: The sum of all the recipients event values to date
+- **Change This Period**: Absolute change in the recipients current total in the current aggregation period
+- **Change This Period (%)**: Percent change in the recipients current total in the current aggregation period
+- **Percentile (All Time)**: The recipients current total compared to all other users for all time
+- **Percentile (This Period)**: The recipients current total compared to all other users in the current aggregion period
 
-  </Expandable>
-</ResponseField>
-<ResponseField name="streak" type="object">
+Additionally, the **Highest** and **Lowest** dynamic aliases support the same set of variables. When using these aliases, Trophy will pick the metric where the recipient has either the highest or lowest current total at send time.
+
+When using metric variables, you also have the option of filtering the data that any of the above variables reference through a [custom event attribute](/platform/events#custom-event-attributes).
+
+    </Accordion>
+
+<Accordion title="Points">
+
+Similarly to metrics, each points system has the following variables that can be used to add dynamic data to email copy:
+
+- **Current Total**: The recipients total points
+- **Change This Period**: Absolute change in the recipients total points in the current aggregation period
+- **Change This Period (%)**: Percent change in the recipients total points in the current aggregation period
+- **Percentile (All Time)**: The recipients total points compared to all other users for all time
+- **Percentile (This Period)**: The recipients total points compared to all other users in the current aggregion period
+
+.
+
+</Accordion>
+<Accordion title="Achievements">
+  <Note>
+  These variables are only relevant for [achievement emails](#achievement-emails).
+  </Note>
+
+When configuring a template for use with achievement emails, the following variables are available:
+
+- **Is Final Achievement**: If the achievement triggering the email is part of a series of metric achievements, this is true when the achievment is the final achievement in the series
+- **Percent To Next Achievement**: If the achievement triggering the email is part of a series of metric achievements, this is the percentage until the user unlocks the next achievment in the series
+- **Achievement Name**: The name of the achievement that triggered the email
+- **Achievement Description**: The description of the achievement that triggered the email
+
+.
+
+  </Accordion>
+<Accordion title="Streak">
   Variables related to the recipient's streak.
 
-  <Expandable title="variables">
-    <ResponseField name="active" type="boolean">
-      `true` if the recipient has an active streak, `false` otherwise.
-    </ResponseField>
-    <ResponseField name="extended" type="boolean">
-      `true` if the recipient has extended their streak within the current streak period, `false` otherwise.
-    </ResponseField>
-    <ResponseField name="length" type="number">
-      The number of consequtive periods that the user has kept their streak. 0 if the user does not have an active streak.
-    </ResponseField>
-    <ResponseField name="daysSinceExtended" type="number">
-      The number of days since the user last extended their streak. 0 if the user has an active streak.
-    </ResponseField>
+- **Has Active Streak**: True if the recipient has an active streak at the time the email is sent, false otherwise
+- **Streak Length**: The length of the recipient's current streak
+- **Streak Extended**: True if the recipient's streak was extended, false otherwise
+- **Days Since Last Extended**: The number of days since the user last extended their streak
 
-  </Expandable>
-</ResponseField>
-<ResponseField name="period" type="object">
-  Variables related to the current setting of the data [Aggregation Period](#aggregation-period).
+.
 
-  <Expandable title="variables">
-    <ResponseField name="dateRange" type="string">
-      The string representation of the current aggregation period. For example 'June 1 - June 7'.
-    </ResponseField>
-
-  </Expandable>
-</ResponseField>
-<ResponseField name="achievement" type="object">
+</Accordion>
+<Accordion title="Reactivation">
   <Note>
-    Only relevant in the context of [Achievement Emails](#achievement-emails).
+  These variables are only relevant for [reactivation emails](#reactivation-emails).
   </Note>
 
-  <Expandable title="variables">
-    <ResponseField name="name" type="string">
-      The `name` of the unlocked achievement that triggered the email.
-    </ResponseField>
-    <ResponseField name="isLastAchievement" type="boolean">
-      `true` if the achievement the recipent unlocked is the last achievement for it's metric, `false` otherwise.
-    </ResponseField>
-    <ResponseField name="percentToNextAchievement" type="number">
-      The percentage progress that the recipent has made to the next achievement against the same metric. 100 if `isLastAchievement` is true.
-    </ResponseField>
+- **Message Number**: The number of the message in the reactivation sequence (1-5)
 
-  </Expandable>
-</ResponseField>
-<ResponseField name="reactivation" type="object">
-  <Note>
-    Only relevant in the context of [Reactivation Emails](#reactivation-emails).
+.
+
+</Accordion>
+<Accordion title="Aggregation Period">
+    <Note>
+  These variables are only relevant for [recap emails](#recap-emails).
   </Note>
-  <Expandable title="variables">
-    <ResponseField name="name" type="number">
-      Trophy sends 5 reactivation emails over 30 days. This is the number of the current email in the sequence. Useful for displaying different email content throughout the sequence.
-    </ResponseField>
 
-  </Expandable>
-</ResponseField>
+- **Current Period Date Range**: The start and end dates of the current aggregation period
+
+.
+
+</Accordion>
+</AccordionGroup>
+
+#### Advanced Usage
+
+There are a couple of additional options to consider when using emails variables.
+
+**Prefix & Suffix**
+
+You can provide a prefix and suffix for text variables like the recipients name, or the name of a particular metric.
+
+<Frame>
+  <img
+    height="200"
+    width="75%"
+    noZoom
+    src="../assets/platform/emails/advanced_variables_prefix_suffix.png"
+  />
+</Frame>
+
+If the value of the variable fails to render when the email is sent, then Trophy won't display the variable or the prefix or suffix to keep emails clean.
+
+**Singular & Plural**
+
+When using numeric variables like the recipients current points total or metric total, you can also provide a singular and plural suffix to accompany it.
+
+<Frame>
+  <img
+    height="200"
+    width="75%"
+    noZoom
+    src="../assets/platform/emails/advanced_usage_singular_plural.png"
+  />
+</Frame>
 
 ### Text Variations
 
@@ -501,54 +782,6 @@ The email editor offers rich text formatting including bold, italics, [hyperlink
   ></video>
 </Frame>
 
-It also supports more complex text formatting use cases based on the [Mustache](https://mustache.github.io/mustache.5.html) specification with the most common use case being to conditionally show text based on the value of [Email Variables](#email-variables).
-
-<Tip>
-  If you need more complex conditional formatting, or aren't familiar with
-  Mustache, consider using [Conditional Blocks](#conditional-blocks) instead.
-</Tip>
-
-Here's an example where we show text if the email recipient has an active streak or not:
-
-```
-{{#streak.active}}
-  You're on a streak!
-{{/streak.active}}
-```
-
-Additionally, the editor support pluralization. In the below example we show different text based on if the value of the `metrics.words.currentTotal` is `1` (singular) or greater than `1` (plural).
-
-```
-{{#plural}}
-  {{metrics.words.currentTotal}} words written
-{{/plural}}
-{{#singular}}
-  {{metrics.words.currentTotal}} word written
-{{/singular}}
-```
-
-<Note>
-  For `#plural` and `#singular` to work, the first entry must be a number
-  variable.
-</Note>
-
-## Email Customization
-
-### Aggregation Period
-
-<Frame>
-  <img
-    height="200"
-    width="75%"
-    noZoom
-    src="../assets/platform/emails/aggregation_period_setting.png"
-  />
-</Frame>
-
-The aggregation period controls the timeframe over which blocks like the [Progress Chart](#progress-chart) display usage. It also controls the frequency at which [Recap Emails](#recap-emails) are sent. Possible values are daily, weekly, monthly or yearly.
-
-Head into the [Integration](https://app.trophy.so/integration) page to manage this setting.
-
 ### Font Style
 
 On the [email configure page](https://app.trophy.so/emails/configure), you'll find a setting to change the font style used in all emails.
@@ -563,183 +796,6 @@ On the [email configure page](https://app.trophy.so/emails/configure), you'll fi
 </Frame>
 
 Other email styles are pulled from your Trophy account's [Branding](https://app.trophy.so/branding) settings.
-
-## Send-time Optimization
-
-In most cases, emails sent by Trophy are sent at **17:00PM ET**, however sending emails to users based on their local timezone usually results in better engagement rates.
-
-That's why if through [User Identification](/platform/users#param-tz) you specify a timezone for each user, Trophy will optimize the send-time for you by sending emails to users at 17:00PM in their local timezone.
-
-## Setting up Emails
-
-Trophy supports sending emails from your own domain out-of-the-box. There are two ways to set this up, Single Sender Verification and DNS Verification.
-
-All domain settings can be found in the [Domains](https://app.trophy.so/emails/domains) page in the Trophy dashboard.
-
-<Tip>
-  If you're looking to get set up quickly we recommend starting with Single
-  Sender Verification then setting up DNS Verification when you're ready to move
-  to production.
-</Tip>
-
-<CardGroup cols={2}>
-  <Card
-    title="Sender Verification"
-    icon="check"
-    href="#sender-verification-basic"
-  >
-    Quickly verify a single email address
-  </Card>
-  <Card title="DNS Verification" icon="lock" href="#dns-verification-advanced">
-    Recommended for production use
-  </Card>
-</CardGroup>
-
-### Sender Verification (Basic)
-
-During onboarding you'll be prompted to set up Sender Verification. This is a super simple way to quickly verify a single email address that you want to use with Trophy without needing to change any code or DNS settings.
-
-You'll be prompted to enter the email address, from name and reply-to email that you'd like Trophy to use when sending emails:
-
-<Frame>
-  <img
-    height="200"
-    width="75%"
-    noZoom
-    src="../assets/platform/emails/sender_verification.jpg"
-  />
-</Frame>
-
-Trophy will send a verification email to that address. Simply click the link in the email to let Trophy know what you own the address and you'll be good to go.
-
-<Note>
-  The email you receive will come from our email provider, Postmark. So keep an
-  eye out for 'Postmark Support' in your inbox!
-</Note>
-
-Sender Verification is great for getting started but is limited in that you won't benefit from your existing email reputation and can only send emails from one address.
-
-Also, if you want to change the address in the future, you'll have to go through Sender Verification again which you can do in the [settings screen](https://app.trophy.so/integration?tab=domains).
-
-### DNS Verification (Advanced)
-
-<Tip>Recommended for production use</Tip>
-
-For production use we recommend DNS Verification. Once set up, this allows you to configure Trophy to send emails from any address on your domain. So if you want to change the address in future, you won't need to verify again.
-
-Completing DNS verification also gives you the full benefits of any existing domain reputation and is the best way to make sure your emails avoid the spam folder.
-
-This does however require adding a couple of new entries into your DNS to allow Trophy to verify you own the domain.
-
-Follow the steps below to set up DNS verification:
-
-<Steps>
-<Step title="Head to the Emails page">
-    Within the Emails page, you'll find the [Domains](https://app.trophy.so/emails/domains) tab which is where you'll configure everything related to the email domain Trophy will use to send emails on your behalf.
-</Step>
-
-<Step title="Configure your domain">
-    Head down to the DNS Verification section and enter the domain you want to set up with Trophy.
-
-    You can also also configure a custom Return Path. This is where Trophy will forward notifications of bounced emails to help you investigate deliverability issues:
-
-    <Frame>
-      <img
-        height="200"
-        width="75%"
-        noZoom
-        src="../assets/platform/emails/dns-verification-1.png"
-      />
-    </Frame>
-
-</Step>
-
-<Step title="Set up your DNS records">
-
-    Once you've entered your email domain, Trophy will provide you with details for two new DNS records that you'll need to add to your DNS provider.
-
-    <Frame>
-      <img
-        height="200"
-        width="75%"
-        noZoom
-        src="../assets/platform/emails/dns-verification-2.png"
-      />
-    </Frame>
-
-    - First is the **DKIM** record which is used by inbox providers like Google to verify the authenticity of emails. Enter the name and value provided as a new **TXT** record in your DNS provider.
-    - Second is the **Return Path** record. This is used to forward notifications of email bounces to your domain. Enter the name and value provided as a new **CNAME** record in your DNS provider.
-
-    Here are the pages for the most common DNS providers on how to set up new records:
-
-    <AccordionGroup>
-      <Accordion title='GoDaddy'>
-          [Add a TXT record](https://www.godaddy.com/en-uk/help/add-a-txt-record-19232)
-          [Add a CNAME record](https://www.godaddy.com/en-uk/help/add-a-cname-record-19236)
-      </Accordion>
-      <Accordion title='Cloudflare'>
-          [Add DNS records](https://developers.cloudflare.com/dns/manage-dns-records/how-to/create-dns-records/#create-dns-records)
-      </Accordion>
-      <Accordion title="NameCheap">
-          [Add a CNAME record](https://www.namecheap.com/support/knowledgebase/article.aspx/9646/2237/how-to-create-a-cname-record-for-your-domain/)
-          [Add a TXT record](https://www.namecheap.com/support/knowledgebase/article.aspx/317/2237how-do-i-add-txtspfdkimdmarc-records-for-my-domain/#:~:text=this%20guide%20.-,DKIM%20records,-DKIM%20(DomainKeys%20Identified))
-      </Accordion>
-    </AccordionGroup>
-
-    <Warning>Note: If you're using a proxy like Cloudflare, make sure to turn  it off for these records or Trophy won't be able to properly verify them.</Warning>
-
-</Step>
-
-<Step title="Verify DNS records">
-
-    Once you've added the two records into your DNS settings, hit the refresh icon and Trophy will attempt to verify the records for you.
-
-    Usually Trophy can verify records within a few minutes but bear in mind that DNS changes can take up to a few hours to fully propogate.
-
-    If you see the following alert, the records may not have propogated yet, or there may be an issue with your setup.
-
-    <Frame>
-      <img
-        height="200"
-        width="75%"
-        noZoom
-        src="../assets/platform/emails/dns-verification-3.png"
-      />
-    </Frame>
-
-    Once you're sure everything's set up correctly in your DNS provider, hit refresh and Trophy will attempt to verify your DNS records once again.
-
-    As soon as you see the following message, you know everything's verified:
-
-    <Frame>
-      <img
-        height="200"
-        width="75%"
-        noZoom
-        src="../assets/platform/emails/dns-verification-4.png"
-      />
-    </Frame>
-
-</Step>
-
-<Step title="Configure your sending address">
-
-    Once your DNS records are verified, it's time to choose the email address you want to send emails from. Note that now you've fully verified your domain, you can change this address whenever you like without impacting deliverability.
-
-    Simply enter the email address you want Trophy to send from, the name to show to users in the inbox when they receive emails and a support email address they can use to contact you if needed:
-
-    <Frame>
-      <img
-        height="200"
-        width="75%"
-        noZoom
-        src="../assets/platform/emails/dns-verification-5.png"
-      />
-    </Frame>
-
-</Step>
-
-</Steps>
 
 ## Handling Unsubscribes
 
@@ -777,7 +833,7 @@ Trophy has built-in analytics for all Emails that it sends. This includes:
 
 <AccordionGroup>
 <Accordion title="Can I send emails from my own domain?">
-    Yes! Sending emails from your own domain is supported out-of-the-box. Follow the steps in the section on [Settings up Emails](#setting-up-emails) to get started.
+    Yes! Sending emails from your own domain is supported out-of-the-box. Follow the steps in the section on [sending emails](#sending-emails) to get started.
   </Accordion>
 
 {" "}

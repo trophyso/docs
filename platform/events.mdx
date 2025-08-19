@@ -14,15 +14,134 @@ Events represent individual user interactions against [Metrics](/platform/metric
 
 When you [integrate metrics](#tracking-metric-events) into your platform, you're setting up your platform to continuously stream events to your Trophy metrics for each user interaction. These interactions then drive all the gamification features you set up around these metrics.
 
-## Key attributes
+## Key Attributes
 
-### Metric-backed
+Events only have one required attribute, `value`. The value of an event is the numerical amount that will be added to the user's total metric count as a result of the user interaction it relates to.
 
-Each event increases or decreases the total value of a specific metric that you've configured in Trophy for a specific user.
+The value can be positive or negative, and can be a whole number or a decimal.
 
-### Value
+## Custom Event Attributes
 
-The value of an event is the numerical amount that will be added to the user's total metric count as a result of the user interaction it relates to. The value can be positive or negative, and can be a whole number or a decimal.
+You can specify a number of custom event attributes to help you track additional information relevant to your use case against events you send to Trophy.
+
+For example, a language learning app might have a 'Questions Completed' metric and use a custom event attribute to store wether the answer to each question was correct.
+
+Similarly a fitness app might use an 'Excercises Completed' metric and use a custom event attribute to store the weight that was used in each excercise and another custom event attribute to store how long the excercise lasted.
+
+Using custom event attributes in this way allows you to enrich events in Trophy with additional context relevant to your use case and use it to power even more engaging gamification features.
+
+### Creating Attibutes
+
+To create a new custom event attribute, head to the metrics page in the Trophy dashboard and hit the _Add Event Attribute_ button.
+
+Give the attribute a name and a unique key, you'll use the key when referencing the attribute in API calls.
+
+<Frame>
+  <video
+    autoPlay
+    muted
+    loop
+    playsInline
+    className="w-full aspect-15/4"
+    src="../assets/platform/events/create_custom_event_attribute.mp4"
+  ></video>
+</Frame>
+
+### Setting Attributes
+
+To set the value of a custom attribute on an event, pass its value in the `attributes` object in your metric tracking code.
+
+<Warning>
+  Trophy will only set values of attributes that have first been created
+  in the dashboard. We do this to help you keep a clean set of attributes and
+  prevent accidental overwrites.
+
+If you receive an error similar to the following then you might have miss-spelled the attribute key in the request, or you need to create the attribute first in the Trophy dashboard:
+
+```json
+{
+  "error": "Invalid attribute keys: devce. Please ensure all attribute keys match those set up at https://app.trophy.so/metrics."
+}
+```
+
+</Warning>
+
+Here's an example of an event payload where the values of two attributes, `device` and `duration`, are set:
+
+```json {7-10}
+{
+  "user": {
+    "id": "18",
+    "tz": "Europe/London"
+  },
+  "value": 25,
+  "attributes": {
+    "device": "ios",
+    "duration": "120"
+  }
+}
+```
+
+### Using Attributes
+
+Custom event attributes can be used to power more advanced triggers for achievements and points and can be used in email templates to customize copy and to control the data shown in charts.
+
+#### Advanced Feature Triggers
+
+Custom event attributes can be used to set up achievements or points triggers that only track events with specific attribute values. Follow the links to the relevant pages below to learn more.
+
+<CardGroup>
+  <Card
+    title="Achievement Triggers"
+    icon="trophy"
+    href="/platform/achievements#creating-achievements"
+  >
+    Configure achievements that can only be unlocked by events with certain
+    attribute values.
+  </Card>
+  <Card
+    title="Points Triggers"
+    icon="sparkle"
+    href="/platform/points#creating-triggers"
+  >
+    Set up points triggers to only award points from events with specific
+    attribute values.
+  </Card>
+</CardGroup>
+
+#### Email Customization
+
+If you use any Trophy [Emails](/platform/emails), event attributes can be used to customize the data shown in certain email blocks.
+
+Firstly, when using metric-based variables in email copy you can use event attributes to further control what data the variable refrences.
+
+For example here's a case where we use an email variable to tell users what their total number of workouts they've done on different gym equipment is using a metric 'Workouts' and an attribute 'Equipment':
+
+<Frame>
+  <video
+    autoPlay
+    muted
+    loop
+    playsInline
+    className="w-full aspect-15/4"
+    src="../assets/platform/events/using_attributes_in_emails.mp4"
+  ></video>
+</Frame>
+
+Secondly, here's an example where we add a chart to an email that shows users how many workouts they've done on a bike over time:
+
+<Frame>
+  <video
+    autoPlay
+    muted
+    loop
+    playsInline
+    className="w-full aspect-15/4"
+    src="../assets/platform/events/using_attributes_in_email_charts.mp4"
+  ></video>
+</Frame>
+
+There's a huge number of possibilities here, so get creative!
 
 ## Tracking Metric Events
 

@@ -132,8 +132,8 @@
           {
             "group": "Points",
             "pages": [
-              "api-reference/endpoints/points/get-points-summary",
-              "api-reference/endpoints/points/get-all-points-triggers"
+              "api-reference/endpoints/points/get-points",
+              "api-reference/endpoints/points/get-points-summary"
             ]
           },
           {
