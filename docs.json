@@ -124,6 +124,10 @@
             ]
           },
           {
+            "group": "Streaks",
+            "pages": ["api-reference/endpoints/streaks/get-streak-rankings"]
+          },
+          {
             "group": "Metrics",
             "pages": [
               "api-reference/endpoints/metrics/send-a-metric-change-event"
