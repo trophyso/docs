@@ -1175,18 +1175,18 @@ paths:
           required: false
           schema:
             type: string
-            enum: ["active", "longest"]
-            default: "active"
-          example: "active"
+            enum: ['active', 'longest']
+            default: 'active'
+          example: 'active'
       responses:
-        "200":
+        '200':
           description: Successful operation
           content:
             application/json:
               schema:
                 type: array
                 items:
-                  $ref: "#/components/schemas/StreakRankingUser"
+                  $ref: '#/components/schemas/StreakRankingUser'
               examples:
                 Successful operation:
                   value:
@@ -1199,18 +1199,18 @@ paths:
                     - userId: user-789
                       name: Charlie Brown
                       streakLength: 8
-        "401":
-          description: "Unauthorized"
+        '401':
+          description: 'Unauthorized'
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/ErrorBody"
-        "422":
-          description: "Unprocessible Entity"
+                $ref: '#/components/schemas/ErrorBody'
+        '422':
+          description: 'Unprocessible Entity'
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/ErrorBody"
+                $ref: '#/components/schemas/ErrorBody'
       summary: Get top users by streak length
       security:
         - ApiKeyAuth: []
@@ -2203,7 +2203,7 @@ components:
         name:
           type:
             - string
-            - "null"
+            - 'null'
           description: The name of the user. May be null if no name is set.
           example: Alice Johnson
         streakLength:
