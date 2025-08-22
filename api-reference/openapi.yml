@@ -1139,6 +1139,81 @@ paths:
       summary: Get a user's streak status
       security:
         - ApiKeyAuth: []
+  /streaks/rankings:
+    get:
+      description: Get the top users by streak length (active or longest).
+      operationId: streaks_rankings
+      tags:
+        - Streaks
+      x-codeSamples:
+        - lang: javascript
+          source: |
+            import { TrophyApiClient } from '@trophyso/node';
+
+            const trophy = new TrophyApiClient({
+              apiKey: 'YOUR_API_KEY'
+            });
+
+            const response = await trophy.streaks.rankings({
+              limit: 20,
+              type: 'active'
+            });
+      parameters:
+        - name: limit
+          in: query
+          description: Number of users to return. Must be between 1 and 100.
+          required: false
+          schema:
+            type: integer
+            minimum: 1
+            maximum: 100
+            default: 10
+          example: 20
+        - name: type
+          in: query
+          description: Whether to rank users by active streaks or longest streaks ever achieved.
+          required: false
+          schema:
+            type: string
+            enum: ['active', 'longest']
+            default: 'active'
+          example: 'active'
+      responses:
+        '200':
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/StreakRankingUser'
+              examples:
+                Successful operation:
+                  value:
+                    - userId: user-123
+                      name: Alice Johnson
+                      streakLength: 15
+                    - userId: user-456
+                      name: Bob Smith
+                      streakLength: 12
+                    - userId: user-789
+                      name: Charlie Brown
+                      streakLength: 8
+        '401':
+          description: 'Unauthorized'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorBody'
+        '422':
+          description: 'Unprocessible Entity'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorBody'
+      summary: Get top users by streak length
+      security:
+        - ApiKeyAuth: []
   /users/{id}/points/{key}:
     get:
       description: Get a user's points for a specific points system.
@@ -2116,6 +2191,29 @@ components:
         - id
         - name
         - triggers
+    StreakRankingUser:
+      title: StreakRankingUser
+      type: object
+      description: A user with their streak length in the rankings.
+      properties:
+        userId:
+          type: string
+          description: The ID of the user.
+          example: user-123
+        name:
+          type:
+            - string
+            - 'null'
+          description: The name of the user. May be null if no name is set.
+          example: Alice Johnson
+        streakLength:
+          type: integer
+          description: The user's streak length (active or longest depending on query parameter).
+          example: 15
+      required:
+        - userId
+        - name
+        - streakLength
   securitySchemes:
     ApiKeyAuth:
       type: apiKey
