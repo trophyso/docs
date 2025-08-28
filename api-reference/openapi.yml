@@ -1096,6 +1096,7 @@ paths:
                     periodStart: '2025-03-31'
                     periodEnd: '2025-04-05'
                     expires: '2025-04-12'
+                    rank: 5
                     streakHistory:
                       - periodStart: '2025-03-30'
                         periodEnd: '2025-04-05'
@@ -1703,6 +1704,10 @@ components:
                   - periodStart
                   - periodEnd
                   - length
+            rank:
+              type: integer
+              description: The user's rank across all users. Null if the user has no active streak.
+              example: 5
     PointsTrigger:
       title: PointsTrigger
       type: object
