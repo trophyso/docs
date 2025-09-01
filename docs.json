@@ -125,7 +125,10 @@
           },
           {
             "group": "Streaks",
-            "pages": ["api-reference/endpoints/streaks/get-streak-rankings"]
+            "pages": [
+              "api-reference/endpoints/streaks/get-streaks",
+              "api-reference/endpoints/streaks/get-streak-rankings"
+            ]
           },
           {
             "group": "Metrics",

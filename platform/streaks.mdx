@@ -60,8 +60,8 @@ Trophy exposes streak data in two ways, which can be used to build UI elements w
 
 ### Metric Event Response
 
-When you [increment a metric](/platform/events#tracking-metric-events) for a user, the [Metric API](/api-reference/endpoints/metrics/send-a-metric-change-event) response will include the user's current
-streak (if streaks are enabled).
+When you [increment a metric](/platform/events#tracking-metric-events) for a user, the [metric API](/api-reference/endpoints/metrics/send-a-metric-change-event) response will include the user's current
+streak.
 
 <MetricChangeResponseBlock />
 
@@ -72,9 +72,7 @@ This can be used to transactionally trigger UI/UX elements including:
 
 ### User Streaks API
 
-At any time, you can query the [User Streaks API](/api-reference/endpoints/users/get-a-users-streak).
-
-This will return the current streak for a single user, along with their recent streak history. Use the [`historyPeriods`](/api-reference/endpoints/users/get-a-users-streak#parameter-history-periods) query parameter to control how many periods to return.
+The [user streaks API](/api-reference/endpoints/users/get-a-users-streak) returns the current streak for a single user, along with their recent streak history. Use the [`historyPeriods`](/api-reference/endpoints/users/get-a-users-streak#parameter-history-periods) query parameter to control how many periods to return.
 
 ```json Response [expandable]
 {
@@ -84,6 +82,7 @@ This will return the current streak for a single user, along with their recent s
   "periodStart": "2025-03-31",
   "periodEnd": "2025-04-05",
   "expires": "2025-04-12",
+  "rank": 5,
   "streakHistory": [
     {
       "periodStart": "2025-03-02",
@@ -134,11 +133,55 @@ Use this data to display a user's streak history within your application.
   />
 </Frame>
 
+### List Multiple User's Streaks
+
+If you want to display streaks for multiple users at once, for example to support a friend streak or user group feature, then use the [list user streaks API](/api-reference/endpoints/streaks/get-streaks).
+
+```json [expandable]
+[
+  {
+    "userId": "user-123",
+    "streakLength": 15,
+    "extended": "2025-01-01T05:03:00Z"
+  },
+  {
+    "userId": "user-456",
+    "streakLength": 12,
+    "extended": "2025-01-01T08:43:00Z"
+  },
+  {
+    "userId": "user-789",
+    "streakLength": 0,
+    "extended": null
+  }
+]
+```
+
 ### Streak Rankings
 
 You can also use the [streak rankings API](/api-reference/endpoints/streaks/get-streak-rankings) to get a list of up to the the top 100 users by streak length and display a streak leaderboard in your application.
 
 You can fetch rankings either for 'active' streaks (users on a streak at the time of request), or 'longest' (ranking each users longest ever streak).
+
+```json [expandable]
+[
+  {
+    "userId": "user-123",
+    "name": "Alice Johnson",
+    "streakLength": 15
+  },
+  {
+    "userId": "user-456",
+    "name": "Bob Smith",
+    "streakLength": 12
+  },
+  {
+    "userId": "user-789",
+    "name": "Charlie Brown",
+    "streakLength": 8
+  }
+]
+```
 
 ## Get Support
 
