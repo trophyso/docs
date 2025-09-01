@@ -1140,6 +1140,64 @@ paths:
       summary: Get a user's streak status
       security:
         - ApiKeyAuth: []
+  /streaks:
+    get:
+      description: Get the streak lengths of a list of users, ranked by streak length from longest to shortest.
+      operationId: streaks_list
+      tags:
+        - Streaks
+      x-codeSamples:
+        - lang: javascript
+          source: |
+            import { TrophyApiClient } from '@trophyso/node';
+
+            const response = await trophy.streaks.list({
+              userIds: ['user-123', 'user-456', 'user-789']
+            });
+      parameters:
+        - name: userIds
+          in: query
+          description: A list of up to 100 user IDs.
+          required: true
+          schema:
+            type: array
+            items:
+              type: string
+          example: 'user-123,user-456,user-789'
+      responses:
+        '200':
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BulkStreakResponse'
+              examples:
+                Successful operation:
+                  value:
+                    - userId: user-123
+                      streakLength: 15
+                      extended: '2025-01-01T05:03:00Z'
+                    - userId: user-456
+                      streakLength: 12
+                      extended: '2025-01-01T08:43:00Z'
+                    - userId: user-789
+                      streakLength: 0
+                      extended: null
+        '401':
+          description: 'Unauthorized'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorBody'
+        '422':
+          description: 'Unprocessible Entity'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorBody'
+      summary: Get the streak lengths of a list of users
+      security:
+        - ApiKeyAuth: []
   /streaks/rankings:
     get:
       description: Get the top users by streak length (active or longest).
@@ -1657,6 +1715,23 @@ components:
       required:
         - length
         - frequency
+    BulkStreakResponse:
+      title: Bulk Streak Response
+      type: array
+      items:
+        properties:
+          userId:
+            type: string
+            description: The ID of the user.
+          streakLength:
+            type: integer
+            description: The length of the user's streak.
+          extended:
+            type: string
+            description: The timestamp the streak was extended, as a string.
+        required:
+          - userId
+          - streakLength
     MetricEventStreakResponse:
       title: Streak Response (Metric Event)
       type: object
