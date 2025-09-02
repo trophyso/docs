@@ -204,24 +204,26 @@ paths:
               apiKey: 'YOUR_API_KEY'
             });
 
-            const response = await trophy.metrics.event({
-              key: 'words-written',
-              user: {
-                id: 'user-id',
-                email: 'user@example.com',
-                tz: 'Europe/London',
-                subscribedToEmails: true,
+            const response = await trophy.metrics.event(
+              "words-written",
+              {
+                user: {
+                  id: 'user-id',
+                  email: 'user@example.com',
+                  tz: 'Europe/London',
+                  subscribedToEmails: true,
+                  attributes: {
+                    department: 'engineering',
+                    role: 'developer'
+                  }
+                },
+                value: 750,
                 attributes: {
-                  department: 'engineering',
-                  role: 'developer'
+                  category: 'writing',
+                  source: 'mobile-app'
                 }
-              },
-              value: 750,
-              attributes: {
-                category: 'writing',
-                source: 'mobile-app'
               }
-            });
+            );
       parameters:
         - name: key
           in: path
