@@ -1,0 +1,65 @@
+---
+title: Idempotency
+description: Prevent unintended side-effects when retrying requests with idempotency controls built into the Trophy API and SDKs.
+"og:description": Prevent unintended side-effects when retrying requests with idempotency built into the Trophy API and SDKs using the `Idempotency-Key` request header.
+icon: repeat
+---
+
+import IdempotentEventTracking from "/snippets/idempotent-event-tracking.mdx";
+
+## What is Idempotency?
+
+When describing APIs, [idempotence](https://en.wikipedia.org/wiki/Idempotence) is a property of a particular operation whereby subsequent invocations after the first have no additional effect on the state of the system.
+
+Trophy's [event tracking API](/api-reference/endpoints/metrics/send-a-metric-change-event) can be used to enforce idempotency preventing client retries from having unintended side effects such as overcounting user interactions, or awarding points to users multiple times for the same action.
+
+This is particularly important where rewards are tied to user actions to prevent users from 'gaming the system'.
+
+## Sending Idempotent Requests
+
+To ensure idempotency is respected when sending events to Trophy, include an `Idempotency-Key` header when using the [event tracking API](/api-reference/endpoints/metrics/send-a-metric-change-event). Additionally, all [client SDKs](/api-reference/client-libraries) support idempotency with built-in type safety.
+
+You can choose what to use as your idempotency key, but it should reflect the level of 'uniqueness' that you want Trophy to respect.
+
+<Tip>
+  For example, if you use Trophy to reward users for completing workouts, and
+  want to make sure each user can only redeem rewards once for each workout, use
+  the unique ID of the workout as your idempotency key.
+</Tip>
+
+Here's an example of what using an idempotency key looks like:
+
+<IdempotentEventTracking />
+
+## How Idempotency Works
+
+When Trophy detects an idempotency key has been sent with an event, it will first check if the user the event relates to has used it before. It will then proceed to take one of the following actions:
+
+- If Trophy does recognise the user has used the idempotency key before, it will not process the event, returning a `202 Accepted` response. The response will reflect the state of the system when the original event that first used the idempotency key was sent.
+- If instead Trophy detects the user hasn't used the idempotency key before, it will process the event as usual, returning a `201 Created` response. Finally Trophy will store the idempotency key for lookup during any subsequent requests.
+
+<Note>
+  All Trophy [metrics](/platform/metrics) manage idempotency in isolation.
+  Trophy will accept a user using the same idempotency key for events against
+  different metrics as seperate isolated requests.
+</Note>
+
+Additionally, when using an idempotency key the response will contain two properties to help clients manage replayed requests effectively:
+
+```json
+{
+    ...,
+    "idempotentReplayed": true, // true if replayed, false otherwise
+    "idempotencyKey": "test" // the original idempotency key if recognised, null otherwise
+}
+```
+
+<Note>
+  By default Trophy uses an infinte time window for detecting duplicate events.
+  If you feel you need different behavoir, please [get in
+  touch](mailto:support@trophy.so) and we'll happily set that up for you.
+</Note>
+
+## Get Support
+
+Want to get in touch with the Trophy team? Reach out to us via [email](mailto:support@trophy.so). We're here to help!
