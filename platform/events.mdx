@@ -196,7 +196,15 @@ Watch Charlie integrate metric tracking into a simple NextJS application using t
 
 ### Idempotent Events
 
-Trophy supports preventing unintended side effects from duplicate events through an `Idempotency-Key` header. [Learn more about idempotency](/api-reference/idempotency).
+Trophy supports enforcing uniqueness on events so that users cannot increase a metric by taking the same exact action over and over.
+
+For example, a language learning app could specify that users can only increase the `lessons completed` metric by 1 for each unique lesson completed, so if they complete the same lesson twice only the first counts.
+
+This helps keep your codebase free of logic that checks if users have completed actions before, and can instead trust Trophy to uphold the constraints you need.
+
+To use idempotent events, use the `Idempotency-Key` header in the [metric event API](/api-reference/endpoints/metrics/send-a-metric-change-event).
+
+[Learn more about idempotency](/api-reference/idempotency).
 
 ## Get Support
 

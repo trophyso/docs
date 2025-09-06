@@ -1,7 +1,7 @@
 ---
 title: Idempotency
-description: Prevent unintended side-effects when retrying requests with idempotency controls built into the Trophy API and SDKs.
-"og:description": Prevent unintended side-effects when retrying requests with idempotency built into the Trophy API and SDKs using the `Idempotency-Key` request header.
+description: Prevent unintended side effects when retrying requests with idempotency controls built into the Trophy API and SDKs.
+"og:description": Prevent unintended side effects when retrying requests with idempotency built into the Trophy API and SDKs using the `Idempotency-Key` request header.
 icon: repeat
 ---
 
@@ -22,9 +22,9 @@ To ensure idempotency is respected when sending events to Trophy, include an `Id
 You can choose what to use as your idempotency key, but it should reflect the level of 'uniqueness' that you want Trophy to respect.
 
 <Tip>
-  For example, if you use Trophy to reward users for completing workouts, and
-  want to make sure each user can only redeem rewards once for each workout, use
-  the unique ID of the workout as your idempotency key.
+  For example, if you use Trophy to reward users for completing lessons, and
+  want to make sure each user can only redeem rewards once for each lesson, use
+  the unique ID of the lesson as your idempotency key.
 </Tip>
 
 Here's an example of what using an idempotency key looks like:
@@ -35,7 +35,7 @@ Here's an example of what using an idempotency key looks like:
 
 When Trophy detects an idempotency key has been sent with an event, it will first check if the user the event relates to has used it before. It will then proceed to take one of the following actions:
 
-- If Trophy does recognise the user has used the idempotency key before, it will not process the event, returning a `202 Accepted` response. The response will reflect the state of the system when the original event that first used the idempotency key was sent.
+- If the user has used the idempotency key before, Trophy will not process the event, returning a `202 Accepted` response. The response will reflect the current state of the system, but will not increase the users metric total, complete any achievements, award any points, extend the streak, etc.
 - If instead Trophy detects the user hasn't used the idempotency key before, it will process the event as usual, returning a `201 Created` response. Finally Trophy will store the idempotency key for lookup during any subsequent requests.
 
 <Note>
@@ -50,7 +50,7 @@ Additionally, when using an idempotency key the response will contain two proper
 {
     ...,
     "idempotentReplayed": true, // true if replayed, false otherwise
-    "idempotencyKey": "test" // the original idempotency key if recognised, null otherwise
+    "idempotencyKey": "test" // the original idempotency key
 }
 ```
 
