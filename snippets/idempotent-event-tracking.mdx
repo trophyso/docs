@@ -1,0 +1,112 @@
+<CodeGroup>
+```bash cURL {3}
+curl -X POST https://app.trophy.so/api/metrics/lessons-completed/event \
+     -H "X-API-KEY: <apiKey>" \
+     -H "Idempotency-Key: <lesson-123>" \
+     -H "Content-Type: application/json" \
+     -d '{
+  "user": {
+    "id": "18",
+    "email": "user@example.com",
+    "tz": "Europe/London"
+  },
+  "value": 1
+}'
+```
+
+```typescript Node {10-12}
+trophy.metrics.event("lessons-completed",
+  {
+    user: {
+      id: "18",
+      email: "user@example.com",
+      tz: "Europe/London",
+    },
+    value: 1,
+  },
+  {
+    idempotencyKey: "lesson-123",
+  }
+);
+```
+
+```python Python
+client.metrics.event(
+    key="lessons-completed",
+    user=EventRequestUser(
+        id="18",
+        email="user@example.com",
+        tz="Europe/London",
+    ),
+    value=1,
+)
+```
+
+```php PHP
+$user = new EventRequestUser([
+    'id' => '18',
+    'email' => 'user@example.com'
+]);
+
+$request = new MetricsEventRequest([
+    'user' => $user,
+    'value' => 1
+]);
+
+$trophy->metrics->event("lessons-completed", $request);
+```
+
+```java Java
+MetricsEventRequest request = MetricsEventRequest.builder()
+      .user(
+        EventRequestUser.builder()
+          .id("18")
+          .email("user@example.com")
+          .build()
+      )
+      .value(1)
+      .build();
+
+EventResponse response = client.metrics().event("lessons-completed", request);
+```
+
+```go Go
+response, err := client.Metrics.Event(
+    context.TODO(),
+    "lessons-completed",
+    &api.MetricsEventRequest{
+        User: &api.EventRequestUser{
+            Id: "18",
+            Email: "user@example.com",
+        },
+        Value: 1,
+    },
+)
+```
+
+```csharp C#
+var user = new EventRequestUser {
+   Id = "18",
+   Email = "user@example.com"
+};
+
+var request = new MetricsEventRequest {
+   User = user,
+   Value = 1
+};
+
+await trophy.Metrics.EventAsync("lessons-completed", request);
+```
+
+```ruby Ruby
+result = client.metrics.event(
+  :key => 'lessons-completed',
+  :user => {
+    :id => '18',
+    :email => 'user@example.com'
+  },
+  :value => 1
+)
+```
+
+</CodeGroup>
