@@ -19,6 +19,13 @@ paths:
             });
 
             const response = await trophy.achievements.all();
+        - lang: python
+          source: |
+            from trophy import TrophyApi
+
+            client = TrophyApi(api_key='YOUR_API_KEY')
+
+            response = client.achievements.all()
       responses:
         '200':
           description: Successful operation
@@ -103,6 +110,15 @@ paths:
                 id: "user-id",
               }
             });
+        - lang: python
+          source: |
+            from trophy import TrophyApi
+
+            client = TrophyApi(api_key='YOUR_API_KEY')
+
+            user = UpsertedUser(id="123")
+
+            response = client.achievements.complete("achievement-key", user=user)
       parameters:
         - name: key
           in: path
@@ -224,6 +240,31 @@ paths:
                 }
               }
             );
+        - lang: python
+          source: |
+            from trophy import TrophyApi
+
+            client = TrophyApi(api_key='YOUR_API_KEY')
+
+            user = UpsertedUser(
+              id="123",
+              email="user@example.com",
+              tz="Europe/London",
+              subscribedToEmails=True,
+              attributes={
+                "department": "engineering",
+                "role": "developer"
+              }
+            )
+
+            response = client.metrics.event(
+              "words-written",
+              user=user,
+              value=750,
+              attributes={
+                "category": "writing",
+                "source": "mobile-app"
+            })
       parameters:
         - name: key
           in: path
@@ -368,6 +409,22 @@ paths:
                 role: 'developer'
               }
             });
+        - lang: python
+          source: |
+            from trophy import TrophyApi
+
+            client = TrophyApi(api_key='YOUR_API_KEY')
+
+            response = client.users.create(
+              id="123",
+              email="user@example.com",
+              tz="Europe/London",
+              subscribedToEmails=True,
+              attributes={
+                "department": "engineering",
+                "role": "developer"
+              }
+            )
       summary: Create a new user
       security:
         - ApiKeyAuth: []
@@ -432,6 +489,13 @@ paths:
             });
 
             const response = await trophy.users.get("user-id");
+        - lang: python
+          source: |
+            from trophy import TrophyApi
+
+            client = TrophyApi(api_key='YOUR_API_KEY')
+
+            response = client.users.get("user-id")
       summary: Get a single user
       parameters:
         - name: id
@@ -502,6 +566,22 @@ paths:
                 role: 'developer'
               }
             });
+        - lang: python
+          source: |
+            from trophy import TrophyApi
+
+            client = TrophyApi(api_key='YOUR_API_KEY')
+
+            response = client.users.identify(
+              id="123",
+              email="user@example.com",
+              tz="Europe/London",
+              subscribedToEmails=True,
+              attributes={
+                "department": "engineering",
+                "role": "developer"
+              }
+            )
       summary: Identify a user
       security:
         - ApiKeyAuth: []
@@ -582,6 +662,22 @@ paths:
                 role: 'developer'
               }
             });
+        - lang: python
+          source: |
+            from trophy import TrophyApi
+
+            client = TrophyApi(api_key='YOUR_API_KEY')
+
+            response = client.users.update(
+              id="123",
+              email="user@example.com",
+              tz="Europe/London",
+              subscribedToEmails=True,
+              attributes={
+                "department": "engineering",
+                "role": "developer"
+              }
+            )
       summary: Update a user
       security:
         - ApiKeyAuth: []
@@ -662,7 +758,14 @@ paths:
               apiKey: 'YOUR_API_KEY'
             });
 
-            const response = await trophy.users.allMetrics("user-id", "words-written");
+            const response = await trophy.users.allMetrics("user-id");
+        - lang: python
+          source: |
+            from trophy import TrophyApi
+
+            client = TrophyApi(api_key='YOUR_API_KEY')
+
+            response = client.users.all_metrics("user-id")
       parameters:
         - name: id
           in: path
@@ -746,6 +849,13 @@ paths:
             });
 
             const response = await trophy.users.singleMetric("user-id", "words-written");
+        - lang: python
+          source: |
+            from trophy import TrophyApi
+
+            client = TrophyApi(api_key='YOUR_API_KEY')
+
+            response = client.users.single_metric(id="user-id", key="words-written")
       parameters:
         - name: id
           in: path
@@ -837,6 +947,19 @@ paths:
               startDate: "2024-01-01",
               endDate: "2024-01-31"
             });
+        - lang: python
+          source: |
+            from trophy import TrophyApi
+
+            client = TrophyApi(api_key='YOUR_API_KEY')
+
+            response = client.users.metric_event_summary(
+              id="user-id",
+              key="words-written",
+              aggregation="daily",
+              start_date="2024-01-01",
+              end_date="2024-01-31"
+            )
       parameters:
         - name: id
           in: path
@@ -970,6 +1093,22 @@ paths:
             const response = await trophy.users.achievements("user-id", {
               includeIncomplete: true
             });
+        - lang: python
+          label: Get a user's completed achievements
+          source: |
+            from trophy import TrophyApi
+
+            client = TrophyApi(api_key='YOUR_API_KEY')
+
+            response = client.users.achievements(id="user-id")
+        - lang: python
+          label: Get a user's achievements (include incomplete)
+          source: |
+            from trophy import TrophyApi
+
+            client = TrophyApi(api_key='YOUR_API_KEY')
+
+            response = client.users.achievements(id="user-id", include_incomplete="true")
       parameters:
         - name: id
           in: path
@@ -1065,6 +1204,13 @@ paths:
             const response = await trophy.users.streak("user-id", {
               historyPeriods: 14
             });
+        - lang: python
+          source: |
+            from trophy import TrophyApi
+
+            client = TrophyApi(api_key='YOUR_API_KEY')
+
+            response = client.users.streak(id="user-id", history_periods=14)
       parameters:
         - name: id
           in: path
@@ -1156,6 +1302,13 @@ paths:
             const response = await trophy.streaks.list({
               userIds: ['user-123', 'user-456', 'user-789']
             });
+        - lang: python
+          source: |
+            from trophy import TrophyApi
+
+            client = TrophyApi(api_key='YOUR_API_KEY')
+
+            response = client.streaks.list(user_ids=["user-123", "user-456", "user-789"])
       parameters:
         - name: userIds
           in: query
@@ -1219,6 +1372,13 @@ paths:
               limit: 20,
               type: 'active'
             });
+        - lang: python
+          source: |
+            from trophy import TrophyApi
+
+            client = TrophyApi(api_key='YOUR_API_KEY')
+
+            response = client.streaks.rankings(limit=20, type="active")
       parameters:
         - name: limit
           in: query
@@ -1291,6 +1451,13 @@ paths:
             });
 
             const response = await trophy.users.points("user-id", "points-system-key");
+        - lang: python
+          source: |
+            from trophy import TrophyApi
+
+            client = TrophyApi(api_key='YOUR_API_KEY')
+
+            response = client.users.points(id="user-id", key="points-system-key")
       parameters:
         - name: id
           in: path
@@ -1381,6 +1548,19 @@ paths:
               startDate: "2024-01-01",
               endDate: "2024-01-31"
             });
+        - lang: python
+          source: |
+            from trophy import TrophyApi
+
+            client = TrophyApi(api_key='YOUR_API_KEY')
+
+            response = client.users.points_event_summary(
+              id="user-id",
+              key="points-system-key",
+              aggregation="daily",
+              start_date="2024-01-01",
+              end_date="2024-01-31"
+            )
       parameters:
         - name: id
           in: path
@@ -1503,6 +1683,16 @@ paths:
             const response = await trophy.points.summary("points-system-key", {
               userAttributes: "plan-type:premium,region:us-east"
             });
+        - lang: python
+          source: |
+            from trophy import TrophyApi
+
+            client = TrophyApi(api_key='YOUR_API_KEY')
+
+            response = client.points.summary(
+              key="points-system-key",
+              user_attributes="plan-type:premium,region:us-east"
+            )
       parameters:
         - name: key
           in: path
@@ -1598,6 +1788,13 @@ paths:
             });
 
             const response = await trophy.points.system("points-system-key");
+        - lang: python
+          source: |
+            from trophy import TrophyApi
+
+            client = TrophyApi(api_key='YOUR_API_KEY')
+
+            response = client.points.system(key="points-system-key")
       parameters:
         - name: key
           in: path
@@ -2145,6 +2342,12 @@ components:
             $ref: '#/components/schemas/MetricEventPointsResponse'
           description: >-
             A map of points systems by key that were affected by this event.
+        idempotencyKey:
+          type: string
+          description: The idempotency key used for the event, if one was provided.
+        idempotentReplayed:
+          type: boolean
+          description: Whether the event was replayed due to idempotency.
       required:
         - eventId
         - metricId
