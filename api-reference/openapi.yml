@@ -273,6 +273,13 @@ paths:
           schema:
             type: string
           example: words-written
+        - name: Idempotency-Key
+          in: header
+          description: The idempotency key for the event.
+          required: false
+          schema:
+            type: string
+          example: e4296e4b-8493-4bd1-9c30-5a1a9ac4d78f
       responses:
         '201':
           description: Created event
