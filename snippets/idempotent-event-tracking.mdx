@@ -14,7 +14,7 @@ curl -X POST https://app.trophy.so/api/metrics/lessons-completed/event \
 }'
 ```
 
-```typescript Node {10-12}
+```typescript Node {9}
 trophy.metrics.event("lessons-completed",
   {
     user: {
@@ -28,7 +28,7 @@ trophy.metrics.event("lessons-completed",
 );
 ```
 
-```python Python
+```python Python {9}
 client.metrics.event(
     key="lessons-completed",
     user=EventRequestUser(
@@ -41,7 +41,7 @@ client.metrics.event(
 )
 ```
 
-```php PHP
+```php PHP {9}
 $user = new EventRequestUser([
     'id' => '18',
     'email' => 'user@example.com'
@@ -56,7 +56,7 @@ $request = new MetricsEventRequest([
 $trophy->metrics->event("lessons-completed", $request);
 ```
 
-```java Java
+```java Java {9}
 MetricsEventRequest request = MetricsEventRequest.builder()
       .user(
         EventRequestUser.builder()
@@ -71,7 +71,7 @@ MetricsEventRequest request = MetricsEventRequest.builder()
 EventResponse response = client.metrics().event("lessons-completed", request);
 ```
 
-```go Go
+```go Go {10}
 response, err := client.Metrics.Event(
     context.TODO(),
     "lessons-completed",
@@ -86,7 +86,7 @@ response, err := client.Metrics.Event(
 )
 ```
 
-```csharp C#
+```csharp C# {9}
 var user = new EventRequestUser {
    Id = "18",
    Email = "user@example.com"
@@ -101,7 +101,7 @@ var request = new MetricsEventRequest {
 await trophy.Metrics.EventAsync("lessons-completed", request);
 ```
 
-```ruby Ruby
+```ruby Ruby {8}
 result = client.metrics.event(
   :key => 'lessons-completed',
   :user => {
