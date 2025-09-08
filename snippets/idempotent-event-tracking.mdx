@@ -23,8 +23,6 @@ trophy.metrics.event("lessons-completed",
       tz: "Europe/London",
     },
     value: 1,
-  },
-  {
     idempotencyKey: "lesson-123",
   }
 );
@@ -39,6 +37,7 @@ client.metrics.event(
         tz="Europe/London",
     ),
     value=1,
+    idempotencyKey="lesson-123"
 )
 ```
 
@@ -50,7 +49,8 @@ $user = new EventRequestUser([
 
 $request = new MetricsEventRequest([
     'user' => $user,
-    'value' => 1
+    'value' => 1,
+    'idempotencyKey' => 'lesson-123'
 ]);
 
 $trophy->metrics->event("lessons-completed", $request);
@@ -65,6 +65,7 @@ MetricsEventRequest request = MetricsEventRequest.builder()
           .build()
       )
       .value(1)
+      .idempotencyKey("lesson-123")
       .build();
 
 EventResponse response = client.metrics().event("lessons-completed", request);
@@ -80,6 +81,7 @@ response, err := client.Metrics.Event(
             Email: "user@example.com",
         },
         Value: 1,
+        IdempotencyKey: "lesson-123"
     },
 )
 ```
@@ -92,7 +94,8 @@ var user = new EventRequestUser {
 
 var request = new MetricsEventRequest {
    User = user,
-   Value = 1
+   Value = 1,
+   IdempotencyKey = "lesson-123"
 };
 
 await trophy.Metrics.EventAsync("lessons-completed", request);
@@ -105,7 +108,8 @@ result = client.metrics.event(
     :id => '18',
     :email => 'user@example.com'
   },
-  :value => 1
+  :value => 1,
+  :idempotencyKey => 'lesson-123'
 )
 ```
 
