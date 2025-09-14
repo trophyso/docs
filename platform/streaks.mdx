@@ -19,15 +19,13 @@ A streak is a period of consecutive days, weeks or months that a user has perfor
 
 Streaks are **global** to your platform, meaning that each user has a single streak across all interactions. You can decide which [Metrics](/platform/metrics) should contribute a user's streak on the [streaks configure](https://staging-app.trophy.so/streaks/configure) page.
 
-## Key Attributes
-
-### Streak Frequency
+## Streak Frequency
 
 Streaks can be configured to be daily, weekly or monthly. This means that a user must increment a metric at least once every calendar day, week or month to maintain their streak.
 
 Trophy will automatically compute streak data for all streak frequencies, which means you can change the frequency at any time while maintaining users' streaks. Just note that changing the frequency may be confusing for users, so best to communicate any changes ahead of time.
 
-### Streak Metrics
+## Streak Metrics
 
 You can choose which metrics should contribute to a user's streak
 
@@ -39,6 +37,26 @@ For example, if your platform is a language learning app, you might want to trac
   and all your users' streak status will be immediately available, going back
   for as long as you've been using Trophy.
 </Callout>
+
+## Streak Freezes
+
+Streak freezes help users keep their streaks for longer by allowing them to miss periods without it resetting to zero. This helps keep streaks motivating even if users don't maintain a perfect usage habit.
+
+Streak freezes are optional in Trophy but can be configured on the [streaks page](https://app.trophy.so/streaks) of the Trophy dashboard.
+
+### Granting Initial Freezes
+
+You can configure the number of freezes that you want users to start with, and that new users you tell Trophy about will get automatically.
+
+### Freeze Accumulation
+
+Trophy can automatically accumulate streak freezes on users behalf based on your preference. You can choose an arbitrary number of days over which to grant an arbitrary number of freezes to each user.
+
+If you've [configured time zones](/platform/users#param-tz) for your users, Trophy will gran freezes to users according to their local clock.
+
+### Maximum Freeze Count
+
+You can also configure the maxiumum number of freezes that each user can have. If set, [freeze accumulation](#freeze-accumulation) will only grant freezes up to this limit for each user.
 
 ## Tracking Streaks
 
