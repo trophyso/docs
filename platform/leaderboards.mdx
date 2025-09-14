@@ -7,35 +7,61 @@ icon: /icons/leaderboard.svg
 
 ## What are Leaderboards
 
-...
+Leaderboards are social competitions between users of your application. Use leaderboards to increase engagement and foster social interaction.
 
 ## Types of Leaderboards
 
-...
+Leaderboards in Trophy can be one of a few different types.
 
-### Perpetual Leaderboards
+### Perpetual Leaderboards
 
-...
+Perpetual leaderboards never reset, once started they continually track and rank users progress over time.
 
 ### Repeating Leaderboards
 
+Repeating leaderboards can be configured to reset according to the following intervals:
+
+- Daily
+- Weekly
+- Monthly
+
+In Trophy each interval of a repeating leaderboard is called a **'run'**. For example, a monthly leaderboard would have 12 runs in a year, but a daily leaderboard would have `n` runs in a month where `n` is the number of days in each month.
+
+Repeating leaderboards reset all ranks at the start of each run giving new users an equal chance to compete with existing users.
+
+Trophy tracks the rankings in each run of a repeating leaderboard individually and provides [APIs](TODO) to fetch ranking data on historical runs.
+
+#### Handling Time Zones
+
+Where you have [configured](/platform/users#param-tz) your integration to tell Trophy about users' time zones, Trophy will use this to ensure each user has an equal chance of winning no matter where they are in the world.
+
+In practice this means leaderboards are finalised and winners chosen about 12 hours after they naturally finish in UTC to allow time for users in all time zones to make their final push.
+
+#### Specifics for Weekly Leaderboards
+
 ...
 
-## Ranking Criterion
+## Ranking Criteria
 
-...
+Leaderboards in Trophy can be configured to rank users in a few different ways.
 
 ### Metric Leaderboards
 
-...
+Metric leaderboards are linked to an existing Trophy [Metric](/platform/metrics) and rank users based on their progress against it.
+
+Use metric leaderboards if you just want to rank users based on a single interaction.
 
 ### Points Leaderboards
 
-...
+Points leaderboards are linked to an existing Trophy [Points System](/platform/points) and automatically rank users according to their total points.
+
+Use a points leaderboard if you want to rank users based on a combination of metrics, achievements or other Trophy features.
 
 ### Streak Leaderboards
 
-...
+Streak leaderbaords rank users based on their current streak length.
+
+<Tip>Streak leaderboards can only be [perpetual](#perpetual-leaderboards).</Tip>
 
 ## Creating Leaderboards
 
