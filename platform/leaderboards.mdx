@@ -15,17 +15,13 @@ Leaderboards in Trophy can be one of a few different types.
 
 ### Perpetual Leaderboards
 
-Perpetual leaderboards never reset, once started they continually track and rank users progress over time.
+Perpetual leaderboards never reset. Once started they continually track and rank users progress over time forever, or until the configured [end date](#end-dates).
 
 ### Repeating Leaderboards
 
-Repeating leaderboards can be configured to reset according to the following intervals:
+Repeating leaderboards can be configured to reset after any arbitrary number of days, months or years.
 
-- Daily
-- Weekly
-- Monthly
-
-In Trophy each interval of a repeating leaderboard is called a **'run'**. For example, a monthly leaderboard would have 12 runs in a year, but a daily leaderboard would have `n` runs in a month where `n` is the number of days in each month.
+In Trophy each instance of a repeating leaderboard is called a **'run'**. For example, a monthly leaderboard would have 12 runs in a year, but a daily leaderboard would have `n` runs in a month where `n` is the number of days in a given month.
 
 Repeating leaderboards reset all ranks at the start of each run giving new users an equal chance to compete with existing users.
 
@@ -37,35 +33,153 @@ Where you have [configured](/platform/users#param-tz) your integration to tell T
 
 In practice this means leaderboards are finalised and winners chosen about 12 hours after they naturally finish in UTC to allow time for users in all time zones to make their final push.
 
-#### Specifics for Weekly Leaderboards
+#### Tips for Weekly Leaderboards
 
-...
+As the start of the week can be different in different countries, there is some debate about how to manage weekly leaderboards correctly and consistently.
 
-## Ranking Criteria
+We'll be adding better support for weekly leaderboards in the future based on customer requests, so if that's you [let us know](mailto:support@trophy.so)! However Trophy leaderboards will cover 90% of weekly use cases, so here's what we suggest if you want to set one up.
+
+To create a weekly leaderboard, set up a [repeating leaderboard](#repeating-leaderboards) on a 7 day schedule and set the start date to be the next occuring first day of the week. Whilst you wait for the start date to come around, the leaderboard will be in `scheduled` status and will automatically go live on the start date.
+
+This will make sure each run of the leaderboard consistently tracks the start and end of each week that your users are familiar with.
+
+## Ranking Method
 
 Leaderboards in Trophy can be configured to rank users in a few different ways.
 
-### Metric Leaderboards
+<Frame>
+  <img
+    height="200"
+    width="50%"
+    noZoom
+    src="../assets/platform/leaderboards/ranking_methods.png"
+  />
+</Frame>
+
+### Metric Rankings
 
 Metric leaderboards are linked to an existing Trophy [Metric](/platform/metrics) and rank users based on their progress against it.
 
 Use metric leaderboards if you just want to rank users based on a single interaction.
 
-### Points Leaderboards
+### Points Rankings
 
 Points leaderboards are linked to an existing Trophy [Points System](/platform/points) and automatically rank users according to their total points.
 
 Use a points leaderboard if you want to rank users based on a combination of metrics, achievements or other Trophy features.
 
-### Streak Leaderboards
+### Streak Rankings
 
 Streak leaderbaords rank users based on their current streak length.
 
 <Tip>Streak leaderboards can only be [perpetual](#perpetual-leaderboards).</Tip>
 
+## Start & End Dates
+
+Use start and end dates to control the window within which leaderboards are actively ranking users.
+
+<Frame>
+  <img
+    height="200"
+    width="50%"
+    noZoom
+    src="../assets/platform/leaderboards/start_end_dates.png"
+  />
+</Frame>
+
+### Start Dates
+
+Leaderboards in Trophy can be set to start at a future date of your choice. This is often useful to allow some time for last minute changes or adjustments before leaderboards start ranking users.
+
+Leaderboards with a start date in the future are scheduled and automatically go live on the start date you choose.
+
+### End Dates
+
+Leaderboards in Trophy can have end dates. If you set an end date on a leaderboard then after that date it will enter `finished` status and rankings will be be finalized and winners chosen.
+
+<Note>
+  Due to differences in [time zones](#handling-time-zones), leaderboards can be
+  finalized up to 12 hours after the end date in UTC to allow all users to reach
+  the end date according to their local clock.
+</Note>
+
+## Participant Limits
+
+Leaderboards in Trophy have a maximum number of participants of **1,000**. However a leaderboard can be configured to have any arbitrary number of participants to support use cases like _Top 100_ or similar.
+
+<Frame>
+  <img
+    height="200"
+    width="50%"
+    noZoom
+    src="../assets/platform/leaderboards/max_participants.png"
+  />
+</Frame>
+
+If a leaderboard already has a number of participants that matches it's configured maximum, new users will have to surpass the score of the lowest rank to join the leaderboard.
+
+We plan to test increasing participant limits, however as computing leaderboard rankings can be resource intensive, there is always a tradeoff between correctness and scale.
+
+Read on for more information on how we think about this.
+
+### Tradeoffs
+
+As leaderboards increase in size, the time required to compute a users new rank based on a state change increases as `O(log n)`. If applications rely on each state change needing to know the users new rank in realtime, then this added latency can lead to a poor user experience.
+
+If however you don't care about realtime updates and are happy to accept eventual correctness, then leaderbaords can increase in size without much impact.
+
+We chose to favour a more engaging, realtime experience where applications can trust Trophy to communicate changes in rank immediately and correctly, rather than supporting arbitrarily large numbers of participants but without the correctness that enables a richer user experience.
+
+### Our Vision
+
+Our long term vision for leaderboards is centered around facilitating smaller, more socially-relevant interactions more akin to 'leagues' than longer, platform-wide rankings that often fail to engage users outside the top 10%.
+
+We hope you agree this is the right approach but if you have any thoughts then [let us know!](mailto:support@trophy.so).
+
 ## Creating Leaderboards
 
-...
+To create a leaderboard, head to the [leaderboards page](https://app.trophy.so/leaderboards) in the Trophy dashboard and hit the _New Leaderboard_ button.
+
+<Frame>
+  <video
+    autoPlay
+    muted
+    loop
+    playsInline
+    className="w-full aspect-15/4"
+    src="../assets/platform/leaderboards/creating_leaderboards.mp4"
+  ></video>
+</Frame>
+
+<Steps>
+  <Step title="Enter a name">
+    Choose a name for the leaderboard.
+  </Step>
+  
+  <Step title="Enter a unique key">
+    Enter a unique reference key for the leaderboard. This is what you'll use to reference the leaderboard in your application code.
+  </Step>
+
+   <Step title="Choose a ranking method">
+    Choose one of the [methods](#ranking-method) that the leaderboard will rank users by:
+
+    - **Metric**: Ranks users by total value of a chosen metric
+    - **Points**: Ranks users by total points in a chosen points system
+    - **Streak**: Ranks users by current streak length
+
+  </Step>
+
+    <Step title="Set max participants">
+    Choose the maximum number of participants the leaderboard should support. The
+    current upper limit supported by Trophy is 1,000. Read [this
+    section](#participant-limits) to learn more about how we chose this limit.
+    </Step>
+
+    <Step title="Hit save">
+    Hit save and head to the configure page to set up [start & end dates](#start-and-end-dates), [repeating leaderboard schedules](#repeating-leaderboards) and more.
+    </Step>
+
+</Steps>
 
 ## Managing Leaderboards
 
@@ -83,25 +197,38 @@ Streak leaderbaords rank users based on their current streak length.
 
 ...
 
-## Backdating Leaderboards
-
-...
-
-## Displaying Leaderboards
-
-...
-
-### Listing Leaderboards
-
-...
-
-### Displaying Rankings
+## Backdating Leaderboards
 
 ...
 
 ## Leaderboard Analytics
 
-...
+Trophy has built-in analytics to help you understand how users are engaging with your leaderboards.
+
+<Frame>
+  <img
+    height="200"
+    width="50%"
+    noZoom
+    src="../assets/platform/leaderboards/analytics.png"
+  />
+</Frame>
+
+### Total Unique Participants
+
+This chart shows how many unique users have participated in any run of a leaderboard over time. This is useful to understand how many of your users actually take part in leaderboards and how [participant limits](#participant-limits) are affecting this.
+
+### Active Users
+
+This chart show the number of users who have changed rank at least once in a given leaderboard. This is useful to get a sense of how competitive the average user is in a particular leaderboard.
+
+## Rank Changes
+
+This chart shows the total number of rank changes in a particular leaderboard over time. This is useful to understand how competitive users are across the board.
+
+## Score Distribution
+
+This chart is a histogram of users' scores in a particular leaderboard. This is useful to get a sense of how bunched up or spread out users are, and what sections of the rankings are the most competitive.
 
 ## Frequently Asked Questions
 
