@@ -7,6 +7,7 @@ icon: radio
 
 import MetricChangeRequestBlock from "/snippets/metric-change-request-block.mdx";
 import MetricChangeResponseBlock from "/snippets/metric-change-response-block.mdx";
+import IdempotentEventTracking from "/snippets/idempotent-event-tracking.mdx";
 
 ## What are Events?
 
@@ -198,7 +199,9 @@ Watch Charlie integrate metric tracking into a simple NextJS application using t
 
 Trophy supports enforcing uniqueness on events so that users cannot increase a metric by taking the same exact action over and over.
 
-For example, a language learning app could specify that users can only increase the `lessons completed` metric by 1 for each unique lesson completed, so if they complete the same lesson twice only the first counts.
+For example, a language learning app could specify that users can only increase the `lessons-completed` metric by 1 for each unique lesson completed, so if they complete the same lesson twice only the first counts.
+
+<IdempotentEventTracking />
 
 This helps keep your codebase free of logic that checks if users have completed actions before, and can instead trust Trophy to uphold the constraints you need.
 

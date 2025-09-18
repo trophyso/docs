@@ -49,8 +49,8 @@ Additionally, you can tell Trophy about any of the following optional key attrib
 <ParamField path="tz" type="string">
   The user's time zone. Must be specified as an [IANA timezone
   identifier](https://en.wikipedia.org/wiki/List_of_tz_database_time_zones).
-  Used to calculate streaks and send emails to users in accordance with their
-  local clock.
+  Used for streaks, leaderboard rankings and sending emails to users in
+  accordance with their local clock.
 </ParamField>
 
 <ParamField path="subscribeToEmails" type="boolean" default="true">
@@ -273,6 +273,13 @@ To explicitly create a new user in Trophy, use the [Create User API](/api-refere
 To tell Trophy about an update to a user in your platform you can use the [Update User API](/api-reference/endpoints/users/update-a-user).
 
 Any properties that you pass to Trophy will be updated to the new values you specify.
+
+<Tip>
+  As [user identifcation](#identifying-users) keeps user records up to date by
+  default, it's usually not necessary to explicitly update users in Trophy every
+  time one of their properties changes in your application. However the user
+  update API is there if you really need it.
+</Tip>
 
 ## Retrieving User Information
 
