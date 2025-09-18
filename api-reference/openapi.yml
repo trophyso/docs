@@ -328,6 +328,23 @@ paths:
                               metricName: words written
                               metricThreshold: 100
                               points: 10
+                    leaderboards:
+                      all-time:
+                        id: 0040fe51-6bce-4b44-b0ad-bddc4e123535
+                        key: all-time
+                        name: All-Time Leaderboard
+                        description: null
+                        rankBy: metric
+                        runUnit: null
+                        runInterval: 0
+                        maxParticipants: 100
+                        metricName: words written
+                        metricKey: words-written
+                        threshold: 10
+                        start: '2025-01-01'
+                        end: null
+                        previousRank: null
+                        rank: 100
         '400':
           description: 'Bad Request'
           content:
@@ -1875,6 +1892,333 @@ paths:
       summary: Get a points system with its triggers
       security:
         - ApiKeyAuth: []
+  /leaderboards:
+    get:
+      description: Get all active leaderboards for your organization.
+      operationId: leaderboards_all
+      tags:
+        - Leaderboards
+      x-codeSamples:
+        - lang: javascript
+          source: |
+            import { TrophyApiClient } from '@trophyso/node';
+
+            const trophy = new TrophyApiClient({
+              apiKey: 'YOUR_API_KEY'
+            });
+
+            const response = await trophy.leaderboards.all();
+        - lang: python
+          source: |
+            from trophy import TrophyApi
+
+            client = TrophyApi(api_key='YOUR_API_KEY')
+
+            response = client.leaderboards.all()
+      responses:
+        '200':
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/LeaderboardResponse'
+              examples:
+                Successful operation:
+                  value:
+                    - id: 5100fe51-6bce-6j44-b0hs-bddc4e123682
+                      name: Weekly Word Count Challenge
+                      key: weekly-words
+                      rankBy: metric
+                      metricKey: words-written
+                      metricName: Words Written
+                      pointsSystemKey: null
+                      pointsSystemName: null
+                      description: Compete weekly to see who writes the most words
+                      status: active
+                      start: '2025-01-01'
+                      end: null
+                      maxParticipants: 100
+                      runUnit: day
+                      runInterval: 7
+                    - id: 5100fe51-6bce-6j44-b0hs-bddc4e123683
+                      name: XP Leaderboard
+                      key: xp-board
+                      rankBy: points
+                      metricKey: null
+                      metricName: null
+                      pointsSystemKey: xp-system
+                      pointsSystemName: Experience Points
+                      description: Overall ranking by XP earned
+                      status: active
+                      start: '2025-01-01'
+                      end: null
+                      maxParticipants: 50
+                      runUnit: null
+                      runInterval: 0
+        '401':
+          description: 'Unauthorized'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorBody'
+        '422':
+          description: 'Unprocessible Entity'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorBody'
+      summary: Get all active leaderboards
+      security:
+        - ApiKeyAuth: []
+  /leaderboards/{key}:
+    get:
+      description: Get a specific leaderboard by its key.
+      operationId: leaderboards_get
+      tags:
+        - Leaderboards
+      x-codeSamples:
+        - lang: javascript
+          source: |
+            import { TrophyApiClient } from '@trophyso/node';
+
+            const trophy = new TrophyApiClient({
+              apiKey: 'YOUR_API_KEY'
+            });
+
+            const response = await trophy.leaderboards.get("weekly-words", {
+              offset: 0,
+              limit: 10,
+              run: "2025-01-15"
+            });
+        - lang: python
+          source: |
+            from trophy import TrophyApi
+
+            client = TrophyApi(api_key='YOUR_API_KEY')
+
+            response = client.leaderboards.get(
+              key="weekly-words",
+              offset=0,
+              limit=10,
+              run="2025-01-15"
+            )
+      parameters:
+        - name: key
+          in: path
+          description: Unique key of the leaderboard as set when created.
+          required: true
+          schema:
+            type: string
+          example: weekly-words
+        - name: offset
+          in: query
+          description: Number of rankings to skip for pagination.
+          required: false
+          schema:
+            type: integer
+            minimum: 0
+            default: 0
+          example: 20
+        - name: limit
+          in: query
+          description: Maximum number of rankings to return.
+          required: false
+          schema:
+            type: integer
+            minimum: 0
+            default: 10
+          example: 50
+        - name: run
+          in: query
+          description: Specific run date in YYYY-MM-DD format. If not provided, returns the current run.
+          required: false
+          schema:
+            type: string
+            format: date
+          example: '2025-01-15'
+        - name: userId
+          in: query
+          description: When provided, offset is relative to this user's position on the leaderboard. If the user is not found in the leaderboard, returns empty rankings array.
+          required: false
+          schema:
+            type: string
+          example: 'user-123'
+      responses:
+        '200':
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/LeaderboardResponseWithRankings'
+              examples:
+                Successful operation:
+                  value:
+                    id: 5100fe51-6bce-6j44-b0hs-bddc4e123682
+                    name: Weekly Word Count Challenge
+                    key: weekly-words
+                    rankBy: metric
+                    metricKey: words-written
+                    metricName: Words Written
+                    pointsSystemKey: null
+                    pointsSystemName: null
+                    description: Compete weekly to see who writes the most words
+                    status: active
+                    start: '2025-01-01'
+                    end: null
+                    maxParticipants: 100
+                    runUnit: day
+                    runInterval: 7
+                    rankings:
+                      - userId: user-123
+                        userName: Alice Johnson
+                        rank: 1
+                        value: 5000
+                      - userId: user-456
+                        userName: Bob Smith
+                        rank: 2
+                        value: 4500
+                      - userId: user-789
+                        userName: Charlie Brown
+                        rank: 3
+                        value: 4200
+        '401':
+          description: 'Unauthorized'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorBody'
+        '404':
+          description: 'Leaderboard not found'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorBody'
+        '422':
+          description: 'Unprocessible Entity'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorBody'
+      summary: Get a single leaderboard
+      security:
+        - ApiKeyAuth: []
+  /users/{userId}/leaderboards/{key}:
+    get:
+      description: Get a user's rank, value, and history for a specific leaderboard.
+      operationId: users_leaderboards
+      tags:
+        - Leaderboards
+      x-codeSamples:
+        - lang: javascript
+          source: |
+            import { TrophyApiClient } from '@trophyso/node';
+
+            const trophy = new TrophyApiClient({
+              apiKey: 'YOUR_API_KEY'
+            });
+
+            const response = await trophy.users.leaderboards("user-123", "weekly-words", {
+              run: "2025-01-15"
+            });
+        - lang: python
+          source: |
+            from trophy import TrophyApi
+
+            client = TrophyApi(api_key='YOUR_API_KEY')
+
+            response = client.users.leaderboards(
+              user_id="user-123",
+              key="weekly-words",
+              run="2025-01-15"
+            )
+      parameters:
+        - name: userId
+          in: path
+          description: The user's ID in your database.
+          required: true
+          schema:
+            type: string
+          example: user-123
+        - name: key
+          in: path
+          description: Unique key of the leaderboard as set when created.
+          required: true
+          schema:
+            type: string
+          example: weekly-words
+        - name: run
+          in: query
+          description: Specific run date in YYYY-MM-DD format. If not provided, returns the current run.
+          required: false
+          schema:
+            type: string
+            format: date
+          example: '2025-01-15'
+      responses:
+        '200':
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UserLeaderboardResponse'
+              examples:
+                Successful operation:
+                  value:
+                    id: 5100fe51-6bce-6j44-b0hs-bddc4e123682
+                    name: Weekly Word Count Challenge
+                    key: weekly-words
+                    rankBy: metric
+                    metricKey: words-written
+                    metricName: Words Written
+                    pointsSystemKey: null
+                    pointsSystemName: null
+                    description: Compete weekly to see who writes the most words
+                    start: '2025-01-01'
+                    end: null
+                    maxParticipants: 100
+                    runUnit: day
+                    runInterval: 7
+                    rank: 2
+                    value: 4500
+                    history:
+                      - time: '2025-01-15T10:30:00Z'
+                        previousRank: null
+                        rank: 5
+                        previousValue: null
+                        value: 1000
+                      - time: '2025-01-15T14:15:00Z'
+                        previousRank: 5
+                        rank: 3
+                        previousValue: 1000
+                        value: 3000
+                      - time: '2025-01-15T18:45:00Z'
+                        previousRank: 3
+                        rank: 2
+                        previousValue: 3000
+                        value: 4500
+        '401':
+          description: 'Unauthorized'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorBody'
+        '404':
+          description: 'User or leaderboard not found'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorBody'
+        '422':
+          description: 'Unprocessible Entity'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorBody'
+      summary: Get a user's leaderboard data
+      security:
+        - ApiKeyAuth: []
 components:
   schemas:
     MetricStatus:
@@ -2062,6 +2406,112 @@ components:
         - name
         - total
         - awards
+    LeaderboardResponse:
+      title: LeaderboardResponse
+      type: object
+      description: A leaderboard with its configuration details.
+      properties:
+        id:
+          type: string
+          description: The unique ID of the leaderboard.
+          example: 5100fe51-6bce-6j44-b0hs-bddc4e123682
+        name:
+          type: string
+          description: The user-facing name of the leaderboard.
+          example: Weekly Word Count Challenge
+        key:
+          type: string
+          description: The unique key used to reference the leaderboard in APIs.
+          example: weekly-words
+        status:
+          type: string
+          enum: ['active', 'scheduled', 'finished']
+          description: The status of the leaderboard.
+          example: active
+        rankBy:
+          type: string
+          enum: ['points', 'streak', 'metric']
+          description: What the leaderboard ranks by.
+          example: metric
+        metricKey:
+          type:
+            - string
+            - 'null'
+          description: The key of the metric to rank by, if rankBy is 'metric'.
+          example: words-written
+        metricName:
+          type:
+            - string
+            - 'null'
+          description: The name of the metric to rank by, if rankBy is 'metric'.
+          example: Words Written
+        pointsSystemKey:
+          type:
+            - string
+            - 'null'
+          description: The key of the points system to rank by, if rankBy is 'points'.
+          example: xp-system
+        pointsSystemName:
+          type:
+            - string
+            - 'null'
+          description: The name of the points system to rank by, if rankBy is 'points'.
+          example: Experience Points
+        description:
+          type:
+            - string
+            - 'null'
+          description: The user-facing description of the leaderboard.
+          example: Compete weekly to see who writes the most words
+        start:
+          type: string
+          format: date
+          description: The start date of the leaderboard in YYYY-MM-DD format.
+          example: '2025-01-01'
+        end:
+          type:
+            - string
+            - 'null'
+          format: date
+          description: The end date of the leaderboard in YYYY-MM-DD format, or null if it runs forever.
+          example: '2025-12-31'
+        maxParticipants:
+          type: integer
+          description: The maximum number of participants in the leaderboard.
+          example: 100
+        runUnit:
+          type:
+            - string
+            - 'null'
+          enum: ['day', 'month', 'year', null]
+          description: The repetition type for recurring leaderboards, or null for one-time leaderboards.
+          example: day
+        runInterval:
+          type: integer
+          description: The interval between repetitions, relative to the start date and repetition type.
+          example: 7
+      required:
+        - id
+        - name
+        - key
+        - rankBy
+        - start
+        - maxParticipants
+        - runInterval
+    LeaderboardResponseWithRankings:
+      title: LeaderboardResponseWithRankings
+      type: object
+      allOf:
+        - $ref: '#/components/schemas/LeaderboardResponse'
+        - type: object
+          properties:
+            rankings:
+              type: array
+              description: Array of user rankings for the leaderboard.
+              items:
+                $ref: '#/components/schemas/LeaderboardRanking'
+          required:
+            - rankings
     MetricEventPointsResponse:
       title: MetricEventPointsResponse
       type: object
@@ -2073,6 +2523,38 @@ components:
               type: number
               description: The points added by this event.
               example: 10
+    MetricEventLeaderboardResponse:
+      title: MetricEventLeaderboardResponse
+      type: object
+      allOf:
+        - $ref: '#/components/schemas/LeaderboardResponse'
+        - type: object
+          properties:
+            start:
+              type: string
+              format: date
+              description: The start date of the current run of the leaderboard.
+              example: '2025-01-01'
+            end:
+              type: string
+              format: date
+              description: The end date of the current run of the leaderboard, or null if the run never ends.
+              example: '2025-12-31'
+            rank:
+              type: integer
+              description: The user's rank in the leaderboard, or null if the user is not on the leaderboard.
+              example: 100
+            previousRank:
+              type: integer
+              description: The user's rank in the leaderboard before the event, or null if the user was not on the leaderboard before the event.
+              example: 100
+            threshold:
+              type: number
+              description: The minimum value required to enter the leaderboard according to its current rankings.
+              example: 25000
+          required:
+            - start
+            - threshold
     AchievementResponse:
       title: AchievementResponse
       type: object
@@ -2341,14 +2823,19 @@ components:
         currentStreak:
           $ref: '#/components/schemas/MetricEventStreakResponse'
           description: >-
-            The user's current streak for the metric, if the metric has streaks
-            enabled.
+            The user's current streak.
         points:
           type: object
           additionalProperties:
             $ref: '#/components/schemas/MetricEventPointsResponse'
           description: >-
-            A map of points systems by key that were affected by this event.
+            A map of points systems by key.
+        leaderboards:
+          type: object
+          additionalProperties:
+            $ref: '#/components/schemas/MetricEventLeaderboardResponse'
+          description: >-
+            A map of leaderboards by key.
         idempotencyKey:
           type: string
           description: The idempotency key used for the event, if one was provided.
@@ -2506,6 +2993,103 @@ components:
         - userId
         - name
         - streakLength
+    LeaderboardRanking:
+      title: LeaderboardRanking
+      type: object
+      description: A user's ranking in a leaderboard.
+      properties:
+        userId:
+          type: string
+          description: The ID of the user.
+          example: user-123
+        userName:
+          type:
+            - string
+            - 'null'
+          description: The name of the user. May be null if no name is set.
+          example: Alice Johnson
+        rank:
+          type: integer
+          description: The user's rank in the leaderboard.
+          example: 1
+        value:
+          type: integer
+          description: The user's value for this leaderboard (points, metric value, etc.).
+          example: 5000
+      required:
+        - userId
+        - userName
+        - rank
+        - value
+    LeaderboardEvent:
+      title: LeaderboardEvent
+      type: object
+      description: A leaderboard event representing a change in a user's rank or value.
+      properties:
+        time:
+          type: string
+          format: date-time
+          description: The timestamp when the event occurred.
+          example: '2025-01-15T10:30:00Z'
+        previousRank:
+          type:
+            - integer
+            - 'null'
+          description: The user's rank before this event, or null if they were not on the leaderboard.
+          example: 5
+        rank:
+          type:
+            - integer
+            - 'null'
+          description: The user's rank after this event, or null if they are no longer on the leaderboard.
+          example: 3
+        previousValue:
+          type:
+            - integer
+            - 'null'
+          description: The user's value before this event, or null if they were not on the leaderboard.
+          example: 1000
+        value:
+          type:
+            - integer
+            - 'null'
+          description: The user's value after this event, or null if they are no longer on the leaderboard.
+          example: 3000
+      required:
+        - time
+        - previousRank
+        - rank
+        - previousValue
+        - value
+    UserLeaderboardResponse:
+      title: UserLeaderboardResponse
+      type: object
+      description: A user's data for a specific leaderboard including rank, value, and history.
+      allOf:
+        - $ref: '#/components/schemas/LeaderboardResponse'
+        - type: object
+          properties:
+            rank:
+              type:
+                - integer
+                - 'null'
+              description: The user's current rank in this leaderboard. Null if the user is not on the leaderboard.
+              example: 2
+            value:
+              type:
+                - integer
+                - 'null'
+              description: The user's current value in this leaderboard. Null if the user is not on the leaderboard.
+              example: 4500
+            history:
+              type: array
+              items:
+                $ref: '#/components/schemas/LeaderboardEvent'
+              description: An array of events showing the user's rank and value changes over time.
+          required:
+            - rank
+            - value
+            - history
   securitySchemes:
     ApiKeyAuth:
       type: apiKey
