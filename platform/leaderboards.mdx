@@ -14,7 +14,7 @@ icon: /icons/leaderboard.svg
   />
 </Frame>
 
-## What are Leaderboards
+## What are Leaderboards?
 
 Leaderboards are social competitions between users of your application. Use leaderboards to increase engagement and foster social interaction.
 
@@ -34,13 +34,13 @@ In Trophy each instance of a repeating leaderboard is called a **'run'**. For ex
 
 Repeating leaderboards reset all ranks at the start of each run giving new users an equal chance to compete with existing users.
 
-Trophy tracks the rankings in each run of a repeating leaderboard individually and provides [APIs](TODO) to fetch ranking data on historical runs.
+Trophy tracks the rankings in each run of a repeating leaderboard individually and provides [APIs](/api-reference/endpoints/leaderboards/get-leaderboard) to fetch ranking data on historical runs.
 
 #### Handling Time Zones
 
-Where you have [configured](/platform/users#param-tz) your integration to tell Trophy about users' time zones, Trophy will use this to ensure each user has an equal chance of winning no matter where they are in the world.
+If you have tracked users' [time zones](/platform/users#param-tz) with Trophy, these will be used to ensure that each user has an equal chance of winning no matter where they are in the world.
 
-In practice this means leaderboards are finalised and winners chosen about 12 hours after they naturally finish in UTC to allow time for users in all time zones to make their final push.
+In practice this means leaderboards are finalized and winners chosen about 12 hours after they naturally finish in UTC to allow time for users in all time zones to make their final push.
 
 #### Tips for Weekly Leaderboards
 
@@ -48,7 +48,7 @@ As the start of the week can be different in different countries, there is some 
 
 We'll be adding better support for weekly leaderboards in the future based on customer requests, so if that's you [let us know](mailto:support@trophy.so)! However Trophy leaderboards will cover 90% of weekly use cases, so here's what we suggest if you want to set one up.
 
-To create a weekly leaderboard, set up a [repeating leaderboard](#repeating-leaderboards) on a 7 day schedule and set the start date to be the next occuring first day of the week. Whilst you wait for the start date to come around, the leaderboard will be in `scheduled` status and will automatically go live on the start date.
+To create a weekly leaderboard, set up a [repeating leaderboard](#repeating-leaderboards) on a 7 day schedule and set the start date to be the next occuring first day of the week. While you wait for the start date to come around, the leaderboard will be in `scheduled` status and will automatically go live on the start date.
 
 This will make sure each run of the leaderboard consistently tracks the start and end of each week that your users are familiar with.
 
@@ -125,7 +125,7 @@ Leaderboards in Trophy have a maximum number of participants of **1,000**. Howev
   />
 </Frame>
 
-If a leaderboard already has a number of participants that matches it's configured maximum, new users will have to surpass the score of the lowest rank to join the leaderboard.
+If a leaderboard already has a number of participants that matches its configured maximum, new users will have to surpass the score of the lowest rank to join the leaderboard.
 
 We plan to test increasing participant limits, however as computing leaderboard rankings can be resource intensive, there is always a tradeoff between correctness and scale.
 
@@ -133,11 +133,11 @@ Read on for more information on how we think about this.
 
 ### Tradeoffs
 
-As leaderboards increase in size, the time required to compute a users new rank based on a state change increases as `O(log n)`. If applications rely on each state change needing to know the users new rank in realtime, then this added latency can lead to a poor user experience.
+As leaderboards increase in size, the time required to compute a user's new rank based on a state change increases as `O(n log n)`. If applications rely on each state change needing to know the users new rank in realtime, then this added latency can lead to a poor user experience.
 
 If however you don't care about realtime updates and are happy to accept eventual correctness, then leaderboards can increase in size without much impact.
 
-We chose to favour a more engaging, realtime experience where applications can trust Trophy to communicate changes in rank immediately and correctly, rather than supporting arbitrarily large numbers of participants but without the correctness that enables a richer user experience.
+We chose to favor a more engaging, realtime experience where applications can trust Trophy to communicate changes in rank immediately and correctly, rather than supporting arbitrarily large numbers of participants but without the correctness that enables a richer user experience.
 
 ### Our Vision
 
@@ -192,7 +192,7 @@ To create a leaderboard, head to the [leaderboards page](https://app.trophy.so/l
 
 ## Managing Leaderboards
 
-Leaderboarsd in Trophy have a number of statuses to help you control when users and how users can join them.
+Leaderboards in Trophy have a number of statuses to help you control when users and how users can join them.
 
 ### Leaderboard Statuses
 
@@ -204,15 +204,15 @@ Leaderboards can have one of the following statuses:
 - `Finished`
 - `Archived`
 
-All new leaderboards are created as `Inactive`. Whilst inactive, any properties or settings of the leaderboard can be changed, they won't be visible to users and users can't join them.
+All new leaderboards are created as `Inactive`. While inactive, any properties or settings of the leaderboard can be changed, they won't be visible to users and users can't join them.
 
-Once you're ready for users to start participating, you can make it `Active`. This means Trophy will start tracking users activity and entering them into leaderboards.
+Once you're ready for users to start participating, you can make it `Active`. This means Trophy will start tracking users' activity and entering them into leaderboards.
 
 Leaderboards that have been configured with a [start date](#start-dates) in the future can't be made active, they can only be `Scheduled`. Once the start date is past, Trophy will automatically make them `Active` and start accepting participants.
 
-If a leaderboard has an [end date](#end-dates), then once it's past Trophy will automatically move it to `Finished` status and stop monitoring user activity. Once a leaderboard has finished it won't be visible to users but you can still query APIs to get rankings for historical runs.
+If a leaderboard has an [end date](#end-dates), then once it has past Trophy will automatically move it to `Finished` status and stop monitoring user activity. Once a leaderboard has finished it won't be visible to users but you can still query APIs to get rankings for historical runs.
 
-If you decide you no longer need a leaderboard, you can move it to `Archived` status. Only leaderboards in `Inactive` or `Finished` status can be archived.
+If you decide you no longer need a leaderboard, you can move it to `Archived` status.
 
 <Warning>
   Once a leaderboard is archived, it can only be restored by contacting support.
