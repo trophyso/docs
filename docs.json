@@ -146,6 +146,13 @@
             ]
           },
           {
+            "group": "Leaderboards",
+            "pages": [
+              "api-reference/endpoints/leaderboards/get-all-active-leaderboards",
+              "api-reference/endpoints/leaderboards/get-leaderboard"
+            ]
+          },
+          {
             "group": "Users",
             "pages": [
               "api-reference/endpoints/users/identify-a-user",
@@ -158,7 +165,8 @@
               "api-reference/endpoints/users/get-a-users-completed-achievements",
               "api-reference/endpoints/users/get-a-users-streak",
               "api-reference/endpoints/users/get-a-users-points",
-              "api-reference/endpoints/users/get-a-users-points-summary"
+              "api-reference/endpoints/users/get-a-users-points-summary",
+              "api-reference/endpoints/users/get-a-users-leaderboard"
             ]
           }
         ]
