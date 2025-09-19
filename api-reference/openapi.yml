@@ -1689,6 +1689,121 @@ paths:
       summary: Get a summary of points events over time
       security:
         - ApiKeyAuth: []
+  /users/{id}/leaderboards/{key}:
+    get:
+      description: Get a user's rank, value, and history for a specific leaderboard.
+      operationId: users_leaderboards
+      tags:
+        - Users
+      x-codeSamples:
+        - lang: javascript
+          source: |
+            import { TrophyApiClient } from '@trophyso/node';
+
+            const trophy = new TrophyApiClient({
+              apiKey: 'YOUR_API_KEY'
+            });
+
+            const response = await trophy.users.leaderboards("user-123", "weekly-words", {
+              run: "2025-01-15"
+            });
+        - lang: python
+          source: |
+            from trophy import TrophyApi
+
+            client = TrophyApi(api_key='YOUR_API_KEY')
+
+            response = client.users.leaderboards(
+              user_id="user-123",
+              key="weekly-words",
+              run="2025-01-15"
+            )
+      parameters:
+        - name: id
+          in: path
+          description: The user's ID in your database.
+          required: true
+          schema:
+            type: string
+          example: user-123
+        - name: key
+          in: path
+          description: Unique key of the leaderboard as set when created.
+          required: true
+          schema:
+            type: string
+          example: weekly-words
+        - name: run
+          in: query
+          description: Specific run date in YYYY-MM-DD format. If not provided, returns the current run.
+          required: false
+          schema:
+            type: string
+            format: date
+          example: '2025-01-15'
+      responses:
+        '200':
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UserLeaderboardResponse'
+              examples:
+                Successful operation:
+                  value:
+                    id: 5100fe51-6bce-6j44-b0hs-bddc4e123682
+                    name: Weekly Word Count Challenge
+                    key: weekly-words
+                    rankBy: metric
+                    metricKey: words-written
+                    metricName: Words Written
+                    pointsSystemKey: null
+                    pointsSystemName: null
+                    description: Compete weekly to see who writes the most words
+                    start: '2025-01-01'
+                    end: null
+                    maxParticipants: 100
+                    runUnit: day
+                    runInterval: 7
+                    rank: 2
+                    value: 4500
+                    history:
+                      - time: '2025-01-15T10:30:00Z'
+                        previousRank: null
+                        rank: 5
+                        previousValue: null
+                        value: 1000
+                      - time: '2025-01-15T14:15:00Z'
+                        previousRank: 5
+                        rank: 3
+                        previousValue: 1000
+                        value: 3000
+                      - time: '2025-01-15T18:45:00Z'
+                        previousRank: 3
+                        rank: 2
+                        previousValue: 3000
+                        value: 4500
+        '401':
+          description: 'Unauthorized'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorBody'
+        '404':
+          description: 'User or leaderboard not found'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorBody'
+        '422':
+          description: 'Unprocessible Entity'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorBody'
+      summary: Get a user's leaderboard data
+      security:
+        - ApiKeyAuth: []
   /points/{key}/summary:
     get:
       description: Get a breakdown of the number of users with points in each range.
@@ -2102,121 +2217,6 @@ paths:
               schema:
                 $ref: '#/components/schemas/ErrorBody'
       summary: Get a single leaderboard
-      security:
-        - ApiKeyAuth: []
-  /users/{userId}/leaderboards/{key}:
-    get:
-      description: Get a user's rank, value, and history for a specific leaderboard.
-      operationId: users_leaderboards
-      tags:
-        - Leaderboards
-      x-codeSamples:
-        - lang: javascript
-          source: |
-            import { TrophyApiClient } from '@trophyso/node';
-
-            const trophy = new TrophyApiClient({
-              apiKey: 'YOUR_API_KEY'
-            });
-
-            const response = await trophy.users.leaderboards("user-123", "weekly-words", {
-              run: "2025-01-15"
-            });
-        - lang: python
-          source: |
-            from trophy import TrophyApi
-
-            client = TrophyApi(api_key='YOUR_API_KEY')
-
-            response = client.users.leaderboards(
-              user_id="user-123",
-              key="weekly-words",
-              run="2025-01-15"
-            )
-      parameters:
-        - name: userId
-          in: path
-          description: The user's ID in your database.
-          required: true
-          schema:
-            type: string
-          example: user-123
-        - name: key
-          in: path
-          description: Unique key of the leaderboard as set when created.
-          required: true
-          schema:
-            type: string
-          example: weekly-words
-        - name: run
-          in: query
-          description: Specific run date in YYYY-MM-DD format. If not provided, returns the current run.
-          required: false
-          schema:
-            type: string
-            format: date
-          example: '2025-01-15'
-      responses:
-        '200':
-          description: Successful operation
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/UserLeaderboardResponse'
-              examples:
-                Successful operation:
-                  value:
-                    id: 5100fe51-6bce-6j44-b0hs-bddc4e123682
-                    name: Weekly Word Count Challenge
-                    key: weekly-words
-                    rankBy: metric
-                    metricKey: words-written
-                    metricName: Words Written
-                    pointsSystemKey: null
-                    pointsSystemName: null
-                    description: Compete weekly to see who writes the most words
-                    start: '2025-01-01'
-                    end: null
-                    maxParticipants: 100
-                    runUnit: day
-                    runInterval: 7
-                    rank: 2
-                    value: 4500
-                    history:
-                      - time: '2025-01-15T10:30:00Z'
-                        previousRank: null
-                        rank: 5
-                        previousValue: null
-                        value: 1000
-                      - time: '2025-01-15T14:15:00Z'
-                        previousRank: 5
-                        rank: 3
-                        previousValue: 1000
-                        value: 3000
-                      - time: '2025-01-15T18:45:00Z'
-                        previousRank: 3
-                        rank: 2
-                        previousValue: 3000
-                        value: 4500
-        '401':
-          description: 'Unauthorized'
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ErrorBody'
-        '404':
-          description: 'User or leaderboard not found'
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ErrorBody'
-        '422':
-          description: 'Unprocessible Entity'
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ErrorBody'
-      summary: Get a user's leaderboard data
       security:
         - ApiKeyAuth: []
 components:
