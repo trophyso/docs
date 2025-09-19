@@ -1692,7 +1692,7 @@ paths:
   /users/{id}/leaderboards/{key}:
     get:
       description: Get a user's rank, value, and history for a specific leaderboard.
-      operationId: users_leaderboards
+      operationId: users_leaderboard
       tags:
         - Users
       x-codeSamples:
