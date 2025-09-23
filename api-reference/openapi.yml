@@ -1768,17 +1768,17 @@ paths:
                     rank: 2
                     value: 4500
                     history:
-                      - time: '2025-01-15T10:30:00Z'
+                      - timestamp: '2025-01-15T10:30:00Z'
                         previousRank: null
                         rank: 5
                         previousValue: null
                         value: 1000
-                      - time: '2025-01-15T14:15:00Z'
+                      - timestamp: '2025-01-15T14:15:00Z'
                         previousRank: 5
                         rank: 3
                         previousValue: 1000
                         value: 3000
-                      - time: '2025-01-15T18:45:00Z'
+                      - timestamp: '2025-01-15T18:45:00Z'
                         previousRank: 3
                         rank: 2
                         previousValue: 3000
@@ -3026,7 +3026,7 @@ components:
       type: object
       description: A leaderboard event representing a change in a user's rank or value.
       properties:
-        time:
+        timestamp:
           type: string
           format: date-time
           description: The timestamp when the event occurred.
