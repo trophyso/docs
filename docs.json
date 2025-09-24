@@ -38,6 +38,7 @@
     "tabs": [
       {
         "tab": "Home",
+        "icon": "home",
         "groups": [
           {
             "group": "Getting Started",
@@ -80,6 +81,7 @@
       },
       {
         "tab": "Guides",
+        "icon": "rocket",
         "dropdowns": [
           {
             "dropdown": "Tutorials",
@@ -106,7 +108,8 @@
         ]
       },
       {
-        "tab": "API Reference",
+        "tab": "Application API",
+        "icon": "globe",
         "groups": [
           {
             "group": "Overview",
@@ -168,6 +171,20 @@
               "api-reference/endpoints/users/get-a-users-points-summary",
               "api-reference/endpoints/users/get-a-users-leaderboard"
             ]
+          }
+        ]
+      },
+      {
+        "tab": "Admin API",
+        "icon": "globe-lock",
+        "groups": [
+          {
+            "group": "Overview",
+            "pages": ["admin-api/introduction"]
+          },
+          {
+            "group": "Streaks",
+            "pages": ["admin-api/endpoints/streaks/grant-freezes"]
           }
         ]
       }
