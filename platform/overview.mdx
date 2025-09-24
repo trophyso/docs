@@ -6,27 +6,59 @@ description: Learn the key concepts behind Trophy's gamification system.
 
 Trophy is built around a set of key concepts that all gamification experiences have in common, while still offering enough customization for you to build any kind of gamified experience you need.
 
+## Platform Concepts
+
+Trophy's platform concepts are scalable building blocks that support all of Trophy's features and are the main things for developers to get comfortable with.
+
 <CardGroup>
   <Card title="Metrics" icon="box" href="/platform/metrics">
-    Model user interactions and drive gamification features.
+    Model how users interact with your application.
   </Card>
   <Card title="Events" icon="radio-tower" href="/platform/events">
-    Track usage against metrics.
+    Track user interactions against metrics.
   </Card>
   <Card title="Users" icon="users" href="/platform/users">
-    Automatically track usage across your entire userbase.
+    Tell Trophy about the people using your application.
   </Card>
+</CardGroup>
+
+## Gamification Concepts
+
+Trophy's gamification concepts are flexible primitives built on the infrastructure concepts that support a wide range of common gamification use cases.
+
+<CardGroup>
   <Card title="Achievements" icon="trophy" href="/platform/achievements">
-    Reward users for continued progress or taking specific actions.
+    Encourage users to make continued progress or to take specific actions.
   </Card>
   <Card title="Streaks" icon="flame" href="/platform/streaks">
     Motivate users to build regular usage habits.
   </Card>
   <Card title="Points" icon="sparkle" href="/platform/points">
-    Build sophisticated points systems to reward and retain users.
+    Reward users with sophisticated points systems.
+  </Card>
+  <Card
+    title="Leaderboards"
+    icon={
+      <svg
+        width="20"
+        height="18"
+        viewBox="0 0 20 18"
+        fill="none"
+        xmlns="http://www.w3.org/2000/svg"
+        className="text-primary dark:text-primary-light"
+      >
+        <path
+          d="M2 16H6V8H2V16ZM8 16H12V2H8V16ZM14 16H18V10H14V16ZM0 16V8C0 7.45 0.195833 6.97917 0.5875 6.5875C0.979167 6.19583 1.45 6 2 6H6V2C6 1.45 6.19583 0.979167 6.5875 0.5875C6.97917 0.195833 7.45 0 8 0H12C12.55 0 13.0208 0.195833 13.4125 0.5875C13.8042 0.979167 14 1.45 14 2V8H18C18.55 8 19.0208 8.19583 19.4125 8.5875C19.8042 8.97917 20 9.45 20 10V16C20 16.55 19.8042 17.0208 19.4125 17.4125C19.0208 17.8042 18.55 18 18 18H2C1.45 18 0.979167 17.8042 0.5875 17.4125C0.195833 17.0208 0 16.55 0 16Z"
+          fill="currentColor"
+        />
+      </svg>
+    }
+    href="/platform/leaderboards"
+  >
+    Create friendly competitions to increase user engagement.
   </Card>
   <Card title="Emails" icon="mail" href="/platform/emails">
-    Deliver personalized lifecyle emails to users at the perfect moment.
+    Deliver personalized lifecyle emails to users to increase retention.
   </Card>
 </CardGroup>
 
