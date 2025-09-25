@@ -3,10 +3,16 @@ info:
   title: Trophy
   version: '1.0.4'
 paths:
+  # APPLICATION API -------------------------------------------------------
+
   /achievements:
+    servers:
+      - url: https://api.trophy.so
+        description: Application API
     get:
       description: Get all achievements and their completion stats.
       operationId: achievements_all
+      x-fern-server-name: api
       tags:
         - Achievements
       x-codeSamples:
@@ -91,9 +97,13 @@ paths:
       security:
         - ApiKeyAuth: []
   /achievements/{key}/complete:
+    servers:
+      - url: https://api.trophy.so
+        description: Application API
     post:
       description: Mark an achievement as completed for a user.
       operationId: achievements_complete
+      x-fern-server-name: api
       tags:
         - Achievements
       x-codeSamples:
@@ -206,9 +216,13 @@ paths:
                     tz: Europe/London
                     subscribedToEmails: true
   /metrics/{key}/event:
+    servers:
+      - url: https://api.trophy.so
+        description: Application API
     post:
       description: Increment or decrement the value of a metric for a user.
       operationId: metrics_event
+      x-fern-server-name: api
       tags:
         - Metrics
       x-codeSamples:
@@ -409,9 +423,13 @@ paths:
                     category: writing
                     source: mobile-app
   /users:
+    servers:
+      - url: https://api.trophy.so
+        description: Application API
     post:
       description: Create a new user.
       operationId: users_create
+      x-fern-server-name: api
       tags:
         - Users
       x-codeSamples:
@@ -498,9 +516,13 @@ paths:
               schema:
                 $ref: '#/components/schemas/ErrorBody'
   /users/{id}:
+    servers:
+      - url: https://api.trophy.so
+        description: Application API
     get:
       description: Get a single user.
       operationId: users_get
+      x-fern-server-name: api
       tags:
         - Users
       x-codeSamples:
@@ -571,6 +593,7 @@ paths:
     put:
       description: Identify a user.
       operationId: users_identify
+      x-fern-server-name: api
       tags:
         - Users
       x-codeSamples:
@@ -667,6 +690,7 @@ paths:
     patch:
       description: Update a user.
       operationId: users_update
+      x-fern-server-name: api
       tags:
         - Users
       x-codeSamples:
@@ -768,9 +792,13 @@ paths:
               schema:
                 $ref: '#/components/schemas/ErrorBody'
   /users/{id}/metrics:
+    servers:
+      - url: https://api.trophy.so
+        description: Application API
     get:
       description: Get a single user's progress against all active metrics.
       operationId: users_all_metrics
+      x-fern-server-name: api
       tags:
         - Users
       x-codeSamples:
@@ -858,9 +886,13 @@ paths:
       security:
         - ApiKeyAuth: []
   /users/{id}/metrics/{key}:
+    servers:
+      - url: https://api.trophy.so
+        description: Application API
     get:
       description: Get a user's progress against a single active metric.
       operationId: users_single_metric
+      x-fern-server-name: api
       tags:
         - Users
       x-codeSamples:
@@ -952,9 +984,13 @@ paths:
       security:
         - ApiKeyAuth: []
   /users/{id}/metrics/{key}/event-summary:
+    servers:
+      - url: https://api.trophy.so
+        description: Application API
     get:
       description: Get a summary of metric events over time for a user.
       operationId: users_metric_event_summary
+      x-fern-server-name: api
       tags:
         - Users
       x-codeSamples:
@@ -1089,9 +1125,13 @@ paths:
       security:
         - ApiKeyAuth: []
   /users/{id}/achievements:
+    servers:
+      - url: https://api.trophy.so
+        description: Application API
     get:
       description: Get a user's achievements.
       operationId: users_achievements
+      x-fern-server-name: api
       tags:
         - Users
       x-codeSamples:
@@ -1211,9 +1251,13 @@ paths:
       security:
         - ApiKeyAuth: []
   /users/{id}/streak:
+    servers:
+      - url: https://api.trophy.so
+        description: Application API
     get:
       description: Get a user's streak data.
       operationId: users_streak
+      x-fern-server-name: api
       tags:
         - Users
       x-codeSamples:
@@ -1313,9 +1357,13 @@ paths:
       security:
         - ApiKeyAuth: []
   /streaks:
+    servers:
+      - url: https://api.trophy.so
+        description: Application API
     get:
       description: Get the streak lengths of a list of users, ranked by streak length from longest to shortest.
       operationId: streaks_list
+      x-fern-server-name: api
       tags:
         - Streaks
       x-codeSamples:
@@ -1378,9 +1426,13 @@ paths:
       security:
         - ApiKeyAuth: []
   /streaks/rankings:
+    servers:
+      - url: https://api.trophy.so
+        description: Application API
     get:
       description: Get the top users by streak length (active or longest).
       operationId: streaks_rankings
+      x-fern-server-name: api
       tags:
         - Streaks
       x-codeSamples:
@@ -1460,9 +1512,13 @@ paths:
       security:
         - ApiKeyAuth: []
   /users/{id}/points/{key}:
+    servers:
+      - url: https://api.trophy.so
+        description: Application API
     get:
       description: Get a user's points for a specific points system.
       operationId: users_points
+      x-fern-server-name: api
       tags:
         - Users
       x-codeSamples:
@@ -1553,9 +1609,13 @@ paths:
       security:
         - ApiKeyAuth: []
   /users/{id}/points/{key}/event-summary:
+    servers:
+      - url: https://api.trophy.so
+        description: Application API
     get:
       description: Get a summary of points awards over time for a user for a specific points system.
       operationId: users_points_event_summary
+      x-fern-server-name: api
       tags:
         - Users
       x-codeSamples:
@@ -1690,9 +1750,13 @@ paths:
       security:
         - ApiKeyAuth: []
   /users/{id}/leaderboards/{key}:
+    servers:
+      - url: https://api.trophy.so
+        description: Application API
     get:
       description: Get a user's rank, value, and history for a specific leaderboard.
       operationId: users_leaderboard
+      x-fern-server-name: api
       tags:
         - Users
       x-codeSamples:
@@ -1805,9 +1869,13 @@ paths:
       security:
         - ApiKeyAuth: []
   /points/{key}/summary:
+    servers:
+      - url: https://api.trophy.so
+        description: Application API
     get:
       description: Get a breakdown of the number of users with points in each range.
       operationId: points_summary
+      x-fern-server-name: api
       tags:
         - Points
       x-codeSamples:
@@ -1912,9 +1980,13 @@ paths:
       security:
         - ApiKeyAuth: []
   /points/{key}:
+    servers:
+      - url: https://api.trophy.so
+        description: Application API
     get:
       description: Get a points system with all its triggers.
       operationId: points_system
+      x-fern-server-name: api
       tags:
         - Points
       x-codeSamples:
@@ -2008,9 +2080,13 @@ paths:
       security:
         - ApiKeyAuth: []
   /leaderboards:
+    servers:
+      - url: https://api.trophy.so
+        description: Application API
     get:
       description: Get all active leaderboards for your organization.
       operationId: leaderboards_all
+      x-fern-server-name: api
       tags:
         - Leaderboards
       x-codeSamples:
@@ -2088,9 +2164,13 @@ paths:
       security:
         - ApiKeyAuth: []
   /leaderboards/{key}:
+    servers:
+      - url: https://api.trophy.so
+        description: Application API
     get:
       description: Get a specific leaderboard by its key.
       operationId: leaderboards_get
+      x-fern-server-name: api
       tags:
         - Leaderboards
       x-codeSamples:
@@ -2219,6 +2299,112 @@ paths:
       summary: Get a single leaderboard
       security:
         - ApiKeyAuth: []
+
+    # ADMIN API ------------------------------------------------------------
+
+  /streaks/freezes:
+    servers:
+      - url: https://admin.trophy.so
+        description: Admin API
+    post:
+      description: Create streak freezes for multiple users.
+      operationId: admin_streaks_freezes_create
+      x-fern-server-name: admin
+      x-fern-sdk-group-name:
+        - admin
+        - streaks
+        - freezes
+      x-fern-sdk-method-name: create
+      tags:
+        - Admin
+      x-codeSamples:
+        - lang: javascript
+          source: |
+            import { TrophyApiClient } from '@trophyso/node';
+
+            const trophy = new TrophyApiClient({
+              apiKey: 'YOUR_API_KEY'
+            });
+
+            const response = await trophy.admin.streaks.freezes.create({
+              freezes: [
+                { userId: 'user-123' },
+                { userId: 'user-456' },
+              ]
+            });
+        - lang: python
+          source: |
+            from trophy import TrophyApi
+
+            client = TrophyApi(api_key='YOUR_API_KEY')
+
+            response = client.admin.streaks.freezes.create({
+              "freezes": [
+                {"userId": "user-123"},
+                {"userId": "user-456"}
+              ]
+            })
+      requestBody:
+        description: Array of freezes to create
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreateStreakFreezesRequest'
+            examples:
+              Create freezes for multiple users:
+                value:
+                  freezes:
+                    - userId: user-123
+                    - userId: user-456
+                    - userId: user-123
+      responses:
+        '200':
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CreateStreakFreezesResponse'
+              examples:
+                Success with no issues:
+                  value:
+                    issues: []
+                Success with warnings:
+                  value:
+                    issues:
+                      - userId: user-789
+                        level: warning
+                        reason: Would exceed maximum freeze limit
+                Mixed success and errors:
+                  value:
+                    issues:
+                      - userId: non-existent-user
+                        level: error
+                        reason: User does not exist
+                      - userId: user-456
+                        level: warning
+                        reason: Would exceed maximum freeze limit
+        '400':
+          description: 'Bad Request'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorBody'
+        '401':
+          description: 'Unauthorized'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorBody'
+        '422':
+          description: 'Unprocessible Entity'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorBody'
+      summary: Create streak freezes for multiple users
+      security:
+        - ApiKeyAuth: []
 components:
   schemas:
     MetricStatus:
@@ -2262,6 +2448,18 @@ components:
           type: string
           format: date
           description: The date the streak will expire if the user does not increment a metric.
+        freezes:
+          type: integer
+          description: The number of available streak freezes. Only present if the organization has enabled streak freezes.
+        maxFreezes:
+          type: integer
+          description: The maximum number of streak freezes a user can have. Only present if the organization has enabled streak freezes.
+        freezeAutoEarnInterval:
+          type: integer
+          description: The interval at which the user will earn streak freezes, in days. Only present if the organization has enabled streak freeze auto-earn.
+        freezeAutoEarnAmount:
+          type: integer
+          description: The amount of streak freezes the user will earn per interval. Only present if the organization has enabled streak freeze auto-earn.
       required:
         - length
         - frequency
@@ -2325,6 +2523,10 @@ components:
                     type: integer
                     description: The length of the user's streak during this period.
                     example: 1
+                  usedFreeze:
+                    type: boolean
+                    description: Whether the user used a streak freeze during this period. Only present if the organization has enabled streak freezes.
+                    example: false
                 required:
                   - periodStart
                   - periodEnd
@@ -3090,11 +3292,72 @@ components:
             - rank
             - value
             - history
+    CreateStreakFreezesRequest:
+      title: CreateStreakFreezesRequest
+      type: object
+      description: Request body for creating streak freezes.
+      properties:
+        freezes:
+          type: array
+          items:
+            type: object
+            properties:
+              userId:
+                type: string
+                description: The ID of the user to create a freeze for.
+                example: user-123
+            required:
+              - userId
+          description: Array of freezes to create. Maximum 1,000 freezes per request.
+          maxItems: 1000
+          minItems: 1
+      required:
+        - freezes
+    CreateStreakFreezesResponse:
+      title: CreateStreakFreezesResponse
+      type: object
+      description: Response containing any issues encountered while creating streak freezes.
+      properties:
+        issues:
+          type: array
+          items:
+            $ref: '#/components/schemas/BulkInsertIssue'
+          description: Array of issues encountered during freeze creation.
+      required:
+        - issues
+    BulkInsertIssue:
+      title: BulkInsertIssue
+      type: object
+      description: An issue encountered while bulk inserting data.
+      properties:
+        userId:
+          type: string
+          description: The ID of the user the issue relates to.
+          example: user-123
+        level:
+          type: string
+          enum:
+            - error
+            - warning
+          description: The severity level of the issue.
+          example: warning
+        reason:
+          type: string
+          description: A human-readable description of the issue.
+          example: Would exceed maximum freeze limit
+      required:
+        - userId
+        - level
+        - reason
   securitySchemes:
     ApiKeyAuth:
       type: apiKey
       in: header
       name: X-API-KEY
 servers:
-  - url: https://app.trophy.so/api
-    description: Default
+  - x-fern-server-name: Application API
+    url: https://api.trophy.so
+    description: Application API
+  - x-fern-server-name: Admin API
+    url: https://admin.trophy.so
+    description: Admin API
