@@ -108,6 +108,8 @@ This can be used to transactionally trigger UI/UX elements including:
 
 The [user streaks API](/api-reference/endpoints/users/get-a-users-streak) returns the current streak for a single user, along with their recent streak history. Use the [`historyPeriods`](/api-reference/endpoints/users/get-a-users-streak#parameter-history-periods) query parameter to control how many periods to return.
 
+{/* vale off */}
+
 ```json Response [expandable]
 {
   "length": 1,
@@ -156,6 +158,8 @@ The [user streaks API](/api-reference/endpoints/users/get-a-users-streak) return
   ]
 }
 ```
+
+{/* vale on */}
 
 Use this data to display a user's streak history within your application.
 
