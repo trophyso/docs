@@ -46,6 +46,8 @@ When Trophy detects an idempotency key has been sent with an event, it will firs
 
 Additionally, when using an idempotency key the response will contain two properties to help clients manage replayed requests effectively:
 
+{/* vale off */}
+
 ```json
 {
     ...,
@@ -53,6 +55,8 @@ Additionally, when using an idempotency key the response will contain two proper
     "idempotencyKey": "test" // the original idempotency key
 }
 ```
+
+{/* vale on */}
 
 <Note>
   By default Trophy uses an infinite time window for detecting duplicate events.

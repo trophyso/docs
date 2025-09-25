@@ -8,7 +8,7 @@ overcounting
 userbase
 Duolingo
 realtime
-[Ll]eaderboards
+[Ll]eaderboard[s]?
 Flippin
 api
 badgeUrl
