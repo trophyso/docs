@@ -139,7 +139,7 @@ To create new achievements, head to the [achievements page](https://app.trophy.s
 </Step>
 
 <Step title="Add attribute filters (Optional)">
-  You can assign _attribute filters_ to an achievement to further restrict who can unlock them and when.
+You can assign attribute filters to an achievement to further restrict who can unlock them and when.
 
 - To limit a **Metric** achievement to only apply to events with specific [custom event attributes](/platform/events#custom-event-attributes), select an attribute and enter a value in the **Event Attribute** section.
 
@@ -172,22 +172,22 @@ When you make an achievement active, it makes it 'live'. Users can complete it a
 
 When you lock an achievement, users who haven't unlocked it yet won't be able to unlock it anymore, but users who have already unlocked it won't be affected.
 
-Locked acheivements are only returned in APIs for users who have already achieved them.
+Locked achievements are only returned in APIs for users who have already achieved them.
 
 **Archived**
 
-Archvied achievements can't be completed and aren't returned in any achievement APIs.
+Archived achievements can't be completed and aren't returned in any achievement APIs.
 
 <Warning>
-  Once you archive an achievement it disapears from Trophy so be sure to only
+  Once you archive an achievement it disappears from Trophy so be sure to only
   archive achievements that you no longer need.
 </Warning>
 
 Archived achievements can be restored by [contacting support](#get-support).
 
-### Acheivement Workflow
+### Achievement Workflow
 
-Achievements can be moved through different statuses according to the following workfow:
+Achievements can be moved through different statuses according to the following workflow:
 
 ```mermaid
 flowchart LR
@@ -226,6 +226,8 @@ However if you're using any API achievements, you will have to mark them as comp
 
 This will return back a response that contains details of the achievement that was completed that can be used in any post-completion workflows, like showing an in-app notification.
 
+{/* vale off */}
+
 ```json Response
 {
   "completionId": "0040fe51-6bce-4b44-b0ad-bddc4e123534",
@@ -241,11 +243,13 @@ This will return back a response that contains details of the achievement that w
 }
 ```
 
+{/* vale on */}
+
 ## Backdating Achievements
 
-By default, whenever you move an achievement to 'Active' [status](#managing-achievements), Trophy will check if any existing users meet the requirements of the achievment and complete it for them behind the scenes.
+By default, whenever you move an achievement to 'Active' [status](#managing-achievements), Trophy will check if any existing users meet the requirements of the achievement and complete it for them behind the scenes.
 
-This means when you release new achievments into production, or edit an existing live achievement, backdating will happen automatically.
+This means when you release new achievements into production, or edit an existing live achievement, backdating will happen automatically.
 
 <Note>
   When achievements are completed in this way, users don't receive any
@@ -253,7 +257,7 @@ This means when you release new achievments into production, or edit an existing
   achievements in Trophy resulting in users getting lots of notifications.
 </Note>
 
-You can check how many users have completed achievements at any time on the [acheivements page](https://app.trophy.so/achievements) in the Trophy dashboard. The _Users_ column in the acheivements can update during backdating.
+You can check how many users have completed achievements at any time on the [achievements page](https://app.trophy.so/achievements) in the Trophy dashboard. The _Users_ column in the achievements can update during backdating.
 
 <Frame>
   <img
@@ -317,7 +321,7 @@ To display a high-level overview of all achievements users can complete, use the
   ></video>
 </Frame>
 
-The all achievements endpoint returns a list of all achievements within your Trophy account. Each achievement returned also includes `completions` (the number of users who have compelted the acheivement) and `rarity` (the percentage of users who have completed the achievement) as follows:
+The all achievements endpoint returns a list of all achievements within your Trophy account. Each achievement returned also includes `completions` (the number of users who have compeleted the achievement) and `rarity` (the percentage of users who have completed the achievement) as follows:
 
 <AllAchievementsResponseBlock />
 

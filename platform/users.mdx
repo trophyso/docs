@@ -94,7 +94,7 @@ Give the attribute a name and a unique key. The key is what you'll use to refere
 
 ### Setting Attributes
 
-Attributes can be assigned values for specific users using their unique key either inline, as users increment metrics through the [metric increment API](/api-reference/endpoints/metrics/send-a-metric-change-event), or explicity through the [user identification](/api-reference/endpoints/users/identify-a-user), [create user](/api-reference/endpoints/users/create-a-user), or [update user](api-reference/endpoints/users/update-a-user) APIs.
+Attributes can be assigned values for specific users using their unique key either inline, as users increment metrics through the [metric increment API](/api-reference/endpoints/metrics/send-a-metric-change-event), or explicitly through the [user identification](/api-reference/endpoints/users/identify-a-user), [create user](/api-reference/endpoints/users/create-a-user), or [update user](api-reference/endpoints/users/update-a-user) APIs.
 
 <Warning>
   Trophy will only set values of attributes that have first been created
@@ -103,11 +103,15 @@ Attributes can be assigned values for specific users using their unique key eith
 
 If you receive an error similar to the following then you might have miss-spelled the attribute key in the request, or you need to create the attribute first in the Trophy dashboard:
 
+{/* vale off */}
+
 ```json
 {
   "error": "Invalid attribute keys: pln. Please ensure all attribute keys match those set up at https://app.trophy.so/users/attributes."
 }
 ```
+
+{/* vale on */}
 
 </Warning>
 
@@ -246,7 +250,7 @@ This is why we recommend starting with inline identification first, then explori
 
 ### Explicit Identification
 
-Explicit identification is when you write code in your application that explicitly tells Trophy about users seperate from any metric interactions. This is useful if you want complete control over how and when Trophy learns about your users.
+Explicit identification is when you write code in your application that explicitly tells Trophy about users separate from any metric interactions. This is useful if you want complete control over how and when Trophy learns about your users.
 
 Scenarios where you might want to use explicit identification might be:
 
@@ -259,9 +263,9 @@ In this case, you can tell Trophy about new users using the [User Identification
 <IdentifyUserRequestBlock />
 
 <Tip>
-  Just like in inline identification, explicit identifcation also works by means
-  of an `UPSERT` operation meaning all user attributes are kept in sync with
-  Trophy automatically.
+  Just like in inline identification, explicit identification also works by
+  means of an `UPSERT` operation meaning all user attributes are kept in sync
+  with Trophy automatically.
 </Tip>
 
 ## Creating Users
@@ -275,7 +279,7 @@ To tell Trophy about an update to a user in your platform you can use the [Updat
 Any properties that you pass to Trophy will be updated to the new values you specify.
 
 <Tip>
-  As [user identifcation](#identifying-users) keeps user records up to date by
+  As [user identification](#identifying-users) keeps user records up to date by
   default, it's usually not necessary to explicitly update users in Trophy every
   time one of their properties changes in your application. However the user
   update API is there if you really need it.

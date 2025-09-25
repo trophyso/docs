@@ -41,10 +41,12 @@ When Trophy detects an idempotency key has been sent with an event, it will firs
 <Note>
   All Trophy [metrics](/platform/metrics) manage idempotency in isolation.
   Trophy will accept a user using the same idempotency key for events against
-  different metrics as seperate isolated requests.
+  different metrics as separate isolated requests.
 </Note>
 
 Additionally, when using an idempotency key the response will contain two properties to help clients manage replayed requests effectively:
+
+{/* vale off */}
 
 ```json
 {
@@ -54,9 +56,11 @@ Additionally, when using an idempotency key the response will contain two proper
 }
 ```
 
+{/* vale on */}
+
 <Note>
-  By default Trophy uses an infinte time window for detecting duplicate events.
-  If you feel you need different behavoir, please [get in
+  By default Trophy uses an infinite time window for detecting duplicate events.
+  If you feel you need different behavior, please [get in
   touch](mailto:support@trophy.so) and we'll happily set that up for you.
 </Note>
 

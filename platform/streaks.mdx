@@ -68,11 +68,11 @@ Giving users too many freezes may decrease their perceived value, but granting t
 
 As users use up streak freezes, they'll need a continuous supply of new ones to keep them going. To facilitate this, Trophy can automatically grant streak freezes to users over time. You can choose an arbitrary number of days over which to grant an arbitrary number of freezes to each user.
 
-If you've [configured time zones](/platform/users#param-tz) for your users, Trophy will automatically consume freezes at midnight in the user's time zone when necessary to extend their streak, and if any new freezes are due to be greatned to a user, they will be granted up to ten minutes later.
+If you've [configured time zones](/platform/users#param-tz) for your users, Trophy will automatically consume freezes at midnight in the user's time zone when necessary to extend their streak, and if any new freezes are due to be granted to a user, they will be granted up to ten minutes later.
 
 ### Maximum Freeze Count
 
-In Trophy you also configure the maxiumum number of freezes that each user can have, up to a limit of 100. [Freeze accumulation](#freeze-accumulation) will only ever grant freezes up to this limit.
+In Trophy you also configure the maximum number of freezes that each user can have, up to a limit of 100. [Freeze accumulation](#freeze-accumulation) will only ever grant freezes up to this limit.
 
 ## Tracking Streaks
 
@@ -107,6 +107,8 @@ This can be used to transactionally trigger UI/UX elements including:
 ### User Streaks API
 
 The [user streaks API](/api-reference/endpoints/users/get-a-users-streak) returns the current streak for a single user, along with their recent streak history. Use the [`historyPeriods`](/api-reference/endpoints/users/get-a-users-streak#parameter-history-periods) query parameter to control how many periods to return.
+
+{/* vale off */}
 
 ```json Response [expandable]
 {
@@ -157,6 +159,8 @@ The [user streaks API](/api-reference/endpoints/users/get-a-users-streak) return
 }
 ```
 
+{/* vale on */}
+
 Use this data to display a user's streak history within your application.
 
 <Frame>
@@ -193,7 +197,7 @@ If you want to display streaks for multiple users at once, for example to suppor
 
 ### Streak Rankings
 
-You can also use the [streak rankings API](/api-reference/endpoints/streaks/get-streak-rankings) to get a list of up to the the top 100 users by streak length and display a streak leaderboard in your application.
+You can also use the [streak rankings API](/api-reference/endpoints/streaks/get-streak-rankings) to get a list of up to the top 100 users by streak length and display a streak leaderboard in your application.
 
 You can fetch rankings either for 'active' streaks (users on a streak at the time of request), or 'longest' (ranking each users longest ever streak).
 
