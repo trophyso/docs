@@ -139,8 +139,7 @@ To create new achievements, head to the [achievements page](https://app.trophy.s
 </Step>
 
 <Step title="Add attribute filters (Optional)">
-
-You can assign _attribute filters_ to an achievement to further restrict who can unlock them and when.
+You can assign attribute filters to an achievement to further restrict who can unlock them and when.
 
 - To limit a **Metric** achievement to only apply to events with specific [custom event attributes](/platform/events#custom-event-attributes), select an attribute and enter a value in the **Event Attribute** section.
 
@@ -227,6 +226,8 @@ However if you're using any API achievements, you will have to mark them as comp
 
 This will return back a response that contains details of the achievement that was completed that can be used in any post-completion workflows, like showing an in-app notification.
 
+{/* vale off */}
+
 ```json Response
 {
   "completionId": "0040fe51-6bce-4b44-b0ad-bddc4e123534",
@@ -241,6 +242,8 @@ This will return back a response that contains details of the achievement that w
   }
 }
 ```
+
+{/* vale on */}
 
 ## Backdating Achievements
 
