@@ -55,21 +55,24 @@ Streak freezes are optional in Trophy but can be configured on the [streaks page
 
 ### Granting Initial Freezes
 
-You can configure any number of arbitrary freezes to grant to new users when you identofy them with Trophy.
+You can configure any number of arbitrary freezes to grant to new users when you first identify them with Trophy.
 
 Giving users too many freezes may decrease their perceived value, but granting too few freezes might result it a higher number of lost streaks.
 
-Monitor retention on the [streaks dashboard](https://app.trophy.so/streaks) in Trophy and experiment with granting different numbers of freezes.
+<Tip>
+  As a general rule of thumb, aim for the average user to have one or two
+  freezes in their account in any given period to create a balanced experience.
+</Tip>
 
 ### Freeze Accumulation
 
 As users use up streak freezes, they'll need a continuous supply of new ones to keep them going. To facilitate this, Trophy can automatically grant streak freezes to users over time. You can choose an arbitrary number of days over which to grant an arbitrary number of freezes to each user.
 
-If you've [configured time zones](/platform/users#param-tz) against users, Trophy will grant freezes to users on a schedule in keeping with their local clock.
+If you've [configured time zones](/platform/users#param-tz) for your users, Trophy will automatically consume freezes at midnight in the user's time zone when necessary to extend their streak, and if any new freezes are due to be greatned to a user, they will be granted up to ten minutes later.
 
 ### Maximum Freeze Count
 
-You can also configure the maxiumum number of freezes that each user can have. If set, [freeze accumulation](#freeze-accumulation) will only ever grant freezes up to this limit.
+In Trophy you also configure the maxiumum number of freezes that each user can have, up to a limit of 100. [Freeze accumulation](#freeze-accumulation) will only ever grant freezes up to this limit.
 
 ## Tracking Streaks
 
