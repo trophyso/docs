@@ -1,5 +1,4 @@
 # General
-
 MAUs
 [Gg]amification
 SDKs
