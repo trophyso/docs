@@ -1,0 +1,24 @@
+# General
+
+MAUs
+[Gg]amification
+SDKs
+gamified
+[Ii]dempotency
+overcounting
+userbase
+Duolingo
+realtime
+[Ll]eaderboards
+Flippin
+api
+badgeUrl
+achievedAt
+transactionally
+tz
+
+# Markdown rich text
+_[\w\s]+_
+\*[\w\s]+\*
+`[\w\s]+`
+`[a-zA-Z][a-zA-Z0-9]*`

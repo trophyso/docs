@@ -72,7 +72,7 @@ Would you like to use Turbopack for `next dev`?  Yes
 Would you like to customize the import alias (`@/*` by default)? No
 ```
 
-Next, we'll initialize a new install of everyones favourite UI library, shadcn/ui:
+Next, we'll initialize a new install of everyone's favourite UI library, shadcn/ui:
 
 ```bash
 npx shadcn@latest init
@@ -458,7 +458,7 @@ export default function Flashcard({ flashcard }: Props) {
 
 You'll notice we also added a couple of styles here. These do a couple of things:
 
-- Ensure that when a `<Card />` is flipping, the 'backface' isn't visible during the animation with `backface-visibility: hidden;`
+- Ensure that when a `<Card />` is flipping, the 'back face' isn't visible during the animation with `backface-visibility: hidden;`
 - As the `<Card />` component is a child of the `<motion.div />`, usually it would appear flat when it's parent rotates in 3D. Adding `transform-style: preserve-3d;` to the `<Card />` ensures it keeps it's 3D effect when it's parent animates.
 
 ```css src/app/flashcard.module.css
@@ -1178,7 +1178,7 @@ To see this in action, all we need to do is unlock our first achievement by view
 
 #### Streak Extended Toasts
 
-We'll use the same methods to show similar toasts when a user extendeds their streak. As we've set up a daily streak in Trophy, this will trigger the first time a user views a flashcard each day.
+We'll use the same methods to show similar toasts when a user extends their streak. As we've set up a daily streak in Trophy, this will trigger the first time a user views a flashcard each day.
 
 <Tip>
   If we wanted to experiment with a different streak cadence, like a weekly
@@ -1407,9 +1407,9 @@ export default function Flashcards({ flashcards }: Props) {
 
 #### Displaying Study Journey
 
-The last peice of UI we'll add will be a dialog to display the user's study progress, including their streak and any achievements they've unlocked so far.
+The last piece of UI we'll add will be a dialog to display the user's study progress, including their streak and any achievements they've unlocked so far.
 
-First, we'll add a couple of new server actions to fetch the users streak and achievements from Trophy. As we're using a daily sterak here, we'll fetch the last 14 days of streak data from Trophy to give us enough to work with in our UI:
+First, we'll add a couple of new server actions to fetch the users streak and achievements from Trophy. As we're using a daily streak here, we'll fetch the last 14 days of streak data from Trophy to give us enough to work with in our UI:
 
 ```tsx src/app/actions.ts [expandable] {6-7,10-11,24,33,45-58,60-73}
 "use server";
