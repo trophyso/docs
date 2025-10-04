@@ -2568,7 +2568,7 @@ components:
         type:
           type: string
           description: The type of trigger
-          enum: ['metric', 'achievement', 'streak']
+          enum: ['metric', 'achievement', 'streak', 'time', 'user_creation']
         points:
           type: number
           description: The points awarded by this trigger.
@@ -2584,6 +2584,13 @@ components:
         achievementName:
           type: string
           description: If the trigger has type 'achievement', the name of the achievement
+        timeUnit:
+          type: string
+          enum: ['hour', 'day']
+          description: If the trigger has type 'time', the unit of time after which to award points
+        timeInterval:
+          type: number
+          description: If the trigger has type 'time', the numer of units of timeUnit after which to award points
     PointsAward:
       title: PointsAward
       type: object
@@ -3151,7 +3158,7 @@ components:
           description: The unique ID of the trigger.
         type:
           type: string
-          enum: ['metric', 'achievement', 'streak']
+          enum: ['metric', 'achievement', 'streak', 'time', 'user_creation']
           description: The type of trigger.
         points:
           type: number
@@ -3178,6 +3185,13 @@ components:
         achievementName:
           type: string
           description: The name of the achievement associated with this trigger, if the trigger is an achievement.
+        timeUnit:
+          type: string
+          enum: ['hour', 'day']
+          description: The time unit of the trigger, if the trigger is a time interval.
+        timeInterval:
+          type: number
+          description: The interval of the trigger in the time unit, if the trigger is a time interval.
         userAttributes:
           type: array
           description: User attribute filters that must be met for this trigger to activate. Only present if the trigger has user attribute filters configured.
