@@ -1,0 +1,24 @@
+{
+  "name": "docs",
+  "version": "1.0.0",
+  "description": "Our documentation is built on top of [Mintlify](https://mintlify.com). We welcome contributions for fixing small issues such as typos and for adding new or updating existing content that you think would help others.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "dev": "mint dev"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/trophyso/docs.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/trophyso/docs/issues"
+  },
+  "homepage": "https://github.com/trophyso/docs#readme",
+  "dependencies": {
+    "mint": "^4.2.144"
+  }
+}
