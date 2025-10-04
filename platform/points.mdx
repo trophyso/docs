@@ -7,17 +7,23 @@ icon: sparkle
 
 import MetricChangeResponseBlock from "/snippets/metric-change-response-block.mdx";
 
-## What is a Points system?
+## What is a Points System?
 
-Points systems are used to reward users for taking actions in your product. When rewards are closely aligned with user incentives, they can be a powerful retention feature.
+Points systems allow you to create custom logic that combines multiple user interactions through [Metrics](/platform/metrics), [Achievements](/platform/achievements) and [Streaks](/platform/streaks) into one system.
 
-<Tip>
-  Use Trophy's [metric analytics](/platform/metrics#metric-analytics) to compare
-  the retention of each user interaction, then configure points around these
-  interactions to maximize retention impact.
-</Tip>
+## Use Cases
 
-Use Trophy to create sophisticated points systems driven by real user interactions with no custom code.
+### Rewards
+
+Points systems can be used to create features like 'XP' or 'Gems' that reward users for a number of interactions at different rates.
+
+In this way points can be used to weight the value of certain interactions differently to others to reward users for taking the actions you consider most closely related to retention.
+
+### Metering
+
+Points systems can also be used to create features like 'Energy' that meter usage of your product in a way that gives you control over promoting and restricting user activity.
+
+This allows you to control the rate at which users can use your product with a flexible mechanic that sits outside your codebase.
 
 ## Creating Points Systems
 
@@ -46,6 +52,13 @@ To create a points system, head to the [points page](https://app.trophy.so/point
     You can also give the points system a description which is returned from
     APIs to be displayed in your application.
   </Step>
+  <Step title="Configure max points (Optional)">
+  If you want to limit the number of points that each user can have in your new system, set a value in the 'max points' field.
+
+  <Tip>
+  Any [points triggers](#points-triggers) that you configure against this points system will respect the maximum set.
+  </Tip>
+  </Step>
   <Step title="Assign a badge (Optional)">
     You can also optionally upload a badge or logo to represent the points
     system. A `src` friendly URL to the image is returned from APIs for display
@@ -53,15 +66,44 @@ To create a points system, head to the [points page](https://app.trophy.so/point
   </Step>
 </Steps>
 
-## Creating Triggers
+## Points Triggers
 
-You can add as many triggers as you like to each points system you set up in Trophy. This let's you create different logic for how points are awarded to users for different points systems.
+In Trophy, points are awarded to or deducted from users through triggers. These define the different mechanics that make up your points system.
 
-Points can be awarded as a result of many different user interactions tracked by Trophy including:
+You can add as many triggers as you like to each points system you set up, allowing you create different logic for how points are awarded or deducted for different points systems.
 
-- Awarding points as users increment [Metrics](/platform/metrics) e.g. "earn 10 points for every mile ran".
-- Awarding points for reaching [Streak](/platform/streaks) milestones e.g. reaching 7-day, 14-day and 30-day streaks.
-- Awarding points for unlocking [Achievements](/platform/achievements).
+### Types of Triggers
+
+There are multiple types of triggers in Trophy that can be used to award or deduct points in different ways.
+
+**Metric Triggers**
+
+Points can be awarded or deducted continually as users increment [Metrics](/platform/metrics). You can choose to award or deduct any arbitrary number of points at any arbitrary metric threshold, for example "award 10 points for every 3 tasks completed".
+
+**Streak Triggers**
+
+Points can be awarded or deducted for reaching any arbitrary length of a [Streak](/platform/streaks), for example "award 50 points for every 7 days streak".
+
+**Achievement Triggers**
+
+Points can be awarded or deducted when users unlock specific [Achievements](/platform/achievements), for example "award 100 points when users completed the `profile-completed` achievement".
+
+**Time-based Triggers**
+
+Points can be awarded or deducted at repeating time intervals, every hour or every day. For example "award 10 points every 3 hours".
+
+**User Identification Triggers**
+
+Points can be awarded when users are first identified in Trophy, useful for granting an initial amount of points when they sign up to your product.
+
+### Creating Triggers
+
+To create a new points trigger, head to the points system that you want to create a trigger for and follow the steps below.
+
+<Tip>
+  All new points triggers are created as 'Inactive' to allow testing and
+  balancing before deployment to production.
+</Tip>
 
 <Frame>
   <video
@@ -74,34 +116,29 @@ Points can be awarded as a result of many different user interactions tracked by
   ></video>
 </Frame>
 
-To create a new points trigger, head to the points system that you want to create a trigger for and follow the steps below:
-
-<Tip>
-  All new points triggers are created as 'Inactive' to allow testing and
-  balancing before deployment to production.
-</Tip>
-
 <Steps>
 <Step title="Choose a trigger type">
-  Choose how you want points to be awarded.
-  
-- Choosing **Metric** will mean points will be automatically awarded to users incrementally as they increase their metric total for a particular metric.
-
-- Choosing **Streak** will mean points will be automatically awarded to users each time their streak is increased by a specific length.
-
-- Choosing **Achievement** will mean points will be automatically awarded to users when they complete a specific achievement.
-
+  Choose how you want points to be awarded or deducted as described by the available [trigger types](#types-of-triggers).
 </Step>
 
 <Step title="Set up trigger">
   Once you've chosen the points trigger type, you need to set up the trigger settings.
 
-- If you chose the **Metric** trigger, you'll need to choose the metric, the threshold amount at which to award points, and number of points to award each time the user's total metric value increases by the threshold amount.
+- If you chose the **Metric** trigger, you'll need to choose the metric, the threshold amount at which to award or deduct points.
 
-- If you chose the **Streak** trigger, you'll need to set the streak length that should award points and the number of points to award to user's each time their streak is increased by this length.
+- If you chose the **Streak** trigger, you'll need to set the streak length that should award or deduct points.
 
-- If you chose the **Achievement** trigger, you'll need to choose the achievement that should award points when completed and the number of points to award.
+- If you chose the **Achievement** trigger, you'll need to choose the achievement that should award or deduct points when completed.
 
+- If you chose the **Time** trigger, you'll need to choose the time unit you want to award or deduct points on (hours or days) and the number of those time units that you want to award or deduct points after.
+
+- If you chose the **First User Identification** trigger, you won't need to add any additional configuration.
+
+</Step>
+
+<Step title="Set points to award/deduct">
+  Once your trigger is configured, set the number of points to award or deduct
+  when fired.
 </Step>
 
 <Step title="Add attribute filters (Optional)">
@@ -115,6 +152,9 @@ To create a new points trigger, head to the points system that you want to creat
 
 <Step title="Hit save">
   Save the new points trigger.
+</Step>
+<Step title="Activate">
+  Once you're happy that your new trigger will behave as expected, change it's status to active to make it live.
 </Step>
 </Steps>
 
@@ -152,9 +192,9 @@ There are a few ways to use Trophy to fetch and display points in your app.
 
 ### Triggering Transactional UI
 
-Firstly, any points awarded to users as a result of a metric change event are returned in the response when using the [metric change event API](/api-reference/endpoints/metrics/send-a-metric-change-event).
+Firstly, any points awarded to or deducted from users as a result of a metric change event are returned in the response when using the [metric change event API](/api-reference/endpoints/metrics/send-a-metric-change-event).
 
-The response includes the user's new total points, how many points were awarded as a result of the event, and the details of the specific points triggers that fired.
+The response includes the user's new total points, how many points were awarded or deducted as a result of the event, and the details of the specific points triggers that fired.
 
 <MetricChangeResponseBlock />
 
@@ -167,7 +207,7 @@ This makes it really simple to read the response and trigger any of the followin
 
 Trophy also has APIs that allow you fetch user's points data whenever you want.
 
-First, the [user points API](/api-reference/endpoints/users/get-a-users-points) returns the user's total points for a particular points system and up to 100 of the most recent events that awarded points to the user.
+First, the [user points API](/api-reference/endpoints/users/get-a-users-points) returns the user's total points for a particular points system and up to 100 of the most recent events that awarded points to or deducted points from them.
 
 You can use this API to display the user's total points anywhere in your platform as well as a 'Latest awards' section or similar.
 
@@ -204,7 +244,7 @@ Use this data to display a histogram of points for a particular points system an
   <img height="200" noZoom src="../assets/platform/points/points_summary.png" />
 </Frame>
 
-Finally, the [points system API](/api-reference/endpoints/points/get-points) returns data about a particular points system, including all its triggers that award points to users.
+Finally, the [points system API](/api-reference/endpoints/points/get-points) returns data about a particular points system, including all its triggers that award points to or deduct points from users.
 
 Use this API to show users how they can earn points on your platform. Any new triggers you add will automatically be returned from this API helping to reduce code changes in your platform, and shifting operations to Trophy.
 
