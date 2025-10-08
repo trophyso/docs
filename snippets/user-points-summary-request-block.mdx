@@ -1,0 +1,52 @@
+<CodeGroup>
+```bash cURL
+curl --request GET \
+  --url https://api.trophy.so/v1/users/{id}/points/{key}/event-summary \
+  --header 'X-API-KEY: <api-key>'
+```
+
+```typescript Node
+trophy.users.pointsEventSummary("user-id", "points-system-key", {
+  aggregation: "daily",
+  start_date: "2025-01-01",
+  end_date: "2025-01-07"
+});
+```
+
+```python Python
+client.users.points_event_summary(
+  id="user-id",
+  key="points-system-key",
+  aggregation="daily",
+  start_date="2025-01-01",
+  end_date="2025-01-07"
+)
+```
+
+```php PHP
+$trophy->users->pointsEventSummary("user-id", "points-system-key");
+```
+
+```java Java
+client.users().pointsEventSummary("user-id","points-system-key");
+```
+
+```go Go
+response, err := client.Users.PointsEventSummary(
+    "user-id",
+    "points-system-key"
+)
+```
+
+```csharp C#
+trophy.Users.PointsEventSummaryAsync("user-id", "points-system-key");
+```
+
+```ruby Ruby
+result = client.users.pointsEventSummary(
+  :id => 'user-id',
+  :key => "points-system-key"
+)
+```
+
+</CodeGroup>

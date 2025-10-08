@@ -31,7 +31,7 @@ UsersStreakRequest request = UsersStreakRequest.builder()
       .historyPeriods(14)
       .build();
 
-UserStreakResponse response = client.users().streak("user-id", request);
+UsersStreakResponse response = client.users().streak("user-id", request);
 ```
 
 ```go Go
