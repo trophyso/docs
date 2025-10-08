@@ -91,17 +91,12 @@
               "guides/how-to-build-a-streaks-feature",
               "guides/how-to-build-an-xp-feature",
               "guides/how-to-build-an-energy-feature",
-              "guides/how-to-build-a-leaderboards-feature",
-              "guides/how-to-build-monthly-digests",
-              "guides/how-to-build-win-back-campaigns"
+              "guides/how-to-build-a-leaderboards-feature"
             ]
           },
           {
             "group": "Use Cases",
-            "pages": [
-              "guides/gamified-study-platform",
-              "guides/gamified-onboarding-flow"
-            ]
+            "pages": ["guides/gamified-study-platform"]
           }
         ]
       },
