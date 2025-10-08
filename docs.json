@@ -85,7 +85,7 @@
         "description": "Gamification how-to guides",
         "groups": [
           {
-            "group": "By Feature",
+            "group": "Feature Guides",
             "pages": [
               "guides/how-to-build-an-achievements-feature",
               "guides/how-to-build-a-streaks-feature",
