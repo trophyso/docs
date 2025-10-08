@@ -82,28 +82,26 @@
       {
         "tab": "Guides",
         "icon": "rocket",
-        "dropdowns": [
+        "description": "Gamification how-to guides",
+        "groups": [
           {
-            "dropdown": "Tutorials",
-            "description": "Gamification how-to guides",
-            "icon": "graduation-cap",
-            "pages": ["guides/tutorials/how-to-build-a-gamified-study-platform"]
-          },
-          {
-            "dropdown": "Example Apps",
-            "description": "Ready-to-use example apps",
-            "icon": "rocket",
-            "pages": ["guides/example-apps/example-study-platform"]
-          },
-          {
-            "dropdown": "UI Components",
-            "description": "UI Component library",
-            "icon": "layout-panel-left",
+            "group": "By Feature",
             "pages": [
-              "guides/ui-components/git-style-tracker",
-              "guides/ui-components/trophy-cabinet"
-            ],
-            "hidden": true
+              "guides/how-to-build-an-achievements-feature",
+              "guides/how-to-build-a-streaks-feature",
+              "guides/how-to-build-an-xp-feature",
+              "guides/how-to-build-an-energy-feature",
+              "guides/how-to-build-a-leaderboards-feature",
+              "guides/how-to-build-monthly-digests",
+              "guides/how-to-build-win-back-campaigns"
+            ]
+          },
+          {
+            "group": "Use Cases",
+            "pages": [
+              "guides/gamified-study-platform",
+              "guides/gamified-onboarding-flow"
+            ]
           }
         ]
       },
