@@ -724,7 +724,7 @@ That's how in just a few lines of code we can power a whole suite of gamificatio
 
 Here's how we'll setup our Trophy account for our study app:
 
-- First, we'll set up a _Flashcards Viewed_ metric
+- First, we'll set up a _Flashcards Flipped_ metric
 - Next, we'll setup achievements linked to this metric
 - Then, we'll configure a daily streak linked to this metric
 - Finally, we'll configure automated email sequences for this metric
@@ -733,7 +733,7 @@ Let's get into it...
 
 <AccordionGroup>
   <Accordion title="Create the metric" icon="box">
-    Head into the Trophy [metrics page](https://app.trophy.so/metrics) and create a new metric, making sure to specify `flashcards-viewed` as the metric `key`. This is what we'll use to reference the metric in our code when sending events.
+    Head into the Trophy [metrics page](https://app.trophy.so/metrics) and create a new metric, making sure to specify `flashcards-flipped` as the metric `key`. This is what we'll use to reference the metric in our code when sending events.
 
     <Frame>
       <video
@@ -862,7 +862,7 @@ const trophy = new TrophyApiClient({
  */
 export async function viewFlashcard(): Promise<EventResponse | null> {
   try {
-    return await trophy.metrics.event("flashcards-viewed", {
+    return await trophy.metrics.event("flashcards-flipped", {
       user: {
         // Mock email
         email: "user@example.com",
@@ -1422,7 +1422,7 @@ import {
 } from "@trophyso/node/api";
 
 const USER_ID = "39";
-const FLASHCARDS_VIEWED_METRIC_KEY = "flashcards-viewed";
+const FLASHCARDS_VIEWED_METRIC_KEY = "flashcards-flipped";
 
 // Set up Trophy SDK with API key
 const trophy = new TrophyApiClient({

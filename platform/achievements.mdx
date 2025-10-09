@@ -45,18 +45,18 @@ Trophy offers three types of achievements, [Metric](#metric-achievements), [API]
 
 Metric achievements are tied to [Metrics](/platform/metrics) and are best used when you want to incentivize users to take the same action over and over again.
 
-Let's take the example of a book-writing platform that uses Trophy to encourage users to write more often with metric achievements as follows:
+Let's take the example of a study platform that uses Trophy to encourage users to view more flashcards with metric achievements as follows:
 
-- 1,000 words
-- 2,500 words
-- 5,000 words
-- 10,000 words
-- 25,000 words
-- 50,000 words
+- 1,000 flashcards
+- 2,500 flashcards
+- 5,000 flashcards
+- 10,000 flashcards
+- 25,000 flashcards
+- 50,000 flashcards
 
-In this case you would create a metric called _Words Written_ and create achievements against the metric for each milestone.
+In this case you would create a metric called _Flashcards Flipped_ and create achievements against the metric for each milestone.
 
-Since these achievements are directly tied to the _Words Written_ metric, Trophy will automatically track when users unlock these achievements as they [increment the metric](/platform/events#tracking-metric-events).
+Since these achievements are directly tied to the _Flashcards Flipped_ metric, Trophy will automatically track when users unlock these achievements as they [increment the metric](/platform/events#tracking-metric-events).
 
 When achievements are unlocked, Trophy includes information about the unlocked achievements in the [Event API](/api-reference/endpoints/metrics/send-a-metric-change-event) response, and automatically triggers [Achievement Emails](/platform/emails#achievement-emails) if configured.
 
