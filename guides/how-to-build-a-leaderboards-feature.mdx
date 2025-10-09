@@ -7,7 +7,6 @@ noindex: true
 
 import SDKInstallCommand from "/snippets/sdk-install-command.mdx";
 import MetricChangeRequestBlock from "/snippets/metric-change-request-block.mdx";
-import MetricChangeResponseBlock from "/snippets/metric-change-response-block.mdx";
 import LeaderboardRankingsRequest from "/snippets/leaderboard-rankings-request.mdx";
 import LeaderboardRankingsResponse from "/snippets/leaderboard-rankings-response.mdx";
 import UserLeaderboardRankingsRequest from "/snippets/user-leaderboard-rankings-request.mdx";
@@ -99,7 +98,37 @@ To track an event (user interaction) against your metric, use the [metric change
 
 The response to this API call is the complete set of changes to any features you've built with Trophy, including any changes to their ranking in any leaderboards they are a part of.
 
-<MetricChangeResponseBlock />
+{/* vale off */}
+
+```json Response [expandable]
+{
+  "metricId": "d01dcbcb-d51e-4c12-b054-dc811dcdc623",
+  "eventId": "0040fe51-6bce-4b44-b0ad-bddc4e123534",
+  "total": 750,
+  ...,
+  "leaderboards": {
+    "daily_champions": {
+      "id": "0040fe51-6bce-4b44-b0ad-bddc4e123535",
+      "key": "daily_champions",
+      "name": "Daily Champions",
+      "description": null,
+      "rankBy": "metric",
+      "runUnit": null,
+      "runInterval": 0,
+      "maxParticipants": 100,
+      "metricName": "Flashcards Flipped",
+      "metricKey": "flashcards-flipped",
+      "threshold": 10,
+      "start": "2025-01-01",
+      "end": null,
+      "previousRank": 50,
+      "rank": 12
+    }
+  }
+}
+```
+
+{/* vale on */}
 
 Validate this is working by checking the Trophy [dashboard](https://app.trophy.so).
 

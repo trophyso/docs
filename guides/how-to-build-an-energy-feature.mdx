@@ -7,7 +7,6 @@ noindex: true
 
 import SDKInstallCommand from "/snippets/sdk-install-command.mdx";
 import MetricChangeRequestBlock from "/snippets/metric-change-request-block.mdx";
-import MetricChangeResponseBlock from "/snippets/metric-change-response-block.mdx";
 import UserPointsRequest from "/snippets/user-points-request-block.mdx";
 import UserEnergyResponse from "/snippets/user-energy-response-block.mdx";
 import UserPointsEventSummaryRequest from "/snippets/user-points-summary-request-block.mdx";
@@ -108,7 +107,44 @@ To track an event (user interaction) against your metric, use the [metric change
 
 The response to this API call is the complete set of changes to any features you've built with Trophy, including any changes in energy as a result of the event, and from what triggers energy was consumed.
 
-<MetricChangeResponseBlock />
+{/* vale off */}
+
+```json Response [expandable]
+{
+  "metricId": "d01dcbcb-d51e-4c12-b054-dc811dcdc623",
+  "eventId": "0040fe51-6bce-4b44-b0ad-bddc4e123534",
+  "total": 750,
+  ...,
+  "points": {
+    "energy": {
+      "id": "0040fe51-6bce-4b44-b0ad-bddc4e123534",
+      "name": "Energy",
+      "description": null,
+      "badgeUrl": null,
+      "total": 9,
+      "added": -1,
+      "awards": [
+        {
+          "id": "0040fe51-6bce-4b44-b0ad-bddc4e123534",
+          "awarded": -1,
+          "date": "2021-01-01T00:00:00Z",
+          "total": 9,
+          "trigger": {
+            "id": "0040fe51-6bce-4b44-b0ad-bddc4e123534",
+            "type": "metric",
+            "metricName": "Flashcards Flipped",
+            "metricThreshold": 1,
+            "points": -1
+          }
+        }
+      ]
+    }
+  },
+  ...
+}
+```
+
+{/* vale on */}
 
 Validate this is working by checking the Trophy [dashboard](https://app.trophy.so).
 

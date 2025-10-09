@@ -7,7 +7,6 @@ noindex: true
 
 import SDKInstallCommand from "/snippets/sdk-install-command.mdx";
 import MetricChangeRequestBlock from "/snippets/metric-change-request-block.mdx";
-import MetricChangeResponseBlock from "/snippets/metric-change-response-block.mdx";
 import UserAchievementsRequestBlock from "/snippets/user-achievements-request-block.mdx";
 import AllAchievementsRequestBlock from "/snippets/all-achievements-request-block.mdx";
 
@@ -94,7 +93,30 @@ To track an event (user interaction) against your metric, use the [metric change
 
 The response to this API call is the complete set of changes to any features you've built with Trophy, including any achievements that were unlocked as a result of the event.
 
-<MetricChangeResponseBlock />
+{/* vale off */}
+
+```json Response [expandable]
+{
+  "metricId": "d01dcbcb-d51e-4c12-b054-dc811dcdc623",
+  "eventId": "0040fe51-6bce-4b44-b0ad-bddc4e123534",
+  "total": 750,
+  "achievements": [
+    {
+      "id": "5100fe51-6bce-6j44-b0hs-bddc4e123682",
+      "trigger": "metric",
+      "metricId": "5100fe51-6bce-6j44-b0hs-bddc4e123682",
+      "metricName": "Flashcards Flipped",
+      "metricValue": 500,
+      "name": "500 Flashcards Flipped",
+      "description": "Write 500 words in the app.",
+      "achievedAt": "2020-01-01T00:00:00Z"
+    }
+  ],
+  ...
+}
+```
+
+{/* vale on */}
 
 Validate this is working by checking the Trophy [dashboard](https://app.trophy.so).
 
