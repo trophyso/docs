@@ -1,6 +1,6 @@
 <CodeGroup>
 ```bash cURL
-curl -X POST https://app.trophy.so/api/metrics/words-written/event \
+curl -X POST https://app.trophy.so/api/metrics/flashcards-flipped/event \
      -H "X-API-KEY: <apiKey>" \
      -H "Content-Type: application/json" \
      -d '{
@@ -17,10 +17,10 @@ curl -X POST https://app.trophy.so/api/metrics/words-written/event \
 ```
 
 ```typescript Node
-trophy.metrics.event("words-written", {
+trophy.metrics.event("flashcards-flipped", {
   user: {
     id: "18",
-    email: "jk.rowling@harrypotter.com",
+    email: "user@example.com",
     tz: "Europe/London",
   },
   value: 750,
@@ -29,10 +29,10 @@ trophy.metrics.event("words-written", {
 
 ```python Python
 client.metrics.event(
-    key="words-written",
+    key="flashcards-flipped",
     user=EventRequestUser(
         id="18",
-        email="jk.rowling@harrypotter.com",
+        email="user@example.com",
         tz="Europe/London",
     ),
     value=750.0,
@@ -42,7 +42,7 @@ client.metrics.event(
 ```php PHP
 $user = new EventRequestUser([
     'id' => '18',
-    'email' => 'jk.rowling@harrypotter.com'
+    'email' => 'user@example.com'
 ]);
 
 $request = new MetricsEventRequest([
@@ -50,7 +50,7 @@ $request = new MetricsEventRequest([
     'value' => 750
 ]);
 
-$trophy->metrics->event("words-written", $request);
+$trophy->metrics->event("flashcards-flipped", $request);
 ```
 
 ```java Java
@@ -58,23 +58,23 @@ MetricsEventRequest request = MetricsEventRequest.builder()
       .user(
         EventRequestUser.builder()
           .id("18")
-          .email("jk.rowling@harrypotter.com")
+          .email("user@example.com")
           .build()
       )
       .value(750)
       .build();
 
-EventResponse response = client.metrics().event("words-written", request);
+EventResponse response = client.metrics().event("flashcards-flipped", request);
 ```
 
 ```go Go
 response, err := client.Metrics.Event(
     context.TODO(),
-    "words-written",
+    "flashcards-flipped",
     &api.MetricsEventRequest{
         User: &api.EventRequestUser{
             Id: "18",
-            Email: "jk.rowling@harrypotter.com",
+            Email: "user@example.com",
         },
         Value: 750,
     },
@@ -84,7 +84,7 @@ response, err := client.Metrics.Event(
 ```csharp C#
 var user = new EventRequestUser {
    Id = "18",
-   Email = "jk.rowling@harrypotter.com"
+   Email = "user@example.com"
 };
 
 var request = new MetricsEventRequest {
@@ -92,15 +92,15 @@ var request = new MetricsEventRequest {
    Value = 750
 };
 
-await trophy.Metrics.EventAsync("words-written", request);
+await trophy.Metrics.EventAsync("flashcards-flipped", request);
 ```
 
 ```ruby Ruby
 result = client.metrics.event(
-  :key => 'words-written',
+  :key => 'flashcards-flipped',
   :user => {
     :id => '18',
-    :email => 'jk.rowling@harrypotter.com'
+    :email => 'user@example.com'
   },
   :value => 750
 )

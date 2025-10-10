@@ -88,8 +88,8 @@ Trophy automatically calculates streaks for all users when users
 Trophy exposes streak data in two ways, which can be used to build UI elements within your applications and display streaks to users.
 
 <Tip>
-  Take a look at our [examples center](https://examples.trophy.so) for live
-  demos of APIs in practice.
+  Check out our [full guide](/guides/how-to-build-a-streaks-feature) on adding a
+  streaks feature to your app for more details.
 </Tip>
 
 ### Metric Event Response
@@ -191,32 +191,6 @@ If you want to display streaks for multiple users at once, for example to suppor
     "userId": "user-789",
     "streakLength": 0,
     "extended": null
-  }
-]
-```
-
-### Streak Rankings
-
-You can also use the [streak rankings API](/api-reference/endpoints/streaks/get-streak-rankings) to get a list of up to the top 100 users by streak length and display a streak leaderboard in your application.
-
-You can fetch rankings either for 'active' streaks (users on a streak at the time of request), or 'longest' (ranking each users longest ever streak).
-
-```json [expandable]
-[
-  {
-    "userId": "user-123",
-    "name": "Alice Johnson",
-    "streakLength": 15
-  },
-  {
-    "userId": "user-456",
-    "name": "Bob Smith",
-    "streakLength": 12
-  },
-  {
-    "userId": "user-789",
-    "name": "Charlie Brown",
-    "streakLength": 8
   }
 ]
 ```

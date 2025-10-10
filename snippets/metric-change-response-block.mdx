@@ -1,3 +1,5 @@
+{/* vale off */}
+
 ```json Response [expandable]
 {
   "metricId": "d01dcbcb-d51e-4c12-b054-dc811dcdc623",
@@ -8,11 +10,11 @@
       "id": "5100fe51-6bce-6j44-b0hs-bddc4e123682",
       "trigger": "metric",
       "metricId": "5100fe51-6bce-6j44-b0hs-bddc4e123682",
-      "metricName": "Words Written",
+      "metricName": "Flashcards Flipped",
       "metricValue": 500,
-      "name": "500 words written",
+      "name": "500 Flashcards Flipped",
       "description": "Write 500 words in the app.",
-      "achievedAt": "2025-04-02T00:00:00Z"
+      "achievedAt": "2020-01-01T00:00:00Z"
     }
   ],
   "currentStreak": {
@@ -24,22 +26,47 @@
     "expires": "2025-04-12"
   },
   "points": {
-    "point-system-key": {
-      "total": 5,
-      "added": 5,
+    "xp": {
+      "id": "0040fe51-6bce-4b44-b0ad-bddc4e123534",
+      "name": "XP",
+      "description": null,
+      "badgeUrl": null,
+      "total": 10,
+      "added": 10,
       "awards": [
         {
-          "id": "2414266f-9d02-4820-866b-47b03e87b702",
-          "awarded": 5,
+          "id": "0040fe51-6bce-4b44-b0ad-bddc4e123534",
+          "awarded": 10,
+          "date": "2021-01-01T00:00:00Z",
+          "total": 10,
           "trigger": {
-            "id": "8126234a-2d8c-498d-b919-2459378accad",
+            "id": "0040fe51-6bce-4b44-b0ad-bddc4e123534",
             "type": "metric",
-            "metricName": "Words Written",
-            "metricThreshold": 10,
-            "points": 5
+            "metricName": "Flashcards Flipped",
+            "metricThreshold": 100,
+            "points": 10
           }
         }
       ]
+    }
+  },
+  "leaderboards": {
+    "daily_champions": {
+      "id": "0040fe51-6bce-4b44-b0ad-bddc4e123535",
+      "key": "daily_champions",
+      "name": "Daily Champions",
+      "description": null,
+      "rankBy": "metric",
+      "runUnit": null,
+      "runInterval": 0,
+      "maxParticipants": 100,
+      "metricName": "Flashcards Flipped",
+      "metricKey": "flashcards-flipped",
+      "threshold": 10,
+      "start": "2025-01-01",
+      "end": null,
+      "previousRank": 50,
+      "rank": 12
     }
   }
 }
