@@ -2413,6 +2413,7 @@ paths:
 webhooks:
   achievement.completed:
     post:
+      description: Triggered when a user completes an achievement.
       requestBody:
         description: The webhook event.
         content:
@@ -2453,6 +2454,7 @@ webhooks:
           description: Return a 200 status to indicate the webhook was received and processed.
   streak.started:
     post:
+      description: Triggered when a user starts a streak.
       requestBody:
         description: The webhook event.
         content:
@@ -2495,6 +2497,7 @@ webhooks:
           description: Return a 200 status to indicate the webhook was received and processed.
   streak.extended:
     post:
+      description: Triggered when a user extends an existing active streak.
       requestBody:
         description: The webhook event.
         content:
@@ -2537,6 +2540,7 @@ webhooks:
           description: Return a 200 status to indicate the webhook was received and processed.
   streak.lost:
     post:
+      description: Triggered when a user loses their streak.
       requestBody:
         description: The webhook event.
         content:
@@ -2569,6 +2573,7 @@ webhooks:
           description: Return a 200 status to indicate the webhook was received and processed.
   streak.freeze_consumed:
     post:
+      description: Triggered when a user consumes a streak freeze.
       requestBody:
         description: The webhook event.
         content:
@@ -2606,6 +2611,7 @@ webhooks:
           description: Return a 200 status to indicate the webhook was received and processed.
   streak.freeze_earned:
     post:
+      description: Triggered when a user earns streak freezes.
       requestBody:
         description: The webhook event.
         content:
@@ -2643,6 +2649,7 @@ webhooks:
           description: Return a 200 status to indicate the webhook was received and processed.
   points.changed:
     post:
+      description: Triggered when a user is awarded or loses points.
       requestBody:
         description: The webhook event.
         content:
@@ -2693,6 +2700,7 @@ webhooks:
           description: Return a 200 status to indicate the webhook was received and processed.
   leaderboard.started:
     post:
+      description: Triggered when a run of a leaderboard begins.
       requestBody:
         description: The webhook event.
         content:
@@ -2739,6 +2747,7 @@ webhooks:
           description: Return a 200 status to indicate the webhook was received and processed.
   leaderboard.changed:
     post:
+      description: Triggered when leaderboard rankings change.
       requestBody:
         description: The webhook event.
         content:
@@ -2793,6 +2802,7 @@ webhooks:
           description: Return a 200 status to indicate the webhook was received and processed.
   leaderboard.finished:
     post:
+      description: Triggered when a run of a leaderboard finishes.
       requestBody:
         description: The webhook event.
         content:
@@ -2847,6 +2857,7 @@ webhooks:
           description: Return a 200 status to indicate the webhook was received and processed.
   leaderboard.rank_changed:
     post:
+      description: Triggered when a user's leaderboard rank changes.
       requestBody:
         description: The webhook event.
         content:
