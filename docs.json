@@ -191,7 +191,8 @@
               "webhooks/introduction",
               "webhooks/quickstart",
               "webhooks/security",
-              "webhooks/retries"
+              "webhooks/retries",
+              "webhooks/idempotency"
             ]
           },
           {
