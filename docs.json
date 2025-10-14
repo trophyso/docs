@@ -192,7 +192,8 @@
               "webhooks/quickstart",
               "webhooks/security",
               "webhooks/retries",
-              "webhooks/idempotency"
+              "webhooks/idempotency",
+              "webhooks/observability"
             ]
           },
           {

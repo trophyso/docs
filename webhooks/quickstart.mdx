@@ -71,6 +71,18 @@ Trophy will send requests to your handler, telling it what `type` of event it's 
     </Tip>
 
   </Step>
+  <Step title="Validate test webhook behavoir">
+    Once you've written and secured your handler, you're ready to send your first test event.
+
+    Using a test user, perform interactions in your product of the type that you want to test webhooks for. For example if you want to test the `achievement.completed` webhook, trigger an achievement completion in Trophy.
+
+    Trophy will fire the relevant events to your webhook URL and you should see these in your webhook testing tool. This will then forward the event to your local webhook handler, triggering your code to run.
+
+    You can now iterate on your code until your happy you have the functionality you desire.
+
+    // TODO - add video
+
+  </Step>
   <Step title="Secure webhook handler">
   To help you secure your webhook handler so that it only responds to events sent from Trophy and not mailicious attackers, Trophy includes a webhook signature with every event.
 
@@ -113,18 +125,6 @@ Once you have your webhook secret, you're ready to start validating events. Here
   If your handler detects a request that did not originate from Trophy, it's
   important to reject the request as early as possible with a `4XX` status code.
 </Warning>
-
-  </Step>
-  <Step title="Validate test webhook behavoir">
-    Once you've written and secured your handler, you're ready to send your first test event.
-
-    Using a test user, perform interactions in your product of the type that you want to test webhooks for. For example if you want to test the `achievement.completed` webhook, trigger an achievement completion in Trophy.
-
-    Trophy will fire the relevant events to your webhook URL and you should see these in your webhook testing tool. This will then forward the event to your local webhook handler, triggering your code to run.
-
-    You can now iterate on your code until your happy you have the functionality you desire.
-
-    // TODO - add video
 
   </Step>
   <Step title="Create production webhook">
