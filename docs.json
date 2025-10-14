@@ -180,6 +180,24 @@
             "pages": ["admin-api/endpoints/streaks/grant-freezes"]
           }
         ]
+      },
+      {
+        "tab": "Webhooks",
+        "icon": "webhook",
+        "groups": [
+          {
+            "group": "Overview",
+            "pages": [
+              "webhooks/introduction",
+              "webhooks/quickstart",
+              "webhooks/security"
+            ]
+          },
+          {
+            "group": "Achievements",
+            "pages": ["webhooks/events/achievements/achievement-completed"]
+          }
+        ]
       }
     ],
     "global": {
