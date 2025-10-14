@@ -190,7 +190,8 @@
             "pages": [
               "webhooks/introduction",
               "webhooks/quickstart",
-              "webhooks/security"
+              "webhooks/security",
+              "webhooks/retries"
             ]
           },
           {

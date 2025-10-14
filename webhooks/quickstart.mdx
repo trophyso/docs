@@ -67,7 +67,7 @@ Trophy will send requests to your handler, telling it what `type` of event it's 
     ```
 
     <Tip>
-    Make sure your webhook handler is set up to return a `200` status code. If Trophy detects your handler returns a `3XX`, `4XX` or `500` status code, it will treat this as a failure and retry the request with exponential backoff.
+    Make sure your webhook handler is set up to return a `200` status code. If Trophy detects your handler returns a non-`2XX` status code, it will treat this as a failure and [retry the request](/webhooks/retries).
     </Tip>
 
   </Step>
