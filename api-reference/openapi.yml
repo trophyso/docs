@@ -2413,6 +2413,9 @@ paths:
 webhooks:
   achievement.completed:
     post:
+      servers:
+        - url: achievement.completed
+          description: Webhooks API
       description: Triggered when a user completes an achievement.
       requestBody:
         description: The webhook event.
