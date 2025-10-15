@@ -9,7 +9,7 @@ icon: repeat
 
 In the context of webhooks, [idempotence](https://en.wikipedia.org/wiki/Idempotence) is the property of an endpoint to ensure it processes duplicate events exactly once.
 
-Most webhook emitters, including Trophy, operate on an "at least once" delivery guarantee. This means you will eventually receive the same webhook multiple times and your code needs to handle those scenarios without unintended consequences.
+Most webhook emitters, including Trophy, operate on an "at least once" delivery guarantee. This means you may eventually receive the same webhook multiple times and your code needs to handle those scenarios without unintended consequences.
 
 For example, if your webhook handler is subscribed to [`leaderboard.finished`](/webhooks/events/leaderboards/leaderboard-finished) events and sends users gift cards if they place in the top 10, then your code needs to only send the gift cards once even if your code receives the same event from Trophy multiple times.
 

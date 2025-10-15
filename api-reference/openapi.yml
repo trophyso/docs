@@ -2413,6 +2413,8 @@ paths:
 webhooks:
   achievement.completed:
     post:
+      summary: Achievement completed
+      operationId: webhooks_achievement_completed
       description: Triggered when a user completes an achievement.
       requestBody:
         description: The webhook event.
@@ -2454,6 +2456,8 @@ webhooks:
           description: Return a 200 status to indicate the webhook was received and processed.
   streak.started:
     post:
+      summary: Streak started
+      operationId: webhooks_streak_started
       description: Triggered when a user starts a streak.
       requestBody:
         description: The webhook event.
@@ -2497,6 +2501,8 @@ webhooks:
           description: Return a 200 status to indicate the webhook was received and processed.
   streak.extended:
     post:
+      summary: Streak extended
+      operationId: webhooks_streak_extended
       description: Triggered when a user extends an existing active streak.
       requestBody:
         description: The webhook event.
@@ -2540,6 +2546,8 @@ webhooks:
           description: Return a 200 status to indicate the webhook was received and processed.
   streak.lost:
     post:
+      summary: Streak lost
+      operationId: webhooks_streak_lost
       description: Triggered when a user loses their streak.
       requestBody:
         description: The webhook event.
@@ -2573,6 +2581,8 @@ webhooks:
           description: Return a 200 status to indicate the webhook was received and processed.
   streak.freeze_consumed:
     post:
+      summary: Streak freeze consumed
+      operationId: webhooks_streak_freeze_consumed
       description: Triggered when a user consumes a streak freeze.
       requestBody:
         description: The webhook event.
@@ -2611,6 +2621,8 @@ webhooks:
           description: Return a 200 status to indicate the webhook was received and processed.
   streak.freeze_earned:
     post:
+      summary: Streak freeze earned
+      operationId: webhooks_streak_freeze_earned
       description: Triggered when a user earns streak freezes.
       requestBody:
         description: The webhook event.
@@ -2649,6 +2661,8 @@ webhooks:
           description: Return a 200 status to indicate the webhook was received and processed.
   points.changed:
     post:
+      summary: Points changed
+      operationId: webhooks_points_changed
       description: Triggered when a user is awarded or loses points.
       requestBody:
         description: The webhook event.
@@ -2700,6 +2714,8 @@ webhooks:
           description: Return a 200 status to indicate the webhook was received and processed.
   leaderboard.started:
     post:
+      summary: Leaderboard started
+      operationId: webhooks_leaderboard_started
       description: Triggered when a run of a leaderboard begins.
       requestBody:
         description: The webhook event.
@@ -2747,6 +2763,8 @@ webhooks:
           description: Return a 200 status to indicate the webhook was received and processed.
   leaderboard.changed:
     post:
+      summary: Leaderboard changed
+      operationId: webhooks_leaderboard_changed
       description: Triggered when leaderboard rankings change.
       requestBody:
         description: The webhook event.
@@ -2802,6 +2820,8 @@ webhooks:
           description: Return a 200 status to indicate the webhook was received and processed.
   leaderboard.finished:
     post:
+      summary: Leaderboard finished
+      operationId: webhooks_leaderboard_finished
       description: Triggered when a run of a leaderboard finishes.
       requestBody:
         description: The webhook event.
@@ -2857,6 +2877,8 @@ webhooks:
           description: Return a 200 status to indicate the webhook was received and processed.
   leaderboard.rank_changed:
     post:
+      summary: Leaderboard rank changed
+      operationId: webhooks_leaderboard_rank_changed
       description: Triggered when a user's leaderboard rank changes.
       requestBody:
         description: The webhook event.
