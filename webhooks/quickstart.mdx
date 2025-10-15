@@ -7,6 +7,11 @@ icon: circle-play
 
 ## Getting Started
 
+<Note>
+  If you don't already have a Trophy account, follow the [Trophy quick start
+  guide](/getting-started/quickstart) first to get started.
+</Note>
+
 In Trophy you can have multiple webhooks for handling one or more types of event. Follow the steps below to get started receiving webhook events from Trophy.
 
 <Frame>
@@ -21,11 +26,6 @@ In Trophy you can have multiple webhooks for handling one or more types of event
   ></iframe>
 </Frame>
 
-<Tip>
-  If you don't already have a Trophy account, follow the [Trophy quick start
-  guide](/getting-started/quickstart) first to get started.
-</Tip>
-
 <Steps>
   <Step title="Create test webhook">
   To develop and test webhooks, it's useful to use a test service that can proxy events from Trophy and send them to your local development environment.
@@ -34,7 +34,16 @@ You can choose to use any webhook development tool you like, but we recommend [H
 
 First up, head into your webhook testing platform of choice and create a new test endpoint.
 
-Then, set up this endpoint to proxy events it receives to your local develpoment environment.
+Then, set up this endpoint to proxy events it receives to your local development environment.
+
+<Frame>
+  <img
+    height="200"
+    width="100%"
+    noZoom
+    src="../assets/webhooks/quickstart/hookdeck.png"
+  />
+</Frame>
 
   </Step>
   <Step title="Configure test webhook in Trophy">
@@ -48,6 +57,16 @@ Then, set up this endpoint to proxy events it receives to your local develpoment
     <Tip>
     You can modify the events the webhook is subscribed to at any time after creation.
     </Tip>
+
+    <Frame>
+
+  <img
+    height="200"
+    width="100%"
+    noZoom
+    src="../assets/webhooks/quickstart/dashboard.png"
+  />
+</Frame>
 
   </Step>
   <Step title="Write webhook handler">
@@ -76,9 +95,9 @@ Trophy will send requests to your handler, telling it what `type` of event it's 
     }
     ```
 
-    <Tip>
+    <Warning>
     Make sure your webhook handler is set up to return a `200` status code. If Trophy detects your handler returns a non-`2XX` status code, it will treat this as a failure and [retry the request](/webhooks/retries).
-    </Tip>
+    </Warning>
 
   </Step>
   <Step title="Validate test webhook behavoir">
@@ -100,7 +119,16 @@ To validate that events your webhook handler receives do actually come from Trop
 
 Grab your secure webhook secret from the webhooks page in Trophy.
 
-// TODO - add video
+<Frame>
+  <video
+    autoPlay
+    muted
+    loop
+    playsInline
+    className="w-full aspect-15/4"
+    src="../assets/webhooks/copy_secret.mp4"
+  ></video>
+</Frame>
 
 <Warning>
   Make sure you store your webhook secret in a secure environment variable and

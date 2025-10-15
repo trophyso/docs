@@ -24,7 +24,16 @@ Each webhook you set up in Trophy has a unique webhook secret which you can acce
 
 To validate that events your webhook handler receives do actually come from Trophy, you need to create your own hash using your secure [webhook secret](#webhook-secrets) and compare it to the [webhook signature](#webhook-signatures) in the `X-Trophy-Signature` header.
 
-// TODO - add video
+<Frame>
+  <video
+    autoPlay
+    muted
+    loop
+    playsInline
+    className="w-full aspect-15/4"
+    src="../assets/webhooks/copy_secret.mp4"
+  ></video>
+</Frame>
 
 Once you have your webhook secret, you're ready to start validating events. Here's an example in NodeJS:
 

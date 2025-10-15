@@ -30,6 +30,12 @@ CREATE TABLE gift_card_receipts (
 -- Insert a row after sending gift card
 INSERT INTO gift_card_receipts (id, user_id, gift_card_id)
 VALUES ('webhook_event_id', 'user_123', 'gift_card_abc')
+
+-- Check before sending gift card
+SELECT * FROM gift_card_receipts
+WHERE user_id = 'user-id'
+AND gift_card_id = 'gift-card-id'
+LIMIT 1
 ```
 
 Then before sending gift cards add an `if` statement that checks if the gift card has already been sent to the user.
