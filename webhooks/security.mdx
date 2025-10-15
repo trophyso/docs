@@ -7,7 +7,7 @@ icon: shield-check
 
 ## Webhook Signatures
 
-To help you secure your webhook handlers so that they only respond to events sent from Trophy and not mailicious attackers, Trophy includes a webhook signature with every event.
+To help you secure your webhook handlers so that they only respond to events sent from Trophy and not malicious attackers, Trophy includes a webhook signature with every event.
 
 This signature is sent in the `X-Trophy-Signature` header and is a `base64` encoded hash of the request payload, hashed using a secure webhook secret provided by Trophy.
 
