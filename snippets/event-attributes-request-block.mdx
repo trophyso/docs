@@ -69,7 +69,6 @@ EventResponse response = client.metrics().event("flashcards-flipped", request);
 
 ```go Go
 response, err := client.Metrics.Event(
-    context.TODO(),
     "flashcards-flipped",
     &api.MetricsEventRequest{
         User: &api.EventRequestUser{

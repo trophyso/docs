@@ -73,7 +73,6 @@ EventResponse response = client.metrics().event("lessons-completed", request);
 
 ```go Go {10}
 response, err := client.Metrics.Event(
-    context.TODO(),
     "lessons-completed",
     &api.MetricsEventRequest{
         User: &api.EventRequestUser{

@@ -5,7 +5,21 @@ subtitle: Start receiving webhook events from Trophy in under 10 minutes.
 icon: circle-play
 ---
 
+## Getting Started
+
 In Trophy you can have multiple webhooks for handling one or more types of event. Follow the steps below to get started receiving webhook events from Trophy.
+
+<Frame>
+  <iframe
+    width="560"
+    height="315"
+    src="https://www.youtube.com/embed/_jtHmRqDcMM?si=DHl8d6i-jKJedCxZ"
+    title="YouTube video player"
+    frameborder="0"
+    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+    allowfullscreen
+  ></iframe>
+</Frame>
 
 <Tip>
   If you don't already have a Trophy account, follow the [Trophy quick start
@@ -20,20 +34,16 @@ You can choose to use any webhook development tool you like, but we recommend [H
 
 First up, head into your webhook testing platform of choice and create a new test endpoint.
 
-Then, set up this endpoint to proxy events it receives to your local develpoment environment. The video below walks through setting this up using Hookdeck.
-
-// TODO - add video
+Then, set up this endpoint to proxy events it receives to your local develpoment environment.
 
   </Step>
   <Step title="Configure test webhook in Trophy">
     Once you have your test endpoint, head to the [webhooks](https://app.trophy.so/integration/webhooks) page of the Trophy dashboard and create a new webhook.
 
     - Give your new webhook a name like 'Local Testing' or similar
-    - Paste your test URL in the 'Webhook URL' field
+    - Paste your test endpoint URL in the 'Webhook URL' field
     - Select the webhook events you want to subscribe this webhook to
     - Save the new webhook
-
-    // TODO - add video
 
     <Tip>
     You can modify the events the webhook is subscribed to at any time after creation.
@@ -79,8 +89,6 @@ Trophy will send requests to your handler, telling it what `type` of event it's 
     Trophy will fire the relevant events to your webhook URL and you should see these in your webhook testing tool. This will then forward the event to your local webhook handler, triggering your code to run.
 
     You can now iterate on your code until your happy you have the functionality you desire.
-
-    // TODO - add video
 
   </Step>
   <Step title="Secure webhook handler">
@@ -136,6 +144,59 @@ Once you have your webhook secret, you're ready to start validating events. Here
 
   </Step>
 </Steps>
+
+## Full Webhook Example
+
+Here's a full working NextJS example webhook endpoint capable of securely receiving webhook events from Trophy.
+
+```ts Example NextJS Webhook Endpoint
+import crypto from "crypto";
+
+import { NextRequest, NextResponse } from "next/server";
+
+interface WebhookPayload {
+  type: string;
+  [x: string]: unknown;
+}
+
+export async function POST(request: NextRequest) {
+  // Extract 'X-Trophy-Signature' header from the request
+  const hmacHeader = request.headers.get("X-Trophy-Signature");
+
+  // Create a hash based on the parsed body
+  const hash = crypto
+    // copy this secret from the Webhooks page in Trophy
+    .createHmac("sha256", process.env.TROPHY_WEBHOOK_SECRET as string)
+    .update(await request.text())
+    .digest("base64");
+
+  // Compare the created hash with the value of the X-Trophy-Signature header
+  if (hash === hmacHeader) {
+    console.log("Webhook is originating from Trophy");
+
+    handleEvent(request.body as unknown as WebhookPayload);
+
+    return NextResponse.json({ message: "Webhook received" }, { status: 200 });
+  } else {
+    console.log("Signature is invalid, rejected");
+
+    return NextResponse.json({ message: "Webhook rejected" }, { status: 403 });
+  }
+}
+
+function handleEvent(payload: WebhookPayload) {
+  switch (payload.type) {
+    case "points.changed":
+      console.log("Handling points changed event");
+      break;
+    case "streak.extended":
+      console.log("Handling streak extended event");
+      break;
+    default:
+      break;
+  }
+}
+```
 
 ## Get Support
 
