@@ -2441,7 +2441,15 @@ webhooks:
                 value:
                   type: achievement.completed
                   user:
-                    id: user-123
+                    id: user-id
+                    email: user@example.com
+                    tz: Europe/London
+                    subscribedToEmails: true
+                    created: '2021-01-01T00:00:00Z'
+                    updated: '2021-01-01T00:00:00Z'
+                    attributes:
+                      department: engineering
+                      role: developer
                   achievement:
                     id: d01dcbcb-d51e-4c12-b054-dc811dcdc625
                     name: Completed Onboarding
@@ -2484,14 +2492,22 @@ webhooks:
                 value:
                   type: streak.started
                   user:
-                    id: user-123
+                    id: user-id
+                    email: user@example.com
+                    tz: Europe/London
+                    subscribedToEmails: true
+                    created: '2021-01-01T00:00:00Z'
+                    updated: '2021-01-01T00:00:00Z'
+                    attributes:
+                      department: engineering
+                      role: developer
                   streak:
                     length: 1
                     frequency: daily
-                    periodStart: "2025-04-02"
-                    periodEnd: "2025-04-02"
-                    started: "2025-04-02"
-                    expires: "2025-04-03"
+                    periodStart: '2025-04-02'
+                    periodEnd: '2025-04-02'
+                    started: '2025-04-02'
+                    expires: '2025-04-03'
                     freezes: 0
                     maxFreezes: 3
                     freezeAutoEarnInterval: 7
@@ -2529,14 +2545,22 @@ webhooks:
                 value:
                   type: streak.extended
                   user:
-                    id: user-123
+                    id: user-id
+                    email: user@example.com
+                    tz: Europe/London
+                    subscribedToEmails: true
+                    created: '2021-01-01T00:00:00Z'
+                    updated: '2021-01-01T00:00:00Z'
+                    attributes:
+                      department: engineering
+                      role: developer
                   streak:
                     length: 2
                     frequency: daily
-                    periodStart: "2025-04-03"
-                    periodEnd: "2025-04-03"
-                    started: "2025-04-02"
-                    expires: "2025-04-05"
+                    periodStart: '2025-04-03'
+                    periodEnd: '2025-04-03'
+                    started: '2025-04-02'
+                    expires: '2025-04-05'
                     freezes: 0
                     maxFreezes: 3
                     freezeAutoEarnInterval: 7
@@ -2574,10 +2598,18 @@ webhooks:
                 value:
                   type: streak.lost
                   user:
-                    id: user-123
+                    id: user-id
+                    email: user@example.com
+                    tz: Europe/London
+                    subscribedToEmails: true
+                    created: '2021-01-01T00:00:00Z'
+                    updated: '2021-01-01T00:00:00Z'
+                    attributes:
+                      department: engineering
+                      role: developer
                   length: 7
       responses:
-        "200":
+        '200':
           description: Return a 200 status to indicate the webhook was received and processed.
   streak.freeze_consumed:
     post:
@@ -2613,11 +2645,19 @@ webhooks:
                 value:
                   type: streak.freeze_consumed
                   user:
-                    id: user-123
+                    id: user-id
+                    email: user@example.com
+                    tz: Europe/London
+                    subscribedToEmails: true
+                    created: '2021-01-01T00:00:00Z'
+                    updated: '2021-01-01T00:00:00Z'
+                    attributes:
+                      department: engineering
+                      role: developer
                   consumed: 1
                   freezes: 2
       responses:
-        "200":
+        '200':
           description: Return a 200 status to indicate the webhook was received and processed.
   streak.freeze_earned:
     post:
@@ -2653,11 +2693,19 @@ webhooks:
                 value:
                   type: streak.freeze_earned
                   user:
-                    id: user-123
+                    id: user-id
+                    email: user@example.com
+                    tz: Europe/London
+                    subscribedToEmails: true
+                    created: '2021-01-01T00:00:00Z'
+                    updated: '2021-01-01T00:00:00Z'
+                    attributes:
+                      department: engineering
+                      role: developer
                   earned: 1
                   freezes: 2
       responses:
-        "200":
+        '200':
           description: Return a 200 status to indicate the webhook was received and processed.
   points.changed:
     post:
@@ -2689,7 +2737,15 @@ webhooks:
                 value:
                   type: points.changed
                   user:
-                    id: user-123
+                    id: user-id
+                    email: user@example.com
+                    tz: Europe/London
+                    subscribedToEmails: true
+                    created: '2021-01-01T00:00:00Z'
+                    updated: '2021-01-01T00:00:00Z'
+                    attributes:
+                      department: engineering
+                      role: developer
                   points:
                     id: 0040fe51-6bce-4b44-b0ad-bddc4e123534
                     key: xp
@@ -2905,7 +2961,15 @@ webhooks:
                 value:
                   type: leaderboard.rank_changed
                   user:
-                    id: user-123
+                    id: user-id
+                    email: user@example.com
+                    tz: Europe/London
+                    subscribedToEmails: true
+                    created: '2021-01-01T00:00:00Z'
+                    updated: '2021-01-01T00:00:00Z'
+                    attributes:
+                      department: engineering
+                      role: developer
                   leaderboard:
                     id: 5100fe51-6bce-6j44-b0hs-bddc4e123682
                     name: Weekly Word Count Challenge
@@ -3933,16 +3997,6 @@ components:
               description: An array of events showing the user's rank and value changes over time.
           required:
             - history
-    WebhookUser:
-      title: WebhookUser
-      type: object
-      description: A user object used in webhook events.
-      properties:
-        id:
-          type: string
-          description: The ID of the user.
-      required:
-        - id
     WebhookUserLeaderboardResponse:
       title: WebhookUserLeaderboardResponse
       type: object
