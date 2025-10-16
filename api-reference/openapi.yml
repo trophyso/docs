@@ -2427,7 +2427,7 @@ webhooks:
                   enum: ["achievement.completed"]
                   description: The webhook event type.
                 user:
-                  $ref: "#/components/schemas/WebhookUser"
+                  $ref: "#/components/schemas/User"
                   description: The user who completed the achievement.
                 achievement:
                   $ref: "#/components/schemas/CompletedAchievementResponse"
@@ -2445,8 +2445,8 @@ webhooks:
                     email: user@example.com
                     tz: Europe/London
                     subscribedToEmails: true
-                    created: '2021-01-01T00:00:00Z'
-                    updated: '2021-01-01T00:00:00Z'
+                    created: "2021-01-01T00:00:00Z"
+                    updated: "2021-01-01T00:00:00Z"
                     attributes:
                       department: engineering
                       role: developer
@@ -2478,7 +2478,7 @@ webhooks:
                   enum: ["streak.started"]
                   description: The webhook event type.
                 user:
-                  $ref: "#/components/schemas/WebhookUser"
+                  $ref: "#/components/schemas/User"
                   description: The user who started the streak.
                 streak:
                   $ref: "#/components/schemas/BaseStreakResponse"
@@ -2496,18 +2496,18 @@ webhooks:
                     email: user@example.com
                     tz: Europe/London
                     subscribedToEmails: true
-                    created: '2021-01-01T00:00:00Z'
-                    updated: '2021-01-01T00:00:00Z'
+                    created: "2021-01-01T00:00:00Z"
+                    updated: "2021-01-01T00:00:00Z"
                     attributes:
                       department: engineering
                       role: developer
                   streak:
                     length: 1
                     frequency: daily
-                    periodStart: '2025-04-02'
-                    periodEnd: '2025-04-02'
-                    started: '2025-04-02'
-                    expires: '2025-04-03'
+                    periodStart: "2025-04-02"
+                    periodEnd: "2025-04-02"
+                    started: "2025-04-02"
+                    expires: "2025-04-03"
                     freezes: 0
                     maxFreezes: 3
                     freezeAutoEarnInterval: 7
@@ -2531,7 +2531,7 @@ webhooks:
                   enum: ["streak.extended"]
                   description: The webhook event type.
                 user:
-                  $ref: "#/components/schemas/WebhookUser"
+                  $ref: "#/components/schemas/User"
                   description: The user who extended the streak.
                 streak:
                   $ref: "#/components/schemas/BaseStreakResponse"
@@ -2549,18 +2549,18 @@ webhooks:
                     email: user@example.com
                     tz: Europe/London
                     subscribedToEmails: true
-                    created: '2021-01-01T00:00:00Z'
-                    updated: '2021-01-01T00:00:00Z'
+                    created: "2021-01-01T00:00:00Z"
+                    updated: "2021-01-01T00:00:00Z"
                     attributes:
                       department: engineering
                       role: developer
                   streak:
                     length: 2
                     frequency: daily
-                    periodStart: '2025-04-03'
-                    periodEnd: '2025-04-03'
-                    started: '2025-04-02'
-                    expires: '2025-04-05'
+                    periodStart: "2025-04-03"
+                    periodEnd: "2025-04-03"
+                    started: "2025-04-02"
+                    expires: "2025-04-05"
                     freezes: 0
                     maxFreezes: 3
                     freezeAutoEarnInterval: 7
@@ -2584,7 +2584,7 @@ webhooks:
                   enum: ["streak.lost"]
                   description: The webhook event type.
                 user:
-                  $ref: "#/components/schemas/WebhookUser"
+                  $ref: "#/components/schemas/User"
                   description: The user who lost the streak.
                 length:
                   type: integer
@@ -2602,14 +2602,14 @@ webhooks:
                     email: user@example.com
                     tz: Europe/London
                     subscribedToEmails: true
-                    created: '2021-01-01T00:00:00Z'
-                    updated: '2021-01-01T00:00:00Z'
+                    created: "2021-01-01T00:00:00Z"
+                    updated: "2021-01-01T00:00:00Z"
                     attributes:
                       department: engineering
                       role: developer
                   length: 7
       responses:
-        '200':
+        "200":
           description: Return a 200 status to indicate the webhook was received and processed.
   streak.freeze_consumed:
     post:
@@ -2627,7 +2627,7 @@ webhooks:
                   enum: ["streak.freeze_consumed"]
                   description: The webhook event type.
                 user:
-                  $ref: "#/components/schemas/WebhookUser"
+                  $ref: "#/components/schemas/User"
                   description: The user whose streak freeze was consumed.
                 consumed:
                   type: integer
@@ -2649,15 +2649,15 @@ webhooks:
                     email: user@example.com
                     tz: Europe/London
                     subscribedToEmails: true
-                    created: '2021-01-01T00:00:00Z'
-                    updated: '2021-01-01T00:00:00Z'
+                    created: "2021-01-01T00:00:00Z"
+                    updated: "2021-01-01T00:00:00Z"
                     attributes:
                       department: engineering
                       role: developer
                   consumed: 1
                   freezes: 2
       responses:
-        '200':
+        "200":
           description: Return a 200 status to indicate the webhook was received and processed.
   streak.freeze_earned:
     post:
@@ -2675,7 +2675,7 @@ webhooks:
                   enum: ["streak.freeze_earned"]
                   description: The webhook event type.
                 user:
-                  $ref: "#/components/schemas/WebhookUser"
+                  $ref: "#/components/schemas/User"
                   description: The user who earned streak freezes.
                 earned:
                   type: integer
@@ -2697,15 +2697,15 @@ webhooks:
                     email: user@example.com
                     tz: Europe/London
                     subscribedToEmails: true
-                    created: '2021-01-01T00:00:00Z'
-                    updated: '2021-01-01T00:00:00Z'
+                    created: "2021-01-01T00:00:00Z"
+                    updated: "2021-01-01T00:00:00Z"
                     attributes:
                       department: engineering
                       role: developer
                   earned: 1
                   freezes: 2
       responses:
-        '200':
+        "200":
           description: Return a 200 status to indicate the webhook was received and processed.
   points.changed:
     post:
@@ -2723,7 +2723,7 @@ webhooks:
                   enum: ["points.changed"]
                   description: The webhook event type.
                 user:
-                  $ref: "#/components/schemas/WebhookUser"
+                  $ref: "#/components/schemas/User"
                   description: The user whose points increased or decreased.
                 points:
                   $ref: "#/components/schemas/GetUserPointsResponse"
@@ -2741,8 +2741,8 @@ webhooks:
                     email: user@example.com
                     tz: Europe/London
                     subscribedToEmails: true
-                    created: '2021-01-01T00:00:00Z'
-                    updated: '2021-01-01T00:00:00Z'
+                    created: "2021-01-01T00:00:00Z"
+                    updated: "2021-01-01T00:00:00Z"
                     attributes:
                       department: engineering
                       role: developer
@@ -2947,7 +2947,7 @@ webhooks:
                   enum: ["leaderboard.rank_changed"]
                   description: The webhook event type.
                 user:
-                  $ref: "#/components/schemas/WebhookUser"
+                  $ref: "#/components/schemas/User"
                   description: The user whose rank changed.
                 leaderboard:
                   $ref: "#/components/schemas/WebhookUserLeaderboardResponse"
@@ -2965,8 +2965,8 @@ webhooks:
                     email: user@example.com
                     tz: Europe/London
                     subscribedToEmails: true
-                    created: '2021-01-01T00:00:00Z'
-                    updated: '2021-01-01T00:00:00Z'
+                    created: "2021-01-01T00:00:00Z"
+                    updated: "2021-01-01T00:00:00Z"
                     attributes:
                       department: engineering
                       role: developer
