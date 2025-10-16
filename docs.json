@@ -180,6 +180,50 @@
             "pages": ["admin-api/endpoints/streaks/grant-freezes"]
           }
         ]
+      },
+      {
+        "tab": "Webhooks",
+        "icon": "webhook",
+        "groups": [
+          {
+            "group": "Overview",
+            "pages": [
+              "webhooks/introduction",
+              "webhooks/quickstart",
+              "webhooks/security",
+              "webhooks/retries",
+              "webhooks/idempotency",
+              "webhooks/observability"
+            ]
+          },
+          {
+            "group": "Achievements",
+            "pages": ["webhooks/events/achievements/achievement-completed"]
+          },
+          {
+            "group": "Streaks",
+            "pages": [
+              "webhooks/events/streaks/streak-started",
+              "webhooks/events/streaks/streak-extended",
+              "webhooks/events/streaks/streak-lost",
+              "webhooks/events/streaks/streak-freeze-consumed",
+              "webhooks/events/streaks/streak-freeze-earned"
+            ]
+          },
+          {
+            "group": "Points",
+            "pages": ["webhooks/events/points/points-changed"]
+          },
+          {
+            "group": "Leaderboards",
+            "pages": [
+              "webhooks/events/leaderboards/leaderboard-started",
+              "webhooks/events/leaderboards/leaderboard-changed",
+              "webhooks/events/leaderboards/leaderboard-rank-changed",
+              "webhooks/events/leaderboards/leaderboard-finished"
+            ]
+          }
+        ]
       }
     ],
     "global": {
