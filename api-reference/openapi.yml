@@ -1206,13 +1206,11 @@ paths:
                 Successful operation:
                   value:
                     - id: d01dcbcb-d51e-4c12-b054-dc811dcdc625
+                      name: Completed Onboarding
                       trigger: api
                       key: completed-onboarding
-                      name: Completed Onboarding
                       achievedAt: '2021-01-01T00:00:00Z'
                       badgeUrl: https://example.com/badge2.png
-                      completions: 10
-                      rarity: 90.13
                     - id: d01dcbcb-d51e-4c12-b054-dc811dcdc623
                       trigger: metric
                       key: novice-writer
@@ -1222,8 +1220,6 @@ paths:
                       name: Novice Writer
                       achievedAt: '2021-02-01T00:00:00Z'
                       badgeUrl: https://example.com/badge1.png
-                      completions: 8
-                      rarity: 22.98
                     - id: d01dcbcb-d51e-4c12-b054-dc811dcdc624
                       trigger: streak
                       key: 3-day-streak
@@ -1231,8 +1227,6 @@ paths:
                       name: 3-Day Streak
                       achievedAt: '2021-03-01T00:00:00Z'
                       badgeUrl: https://example.com/badge2.png
-                      completions: 12
-                      rarity: 89.52
         '401':
           description: 'Unauthorized'
           content:
@@ -1576,9 +1570,11 @@ paths:
                 Successful operation:
                   value:
                     id: 0040fe51-6bce-4b44-b0ad-bddc4e123534
+                    key: xp
                     name: XP
                     description: null
                     badgeUrl: null
+                    maxPoints: null
                     total: 100
                     awards:
                       - id: 0040fe51-6bce-4b44-b0ad-bddc4e123534
@@ -1815,7 +1811,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/UserLeaderboardResponse'
+                $ref: '#/components/schemas/UserLeaderboardResponseWithHistory'
               examples:
                 Successful operation:
                   value:
@@ -1825,8 +1821,6 @@ paths:
                     rankBy: metric
                     metricKey: words-written
                     metricName: Words Written
-                    pointsSystemKey: null
-                    pointsSystemName: null
                     description: Compete weekly to see who writes the most words
                     start: '2025-01-01'
                     end: null
@@ -2032,6 +2026,7 @@ paths:
                     name: XP System
                     description: Experience points for user engagement
                     badgeUrl: https://example.com/badge.png
+                    maxPoints: null
                     triggers:
                       - id: 0040fe51-6bce-4b44-b0ad-bddc4e123534
                         type: metric
@@ -2118,7 +2113,17 @@ paths:
               schema:
                 type: array
                 items:
-                  $ref: '#/components/schemas/LeaderboardResponse'
+                  allOf:
+                    - $ref: '#/components/schemas/LeaderboardResponse'
+                    - type: object
+                      properties:
+                        status:
+                          type: string
+                          enum: ['active', 'scheduled', 'finished']
+                          description: The status of the leaderboard.
+                          example: active
+                      required:
+                        - status
               examples:
                 Successful operation:
                   value:
@@ -2128,8 +2133,6 @@ paths:
                       rankBy: metric
                       metricKey: words-written
                       metricName: Words Written
-                      pointsSystemKey: null
-                      pointsSystemName: null
                       description: Compete weekly to see who writes the most words
                       status: active
                       start: '2025-01-01'
@@ -2141,8 +2144,6 @@ paths:
                       name: XP Leaderboard
                       key: xp-board
                       rankBy: points
-                      metricKey: null
-                      metricName: null
                       pointsSystemKey: xp-system
                       pointsSystemName: Experience Points
                       description: Overall ranking by XP earned
@@ -2409,6 +2410,586 @@ paths:
       summary: Create streak freezes for multiple users
       security:
         - ApiKeyAuth: []
+webhooks:
+  achievement.completed:
+    post:
+      summary: Achievement completed
+      operationId: webhooks_achievement_completed
+      description: Triggered when a user completes an achievement.
+      requestBody:
+        description: The webhook event.
+        content:
+          application/json:
+            schema:
+              properties:
+                type:
+                  type: string
+                  enum: ['achievement.completed']
+                  description: The webhook event type.
+                user:
+                  $ref: '#/components/schemas/User'
+                  description: The user who completed the achievement.
+                achievement:
+                  $ref: '#/components/schemas/CompletedAchievementResponse'
+                  description: The achievement completion that occurred.
+              required:
+                - type
+                - user
+                - achievement
+            examples:
+              Achievement completed:
+                value:
+                  type: achievement.completed
+                  user:
+                    id: user-id
+                    email: user@example.com
+                    tz: Europe/London
+                    subscribedToEmails: true
+                    created: '2021-01-01T00:00:00Z'
+                    updated: '2021-01-01T00:00:00Z'
+                    attributes:
+                      department: engineering
+                      role: developer
+                  achievement:
+                    id: d01dcbcb-d51e-4c12-b054-dc811dcdc625
+                    name: Completed Onboarding
+                    trigger: api
+                    description: null
+                    key: completed-onboarding
+                    achievedAt: '2021-01-01T00:00:00Z'
+                    badgeUrl: https://example.com/badge2.png
+
+      responses:
+        '200':
+          description: Return a 200 status to indicate the webhook was received and processed.
+  streak.started:
+    post:
+      summary: Streak started
+      operationId: webhooks_streak_started
+      description: Triggered when a user starts a streak.
+      requestBody:
+        description: The webhook event.
+        content:
+          application/json:
+            schema:
+              properties:
+                type:
+                  type: string
+                  enum: ['streak.started']
+                  description: The webhook event type.
+                user:
+                  $ref: '#/components/schemas/User'
+                  description: The user who started the streak.
+                streak:
+                  $ref: '#/components/schemas/BaseStreakResponse'
+                  description: The streak that was started.
+              required:
+                - type
+                - user
+                - streak
+            examples:
+              Streak started:
+                value:
+                  type: streak.started
+                  user:
+                    id: user-id
+                    email: user@example.com
+                    tz: Europe/London
+                    subscribedToEmails: true
+                    created: '2021-01-01T00:00:00Z'
+                    updated: '2021-01-01T00:00:00Z'
+                    attributes:
+                      department: engineering
+                      role: developer
+                  streak:
+                    length: 1
+                    frequency: daily
+                    periodStart: '2025-04-02'
+                    periodEnd: '2025-04-02'
+                    started: '2025-04-02'
+                    expires: '2025-04-03'
+                    freezes: 0
+                    maxFreezes: 3
+                    freezeAutoEarnInterval: 7
+                    freezeAutoEarnAmount: 1
+      responses:
+        '200':
+          description: Return a 200 status to indicate the webhook was received and processed.
+  streak.extended:
+    post:
+      summary: Streak extended
+      operationId: webhooks_streak_extended
+      description: Triggered when a user extends an existing active streak.
+      requestBody:
+        description: The webhook event.
+        content:
+          application/json:
+            schema:
+              properties:
+                type:
+                  type: string
+                  enum: ['streak.extended']
+                  description: The webhook event type.
+                user:
+                  $ref: '#/components/schemas/User'
+                  description: The user who extended the streak.
+                streak:
+                  $ref: '#/components/schemas/BaseStreakResponse'
+                  description: The streak that was extended.
+              required:
+                - type
+                - user
+                - streak
+            examples:
+              Streak extended:
+                value:
+                  type: streak.extended
+                  user:
+                    id: user-id
+                    email: user@example.com
+                    tz: Europe/London
+                    subscribedToEmails: true
+                    created: '2021-01-01T00:00:00Z'
+                    updated: '2021-01-01T00:00:00Z'
+                    attributes:
+                      department: engineering
+                      role: developer
+                  streak:
+                    length: 2
+                    frequency: daily
+                    periodStart: '2025-04-03'
+                    periodEnd: '2025-04-03'
+                    started: '2025-04-02'
+                    expires: '2025-04-05'
+                    freezes: 0
+                    maxFreezes: 3
+                    freezeAutoEarnInterval: 7
+                    freezeAutoEarnAmount: 1
+      responses:
+        '200':
+          description: Return a 200 status to indicate the webhook was received and processed.
+  streak.lost:
+    post:
+      summary: Streak lost
+      operationId: webhooks_streak_lost
+      description: Triggered when a user loses their streak.
+      requestBody:
+        description: The webhook event.
+        content:
+          application/json:
+            schema:
+              properties:
+                type:
+                  type: string
+                  enum: ['streak.lost']
+                  description: The webhook event type.
+                user:
+                  $ref: '#/components/schemas/User'
+                  description: The user who lost the streak.
+                length:
+                  type: integer
+                  description: The length of the streak that was lost.
+              required:
+                - type
+                - user
+                - length
+            examples:
+              Streak lost:
+                value:
+                  type: streak.lost
+                  user:
+                    id: user-id
+                    email: user@example.com
+                    tz: Europe/London
+                    subscribedToEmails: true
+                    created: '2021-01-01T00:00:00Z'
+                    updated: '2021-01-01T00:00:00Z'
+                    attributes:
+                      department: engineering
+                      role: developer
+                  length: 7
+      responses:
+        '200':
+          description: Return a 200 status to indicate the webhook was received and processed.
+  streak.freeze_consumed:
+    post:
+      summary: Streak freeze consumed
+      operationId: webhooks_streak_freeze_consumed
+      description: Triggered when a user consumes a streak freeze.
+      requestBody:
+        description: The webhook event.
+        content:
+          application/json:
+            schema:
+              properties:
+                type:
+                  type: string
+                  enum: ['streak.freeze_consumed']
+                  description: The webhook event type.
+                user:
+                  $ref: '#/components/schemas/User'
+                  description: The user whose streak freeze was consumed.
+                consumed:
+                  type: integer
+                  description: The number of freezes consumed.
+                freezes:
+                  type: integer
+                  description: The total number of freezes the user has left after the consumption.
+              required:
+                - type
+                - user
+                - consumed
+                - freezes
+            examples:
+              Streak freeze consumed:
+                value:
+                  type: streak.freeze_consumed
+                  user:
+                    id: user-id
+                    email: user@example.com
+                    tz: Europe/London
+                    subscribedToEmails: true
+                    created: '2021-01-01T00:00:00Z'
+                    updated: '2021-01-01T00:00:00Z'
+                    attributes:
+                      department: engineering
+                      role: developer
+                  consumed: 1
+                  freezes: 2
+      responses:
+        '200':
+          description: Return a 200 status to indicate the webhook was received and processed.
+  streak.freeze_earned:
+    post:
+      summary: Streak freeze earned
+      operationId: webhooks_streak_freeze_earned
+      description: Triggered when a user earns streak freezes.
+      requestBody:
+        description: The webhook event.
+        content:
+          application/json:
+            schema:
+              properties:
+                type:
+                  type: string
+                  enum: ['streak.freeze_earned']
+                  description: The webhook event type.
+                user:
+                  $ref: '#/components/schemas/User'
+                  description: The user who earned streak freezes.
+                earned:
+                  type: integer
+                  description: The number of freezes earned.
+                freezes:
+                  type: integer
+                  description: The total number of freezes the user has after the event.
+              required:
+                - type
+                - user
+                - earned
+                - freezes
+            examples:
+              Streak freeze earned:
+                value:
+                  type: streak.freeze_earned
+                  user:
+                    id: user-id
+                    email: user@example.com
+                    tz: Europe/London
+                    subscribedToEmails: true
+                    created: '2021-01-01T00:00:00Z'
+                    updated: '2021-01-01T00:00:00Z'
+                    attributes:
+                      department: engineering
+                      role: developer
+                  earned: 1
+                  freezes: 2
+      responses:
+        '200':
+          description: Return a 200 status to indicate the webhook was received and processed.
+  points.changed:
+    post:
+      summary: Points changed
+      operationId: webhooks_points_changed
+      description: Triggered when a user is awarded or loses points.
+      requestBody:
+        description: The webhook event.
+        content:
+          application/json:
+            schema:
+              properties:
+                type:
+                  type: string
+                  enum: ['points.changed']
+                  description: The webhook event type.
+                user:
+                  $ref: '#/components/schemas/User'
+                  description: The user whose points increased or decreased.
+                points:
+                  $ref: '#/components/schemas/GetUserPointsResponse'
+                  description: The user's points after the event.
+              required:
+                - type
+                - user
+                - points
+            examples:
+              Points changed:
+                value:
+                  type: points.changed
+                  user:
+                    id: user-id
+                    email: user@example.com
+                    tz: Europe/London
+                    subscribedToEmails: true
+                    created: '2021-01-01T00:00:00Z'
+                    updated: '2021-01-01T00:00:00Z'
+                    attributes:
+                      department: engineering
+                      role: developer
+                  points:
+                    id: 0040fe51-6bce-4b44-b0ad-bddc4e123534
+                    key: xp
+                    name: XP
+                    description: null
+                    badgeUrl: null
+                    maxPoints: null
+                    total: 100
+                    awards:
+                      - id: 0040fe51-6bce-4b44-b0ad-bddc4e123534
+                        awarded: 10
+                        date: '2021-01-01T00:00:00Z'
+                        total: 100
+                        trigger:
+                          id: 0040fe51-6bce-4b44-b0ad-bddc4e123534
+                          type: metric
+                          points: 10
+                          metricName: words written
+                          metricThreshold: 1000
+      responses:
+        '200':
+          description: Return a 200 status to indicate the webhook was received and processed.
+  leaderboard.started:
+    post:
+      summary: Leaderboard started
+      operationId: webhooks_leaderboard_started
+      description: Triggered when a run of a leaderboard begins.
+      requestBody:
+        description: The webhook event.
+        content:
+          application/json:
+            schema:
+              properties:
+                type:
+                  type: string
+                  enum: ['leaderboard.started']
+                  description: The webhook event type.
+                leaderboard:
+                  $ref: '#/components/schemas/LeaderboardResponseWithRankings'
+                  description: The leaderboard run that started and its initial rankings.
+              required:
+                - type
+                - leaderboard
+            examples:
+              Leaderboard started:
+                value:
+                  type: leaderboard.started
+                  leaderboard:
+                    id: 5100fe51-6bce-6j44-b0hs-bddc4e123682
+                    name: Weekly Word Count Challenge
+                    key: weekly-words
+                    rankBy: metric
+                    metricKey: words-written
+                    metricName: Words Written
+                    pointsSystemKey: null
+                    pointsSystemName: null
+                    description: Compete weekly to see who writes the most words
+                    status: active
+                    start: '2025-01-01'
+                    end: null
+                    maxParticipants: 100
+                    runUnit: day
+                    runInterval: 7
+                    rankings:
+                      - userId: user-123
+                        userName: Alice Johnson
+                        rank: 1
+                        value: 1
+      responses:
+        '200':
+          description: Return a 200 status to indicate the webhook was received and processed.
+  leaderboard.changed:
+    post:
+      summary: Leaderboard changed
+      operationId: webhooks_leaderboard_changed
+      description: Triggered when leaderboard rankings change.
+      requestBody:
+        description: The webhook event.
+        content:
+          application/json:
+            schema:
+              properties:
+                type:
+                  type: string
+                  enum: ['leaderboard.changed']
+                  description: The webhook event type.
+                leaderboard:
+                  $ref: '#/components/schemas/LeaderboardResponseWithRankings'
+                  description: The leaderboard run that changed.
+              required:
+                - type
+                - leaderboard
+            examples:
+              Leaderboard changed:
+                value:
+                  type: leaderboard.changed
+                  leaderboard:
+                    id: 5100fe51-6bce-6j44-b0hs-bddc4e123682
+                    name: Weekly Word Count Challenge
+                    key: weekly-words
+                    rankBy: metric
+                    metricKey: words-written
+                    metricName: Words Written
+                    pointsSystemKey: null
+                    pointsSystemName: null
+                    description: Compete weekly to see who writes the most words
+                    status: active
+                    start: '2025-01-01'
+                    end: null
+                    maxParticipants: 100
+                    runUnit: day
+                    runInterval: 7
+                    rankings:
+                      - userId: user-123
+                        userName: Alice Johnson
+                        rank: 1
+                        value: 10
+                      - userId: user-456
+                        userName: Bob Smith
+                        rank: 2
+                        value: 6
+                      - userId: user-789
+                        userName: Charlie Brown
+                        rank: 3
+                        value: 4
+      responses:
+        '200':
+          description: Return a 200 status to indicate the webhook was received and processed.
+  leaderboard.finished:
+    post:
+      summary: Leaderboard finished
+      operationId: webhooks_leaderboard_finished
+      description: Triggered when a run of a leaderboard finishes.
+      requestBody:
+        description: The webhook event.
+        content:
+          application/json:
+            schema:
+              properties:
+                type:
+                  type: string
+                  enum: ['leaderboard.finished']
+                  description: The webhook event type.
+                leaderboard:
+                  $ref: '#/components/schemas/LeaderboardResponseWithRankings'
+                  description: The leaderboard run that finished and its final rankings.
+              required:
+                - type
+                - leaderboard
+            examples:
+              Leaderboard finished:
+                value:
+                  type: leaderboard.finished
+                  leaderboard:
+                    id: 5100fe51-6bce-6j44-b0hs-bddc4e123682
+                    name: Weekly Word Count Challenge
+                    key: weekly-words
+                    rankBy: metric
+                    metricKey: words-written
+                    metricName: Words Written
+                    pointsSystemKey: null
+                    pointsSystemName: null
+                    description: Compete weekly to see who writes the most words
+                    status: active
+                    start: '2025-01-01'
+                    end: null
+                    maxParticipants: 100
+                    runUnit: day
+                    runInterval: 7
+                    rankings:
+                      - userId: user-123
+                        userName: Alice Johnson
+                        rank: 1
+                        value: 10
+                      - userId: user-456
+                        userName: Bob Smith
+                        rank: 2
+                        value: 6
+                      - userId: user-789
+                        userName: Charlie Brown
+                        rank: 3
+                        value: 4
+      responses:
+        '200':
+          description: Return a 200 status to indicate the webhook was received and processed.
+  leaderboard.rank_changed:
+    post:
+      summary: Leaderboard rank changed
+      operationId: webhooks_leaderboard_rank_changed
+      description: Triggered when a user's leaderboard rank changes.
+      requestBody:
+        description: The webhook event.
+        content:
+          application/json:
+            schema:
+              properties:
+                type:
+                  type: string
+                  enum: ['leaderboard.rank_changed']
+                  description: The webhook event type.
+                user:
+                  $ref: '#/components/schemas/User'
+                  description: The user whose rank changed.
+                leaderboard:
+                  $ref: '#/components/schemas/WebhookUserLeaderboardResponse'
+                  description: The user's leaderboard data that changed.
+              required:
+                - type
+                - user
+                - leaderboard
+            examples:
+              Leaderboard rank changed:
+                value:
+                  type: leaderboard.rank_changed
+                  user:
+                    id: user-id
+                    email: user@example.com
+                    tz: Europe/London
+                    subscribedToEmails: true
+                    created: '2021-01-01T00:00:00Z'
+                    updated: '2021-01-01T00:00:00Z'
+                    attributes:
+                      department: engineering
+                      role: developer
+                  leaderboard:
+                    id: 5100fe51-6bce-6j44-b0hs-bddc4e123682
+                    name: Weekly Word Count Challenge
+                    key: weekly-words
+                    rankBy: metric
+                    metricKey: words-written
+                    metricName: Words Written
+                    description: Compete weekly to see who writes the most words
+                    start: '2025-01-01'
+                    end: null
+                    maxParticipants: 100
+                    runUnit: day
+                    runInterval: 7
+                    rank: 2
+                    value: 4500
+                    previousRank: 1
+                    previousValue: 4500
+      responses:
+        '200':
+          description: Return a 200 status to indicate the webhook was received and processed.
 components:
   schemas:
     MetricStatus:
@@ -2570,16 +3151,16 @@ components:
           description: The type of trigger
           enum: ['metric', 'achievement', 'streak', 'time', 'user_creation']
         points:
-          type: number
+          type: integer
           description: The points awarded by this trigger.
         metricName:
           type: string
           description: If the trigger has type 'metric', the name of the metric
         metricThreshold:
-          type: number
+          type: integer
           description: If the trigger has type 'metric', the threshold of the metric that triggers the points
         streakLengthThreshold:
-          type: number
+          type: integer
           description: If the trigger has type 'streak', the threshold of the streak that triggers the points
         achievementName:
           type: string
@@ -2589,7 +3170,7 @@ components:
           enum: ['hour', 'day']
           description: If the trigger has type 'time', the unit of time after which to award points
         timeInterval:
-          type: number
+          type: integer
           description: If the trigger has type 'time', the numer of units of timeUnit after which to award points
     PointsAward:
       title: PointsAward
@@ -2599,13 +3180,13 @@ components:
           type: string
           description: The ID of the trigger award
         awarded:
-          type: number
+          type: integer
           description: The points awarded by this trigger
         date:
           type: string
           description: The date these points were awarded, in ISO 8601 format.
         total:
-          type: number
+          type: integer
           description: The user's total points after this award occurred.
         trigger:
           $ref: '#/components/schemas/PointsTrigger'
@@ -2616,6 +3197,9 @@ components:
         id:
           type: string
           description: The ID of the points system
+        key:
+          type: string
+          description: The key of the points system
         name:
           type: string
           description: The name of the points system
@@ -2629,8 +3213,13 @@ components:
             - string
             - 'null'
           description: The URL of the badge image for the points system
+        maxPoints:
+          type:
+            - number
+            - 'null'
+          description: The maximum number of points a user can be awarded in this points system
         total:
-          type: number
+          type: integer
           description: The user's total points
         awards:
           type: array
@@ -2639,9 +3228,11 @@ components:
             $ref: '#/components/schemas/PointsAward'
       required:
         - id
+        - key
         - name
         - description
         - badgeUrl
+        - maxPoints
         - total
         - awards
     LeaderboardResponse:
@@ -2661,11 +3252,6 @@ components:
           type: string
           description: The unique key used to reference the leaderboard in APIs.
           example: weekly-words
-        status:
-          type: string
-          enum: ['active', 'scheduled', 'finished']
-          description: The status of the leaderboard.
-          example: active
         rankBy:
           type: string
           enum: ['points', 'streak', 'metric']
@@ -2737,6 +3323,11 @@ components:
         - $ref: '#/components/schemas/LeaderboardResponse'
         - type: object
           properties:
+            status:
+              type: string
+              enum: ['active', 'scheduled', 'finished']
+              description: The status of the leaderboard.
+              example: active
             rankings:
               type: array
               description: Array of user rankings for the leaderboard.
@@ -2744,6 +3335,7 @@ components:
                 $ref: '#/components/schemas/LeaderboardRanking'
           required:
             - rankings
+            - status
     MetricEventPointsResponse:
       title: MetricEventPointsResponse
       type: object
@@ -2752,7 +3344,7 @@ components:
         - type: object
           properties:
             added:
-              type: number
+              type: integer
               description: The points added by this event.
               example: 10
           required:
@@ -2789,7 +3381,7 @@ components:
               description: The user's rank in the leaderboard before the event, or null if the user was not on the leaderboard before the event.
               example: 100
             threshold:
-              type: number
+              type: integer
               description: The minimum value required to enter the leaderboard according to its current rankings.
               example: 25000
           required:
@@ -3127,13 +3719,13 @@ components:
       type: object
       properties:
         from:
-          type: number
+          type: integer
           description: The start of the points range. Inclusive.
         to:
-          type: number
+          type: integer
           description: The end of the points range. Inclusive.
         users:
-          type: number
+          type: integer
           description: The number of users in this points range.
       required:
         - from
@@ -3161,7 +3753,7 @@ components:
           enum: ['metric', 'achievement', 'streak', 'time', 'user_creation']
           description: The type of trigger.
         points:
-          type: number
+          type: integer
           description: The points awarded by this trigger.
         status:
           type: string
@@ -3174,10 +3766,10 @@ components:
           type: string
           description: The unique ID of the metric associated with this trigger, if the trigger is a metric.
         metricThreshold:
-          type: number
+          type: integer
           description: The amount that a user must increase the metric to earn the points, if the trigger is a metric.
         streakLengthThreshold:
-          type: number
+          type: integer
           description: The number of consecutive streak periods that a user must complete to earn the points, if the trigger is a streak.
         metricName:
           type: string
@@ -3190,7 +3782,7 @@ components:
           enum: ['hour', 'day']
           description: The time unit of the trigger, if the trigger is a time interval.
         timeInterval:
-          type: number
+          type: integer
           description: The interval of the trigger in the time unit, if the trigger is a time interval.
         userAttributes:
           type: array
@@ -3259,6 +3851,11 @@ components:
             - string
             - 'null'
           description: The URL of the badge image for the points system, if one has been uploaded.
+        maxPoints:
+          type:
+            - number
+            - 'null'
+          description: The maximum number of points a user can be awarded in this points system
         triggers:
           type: array
           description: Array of active triggers for this points system.
@@ -3269,6 +3866,7 @@ components:
         - name
         - description
         - badgeUrl
+        - maxPoints
         - triggers
     StreakRankingUser:
       title: StreakRankingUser
@@ -3381,15 +3979,47 @@ components:
                 - 'null'
               description: The user's current value in this leaderboard. Null if the user is not on the leaderboard.
               example: 4500
+          required:
+            - rank
+            - value
+    UserLeaderboardResponseWithHistory:
+      title: UserLeaderboardResponseWithHistory
+      type: object
+      description: A user's data for a specific leaderboard including rank, value, and history.
+      allOf:
+        - $ref: '#/components/schemas/UserLeaderboardResponse'
+        - type: object
+          properties:
             history:
               type: array
               items:
                 $ref: '#/components/schemas/LeaderboardEvent'
               description: An array of events showing the user's rank and value changes over time.
           required:
-            - rank
-            - value
             - history
+    WebhookUserLeaderboardResponse:
+      title: WebhookUserLeaderboardResponse
+      type: object
+      description: A user's data for a specific leaderboard including rank, value, and history.
+      allOf:
+        - $ref: '#/components/schemas/UserLeaderboardResponse'
+        - type: object
+          properties:
+            previousRank:
+              type:
+                - integer
+                - 'null'
+              description: The user's rank before this event, or null if they were not on the leaderboard.
+              example: 5
+            previousValue:
+              type:
+                - integer
+                - 'null'
+              description: The user's value before this event, or null if they were not on the leaderboard.
+              example: 1000
+          required:
+            - previousRank
+            - previousValue
     CreateStreakFreezesRequest:
       title: CreateStreakFreezesRequest
       type: object
