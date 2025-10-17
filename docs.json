@@ -34,6 +34,9 @@
       "measurementId": "G-R146N3CQHE"
     }
   },
+  "contextual": {
+    "options": ["copy", "view", "chatgpt", "claude", "perplexity"]
+  },
   "navigation": {
     "tabs": [
       {
