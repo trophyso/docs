@@ -52,9 +52,13 @@ To create a weekly leaderboard, set up a [repeating leaderboard](#repeating-lead
 
 This will make sure each run of the leaderboard consistently tracks the start and end of each week that your users are familiar with.
 
-## Ranking Method
+## Ranking Logic
 
-Leaderboards in Trophy can be configured to rank users in a few different ways.
+Leaderboards in Trophy are configurable to rank participants in a number of different ways to support common use cases.
+
+### Ranking Methods
+
+The ranking method of a leaderboard determines on what dimension participants will be ordered.
 
 <Frame>
   <img
@@ -65,23 +69,49 @@ Leaderboards in Trophy can be configured to rank users in a few different ways.
   />
 </Frame>
 
-### Metric Rankings
+#### Metric Rankings
 
 Metric leaderboards are linked to an existing Trophy [Metric](/platform/metrics) and rank users based on their progress against it.
 
 Use metric leaderboards if you just want to rank users based on a single interaction.
 
-### Points Rankings
+#### Points Rankings
 
 Points leaderboards are linked to an existing Trophy [Points System](/platform/points) and automatically rank users according to their total points.
 
 Use a points leaderboard if you want to rank users based on a combination of metrics, achievements or other Trophy features.
 
-### Streak Rankings
+#### Streak Rankings
 
 Streak leaderboards rank users based on their current streak length.
 
 <Tip>Streak leaderboards can only be [perpetual](#perpetual-leaderboards).</Tip>
+
+### Ranking Breakdowns
+
+Leaderboards in Trophy can be configured to group users into smaller subsets according to a specific [custom user attribute](#custom-user-attributes).
+
+<Tip>
+Where possible we consider this best practice as smaller, more socially-connected leaderboards often have higher engagement than global leaderboards. This is why we [limit](#participant-limits) leaderboards to a maximum of 1,000 participants.
+
+If you think you want to create a leaderboard with a higher number of participants than this, instead consider using breakdown attributes.
+
+</Tip>
+
+On the leaderboard configuration page, create or select your user attribute in the 'Breakdown Attribute' field. Trophy will automatically start grouping users into smaller leaderboards based on the values of your chosen attribute for each of your users.
+
+<Frame>
+  <video
+    autoPlay
+    muted
+    loop
+    playsInline
+    className="w-full aspect-15/4"
+    src="../assets/platform/leaderboards/breakdowns.mp4"
+  ></video>
+</Frame>
+
+To fetch rankings for a particular group of users with a specific attribute value, use the [leaderboard rankings API](/api-reference/endpoints/leaderboards/get-leaderboard), specifying the attribute value in the [`userAttributes` parameter](/api-reference/endpoints/leaderboards/get-leaderboard#parameter-user-attributes).
 
 ## Start & End Dates
 
@@ -127,23 +157,14 @@ Leaderboards in Trophy have a maximum number of participants of **1,000**. Howev
 
 If a leaderboard already has a number of participants that matches its configured maximum, new users will have to surpass the score of the lowest rank to join the leaderboard.
 
-We plan to test increasing participant limits, however as computing leaderboard rankings can be resource intensive, there is always a tradeoff between correctness and scale.
+<Tip>
+We chose to limit leaderboard size to help guide customers on best practice.
 
-Read on for more information on how we think about this.
+Traditionally, leaderboards with lots of participants fail to engage users beyond the top 1%, and have a **negative** impact on users in the bottom half, particularly new users. To avoid this, keep your leaderboards small by breaking them down into smaller leaderboards using breakdown attributes(#ranking-breakdowns).
 
-### Tradeoffs
+For more background on the negative effects on global leaderboards, read this [blog post](https://www.trophy.so/blog/leaderboard-only-motivating-top-one-percent).
 
-As leaderboards increase in size, the time required to compute a user's new rank based on a state change increases as `O(n log n)`. If applications rely on each state change needing to know the users new rank in realtime, then this added latency can lead to a poor user experience.
-
-If however you don't care about realtime updates and are happy to accept eventual correctness, then leaderboards can increase in size without much impact.
-
-We chose to favor a more engaging, realtime experience where applications can trust Trophy to communicate changes in rank immediately and correctly, rather than supporting arbitrarily large numbers of participants but without the correctness that enables a richer user experience.
-
-### Our Vision
-
-Our long term vision for leaderboards is centered around facilitating smaller, more socially-relevant interactions more akin to 'leagues' than longer, platform-wide rankings that often fail to engage users outside the top 10%.
-
-We hope you agree this is the right approach but if you have any thoughts then [let us know!](mailto:support@trophy.so).
+</Tip>
 
 ## Creating Leaderboards
 
