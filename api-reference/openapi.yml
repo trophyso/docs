@@ -32,6 +32,14 @@ paths:
             client = TrophyApi(api_key='YOUR_API_KEY')
 
             response = client.achievements.all()
+      parameters:
+        - name: userAttributes
+          in: query
+          description: Optional colon-delimited user attributes in the format attribute:value,attribute:value. Only achievements accessible to a user with the provided attributes will be returned.
+          required: false
+          schema:
+            type: string
+          example: plan-type:premium,region:us-east
       responses:
         '200':
           description: Successful operation
@@ -352,6 +360,7 @@ paths:
                         runUnit: null
                         runInterval: 0
                         maxParticipants: 100
+                        breakdownAttribute: null
                         metricName: words written
                         metricKey: words-written
                         threshold: 10
@@ -1825,6 +1834,7 @@ paths:
                     start: '2025-01-01'
                     end: null
                     maxParticipants: 100
+                    breakdownAttribute: null
                     runUnit: day
                     runInterval: 7
                     rank: 2
@@ -1908,7 +1918,7 @@ paths:
           example: points-system-key
         - name: userAttributes
           in: query
-          description: Optional colon-delimited user attribute filters in the format attributeKey:value,attributeKey:value. Only users matching ALL specified attributes will be included in the points breakdown.
+          description: Optional colon-delimited user attribute filters in the format attribute:value,attribute:value. Only users matching ALL specified attributes will be included in the points breakdown.
           required: false
           schema:
             type: string
@@ -2138,6 +2148,7 @@ paths:
                       start: '2025-01-01'
                       end: null
                       maxParticipants: 100
+                      breakdownAttribute: null
                       runUnit: day
                       runInterval: 7
                     - id: 5100fe51-6bce-6j44-b0hs-bddc4e123683
@@ -2151,6 +2162,7 @@ paths:
                       start: '2025-01-01'
                       end: null
                       maxParticipants: 50
+                      breakdownAttribute: null
                       runUnit: null
                       runInterval: 0
         '401':
@@ -2245,6 +2257,13 @@ paths:
           schema:
             type: string
           example: 'user-123'
+        - name: userAttributes
+          in: query
+          description: Attribute key and value to filter the rankings by, separated by a colon. This parameter is required, and only valid for leaderboards with a breakdown attribute.
+          required: false
+          schema:
+            type: string
+          example: city:London
       responses:
         '200':
           description: Successful operation
@@ -2268,6 +2287,7 @@ paths:
                     start: '2025-01-01'
                     end: null
                     maxParticipants: 100
+                    breakdownAttribute: null
                     runUnit: day
                     runInterval: 7
                     rankings:
@@ -2807,6 +2827,7 @@ webhooks:
                     start: '2025-01-01'
                     end: null
                     maxParticipants: 100
+                    breakdownAttribute: null
                     runUnit: day
                     runInterval: 7
                     rankings:
@@ -2856,6 +2877,7 @@ webhooks:
                     start: '2025-01-01'
                     end: null
                     maxParticipants: 100
+                    breakdownAttribute: null
                     runUnit: day
                     runInterval: 7
                     rankings:
@@ -2913,6 +2935,7 @@ webhooks:
                     start: '2025-01-01'
                     end: null
                     maxParticipants: 100
+                    breakdownAttribute: null
                     runUnit: day
                     runInterval: 7
                     rankings:
@@ -2981,6 +3004,7 @@ webhooks:
                     start: '2025-01-01'
                     end: null
                     maxParticipants: 100
+                    breakdownAttribute: null
                     runUnit: day
                     runInterval: 7
                     rank: 2
@@ -3257,6 +3281,12 @@ components:
           enum: ['points', 'streak', 'metric']
           description: What the leaderboard ranks by.
           example: metric
+        breakdownAttribute:
+          type:
+            - string
+            - 'null'
+          description: The key of the attribute to break down this leaderboard by.
+          example: country
         metricKey:
           type: string
           description: The key of the metric to rank by, if rankBy is 'metric'.
@@ -3311,6 +3341,7 @@ components:
         - status
         - description
         - rankBy
+        - breakdownAttribute
         - start
         - end
         - maxParticipants
@@ -3384,6 +3415,10 @@ components:
               type: integer
               description: The minimum value required to enter the leaderboard according to its current rankings.
               example: 25000
+            breakdownAttributeValue:
+              type: string
+              description: For leaderboards with a breakdown attribute, the value of the attribute for the user.
+              example: USA
           required:
             - start
             - end
