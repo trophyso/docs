@@ -3645,12 +3645,6 @@ components:
           example:
             department: engineering
             role: developer
-      required:
-        - email
-        - name
-        - deviceTokens
-        - subscribeToEmails
-        - attributes
     UpsertedUser:
       title: Upserted User
       type: object
@@ -3669,28 +3663,73 @@ components:
       title: User
       type: object
       description: A user of your application.
-      allOf:
-        - $ref: '#/components/schemas/UpsertedUser'
-        - type: object
-          properties:
-            control:
-              type: boolean
-              description: Whether the user is in the control group, meaning they do not receive emails or other communications from Trophy.
-              example: false
-            created:
-              type: string
-              format: date-time
-              description: The date and time the user was created, in ISO 8601 format.
-              example: '2021-01-01T00:00:00Z'
-            updated:
-              type: string
-              format: date-time
-              description: The date and time the user was last updated, in ISO 8601 format.
-              example: '2021-01-01T00:00:00Z'
-          required:
-            - control
-            - created
-            - updated
+      properties:
+        id:
+          type: string
+          description: The ID of the user in your database. Must be a string.
+          example: user-id
+        email:
+          type:
+            - string
+            - 'null'
+          description: The user's email address.
+          example: user@example.com
+        name:
+          type:
+            - string
+            - 'null'
+          description: The name of the user.
+          example: John Doe
+        tz:
+          type:
+            - string
+            - 'null'
+          description: The user's timezone.
+          example: Europe/London
+        deviceTokens:
+          type: array
+          description: The user's device tokens.
+          items:
+            type: string
+            description: The device token.
+          example: ['token1', 'token2']
+        subscribeToEmails:
+          type: boolean
+          description: Whether the user is opted into receiving Trophy-powered emails.
+          example: true
+        attributes:
+          type: object
+          additionalProperties:
+            type: string
+          description: User attributes as key-value pairs. Keys must match existing user attributes set up in the Trophy dashboard.
+          example:
+            department: engineering
+            role: developer
+        control:
+          type: boolean
+          description: Whether the user is in the control group, meaning they do not receive emails or other communications from Trophy.
+          example: false
+        created:
+          type: string
+          format: date-time
+          description: The date and time the user was created, in ISO 8601 format.
+          example: '2021-01-01T00:00:00Z'
+        updated:
+          type: string
+          format: date-time
+          description: The date and time the user was last updated, in ISO 8601 format.
+          example: '2021-01-01T00:00:00Z'
+      required:
+        - id
+        - email
+        - name
+        - tz
+        - deviceTokens
+        - subscribeToEmails
+        - attributes
+        - control
+        - created
+        - updated
     ErrorBody:
       title: ErrorBody
       type: object
