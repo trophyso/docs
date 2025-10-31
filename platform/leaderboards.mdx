@@ -5,6 +5,9 @@ description: Learn how to use Leaderboards in a gamified product experience with
 icon: /icons/leaderboard.svg
 ---
 
+import LeaderboardSingleAttributeRequest from "/snippets/leaderboard-rankings-request-single-attribute.mdx";
+import LeaderboardMultiAttributeRequest from "/snippets/leaderboard-rankings-request-multiple-attributes.mdx";
+
 <Frame>
   <img
     height="100"
@@ -92,7 +95,7 @@ Streak leaderboards rank users based on their current streak length.
 Leaderboards in Trophy can be configured to group users into smaller subsets according to a specific [custom user attribute](#custom-user-attributes).
 
 <Tip>
-Where possible we consider this best practice as smaller, more socially-connected leaderboards often have higher engagement than global leaderboards. This is why we [limit](#participant-limits) leaderboards to a maximum of 1,000 participants.
+We consider using breakdowns best practice as smaller, more socially-connected leaderboards often have higher engagement than global leaderboards. This is why we [limit](#participant-limits) leaderboards to a maximum of 1,000 participants.
 
 If you think you want to create a leaderboard with a higher number of participants than this, instead consider using breakdown attributes.
 
@@ -111,7 +114,13 @@ On the leaderboard configuration page, create or select your user attribute in t
   ></video>
 </Frame>
 
-To fetch rankings for a particular group of users with a specific attribute value, use the [leaderboard rankings API](/api-reference/endpoints/leaderboards/get-leaderboard), specifying the attribute value in the [`userAttributes` parameter](/api-reference/endpoints/leaderboards/get-leaderboard#parameter-user-attributes).
+To fetch rankings for a particular group of users with a specific attribute value, use the [leaderboard rankings API](/api-reference/endpoints/leaderboards/get-leaderboard), specifying the attribute value in the [`userAttributes` parameter](/api-reference/endpoints/leaderboards/get-leaderboard#parameter-user-attributes) as follows:
+
+<LeaderboardSingleAttributeRequest />
+
+If you wish to fetch rankings for a particular group of users with a specific combination of user attributes, create a new attribute to track the combination and use that as your breakdown attribute as follows:
+
+<LeaderboardMultiAttributeRequest />
 
 ## Start & End Dates
 
