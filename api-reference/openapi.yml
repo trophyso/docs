@@ -2192,6 +2192,7 @@ paths:
         - Leaderboards
       x-codeSamples:
         - lang: javascript
+          label: Get rankings
           source: |
             import { TrophyApiClient } from '@trophyso/node';
 
@@ -2204,7 +2205,23 @@ paths:
               limit: 10,
               run: "2025-01-15"
             });
+        - lang: javascript
+          label: Get rankings by user attribute
+          source: |
+            import { TrophyApiClient } from '@trophyso/node';
+
+            const trophy = new TrophyApiClient({
+              apiKey: 'YOUR_API_KEY'
+            });
+
+            const response = await trophy.leaderboards.get("weekly-words", {
+              offset: 0,
+              limit: 10,
+              run: "2025-01-15",
+              userAttributes: "city:london"
+            });
         - lang: python
+          label: Get rankings
           source: |
             from trophy import TrophyApi
 
@@ -2215,6 +2232,20 @@ paths:
               offset=0,
               limit=10,
               run="2025-01-15"
+            )
+        - lang: python
+          label: Get rankings by user attribute
+          source: |
+            from trophy import TrophyApi
+
+            client = TrophyApi(api_key='YOUR_API_KEY')
+
+            response = client.leaderboards.get(
+              key="weekly-words",
+              offset=0,
+              limit=10,
+              run="2025-01-15",
+              user_attributes="city:london"
             )
       parameters:
         - name: key
@@ -2235,7 +2266,7 @@ paths:
           example: 20
         - name: limit
           in: query
-          description: Maximum number of rankings to return.
+          description: Maximum number of rankings to return. Cannot be greater than the size of the leaderboard.
           required: false
           schema:
             type: integer
@@ -2259,7 +2290,7 @@ paths:
           example: 'user-123'
         - name: userAttributes
           in: query
-          description: Attribute key and value to filter the rankings by, separated by a colon. This parameter is required, and only valid for leaderboards with a breakdown attribute.
+          description: Attribute key and value to filter the rankings by, separated by a colon. For example, `city:London`. This parameter is required, and only valid for leaderboards with a breakdown attribute.
           required: false
           schema:
             type: string
