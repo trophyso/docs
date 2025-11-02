@@ -162,23 +162,22 @@ Here's an example where a fictional study platform is using a metric to track th
 
 <MetricChangeRequestBlock />
 
-Any [Achievements](/platform/achievements), [Streaks](/platform/streaks) or [Points](/platform/points) that have been set up against this metric will be automatically processed, and the response will contain any updates to the users progress that are a direct result of the event occurring:
+Any [Achievements](/platform/achievements), [Streaks](/platform/streaks), [Points](/platform/points) or [Leaderboards](/platform/leaderboards) that have been set up against this metric will be automatically processed, and the response will contain any updates to the users progress that are a direct result of the event occurring:
 
 <MetricChangeResponseBlock />
 
 In this example the response includes the following:
 
-- Newly unlocked achievements as a result of the event
+- The users newly unlocked achievements as a result of the event
 - The users latest streak as result of the event
-- Any points awards as a result of the event
+- The users latest points for each points system that changed as a result of the event
+- The users latest leaderboard data for each leaderboard that changed as a result of the event
 
 With a little bit of custom code, this response data can be used to drive any in-app experience you wish including:
 
 - Triggering in-app notifications
 - Sound effects
 - Animations
-
-Additionally, any [Emails](/platform/emails) configured to track the metric will be scheduled automatically by Trophy.
 
 Watch Charlie integrate metric tracking into a simple NextJS application using the Trophy [NodeJS SDK](/api-reference/client-libraries):
 
