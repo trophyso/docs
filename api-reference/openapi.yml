@@ -3061,7 +3061,6 @@ components:
         - daily
         - weekly
         - monthly
-        - yearly
     BaseStreakResponse:
       title: Streak Response
       type: object
@@ -3798,13 +3797,13 @@ components:
           additionalProperties:
             $ref: '#/components/schemas/MetricEventPointsResponse'
           description: >-
-            A map of points systems by key.
+            A map of points systems by key. Only contains points systems that were affected by the event.
         leaderboards:
           type: object
           additionalProperties:
             $ref: '#/components/schemas/MetricEventLeaderboardResponse'
           description: >-
-            A map of leaderboards by key.
+            A map of leaderboards by key. Only contains leaderboards that were affected by the event.
         idempotencyKey:
           type: string
           description: The idempotency key used for the event, if one was provided.
