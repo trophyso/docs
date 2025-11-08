@@ -5,6 +5,8 @@ description: Learn how Trophy controls costs by charging based on monthly active
 icon: gauge
 ---
 
+import { PlanBadge } from "/snippets/plan-badge.jsx";
+
 ## Usage-based Billing
 
 Trophy follows a usage-based pricing model where customers only pay for the units of usage they consume. For Trophy, a unit of usage corresponds to a single [Monthly Active User](##monthly-active-users-maus) (MAU).
@@ -19,39 +21,13 @@ Trophy defines an MAU as a single user that is involved in at least one API call
   and never again.
 </Tip>
 
-## Features
-
-Trophy splits features into two groups, [Core](#core-features), and [Advanced](#advanced-features).
-
-### Core Features
-
-Core features include all gamification mechanics including:
-
-- [Achievements](/platform/achievements)
-- [Streaks](/platform/streaks)
-- [Points](/platform/points)
-- [Leaderboards](/platform/leaderboards)
-- [Emails](/platform/emails)
-
-All customers have access to all core features.
-
-### Advanced Features
-
-Advanced features include:
-
-- [Webhooks](/webhooks)
-- [Custom Attributes](/platform/users#custom-user-attributes)
-- [DNS Verification](/platform/emails#dns-verification-advanced)
-
-Advanced features are limited to [paid plans](#paid-plans).
-
 ## Free Tier
 
-The free tier grants access to all [Core Features](#core-features) for up to **100 MAUs**. This allows teams to test and evaluate Trophy without accruing usage charges.
+The free tier allows teams to test and evaluate Trophy up to **100 MAUs** without accruing usage charges.
 
 <Note>
-  If you exceed the free plan, don't panic! Nothing will stop working, we'll
-  just reach out to you with a friendly reminder to upgrade.
+  Once you exceed the free plan, your account will continue to function and
+  we'll reach out to you directly with a friendly reminder to upgrade.
 </Note>
 
 ## Paid Plans
@@ -62,16 +38,16 @@ Trophy has two paid plans, [Starter](#starter-plan) and [Pro](#pro-plan).
 
 The starter plan is for customers who have graduated from the testing and evaluation phase and are using Trophy in small-scale production deployments.
 
-Unlike the [Free Tier](#free-tier), the starter plan has no limits on monthly active users.
+Unlike the [Free Tier](#free-tier), the starter plan has no limits on MAUs.
 
 <Tip>
-  Beyond ~ 16,000 MAUs it's usually more cost-efficient to upgrade to the [Pro
+  Beyond ~ `16,000` MAUs it's usually more cost-efficient to upgrade to the [Pro
   Plan](#pro-plan).
 </Tip>
 
 ### Pro Plan
 
-The pro plan is for customers who are using Trophy in larger scale deployments or who require [advanced features](#advanced-features).
+The pro plan is for customers who are using Trophy in larger scale deployments or who require more advanced [features](#features).
 
 ### Plan Limits
 
@@ -83,9 +59,30 @@ Here's a comparison of the limits of each paid plan:
 | Included MAUs   | `1,000` | `10,000` |
 | Included emails | `5,000` | `50,000` |
 
+## Features
+
+Here's a list of all Trophy features and the plan they become available on:
+
+<PlanBadge plan="free" />
+
+- [Achievements](/platform/achievements)
+- [Streaks](/platform/streaks)
+- [Points](/platform/points)
+- [Leaderboards](/platform/leaderboards)
+- [Emails](/platform/emails)
+
+<PlanBadge plan="starter" />
+
+- [DNS Verification](/platform/emails#dns-verification-advanced)
+
+<PlanBadge plan="pro" />
+
+- [Webhooks](/webhooks)
+- [Custom Attributes](/platform/users#custom-user-attributes)
+
 ## Custom Contracts
 
-If you have more than **100,000 MAUs** and would like to discuss custom contracts to suit your business needs then please [get in touch](mailto:hello@trophy.so) and we'll be happy to help.
+If you have more than `1M` MAUs and would like to discuss custom contracts to suit your business needs then please [get in touch](mailto:hello@trophy.so) and we'll be happy to help.
 
 ## Viewing Your Usage
 
