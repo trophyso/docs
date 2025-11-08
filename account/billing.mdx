@@ -1,7 +1,7 @@
 ---
 title: Billing
-description: Learn how Trophy only charges for the number of users that use your product.
-"og:description": Learn how Trophy only charges for to the number of users that use your product.
+description: Learn how Trophy controls costs by charging based on monthly active users.
+"og:description": Learn how Trophy controls costs by charging based on monthly active users.
 icon: gauge
 ---
 
@@ -13,33 +13,75 @@ Trophy follows a usage-based pricing model where customers only pay for the unit
 
 Trophy defines an MAU as a single user that is involved in at least one API call in a given month.
 
-<Note>
+<Tip>
   Bear in mind **you never pay for churned users**. If a user signs up to your
   product in a given month but doesn't return, you only pay for that user once
   and never again.
-</Note>
+</Tip>
 
-## Free tier
+## Features
 
-All customers start on the free tier. This allows dev teams to build and test implementations for up to **100 MAUs** without accruing any usage charges.
+Trophy splits features into two groups, [Core](#core-features), and [Advanced](#advanced-features).
+
+### Core Features
+
+Core features include all gamification mechanics including:
+
+- [Achievements](/platform/achievements)
+- [Streaks](/platform/streaks)
+- [Points](/platform/points)
+- [Leaderboards](/platform/leaderboards)
+- [Emails](/platform/emails)
+
+All customers have access to all core features.
+
+### Advanced Features
+
+Advanced features include:
+
+- [Webhooks](/webhooks)
+- [Custom Attributes](/platform/users#custom-user-attributes)
+- [DNS Verification](/platform/emails#dns-verification-advanced)
+
+Advanced features are limited to [paid plans](#paid-plans).
+
+## Free Tier
+
+The free tier grants access to all [Core Features](#core-features) for up to **100 MAUs**. This allows teams to test and evaluate Trophy without accruing usage charges.
 
 <Note>
   If you exceed the free plan, don't panic! Nothing will stop working, we'll
-  just reach out to you with a friendly reminder to add a payment method.
+  just reach out to you with a friendly reminder to upgrade.
 </Note>
 
-## Estimating Costs
+## Paid Plans
 
-You'll be charged a flat rate of `$49` + `$0.015` / MAU (USD) above the [Free Tier](#free-tier). You can estimate your monthly charges using our [calculator](https://www.trophy.so/pricing), but here are some common examples:
+Trophy has two paid plans, [Starter](#starter-plan) and [Pro](#pro-plan).
 
-| MAUs      | Cost (USD) |
-| --------- | ---------- |
-| `100`     | `0`        |
-| `1,000`   | `62.5`     |
-| `5,000`   | `122.5`    |
-| `10,000`  | `197.5`    |
-| `50,000`  | `797.5`    |
-| `100,000` | `1,547.5`  |
+### Starter Plan
+
+The starter plan is for customers who have graduated from the testing and evaluation phase and are using Trophy in small-scale production deployments.
+
+Unlike the [Free Tier](#free-tier), the starter plan has no limits on monthly active users.
+
+<Tip>
+  Beyond ~ 16,000 MAUs it's usually more cost-efficient to upgrade to the [Pro
+  Plan](#pro-plan).
+</Tip>
+
+### Pro Plan
+
+The pro plan is for customers who are using Trophy in larger scale deployments or who require [advanced features](#advanced-features).
+
+### Plan Limits
+
+Here's a comparison of the limits of each paid plan:
+
+| Item            | Starter | Pro      |
+| --------------- | ------- | -------- |
+| Base price ($)  | `99`    | `299`    |
+| Included MAUs   | `1,000` | `10,000` |
+| Included emails | `5,000` | `50,000` |
 
 ## Custom Contracts
 
@@ -47,14 +89,14 @@ If you have more than **100,000 MAUs** and would like to discuss custom contract
 
 ## Viewing Your Usage
 
-You can view your usage for the current billing period in the [Trophy dashboard](https://app.trophy.so) and view all past invoices on the [Billing](#billing) page.
+You can view your usage for the current billing period on the [billing page](https://app.trophy.so/billing) of the Trohpy dashboard and view all past invoices in your billing portal.
 
 <Frame>
   <img
     height="200"
     width="50%"
     noZoom
-    src="../assets/account/billing/usage_widget.png"
+    src="../assets/account/billing/plan-usage.png"
   />
 </Frame>
 
@@ -62,7 +104,7 @@ You can view your usage for the current billing period in the [Trophy dashboard]
 
 <AccordionGroup>
   <Accordion title="When will I be charged?">
-    We charge all customers on the 1st of the month in arrears.
+    We charge all customers on the 1st of the month for usage in arrears.
   </Accordion>
 </AccordionGroup>
 
