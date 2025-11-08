@@ -5,6 +5,8 @@ description: Learn how to use emails in a gamified product experience with Troph
 icon: mail
 ---
 
+import { PlanBadge } from "/snippets/plan-badge.jsx";
+
 Trophy can send automated emails to users based on key triggers without requiring any code. Here we'll look at what these triggers are, and how they can form part of your product's gamification experience.
 
 ## Types Of Emails
@@ -86,7 +88,10 @@ Also, if you want to change the address in the future, you'll have to go through
 
 #### DNS Verification (Advanced)
 
-<Tip>Recommended for production use</Tip>
+<Note>
+  This feature is available on the [Starter](/account/billing#starter-plan)
+  plan.
+</Note>
 
 For production use we recommend DNS Verification. Once set up, this allows you to configure Trophy to send emails from any address on your domain. So if you want to change the address in future, you won't need to verify again.
 
