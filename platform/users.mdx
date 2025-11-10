@@ -51,6 +51,14 @@ Additionally, you can tell Trophy about any of the following optional key attrib
   identifier](https://en.wikipedia.org/wiki/List_of_tz_database_time_zones).
   Used for streaks, leaderboard rankings and sending emails to users in
   accordance with their local clock.
+
+In JavaScript, you can fetch the users time zone using this snippet:
+
+```js Fetching timezone
+// e.g. 'Europe/London'
+const timezone = Intl.DateTimeFormat().resolvedOptions().timeZone;
+```
+
 </ParamField>
 
 <ParamField path="subscribeToEmails" type="boolean" default="true">
