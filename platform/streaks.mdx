@@ -29,7 +29,9 @@ Trophy will automatically compute streak data for all streak frequencies, which 
 
 You can choose which metrics should contribute to a user's streak
 
-For example, if your platform is a language learning app, you might want to track a user's streak based on the number of lessons completed, while also tracking a metric for the number of words learned that doesn't affect streaks. In this case, you would configure the lessons completed metric to contribute to streak's but not the words learned metric.
+For example, if your platform is a language learning app, you might want to track a user's streak based on the number of lessons completed, while also tracking a metric for the number of words learned that doesn't affect streaks.
+
+In this case, you would configure the lessons completed metric to contribute to streaks but not the words learned metric.
 
 <Callout intent="info">
   Regardless of whether streaks are enabled or disabled, Trophy will still
@@ -81,6 +83,25 @@ Trophy automatically calculates streaks for all users when users
 
 <Frame>
   <img height="200" noZoom src="../assets/quick-start/streak_configure.jpg" />
+</Frame>
+
+## Managing Streaks
+
+This section outlines some of the operations you can perform to manage user's streaks in your application.
+
+### Restoring A Users Streak
+
+To restore a user's streak, head to the user details page and use the 'Restore Streak' action. Restoring a user's streak sets it to the length it was when they last lost it.
+
+<Frame>
+  <video
+    autoPlay
+    muted
+    loop
+    playsInline
+    className="w-full aspect-15/4"
+    src="../assets/platform/streaks/restoring_streaks.mp4"
+  ></video>
 </Frame>
 
 ## Displaying Streaks
