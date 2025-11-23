@@ -358,7 +358,7 @@ paths:
                         description: null
                         rankBy: metric
                         runUnit: null
-                        runInterval: 0
+                        runInterval: null
                         maxParticipants: 100
                         breakdownAttribute: null
                         metricName: words written
@@ -1814,6 +1814,16 @@ paths:
             type: string
             format: date
           example: '2025-01-15'
+        - name: numEvents
+          in: query
+          description: The number of events to return in the history array.
+          required: false
+          schema:
+            type: integer
+            default: 10
+            minimum: 1
+            maximum: 100
+          example: 10
       responses:
         '200':
           description: Successful operation
@@ -2164,7 +2174,7 @@ paths:
                       maxParticipants: 50
                       breakdownAttribute: null
                       runUnit: null
-                      runInterval: 0
+                      runInterval: null
         '401':
           description: 'Unauthorized'
           content:
@@ -3361,8 +3371,10 @@ components:
           description: The repetition type for recurring leaderboards, or null for one-time leaderboards.
           example: day
         runInterval:
-          type: integer
-          description: The interval between repetitions, relative to the start date and repetition type.
+          type:
+            - integer
+            - 'null'
+          description: The interval between repetitions, relative to the start date and repetition type. Null for one-time leaderboards.
           example: 7
       required:
         - id
