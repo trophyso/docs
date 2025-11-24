@@ -8,6 +8,10 @@ icon: /icons/leaderboard.svg
 import LeaderboardSingleAttributeRequest from "/snippets/leaderboard-rankings-request-single-attribute.mdx";
 import LeaderboardMultiAttributeRequest from "/snippets/leaderboard-rankings-request-multiple-attributes.mdx";
 
+## What are Leaderboards?
+
+Leaderboards are social competitions between users of your application. Use leaderboards to increase engagement and foster social interaction.
+
 <Frame>
   <img
     height="100"
@@ -17,17 +21,15 @@ import LeaderboardMultiAttributeRequest from "/snippets/leaderboard-rankings-req
   />
 </Frame>
 
-## What are Leaderboards?
-
-Leaderboards are social competitions between users of your application. Use leaderboards to increase engagement and foster social interaction.
-
 ## Types of Leaderboards
 
-Leaderboards in Trophy can be one of a few different types.
+In this section we outline the different types of leaderboards supported in Trophy and when to use each one.
 
 ### Perpetual Leaderboards
 
 Perpetual leaderboards never reset. Once started they continually track and rank users progress over time forever, or until the configured [end date](#end-dates).
+
+Use perpetual leaderboards when you want to create all-time rankings of user activity.
 
 ### Repeating Leaderboards
 
@@ -35,25 +37,25 @@ Repeating leaderboards can be configured to reset after any arbitrary number of 
 
 In Trophy each instance of a repeating leaderboard is called a **'run'**. For example, a monthly leaderboard would have 12 runs in a year, but a daily leaderboard would have `n` runs in a month where `n` is the number of days in a given month.
 
-Repeating leaderboards reset all ranks at the start of each run giving new users an equal chance to compete with existing users.
-
 Trophy tracks the rankings in each run of a repeating leaderboard individually and provides [APIs](/api-reference/endpoints/leaderboards/get-leaderboard) to fetch ranking data on historical runs.
+
+<Tip>
+  We recommend using repeating leaderboards over perpetual where possible as
+  repeating leaderboards give new users an equal chance to compete with existing
+  users, helping to prevent leaderboards from becoming stale.
+</Tip>
 
 #### Handling Time Zones
 
 If you have tracked users' [time zones](/platform/users#param-tz) with Trophy, these will be used to ensure that each user has an equal chance of winning no matter where they are in the world.
 
-In practice this means leaderboards are finalized and winners chosen about 12 hours after they naturally finish in UTC to allow time for users in all time zones to make their final push.
+In practice this means leaderboards are finalized and winners chosen about 12 hours after they naturally finish in UTC to allow users in all time zones to make their final push.
 
 #### Tips for Weekly Leaderboards
 
-As the start of the week can be different in different countries, there is some debate about how to manage weekly leaderboards correctly and consistently.
+To create a weekly leaderboard, set up a [repeating leaderboard](#repeating-leaderboards) on a 7 day schedule and set the start date to be the next occurring first day of the week.
 
-We'll be adding better support for weekly leaderboards in the future based on customer requests, so if that's you [let us know](mailto:support@trophy.so)! However Trophy leaderboards will cover 90% of weekly use cases, so here's what we suggest if you want to set one up.
-
-To create a weekly leaderboard, set up a [repeating leaderboard](#repeating-leaderboards) on a 7 day schedule and set the start date to be the next occurring first day of the week. While you wait for the start date to come around, the leaderboard will be in `scheduled` status and will automatically go live on the start date.
-
-This will make sure each run of the leaderboard consistently tracks the start and end of each week that your users are familiar with.
+While you wait for the start date to come around, the leaderboard will be in `scheduled` status and will automatically go live on the start date.
 
 ## Ranking Logic
 
@@ -74,9 +76,9 @@ The ranking method of a leaderboard determines on what dimension participants wi
 
 #### Metric Rankings
 
-Metric leaderboards are linked to an existing Trophy [Metric](/platform/metrics) and rank users based on their progress against it.
+Metric leaderboards are linked to an existing Trophy [Metric](/platform/metrics) and rank users based on their total metric value.
 
-Use metric leaderboards if you just want to rank users based on a single interaction.
+Use metric leaderboards if you only want to rank users based on a single interaction.
 
 #### Points Rankings
 
@@ -88,7 +90,9 @@ Use a points leaderboard if you want to rank users based on a combination of met
 
 Streak leaderboards rank users based on their current streak length.
 
-<Tip>Streak leaderboards can only be [perpetual](#perpetual-leaderboards).</Tip>
+<Note>
+  Streak leaderboards can only be [perpetual](#perpetual-leaderboards).
+</Note>
 
 ### Ranking Breakdowns
 
@@ -171,7 +175,7 @@ If a leaderboard already has a number of participants that matches its configure
 <Tip>
 We chose to limit leaderboard size to help guide customers on best practice.
 
-Traditionally, leaderboards with lots of participants fail to engage users beyond the top 1%, and have a **negative** impact on users in the bottom half, particularly new users. To avoid this, keep your leaderboards small by breaking them down into smaller leaderboards using breakdown attributes(#ranking-breakdowns).
+Traditionally, leaderboards with lots of participants fail to engage users beyond the top 1%, and have a **negative** impact on users in the bottom half, particularly new users. To avoid this, keep your leaderboards small by breaking them down into smaller leaderboards using [breakdown attributes](#ranking-breakdowns).
 
 For more background on the negative effects on global leaderboards, read this [blog post](https://www.trophy.so/blog/leaderboard-only-motivating-top-one-percent).
 
@@ -272,21 +276,57 @@ Trophy has built-in analytics to help you understand how users are engaging with
   />
 </Frame>
 
-### Total Unique Participants
+### Total Unique Participants
 
 This chart shows how many unique users have participated in any run of a leaderboard over time. This is useful to understand how many of your users actually take part in leaderboards and how [participant limits](#participant-limits) are affecting this.
+
+<Frame>
+  <img
+    height="200"
+    width="50%"
+    noZoom
+    src="../assets/platform/leaderboards/total_unique_participants.png"
+  />
+</Frame>
 
 ### Active Users
 
 This chart show the number of users who have changed rank at least once in a given leaderboard. This is useful to get a sense of how competitive the average user is in a particular leaderboard.
 
-## Rank Changes
+<Frame>
+  <img
+    height="200"
+    width="50%"
+    noZoom
+    src="../assets/platform/leaderboards/active_users.png"
+  />
+</Frame>
+
+### Rank Changes
 
 This chart shows the total number of rank changes in a particular leaderboard over time. This is useful to understand how competitive users are across the board.
 
-## Score Distribution
+<Frame>
+  <img
+    height="200"
+    width="50%"
+    noZoom
+    src="../assets/platform/leaderboards/rank_changes.png"
+  />
+</Frame>
+
+### Score Distribution
 
 This chart is a histogram of users' scores in a particular leaderboard. This is useful to get a sense of how bunched up or spread out users are, and what sections of the rankings are the most competitive.
+
+<Frame>
+  <img
+    height="200"
+    width="50%"
+    noZoom
+    src="../assets/platform/leaderboards/score_distribution.png"
+  />
+</Frame>
 
 ## Frequently Asked Questions
 
