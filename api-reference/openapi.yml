@@ -3344,7 +3344,9 @@ components:
           description: The name of the points system to rank by, if rankBy is 'points'.
           example: Experience Points
         description:
-          type: string
+          type:
+            - string
+            - 'null'
           description: The user-facing description of the leaderboard.
           example: Compete weekly to see who writes the most words
         start:
