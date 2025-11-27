@@ -3527,9 +3527,11 @@ components:
         - type: object
           properties:
             achievedAt:
-              type: string
+              type:
+                - string
+                - 'null'
               format: date-time
-              description: The date and time the achievement was completed, in ISO 8601 format.
+              description: The date and time the achievement was completed, in ISO 8601 format. Null if the achievement has not been completed.
           required:
             - achievedAt
     AchievementWithStatsResponse:
