@@ -67,6 +67,12 @@ const timezone = Intl.DateTimeFormat().resolvedOptions().timeZone;
   `email`, attempting to set this field to true will result in an error.
 </ParamField>
 
+<ParamField path="deviceTokens" type="array<string>">
+  The list of device tokens to associate with the user. If you've configured any
+  Trophy [Push Notifications](/platform/push-notifications), then they'll only
+  be sent to a user when this field is provided.
+</ParamField>
+
 ## Custom User Attributes
 
 <Note>

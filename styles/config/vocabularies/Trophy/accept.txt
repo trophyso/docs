@@ -15,6 +15,7 @@ badgeUrl
 achievedAt
 transactionally
 tz
+APNs
 
 # Markdown rich text
 _[\w\s]+_

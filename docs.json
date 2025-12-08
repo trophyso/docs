@@ -61,7 +61,8 @@
               "platform/streaks",
               "platform/points",
               "platform/leaderboards",
-              "platform/emails"
+              "platform/emails",
+              "platform/push-notifications"
             ]
           },
           {
