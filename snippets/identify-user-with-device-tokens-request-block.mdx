@@ -1,0 +1,96 @@
+<CodeGroup>
+```bash cURL {10}
+curl --request PUT \
+  --url https://app.trophy.so/api/users/{id} \
+  --header 'Content-Type: application/json' \
+  --header 'X-API-KEY: <api-key>' \
+  --data '{
+  "email": "user@example.com",
+  "name": "User",
+  "tz": "Europe/London",
+  "subscribeToEmails": true,
+  "deviceTokens": ["token1", "token2"]
+}'
+```
+
+```typescript Node {6}
+trophy.users.identify("user-id", {
+  email: "user@example.com",
+  name: "User",
+  tz: "Europe/London",
+  subscribeToEmails: true,
+  deviceTokens: ["token1", "token2"],
+});
+```
+
+```python Python {7}
+client.users.identify(
+    id="user-id",
+    email="user@example.com",
+    name="User",
+    tz="Europe/London",
+    subscribeToEmails=True,
+    deviceTokens=["token1", "token2"],
+)
+```
+
+```php PHP {6}
+$trophy->users->identify("user-id", [
+    'email' => 'user@example.com',
+    'name' => 'User',
+    'tz' => 'Europe/London',
+    'subscribeToEmails' => true,
+    'deviceTokens' => ['token1', 'token2'],
+]);
+```
+
+```java Java {6}
+UpdatedUser user = UpdatedUser.builder()
+    .email("user@example.com")
+    .name("User")
+    .tz("Europe/London")
+    .subscribeToEmails(true)
+    .deviceTokens(Arrays.asList("token1", "token2"))
+    .build();
+
+client.users().identify("user-id", user);
+```
+
+```go Go {8}
+response, err := client.Users.Identify(
+    "user-id",
+    &api.UpdatedUser{
+        Email:            "user@example.com",
+        Name:             "User",
+        Tz:               "Europe/London",
+        SubscribeToEmails: true,
+        DeviceTokens:     []string{"token1", "token2"},
+    },
+)
+```
+
+```csharp C# {6}
+var user = new UpdatedUser {
+    Email = "user@example.com",
+    Name = "User",
+    Tz = "Europe/London",
+    SubscribeToEmails = true,
+    DeviceTokens = new[] { "token1", "token2" }
+};
+
+await trophy.Users.IdentifyAsync("user-id", user);
+```
+
+```ruby Ruby {7}
+result = client.users.identify(
+  "user-id",
+  :email => "user@example.com",
+  :name => "User",
+  :tz => "Europe/London",
+  :subscribeToEmails => true,
+  :deviceTokens => ["token1", "token2"]
+)
+```
+
+</CodeGroup>
+

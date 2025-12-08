@@ -1,0 +1,114 @@
+<CodeGroup>
+```bash cURL {10}
+curl -X POST https://app.trophy.so/api/metrics/flashcards-flipped/event \
+     -H "X-API-KEY: <apiKey>" \
+     -H "Content-Type: application/json" \
+     -d '{
+  "user": {
+    "id": "18",
+    "email": "user@example.com",
+    "tz": "Europe/London",
+    "deviceTokens": ["token1", "token2"]
+  },
+  "value": 750
+}'
+```
+
+```typescript Node {6}
+trophy.metrics.event("flashcards-flipped", {
+  user: {
+    id: "18",
+    email: "user@example.com",
+    tz: "Europe/London",
+    deviceTokens: ["token1", "token2"],
+  },
+  value: 750,
+});
+```
+
+```python Python {7}
+client.metrics.event(
+    key="flashcards-flipped",
+    user=EventRequestUser(
+        id="18",
+        email="user@example.com",
+        tz="Europe/London",
+        deviceTokens=["token1", "token2"],
+    ),
+    value=750.0,
+)
+```
+
+```php PHP {6}
+$user = new EventRequestUser([
+    'id' => '18',
+    'email' => 'user@example.com',
+    'deviceTokens' => ['token1', 'token2'],
+]);
+
+$request = new MetricsEventRequest([
+    'user' => $user,
+    'value' => 750
+]);
+
+$trophy->metrics->event("flashcards-flipped", $request);
+```
+
+```java Java {6}
+MetricsEventRequest request = MetricsEventRequest.builder()
+      .user(
+        EventRequestUser.builder()
+          .id("18")
+          .email("user@example.com")
+          .deviceTokens(Arrays.asList("token1", "token2"))
+          .build()
+      )
+      .value(750)
+      .build();
+
+EventResponse response = client.metrics().event("flashcards-flipped", request);
+```
+
+```go Go {8}
+response, err := client.Metrics.Event(
+    "flashcards-flipped",
+    &api.MetricsEventRequest{
+        User: &api.EventRequestUser{
+            Id: "18",
+            Email: "user@example.com",
+            DeviceTokens: []string{"token1", "token2"},
+        },
+        Value: 750,
+    },
+)
+```
+
+```csharp C# {6}
+var user = new EventRequestUser {
+   Id = "18",
+   Email = "user@example.com",
+   DeviceTokens = new[] { "token1", "token2" }
+};
+
+var request = new MetricsEventRequest {
+   User = user,
+   Value = 750
+};
+
+await trophy.Metrics.EventAsync("flashcards-flipped", request);
+```
+
+```ruby Ruby {7}
+result = client.metrics.event(
+  :key => 'flashcards-flipped',
+  :user => {
+    :id => '18',
+    :email => 'user@example.com',
+    :deviceTokens => ['token1', 'token2']
+  },
+  :value => 750
+)
+```
+
+</CodeGroup>
+
