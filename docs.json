@@ -166,7 +166,8 @@
               "api-reference/endpoints/users/get-a-users-streak",
               "api-reference/endpoints/users/get-a-users-points",
               "api-reference/endpoints/users/get-a-users-points-summary",
-              "api-reference/endpoints/users/get-a-users-leaderboard"
+              "api-reference/endpoints/users/get-a-users-leaderboard",
+              "api-reference/endpoints/users/get-a-users-wrapped"
             ]
           }
         ]
@@ -181,7 +182,10 @@
           },
           {
             "group": "Streaks",
-            "pages": ["admin-api/endpoints/streaks/grant-freezes"]
+            "pages": [
+              "admin-api/endpoints/streaks/grant-freezes",
+              "admin-api/endpoints/streaks/restore-streaks"
+            ]
           }
         ]
       },
