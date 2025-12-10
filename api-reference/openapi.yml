@@ -2721,7 +2721,7 @@ paths:
             });
 
             const response = await trophy.admin.streaks.restore({
-              userIds: ['user-123', 'user-456']
+              users: [{ id: 'user-123' }, { id: 'user-456' }]
             });
         - lang: python
           source: |
@@ -2730,10 +2730,10 @@ paths:
             client = TrophyApi(api_key='YOUR_API_KEY')
 
             response = client.admin.streaks.restore({
-              "userIds": ["user-123", "user-456"]
+              "users": [{"id": "user-123"}, {"id": "user-456"}]
             })
       requestBody:
-        description: Array of user IDs to restore streaks for
+        description: Array of users to restore streaks for
         required: true
         content:
           application/json:
@@ -2742,9 +2742,9 @@ paths:
             examples:
               Restore streaks for multiple users:
                 value:
-                  userIds:
-                    - user-123
-                    - user-456
+                  users:
+                    - id: user-123
+                    - id: user-456
       responses:
         '200':
           description: Successful operation
@@ -4506,18 +4506,25 @@ components:
       type: object
       description: Request body for restoring streaks for multiple users.
       properties:
-        userIds:
+        users:
           type: array
           items:
-            type: string
-          description: Array of user IDs to restore streaks for. Maximum 100 users per request.
+            type: object
+            properties:
+              id:
+                type: string
+                description: The ID of the user to restore streaks for.
+                example: user-123
+            required:
+              - id
+          description: Array of users to restore streaks for. Maximum 100 users per request.
           maxItems: 100
           minItems: 1
           example:
-            - user-123
-            - user-456
+            - id: user-123
+            - id: user-456
       required:
-        - userIds
+        - users
     RestoreStreaksResponse:
       title: RestoreStreaksResponse
       type: object
