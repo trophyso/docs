@@ -1220,6 +1220,8 @@ paths:
                       key: completed-onboarding
                       achievedAt: '2021-01-01T00:00:00Z'
                       badgeUrl: https://example.com/badge2.png
+                      completions: 100
+                      rarity: 50
                     - id: d01dcbcb-d51e-4c12-b054-dc811dcdc623
                       trigger: metric
                       key: novice-writer
@@ -1229,6 +1231,8 @@ paths:
                       name: Novice Writer
                       achievedAt: '2021-02-01T00:00:00Z'
                       badgeUrl: https://example.com/badge1.png
+                      completions: 100
+                      rarity: 50
                     - id: d01dcbcb-d51e-4c12-b054-dc811dcdc624
                       trigger: streak
                       key: 3-day-streak
@@ -1236,6 +1240,8 @@ paths:
                       name: 3-Day Streak
                       achievedAt: '2021-03-01T00:00:00Z'
                       badgeUrl: https://example.com/badge2.png
+                      completions: 100
+                      rarity: 50
         '401':
           description: 'Unauthorized'
           content:
@@ -1886,6 +1892,225 @@ paths:
       summary: Get a user's leaderboard data
       security:
         - ApiKeyAuth: []
+  /users/{id}/wrapped:
+    servers:
+      - url: https://api.trophy.so/v1
+        description: Application API
+    get:
+      description: Get a user's year-in-review wrapped data.
+      operationId: users_wrapped
+      x-fern-server-name: api
+      tags:
+        - Users
+      x-codeSamples:
+        - lang: javascript
+          source: |
+            import { TrophyApiClient } from '@trophyso/node';
+
+            const trophy = new TrophyApiClient({
+              apiKey: 'YOUR_API_KEY'
+            });
+
+            const response = await trophy.users.wrapped("user-123", {
+              year: 2024
+            });
+        - lang: python
+          source: |
+            from trophy import TrophyApi
+
+            client = TrophyApi(api_key='YOUR_API_KEY')
+
+            response = client.users.wrapped(id="user-123", year=2024)
+      parameters:
+        - name: id
+          in: path
+          description: The user's ID in your database.
+          required: true
+          schema:
+            type: string
+          example: user-123
+        - name: year
+          in: query
+          description: The year to get wrapped data for. Defaults to the current year. Must be an integer between 1 and the current year.
+          required: false
+          schema:
+            type: integer
+            minimum: 1
+          example: 2024
+      responses:
+        '200':
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/WrappedResponse'
+              examples:
+                Successful operation:
+                  value:
+                    user:
+                      id: user-123
+                      email: user@example.com
+                      name: John Doe
+                      tz: America/New_York
+                      subscribeToEmails: true
+                      created: '2024-01-15T10:30:00Z'
+                      updated: '2024-06-20T14:45:00Z'
+                      control: false
+                      attributes:
+                        plan-type: premium
+                        region: us-east
+                    activity:
+                      daysActive: 156
+                      weeksActive: 42
+                      monthsActive: 11
+                      mostActiveDay:
+                        date: '2024-03-15'
+                        metrics:
+                          words-written:
+                            name: Words Written
+                            units: words
+                            currentTotal: 15000
+                            changeThisPeriod: 2500
+                            percentChange: 20
+                            byAttribute: {}
+                        points:
+                          xp-system:
+                            name: Experience Points
+                            description: Points earned through activity
+                            currentTotal: 5000
+                            changeThisPeriod: 500
+                            percentChange: 11.1
+                        achievements:
+                          - id: 5100fe51-6bce-6j44-b0hs-bddc4e123682
+                            name: 500 Words Written
+                            trigger: metric
+                            description: Write 500 words in a single day
+                            badgeUrl: https://example.com/badge.png
+                            key: 500-words
+                            metricId: metric-123
+                            metricValue: 500
+                            metricName: Words Written
+                            achievedAt: '2024-03-15T14:30:00Z'
+                            completions: 150
+                            rarity: 15
+                        leaderboards:
+                          weekly-words:
+                            id: leaderboard-123
+                            name: Weekly Word Count
+                            key: weekly-words
+                            rankBy: metric
+                            metricKey: words-written
+                            metricName: Words Written
+                            description: Weekly writing competition
+                            start: '2024-03-11'
+                            end: '2024-03-17'
+                            maxParticipants: 100
+                            runUnit: day
+                            runInterval: 7
+                            rank: 3
+                            value: 2500
+                      mostActiveWeek:
+                        start: '2024-03-11'
+                        end: '2024-03-17'
+                        metrics:
+                          words-written:
+                            name: Words Written
+                            units: words
+                            currentTotal: 15000
+                            changeThisPeriod: 8500
+                            percentChange: 130
+                            percentileThisPeriod: 95
+                            byAttribute: {}
+                        points:
+                          xp-system:
+                            name: Experience Points
+                            description: Points earned through activity
+                            currentTotal: 5000
+                            changeThisPeriod: 1200
+                            percentChange: 31.5
+                            percentileThisPeriod: 88
+                        achievements: []
+                        leaderboards: {}
+                      mostActiveMonth:
+                        month: 2
+                        metrics:
+                          words-written:
+                            name: Words Written
+                            units: words
+                            currentTotal: 15000
+                            changeThisPeriod: 12000
+                            percentChange: 400
+                            percentileThisPeriod: 92
+                            byAttribute: {}
+                        points:
+                          xp-system:
+                            name: Experience Points
+                            description: Points earned through activity
+                            currentTotal: 5000
+                            changeThisPeriod: 2000
+                            percentChange: 66.6
+                            percentileThisPeriod: 85
+                        achievements: []
+                        leaderboards: {}
+                      entireYear:
+                        metrics:
+                          words-written:
+                            name: Words Written
+                            units: words
+                            currentTotal: 150000
+                            changeThisPeriod: 150000
+                            percentChange: 100
+                            percentileThisPeriod: 78
+                            byAttribute: {}
+                        points:
+                          xp-system:
+                            name: Experience Points
+                            description: Points earned through activity
+                            currentTotal: 25000
+                            changeThisPeriod: 25000
+                            percentChange: 100
+                            percentileThisPeriod: 82
+                        achievements:
+                          - id: 5100fe51-6bce-6j44-b0hs-bddc4e123682
+                            name: 500 Words Written
+                            trigger: metric
+                            description: Write 500 words in a single day
+                            badgeUrl: https://example.com/badge.png
+                            key: 500-words
+                            metricId: metric-123
+                            metricValue: 500
+                            metricName: Words Written
+                            achievedAt: '2024-03-15T14:30:00Z'
+                            completions: 150
+                            rarity: 15
+                        leaderboards: {}
+                        longestStreak:
+                          length: 45
+                          frequency: daily
+                          periodStart: '2024-02-01'
+                          periodEnd: '2024-03-17'
+                          started: '2024-02-01'
+        '401':
+          description: 'Unauthorized'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorBody'
+        '404':
+          description: 'User not found'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorBody'
+        '422':
+          description: 'Unprocessible Entity'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorBody'
+      summary: Get a user's wrapped data
+      security:
+        - ApiKeyAuth: []
   /points/{key}/summary:
     servers:
       - url: https://api.trophy.so/v1
@@ -2469,6 +2694,109 @@ paths:
               schema:
                 $ref: '#/components/schemas/ErrorBody'
       summary: Create streak freezes for multiple users
+      security:
+        - ApiKeyAuth: []
+
+  /streaks/restore:
+    servers:
+      - url: https://admin.trophy.so/v1
+        description: Admin API
+    post:
+      description: Restore streaks for multiple users to the maximum length in the last 90 days (in the case of daily streaks), one year (in the case of weekly streaks), or two years (in the case of monthly streaks).
+      operationId: admin_streaks_restore
+      x-fern-server-name: admin
+      x-fern-sdk-group-name:
+        - admin
+        - streaks
+      x-fern-sdk-method-name: restore
+      tags:
+        - Admin
+      x-codeSamples:
+        - lang: javascript
+          source: |
+            import { TrophyApiClient } from '@trophyso/node';
+
+            const trophy = new TrophyApiClient({
+              apiKey: 'YOUR_API_KEY'
+            });
+
+            const response = await trophy.admin.streaks.restore({
+              userIds: ['user-123', 'user-456']
+            });
+        - lang: python
+          source: |
+            from trophy import TrophyApi
+
+            client = TrophyApi(api_key='YOUR_API_KEY')
+
+            response = client.admin.streaks.restore({
+              "userIds": ["user-123", "user-456"]
+            })
+      requestBody:
+        description: Array of user IDs to restore streaks for
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/RestoreStreaksRequest'
+            examples:
+              Restore streaks for multiple users:
+                value:
+                  userIds:
+                    - user-123
+                    - user-456
+      responses:
+        '200':
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RestoreStreaksResponse'
+              examples:
+                Success with no issues:
+                  value:
+                    restoredUsers:
+                      - user-123
+                      - user-456
+                    issues: []
+                Success with warnings:
+                  value:
+                    restoredUsers:
+                      - user-123
+                    issues:
+                      - userId: user-456
+                        level: warning
+                        reason: No streak to restore
+                Mixed success and errors:
+                  value:
+                    restoredUsers:
+                      - user-123
+                    issues:
+                      - userId: non-existent-user
+                        level: error
+                        reason: User does not exist
+                      - userId: user-789
+                        level: warning
+                        reason: Streak is already at maximum length
+        '400':
+          description: 'Bad Request'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorBody'
+        '401':
+          description: 'Unauthorized'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorBody'
+        '422':
+          description: 'Unprocessible Entity'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorBody'
+      summary: Restore streaks for multiple users
       security:
         - ApiKeyAuth: []
 webhooks:
@@ -3523,7 +3851,7 @@ components:
       title: CompletedAchievementResponse
       type: object
       allOf:
-        - $ref: '#/components/schemas/AchievementResponse'
+        - $ref: '#/components/schemas/AchievementWithStatsResponse'
         - type: object
           properties:
             achievedAt:
@@ -4173,6 +4501,44 @@ components:
           description: Array of issues encountered during freeze creation.
       required:
         - issues
+    RestoreStreaksRequest:
+      title: RestoreStreaksRequest
+      type: object
+      description: Request body for restoring streaks for multiple users.
+      properties:
+        userIds:
+          type: array
+          items:
+            type: string
+          description: Array of user IDs to restore streaks for. Maximum 100 users per request.
+          maxItems: 100
+          minItems: 1
+          example:
+            - user-123
+            - user-456
+      required:
+        - userIds
+    RestoreStreaksResponse:
+      title: RestoreStreaksResponse
+      type: object
+      description: Response containing restored users and any issues encountered.
+      properties:
+        restoredUsers:
+          type: array
+          items:
+            type: string
+          description: Array of user IDs whose streaks were successfully restored.
+          example:
+            - user-123
+            - user-456
+        issues:
+          type: array
+          items:
+            $ref: '#/components/schemas/BulkInsertIssue'
+          description: Array of issues encountered during streak restoration.
+      required:
+        - restoredUsers
+        - issues
     BulkInsertIssue:
       title: BulkInsertIssue
       type: object
@@ -4197,6 +4563,292 @@ components:
         - userId
         - level
         - reason
+    WrappedMetric:
+      title: WrappedMetric
+      type: object
+      description: A user's metric data for a wrapped period.
+      properties:
+        name:
+          type: string
+          description: The name of the metric.
+          example: Words Written
+        units:
+          type:
+            - string
+            - 'null'
+          description: The units of the metric.
+          example: words
+        currentTotal:
+          type: number
+          description: The user's current total for the metric.
+          example: 15000
+        changeThisPeriod:
+          type: number
+          description: The change in the metric value during the period.
+          example: 2500
+        percentChange:
+          type: number
+          description: The percentage change in the metric value during the period.
+          example: 20
+        percentileThisPeriod:
+          type: number
+          description: The user's percentile rank for this metric during the period. Only included for weekly, monthly, and yearly aggregation periods.
+          example: 85
+        byAttribute:
+          type: object
+          additionalProperties:
+            type: object
+            additionalProperties:
+              type: object
+              properties:
+                name:
+                  type: string
+                  description: The name of the metric.
+                units:
+                  type:
+                    - string
+                    - 'null'
+                  description: The units of the metric.
+                currentTotal:
+                  type: number
+                  description: The current total for this attribute value.
+                changeThisPeriod:
+                  type: number
+                  description: The change during the period for this attribute value.
+                percentChange:
+                  type: number
+                  description: The percentage change for this attribute value.
+                percentileThisPeriod:
+                  type: number
+                  description: The user's percentile rank for this attribute value during the period.
+          description: Metric data broken down by attribute key and value.
+      required:
+        - name
+        - currentTotal
+        - changeThisPeriod
+        - percentChange
+        - byAttribute
+    WrappedPoints:
+      title: WrappedPoints
+      type: object
+      description: A user's points data for a wrapped period.
+      properties:
+        name:
+          type: string
+          description: The name of the points system.
+          example: Experience Points
+        description:
+          type:
+            - string
+            - 'null'
+          description: The description of the points system.
+          example: Points earned through activity
+        currentTotal:
+          type: number
+          description: The user's current total points.
+          example: 5000
+        changeThisPeriod:
+          type: number
+          description: The change in points during the period.
+          example: 500
+        percentChange:
+          type: number
+          description: The percentage change in points during the period.
+          example: 11.1
+        percentileThisPeriod:
+          type: number
+          description: The user's percentile rank for this points system during the period. Only included for weekly, monthly, and yearly aggregation periods.
+          example: 88
+      required:
+        - name
+        - currentTotal
+        - changeThisPeriod
+        - percentChange
+    WrappedStreak:
+      title: WrappedStreak
+      type: object
+      description: The user's longest streak during the wrapped period.
+      properties:
+        length:
+          type: integer
+          description: The length of the streak.
+          example: 45
+        frequency:
+          $ref: '#/components/schemas/StreakFrequency'
+          description: The frequency of the streak.
+        periodStart:
+          type:
+            - string
+            - 'null'
+          format: date
+          description: The start date of the streak period.
+          example: '2024-02-01'
+        periodEnd:
+          type:
+            - string
+            - 'null'
+          format: date
+          description: The end date of the streak period.
+          example: '2024-03-17'
+        started:
+          type:
+            - string
+            - 'null'
+          format: date
+          description: The date the streak started.
+          example: '2024-02-01'
+      required:
+        - length
+        - frequency
+        - periodStart
+        - periodEnd
+        - started
+    WrappedActivityPeriod:
+      title: WrappedActivityPeriod
+      type: object
+      description: Activity data for a specific period (day, week, month, or year).
+      properties:
+        metrics:
+          type: object
+          additionalProperties:
+            $ref: '#/components/schemas/WrappedMetric'
+          description: The user's metrics during this period, keyed by metric key.
+        points:
+          type: object
+          additionalProperties:
+            $ref: '#/components/schemas/WrappedPoints'
+          description: The user's points during this period, keyed by points system key.
+        achievements:
+          type: array
+          items:
+            $ref: '#/components/schemas/CompletedAchievementResponse'
+          description: Achievements completed during this period.
+        leaderboards:
+          type: object
+          additionalProperties:
+            $ref: '#/components/schemas/UserLeaderboardResponse'
+          description: The user's best leaderboard rankings during this period, keyed by leaderboard key.
+      required:
+        - metrics
+        - points
+        - achievements
+        - leaderboards
+    WrappedMostActiveDay:
+      title: WrappedMostActiveDay
+      type: object
+      description: The user's most active day during the year.
+      allOf:
+        - $ref: '#/components/schemas/WrappedActivityPeriod'
+        - type: object
+          properties:
+            date:
+              type: string
+              format: date
+              description: The date of the most active day in YYYY-MM-DD format.
+              example: '2024-03-15'
+          required:
+            - date
+    WrappedMostActiveWeek:
+      title: WrappedMostActiveWeek
+      type: object
+      description: The user's most active week during the year.
+      allOf:
+        - $ref: '#/components/schemas/WrappedActivityPeriod'
+        - type: object
+          properties:
+            start:
+              type: string
+              format: date
+              description: The start date of the most active week in YYYY-MM-DD format.
+              example: '2024-03-11'
+            end:
+              type: string
+              format: date
+              description: The end date of the most active week in YYYY-MM-DD format.
+              example: '2024-03-17'
+          required:
+            - start
+            - end
+    WrappedMostActiveMonth:
+      title: WrappedMostActiveMonth
+      type: object
+      description: The user's most active month during the year.
+      allOf:
+        - $ref: '#/components/schemas/WrappedActivityPeriod'
+        - type: object
+          properties:
+            month:
+              type: integer
+              minimum: 0
+              maximum: 11
+              description: The month number (0-11, where 0 is January).
+              example: 2
+          required:
+            - month
+    WrappedEntireYear:
+      title: WrappedEntireYear
+      type: object
+      description: The user's activity data for the entire year.
+      allOf:
+        - $ref: '#/components/schemas/WrappedActivityPeriod'
+        - type: object
+          properties:
+            longestStreak:
+              $ref: '#/components/schemas/WrappedStreak'
+              description: The user's longest streak during the year.
+          required:
+            - longestStreak
+    WrappedActivity:
+      title: WrappedActivity
+      type: object
+      description: The user's activity summary for the wrapped year.
+      properties:
+        daysActive:
+          type: integer
+          description: The number of days the user was active during the year.
+          example: 156
+        weeksActive:
+          type: integer
+          description: The number of weeks the user was active during the year.
+          example: 42
+        monthsActive:
+          type: integer
+          description: The number of months the user was active during the year.
+          example: 11
+        mostActiveDay:
+          $ref: '#/components/schemas/WrappedMostActiveDay'
+          description: Data about the user's most active day.
+        mostActiveWeek:
+          $ref: '#/components/schemas/WrappedMostActiveWeek'
+          description: Data about the user's most active week.
+        mostActiveMonth:
+          $ref: '#/components/schemas/WrappedMostActiveMonth'
+          description: Data about the user's most active month.
+        entireYear:
+          $ref: '#/components/schemas/WrappedEntireYear'
+          description: Data about the user's activity for the entire year.
+      required:
+        - daysActive
+        - weeksActive
+        - monthsActive
+        - mostActiveDay
+        - mostActiveWeek
+        - mostActiveMonth
+        - entireYear
+    WrappedResponse:
+      title: WrappedResponse
+      type: object
+      description: A user's year-in-review wrapped data including activity summaries, metrics, points, achievements, streaks, and leaderboard rankings.
+      properties:
+        user:
+          $ref: '#/components/schemas/User'
+          description: The user's profile information.
+        activity:
+          $ref: '#/components/schemas/WrappedActivity'
+          description: The user's activity data for the wrapped year.
+      required:
+        - user
+        - activity
   securitySchemes:
     ApiKeyAuth:
       type: apiKey
