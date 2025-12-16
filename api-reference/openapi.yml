@@ -1,7 +1,7 @@
 openapi: 3.1.0
 info:
   title: Trophy
-  version: '1.0.4'
+  version: '1.0.39'
 paths:
   # APPLICATION API -------------------------------------------------------
 
@@ -1210,7 +1210,7 @@ paths:
               schema:
                 type: array
                 items:
-                  $ref: '#/components/schemas/CompletedAchievementResponse'
+                  $ref: '#/components/schemas/UserAchievementWithStatsResponse'
               examples:
                 Successful operation:
                   value:
@@ -2819,7 +2819,7 @@ webhooks:
                   $ref: '#/components/schemas/User'
                   description: The user who completed the achievement.
                 achievement:
-                  $ref: '#/components/schemas/CompletedAchievementResponse'
+                  $ref: '#/components/schemas/UserAchievementResponse'
                   description: The achievement completion that occurred.
               required:
                 - type
@@ -3464,8 +3464,10 @@ components:
             type: integer
             description: The length of the user's streak.
           extended:
-            type: string
-            description: The timestamp the streak was extended, as a string.
+            type:
+              - string
+              - 'null'
+            description: The timestamp the streak was extended, as a string. Null if the streak is not active.
         required:
           - userId
           - streakLength
@@ -3840,15 +3842,61 @@ components:
         metricName:
           type: string
           description: The name of the metric associated with this achievement (only applicable if trigger = 'metric')
+        userAttributes:
+          type: array
+          description: User attribute filters that must be met for this achievement to be completed. Only present if the achievement has user attribute filters configured.
+          items:
+            type: object
+            properties:
+              key:
+                type: string
+                description: The key of the user attribute.
+                example: plan-type
+              value:
+                type: string
+                description: The value of the user attribute.
+                example: premium
+            required:
+              - key
+              - value
+        eventAttribute:
+          type: object
+          description: Event attribute filter that must be met for this achievement to be completed. Only present if the achievement has an event filter configured.
+          properties:
+            key:
+              type: string
+              description: The key of the event attribute.
+              example: source
+            value:
+              type: string
+              description: The value of the event attribute.
+              example: mobile-app
+          required:
+            - key
+            - value
       required:
         - id
-        - key
         - name
         - trigger
         - description
         - badgeUrl
-    CompletedAchievementResponse:
-      title: CompletedAchievementResponse
+    UserAchievementResponse:
+      title: UserAchievementResponse
+      type: object
+      allOf:
+        - $ref: '#/components/schemas/AchievementResponse'
+        - type: object
+          properties:
+            achievedAt:
+              type:
+                - string
+                - 'null'
+              format: date-time
+              description: The date and time the achievement was completed, in ISO 8601 format. Null if the achievement has not been completed.
+          required:
+            - achievedAt
+    UserAchievementWithStatsResponse:
+      title: UserAchievementWithStatsResponse
       type: object
       allOf:
         - $ref: '#/components/schemas/AchievementWithStatsResponse'
@@ -3876,38 +3924,6 @@ components:
               type: number
               format: double
               description: The percentage of all users who have completed this achievement.
-            userAttributes:
-              type: array
-              description: User attribute filters that must be met for this achievement to be completed. Only present if the achievement has user attribute filters configured.
-              items:
-                type: object
-                properties:
-                  key:
-                    type: string
-                    description: The key of the user attribute.
-                    example: plan-type
-                  value:
-                    type: string
-                    description: The value of the user attribute.
-                    example: premium
-                required:
-                  - key
-                  - value
-            eventAttribute:
-              type: object
-              description: Event attribute filter that must be met for this achievement to be completed. Only present if the achievement has an event filter configured.
-              properties:
-                key:
-                  type: string
-                  description: The key of the event attribute.
-                  example: source
-                value:
-                  type: string
-                  description: The value of the event attribute.
-                  example: mobile-app
-              required:
-                - key
-                - value
           required:
             - completions
             - rarity
@@ -3938,7 +3954,7 @@ components:
         achievements:
           type: array
           items:
-            $ref: '#/components/schemas/CompletedAchievementResponse'
+            $ref: '#/components/schemas/UserAchievementResponse'
           description: >-
             A list of the metric's achievements and the user's progress towards
             each.
@@ -3969,7 +3985,9 @@ components:
           description: The user's timezone (used for email scheduling).
           example: Europe/London
         deviceTokens:
-          type: array
+          type:
+            - array
+            - 'null'
           description: The user's device tokens, used for push notifications.
           items:
             type: string
@@ -4030,7 +4048,9 @@ components:
           description: The user's timezone.
           example: Europe/London
         deviceTokens:
-          type: array
+          type:
+            - array
+            - 'null'
           description: The user's device tokens.
           items:
             type: string
@@ -4067,7 +4087,6 @@ components:
         - email
         - name
         - tz
-        - deviceTokens
         - subscribeToEmails
         - attributes
         - control
@@ -4090,16 +4109,7 @@ components:
           description: The unique ID of the completion.
           example: 0040fe51-6bce-4b44-b0ad-bddc4e123534
         achievement:
-          type: object
-          allOf:
-            - $ref: '#/components/schemas/CompletedAchievementResponse'
-            - type: object
-              properties:
-                currentStreak:
-                  $ref: '#/components/schemas/MetricEventStreakResponse'
-                  description: >-
-                    The user's current streak for the metric, if the metric has streaks
-                    enabled.
+          $ref: '#/components/schemas/UserAchievementResponse'
         points:
           type: object
           additionalProperties:
@@ -4130,7 +4140,7 @@ components:
         achievements:
           type: array
           items:
-            $ref: '#/components/schemas/CompletedAchievementResponse'
+            $ref: '#/components/schemas/UserAchievementResponse'
           description: Achievements completed as a result of this event.
         currentStreak:
           $ref: '#/components/schemas/MetricEventStreakResponse'
@@ -4728,7 +4738,7 @@ components:
         achievements:
           type: array
           items:
-            $ref: '#/components/schemas/CompletedAchievementResponse'
+            $ref: '#/components/schemas/UserAchievementResponse'
           description: Achievements completed during this period.
         leaderboards:
           type: object
