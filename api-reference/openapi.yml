@@ -3100,7 +3100,7 @@ webhooks:
     post:
       summary: Points changed
       operationId: webhooks_points_changed
-      description: Triggered when a user is awarded or loses points.
+      description: Triggered when a user is awarded or loses points. This event is fired a maximum of once per user per points system per minute.
       requestBody:
         description: The webhook event.
         content:
