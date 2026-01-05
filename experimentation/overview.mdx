@@ -1,27 +1,67 @@
 ---
 title: Overview
-description: Learn how to use Trophy to experiment with the gamification experience and increase retention.
-"og:description": Learn how to use Trophy to experiment with the gamification experience and increase retention.
+description: Learn how to use Trophy to experiment with the gamification experience and increase retention and user engagement.
+"og:description": Learn how to use Trophy to experiment with the gamification experience and increase retention and user engagement.
 ---
+
+import ControlFlagBlock from "/snippets/control-flag-block.mdx";
 
 Trophy provides a core set of primitives to help you ship gamification experiences faster. But gamification is not something you can set and forget.
 
 A key part of running a gamified platform is experimentation — tweaking and optimizing the user experience to ensure that users keep coming back.
 
-Usually, you'd have to build these tools yourself, but with Trophy you get an experimentation stack out-of-the-box.
+Usually, you'd have to build these tools yourself, but with Trophy you get a simple experimentation stack out-of-the-box.
+
+<Tip>
+  We have plans to extend Trophy's experimentation capabilities in the future to
+  support more granular A/B testing of your gamification features.
+</Tip>
+
+## Control Ratio
+
+Trophy has a built-in capability to automatically A/B test gamification features using a control ratio.
+
+Found on the [integration page](https://app.trophy.so/integration/configure) of the Trophy dashboard, the control ratio adjusts the percentage of users that are assigned to the 'control' group versus the 'experimental' group.
+
+<Frame>
+  <video
+    autoPlay
+    muted
+    loop
+    playsInline
+    className="w-full aspect-15/4"
+    src="../assets/experimentation/control_ratio.mp4"
+  ></video>
+</Frame>
+
+Trophy returns the `control` attribute as `true` or `false` in most APIs that relate to user data allowing you to conditionally show gamification features to users who are in the experimental group.
+
+If you plan to measure the overall impact of gamification features, make sure to only show those features to users with `control` set to `false`.
+
+<ControlFlagBlock />
 
 <Note>
-  We have plans to extend Trophy's experimentation capabilities in the future to
-  support more broad A/B testing of your gamification features.
+  Trophy also doesn't send any [Emails](/platform/emails) or [Push
+  Notifications](/platform/push-notifications) to users who are in the control
+  group.
 </Note>
 
+Analytics dashboards then compare retention and user engagement between users in the control and experimental groups allowing you to measure the impact of the features you build with Trophy and adjust mechanics where necessary.
+
+<Frame>
+  <img height="200" noZoom src="../assets/experimentation/charts.png" />
+</Frame>
+
+## Retention & Engagement
+
+Both retention and user engagement are important metrics to use when measuring the impact of changes on the user experience. The following sections outline what each means and how it relates to features you build with Trophy.
+
 <CardGroup>
-  <Card
-    title="Trophy Impact Score"
-    icon="percent"
-    href="/experimentation/trophy-impact-score"
-  >
-    Automatically measure the impact of gamification on user retention
+  <Card title="Retention" icon="refresh-cw" href="/experimentation/retention">
+    Learn how to measure the impact of gamification on retention
+  </Card>
+  <Card title="Engagement" icon="heart" href="/experimentation/engagement">
+    Learn how to measure the impact of gamification on user engagement
   </Card>
 </CardGroup>
 
