@@ -19,9 +19,9 @@ Usually, you'd have to build these tools yourself, but with Trophy you get a sim
 
 ## Control Ratio
 
-Trophy has a built-in measure to automatically A/B test gamification feautres using a control ratio.
+Trophy has a built-in capability to automatically A/B test gamification feautres using a control ratio.
 
-Found in the [integration page](https://app.trophy.so/integration/configure) of the Trophy dashboard, the control ratio adjusts the percentage of users that are assigned to the 'control' group verses the 'experimental' group.
+Found on the [integration page](https://app.trophy.so/integration/configure) of the Trophy dashboard, the control ratio adjusts the percentage of users that are assigned to the 'control' group versus the 'experimental' group.
 
 <Frame>
   <video
@@ -34,7 +34,9 @@ Found in the [integration page](https://app.trophy.so/integration/configure) of 
   ></video>
 </Frame>
 
-Trophy returns the `control` attribute as `true` or `false` in most APIs that relate to user data allowing you to conditionally show gamification feautres to users who are in the experiemental group.
+Trophy returns the `control` attribute as `true` or `false` in most APIs that relate to user data allowing you to conditionally show gamification features to users who are in the experimental group.
+
+If you plan to measure the overall impact of gamification features, make sure to only show those features to users with `control` set to `false`.
 
 <ControlFlagBlock />
 
@@ -52,7 +54,7 @@ Analytics dashboards then compare retention and user engagement between users in
 
 ## Retention & Engagement
 
-Both retention and user engagement are important metrics to use when measuring the impaact of changes to user experience. The following sections outline what each means and how it relates to features you build with Trophy.
+Both retention and user engagement are important metrics to use when measuring the impact of changes on the user experience. The following sections outline what each means and how it relates to features you build with Trophy.
 
 <CardGroup>
   <Card title="Retention" icon="refresh-cw" href="/experimentation/retention">
