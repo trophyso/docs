@@ -69,7 +69,8 @@
             "group": "Experimentation",
             "pages": [
               "experimentation/overview",
-              "experimentation/trophy-impact-score"
+              "experimentation/retention",
+              "experimentation/engagement"
             ]
           },
           {
