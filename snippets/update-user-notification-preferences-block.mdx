@@ -1,0 +1,83 @@
+<CodeGroup>
+```bash cURL
+curl --request PATCH \
+  --url https://api.trophy.so/v1/users/user-123/preferences \
+  --header 'Content-Type: application/json' \
+  --header 'X-API-KEY: <api-key>' \
+  --data '{
+  "notifications": {
+    "recap": ["email"],
+    "streak_reminder": []
+  }
+}'
+```
+
+```typescript Node
+const response = await trophy.users.updatePreferences("user-123", {
+  notifications: {
+    recap: ["email"],
+    streak_reminder: []
+  }
+});
+```
+
+```python Python
+response = client.users.update_preferences(
+  id="user-123",
+  notifications={
+    "recap": ["email"],
+    "streak_reminder": []
+  }
+)
+```
+
+```php PHP
+$response = $trophy->users()->updatePreferences("user-123", [
+  "notifications" => [
+    "recap" => ["email"],
+    "streak_reminder" => []
+  ]
+]);
+```
+
+```java Java
+UpdateUserPreferencesRequest request = UpdateUserPreferencesRequest.builder()
+  .notifications(NotificationPreferences.builder()
+    .recap(Arrays.asList("email"))
+    .streakReminder(Collections.emptyList())
+    .build())
+  .build();
+UserPreferencesResponse response = client.users().updatePreferences("user-123", request);
+```
+
+```go Go
+response, err := client.Users.UpdatePreferences("user-123", &UpdateUserPreferencesRequest{
+  Notifications: &NotificationPreferences{
+    Recap: []string{"email"},
+    StreakReminder: []string{},
+  },
+})
+```
+
+```csharp C#
+var response = await trophy.Users.UpdatePreferencesAsync("user-123", new UpdateUserPreferencesRequest
+{
+  Notifications = new NotificationPreferences
+  {
+    Recap = new[] { "email" },
+    StreakReminder = Array.Empty<string>()
+  }
+});
+```
+
+```ruby Ruby
+response = client.users.update_preferences(
+  id: "user-123",
+  notifications: {
+    recap: ["email"],
+    streak_reminder: []
+  }
+)
+```
+
+</CodeGroup>

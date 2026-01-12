@@ -7,6 +7,8 @@ icon: users
 
 import MetricChangeRequestBlock from "/snippets/metric-change-request-block.mdx";
 import IdentifyUserRequestBlock from "/snippets/identify-user-request-block.mdx";
+import UpdateUserNotificationPreferencesBlock from "/snippets/update-user-notification-preferences-block.mdx";
+import GetUserNotificationPreferencesBlock from "/snippets/get-user-notification-preferences-block.mdx";
 
 ## What are Users?
 
@@ -302,6 +304,58 @@ Any properties that you pass to Trophy will be updated to the new values you spe
   time one of their properties changes in your application. However the user
   update API is there if you really need it.
 </Tip>
+
+## Setting User Preferences
+
+Trophy has APIs to help you power a preference center that your users can use to control and customize how they interact with your gamification features.
+
+This section walks through all the preferences that you can expose to your users, and their function.
+
+### Notification Preferences
+
+You can use Trophy to send gamified [Emails](/platform/emails) and [Push Notifications](/platform/push-notifications) to your users.
+
+Trophy's [update preferences API](/api-reference/endpoints/users/update-user-preferences) allows you to build a preference center within your application that your users can interact with to control which notifications they receive, and through which channels.
+
+The API lets you update a user's notification preferences for different notification types:
+
+- **achievement_completed**: Notifications sent when a user completes an achievement
+- **recap**: Periodic summary notifications about user progress
+- **reactivation**: Notifications sent to re-engage inactive users
+- **streak_reminder**: Reminders to help users maintain their streaks
+
+For each notification type, you can specify which channels the user should receive notifications on: `email`, `push`, or both. To disable a notification type entirely, pass an empty array.
+
+For example, the following code snippet updates a user's notification preferences in Trophy:
+
+<UpdateUserNotificationPreferencesBlock />
+
+To build a preference center UI in your application, you'll first need to fetch the user's current preferences using the [get preferences API](/api-reference/endpoints/users/get-user-preferences).
+
+This will return the user's current notification settings, which you can then display in your UI and allow users to modify.
+
+<GetUserNotificationPreferencesBlock />
+
+The API returns a response containing the user's current notification preferences for each notification type:
+
+```json Response {3}
+{
+  "notifications": {
+    "achievement_completed": ["email", "push"],
+    "recap": ["email"],
+    "reactivation": ["push"],
+    "streak_reminder": ["email", "push"]
+  }
+}
+```
+
+You can use this response to:
+
+- **Populate form controls**: Pre-select checkboxes or toggles in your preference center UI based on the current values
+- **Show current state**: Display which notifications are enabled and through which channels
+- **Handle missing preferences**: If a notification type is not present in the response, it means the user hasn't set preferences for it yet, and you can default to your application's default settings
+
+Once you've fetched and displayed the preferences, users can make changes in your UI, and you can use the [update preferences API](/api-reference/endpoints/users/update-user-preferences) to save their selections back to Trophy.
 
 ## Retrieving User Information
 

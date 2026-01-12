@@ -35,6 +35,13 @@ All emails are optional, but all four can be used simultaneously and can be cont
 
 To start sending emails with Trophy, you'll need to verify your domain and enable email triggers.
 
+<Tip>
+  Users can control which email notifications they receive through Trophy's
+  [user preferences API](/platform/users#notification-preferences). This allows
+  you to build a preference center in your application where users can opt in or
+  out of specific email types.
+</Tip>
+
 ### Domain Verification
 
 Trophy supports sending emails from your own domain out-of-the-box. There are two ways to set this up, Single Sender Verification and DNS Verification.
@@ -812,7 +819,14 @@ All emails that Trophy sends include an unsubscribe link and message. This is im
   wish to receive these emails, you can unsubscribe._
 </Info>
 
-Any recipient that clicks this link will no longer receive any emails from Trophy.
+Any recipient that clicks this link will be taken to a branded page that allows them to control which emails notifications they receive.
+
+<Tip>
+  As an alternative to the unsubscribe link, you can also build a preference
+  center in your application using Trophy's [user preferences
+  API](/platform/users#notification-preferences). This gives users more granular
+  control over which types of emails they receive.
+</Tip>
 
 ## Email Analytics
 
