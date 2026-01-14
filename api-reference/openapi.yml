@@ -800,6 +800,188 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/ErrorBody'
+  /users/{id}/preferences:
+    servers:
+      - url: https://api.trophy.so/v1
+        description: Application API
+    get:
+      description: Get a user's notification preferences.
+      operationId: users_get_preferences
+      x-fern-server-name: api
+      tags:
+        - Users
+      x-codeSamples:
+        - lang: javascript
+          source: |
+            import { TrophyApiClient } from '@trophyso/node';
+
+            const trophy = new TrophyApiClient({
+              apiKey: 'YOUR_API_KEY'
+            });
+
+            const response = await trophy.users.getPreferences("user-123");
+        - lang: python
+          source: |
+            from trophy import TrophyApi
+
+            client = TrophyApi(api_key='YOUR_API_KEY')
+
+            response = client.users.get_preferences(id="user-123")
+      parameters:
+        - name: id
+          in: path
+          description: The user's ID in your database.
+          required: true
+          schema:
+            type: string
+          example: user-123
+      responses:
+        '200':
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UserPreferencesResponse'
+              examples:
+                Successful operation:
+                  value:
+                    notifications:
+                      achievement_completed:
+                        - email
+                        - push
+                      recap:
+                        - email
+                      reactivation:
+                        - push
+                      streak_reminder:
+                        - email
+                        - push
+        '401':
+          description: 'Unauthorized'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorBody'
+        '404':
+          description: 'User not found'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorBody'
+        '422':
+          description: 'Unprocessible Entity'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorBody'
+      summary: Get a user's preferences
+      security:
+        - ApiKeyAuth: []
+    patch:
+      description: Update a user's notification preferences.
+      operationId: users_update_preferences
+      x-fern-server-name: api
+      tags:
+        - Users
+      x-codeSamples:
+        - lang: javascript
+          source: |
+            import { TrophyApiClient } from '@trophyso/node';
+
+            const trophy = new TrophyApiClient({
+              apiKey: 'YOUR_API_KEY'
+            });
+
+            const response = await trophy.users.updatePreferences("user-123", {
+              notifications: {
+                recap: ["email"],
+                streak_reminder: []
+              }
+            });
+        - lang: python
+          source: |
+            from trophy import TrophyApi
+
+            client = TrophyApi(api_key='YOUR_API_KEY')
+
+            response = client.users.update_preferences(
+              id="user-123",
+              notifications={
+                "recap": ["email"],
+                "streak_reminder": []
+              }
+            )
+      parameters:
+        - name: id
+          in: path
+          description: The user's ID in your database.
+          required: true
+          schema:
+            type: string
+          example: user-123
+      responses:
+        '200':
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UserPreferencesResponse'
+              examples:
+                Successful operation:
+                  value:
+                    notifications:
+                      achievement_completed:
+                        - email
+                        - push
+                      recap:
+                        - email
+                      reactivation:
+                        - email
+                        - push
+                      streak_reminder: []
+        '401':
+          description: 'Unauthorized'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorBody'
+        '404':
+          description: 'User not found'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorBody'
+        '422':
+          description: 'Unprocessible Entity'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorBody'
+      summary: Update a user's preferences
+      security:
+        - ApiKeyAuth: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UpdateUserPreferencesRequest'
+            examples:
+              Disable streak reminders:
+                value:
+                  notifications:
+                    streak_reminder: []
+              Email only for recaps:
+                value:
+                  notifications:
+                    recap:
+                      - email
+              Enable all for achievements:
+                value:
+                  notifications:
+                    achievement_completed:
+                      - email
+                      - push
   /users/{id}/metrics:
     servers:
       - url: https://api.trophy.so/v1
@@ -4092,6 +4274,63 @@ components:
         - control
         - created
         - updated
+    NotificationChannel:
+      title: NotificationChannel
+      type: string
+      enum:
+        - email
+        - push
+      description: A notification delivery channel.
+    NotificationType:
+      title: NotificationType
+      type: string
+      enum:
+        - achievement_completed
+        - recap
+        - reactivation
+        - streak_reminder
+      description: A type of notification that can be configured.
+    NotificationPreferences:
+      title: NotificationPreferences
+      type: object
+      description: Notification preferences for each notification type.
+      properties:
+        achievement_completed:
+          type: array
+          items:
+            $ref: '#/components/schemas/NotificationChannel'
+          description: Channels to receive achievement completion notifications on.
+        recap:
+          type: array
+          items:
+            $ref: '#/components/schemas/NotificationChannel'
+          description: Channels to receive recap notifications on.
+        reactivation:
+          type: array
+          items:
+            $ref: '#/components/schemas/NotificationChannel'
+          description: Channels to receive reactivation notifications on.
+        streak_reminder:
+          type: array
+          items:
+            $ref: '#/components/schemas/NotificationChannel'
+          description: Channels to receive streak reminder notifications on.
+    UserPreferencesResponse:
+      title: UserPreferencesResponse
+      type: object
+      description: A user's preferences.
+      properties:
+        notifications:
+          $ref: '#/components/schemas/NotificationPreferences'
+      required:
+        - notifications
+    UpdateUserPreferencesRequest:
+      title: UpdateUserPreferencesRequest
+      type: object
+      description: Request body for updating user preferences.
+      properties:
+        notifications:
+          $ref: '#/components/schemas/NotificationPreferences'
     ErrorBody:
       title: ErrorBody
       type: object
