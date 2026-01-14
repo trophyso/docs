@@ -105,6 +105,13 @@ To achieve this you must provide Trophy with a few key details from your Expo ac
 
 Follow the steps below to start sending push notifications using Trophy.
 
+<Tip>
+  Users can control which push notifications they receive through Trophy's [user
+  preferences API](/platform/users#notification-preferences). This allows you to
+  build a preference center in your application where users can opt in or out of
+  specific notification types.
+</Tip>
+
 <Steps>
   <Step title="Set up channels">
     Trophy support sending push notifications via 3 channels, [Apple Push Notification Service (APNs)](#apple-push-notification-service-apns), [Firebase Cloud Messaging (FCM)](#firebase-cloud-messaging-fcm) or [Expo Push Service](#expo-push-service).
@@ -172,6 +179,10 @@ Follow the steps below to start sending push notifications using Trophy.
     Head to the [configure page](https://app.trophy.so/push/configure) and enable each type of trigger that you want to use, and select the template that each trigger should use.
 
     Once enabled, Trophy will start sending push notifications automatically.
+
+    <Tip>
+      Users can control which push notification types they receive through Trophy's [user preferences API](/platform/users#notification-preferences). When a user has disabled a notification type in their preferences, Trophy will respect that setting and won't send those notifications to that user.
+    </Tip>
 
     <Frame>
 

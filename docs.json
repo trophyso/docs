@@ -168,7 +168,9 @@
               "api-reference/endpoints/users/get-a-users-points",
               "api-reference/endpoints/users/get-a-users-points-summary",
               "api-reference/endpoints/users/get-a-users-leaderboard",
-              "api-reference/endpoints/users/get-a-users-wrapped"
+              "api-reference/endpoints/users/get-a-users-wrapped",
+              "api-reference/endpoints/users/get-user-preferences",
+              "api-reference/endpoints/users/update-user-preferences"
             ]
           }
         ]
