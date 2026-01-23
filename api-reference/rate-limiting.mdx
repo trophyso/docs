@@ -5,7 +5,16 @@ description: Learn about the Trophy API and request rate limiting.
 icon: circle-gauge
 ---
 
-Trophy currently rate limits requests to **60 requests/second** across all endpoints scoped at the organisation level.
+import { RateLimitBadge } from "/snippets/rate-limit-badge.jsx";
+
+Trophy operates a tiered rate limiting model for each API endpoint. All rate limits are scoped at the organisation level. Exceeding rate limits will result in your application receiving a `429 Too Many Requests` response.
+
+## Rate Limit Tiers
+
+| Tier | Rate Limit |
+| ---- | ---------- |
+| <RateLimitBadge tier={1} noTooltip /> | 10 req/s |
+| <RateLimitBadge tier={2} noTooltip /> | 100 req/s |
 
 <Tip>
   If you feel you need a higher rate limit, then please [contact
