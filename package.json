@@ -17,8 +17,5 @@
   "bugs": {
     "url": "https://github.com/trophyso/docs/issues"
   },
-  "homepage": "https://github.com/trophyso/docs#readme",
-  "dependencies": {
-    "mint": "^4.2.144"
-  }
+  "homepage": "https://github.com/trophyso/docs#readme"
 }
