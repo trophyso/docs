@@ -1,0 +1,138 @@
+---
+title: Building a Fitness Tracker
+description: Learn how to build a Strava-like fitness app with Next.js, featuring multi-sport tracking, city-based leaderboards, and normalized XP progression.
+subtitle: Build a high-retention fitness app with streaks and leaderboards.
+---
+
+import MetricChangeRequestBlock from "/snippets/metric-change-request-block.mdx";
+import MetricChangeResponseBlock from "/snippets/metric-change-response-block.mdx";
+
+In this tutorial, we'll build **TrophyFitness**, a consumer fitness application that tracks running, cycling, and swimming. We'll implement a complete gamification loop including weekly leaderboards, habit-forming streaks, and a leveled progression system.
+
+If you want to skip straight to the code, check out the [example repository](https://github.com/trophyso/example-fitness-platform).
+
+<Frame>
+  {/* Placeholder for demo video */}
+  <div className="w-full aspect-video bg-muted flex items-center justify-center rounded-lg border border-border">
+    <span className="text-muted-foreground">Demo Video Coming Soon</span>
+  </div>
+</Frame>
+
+## Table of Contents
+
+- [Tech Stack](#tech-stack)
+- [Prerequisites](#prerequisites)
+- [Setup & Installation](#setup--installation)
+- [Designing the Data Model](#designing-the-data-model)
+- [Logging Activities](#logging-activities)
+- [Building Leaderboards](#building-leaderboards)
+- [Adding Progression (XP & Levels)](#adding-progression-xp--levels)
+- [Streaks & Retention](#streaks--retention)
+- [The Result](#the-result)
+
+## Tech Stack
+
+- **Framework:** [Next.js 15](https://nextjs.org) (App Router)
+- **UI:** [Shadcn/UI](https://ui.shadcn.com) + TailwindCSS
+- **Icons:** [Lucide React](https://lucide.dev)
+- **Gamification:** [Trophy](https://trophy.so)
+
+## Prerequisites
+
+- A Trophy account (sign up [here](https://app.trophy.so/sign-up)).
+- Node.js 18+ installed.
+
+## Setup & Installation
+
+First, clone the starter repository or create a new Next.js app:
+
+```bash
+npx create-next-app@latest trophy-fitness
+```
+
+Install the required dependencies:
+
+```bash
+npm install @trophyso/node lucide-react clsx tailwind-merge
+```
+
+Configure your environment variables in `.env.local`:
+
+```bash
+TROPHY_API_KEY=your_api_key_here
+```
+
+## Designing the Data Model
+
+For a multi-sport fitness app, we need to normalize efforts. A 10km cycle is not the same as a 10km run. We'll use three distinct metrics to track raw data, and a unified XP system for progression.
+
+### 1. The Metrics
+We will track distance as the primary value.
+
+*   `distance_run` (km) - with `pace` attribute (walk/run).
+*   `distance_cycled` (km)
+*   `distance_swum` (m) - with `style` attribute (freestyle/breaststroke).
+
+### 2. The Attributes
+To enable local leaderboards, we'll tag every user with a `city` attribute.
+
+## Logging Activities
+
+We'll create a Server Action to handle activity logging. This ensures our API keys stay secure and allows us to revalidate the UI instantly.
+
+```tsx src/app/actions.ts
+import { TrophyApiClient } from "@trophyso/node";
+import { revalidatePath } from "next/cache";
+
+const trophy = new TrophyApiClient({
+  apiKey: process.env.TROPHY_API_KEY as string,
+});
+
+export async function logActivity(userId: string, type: "run" | "cycle" | "swim", distance: number) {
+  let metricKey = "";
+  
+  switch (type) {
+    case "run": metricKey = "distance_run"; break;
+    case "cycle": metricKey = "distance_cycled"; break;
+    case "swim": metricKey = "distance_swum"; break;
+  }
+
+  await trophy.metrics.event(metricKey, {
+    user: { id: userId },
+    value: distance,
+  });
+
+  revalidatePath("/");
+}
+```
+
+## Building Leaderboards
+
+We want users to compete locally. Global leaderboards are great, but "Top Runner in London" is far more engaging than "Top Runner in the World."
+
+We'll use Trophy's **Breakdown Attributes** to automatically segment users by city.
+
+```tsx
+// Fetch leaderboard for a specific city
+const leaderboard = await trophy.leaderboards.get("weekly-distance-run-cities", {
+  userAttributes: "city:London"
+});
+```
+
+## Adding Progression (XP & Levels)
+
+To compare athletes across different sports, we use XP.
+
+*   **Run:** 10 XP / km
+*   **Cycle:** 3 XP / km
+*   **Swim:** 10 XP / 100m
+
+This logic is handled entirely within Trophy's **Points System** configuration, so your code just needs to display the user's level.
+
+## Streaks & Retention
+
+Consistency is key. We set up a "Daily Active Streak" that triggers whenever *any* of the three metrics is incremented.
+
+## The Result
+
+You now have a fully functional fitness gamification loop! Users can log workouts, compete in local leagues, and level up their global athlete profile.
