@@ -24,10 +24,9 @@ If you want to skip straight to the code, check out the [example repository](htt
 - [Prerequisites](#prerequisites)
 - [Setup & Installation](#setup--installation)
 - [Designing the Data Model](#designing-the-data-model)
-- [Logging Activities](#logging-activities)
-- [Building Leaderboards](#building-leaderboards)
-- [Adding Progression (XP & Levels)](#adding-progression-xp--levels)
-- [Streaks & Retention](#streaks--retention)
+- [Server Actions](#server-actions)
+- [Building the Dashboard](#building-the-dashboard)
+- [Implementing Leaderboards](#implementing-leaderboards)
 - [The Result](#the-result)
 
 ## Tech Stack
@@ -76,11 +75,13 @@ We will track distance as the primary value.
 ### 2. The Attributes
 To enable local leaderboards, we'll tag every user with a `city` attribute.
 
-## Logging Activities
+## Server Actions
 
-We'll create a Server Action to handle activity logging. This ensures our API keys stay secure and allows us to revalidate the UI instantly.
+We'll create a `src/app/actions.ts` file to handle all interactions with the Trophy API. This keeps our API keys secure and allows us to leverage Next.js Server Actions.
 
 ```tsx src/app/actions.ts
+"use server";
+
 import { TrophyApiClient } from "@trophyso/node";
 import { revalidatePath } from "next/cache";
 
@@ -88,7 +89,25 @@ const trophy = new TrophyApiClient({
   apiKey: process.env.TROPHY_API_KEY as string,
 });
 
-export async function logActivity(userId: string, type: "run" | "cycle" | "swim", distance: number) {
+// Helper to simulate a logged-in user for this demo
+const USER_ID = "user_123";
+
+export async function getUserStats() {
+  try {
+    const [streak, achievements, points] = await Promise.all([
+      trophy.users.streak(USER_ID),
+      trophy.users.achievements(USER_ID),
+      trophy.users.points(USER_ID, "xp"),
+    ]);
+
+    return { streak, achievements, points };
+  } catch (error) {
+    console.error(error);
+    return null;
+  }
+}
+
+export async function logActivity(type: "run" | "cycle" | "swim", distance: number) {
   let metricKey = "";
   
   switch (type) {
@@ -98,25 +117,120 @@ export async function logActivity(userId: string, type: "run" | "cycle" | "swim"
   }
 
   await trophy.metrics.event(metricKey, {
-    user: { id: userId },
+    user: { id: USER_ID },
     value: distance,
   });
 
   revalidatePath("/");
 }
+
+export async function getLeaderboard(key: string, city?: string) {
+  const response = await trophy.leaderboards.get(key, {
+    userAttributes: city ? `city:${city}` : undefined,
+  });
+  return response.rankings;
+}
 ```
 
-## Building Leaderboards
+## Building the Dashboard
 
-We want users to compete locally. Global leaderboards are great, but "Top Runner in London" is far more engaging than "Top Runner in the World."
+The dashboard is the player's home base. It shows their current streak, XP level, and recent activity.
 
-We'll use Trophy's **Breakdown Attributes** to automatically segment users by city.
+We'll create a main page that fetches stats server-side and renders them.
 
-```tsx
-// Fetch leaderboard for a specific city
-const leaderboard = await trophy.leaderboards.get("weekly-distance-run-cities", {
-  userAttributes: "city:London"
-});
+```tsx src/app/page.tsx
+import { getUserStats } from "./actions";
+import { Flame, Trophy } from "lucide-react";
+import { Progress } from "@/components/ui/progress";
+
+export default async function Dashboard() {
+  const stats = await getUserStats();
+  
+  const streakLength = stats?.streak?.length ?? 0;
+  const totalPoints = stats?.points?.total ?? 0;
+  const maxPoints = stats?.points?.maxPoints ?? 1000;
+  const progressPercent = (totalPoints / maxPoints) * 100;
+
+  return (
+    <div className="p-6 max-w-md mx-auto space-y-6">
+      {/* XP & Level Card */}
+      <div className="bg-card border rounded-xl p-4 space-y-3">
+        <div className="flex justify-between items-baseline">
+          <h2 className="font-bold text-lg">Level {stats?.points?.level?.name ?? "Rookie"}</h2>
+          <span className="text-sm text-muted-foreground">{totalPoints} XP</span>
+        </div>
+        <Progress value={progressPercent} className="h-2" />
+      </div>
+
+      {/* Streak Card */}
+      <div className="bg-orange-50 border border-orange-100 rounded-xl p-4 flex items-center gap-4">
+        <div className="bg-orange-100 p-3 rounded-full">
+          <Flame className="w-6 h-6 text-orange-500 fill-orange-500" />
+        </div>
+        <div>
+          <div className="font-bold text-2xl">{streakLength}</div>
+          <div className="text-sm text-orange-600 font-medium">Day Streak</div>
+        </div>
+      </div>
+    </div>
+  );
+}
+```
+
+## Implementing Leaderboards
+
+Competition drives engagement. We'll build a leaderboard page that lets users toggle between "Global" and "Local" (City) views.
+
+We'll use a client component to handle the toggling state, calling our server action to fetch data.
+
+```tsx src/app/leaderboards/page.tsx
+"use client";
+
+import { useState, useEffect } from "react";
+import { getLeaderboard } from "@/app/actions";
+import { Trophy } from "lucide-react";
+
+export default function LeaderboardPage() {
+  const [scope, setScope] = useState<"global" | "city">("global");
+  const [data, setData] = useState([]);
+
+  useEffect(() => {
+    // In a real app, you'd fetch the user's city dynamically
+    const city = scope === "city" ? "London" : undefined;
+    
+    getLeaderboard("weekly-distance-run", city).then(setData);
+  }, [scope]);
+
+  return (
+    <div className="p-6 max-w-md mx-auto">
+      <div className="flex gap-2 mb-6">
+        <button 
+          onClick={() => setScope("global")}
+          className={`px-4 py-2 rounded-lg ${scope === "global" ? "bg-primary text-white" : "bg-gray-100"}`}
+        >
+          Global
+        </button>
+        <button 
+          onClick={() => setScope("city")}
+          className={`px-4 py-2 rounded-lg ${scope === "city" ? "bg-primary text-white" : "bg-gray-100"}`}
+        >
+          Local
+        </button>
+      </div>
+
+      <div className="space-y-3">
+        {data.map((entry: any, index) => (
+          <div key={entry.userId} className="flex items-center gap-4 p-4 border rounded-xl">
+            <div className="font-bold text-gray-400 w-6">{index + 1}</div>
+            <div className="flex-1 font-medium">User {entry.userId}</div>
+            <div className="font-bold">{entry.value} km</div>
+            {index < 3 && <Trophy className="w-4 h-4 text-yellow-500" />}
+          </div>
+        ))}
+      </div>
+    </div>
+  );
+}
 ```
 
 ## Adding Progression (XP & Levels)
@@ -127,12 +241,12 @@ To compare athletes across different sports, we use XP.
 *   **Cycle:** 3 XP / km
 *   **Swim:** 10 XP / 100m
 
-This logic is handled entirely within Trophy's **Points System** configuration, so your code just needs to display the user's level.
-
-## Streaks & Retention
-
-Consistency is key. We set up a "Daily Active Streak" that triggers whenever *any* of the three metrics is incremented.
+This logic is handled entirely within Trophy's **Points System** configuration, so your code just needs to display the user's level as shown in the Dashboard step above.
 
 ## The Result
 
 You now have a fully functional fitness gamification loop! Users can log workouts, compete in local leagues, and level up their global athlete profile.
+
+<Frame>
+  <img src="/images/fitness-app-demo.png" alt="Fitness App Demo" className="rounded-xl border" />
+</Frame>
