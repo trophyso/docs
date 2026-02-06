@@ -4,9 +4,6 @@ description: Learn how to build a Strava-like fitness app with Next.js, featurin
 subtitle: Build a high-retention fitness app with streaks and leaderboards.
 ---
 
-import MetricChangeRequestBlock from "/snippets/metric-change-request-block.mdx";
-import MetricChangeResponseBlock from "/snippets/metric-change-response-block.mdx";
-
 In this tutorial, we'll build **TrophyFitness**, a consumer fitness application that tracks running, cycling, and swimming. We'll implement a complete gamification loop including weekly leaderboards, habit-forming streaks, and a leveled progression system.
 
 If you want to skip straight to the code, check out the [example repository](https://github.com/trophyso/example-fitness-platform).
@@ -79,7 +76,7 @@ To enable local leaderboards, we'll tag every user with a `city` attribute.
 
 We'll create a `src/app/actions.ts` file to handle all interactions with the Trophy API. This keeps our API keys secure and allows us to leverage Next.js Server Actions.
 
-```tsx src/app/actions.ts
+```tsx src/app/actions.ts [expandable]
 "use server";
 
 import { TrophyApiClient } from "@trophyso/node";
@@ -124,7 +121,11 @@ export async function logActivity(type: "run" | "cycle" | "swim", distance: numb
   revalidatePath("/");
 }
 
-export async function getLeaderboard(key: string, city?: string) {
+export async function getLeaderboard(metricKey: string, city?: string) {
+  // Use a different leaderboard key if filtering by city
+  // e.g. "weekly-distance-run" vs "weekly-distance-run-cities"
+  const key = city ? `${metricKey}-cities` : metricKey;
+
   const response = await trophy.leaderboards.get(key, {
     userAttributes: city ? `city:${city}` : undefined,
   });
@@ -138,7 +139,7 @@ The dashboard is the player's home base. It shows their current streak, XP level
 
 We'll create a main page that fetches stats server-side and renders them.
 
-```tsx src/app/page.tsx
+```tsx src/app/page.tsx [expandable]
 import { getUserStats } from "./actions";
 import { Flame, Trophy } from "lucide-react";
 import { Progress } from "@/components/ui/progress";
@@ -183,7 +184,7 @@ Competition drives engagement. We'll build a leaderboard page that lets users to
 
 We'll use a client component to handle the toggling state, calling our server action to fetch data.
 
-```tsx src/app/leaderboards/page.tsx
+```tsx src/app/leaderboards/page.tsx [expandable]
 "use client";
 
 import { useState, useEffect } from "react";
