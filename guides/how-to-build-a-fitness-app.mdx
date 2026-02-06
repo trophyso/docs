@@ -276,7 +276,7 @@ To compare athletes across different sports, we use a normalized XP system.
 In Trophy, you configure a **Points System** with the key `xp`. You then create **Triggers** for each metric:
 1.  **Metric:** `distance_run` → **Award:** 10 Points per 1 unit.
 2.  **Metric:** `distance_cycled` → **Award:** 3 Points per 1 unit.
-3.  **Metric:** `distance_swum` → **Award:** 0.1 Points per 1 unit (since swimming is tracked in meters).
+3.  **Metric:** `distance_swum` → **Award:** 10 Points per 100 units (since swimming is tracked in meters).
 
 Trophy automatically aggregates these into a single `total` for the user and maps them to your defined **Levels** (e.g., Level 1: 0 XP, Level 2: 500 XP). Your frontend code simply reads `stats.points.total` and `stats.points.level.name`.
 
