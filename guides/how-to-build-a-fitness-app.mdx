@@ -86,47 +86,66 @@ const trophy = new TrophyApiClient({
   apiKey: process.env.TROPHY_API_KEY as string,
 });
 
-// Helper to simulate a logged-in user for this demo
-const USER_ID = "user_123";
-
-export async function getUserStats() {
+export async function getUserStats(userId: string) {
   try {
-    const [streak, achievements, points] = await Promise.all([
-      trophy.users.streak(USER_ID),
-      trophy.users.achievements(USER_ID),
-      trophy.users.points(USER_ID, "xp"),
+    const [streak, achievements, pointsResponse] = await Promise.all([
+      trophy.users.streak(userId).catch(() => null),
+      trophy.users.achievements(userId, { includeIncomplete: "true" }).catch(() => []),
+      // Points system handles the normalization of XP across sports
+      trophy.users.points(userId, "xp").catch(() => null),
     ]);
 
-    return { streak, achievements, points };
+    return { streak, achievements, points: pointsResponse };
   } catch (error) {
-    console.error(error);
+    console.error("Failed to fetch user stats:", error);
     return null;
   }
 }
 
-export async function logActivity(type: "run" | "cycle" | "swim", distance: number) {
-  let metricKey = "";
+export async function logActivity(params: {
+  type: "run" | "cycle" | "swim";
+  distance: number;
+  userId: string;
+  city?: string;
+  pace?: string;
+  style?: string;
+}) {
+  const { type, distance, userId, city, pace, style } = params;
   
+  let metricKey = "";
+  const eventAttributes: Record<string, string> = {};
+
   switch (type) {
-    case "run": metricKey = "distance_run"; break;
-    case "cycle": metricKey = "distance_cycled"; break;
-    case "swim": metricKey = "distance_swum"; break;
+    case "run": 
+      metricKey = "distance_run"; 
+      if (pace) eventAttributes.pace = pace;
+      break;
+    case "cycle": 
+      metricKey = "distance_cycled"; 
+      break;
+    case "swim": 
+      metricKey = "distance_swum"; 
+      if (style) eventAttributes.style = style;
+      break;
   }
 
+  // Update the user's city attribute while logging the event
+  // to ensure leaderboards are correctly filtered.
   await trophy.metrics.event(metricKey, {
-    user: { id: USER_ID },
+    user: { 
+      id: userId,
+      ...(city ? { attributes: { city } } : {})
+    },
     value: distance,
+    ...(Object.keys(eventAttributes).length > 0 ? { attributes: eventAttributes } : {}),
   });
 
   revalidatePath("/");
+  revalidatePath("/leaderboards");
 }
 
-export async function getLeaderboard(metricKey: string, city?: string) {
-  // Use a different leaderboard key if filtering by city
-  // e.g. "weekly-distance-run" vs "weekly-distance-run-cities"
-  const key = city ? `${metricKey}-cities` : metricKey;
-
-  const response = await trophy.leaderboards.get(key, {
+export async function getLeaderboard(leaderboardKey: string, city?: string) {
+  const response = await trophy.leaderboards.get(leaderboardKey, {
     userAttributes: city ? `city:${city}` : undefined,
   });
   return response.rankings;
@@ -145,22 +164,31 @@ import { Flame, Trophy } from "lucide-react";
 import { Progress } from "@/components/ui/progress";
 
 export default async function Dashboard() {
-  const stats = await getUserStats();
+  // In a real app, you would get the current user ID from your auth provider
+  const userId = "user_123"; 
+  const stats = await getUserStats(userId);
   
   const streakLength = stats?.streak?.length ?? 0;
   const totalPoints = stats?.points?.total ?? 0;
-  const maxPoints = stats?.points?.maxPoints ?? 1000;
-  const progressPercent = (totalPoints / maxPoints) * 100;
+  
+  // Trophy Points objects return the current level and the points 
+  // required for the next level automatically.
+  const currentLevel = stats?.points?.level?.name ?? "Rookie";
+  const nextLevelPoints = stats?.points?.nextLevelPoints ?? 1000;
+  const progressPercent = (totalPoints / nextLevelPoints) * 100;
 
   return (
     <div className="p-6 max-w-md mx-auto space-y-6">
       {/* XP & Level Card */}
       <div className="bg-card border rounded-xl p-4 space-y-3">
         <div className="flex justify-between items-baseline">
-          <h2 className="font-bold text-lg">Level {stats?.points?.level?.name ?? "Rookie"}</h2>
+          <h2 className="font-bold text-lg">Level {currentLevel}</h2>
           <span className="text-sm text-muted-foreground">{totalPoints} XP</span>
         </div>
         <Progress value={progressPercent} className="h-2" />
+        <p className="text-xs text-muted-foreground">
+          {nextLevelPoints - totalPoints} XP until next level
+        </p>
       </div>
 
       {/* Streak Card */}
@@ -182,7 +210,7 @@ export default async function Dashboard() {
 
 Competition drives engagement. We'll build a leaderboard page that lets users toggle between "Global" and "Local" (City) views.
 
-We'll use a client component to handle the toggling state, calling our server action to fetch data.
+Ensure you have configured separate leaderboard keys in the Trophy Dashboard for global and filtered views (e.g., `weekly-run` and `weekly-run-cities`).
 
 ```tsx src/app/leaderboards/page.tsx [expandable]
 "use client";
@@ -196,10 +224,11 @@ export default function LeaderboardPage() {
   const [data, setData] = useState([]);
 
   useEffect(() => {
-    // In a real app, you'd fetch the user's city dynamically
+    // Determine the correct leaderboard key based on scope
+    const key = scope === "city" ? "weekly-run-cities" : "weekly-run";
     const city = scope === "city" ? "London" : undefined;
     
-    getLeaderboard("weekly-distance-run", city).then(setData);
+    getLeaderboard(key, city).then(setData);
   }, [scope]);
 
   return (
@@ -207,13 +236,13 @@ export default function LeaderboardPage() {
       <div className="flex gap-2 mb-6">
         <button 
           onClick={() => setScope("global")}
-          className={`px-4 py-2 rounded-lg ${scope === "global" ? "bg-primary text-white" : "bg-gray-100"}`}
+          className={`px-4 py-2 rounded-lg ${scope === "global" ? "bg-primary text-white shadow" : "bg-gray-100"}`}
         >
           Global
         </button>
         <button 
           onClick={() => setScope("city")}
-          className={`px-4 py-2 rounded-lg ${scope === "city" ? "bg-primary text-white" : "bg-gray-100"}`}
+          className={`px-4 py-2 rounded-lg ${scope === "city" ? "bg-primary text-white shadow" : "bg-gray-100"}`}
         >
           Local
         </button>
@@ -221,10 +250,12 @@ export default function LeaderboardPage() {
 
       <div className="space-y-3">
         {data.map((entry: any, index) => (
-          <div key={entry.userId} className="flex items-center gap-4 p-4 border rounded-xl">
-            <div className="font-bold text-gray-400 w-6">{index + 1}</div>
-            <div className="flex-1 font-medium">User {entry.userId}</div>
-            <div className="font-bold">{entry.value} km</div>
+          <div key={entry.userId} className="flex items-center gap-4 p-4 border rounded-xl bg-card">
+            <div className={`font-bold w-6 ${index < 3 ? "text-primary" : "text-muted-foreground"}`}>
+              {index + 1}
+            </div>
+            <div className="flex-1 font-medium">{entry.userName || `User ${entry.userId.slice(0,5)}`}</div>
+            <div className="font-bold">{entry.value.toLocaleString()} km</div>
             {index < 3 && <Trophy className="w-4 h-4 text-yellow-500" />}
           </div>
         ))}
@@ -236,13 +267,18 @@ export default function LeaderboardPage() {
 
 ## Adding Progression (XP & Levels)
 
-To compare athletes across different sports, we use XP.
+To compare athletes across different sports, we use a normalized XP system.
 
 *   **Run:** 10 XP / km
 *   **Cycle:** 3 XP / km
 *   **Swim:** 10 XP / 100m
 
-This logic is handled entirely within Trophy's **Points System** configuration, so your code just needs to display the user's level as shown in the Dashboard step above.
+In Trophy, you configure a **Points System** with the key `xp`. You then create **Triggers** for each metric:
+1.  **Metric:** `distance_run` → **Award:** 10 Points per 1 unit.
+2.  **Metric:** `distance_cycled` → **Award:** 3 Points per 1 unit.
+3.  **Metric:** `distance_swum` → **Award:** 0.1 Points per 1 unit (since swimming is tracked in meters).
+
+Trophy automatically aggregates these into a single `total` for the user and maps them to your defined **Levels** (e.g., Level 1: 0 XP, Level 2: 500 XP). Your frontend code simply reads `stats.points.total` and `stats.points.level.name`.
 
 ## The Result
 
