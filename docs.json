@@ -101,7 +101,10 @@
           },
           {
             "group": "Use Cases",
-            "pages": ["guides/gamified-study-platform"]
+            "pages": [
+              "guides/gamified-study-platform",
+              "guides/how-to-build-a-fitness-app"
+            ]
           }
         ]
       },
