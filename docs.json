@@ -35,7 +35,13 @@
     }
   },
   "contextual": {
-    "options": ["copy", "view", "chatgpt", "claude", "perplexity"]
+    "options": [
+      "copy",
+      "view",
+      "chatgpt",
+      "claude",
+      "perplexity"
+    ]
   },
   "navigation": {
     "tabs": [
@@ -101,7 +107,9 @@
           },
           {
             "group": "Use Cases",
-            "pages": ["guides/gamified-study-platform"]
+            "pages": [
+              "guides/gamified-study-platform"
+            ]
           }
         ]
       },
@@ -181,13 +189,23 @@
         "groups": [
           {
             "group": "Overview",
-            "pages": ["admin-api/introduction"]
+            "pages": [
+              "admin-api/introduction"
+            ]
           },
           {
             "group": "Streaks",
             "pages": [
               "admin-api/endpoints/streaks/grant-freezes",
               "admin-api/endpoints/streaks/restore-streaks"
+            ]
+          },
+          {
+            "group": "Points",
+            "pages": [
+              "admin-api/endpoints/points/create-boosts",
+              "admin-api/endpoints/points/archive-boosts-batch",
+              "admin-api/endpoints/points/archive-a-boost"
             ]
           }
         ]
@@ -209,7 +227,9 @@
           },
           {
             "group": "Achievements",
-            "pages": ["webhooks/events/achievements/achievement-completed"]
+            "pages": [
+              "webhooks/events/achievements/achievement-completed"
+            ]
           },
           {
             "group": "Streaks",
@@ -223,7 +243,9 @@
           },
           {
             "group": "Points",
-            "pages": ["webhooks/events/points/points-changed"]
+            "pages": [
+              "webhooks/events/points/points-changed"
+            ]
           },
           {
             "group": "Leaderboards",
