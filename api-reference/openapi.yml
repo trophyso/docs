@@ -1773,6 +1773,13 @@ paths:
                     badgeUrl: null
                     maxPoints: null
                     total: 100
+                    boosts:
+                      - id: 0040fe51-6bce-4b44-b0ad-bddc4e123534
+                        name: Double XP Weekend
+                        start: '2021-01-01'
+                        end: '2021-01-03'
+                        multiplier: 2
+                        rounding: 'down'
                     awards:
                       - id: 0040fe51-6bce-4b44-b0ad-bddc4e123534
                         awarded: 10
@@ -2454,6 +2461,13 @@ paths:
                     description: Experience points for user engagement
                     badgeUrl: https://example.com/badge.png
                     maxPoints: null
+                    boosts:
+                      - id: 0040fe51-6bce-4b44-b0ad-bddc4e123537
+                        name: Double XP Weekend
+                        start: '2021-01-01'
+                        end: '2021-01-03'
+                        multiplier: 2
+                        rounding: 'down'
                     triggers:
                       - id: 0040fe51-6bce-4b44-b0ad-bddc4e123534
                         type: metric
@@ -2981,6 +2995,296 @@ paths:
       summary: Restore streaks for multiple users
       security:
         - ApiKeyAuth: []
+
+  /points/boosts:
+    servers:
+      - url: https://admin.trophy.so/v1
+        description: Admin API
+    post:
+      description: Create points boosts for multiple users.
+      operationId: admin_points_boosts_create
+      x-fern-server-name: admin
+      x-fern-sdk-group-name:
+        - admin
+        - points
+        - boosts
+      x-fern-sdk-method-name: create
+      tags:
+        - Admin
+      x-codeSamples:
+        - lang: javascript
+          source: |
+            import { TrophyApiClient } from '@trophyso/node';
+
+            const trophy = new TrophyApiClient({
+              apiKey: 'YOUR_API_KEY'
+            });
+
+            const response = await trophy.admin.points.boosts.create({
+              systemKey: 'xp',
+              boosts: [
+                {
+                  userId: 'user-123',
+                  name: 'Double XP Weekend',
+                  start: '2024-01-01',
+                  end: '2024-01-03',
+                  multiplier: 2
+                },
+                {
+                  userId: 'user-456',
+                  name: 'Holiday Bonus',
+                  start: '2024-12-25',
+                  multiplier: 1.5,
+                  rounding: 'up'
+                }
+              ]
+            });
+        - lang: python
+          source: |
+            from trophy import TrophyApi
+
+            client = TrophyApi(api_key='YOUR_API_KEY')
+
+            response = client.admin.points.boosts.create({
+              "systemKey": "xp",
+              "boosts": [
+                {
+                  "userId": "user-123",
+                  "name": "Double XP Weekend",
+                  "start": "2024-01-01",
+                  "end": "2024-01-03",
+                  "multiplier": 2
+                },
+                {
+                  "userId": "user-456",
+                  "name": "Holiday Bonus",
+                  "start": "2024-12-25",
+                  "multiplier": 1.5,
+                  "rounding": "up"
+                }
+              ]
+            })
+      requestBody:
+        description: The points system key and array of boosts to create
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreatePointsBoostsRequest'
+            examples:
+              Create boosts for multiple users:
+                value:
+                  systemKey: xp
+                  boosts:
+                    - userId: user-123
+                      name: Double XP Weekend
+                      start: '2024-01-01'
+                      end: '2024-01-03'
+                      multiplier: 2
+                    - userId: user-456
+                      name: Holiday Bonus
+                      start: '2024-12-25'
+                      multiplier: 1.5
+                      rounding: up
+      responses:
+        '200':
+          description: Successful operation (no boosts created)
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CreatePointsBoostsResponse'
+              examples:
+                All requests had errors:
+                  value:
+                    issues:
+                      - userId: non-existent-user
+                        level: error
+                        reason: User does not exist
+        '201':
+          description: Created (at least one boost created)
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CreatePointsBoostsResponse'
+              examples:
+                Success with no issues:
+                  value:
+                    issues: []
+                Mixed success and errors:
+                  value:
+                    issues:
+                      - userId: non-existent-user
+                        level: error
+                        reason: User does not exist
+        '400':
+          description: 'Bad Request'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorBody'
+        '401':
+          description: 'Unauthorized'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorBody'
+        '404':
+          description: 'Not Found (points system not found)'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorBody'
+        '422':
+          description: 'Unprocessible Entity'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorBody'
+      summary: Create points boosts for multiple users
+      security:
+        - ApiKeyAuth: []
+    delete:
+      description: Archive multiple points boosts by ID. This sets the boost status to 'archived' rather than deleting the records.
+      operationId: admin_points_boosts_batch_delete
+      x-fern-server-name: admin
+      x-fern-sdk-group-name:
+        - admin
+        - points
+        - boosts
+      x-fern-sdk-method-name: batchDelete
+      tags:
+        - Admin
+      x-codeSamples:
+        - lang: javascript
+          source: |
+            import { TrophyApiClient } from '@trophyso/node';
+
+            const trophy = new TrophyApiClient({
+              apiKey: 'YOUR_API_KEY'
+            });
+
+            const response = await trophy.admin.points.boosts.batchDelete({
+              ids: ['boost-uuid-1', 'boost-uuid-2', 'boost-uuid-3']
+            });
+
+            console.log(`Archived ${response.archivedCount} boosts`);
+        - lang: python
+          source: |
+            from trophy import TrophyApi
+
+            client = TrophyApi(api_key='YOUR_API_KEY')
+
+            response = client.admin.points.boosts.batch_delete(
+              ids=['boost-uuid-1', 'boost-uuid-2', 'boost-uuid-3']
+            )
+
+            print(f"Archived {response.archived_count} boosts")
+      parameters:
+        - name: ids
+          in: query
+          required: true
+          description: Array of boost UUIDs to archive. Maximum 1000 IDs per request.
+          schema:
+            type: array
+            items:
+              type: string
+              format: uuid
+            minItems: 1
+            maxItems: 1000
+          style: form
+          explode: true
+      responses:
+        '200':
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DeletePointsBoostsResponse'
+              examples:
+                All boosts archived:
+                  value:
+                    archivedCount: 3
+                Some boosts not found:
+                  value:
+                    archivedCount: 1
+                No boosts found:
+                  value:
+                    archivedCount: 0
+        '400':
+          description: 'Bad Request (no IDs provided or invalid UUID format)'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorBody'
+        '401':
+          description: 'Unauthorized'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorBody'
+      summary: Archive multiple points boosts
+      security:
+        - ApiKeyAuth: []
+
+  /points/boosts/{id}:
+    servers:
+      - url: https://admin.trophy.so/v1
+        description: Admin API
+    delete:
+      description: Archive a points boost by ID. This sets the boost status to 'archived' rather than deleting the record.
+      operationId: admin_points_boosts_delete
+      x-fern-server-name: admin
+      x-fern-sdk-group-name:
+        - admin
+        - points
+        - boosts
+      x-fern-sdk-method-name: delete
+      tags:
+        - Admin
+      x-codeSamples:
+        - lang: javascript
+          source: |
+            import { TrophyApiClient } from '@trophyso/node';
+
+            const trophy = new TrophyApiClient({
+              apiKey: 'YOUR_API_KEY'
+            });
+
+            await trophy.admin.points.boosts.delete('boost-uuid-here');
+        - lang: python
+          source: |
+            from trophy import TrophyApi
+
+            client = TrophyApi(api_key='YOUR_API_KEY')
+
+            client.admin.points.boosts.delete('boost-uuid-here')
+      parameters:
+        - name: id
+          in: path
+          required: true
+          description: The UUID of the points boost to archive
+          schema:
+            type: string
+            format: uuid
+      responses:
+        '204':
+          description: Successfully archived
+        '401':
+          description: 'Unauthorized'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorBody'
+        '404':
+          description: 'Not Found'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorBody'
+      summary: Archive a points boost
+      security:
+        - ApiKeyAuth: []
+
 webhooks:
   achievement.completed:
     post:
@@ -3325,6 +3629,7 @@ webhooks:
                     badgeUrl: null
                     maxPoints: null
                     total: 100
+                    boosts: []
                     awards:
                       - id: 0040fe51-6bce-4b44-b0ad-bddc4e123534
                         awarded: 10
@@ -3766,6 +4071,36 @@ components:
           description: The user's total points after this award occurred.
         trigger:
           $ref: '#/components/schemas/PointsTrigger'
+        boosts:
+          type: array
+          description: Array of points boosts that applied to this award.
+          items:
+            $ref: '#/components/schemas/PointsBoost'
+    PointsBoost:
+      title: PointsBoost
+      type: object
+      properties:
+        id:
+          type: string
+          description: The ID of the points boost
+        name:
+          type: string
+          description: The name of the points boost
+        start:
+          type: string
+          description: The start date of the points boost
+        end:
+          type:
+            - string
+            - 'null'
+          description: The end date of the points boost
+        multiplier:
+          type: number
+          description: The multiplier of the points boost
+        rounding:
+          type: string
+          enum: ['down', 'up', 'nearest']
+          description: The rounding method of the points boost
     GetUserPointsResponse:
       title: GetUserPointsResponse
       type: object
@@ -3797,6 +4132,11 @@ components:
         total:
           type: integer
           description: The user's total points
+        boosts:
+          type: array
+          description: Array of active points boosts applicable to this user for this points system.
+          items:
+            $ref: '#/components/schemas/PointsBoost'
         awards:
           type: array
           description: Array of trigger awards that added points.
@@ -3810,6 +4150,7 @@ components:
         - badgeUrl
         - maxPoints
         - total
+        - boosts
         - awards
     LeaderboardResponse:
       title: LeaderboardResponse
@@ -4553,6 +4894,11 @@ components:
             - number
             - 'null'
           description: The maximum number of points a user can be awarded in this points system
+        boosts:
+          type: array
+          description: Array of active global boosts for this points system.
+          items:
+            $ref: '#/components/schemas/PointsBoost'
         triggers:
           type: array
           description: Array of active triggers for this points system.
@@ -4564,6 +4910,7 @@ components:
         - description
         - badgeUrl
         - maxPoints
+        - boosts
         - triggers
     StreakRankingUser:
       title: StreakRankingUser
@@ -4750,6 +5097,90 @@ components:
           description: Array of issues encountered during freeze creation.
       required:
         - issues
+    CreatePointsBoostsRequest:
+      title: CreatePointsBoostsRequest
+      type: object
+      description: Request body for creating points boosts.
+      properties:
+        systemKey:
+          type: string
+          description: The key of the points system to create boosts for.
+          example: xp
+        boosts:
+          type: array
+          items:
+            type: object
+            properties:
+              userId:
+                type: string
+                description: The ID of the user to create a boost for.
+                example: user-123
+              name:
+                type: string
+                description: The name of the boost.
+                maxLength: 255
+                example: Double XP Weekend
+              start:
+                type: string
+                format: date
+                description: The start date of the boost (YYYY-MM-DD).
+                example: '2024-01-01'
+              end:
+                type:
+                  - string
+                  - 'null'
+                format: date
+                description: The end date of the boost (YYYY-MM-DD). If null, the boost has no end date.
+                example: '2024-01-03'
+              multiplier:
+                type: number
+                description: The points multiplier. Must be greater than 0, not equal to 1, and less than 100.
+                example: 2
+                exclusiveMinimum: 0
+                exclusiveMaximum: 100
+              rounding:
+                type: string
+                enum:
+                  - down
+                  - up
+                  - nearest
+                default: down
+                description: How to round the boosted points. Defaults to 'down'.
+                example: down
+            required:
+              - userId
+              - name
+              - start
+              - multiplier
+          description: Array of boosts to create. Maximum 1,000 boosts per request.
+          maxItems: 1000
+          minItems: 1
+      required:
+        - systemKey
+        - boosts
+    CreatePointsBoostsResponse:
+      title: CreatePointsBoostsResponse
+      type: object
+      description: Response containing any issues encountered while creating points boosts.
+      properties:
+        issues:
+          type: array
+          items:
+            $ref: '#/components/schemas/BulkInsertIssue'
+          description: Array of issues encountered during boost creation.
+      required:
+        - issues
+    DeletePointsBoostsResponse:
+      title: DeletePointsBoostsResponse
+      type: object
+      description: Response containing the count of archived points boosts.
+      properties:
+        archivedCount:
+          type: integer
+          description: The number of boosts that were archived.
+          example: 3
+      required:
+        - archivedCount
     RestoreStreaksRequest:
       title: RestoreStreaksRequest
       type: object
