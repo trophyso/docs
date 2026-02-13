@@ -151,6 +151,7 @@
             "group": "Points",
             "pages": [
               "api-reference/endpoints/points/get-points",
+              "api-reference/endpoints/points/get-points-boosts",
               "api-reference/endpoints/points/get-points-summary"
             ]
           },
