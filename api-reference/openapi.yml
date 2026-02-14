@@ -3330,13 +3330,13 @@ paths:
         - ApiKeyAuth: []
     delete:
       description: Archive multiple points boosts by ID.
-      operationId: admin_points_boosts_batch_delete
+      operationId: admin_points_boosts_batch_archive
       x-fern-server-name: admin
       x-fern-sdk-group-name:
         - admin
         - points
         - boosts
-      x-fern-sdk-method-name: batchDelete
+      x-fern-sdk-method-name: batchArchive
       tags:
         - Admin
       x-codeSamples:
@@ -3348,7 +3348,7 @@ paths:
               apiKey: 'YOUR_API_KEY'
             });
 
-            const response = await trophy.admin.points.boosts.batchDelete({
+            const response = await trophy.admin.points.boosts.batchArchive({
               ids: ['boost-uuid-1', 'boost-uuid-2', 'boost-uuid-3']
             });
 
@@ -3359,7 +3359,7 @@ paths:
 
             client = TrophyApi(api_key='YOUR_API_KEY')
 
-            response = client.admin.points.boosts.batch_delete(
+            response = client.admin.points.boosts.batch_archive(
               ids=['boost-uuid-1', 'boost-uuid-2', 'boost-uuid-3']
             )
 
@@ -3382,7 +3382,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/DeletePointsBoostsResponse'
+                $ref: '#/components/schemas/ArchivePointsBoostsResponse'
               examples:
                 All boosts archived:
                   value:
@@ -3414,14 +3414,14 @@ paths:
       - url: https://admin.trophy.so/v1
         description: Admin API
     delete:
-      description: Archive a points boost by ID. This sets the boost status to 'archived' rather than deleting the record.
-      operationId: admin_points_boosts_delete
+      description: Archive a points boost by ID.
+      operationId: admin_points_boosts_archive
       x-fern-server-name: admin
       x-fern-sdk-group-name:
         - admin
         - points
         - boosts
-      x-fern-sdk-method-name: delete
+      x-fern-sdk-method-name: archive
       tags:
         - Admin
       x-codeSamples:
@@ -3433,14 +3433,14 @@ paths:
               apiKey: 'YOUR_API_KEY'
             });
 
-            await trophy.admin.points.boosts.delete('boost-uuid-here');
+            await trophy.admin.points.boosts.archive('boost-uuid-here');
         - lang: python
           source: |
             from trophy import TrophyApi
 
             client = TrophyApi(api_key='YOUR_API_KEY')
 
-            client.admin.points.boosts.delete('boost-uuid-here')
+            client.admin.points.boosts.archive('boost-uuid-here')
       parameters:
         - name: id
           in: path
@@ -3451,7 +3451,7 @@ paths:
             format: uuid
       responses:
         '204':
-          description: Successfully archived
+          description: Successfully archived the points boost
         '401':
           description: 'Unauthorized'
           content:
@@ -3846,22 +3846,23 @@ webhooks:
                   type: string
                   format: date-time
                   description: When the event occurred (ISO 8601).
-                pointsBoost:
+                boost:
                   $ref: '#/components/schemas/PointsBoostWebhookPayload'
                   description: The points boost that started.
               required:
                 - type
                 - timestamp
-                - pointsBoost
+                - boost
             examples:
               Points boost started:
                 value:
                   type: points.boost_started
                   timestamp: '2025-01-15T00:00:00Z'
-                  pointsBoost:
+                  boost:
                     id: 0040fe51-6bce-4b44-b0ad-bddc4e123534
                     name: Double XP Weekend
                     status: active
+                    userId: null
                     pointsSystemId: 0040fe51-6bce-4b44-b0ad-bddc4e123535
                     pointsSystemKey: xp
                     pointsSystemName: XP
@@ -3891,22 +3892,23 @@ webhooks:
                   type: string
                   format: date-time
                   description: When the event occurred (ISO 8601).
-                pointsBoost:
+                boost:
                   $ref: '#/components/schemas/PointsBoostWebhookPayload'
                   description: The points boost that finished.
               required:
                 - type
                 - timestamp
-                - pointsBoost
+                - boost
             examples:
               Points boost finished:
                 value:
                   type: points.boost_finished
                   timestamp: '2025-01-17T23:59:59Z'
-                  pointsBoost:
+                  boost:
                     id: 0040fe51-6bce-4b44-b0ad-bddc4e123534
                     name: Double XP Weekend
                     status: finished
+                    userId: null
                     pointsSystemId: 0040fe51-6bce-4b44-b0ad-bddc4e123535
                     pointsSystemKey: xp
                     pointsSystemName: XP
@@ -4401,6 +4403,11 @@ components:
           type: string
           enum: ['active', 'finished']
           description: The status of the points boost.
+        userId:
+          type:
+            - string
+            - 'null'
+          description: The customer-facing user ID that the boost is scoped to, or null for global boosts.
         pointsSystemId:
           type: string
           description: The ID of the points system this boost applies to.
@@ -4431,6 +4438,7 @@ components:
         - id
         - name
         - status
+        - userId
         - pointsSystemId
         - pointsSystemKey
         - pointsSystemName
@@ -5587,8 +5595,8 @@ components:
       required:
         - created
         - issues
-    DeletePointsBoostsResponse:
-      title: DeletePointsBoostsResponse
+    ArchivePointsBoostsResponse:
+      title: ArchivePointsBoostsResponse
       type: object
       description: Response containing the count of archived points boosts.
       properties:
