@@ -246,7 +246,9 @@
           {
             "group": "Points",
             "pages": [
-              "webhooks/events/points/points-changed"
+              "webhooks/events/points/points-changed",
+              "webhooks/events/points/points-boost-started",
+              "webhooks/events/points/points-boost-finished"
             ]
           },
           {
