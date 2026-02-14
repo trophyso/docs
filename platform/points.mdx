@@ -76,23 +76,23 @@ You can add as many triggers as you like to each points system you set up, allow
 
 There are multiple types of triggers in Trophy that can be used to award or deduct points in different ways.
 
-**Metric Triggers**
+#### Metric Triggers
 
 Points can be awarded or deducted continually as users increment [Metrics](/platform/metrics). You can choose to award or deduct any arbitrary number of points at any arbitrary metric threshold, for example "award 10 points for every 3 tasks completed".
 
-**Streak Triggers**
+#### Streak Triggers
 
 Points can be awarded or deducted for reaching any arbitrary length of a [Streak](/platform/streaks), for example "award 50 points for every 7 days streak".
 
-**Achievement Triggers**
+#### Achievement Triggers
 
 Points can be awarded or deducted when users unlock specific [Achievements](/platform/achievements), for example "award 100 points when users completed the `profile-completed` achievement".
 
-**Time-based Triggers**
+#### Time-based Triggers
 
 Points can be awarded or deducted at repeating time intervals, every hour or every day. For example "award 10 points every 3 hours".
 
-**User Identification Triggers**
+#### User Identification Triggers
 
 Points can be awarded when users are first identified in Trophy, useful for granting an initial amount of points when they sign up to your product.
 
@@ -175,15 +175,121 @@ Trophy's preview tool can model different scenarios to help you determine how fr
   ></video>
 </Frame>
 
+## Points Boosts
+
+Points boosts are multipliers that you can use to incentivise user actions in your product during a specific time period.
+
+This section walks through how boosts work, and how you can use them to incentivise users to take actions within your application and increase retention and engagement.
+
+### Boost Targeting
+
+There are a few different ways you can use boosts in Trophy.
+
+- **Global boosts** multiply points earned by all users during the boost window.
+- **Scoped boosts** using [custom user attributes](/platform/users#custom-user-attributes) only multiply points earned by a particular user group with custom attribute values matching those set on the boost.
+- **User-specific boosts** only multiply points earned by a single user within the boost window.
+
+Typically, global boosts are used to increase platform-wide engagement during key calendar events like BFCM in e-commerce, New Year in fitness and exam season in ed-tech platforms.
+
+Conversely, scoped and user-specific boosts are commonly targeted at providing additional incentives to specific usage patterns that are leading to churn or disengagement.
+
+### Creating Boosts
+
+<Note>
+User-specific boosts can only be created programatically through the [Admin API](/admin-api/endpoints/points/create-boosts).
+</Note>
+
+To create a points boost via the Trophy dashboard, follow the steps below.
+
+<Frame>
+  <video
+    autoPlay
+    muted
+    loop
+    playsInline
+    className="w-full aspect-15/4"
+    src="../assets/platform/points/create_points_boost.mp4"
+  ></video>
+</Frame>
+
+<Steps>
+  <Step title="Head to boosts page">
+    Head to the [points page](https://app.trophy.so/points) and click on the points system you want to create the boost for. Then head to the boosts tab and hit the *New Boost* button.
+  </Step>
+  <Step title="Choose Name">
+    Choose a name for your boost that clearly describes what it's for. For example "2X Boost - All Users - Christmas 2026".
+  </Step>
+  <Step title="Set Multipler">
+    Set the numeric value that the boost will multiply points earned by. If you choose a decimal multipler, you'll have the option to choose the [rounding behavoir](#boost-rounding) the boost should use.
+  </Step>
+  <Step title="Set Boost Window">
+    Choose a start and (optionally) an end date for your boost. If you choose a future start date, Trophy will schedule the boost to go active on your chosen date. Similarly if you set an end date, Trophy will take care of stopping your boost for you.
+  </Step>
+  <Step title="Set Scope (Optional)">
+
+    <Note>
+      This feature requires [custom user attributes](/platform/users#custom-user-attributes) which are available on the [Pro](/account/billing#pro-plan) plan.
+    </Note>
+
+    If you want your boost to only affect a specific user cohort, set user attribute conditions that match those of your target cohort. Trophy will take care of only applying the boost to points earned by users with matching user attribute values.
+
+    <Frame>
+      <img
+        height="200"
+        width="100%"
+        noZoom
+        src="../assets/platform/points/points_boost_attributes.png"
+      />
+    </Frame>
+  </Step>
+  <Step title="Activate Boost">
+    Hit *Save Boost* and make your boost active when ready.
+  </Step>
+</Steps>
+
+### Boost Multiplers
+
+Every boost has a single multiplier value that increases the total points earned by users affected by that boost.
+
+Boost multiplers must be positive numbers, but can be decimals to support secnarios where percentage boosts like '50% more points' may be required.
+
+### Boost Stacking
+
+Points boosts in Trophy stack through [multiplication](#boost-multiplers). This is to support allowing users to benefit from multiple boosts simultaneously.
+
+To demonstrate stacking consider a 2X, 1.5X and a 3X boost all active within the same time period. The resulting boost multipler for a user that qualifies for all three boosts would be as follows:
+
+```txt Boost Stacking Example
+Overall Multipler (3 boosts) = 2X * 1.5X * 3X = 9X
+```
+
+### Boost Rounding
+
+Trophy supports [floating point metric event values](/platform/events#event-value), but takes care of rounding points to integers automatically.
+
+However, when using decimal [boost multiplers](#boost-multiplers), there may be some scenarios where this default rounding is not enough to always produce integer points values.
+
+Therefore Trophy offers three rounding modes to provide additional control on rounding behavoir specifically when boosts are involved in points calculations.
+
+- **Round Down**: By default, Trophy will round points down to the nearest integer when boost multiplication results in a decimal.
+- **Round Up**: Trophy rounds decimal points up to the nearest integer after boost multiplcation.
+- **Round Nearest**: Trophy will round points to the nearest integer, up or down, based on the final value after boost multiplcation. For example `1.2` is rounded to `1` and `1.7` is rounded to `2`.
+
+<Tip>
+In scenarios where points are used to mimic platform credit mechanics, it's recommended to use the default rounding down behavoir to protect against slippage.
+</Tip>
+
+Simply choose your preferred rounding mode when [creating boosts](/platform/points#creating-boosts) through the Trophy dashboard.
+
 ## Displaying Points
 
 There are a few ways to use Trophy to fetch and display points in your app.
 
-<Tip>
-  Check out our guides on adding an [XP
+<Note>
+  For working examples check out our guides on adding an [XP
   feature](/guides/how-to-build-an-xp-feature) or an [energy
   feature](/guides/how-to-build-an-energy-feature) to your web or mobile app.
-</Tip>
+</Note>
 
 <Frame>
   <video
