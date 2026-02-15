@@ -177,21 +177,20 @@ Trophy's preview tool can model different scenarios to help you determine how fr
 
 ## Points Boosts
 
-Points boosts are multipliers that you can use to incentivise user actions in your product during a specific time period.
+Points boosts are multipliers that you can use to increase the number of points awarded to users during a specific time period.
 
-This section walks through how boosts work, and how you can use them to incentivise users to take actions within your application and increase retention and engagement.
+This section explains how boosts work and how they can be used to increase your application's retention and engagement.
 
 ### Boost Targeting
 
 There are a few different ways you can use boosts in Trophy.
 
-- **Global boosts** multiply points earned by all users during the boost window.
-- **Scoped boosts** using [custom user attributes](/platform/users#custom-user-attributes) only multiply points earned by a particular user group with custom attribute values matching those set on the boost.
+- **Global boosts** multiply points earned by all users during the boost window, or can be scoped to a specific user cohort by using [custom user attributes](/platform/users#custom-user-attributes).
 - **User-specific boosts** only multiply points earned by a single user within the boost window.
 
-Typically, global boosts are used to increase platform-wide engagement during key calendar events like BFCM in e-commerce, New Year in fitness and exam season in ed-tech platforms.
+Typically, global boosts are used to increase platform-wide engagement during key calendar events like Black Friday/Cyber Monday in e-commerce, New Year in fitness and exam season in ed-tech platforms.
 
-Conversely, scoped and user-specific boosts are commonly targeted at providing additional incentives to specific usage patterns that are leading to churn or disengagement.
+Conversely, user-specific boosts are commonly used to provide additional incentives for users to take actions that are correlated with higher retention.
 
 ### Creating Boosts
 
@@ -199,7 +198,7 @@ Conversely, scoped and user-specific boosts are commonly targeted at providing a
 User-specific boosts can only be created programmatically through the [Admin API](/admin-api/endpoints/points/create-boosts).
 </Note>
 
-To create a points boost via the Trophy dashboard, follow the steps below.
+To create a global points boost in the Trophy dashboard, follow the steps below.
 
 <Frame>
   <video
@@ -213,19 +212,19 @@ To create a points boost via the Trophy dashboard, follow the steps below.
 </Frame>
 
 <Steps>
-  <Step title="Head to boosts page">
-    Head to the [points page](https://app.trophy.so/points) and click on the points system you want to create the boost for. Then head to the boosts tab and hit the *New Boost* button.
+  <Step title="Go to the Boosts page">
+    Go to the [points page](https://app.trophy.so/points) and click on the points system you want to create a boost for. Then navigate to the Boosts tab and click the *New Boost* button.
   </Step>
-  <Step title="Choose Name">
+  <Step title="Choose a name">
     Choose a name for your boost that clearly describes what it's for. For example "2X Boost - All Users - Christmas 2026".
   </Step>
-  <Step title="Set Multiplier">
+  <Step title="Set the multiplier">
     Set the numeric value that the boost will multiply points earned by. If you choose a decimal multiplier, you'll have the option to choose the [rounding behavior](#boost-rounding) the boost should use.
   </Step>
-  <Step title="Set Boost Window">
+  <Step title="Set the boost window">
     Choose a start and (optionally) an end date for your boost. If you choose a future start date, Trophy will schedule the boost to go active on your chosen date. Similarly if you set an end date, Trophy will take care of stopping your boost for you.
   </Step>
-  <Step title="Set Scope (Optional)">
+  <Step title="Add attribute filters (optional)">
 
     <Note>
       This feature requires [custom user attributes](/platform/users#custom-user-attributes) which are available on the [Pro](/account/billing#pro-plan) plan.
@@ -242,8 +241,8 @@ To create a points boost via the Trophy dashboard, follow the steps below.
       />
     </Frame>
   </Step>
-  <Step title="Activate Boost">
-    Hit *Save Boost* and make your boost active when ready.
+  <Step title="Activate boost">
+    Click *Save Boost* to save your new boost to your account. The boost will be in the inactive state by default. To activate it, click the dropdown to the right of the boost name on the Boosts page and click Activate.
   </Step>
 </Steps>
 
