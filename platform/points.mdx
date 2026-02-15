@@ -196,7 +196,7 @@ Conversely, scoped and user-specific boosts are commonly targeted at providing a
 ### Creating Boosts
 
 <Note>
-User-specific boosts can only be created programatically through the [Admin API](/admin-api/endpoints/points/create-boosts).
+User-specific boosts can only be created programmatically through the [Admin API](/admin-api/endpoints/points/create-boosts).
 </Note>
 
 To create a points boost via the Trophy dashboard, follow the steps below.
@@ -219,8 +219,8 @@ To create a points boost via the Trophy dashboard, follow the steps below.
   <Step title="Choose Name">
     Choose a name for your boost that clearly describes what it's for. For example "2X Boost - All Users - Christmas 2026".
   </Step>
-  <Step title="Set Multipler">
-    Set the numeric value that the boost will multiply points earned by. If you choose a decimal multipler, you'll have the option to choose the [rounding behavoir](#boost-rounding) the boost should use.
+  <Step title="Set Multiplier">
+    Set the numeric value that the boost will multiply points earned by. If you choose a decimal multiplier, you'll have the option to choose the [rounding behavior](#boost-rounding) the boost should use.
   </Step>
   <Step title="Set Boost Window">
     Choose a start and (optionally) an end date for your boost. If you choose a future start date, Trophy will schedule the boost to go active on your chosen date. Similarly if you set an end date, Trophy will take care of stopping your boost for you.
@@ -247,36 +247,36 @@ To create a points boost via the Trophy dashboard, follow the steps below.
   </Step>
 </Steps>
 
-### Boost Multiplers
+### Boost Multipliers
 
 Every boost has a single multiplier value that increases the total points earned by users affected by that boost.
 
-Boost multiplers must be positive numbers, but can be decimals to support secnarios where percentage boosts like '50% more points' may be required.
+Boost multipliers must be positive numbers, but can be decimals to support scenarios where percentage boosts like '50% more points' may be required.
 
 ### Boost Stacking
 
-Points boosts in Trophy stack through [multiplication](#boost-multiplers). This is to support allowing users to benefit from multiple boosts simultaneously.
+Points boosts in Trophy stack through [multiplication](#boost-multipliers). This is to support allowing users to benefit from multiple boosts simultaneously.
 
-To demonstrate stacking consider a 2X, 1.5X and a 3X boost all active within the same time period. The resulting boost multipler for a user that qualifies for all three boosts would be as follows:
+To demonstrate stacking consider a 2X, 1.5X and a 3X boost all active within the same time period. The resulting boost multiplier for a user that qualifies for all three boosts would be as follows:
 
 ```txt Boost Stacking Example
-Overall Multipler (3 boosts) = 2X * 1.5X * 3X = 9X
+Overall Multiplier (3 boosts) = 2X * 1.5X * 3X = 9X
 ```
 
 ### Boost Rounding
 
 Trophy supports [floating point metric event values](/platform/events#event-value), but takes care of rounding points to integers automatically.
 
-However, when using decimal [boost multiplers](#boost-multiplers), there may be some scenarios where this default rounding is not enough to always produce integer points values.
+However, when using decimal [boost multipliers](#boost-multipliers), there may be some scenarios where this default rounding is not enough to always produce integer points values.
 
-Therefore Trophy offers three rounding modes to provide additional control on rounding behavoir specifically when boosts are involved in points calculations.
+Therefore Trophy offers three rounding modes to provide additional control on rounding behavior specifically when boosts are involved in points calculations.
 
 - **Round Down**: By default, Trophy will round points down to the nearest integer when boost multiplication results in a decimal.
-- **Round Up**: Trophy rounds decimal points up to the nearest integer after boost multiplcation.
-- **Round Nearest**: Trophy will round points to the nearest integer, up or down, based on the final value after boost multiplcation. For example `1.2` is rounded to `1` and `1.7` is rounded to `2`.
+- **Round Up**: Trophy rounds decimal points up to the nearest integer after boost multiplication.
+- **Round Nearest**: Trophy will round points to the nearest integer, up or down, based on the final value after boost multiplication. For example `1.2` is rounded to `1` and `1.7` is rounded to `2`.
 
 <Tip>
-In scenarios where points are used to mimic platform credit mechanics, it's recommended to use the default rounding down behavoir to protect against slippage.
+In scenarios where points are used to mimic platform credit mechanics, it's recommended to use the default rounding down behavior to protect against slippage.
 </Tip>
 
 Simply choose your preferred rounding mode when [creating boosts](/platform/points#creating-boosts) through the Trophy dashboard.
