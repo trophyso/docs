@@ -1,5 +1,5 @@
 ---
-title: How to Build a Fitness Tracker
+title: How to Build a Gamified Fitness Tracker
 description: Learn how to build a Strava-like fitness app with Next.js, featuring multi-sport tracking, city-based leaderboards, and normalized XP progression.
 subtitle: Build a high-retention fitness app with streaks and leaderboards.
 ---
@@ -113,7 +113,7 @@ This is what makes building gamified experiences with Trophy so powerful—it do
 Here's how we'll configure Trophy for our fitness app:
 
 <AccordionGroup>
-  <Accordion title="Create the metrics" icon="box">
+  <Accordion title="Create metrics" icon="box">
     Head into the Trophy [metrics page](https://app.trophy.so/metrics) and create three metrics:
     
     - `distance_run` — Total kilometers run
@@ -121,32 +121,131 @@ Here's how we'll configure Trophy for our fitness app:
     - `distance_swum` — Total meters swum
     
     These keys are what we'll reference in our code when sending events.
+
+    <Frame>
+      <img
+        height="200"
+        width="100%"
+        noZoom
+        src="../assets/guides/example-apps/example-fitness-app/metrics.png"
+      />
+    </Frame>
+
+  </Accordion>
+
+  <Accordion title="Create attributes" icon="tag">
+    While still on the [metrics page](https://app.trophy.so/metrics), set up
+    the **pace** and **style** event attributes:
+
+    <Frame>
+      <img
+        height="200"
+        width="100%"
+        noZoom
+        src="../assets/guides/example-apps/example-fitness-app/event-attributes.png"
+      />
+    </Frame>
+
+    Then, go to the [user attributes page](https://app.trophy.so/users/attributes)
+    and create the **city** user atribute:
+
+    <Frame>
+      <img
+        height="200"
+        width="100%"
+        noZoom
+        src="../assets/guides/example-apps/example-fitness-app/user-attributes.png"
+      />
+    </Frame>
+
   </Accordion>
 
 <Accordion title="Create achievements" icon="trophy">
   Head into the Trophy [achievements page](https://app.trophy.so/achievements)
-  and create milestone achievements for each sport. For example: **Running:** -
-  First 5K (5km total) - Half Marathon Hero (21.1km total) - Marathon Master
-  (42.2km total) **Cycling:** - Century Rider (100km total) - Tour Stage (200km
-  total) **Swimming:** - Pool Regular (1000m total) - Open Water Ready (5000m
-  total) Link each achievement to the appropriate metric.
+  and create milestone achievements for each sport. For example:
+  
+  **Running:** 
+  
+  - First 5K (5km total) 
+  - Half Marathon Hero (21.1km total) 
+  - Marathon Master (42.2km total) 
+  
+  **Cycling:** 
+  
+  - Century Rider (100km total) 
+  - Tour Stage (200km total) 
+  
+  **Swimming:** 
+  - Pool Regular (1000m total) 
+  - Open Water Ready (5000m total) 
+  
+  Link each achievement to the appropriate metric.
+
+  <Frame>
+    <img
+      height="200"
+      width="100%"
+      noZoom
+      src="../assets/guides/example-apps/example-fitness-app/achievements.png"
+    />
+  </Frame>
 </Accordion>
 
 <Accordion title="Configure leaderboards" icon="chart-bar">
   Head to the [leaderboards page](https://app.trophy.so/leaderboards) and set up
-  weekly leaderboards to drive competition: **Global leaderboards:** -
-  `weekly-distance-run` - `weekly-distance-cycled` - `weekly-distance-swum`
-  **City-based leaderboards** (filtered by user attribute): -
-  `weekly-distance-run-cities` - `weekly-distance-cycled-cities` -
-  `weekly-distance-swum-cities` Configure each to reset weekly and rank by total
-  value.
+  weekly leaderboards to drive competition. Each leaderboard should be
+  configured with **Repetition Unit: Days** and **Repetition Interval: 7** to
+  repeat weekly.
+
+  <Frame>
+    <img
+      height="200"
+      width="100%"
+      noZoom
+      src="../assets/guides/example-apps/example-fitness-app/leaderboard-config.png"
+    />
+  </Frame>
+  
+  **Global leaderboards:** 
+  
+  - `weekly-distance-run` 
+  - `weekly-distance-cycled` 
+  - `weekly-distance-swum`
+  
+  **City-based leaderboards** (breakdown by user attribute **city**): 
+  
+  - `weekly-distance-run-cities` 
+  - `weekly-distance-cycled-cities` 
+  - `weekly-distance-swum-cities`
+
+   <Frame>
+    <img
+      height="200"
+      width="100%"
+      noZoom
+      src="../assets/guides/example-apps/example-fitness-app/leaderboards.png"
+    />
+  </Frame>
 </Accordion>
 
 <Accordion title="Set up XP points" icon="star">
   Head to the [points page](https://app.trophy.so/points) and create a points
-  system called `xp` that awards points based on activity: - Running: 10 XP per
-  km - Cycling: 3 XP per km - Swimming: 5 XP per 100m This normalized approach
-  ensures fair progression across sports.
+  system called `xp` that awards points based on activity: 
+  
+  - Running: 10 XP per km 
+  - Cycling: 3 XP per km 
+  - Swimming: 10 XP per 100m 
+  
+  This normalized approach ensures fair progression across sports.
+  
+  <Frame>
+    <img
+      height="200"
+      width="100%"
+      noZoom
+      src="../assets/guides/example-apps/example-fitness-app/points-triggers.png"
+    />
+  </Frame>
 </Accordion>
 
 <Accordion title="Configure daily streak" icon="flame">
@@ -741,11 +840,14 @@ export default async function ProfilePage() {
 You now have a fully functional fitness gamification loop! Users can log workouts across multiple sports, level up their profile, earn badges, and compete on leaderboards.
 
 <Frame>
-  <img
-    src="/images/fitness-app-demo.png"
-    alt="Fitness App Demo"
-    className="rounded-xl border"
-  />
+  <video
+    autoPlay
+    muted
+    loop
+    playsInline
+    className="w-full aspect-video"
+    src="../assets/guides/example-apps/example-fitness-app/demo.mp4"
+  ></video>
 </Frame>
 
 ### What You've Built
