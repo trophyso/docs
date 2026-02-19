@@ -21,12 +21,15 @@ If you want to skip straight to the code, check out the [example repository](htt
 - [Prerequisites](#prerequisites)
 - [Setup & Installation](#setup--installation)
 - [Designing the Data Model](#designing-the-data-model)
+- [How Trophy Works](#how-trophy-works)
+- [Setting Up Trophy](#setting-up-trophy)
 - [Server Actions](#server-actions)
 - [The Leveling System](#the-leveling-system)
 - [Building the Dashboard](#building-the-dashboard)
 - [Implementing Leaderboards](#implementing-leaderboards)
 - [Building the Achievements Page](#building-the-achievements-page)
 - [Building the Profile Page](#building-the-profile-page)
+- [Adding Gamification UX](#adding-gamification-ux)
 - [The Result](#the-result)
 
 ## Tech Stack
@@ -74,6 +77,106 @@ We will track distance as the primary value.
 
 ### 2. The Attributes
 To enable local leaderboards, we'll tag every user with a `city` attribute.
+
+## How Trophy Works
+
+Before diving into the code, let's understand how Trophy powers our gamification layer. In Trophy, [Metrics](/platform/metrics) represent different interactions users can make and drive features like [Achievements](/platform/achievements), [Streaks](/platform/streaks), and [Emails](/platform/emails).
+
+```mermaid
+flowchart TD
+    A@{ shape: rounded, label: "Events" }
+    B@{ shape: rounded, label: "Metrics" }
+    C@{ shape: rounded, label: "Achievements" }
+    D@{ shape: rounded, label: "Streaks" }
+    E@{ shape: rounded, label: "Leaderboards" }
+    F@{ shape: rounded, label: "Emails" }
+    A-.->B
+    B-->C
+    B-->D
+    B-->E
+    B-->F
+```
+
+When events are recorded for a specific user, any achievements linked to the specified metric will be unlocked if the requirements are met, streaks will be automatically calculated, leaderboards will update, and any configured emails will be scheduled.
+
+This is what makes building gamified experiences with Trophy so powerful—it does all the work behind the scenes.
+
+## Setting Up Trophy
+
+Here's how we'll configure Trophy for our fitness app:
+
+<AccordionGroup>
+  <Accordion title="Create the metrics" icon="box">
+    Head into the Trophy [metrics page](https://app.trophy.so/metrics) and create three metrics:
+    
+    - `distance_run` — Total kilometers run
+    - `distance_cycled` — Total kilometers cycled  
+    - `distance_swum` — Total meters swum
+    
+    These keys are what we'll reference in our code when sending events.
+  </Accordion>
+
+  <Accordion title="Create achievements" icon="trophy">
+    Create milestone achievements for each sport. For example:
+    
+    **Running:**
+    - First 5K (5km total)
+    - Half Marathon Hero (21.1km total)
+    - Marathon Master (42.2km total)
+    
+    **Cycling:**
+    - Century Rider (100km total)
+    - Tour Stage (200km total)
+    
+    **Swimming:**
+    - Pool Regular (1000m total)
+    - Open Water Ready (5000m total)
+    
+    Link each achievement to the appropriate metric.
+  </Accordion>
+
+  <Accordion title="Configure leaderboards" icon="chart-bar">
+    Set up weekly leaderboards to drive competition:
+    
+    **Global leaderboards:**
+    - `weekly-distance-run`
+    - `weekly-distance-cycled`
+    - `weekly-distance-swum`
+    
+    **City-based leaderboards** (filtered by user attribute):
+    - `weekly-distance-run-cities`
+    - `weekly-distance-cycled-cities`
+    - `weekly-distance-swum-cities`
+    
+    Configure each to reset weekly and rank by total value.
+  </Accordion>
+
+  <Accordion title="Set up XP points" icon="star">
+    Create a points system called `xp` that awards points based on activity:
+    
+    - Running: 10 XP per km
+    - Cycling: 3 XP per km
+    - Swimming: 5 XP per 100m
+    
+    This normalized approach ensures fair progression across sports.
+  </Accordion>
+
+  <Accordion title="Configure daily streak" icon="flame">
+    Head to the [streaks page](https://app.trophy.so/streaks) and configure a daily streak linked to any of the distance metrics.
+    
+    Users will maintain their streak by logging at least one activity per day.
+  </Accordion>
+
+  <Accordion title="Configure emails" icon="mail">
+    Enable automated engagement emails:
+    
+    - **Achievement unlocked** — Celebrate new badges
+    - **Streak at risk** — Remind users before they lose their streak
+    - **Weekly recap** — Summary of progress and leaderboard position
+    
+    Configure your branding in the [branding page](https://app.trophy.so/branding) for professional emails.
+  </Accordion>
+</AccordionGroup>
 
 ## Server Actions
 
@@ -545,10 +648,145 @@ export default async function ProfilePage() {
 }
 ```
 
+## Adding Gamification UX
+
+The real magic happens when users receive instant feedback. Let's add toast notifications and sound effects when achievements unlock or streaks extend.
+
+### Achievement Toasts
+
+First, add the `sonner` component from shadcn/ui:
+
+```bash
+npx shadcn@latest add sonner
+```
+
+Create a custom toast component for achievements:
+
+```tsx lib/toast.tsx [expandable]
+"use client";
+
+import { toast as sonnerToast } from "sonner";
+import Image from "next/image";
+
+interface ToastProps {
+  id: string | number;
+  title: string;
+  description?: string;
+  image?: { src: string; alt: string };
+}
+
+export function toast(props: Omit<ToastProps, "id">) {
+  return sonnerToast.custom((id) => <Toast id={id} {...props} />);
+}
+
+function Toast({ title, description, image }: ToastProps) {
+  return (
+    <div className="flex rounded-lg bg-white shadow-lg ring-1 ring-black/5 w-full md:max-w-[364px] items-center p-4">
+      {image && (
+        <Image src={image.src} alt={image.alt} width={40} height={40} className="mr-4 rounded-md" />
+      )}
+      <div className="flex-1">
+        <p className="text-sm font-medium text-gray-900">{title}</p>
+        {description && <p className="mt-1 text-sm text-gray-500">{description}</p>}
+      </div>
+    </div>
+  );
+}
+```
+
+### Sound Effects
+
+Sound effects dramatically increase engagement. Add audio feedback for achievements and streaks:
+
+```tsx components/log-activity-dialog.tsx [expandable]
+// Inside your activity logging component
+import { useRef, useEffect } from "react";
+import { toast } from "@/lib/toast";
+
+export function LogActivityDialog() {
+  const achievementSound = useRef<HTMLAudioElement | null>(null);
+  const streakSound = useRef<HTMLAudioElement | null>(null);
+
+  useEffect(() => {
+    achievementSound.current = new Audio("/sounds/achievement.mp3");
+    streakSound.current = new Audio("/sounds/streak.mp3");
+  }, []);
+
+  const handleLogActivity = async (data) => {
+    const response = await logActivity(data);
+    
+    if (response.success && response.data) {
+      // Handle achievement unlocks
+      if (response.data.achievements?.length) {
+        achievementSound.current?.play();
+        response.data.achievements.forEach((achievement) => {
+          toast({
+            title: achievement.name,
+            description: achievement.description,
+            image: { src: achievement.badgeUrl, alt: achievement.name },
+          });
+        });
+      }
+      
+      // Handle streak extensions
+      if (response.data.currentStreak?.extended) {
+        streakSound.current?.play();
+        toast({
+          title: "🔥 Streak Extended!",
+          description: `You're on a ${response.data.currentStreak.length} day streak!`,
+        });
+      }
+    }
+  };
+  
+  // ... rest of component
+}
+```
+
+<Tip>
+  Get free sound effects from [freesound.org](https://freesound.org). Short, satisfying chimes work best for achievements.
+</Tip>
+
+### Configuring Trophy Image Host
+
+To display achievement badges, configure Trophy's image host in `next.config.ts`:
+
+```ts next.config.ts
+import type { NextConfig } from "next";
+
+const nextConfig: NextConfig = {
+  images: {
+    remotePatterns: [
+      {
+        protocol: "https",
+        hostname: "lookmizerpsrsczvtlwh.supabase.co",
+      },
+    ],
+  },
+};
+
+export default nextConfig;
+```
+
 ## The Result
 
-You now have a fully functional fitness gamification loop! Users can log workouts across multiple sports, level up their profile, earn badges, and compete in local leagues.
+You now have a fully functional fitness gamification loop! Users can log workouts across multiple sports, level up their profile, earn badges, compete in local leagues, and receive satisfying audiovisual feedback for their progress.
 
 <Frame>
   <img src="/images/fitness-app-demo.png" alt="Fitness App Demo" className="rounded-xl border" />
 </Frame>
+
+### What You've Built
+
+- **Multi-sport tracking** with normalized XP across running, cycling, and swimming
+- **Weekly leaderboards** with global and city-based competition
+- **Leveled progression** from Rookie to Pro
+- **Achievement system** with milestone badges
+- **Daily streaks** with engaging toast notifications
+- **Engaging UX** with sound effects and visual feedback
+
+### Next Steps
+
+- Add [automated emails](/platform/emails) for streak reminders and weekly recaps
+- Implement [challenges](/platform/challenges) for time-bound competitions
+- Add social features like friend comparisons
