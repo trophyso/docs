@@ -353,20 +353,28 @@ export async function logActivity(params: {
       break;
   }
 
-  // Log the event
-  await trophy.metrics.event(metricKey, {
-    user: {
-      id: userId,
-      ...(city ? { attributes: { city } } : {}),
-    },
-    value: distance,
-    ...(Object.keys(eventAttributes).length > 0
-      ? { attributes: eventAttributes }
-      : {}),
-  });
+  try {
+    // Log the event
+    const response = await trophy.metrics.event(metricKey, {
+      user: {
+        id: userId,
+        ...(city ? { attributes: { city } } : {}),
+      },
+      value: distance,
+      ...(Object.keys(eventAttributes).length > 0
+        ? { attributes: eventAttributes }
+        : {}),
+    });
 
-  revalidatePath("/");
-  revalidatePath("/leaderboards");
+    revalidatePath("/");
+    revalidatePath("/leaderboards");
+    revalidatePath("/profile");
+
+    return { success: true, data: response };
+  } catch (error) {
+    console.error("Failed to log activity:", error);
+    return { success: false, error: "Failed to log activity" };
+  }
 }
 
 export async function getLeaderboard(leaderboardKey: string, city?: string) {
@@ -853,27 +861,28 @@ We'll build a tabbed interface that allows users to switch between activities (R
 ```tsx src/app/leaderboards/page.tsx [expandable]
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, useMemo } from "react";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { getLeaderboard } from "@/app/actions";
 import { Trophy, Globe, MapPin } from "lucide-react";
+import { getUserCity } from "@/lib/city";
 
 export default function LeaderboardsPage() {
   const [scope, setScope] = useState<"global" | "city">("global");
   const [activeTab, setActiveTab] = useState("run");
   const [data, setData] = useState([]);
 
+  // Get user's city from localStorage
+  const city = useMemo(() => getUserCity(), []);
+
   useEffect(() => {
-    // 1. Determine the key based on the active tab and scope
-    // e.g., "weekly-distance-run" vs "weekly-distance-run-cities"
+    // Determine the leaderboard key based on tab and scope
     const baseKey = `weekly-distance-${activeTab}`;
     const key = scope === "city" ? `${baseKey}-cities` : baseKey;
+    const cityParam = scope === "city" ? city : undefined;
 
-    // 2. Determine city parameter (mocked for example)
-    const city = scope === "city" ? "London" : undefined;
-
-    getLeaderboard(key, city).then(setData);
-  }, [scope, activeTab]);
+    getLeaderboard(key, cityParam).then(setData);
+  }, [scope, activeTab, city]);
 
   return (
     <div className="space-y-6">
