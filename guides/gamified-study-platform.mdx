@@ -29,9 +29,10 @@ In this tutorial we'll build an example study platform using Trophy for gamifica
 - [Setting up Flashcard Data](#setting-up-flashcard-data)
 - [Basic Flashcard Layout](#basic-flashcard-layout)
 - [Flipping Flashcards](#flipping-flashcards)
-- [A Flippin' Bug](#a-flippin’-bug)
+- [A Flippin' Bug](#a-flippin'-bug)
 - [Tracking Progress](#tracking-progress)
 - [Adding Gamification](#adding-gamification)
+- [Adding an XP System](#adding-an-xp-system)
 - [The Result](#the-result)
 
 ## Tech Stack
@@ -1739,9 +1740,260 @@ export default async function Home() {
   ></video>
 </Frame>
 
+## Adding an XP System
+
+Now let's take our study platform to the next level by adding an XP (points) system. This will give users a sense of progression and reward them for their study activity.
+
+### Setting Up Points in Trophy
+
+First, head to the Trophy [points page](https://app.trophy.so/points) and create a new points system. We'll call ours "XP" with the key `points`.
+
+<Frame>
+  <img
+    height="200"
+    width="100%"
+    noZoom
+    src="../assets/guides/example-apps/example-study-app/points-setup.png"
+  />
+</Frame>
+
+Configure your points system to award XP for viewing flashcards. You can also set up bonus XP for streak milestones.
+
+### Integrating Points API
+
+Add new server actions to fetch points data:
+
+```tsx src/app/actions.ts [expandable]
+const POINTS_SYSTEM_KEY = "points";
+
+/**
+ * Get the points system configuration
+ */
+export async function getPointsSystem(): Promise<PointsSystemResponse | null> {
+  try {
+    return await trophy.points.system(POINTS_SYSTEM_KEY);
+  } catch (error) {
+    console.error(error);
+    return null;
+  }
+}
+
+/**
+ * Get the points for a user
+ */
+export async function getUserPoints(userId: string): Promise<GetUserPointsResponse | null> {
+  try {
+    return await trophy.users.points(userId, POINTS_SYSTEM_KEY, {
+      awards: 5
+    });
+  } catch (error) {
+    console.error(error);
+    return null;
+  }
+}
+
+/**
+ * Get the points history summary for a user
+ */
+export async function getPointsSummary(userId: string): Promise<UsersPointsEventSummaryResponseItem[] | null> {
+  try {
+    const now = dayjs();
+    return await trophy.users.pointsEventSummary(
+      userId,
+      POINTS_SYSTEM_KEY,
+      {
+        aggregation: "daily",
+        startDate: now.subtract(6, 'day').toISOString().split('T')[0],
+        endDate: now.toISOString().split('T')[0]
+      }
+    );
+  } catch (error) {
+    console.error(error);
+    return null;
+  }
+}
+```
+
+### Creating a Points Context
+
+To manage points state across the app, create a React context:
+
+```tsx src/contexts/UserPointsContext.tsx [expandable]
+'use client';
+
+import { createContext, useContext, useEffect, useState, ReactNode, useCallback, useRef } from 'react';
+import { GetUserPointsResponse } from '@trophyso/node/api';
+import { getUserPoints } from '@/app/actions';
+import { getUserId } from '@/lib/user';
+
+interface UserPointsContextType {
+  points: GetUserPointsResponse | null;
+  lastPoints: GetUserPointsResponse | null;
+  loading: boolean;
+  error: string | null;
+  refetch: () => Promise<void>;
+}
+
+const UserPointsContext = createContext<UserPointsContextType | undefined>(undefined);
+
+export function UserPointsProvider({ children }: { children: ReactNode }) {
+  const [points, setPoints] = useState<GetUserPointsResponse | null>(null);
+  const [lastPoints, setLastPoints] = useState<GetUserPointsResponse | null>(null);
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState<string | null>(null);
+  const timeoutRef = useRef<NodeJS.Timeout | null>(null);
+
+  const fetchPoints = async () => {
+    const userId = getUserId();
+    setLoading(true);
+    setError(null);
+
+    try {
+      setLastPoints(points);
+      const pointsData = await getUserPoints(userId);
+      setPoints(pointsData);
+    } catch (err) {
+      setError(err instanceof Error ? err.message : 'Failed to fetch points');
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const refetch = useCallback(async () => {
+    if (timeoutRef.current) {
+      clearTimeout(timeoutRef.current);
+    }
+    timeoutRef.current = setTimeout(() => {
+      fetchPoints();
+    }, 300);
+  }, []);
+
+  useEffect(() => {
+    fetchPoints();
+    return () => {
+      if (timeoutRef.current) {
+        clearTimeout(timeoutRef.current);
+      }
+    };
+  }, []);
+
+  return (
+    <UserPointsContext.Provider value={{ points, lastPoints, loading, error, refetch }}>
+      {children}
+    </UserPointsContext.Provider>
+  );
+}
+
+export function useUserPoints() {
+  const context = useContext(UserPointsContext);
+  if (context === undefined) {
+    throw new Error('useUserPoints must be used within a UserPointsProvider');
+  }
+  return context;
+}
+```
+
+### Building the Points Center UI
+
+Create a points display component that shows the user's XP with a satisfying number animation:
+
+```tsx src/app/user-center/points-center/points-center.tsx [expandable]
+import { Dialog, DialogTrigger, DialogContent, DialogHeader, DialogTitle, DialogDescription } from "@/components/ui/dialog";
+import { useUserPoints } from "@/contexts/UserPointsContext";
+import { useEffect, useState } from "react";
+import { Sparkle } from "lucide-react";
+import { NumberTicker } from "@/components/magicui/number-ticker";
+
+export default function PointsCenter() {
+  const [open, setOpen] = useState(false);
+  const { points, lastPoints, loading } = useUserPoints();
+  const [isSpinning, setIsSpinning] = useState(false);
+
+  // Trigger spinning animation when points change
+  useEffect(() => {
+    if (points?.total !== lastPoints?.total && points?.total !== undefined) {
+      setIsSpinning(true);
+      const timer = setTimeout(() => setIsSpinning(false), 1000);
+      return () => clearTimeout(timer);
+    }
+  }, [points?.total, lastPoints?.total]);
+
+  return (
+    <Dialog open={open} onOpenChange={setOpen}>
+      <DialogTrigger>
+        <div className="relative rounded-full h-10 border cursor-pointer">
+          <div className="rounded-full bg-gray-50 text-sm font-semibold h-full flex items-center gap-1 px-3">
+            <Sparkle className={`size-4 ${isSpinning ? 'animate-spin' : ''}`} />
+            <NumberTicker
+              value={points?.total || 0}
+              startValue={lastPoints?.total || 0}
+              duration={0.1}
+            />
+          </div>
+        </div>
+      </DialogTrigger>
+      <DialogContent>
+        <DialogHeader>
+          <DialogTitle>
+            <div className="flex items-center gap-1">
+              <Sparkle className="size-4" />
+              Your XP
+            </div>
+          </DialogTitle>
+          <DialogDescription>
+            Keep studying to earn more XP
+          </DialogDescription>
+        </DialogHeader>
+        {/* Add points history chart, recent awards, etc. */}
+      </DialogContent>
+    </Dialog>
+  );
+}
+```
+
+### Updating Points on Flashcard View
+
+Finally, refetch points whenever a user views a flashcard to show real-time XP updates:
+
+```tsx src/app/flashcards.tsx {4,8,45}
+import { useUserPoints } from "@/contexts/UserPointsContext";
+
+export default function Flashcards({ flashcards }: Props) {
+  const { refetch: refetchPoints } = useUserPoints();
+
+  // ... existing code ...
+
+  api.on("select", async () => {
+    setFlashIndex(api.selectedScrollSnap() + 1);
+
+    const response = await viewFlashcard();
+
+    if (!response) return;
+
+    // Refetch points to update the XP display
+    refetchPoints();
+
+    // ... handle achievements and streaks ...
+  });
+}
+```
+
+Now when users view flashcards, they'll see their XP update in real-time with a satisfying animation!
+
+<Frame>
+  <video
+    autoPlay
+    muted
+    loop
+    playsInline
+    className="w-full aspect-video"
+    src="../assets/guides/example-apps/example-study-app/points-demo.mp4"
+  ></video>
+</Frame>
+
 ## The Result
 
-Congrats! If you're reading this you made it to the end of the tutorial and built yourself a fully-funtioning study platform. Of course there's loads more we could do to this, so here's a few ideas:
+Congrats! If you're reading this you made it to the end of the tutorial and built yourself a fully-functioning study platform. Of course there's loads more we could do to this, so here's a few ideas:
 
 - Persist flashcards to a database
 - Create multiple flashcard sets for other topics
@@ -1755,7 +2007,12 @@ Congrats! If you're reading this you made it to the end of the tutorial and buil
 
 ## Taking It Further
 
-If you want to add more features to your study platform including an XP system built using Trophy's [points](/platform/points) feature, then check out the `demo` branch in the [GitHub repo](https://github.com/trophyso/example-study-platform).
+For even more features like points history charts, "How to Earn XP" views, and additional UI polish, check out the `demo` branch in the [GitHub repo](https://github.com/trophyso/example-study-platform).
+
+You could also extend this further with:
+- **Leaderboards** - Add competitive rankings using Trophy's [leaderboards](/platform/leaderboards) feature
+- **Challenges** - Create time-bound study challenges with Trophy's upcoming challenges feature
+- **Social features** - Let users compete with friends or study groups
 
 ## Get Support
 
