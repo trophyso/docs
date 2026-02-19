@@ -16,6 +16,8 @@ achievedAt
 transactionally
 tz
 APNs
+Strava
+grayscale
 
 # Markdown rich text
 _[\w\s]+_
