@@ -26,12 +26,13 @@ In this tutorial we'll build an example study platform using Trophy for gamifica
 - [Tech Stack](#tech-stack)
 - [Pre-requisites](#pre-requisites)
 - [Setup & Installation](#setup-%26-installation)
-- [Setting up Flashcard Data](#setting-up-flashcard-data)
-- [Basic Flashcard Layout](#basic-flashcard-layout)
-- [Flipping Flashcards](#flipping-flashcards)
-- [A Flippin' Bug](#a-flippin'-bug)
-- [Tracking Progress](#tracking-progress)
-- [Adding Gamification](#adding-gamification)
+- [Building the Flashcards Feature](#building-the-flashcards-feature)
+  - [Setting up Flashcard Data](#setting-up-flashcard-data)
+  - [Basic Flashcard Layout](#basic-flashcard-layout)
+  - [Flipping Flashcards](#flipping-flashcards)
+  - [A Flippin' Bug](#a-flippin'-bug)
+  - [Tracking Progress](#tracking-progress)
+- [Adding Basic Gamification](#adding-basic-gamification)
 - [Adding an XP System](#adding-an-xp-system)
 - [Adding Leaderboards](#adding-leaderboards)
 - [Adding an Energy System](#adding-an-energy-system)
@@ -95,7 +96,9 @@ Some packages may fail to install due to peer dependency issues in npm (see http
 
 For the purposes of this tutorial I chose `--force` but you should choose whichever setting you feel suits your requirements.
 
-## Setting Up Flashcard Data
+## Building the Flashcards Feature
+
+### Setting Up Flashcard Data
 
 For the purposes of this tutorial, we're going to be using some simple types with an in-memory data store. In a production application you'd probably want to consider storing this information in a database.
 
@@ -218,7 +221,7 @@ export const flashcards: IFlashcard[] = [
 ];
 ```
 
-## Basic Flashcard Layout
+### Basic Flashcard Layout
 
 With some basic data set up, we need to add a way for users to flick through their flashcards.
 
@@ -298,7 +301,7 @@ At the end of this step, you should have a working flashcard UI that allows you 
   ></video>
 </Frame>
 
-## Flipping Flashcards
+### Flipping Flashcards
 
 Now this is great, but it's not much use as a study app right now as there's no way to see if you got the answer right! We need to add a way to flip flashcards over and check our answer...
 
@@ -477,7 +480,7 @@ You'll notice we also added a couple of styles here. These do a couple of things
 }
 ```
 
-## A Flippin' Bug!
+### A Flippin' Bug!
 
 Sweet! Our project is now starting to feel like a real study tool! However the keen eyed (or maybe not so keen...) will notice there's one major bug here. When we flip a card over, the answer on the back appears in reverse 😢...
 
@@ -540,7 +543,7 @@ Ok awesome. Now when we flip over a card the answer on the back should read in t
   ></video>
 </Frame>
 
-## Tracking Progress
+### Tracking Progress
 
 The next step is to add some UI to show the user how many flashcards they've looked at, and how many in the set they have left. We'll use a simple progress bar to achieve this.
 
@@ -673,7 +676,7 @@ Sweet! Now things are really starting to come together.
 
 Now the real fun begins...
 
-## Adding Gamification
+## Adding Basic Gamification
 
 In this section we'll be adding the following gamification elements to the flashcard project:
 
