@@ -89,12 +89,14 @@ flowchart TD
     C@{ shape: rounded, label: "Achievements" }
     D@{ shape: rounded, label: "Streaks" }
     E@{ shape: rounded, label: "Leaderboards" }
-    F@{ shape: rounded, label: "Emails" }
+    F@{ shape: rounded, label: "Points" }
+    G@{ shape: rounded, label: "Emails" }
     A-.->B
     B-->C
     B-->D
     B-->E
     B-->F
+    B-->G
 ```
 
 When events are recorded for a specific user, any achievements linked to the specified metric will be unlocked if the requirements are met, streaks will be automatically calculated, leaderboards will update, and any configured emails will be scheduled.
@@ -117,7 +119,7 @@ Here's how we'll configure Trophy for our fitness app:
   </Accordion>
 
   <Accordion title="Create achievements" icon="trophy">
-    Create milestone achievements for each sport. For example:
+    Head into the Trophy [achievements page](https://app.trophy.so/achievements) and create milestone achievements for each sport. For example:
     
     **Running:**
     - First 5K (5km total)
@@ -136,7 +138,7 @@ Here's how we'll configure Trophy for our fitness app:
   </Accordion>
 
   <Accordion title="Configure leaderboards" icon="chart-bar">
-    Set up weekly leaderboards to drive competition:
+    Head to the [leaderboards page](https://app.trophy.so/leaderboards) and set up weekly leaderboards to drive competition:
     
     **Global leaderboards:**
     - `weekly-distance-run`
@@ -152,7 +154,7 @@ Here's how we'll configure Trophy for our fitness app:
   </Accordion>
 
   <Accordion title="Set up XP points" icon="star">
-    Create a points system called `xp` that awards points based on activity:
+    Head to the [points page](https://app.trophy.so/points) and create a points system called `xp` that awards points based on activity:
     
     - Running: 10 XP per km
     - Cycling: 3 XP per km
@@ -168,7 +170,7 @@ Here's how we'll configure Trophy for our fitness app:
   </Accordion>
 
   <Accordion title="Configure emails" icon="mail">
-    Enable automated engagement emails:
+    Head to the [emails page](https://app.trophy.so/emails) and enable automated engagement emails:
     
     - **Achievement unlocked** — Celebrate new badges
     - **Streak at risk** — Remind users before they lose their streak
