@@ -1751,12 +1751,14 @@ Now let's take our study platform to the next level by adding an XP (points) sys
 First, head to the Trophy [points page](https://app.trophy.so/points) and create a new points system. We'll call ours "XP" with the key `points`.
 
 <Frame>
-  <img
-    height="200"
-    width="100%"
-    noZoom
-    src="../assets/guides/example-apps/example-study-app/points-setup.png"
-  />
+  <video
+    autoPlay
+    muted
+    loop
+    playsInline
+    className="w-full aspect-video"
+    src="../assets/guides/example-apps/example-study-app/configure-points.mp4"
+  ></video>
 </Frame>
 
 Configure your points system to award XP for viewing flashcards. You can also set up bonus XP for streak milestones.
@@ -2008,7 +2010,7 @@ Now when users view flashcards, they'll see their XP update in real-time with a 
     loop
     playsInline
     className="w-full aspect-video"
-    src="../assets/guides/example-apps/example-study-app/points-demo.mp4"
+    src="../assets/guides/example-apps/example-study-app/points-animation.mp4"
   ></video>
 </Frame>
 
@@ -2019,6 +2021,17 @@ Nothing drives engagement like friendly competition. Let's add a leaderboard to 
 ### Setting Up Leaderboards in Trophy
 
 Head to the Trophy [leaderboards page](https://app.trophy.so/leaderboards) and create a new leaderboard. We'll create a daily leaderboard with the key `daily-champions` that ranks users by flashcards viewed.
+
+<Frame>
+  <video
+    autoPlay
+    muted
+    loop
+    playsInline
+    className="w-full aspect-video"
+    src="../assets/guides/example-apps/example-study-app/configure-leaderboard.mp4"
+  ></video>
+</Frame>
 
 ### Leaderboard API Integration
 
@@ -2138,6 +2151,15 @@ Trophy's points system is flexible enough to handle energy mechanics. Create a n
 - A maximum cap (e.g., 5 energy)
 - Automatic regeneration rules
 - Costs per action (e.g., -1 energy per flashcard session)
+
+<Frame>
+  <img
+    height="200"
+    width="100%"
+    noZoom
+    src="../assets/guides/example-apps/example-study-app/energy-triggers.png"
+  />
+</Frame>
 
 ### Energy API Integration
 
@@ -2284,16 +2306,6 @@ Congrats! If you're reading this you made it to the end of the tutorial and buil
   If you had fun or think you learned something along the way then give the repo
   a star on [GitHub](https://github.com/trophyso/example-study-platform)!
 </Tip>
-
-## Taking It Further
-
-For even more features like points history charts, leaderboard journey views, and additional UI polish, check out the [live demo](https://study.examples.trophy.so) and the [GitHub repo](https://github.com/trophyso/example-study-platform).
-
-You could also extend this further with:
-
-- **Challenges** - Create time-bound study challenges with Trophy's upcoming challenges feature
-- **Social features** - Let users compete with friends or study groups
-- **Rewards** - Integrate with gift card APIs to offer real prizes for top performers
 
 ## Get Support
 
