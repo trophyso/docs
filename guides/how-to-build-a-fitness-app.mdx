@@ -30,6 +30,7 @@ If you want to skip straight to the code, check out the [example repository](htt
 - [Server Actions](#server-actions)
 - [The Leveling System](#the-leveling-system)
 - [Building the Dashboard](#building-the-dashboard)
+- [Logging Workouts](#logging-workouts)
 - [Implementing Leaderboards](#implementing-leaderboards)
 - [Building the Achievements Page](#building-the-achievements-page)
 - [Building the Profile Page](#building-the-profile-page)
@@ -508,6 +509,7 @@ import {
 import { Card, CardContent } from "@/components/ui/card";
 import { Progress } from "@/components/ui/progress";
 import { Button } from "@/components/ui/button";
+import { LogActivityDialog } from "@/components/log-activity-dialog";
 
 export default async function Dashboard() {
   const userId = await getUserIdFromCookies();
@@ -600,11 +602,246 @@ export default async function Dashboard() {
                 {nextAchievement.description}
               </p>
             </div>
-            <Button>Log Workout</Button>
+            <LogActivityDialog>
+              <Button>Log Workout</Button>
+            </LogActivityDialog>
           </CardContent>
         </Card>
       )}
     </div>
+  );
+}
+```
+
+Note the `LogActivityDialog` wrapper around the button—we'll build that next.
+
+## Logging Workouts
+
+The Log Workout button opens a dialog where users select their activity type, enter distance, and submit. This triggers the `logActivity` server action which sends the event to Trophy.
+
+First, install the required shadcn/ui components:
+
+```bash
+npx shadcn@latest add dialog tabs input label select
+```
+
+Then create the dialog component:
+
+```tsx components/log-activity-dialog.tsx [expandable]
+"use client";
+
+import { useState, useTransition } from "react";
+import {
+  Dialog,
+  DialogContent,
+  DialogHeader,
+  DialogTitle,
+  DialogTrigger,
+  DialogDescription,
+} from "@/components/ui/dialog";
+import { Tabs, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
+import { Footprints, Bike, Waves, Loader2, Zap } from "lucide-react";
+import { toast } from "sonner";
+import { logActivity } from "@/app/actions";
+import { ActivityType } from "@/lib/constants";
+import { getUserCity } from "@/lib/city";
+import { useUser } from "@/components/user-provider";
+
+export function LogActivityDialog({ children }: { children: React.ReactNode }) {
+  const { userId } = useUser();
+  const [open, setOpen] = useState(false);
+  const [isPending, startTransition] = useTransition();
+  const [activeTab, setActiveTab] = useState<ActivityType>("run");
+  const [distance, setDistance] = useState("");
+  const [pace, setPace] = useState("run");
+  const [style, setStyle] = useState("freestyle");
+
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+
+    if (!userId) {
+      toast.error("User not initialized");
+      return;
+    }
+
+    const distNum = parseFloat(distance);
+    if (!distNum || distNum <= 0) {
+      toast.error("Please enter a valid distance");
+      return;
+    }
+
+    const city = getUserCity();
+
+    startTransition(async () => {
+      const result = await logActivity({
+        userId,
+        type: activeTab,
+        distance: distNum,
+        city,
+        pace: activeTab === "run" ? pace : undefined,
+        style: activeTab === "swim" ? style : undefined,
+      });
+
+      if (result.success) {
+        toast.success("Workout Saved!", {
+          description: `Logged ${distNum} ${activeTab === "swim" ? "m" : "km"} ${activeTab}.`,
+        });
+        setOpen(false);
+        setDistance("");
+      } else {
+        toast.error("Failed to save workout");
+      }
+    });
+  };
+
+  return (
+    <Dialog open={open} onOpenChange={setOpen}>
+      <DialogTrigger asChild>{children}</DialogTrigger>
+      <DialogContent className="sm:max-w-[400px]">
+        <DialogHeader>
+          <DialogTitle>Log Workout</DialogTitle>
+          <DialogDescription>
+            Record your workout to earn XP and climb the leaderboard.
+          </DialogDescription>
+        </DialogHeader>
+
+        <Tabs value={activeTab} onValueChange={(v) => setActiveTab(v as ActivityType)}>
+          <TabsList className="grid w-full grid-cols-3">
+            <TabsTrigger value="run"><Footprints className="w-4 h-4 mr-1" /> Run</TabsTrigger>
+            <TabsTrigger value="cycle"><Bike className="w-4 h-4 mr-1" /> Cycle</TabsTrigger>
+            <TabsTrigger value="swim"><Waves className="w-4 h-4 mr-1" /> Swim</TabsTrigger>
+          </TabsList>
+
+          <form onSubmit={handleSubmit} className="space-y-4 pt-4">
+            <div className="space-y-2">
+              <Label htmlFor="distance">Distance ({activeTab === "swim" ? "m" : "km"})</Label>
+              <Input
+                id="distance"
+                type="number"
+                step="0.1"
+                placeholder="0.0"
+                value={distance}
+                onChange={(e) => setDistance(e.target.value)}
+                required
+              />
+            </div>
+
+            {activeTab === "run" && (
+              <div className="space-y-2">
+                <Label>Pace</Label>
+                <Select value={pace} onValueChange={setPace}>
+                  <SelectTrigger><SelectValue /></SelectTrigger>
+                  <SelectContent>
+                    <SelectItem value="run">Running</SelectItem>
+                    <SelectItem value="walk">Walking</SelectItem>
+                  </SelectContent>
+                </Select>
+              </div>
+            )}
+
+            {activeTab === "swim" && (
+              <div className="space-y-2">
+                <Label>Style</Label>
+                <Select value={style} onValueChange={setStyle}>
+                  <SelectTrigger><SelectValue /></SelectTrigger>
+                  <SelectContent>
+                    <SelectItem value="freestyle">Freestyle</SelectItem>
+                    <SelectItem value="breaststroke">Breaststroke</SelectItem>
+                  </SelectContent>
+                </Select>
+              </div>
+            )}
+
+            <Button type="submit" className="w-full" disabled={isPending || !distance}>
+              {isPending ? <Loader2 className="w-4 h-4 animate-spin" /> : <><Zap className="w-4 h-4 mr-2" /> Save Workout</>}
+            </Button>
+          </form>
+        </Tabs>
+      </DialogContent>
+    </Dialog>
+  );
+}
+```
+
+### User Context
+
+The dialog needs access to the current user ID. Create a context provider:
+
+```tsx components/user-provider.tsx [expandable]
+"use client";
+
+import { createContext, useContext, useEffect, useState, ReactNode } from "react";
+import { getUserId, getUserName } from "@/lib/user";
+import { identifyUser } from "@/app/actions";
+
+interface UserContextType {
+  userId: string | null;
+  userName: string | null;
+  isLoading: boolean;
+}
+
+const UserContext = createContext<UserContextType>({
+  userId: null,
+  userName: null,
+  isLoading: true,
+});
+
+export function useUser() {
+  return useContext(UserContext);
+}
+
+export function UserProvider({ children }: { children: ReactNode }) {
+  const [userId, setUserId] = useState<string | null>(null);
+  const [userName, setUserName] = useState<string | null>(null);
+  const [isLoading, setIsLoading] = useState(true);
+
+  useEffect(() => {
+    const initUser = async () => {
+      const id = getUserId();
+      const name = getUserName();
+      const tz = Intl.DateTimeFormat().resolvedOptions().timeZone;
+      
+      setUserId(id);
+      setUserName(name);
+      
+      await identifyUser(id, name ?? undefined, tz);
+      setIsLoading(false);
+    };
+    initUser();
+  }, []);
+
+  return (
+    <UserContext.Provider value={{ userId, userName, isLoading }}>
+      {children}
+    </UserContext.Provider>
+  );
+}
+```
+
+Wrap your app with the provider in `layout.tsx`:
+
+```tsx app/layout.tsx
+import { UserProvider } from "@/components/user-provider";
+
+export default function RootLayout({ children }) {
+  return (
+    <html>
+      <body>
+        <UserProvider>
+          {children}
+        </UserProvider>
+      </body>
+    </html>
   );
 }
 ```
