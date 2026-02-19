@@ -29,7 +29,6 @@ If you want to skip straight to the code, check out the [example repository](htt
 - [Implementing Leaderboards](#implementing-leaderboards)
 - [Building the Achievements Page](#building-the-achievements-page)
 - [Building the Profile Page](#building-the-profile-page)
-- [Adding Gamification UX](#adding-gamification-ux)
 - [The Result](#the-result)
 
 ## Tech Stack
@@ -650,129 +649,9 @@ export default async function ProfilePage() {
 }
 ```
 
-## Adding Gamification UX
-
-The real magic happens when users receive instant feedback. Let's add toast notifications and sound effects when achievements unlock or streaks extend.
-
-### Achievement Toasts
-
-First, add the `sonner` component from shadcn/ui:
-
-```bash
-npx shadcn@latest add sonner
-```
-
-Create a custom toast component for achievements:
-
-```tsx lib/toast.tsx [expandable]
-"use client";
-
-import { toast as sonnerToast } from "sonner";
-import Image from "next/image";
-
-interface ToastProps {
-  id: string | number;
-  title: string;
-  description?: string;
-  image?: { src: string; alt: string };
-}
-
-export function toast(props: Omit<ToastProps, "id">) {
-  return sonnerToast.custom((id) => <Toast id={id} {...props} />);
-}
-
-function Toast({ title, description, image }: ToastProps) {
-  return (
-    <div className="flex rounded-lg bg-white shadow-lg ring-1 ring-black/5 w-full md:max-w-[364px] items-center p-4">
-      {image && (
-        <Image src={image.src} alt={image.alt} width={40} height={40} className="mr-4 rounded-md" />
-      )}
-      <div className="flex-1">
-        <p className="text-sm font-medium text-gray-900">{title}</p>
-        {description && <p className="mt-1 text-sm text-gray-500">{description}</p>}
-      </div>
-    </div>
-  );
-}
-```
-
-### Sound Effects
-
-Sound effects dramatically increase engagement. Add audio feedback for achievements and streaks:
-
-```tsx components/log-activity-dialog.tsx [expandable]
-// Inside your activity logging component
-import { useRef, useEffect } from "react";
-import { toast } from "@/lib/toast";
-
-export function LogActivityDialog() {
-  const achievementSound = useRef<HTMLAudioElement | null>(null);
-  const streakSound = useRef<HTMLAudioElement | null>(null);
-
-  useEffect(() => {
-    achievementSound.current = new Audio("/sounds/achievement.mp3");
-    streakSound.current = new Audio("/sounds/streak.mp3");
-  }, []);
-
-  const handleLogActivity = async (data) => {
-    const response = await logActivity(data);
-    
-    if (response.success && response.data) {
-      // Handle achievement unlocks
-      if (response.data.achievements?.length) {
-        achievementSound.current?.play();
-        response.data.achievements.forEach((achievement) => {
-          toast({
-            title: achievement.name,
-            description: achievement.description,
-            image: { src: achievement.badgeUrl, alt: achievement.name },
-          });
-        });
-      }
-      
-      // Handle streak extensions
-      if (response.data.currentStreak?.extended) {
-        streakSound.current?.play();
-        toast({
-          title: "🔥 Streak Extended!",
-          description: `You're on a ${response.data.currentStreak.length} day streak!`,
-        });
-      }
-    }
-  };
-  
-  // ... rest of component
-}
-```
-
-<Tip>
-  Get free sound effects from [freesound.org](https://freesound.org). Short, satisfying chimes work best for achievements.
-</Tip>
-
-### Configuring Trophy Image Host
-
-To display achievement badges, configure Trophy's image host in `next.config.ts`:
-
-```ts next.config.ts
-import type { NextConfig } from "next";
-
-const nextConfig: NextConfig = {
-  images: {
-    remotePatterns: [
-      {
-        protocol: "https",
-        hostname: "lookmizerpsrsczvtlwh.supabase.co",
-      },
-    ],
-  },
-};
-
-export default nextConfig;
-```
-
 ## The Result
 
-You now have a fully functional fitness gamification loop! Users can log workouts across multiple sports, level up their profile, earn badges, compete in local leagues, and receive satisfying audiovisual feedback for their progress.
+You now have a fully functional fitness gamification loop! Users can log workouts across multiple sports, level up their profile, earn badges, and compete on leaderboards.
 
 <Frame>
   <img src="/images/fitness-app-demo.png" alt="Fitness App Demo" className="rounded-xl border" />
@@ -784,11 +663,11 @@ You now have a fully functional fitness gamification loop! Users can log workout
 - **Weekly leaderboards** with global and city-based competition
 - **Leveled progression** from Rookie to Pro
 - **Achievement system** with milestone badges
-- **Daily streaks** with engaging toast notifications
-- **Engaging UX** with sound effects and visual feedback
+- **Daily streaks** to drive retention
 
 ### Next Steps
 
-- Add [automated emails](/platform/emails) for streak reminders and weekly recaps
+- Add **achievement unlock toasts** using the `achievements` array from the [metric event response](/api-reference/endpoints/metrics/send-a-metric-change-event)
+- Add **sound effects** for achievements and streak extensions
+- Configure [automated emails](/platform/emails) for streak reminders and weekly recaps
 - Implement [challenges](/platform/challenges) for time-bound competitions
-- Add social features like friend comparisons
