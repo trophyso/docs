@@ -1,7 +1,7 @@
 openapi: 3.1.0
 info:
   title: Trophy
-  version: '1.0.39'
+  version: '1.1.0'
 paths:
   # APPLICATION API -------------------------------------------------------
 
@@ -1805,6 +1805,95 @@ paths:
       summary: Get a user's points data
       security:
         - ApiKeyAuth: []
+  /users/{id}/points/{key}/boosts:
+    servers:
+      - url: https://api.trophy.so/v1
+        description: Application API
+    get:
+      description: Get active points boosts for a user in a specific points system. Returns both global boosts the user is eligible for and user-specific boosts.
+      operationId: users_points_boosts
+      x-fern-server-name: api
+      tags:
+        - Users
+      x-codeSamples:
+        - lang: javascript
+          source: |
+            import { TrophyApiClient } from '@trophyso/node';
+
+            const trophy = new TrophyApiClient({
+              apiKey: 'YOUR_API_KEY'
+            });
+
+            const response = await trophy.users.pointsBoosts("user-id", "points-system-key");
+        - lang: python
+          source: |
+            from trophy import TrophyApi
+
+            client = TrophyApi(api_key='YOUR_API_KEY')
+
+            response = client.users.points_boosts(id="user-id", key="points-system-key")
+      parameters:
+        - name: id
+          in: path
+          description: ID of the user.
+          required: true
+          schema:
+            type: string
+          example: userId
+        - name: key
+          in: path
+          description: Key of the points system.
+          required: true
+          schema:
+            type: string
+          example: points-system-key
+      responses:
+        '200':
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/PointsBoost'
+              examples:
+                Successful operation:
+                  value:
+                    - id: 0040fe51-6bce-4b44-b0ad-bddc4e123534
+                      name: Double XP Weekend
+                      status: active
+                      start: '2025-01-01'
+                      end: '2025-01-03'
+                      multiplier: 2
+                      rounding: 'down'
+                    - id: 0040fe51-6bce-4b44-b0ad-bddc4e123535
+                      name: VIP Bonus
+                      status: active
+                      start: '2025-01-01'
+                      end: null
+                      multiplier: 1.5
+                      rounding: 'nearest'
+        '401':
+          description: 'Unauthorized'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorBody'
+        '404':
+          description: 'Not Found'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorBody'
+        '422':
+          description: 'Unprocessible Entity'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorBody'
+      summary: Get a user's active points boosts
+      security:
+        - ApiKeyAuth: []
   /users/{id}/points/{key}/event-summary:
     servers:
       - url: https://api.trophy.so/v1
@@ -2409,7 +2498,7 @@ paths:
       - url: https://api.trophy.so/v1
         description: Application API
     get:
-      description: Get a points system with all its triggers.
+      description: Get a points system with its triggers.
       operationId: points_system
       x-fern-server-name: api
       tags:
@@ -2505,16 +2594,107 @@ paths:
       summary: Get a points system with its triggers
       security:
         - ApiKeyAuth: []
+  /points/{key}/boosts:
+    servers:
+      - url: https://api.trophy.so/v1
+        description: Application API
+    get:
+      description: Get all global boosts for a points system. Finished boosts are excluded by default.
+      operationId: points_boosts
+      x-fern-server-name: api
+      tags:
+        - Points
+      x-codeSamples:
+        - lang: javascript
+          source: |
+            import { TrophyApiClient } from '@trophyso/node';
+
+            const trophy = new TrophyApiClient({
+              apiKey: 'YOUR_API_KEY'
+            });
+
+            const response = await trophy.points.boosts("points-system-key");
+        - lang: python
+          source: |
+            from trophy import TrophyApi
+
+            client = TrophyApi(api_key='YOUR_API_KEY')
+
+            response = client.points.boosts(key="points-system-key")
+      parameters:
+        - name: key
+          in: path
+          description: Key of the points system.
+          required: true
+          schema:
+            type: string
+          example: points-system-key
+        - name: includeFinished
+          in: query
+          description: When set to 'true', boosts that have finished (past their end date) will be included in the response. By default, finished boosts are excluded.
+          required: false
+          schema:
+            type: boolean
+            default: false
+      responses:
+        '200':
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/PointsBoost'
+              examples:
+                Successful operation:
+                  value:
+                    - id: 0040fe51-6bce-4b44-b0ad-bddc4e123537
+                      name: Double XP Weekend
+                      status: active
+                      start: '2025-01-01'
+                      end: '2025-01-03'
+                      multiplier: 2
+                      rounding: 'down'
+                    - id: 0040fe51-6bce-4b44-b0ad-bddc4e123538
+                      name: Holiday Bonus
+                      status: finished
+                      start: '2024-12-25'
+                      end: '2024-12-31'
+                      multiplier: 1.5
+                      rounding: 'nearest'
+        '401':
+          description: 'Unauthorized'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorBody'
+        '404':
+          description: 'Points system not found'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorBody'
+      summary: Get boosts for a points system
+      security:
+        - ApiKeyAuth: []
   /leaderboards:
     servers:
       - url: https://api.trophy.so/v1
         description: Application API
     get:
-      description: Get all active leaderboards for your organization.
+      description: Get all leaderboards for your organization. Finished leaderboards are excluded by default.
       operationId: leaderboards_all
       x-fern-server-name: api
       tags:
         - Leaderboards
+      parameters:
+        - name: includeFinished
+          in: query
+          description: When set to 'true', leaderboards with status 'finished' will be included in the response. By default, finished leaderboards are excluded.
+          required: false
+          schema:
+            type: boolean
+            default: false
       x-codeSamples:
         - lang: javascript
           source: |
@@ -2594,7 +2774,7 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/ErrorBody'
-      summary: Get all active leaderboards
+      summary: Get all leaderboards
       security:
         - ApiKeyAuth: []
   /leaderboards/{key}:
@@ -2981,6 +3161,313 @@ paths:
       summary: Restore streaks for multiple users
       security:
         - ApiKeyAuth: []
+
+  /points/boosts:
+    servers:
+      - url: https://admin.trophy.so/v1
+        description: Admin API
+    post:
+      description: Create points boosts for multiple users.
+      operationId: admin_points_boosts_create
+      x-fern-server-name: admin
+      x-fern-sdk-group-name:
+        - admin
+        - points
+        - boosts
+      x-fern-sdk-method-name: create
+      tags:
+        - Admin
+      x-codeSamples:
+        - lang: javascript
+          source: |
+            import { TrophyApiClient } from '@trophyso/node';
+
+            const trophy = new TrophyApiClient({
+              apiKey: 'YOUR_API_KEY'
+            });
+
+            const response = await trophy.admin.points.boosts.create({
+              systemKey: 'xp',
+              boosts: [
+                {
+                  userId: 'user-123',
+                  name: 'Double XP Weekend',
+                  start: '2024-01-01',
+                  end: '2024-01-03',
+                  multiplier: 2
+                },
+                {
+                  userId: 'user-456',
+                  name: 'Holiday Bonus',
+                  start: '2024-12-25',
+                  multiplier: 1.5,
+                  rounding: 'up'
+                }
+              ]
+            });
+        - lang: python
+          source: |
+            from trophy import TrophyApi
+
+            client = TrophyApi(api_key='YOUR_API_KEY')
+
+            response = client.admin.points.boosts.create({
+              "systemKey": "xp",
+              "boosts": [
+                {
+                  "userId": "user-123",
+                  "name": "Double XP Weekend",
+                  "start": "2024-01-01",
+                  "end": "2024-01-03",
+                  "multiplier": 2
+                },
+                {
+                  "userId": "user-456",
+                  "name": "Holiday Bonus",
+                  "start": "2024-12-25",
+                  "multiplier": 1.5,
+                  "rounding": "up"
+                }
+              ]
+            })
+      requestBody:
+        description: The points system key and array of boosts to create
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreatePointsBoostsRequest'
+            examples:
+              Create boosts for multiple users:
+                value:
+                  systemKey: xp
+                  boosts:
+                    - userId: user-123
+                      name: Double XP Weekend
+                      start: '2024-01-01'
+                      end: '2024-01-03'
+                      multiplier: 2
+                    - userId: user-456
+                      name: Holiday Bonus
+                      start: '2024-12-25'
+                      multiplier: 1.5
+                      rounding: up
+      responses:
+        '200':
+          description: Successful operation (no boosts created)
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CreatePointsBoostsResponse'
+              examples:
+                All requests had errors:
+                  value:
+                    created: []
+                    issues:
+                      - userId: non-existent-user
+                        level: error
+                        reason: User does not exist
+        '201':
+          description: Created (at least one boost created)
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CreatePointsBoostsResponse'
+              examples:
+                Success with no issues:
+                  value:
+                    created:
+                      - id: '550e8400-e29b-41d4-a716-446655440000'
+                        name: Double XP Weekend
+                        status: active
+                        start: '2024-01-01'
+                        end: '2024-01-03'
+                        multiplier: 2
+                        rounding: down
+                        userId: user-123
+                    issues: []
+                Mixed success and errors:
+                  value:
+                    created:
+                      - id: '550e8400-e29b-41d4-a716-446655440001'
+                        name: Valid Boost
+                        status: active
+                        start: '2024-01-15'
+                        end: null
+                        multiplier: 1.5
+                        rounding: down
+                        userId: user-456
+                    issues:
+                      - userId: non-existent-user
+                        level: error
+                        reason: User does not exist
+        '400':
+          description: 'Bad Request'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorBody'
+        '401':
+          description: 'Unauthorized'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorBody'
+        '404':
+          description: 'Not Found (points system not found)'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorBody'
+        '422':
+          description: 'Unprocessible Entity'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorBody'
+      summary: Create points boosts for multiple users
+      security:
+        - ApiKeyAuth: []
+    delete:
+      description: Archive multiple points boosts by ID.
+      operationId: admin_points_boosts_batch_archive
+      x-fern-server-name: admin
+      x-fern-sdk-group-name:
+        - admin
+        - points
+        - boosts
+      x-fern-sdk-method-name: batchArchive
+      tags:
+        - Admin
+      x-codeSamples:
+        - lang: javascript
+          source: |
+            import { TrophyApiClient } from '@trophyso/node';
+
+            const trophy = new TrophyApiClient({
+              apiKey: 'YOUR_API_KEY'
+            });
+
+            const response = await trophy.admin.points.boosts.batchArchive({
+              ids: ['boost-uuid-1', 'boost-uuid-2', 'boost-uuid-3']
+            });
+
+            console.log(`Archived ${response.archivedCount} boosts`);
+        - lang: python
+          source: |
+            from trophy import TrophyApi
+
+            client = TrophyApi(api_key='YOUR_API_KEY')
+
+            response = client.admin.points.boosts.batch_archive(
+              ids=['boost-uuid-1', 'boost-uuid-2', 'boost-uuid-3']
+            )
+
+            print(f"Archived {response.archived_count} boosts")
+      parameters:
+        - name: ids
+          in: query
+          description: A list of up to 100 boost IDs.
+          required: true
+          schema:
+            type: array
+            items:
+              type: string
+            minItems: 1
+            maxItems: 100
+          example: 'a0eebc99-9c0b-4ef8-bb6d-6bb9bd380a11,b1ffcd00-0d1c-4ef9-cc7e-7cc0ce491b22'
+      responses:
+        '200':
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ArchivePointsBoostsResponse'
+              examples:
+                All boosts archived:
+                  value:
+                    archivedCount: 3
+                Some boosts not found:
+                  value:
+                    archivedCount: 1
+                No boosts found:
+                  value:
+                    archivedCount: 0
+        '400':
+          description: 'Bad Request (no IDs provided or invalid UUID format)'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorBody'
+        '401':
+          description: 'Unauthorized'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorBody'
+      summary: Archive multiple points boosts
+      security:
+        - ApiKeyAuth: []
+
+  /points/boosts/{id}:
+    servers:
+      - url: https://admin.trophy.so/v1
+        description: Admin API
+    delete:
+      description: Archive a points boost by ID.
+      operationId: admin_points_boosts_archive
+      x-fern-server-name: admin
+      x-fern-sdk-group-name:
+        - admin
+        - points
+        - boosts
+      x-fern-sdk-method-name: archive
+      tags:
+        - Admin
+      x-codeSamples:
+        - lang: javascript
+          source: |
+            import { TrophyApiClient } from '@trophyso/node';
+
+            const trophy = new TrophyApiClient({
+              apiKey: 'YOUR_API_KEY'
+            });
+
+            await trophy.admin.points.boosts.archive('boost-uuid-here');
+        - lang: python
+          source: |
+            from trophy import TrophyApi
+
+            client = TrophyApi(api_key='YOUR_API_KEY')
+
+            client.admin.points.boosts.archive('boost-uuid-here')
+      parameters:
+        - name: id
+          in: path
+          required: true
+          description: The UUID of the points boost to archive
+          schema:
+            type: string
+            format: uuid
+      responses:
+        '204':
+          description: Successfully archived the points boost
+        '401':
+          description: 'Unauthorized'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorBody'
+        '404':
+          description: 'Not Found'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorBody'
+      summary: Archive a points boost
+      security:
+        - ApiKeyAuth: []
+
 webhooks:
   achievement.completed:
     post:
@@ -3297,8 +3784,8 @@ webhooks:
                   $ref: '#/components/schemas/User'
                   description: The user whose points increased or decreased.
                 points:
-                  $ref: '#/components/schemas/GetUserPointsResponse'
-                  description: The user's points after the event.
+                  $ref: '#/components/schemas/MetricEventPointsResponse'
+                  description: The user's points after the event (includes added amount for this event).
               required:
                 - type
                 - user
@@ -3325,6 +3812,7 @@ webhooks:
                     badgeUrl: null
                     maxPoints: null
                     total: 100
+                    added: 10
                     awards:
                       - id: 0040fe51-6bce-4b44-b0ad-bddc4e123534
                         awarded: 10
@@ -3336,6 +3824,98 @@ webhooks:
                           points: 10
                           metricName: words written
                           metricThreshold: 1000
+      responses:
+        '200':
+          description: Return a 200 status to indicate the webhook was received and processed.
+  points.boost_started:
+    post:
+      summary: Points boost started
+      operationId: webhooks_points_boost_started
+      description: Triggered when a points boost goes live (its start time has been reached).
+      requestBody:
+        description: The webhook event.
+        content:
+          application/json:
+            schema:
+              properties:
+                type:
+                  type: string
+                  enum: ['points.boost_started']
+                  description: The webhook event type.
+                timestamp:
+                  type: string
+                  format: date-time
+                  description: When the event occurred (ISO 8601).
+                boost:
+                  $ref: '#/components/schemas/PointsBoostWebhookPayload'
+                  description: The points boost that started.
+              required:
+                - type
+                - timestamp
+                - boost
+            examples:
+              Points boost started:
+                value:
+                  type: points.boost_started
+                  timestamp: '2025-01-15T00:00:00Z'
+                  boost:
+                    id: 0040fe51-6bce-4b44-b0ad-bddc4e123534
+                    name: Double XP Weekend
+                    status: active
+                    userId: null
+                    pointsSystemId: 0040fe51-6bce-4b44-b0ad-bddc4e123535
+                    pointsSystemKey: xp
+                    pointsSystemName: XP
+                    start: '2025-01-15'
+                    end: '2025-01-17'
+                    multiplier: 2
+                    rounding: down
+      responses:
+        '200':
+          description: Return a 200 status to indicate the webhook was received and processed.
+  points.boost_finished:
+    post:
+      summary: Points boost finished
+      operationId: webhooks_points_boost_finished
+      description: Triggered when a points boost ends (its end time has been reached).
+      requestBody:
+        description: The webhook event.
+        content:
+          application/json:
+            schema:
+              properties:
+                type:
+                  type: string
+                  enum: ['points.boost_finished']
+                  description: The webhook event type.
+                timestamp:
+                  type: string
+                  format: date-time
+                  description: When the event occurred (ISO 8601).
+                boost:
+                  $ref: '#/components/schemas/PointsBoostWebhookPayload'
+                  description: The points boost that finished.
+              required:
+                - type
+                - timestamp
+                - boost
+            examples:
+              Points boost finished:
+                value:
+                  type: points.boost_finished
+                  timestamp: '2025-01-17T23:59:59Z'
+                  boost:
+                    id: 0040fe51-6bce-4b44-b0ad-bddc4e123534
+                    name: Double XP Weekend
+                    status: finished
+                    userId: null
+                    pointsSystemId: 0040fe51-6bce-4b44-b0ad-bddc4e123535
+                    pointsSystemKey: xp
+                    pointsSystemName: XP
+                    start: '2025-01-15'
+                    end: '2025-01-17'
+                    multiplier: 2
+                    rounding: down
       responses:
         '200':
           description: Return a 200 status to indicate the webhook was received and processed.
@@ -3766,6 +4346,106 @@ components:
           description: The user's total points after this award occurred.
         trigger:
           $ref: '#/components/schemas/PointsTrigger'
+        boosts:
+          type: array
+          description: Array of points boosts that applied to this award.
+          items:
+            $ref: '#/components/schemas/PointsBoost'
+    PointsBoost:
+      title: PointsBoost
+      type: object
+      properties:
+        id:
+          type: string
+          description: The ID of the points boost
+        name:
+          type: string
+          description: The name of the points boost
+        status:
+          type: string
+          enum: ['active', 'scheduled', 'finished']
+          description: The status of the points boost
+        start:
+          type: string
+          description: The start date of the points boost
+        end:
+          type:
+            - string
+            - 'null'
+          description: The end date of the points boost
+        multiplier:
+          type: number
+          description: The multiplier of the points boost
+        rounding:
+          type: string
+          enum: ['down', 'up', 'nearest']
+          description: The rounding method of the points boost
+      required:
+        - id
+        - name
+        - status
+        - start
+        - end
+        - multiplier
+        - rounding
+    PointsBoostWebhookPayload:
+      title: PointsBoostWebhookPayload
+      type: object
+      description: Points boost payload sent in points.boost_started and points.boost_finished webhook events.
+      properties:
+        id:
+          type: string
+          description: The ID of the points boost.
+        name:
+          type: string
+          description: The name of the points boost.
+        status:
+          type: string
+          enum: ['active', 'finished']
+          description: The status of the points boost.
+        userId:
+          type:
+            - string
+            - 'null'
+          description: The customer-facing user ID that the boost is scoped to, or null for global boosts.
+        pointsSystemId:
+          type: string
+          description: The ID of the points system this boost applies to.
+        pointsSystemKey:
+          type: string
+          description: The key of the points system this boost applies to.
+        pointsSystemName:
+          type: string
+          description: The name of the points system this boost applies to.
+        start:
+          type: string
+          format: date
+          description: The start date of the points boost (YYYY-MM-DD).
+        end:
+          type:
+            - string
+            - 'null'
+          format: date
+          description: The end date of the points boost (YYYY-MM-DD), or null if open-ended.
+        multiplier:
+          type: number
+          description: The multiplier applied to points during the boost.
+        rounding:
+          type: string
+          enum: ['down', 'up', 'nearest']
+          description: The rounding method applied to boosted points.
+      required:
+        - id
+        - name
+        - status
+        - userId
+        - pointsSystemId
+        - pointsSystemKey
+        - pointsSystemName
+        - start
+        - end
+        - multiplier
+        - rounding
     GetUserPointsResponse:
       title: GetUserPointsResponse
       type: object
@@ -3926,16 +4606,54 @@ components:
     MetricEventPointsResponse:
       title: MetricEventPointsResponse
       type: object
-      allOf:
-        - $ref: '#/components/schemas/GetUserPointsResponse'
-        - type: object
-          properties:
-            added:
-              type: integer
-              description: The points added by this event.
-              example: 10
-          required:
-            - added
+      description: Points system response for metric events.
+      properties:
+        id:
+          type: string
+          description: The ID of the points system
+        key:
+          type: string
+          description: The key of the points system
+        name:
+          type: string
+          description: The name of the points system
+        description:
+          type:
+            - string
+            - 'null'
+          description: The description of the points system
+        badgeUrl:
+          type:
+            - string
+            - 'null'
+          description: The URL of the badge image for the points system
+        maxPoints:
+          type:
+            - number
+            - 'null'
+          description: The maximum number of points a user can be awarded in this points system
+        total:
+          type: integer
+          description: The user's total points
+        added:
+          type: integer
+          description: The points added by this event.
+          example: 10
+        awards:
+          type: array
+          description: Array of trigger awards that added points.
+          items:
+            $ref: '#/components/schemas/PointsAward'
+      required:
+        - id
+        - key
+        - name
+        - description
+        - badgeUrl
+        - maxPoints
+        - total
+        - added
+        - awards
     MetricEventLeaderboardResponse:
       title: MetricEventLeaderboardResponse
       type: object
@@ -4750,6 +5468,144 @@ components:
           description: Array of issues encountered during freeze creation.
       required:
         - issues
+    CreatePointsBoostsRequest:
+      title: CreatePointsBoostsRequest
+      type: object
+      description: Request body for creating points boosts.
+      properties:
+        systemKey:
+          type: string
+          description: The key of the points system to create boosts for.
+          example: xp
+        boosts:
+          type: array
+          items:
+            type: object
+            properties:
+              userId:
+                type: string
+                description: The ID of the user to create a boost for.
+                example: user-123
+              name:
+                type: string
+                description: The name of the boost.
+                maxLength: 255
+                example: Double XP Weekend
+              start:
+                type: string
+                format: date
+                description: The start date of the boost (YYYY-MM-DD).
+                example: '2024-01-01'
+              end:
+                type:
+                  - string
+                  - 'null'
+                format: date
+                description: The end date of the boost (YYYY-MM-DD). If null, the boost has no end date.
+                example: '2024-01-03'
+              multiplier:
+                type: number
+                description: The points multiplier. Must be greater than 0, not equal to 1, and less than 100.
+                example: 2
+                exclusiveMinimum: 0
+                exclusiveMaximum: 100
+              rounding:
+                type: string
+                enum:
+                  - down
+                  - up
+                  - nearest
+                default: down
+                description: How to round the boosted points. Defaults to 'down'.
+                example: down
+            required:
+              - userId
+              - name
+              - start
+              - multiplier
+          description: Array of boosts to create. Maximum 1,000 boosts per request.
+          maxItems: 1000
+          minItems: 1
+      required:
+        - systemKey
+        - boosts
+    CreatedPointsBoost:
+      title: CreatedPointsBoost
+      type: object
+      description: A successfully created points boost returned from the create endpoint.
+      properties:
+        id:
+          type: string
+          format: uuid
+          description: The UUID of the created boost.
+        name:
+          type: string
+          description: The name of the boost.
+        status:
+          type: string
+          enum: ['active', 'scheduled', 'finished']
+          description: The status of the boost.
+        start:
+          type: string
+          format: date
+          description: The start date (YYYY-MM-DD).
+        end:
+          type:
+            - string
+            - 'null'
+          format: date
+          description: The end date (YYYY-MM-DD) or null if no end date.
+        multiplier:
+          type: number
+          description: The points multiplier.
+        rounding:
+          type: string
+          enum:
+            - down
+            - up
+            - nearest
+          description: How boosted points are rounded.
+        userId:
+          type: string
+          description: The customer ID of the user the boost was created for.
+      required:
+        - id
+        - name
+        - status
+        - start
+        - end
+        - multiplier
+        - rounding
+        - userId
+    CreatePointsBoostsResponse:
+      title: CreatePointsBoostsResponse
+      type: object
+      description: Response containing created boosts and any issues encountered while creating points boosts.
+      properties:
+        created:
+          type: array
+          items:
+            $ref: '#/components/schemas/CreatedPointsBoost'
+          description: Array of successfully created boosts.
+        issues:
+          type: array
+          items:
+            $ref: '#/components/schemas/BulkInsertIssue'
+          description: Array of issues encountered during boost creation.
+      required:
+        - created
+        - issues
+    ArchivePointsBoostsResponse:
+      title: ArchivePointsBoostsResponse
+      type: object
+      description: Response containing the count of archived points boosts.
+      properties:
+        archivedCount:
+          type: integer
+          description: The number of boosts that were archived.
+          example: 3
+      required:
+        - archivedCount
     RestoreStreaksRequest:
       title: RestoreStreaksRequest
       type: object

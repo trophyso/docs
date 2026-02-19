@@ -146,6 +146,7 @@
             "group": "Points",
             "pages": [
               "api-reference/endpoints/points/get-points",
+              "api-reference/endpoints/points/get-points-boosts",
               "api-reference/endpoints/points/get-points-summary"
             ]
           },
@@ -169,6 +170,7 @@
               "api-reference/endpoints/users/get-a-users-completed-achievements",
               "api-reference/endpoints/users/get-a-users-streak",
               "api-reference/endpoints/users/get-a-users-points",
+              "api-reference/endpoints/users/get-a-users-points-boosts",
               "api-reference/endpoints/users/get-a-users-points-summary",
               "api-reference/endpoints/users/get-a-users-leaderboard",
               "api-reference/endpoints/users/get-a-users-wrapped",
@@ -191,6 +193,14 @@
             "pages": [
               "admin-api/endpoints/streaks/grant-freezes",
               "admin-api/endpoints/streaks/restore-streaks"
+            ]
+          },
+          {
+            "group": "Points",
+            "pages": [
+              "admin-api/endpoints/points/create-boosts",
+              "admin-api/endpoints/points/archive-boosts-batch",
+              "admin-api/endpoints/points/archive-a-boost"
             ]
           }
         ]
@@ -226,7 +236,11 @@
           },
           {
             "group": "Points",
-            "pages": ["webhooks/events/points/points-changed"]
+            "pages": [
+              "webhooks/events/points/points-changed",
+              "webhooks/events/points/points-boost-started",
+              "webhooks/events/points/points-boost-finished"
+            ]
           },
           {
             "group": "Leaderboards",
