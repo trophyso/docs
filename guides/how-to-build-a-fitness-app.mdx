@@ -854,6 +854,69 @@ export default function RootLayout({ children }) {
 }
 ```
 
+### Helper Utilities
+
+The user context relies on helper functions for managing user identity in localStorage:
+
+```tsx lib/user.ts [expandable]
+const USER_ID_KEY = "trophy-fitness-user-id";
+const USER_NAME_KEY = "trophy-fitness-user-name";
+
+const ADJECTIVES = ["Swift", "Mighty", "Blazing", "Iron", "Golden", "Thunder", "Lightning"];
+const NOUNS = ["Runner", "Cyclist", "Swimmer", "Athlete", "Champion", "Tiger", "Eagle"];
+
+function generateRandomName(): string {
+  const adj = ADJECTIVES[Math.floor(Math.random() * ADJECTIVES.length)];
+  const noun = NOUNS[Math.floor(Math.random() * NOUNS.length)];
+  return `${adj}${noun}${Math.floor(Math.random() * 100)}`;
+}
+
+export function getUserId(): string {
+  let userId = localStorage.getItem(USER_ID_KEY);
+  if (!userId) {
+    userId = crypto.randomUUID();
+    localStorage.setItem(USER_ID_KEY, userId);
+    localStorage.setItem(USER_NAME_KEY, generateRandomName());
+  }
+  // Sync to cookie for server-side access
+  document.cookie = `${USER_ID_KEY}=${userId}; path=/; max-age=31536000; SameSite=Lax`;
+  return userId;
+}
+
+export function getUserName(): string | null {
+  return localStorage.getItem(USER_NAME_KEY);
+}
+```
+
+For city-based leaderboards, we infer the user's city from their timezone:
+
+```tsx lib/city.ts [expandable]
+const TIMEZONE_TO_CITY: Record<string, string> = {
+  "America/New_York": "New York",
+  "America/Los_Angeles": "Los Angeles",
+  "Europe/London": "London",
+  "Europe/Paris": "Paris",
+  "Europe/Berlin": "Berlin",
+  "Asia/Tokyo": "Tokyo",
+  "Australia/Sydney": "Sydney",
+  // ... add more as needed
+};
+
+const STORAGE_KEY = "trophy-fitness-city";
+
+export function getUserCity(): string {
+  const stored = localStorage.getItem(STORAGE_KEY);
+  if (stored) return stored;
+  
+  const timezone = Intl.DateTimeFormat().resolvedOptions().timeZone;
+  return TIMEZONE_TO_CITY[timezone] || "London";
+}
+
+export function setStoredCity(city: string): void {
+  localStorage.setItem(STORAGE_KEY, city);
+}
+```
+
 ## Implementing Leaderboards
 
 We'll build a tabbed interface that allows users to switch between activities (Run/Cycle/Swim) and scopes (Global vs. Local City).
