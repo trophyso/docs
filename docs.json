@@ -35,13 +35,7 @@
     }
   },
   "contextual": {
-    "options": [
-      "copy",
-      "view",
-      "chatgpt",
-      "claude",
-      "perplexity"
-    ]
+    "options": ["copy", "view", "chatgpt", "claude", "perplexity"]
   },
   "navigation": {
     "tabs": [
@@ -108,7 +102,8 @@
           {
             "group": "Use Cases",
             "pages": [
-              "guides/gamified-study-platform"
+              "guides/gamified-study-platform",
+              "guides/gamified-fitness-platform"
             ]
           }
         ]
@@ -191,9 +186,7 @@
         "groups": [
           {
             "group": "Overview",
-            "pages": [
-              "admin-api/introduction"
-            ]
+            "pages": ["admin-api/introduction"]
           },
           {
             "group": "Streaks",
@@ -229,9 +222,7 @@
           },
           {
             "group": "Achievements",
-            "pages": [
-              "webhooks/events/achievements/achievement-completed"
-            ]
+            "pages": ["webhooks/events/achievements/achievement-completed"]
           },
           {
             "group": "Streaks",

@@ -16,6 +16,9 @@ achievedAt
 transactionally
 tz
 APNs
+Strava
+grayscale
+localStorage
 
 # Markdown rich text
 _[\w\s]+_
