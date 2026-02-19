@@ -33,6 +33,8 @@ In this tutorial we'll build an example study platform using Trophy for gamifica
 - [Tracking Progress](#tracking-progress)
 - [Adding Gamification](#adding-gamification)
 - [Adding an XP System](#adding-an-xp-system)
+- [Adding Leaderboards](#adding-leaderboards)
+- [Adding an Energy System](#adding-an-energy-system)
 - [The Result](#the-result)
 
 ## Tech Stack
@@ -1991,6 +1993,240 @@ Now when users view flashcards, they'll see their XP update in real-time with a 
   ></video>
 </Frame>
 
+## Adding Leaderboards
+
+Nothing drives engagement like friendly competition. Let's add a leaderboard to show how users stack up against each other.
+
+### Setting Up Leaderboards in Trophy
+
+Head to the Trophy [leaderboards page](https://app.trophy.so/leaderboards) and create a new leaderboard. We'll create a daily leaderboard with the key `daily-champions` that ranks users by flashcards viewed.
+
+### Leaderboard API Integration
+
+Add server actions for fetching leaderboard data:
+
+```tsx src/app/actions.ts [expandable]
+const LEADERBOARD_KEY = "daily-champions";
+
+/**
+ * Get the leaderboard rankings
+ */
+export async function getLeaderboard(
+  limit?: number,
+  offset?: number,
+  userId?: string,
+  runDate?: string
+): Promise<LeaderboardResponseWithRankings | null> {
+  try {
+    return await trophy.leaderboards.get(LEADERBOARD_KEY, {
+      limit: limit || 10,
+      offset: offset || 0,
+      userId: userId || undefined,
+      run: runDate || undefined
+    });
+  } catch (error) {
+    console.error("Get leaderboard error:", error);
+    return null;
+  }
+}
+
+/**
+ * Get a specific user's leaderboard position and history
+ */
+export async function getUserLeaderboard(userId: string, run?: string): Promise<UserLeaderboardResponseWithHistory | null> {
+  try {
+    return await trophy.users.leaderboard(userId, LEADERBOARD_KEY, {
+      run
+    });
+  } catch (error) {
+    console.error("Get user leaderboard error:", error);
+    return null;
+  }
+}
+```
+
+### Building the Leaderboard UI
+
+Create a leaderboard component that displays rankings with pagination:
+
+```tsx src/app/leaderboard-center/leaderboard-center.tsx [expandable]
+import { Dialog, DialogTrigger, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog";
+import { useState, useEffect } from "react";
+import { getLeaderboard } from "@/app/actions";
+import { LeaderboardResponseWithRankings } from "@trophyso/node/api";
+
+export default function LeaderboardCenter() {
+  const [open, setOpen] = useState(false);
+  const [leaderboard, setLeaderboard] = useState<LeaderboardResponseWithRankings | null>(null);
+
+  useEffect(() => {
+    if (open) {
+      getLeaderboard(10, 0).then(setLeaderboard);
+    }
+  }, [open]);
+
+  return (
+    <Dialog open={open} onOpenChange={setOpen}>
+      <DialogTrigger>
+        <button className="flex items-center gap-2 px-4 py-2 rounded-lg border">
+          🏆 Leaderboard
+        </button>
+      </DialogTrigger>
+      <DialogContent>
+        <DialogHeader>
+          <DialogTitle>Daily Champions</DialogTitle>
+        </DialogHeader>
+        <div className="space-y-2">
+          {leaderboard?.rankings?.map((entry, index) => (
+            <div key={entry.userId} className="flex items-center justify-between p-3 rounded-lg bg-gray-50">
+              <div className="flex items-center gap-3">
+                <span className="font-bold text-lg">#{index + 1}</span>
+                <span>{entry.userId}</span>
+              </div>
+              <span className="font-semibold">{entry.score} cards</span>
+            </div>
+          ))}
+        </div>
+      </DialogContent>
+    </Dialog>
+  );
+}
+```
+
+The leaderboard automatically updates as users study, creating a dynamic competitive environment that encourages daily engagement.
+
+## Adding an Energy System
+
+Energy (or "lives") systems are a proven retention mechanic that encourages users to return throughout the day. Let's add one to our study platform.
+
+### Setting Up Energy in Trophy
+
+Trophy's points system is flexible enough to handle energy mechanics. Create a new points system with the key `energy` and configure it with:
+- A maximum cap (e.g., 5 energy)
+- Automatic regeneration rules
+- Costs per action (e.g., -1 energy per flashcard session)
+
+### Energy API Integration
+
+Add server actions for energy management:
+
+```tsx src/app/actions.ts [expandable]
+const ENERGY_SYSTEM_KEY = "energy";
+
+/**
+ * Get the energy system configuration
+ */
+export async function getEnergySystem(): Promise<PointsSystemResponse | null> {
+  try {
+    return await trophy.points.system(ENERGY_SYSTEM_KEY);
+  } catch (error) {
+    console.error("Get energy system error:", error);
+    return null;
+  }
+}
+
+/**
+ * Get the current energy for a user
+ */
+export async function getUserEnergy(userId: string): Promise<GetUserPointsResponse | null> {
+  try {
+    return await trophy.users.points(userId, ENERGY_SYSTEM_KEY, {
+      awards: 5
+    });
+  } catch (error) {
+    console.error("Get user energy error:", error);
+    return null;
+  }
+}
+```
+
+### Creating an Energy Context
+
+Similar to points, create a context for managing energy state:
+
+```tsx src/contexts/UserEnergyContext.tsx [expandable]
+'use client';
+
+import { createContext, useContext, useEffect, useState, ReactNode, useCallback } from 'react';
+import { GetUserPointsResponse } from '@trophyso/node/api';
+import { getUserEnergy } from '@/app/actions';
+import { getUserId } from '@/lib/user';
+
+interface UserEnergyContextType {
+  energy: GetUserPointsResponse | null;
+  loading: boolean;
+  refetch: () => Promise<void>;
+}
+
+const UserEnergyContext = createContext<UserEnergyContextType | undefined>(undefined);
+
+export function UserEnergyProvider({ children }: { children: ReactNode }) {
+  const [energy, setEnergy] = useState<GetUserPointsResponse | null>(null);
+  const [loading, setLoading] = useState(false);
+
+  const fetchEnergy = async () => {
+    const userId = getUserId();
+    setLoading(true);
+    try {
+      const energyData = await getUserEnergy(userId);
+      setEnergy(energyData);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const refetch = useCallback(async () => {
+    await fetchEnergy();
+  }, []);
+
+  useEffect(() => {
+    fetchEnergy();
+  }, []);
+
+  return (
+    <UserEnergyContext.Provider value={{ energy, loading, refetch }}>
+      {children}
+    </UserEnergyContext.Provider>
+  );
+}
+
+export function useUserEnergy() {
+  const context = useContext(UserEnergyContext);
+  if (context === undefined) {
+    throw new Error('useUserEnergy must be used within a UserEnergyProvider');
+  }
+  return context;
+}
+```
+
+### Building the Energy UI
+
+Create an energy display that shows remaining energy with visual indicators:
+
+```tsx src/app/energy-center/energy-center.tsx [expandable]
+import { useUserEnergy } from "@/contexts/UserEnergyContext";
+import { Zap } from "lucide-react";
+
+export default function EnergyCenter() {
+  const { energy, loading } = useUserEnergy();
+  const maxEnergy = 5;
+  const currentEnergy = energy?.total || 0;
+
+  return (
+    <div className="flex items-center gap-1 px-3 py-2 rounded-lg border">
+      {Array.from({ length: maxEnergy }).map((_, i) => (
+        <Zap
+          key={i}
+          className={`size-5 ${i < currentEnergy ? 'text-yellow-500 fill-yellow-500' : 'text-gray-300'}`}
+        />
+      ))}
+    </div>
+  );
+}
+```
+
+With energy in place, users have a reason to return multiple times throughout the day as their energy regenerates, boosting your daily active users.
+
 ## The Result
 
 Congrats! If you're reading this you made it to the end of the tutorial and built yourself a fully-functioning study platform. Of course there's loads more we could do to this, so here's a few ideas:
@@ -2007,12 +2243,12 @@ Congrats! If you're reading this you made it to the end of the tutorial and buil
 
 ## Taking It Further
 
-For even more features like points history charts, "How to Earn XP" views, and additional UI polish, check out the `demo` branch in the [GitHub repo](https://github.com/trophyso/example-study-platform).
+For even more features like points history charts, leaderboard journey views, and additional UI polish, check out the [live demo](https://study.examples.trophy.so) and the [GitHub repo](https://github.com/trophyso/example-study-platform).
 
 You could also extend this further with:
-- **Leaderboards** - Add competitive rankings using Trophy's [leaderboards](/platform/leaderboards) feature
 - **Challenges** - Create time-bound study challenges with Trophy's upcoming challenges feature
 - **Social features** - Let users compete with friends or study groups
+- **Rewards** - Integrate with gift card APIs to offer real prizes for top performers
 
 ## Get Support
 
