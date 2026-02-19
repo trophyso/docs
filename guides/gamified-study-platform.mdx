@@ -1,6 +1,6 @@
 ---
-title: Gamified Study Platform
-description: Follow along as we build out a gamified study platform using Trophy with achievements, a daily streak and engaging automated email campaigns.
+title: How to Build a Gamified Study Platform
+description: Follow along as we build out a gamified study platform using Trophy with achievements, a daily streak, XP and leaderboards.
 subtitle: Follow along as we build out a gamified study platform using Trophy.
 noindex: true
 ---
@@ -8,7 +8,7 @@ noindex: true
 import MetricChangeRequestBlock from "/snippets/metric-change-request-block.mdx";
 import MetricChangeResponseBlock from "/snippets/metric-change-response-block.mdx";
 
-In this tutorial we'll build an example study platform using Trophy for gamification. If you want to just skip to the end then feel free to check out the [template repository](https://github.com/trophyso/example-study-platform) or the [live demo](https://study.examples.trophy.so).
+In this tutorial we'll build an example study platform using Trophy for gamification. If you want to just skip to the end then feel free to check out the [example repository](https://github.com/trophyso/example-study-platform) or the [live demo](https://study.examples.trophy.so).
 
 <Frame>
   <video
@@ -705,16 +705,18 @@ flowchart TD
     B@{ shape: rounded, label: "Metrics" }
     C@{ shape: rounded, label: "Achievements" }
     D@{ shape: rounded, label: "Streaks" }
-    E@{ shape: rounded, label: "Emails" }
+    E@{ shape: rounded, label: "Points" }
+    F@{ shape: rounded, label: "Leaderboards" }
     A-.->B
     B-->C
     B-->D
     B-->E
+    B-->F
 ```
 
 In Trophy we track user interactions by sending [Events](/platform/events) from our code to Trophy against a specific metric.
 
-When events are recorded for a specific user, any achievements linked to the specified metric will be unlocked if the requirements are met, daily streaks will be automatically calculated and kept up to date, and any configured emails will be scheduled.
+When events are recorded for a specific user, any achievements linked to the specified metric will be unlocked if the requirements are met, daily streaks will be automatically calculated and kept up to date, points are awarded, and leaderboards are updated.
 
 This is what makes building gamified experiences with Trophy so easy, is does all the work for you behind the scenes.
 
@@ -1555,7 +1557,7 @@ export default function StudyJourney({ achievements, streak }: Props) {
   const adjustedStreakHistory =
     streak?.streakHistory?.slice(
       sundayOffset - 1,
-      streak.streakHistory.length
+      streak.streakHistory.length,
     ) || Array(14).fill(null);
 
   return (
@@ -1783,10 +1785,12 @@ export async function getPointsSystem(): Promise<PointsSystemResponse | null> {
 /**
  * Get the points for a user
  */
-export async function getUserPoints(userId: string): Promise<GetUserPointsResponse | null> {
+export async function getUserPoints(
+  userId: string,
+): Promise<GetUserPointsResponse | null> {
   try {
     return await trophy.users.points(userId, POINTS_SYSTEM_KEY, {
-      awards: 5
+      awards: 5,
     });
   } catch (error) {
     console.error(error);
@@ -1797,18 +1801,16 @@ export async function getUserPoints(userId: string): Promise<GetUserPointsRespon
 /**
  * Get the points history summary for a user
  */
-export async function getPointsSummary(userId: string): Promise<UsersPointsEventSummaryResponseItem[] | null> {
+export async function getPointsSummary(
+  userId: string,
+): Promise<UsersPointsEventSummaryResponseItem[] | null> {
   try {
     const now = dayjs();
-    return await trophy.users.pointsEventSummary(
-      userId,
-      POINTS_SYSTEM_KEY,
-      {
-        aggregation: "daily",
-        startDate: now.subtract(6, 'day').toISOString().split('T')[0],
-        endDate: now.toISOString().split('T')[0]
-      }
-    );
+    return await trophy.users.pointsEventSummary(userId, POINTS_SYSTEM_KEY, {
+      aggregation: "daily",
+      startDate: now.subtract(6, "day").toISOString().split("T")[0],
+      endDate: now.toISOString().split("T")[0],
+    });
   } catch (error) {
     console.error(error);
     return null;
@@ -1821,12 +1823,20 @@ export async function getPointsSummary(userId: string): Promise<UsersPointsEvent
 To manage points state across the app, create a React context:
 
 ```tsx src/contexts/UserPointsContext.tsx [expandable]
-'use client';
+"use client";
 
-import { createContext, useContext, useEffect, useState, ReactNode, useCallback, useRef } from 'react';
-import { GetUserPointsResponse } from '@trophyso/node/api';
-import { getUserPoints } from '@/app/actions';
-import { getUserId } from '@/lib/user';
+import {
+  createContext,
+  useContext,
+  useEffect,
+  useState,
+  ReactNode,
+  useCallback,
+  useRef,
+} from "react";
+import { GetUserPointsResponse } from "@trophyso/node/api";
+import { getUserPoints } from "@/app/actions";
+import { getUserId } from "@/lib/user";
 
 interface UserPointsContextType {
   points: GetUserPointsResponse | null;
@@ -1836,11 +1846,15 @@ interface UserPointsContextType {
   refetch: () => Promise<void>;
 }
 
-const UserPointsContext = createContext<UserPointsContextType | undefined>(undefined);
+const UserPointsContext = createContext<UserPointsContextType | undefined>(
+  undefined,
+);
 
 export function UserPointsProvider({ children }: { children: ReactNode }) {
   const [points, setPoints] = useState<GetUserPointsResponse | null>(null);
-  const [lastPoints, setLastPoints] = useState<GetUserPointsResponse | null>(null);
+  const [lastPoints, setLastPoints] = useState<GetUserPointsResponse | null>(
+    null,
+  );
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const timeoutRef = useRef<NodeJS.Timeout | null>(null);
@@ -1855,7 +1869,7 @@ export function UserPointsProvider({ children }: { children: ReactNode }) {
       const pointsData = await getUserPoints(userId);
       setPoints(pointsData);
     } catch (err) {
-      setError(err instanceof Error ? err.message : 'Failed to fetch points');
+      setError(err instanceof Error ? err.message : "Failed to fetch points");
     } finally {
       setLoading(false);
     }
@@ -1880,7 +1894,9 @@ export function UserPointsProvider({ children }: { children: ReactNode }) {
   }, []);
 
   return (
-    <UserPointsContext.Provider value={{ points, lastPoints, loading, error, refetch }}>
+    <UserPointsContext.Provider
+      value={{ points, lastPoints, loading, error, refetch }}
+    >
       {children}
     </UserPointsContext.Provider>
   );
@@ -1889,7 +1905,7 @@ export function UserPointsProvider({ children }: { children: ReactNode }) {
 export function useUserPoints() {
   const context = useContext(UserPointsContext);
   if (context === undefined) {
-    throw new Error('useUserPoints must be used within a UserPointsProvider');
+    throw new Error("useUserPoints must be used within a UserPointsProvider");
   }
   return context;
 }
@@ -1900,7 +1916,14 @@ export function useUserPoints() {
 Create a points display component that shows the user's XP with a satisfying number animation:
 
 ```tsx src/app/user-center/points-center/points-center.tsx [expandable]
-import { Dialog, DialogTrigger, DialogContent, DialogHeader, DialogTitle, DialogDescription } from "@/components/ui/dialog";
+import {
+  Dialog,
+  DialogTrigger,
+  DialogContent,
+  DialogHeader,
+  DialogTitle,
+  DialogDescription,
+} from "@/components/ui/dialog";
 import { useUserPoints } from "@/contexts/UserPointsContext";
 import { useEffect, useState } from "react";
 import { Sparkle } from "lucide-react";
@@ -1925,7 +1948,7 @@ export default function PointsCenter() {
       <DialogTrigger>
         <div className="relative rounded-full h-10 border cursor-pointer">
           <div className="rounded-full bg-gray-50 text-sm font-semibold h-full flex items-center gap-1 px-3">
-            <Sparkle className={`size-4 ${isSpinning ? 'animate-spin' : ''}`} />
+            <Sparkle className={`size-4 ${isSpinning ? "animate-spin" : ""}`} />
             <NumberTicker
               value={points?.total || 0}
               startValue={lastPoints?.total || 0}
@@ -1942,9 +1965,7 @@ export default function PointsCenter() {
               Your XP
             </div>
           </DialogTitle>
-          <DialogDescription>
-            Keep studying to earn more XP
-          </DialogDescription>
+          <DialogDescription>Keep studying to earn more XP</DialogDescription>
         </DialogHeader>
         {/* Add points history chart, recent awards, etc. */}
       </DialogContent>
@@ -2015,14 +2036,14 @@ export async function getLeaderboard(
   limit?: number,
   offset?: number,
   userId?: string,
-  runDate?: string
+  runDate?: string,
 ): Promise<LeaderboardResponseWithRankings | null> {
   try {
     return await trophy.leaderboards.get(LEADERBOARD_KEY, {
       limit: limit || 10,
       offset: offset || 0,
       userId: userId || undefined,
-      run: runDate || undefined
+      run: runDate || undefined,
     });
   } catch (error) {
     console.error("Get leaderboard error:", error);
@@ -2033,10 +2054,13 @@ export async function getLeaderboard(
 /**
  * Get a specific user's leaderboard position and history
  */
-export async function getUserLeaderboard(userId: string, run?: string): Promise<UserLeaderboardResponseWithHistory | null> {
+export async function getUserLeaderboard(
+  userId: string,
+  run?: string,
+): Promise<UserLeaderboardResponseWithHistory | null> {
   try {
     return await trophy.users.leaderboard(userId, LEADERBOARD_KEY, {
-      run
+      run,
     });
   } catch (error) {
     console.error("Get user leaderboard error:", error);
@@ -2050,14 +2074,21 @@ export async function getUserLeaderboard(userId: string, run?: string): Promise<
 Create a leaderboard component that displays rankings with pagination:
 
 ```tsx src/app/leaderboard-center/leaderboard-center.tsx [expandable]
-import { Dialog, DialogTrigger, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog";
+import {
+  Dialog,
+  DialogTrigger,
+  DialogContent,
+  DialogHeader,
+  DialogTitle,
+} from "@/components/ui/dialog";
 import { useState, useEffect } from "react";
 import { getLeaderboard } from "@/app/actions";
 import { LeaderboardResponseWithRankings } from "@trophyso/node/api";
 
 export default function LeaderboardCenter() {
   const [open, setOpen] = useState(false);
-  const [leaderboard, setLeaderboard] = useState<LeaderboardResponseWithRankings | null>(null);
+  const [leaderboard, setLeaderboard] =
+    useState<LeaderboardResponseWithRankings | null>(null);
 
   useEffect(() => {
     if (open) {
@@ -2078,7 +2109,10 @@ export default function LeaderboardCenter() {
         </DialogHeader>
         <div className="space-y-2">
           {leaderboard?.rankings?.map((entry, index) => (
-            <div key={entry.userId} className="flex items-center justify-between p-3 rounded-lg bg-gray-50">
+            <div
+              key={entry.userId}
+              className="flex items-center justify-between p-3 rounded-lg bg-gray-50"
+            >
               <div className="flex items-center gap-3">
                 <span className="font-bold text-lg">#{index + 1}</span>
                 <span>{entry.userId}</span>
@@ -2102,6 +2136,7 @@ Energy (or "lives") systems are a proven retention mechanic that encourages user
 ### Setting Up Energy in Trophy
 
 Trophy's points system is flexible enough to handle energy mechanics. Create a new points system with the key `energy` and configure it with:
+
 - A maximum cap (e.g., 5 energy)
 - Automatic regeneration rules
 - Costs per action (e.g., -1 energy per flashcard session)
@@ -2128,10 +2163,12 @@ export async function getEnergySystem(): Promise<PointsSystemResponse | null> {
 /**
  * Get the current energy for a user
  */
-export async function getUserEnergy(userId: string): Promise<GetUserPointsResponse | null> {
+export async function getUserEnergy(
+  userId: string,
+): Promise<GetUserPointsResponse | null> {
   try {
     return await trophy.users.points(userId, ENERGY_SYSTEM_KEY, {
-      awards: 5
+      awards: 5,
     });
   } catch (error) {
     console.error("Get user energy error:", error);
@@ -2145,12 +2182,19 @@ export async function getUserEnergy(userId: string): Promise<GetUserPointsRespon
 Similar to points, create a context for managing energy state:
 
 ```tsx src/contexts/UserEnergyContext.tsx [expandable]
-'use client';
+"use client";
 
-import { createContext, useContext, useEffect, useState, ReactNode, useCallback } from 'react';
-import { GetUserPointsResponse } from '@trophyso/node/api';
-import { getUserEnergy } from '@/app/actions';
-import { getUserId } from '@/lib/user';
+import {
+  createContext,
+  useContext,
+  useEffect,
+  useState,
+  ReactNode,
+  useCallback,
+} from "react";
+import { GetUserPointsResponse } from "@trophyso/node/api";
+import { getUserEnergy } from "@/app/actions";
+import { getUserId } from "@/lib/user";
 
 interface UserEnergyContextType {
   energy: GetUserPointsResponse | null;
@@ -2158,7 +2202,9 @@ interface UserEnergyContextType {
   refetch: () => Promise<void>;
 }
 
-const UserEnergyContext = createContext<UserEnergyContextType | undefined>(undefined);
+const UserEnergyContext = createContext<UserEnergyContextType | undefined>(
+  undefined,
+);
 
 export function UserEnergyProvider({ children }: { children: ReactNode }) {
   const [energy, setEnergy] = useState<GetUserPointsResponse | null>(null);
@@ -2193,7 +2239,7 @@ export function UserEnergyProvider({ children }: { children: ReactNode }) {
 export function useUserEnergy() {
   const context = useContext(UserEnergyContext);
   if (context === undefined) {
-    throw new Error('useUserEnergy must be used within a UserEnergyProvider');
+    throw new Error("useUserEnergy must be used within a UserEnergyProvider");
   }
   return context;
 }
@@ -2217,7 +2263,7 @@ export default function EnergyCenter() {
       {Array.from({ length: maxEnergy }).map((_, i) => (
         <Zap
           key={i}
-          className={`size-5 ${i < currentEnergy ? 'text-yellow-500 fill-yellow-500' : 'text-gray-300'}`}
+          className={`size-5 ${i < currentEnergy ? "text-yellow-500 fill-yellow-500" : "text-gray-300"}`}
         />
       ))}
     </div>
@@ -2246,6 +2292,7 @@ Congrats! If you're reading this you made it to the end of the tutorial and buil
 For even more features like points history charts, leaderboard journey views, and additional UI polish, check out the [live demo](https://study.examples.trophy.so) and the [GitHub repo](https://github.com/trophyso/example-study-platform).
 
 You could also extend this further with:
+
 - **Challenges** - Create time-bound study challenges with Trophy's upcoming challenges feature
 - **Social features** - Let users compete with friends or study groups
 - **Rewards** - Integrate with gift card APIs to offer real prizes for top performers
