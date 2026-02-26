@@ -1,3 +1,9 @@
 ---
 openapi: webhook points.boost_finished
 ---
+
+<Note>
+  For boosts that apply to all users or a user group, events fire between 13:00-13:59 UTC the day following the end of a boost. This is because each boost is relative to each user's time zone, and users in the most delayed time zones must be given the chance to experience the whole duration of the boost.
+
+  For user-specific boosts (boost that only apply to one user), events fire at the exact boost finish time in that user's time zone.
+</Note>
