@@ -11,34 +11,36 @@ import MetricChangeResponseBlock from "/snippets/metric-change-response-block.md
 
 A streak is a period of consecutive days, weeks or months that a user has performed a key action on your platform. Streaks have been shown to meaningfully increase retention, particularly when the user action being tracked aligns with the core value of your product.
 
-<Tip>
-  Use Trophy's [metric analytics](/platform/metrics#metric-analytics) to compare
-  the retention of each user interaction, then configure streaks around these
-  interactions to maximize retention impact.
-</Tip>
-
-Streaks are **global** to your platform, meaning that each user has a single streak across all interactions. You can decide which [Metrics](/platform/metrics) should contribute a user's streak on the [streaks configure](https://staging-app.trophy.so/streaks/configure) page.
-
 ## Streak Frequency
 
-Streaks can be configured to be daily, weekly or monthly. This means that a user must increment a metric at least once every calendar day, week or month to maintain their streak.
+Streaks in Trophy can be **daily, weekly or monthly**. This means that a user must increment a metric at least once every calendar day, week or month to maintain their streak.
 
-Trophy will automatically compute streak data for all streak frequencies, which means you can change the frequency at any time while maintaining users' streaks. Just note that changing the frequency may be confusing for users, so best to communicate any changes ahead of time.
+If you've [configured time zones](/platform/users#param-tz) for your users, Trophy will automatically track each users's streak in their local time zone (including taking into account when users change time zones) and keep streaks in tact.
 
-## Streak Metrics
+<Note>
+Trophy automatically computes streak data for every streak frequency, meaning you can switch at any time.
+</Note>
 
-You can choose which metrics should contribute to a user's streak
+## Streak Conditions
 
-For example, if your platform is a language learning app, you might want to track a user's streak based on the number of lessons completed, while also tracking a metric for the number of words learned that doesn't affect streaks.
+In Trophy you can set the thresholds that a user must meet in order to extend their streak based on your configured [Metrics](/platform/metrics).
 
-In this case, you would configure the lessons completed metric to contribute to streaks but not the words learned metric.
+You can choose which metrics should be part of your streak, and for those that you chose, you can set a custom threshold that users must meet.
 
-<Callout intent="info">
-  Regardless of whether streaks are enabled or disabled, Trophy will still
-  compute all streak data. This means that you can enable streaks at any time
-  and all your users' streak status will be immediately available, going back
-  for as long as you've been using Trophy.
-</Callout>
+<Frame>
+  <img
+    height="200"
+    width="100%"
+    noZoom
+    src="../assets/platform/streaks/streak_config.png"
+  />
+</Frame>
+
+When combining metrics in this way, you can choose between two evaluation modes:
+- `ALL` means a user must meet every metric threshold to extend their streak
+- `OR` means a user only has to meet one of your metric thresholds to extend their streak
+
+In this way you can design your streak logic to match your application use case.
 
 ## Streak Freezes
 
@@ -47,9 +49,9 @@ Streak freezes help users keep their streaks for longer by allowing them to miss
 <Frame>
   <img
     height="200"
-    width="50%"
+    width="100%"
     noZoom
-    src="../assets/platform/streaks/freezes.png"
+    src="../assets/platform/streaks/freezes_config.png"
   />
 </Frame>
 
@@ -59,11 +61,8 @@ Streak freezes are optional in Trophy but can be configured on the [streaks page
 
 You can configure any number of arbitrary freezes to grant to new users when you first identify them with Trophy.
 
-Giving users too many freezes may decrease their perceived value, but granting too few freezes might result it a higher number of lost streaks.
-
 <Tip>
-  As a general rule of thumb, aim for the average user to have one or two
-  freezes in their account in any given period to create a balanced experience.
+Giving users too many freezes may decrease their perceived value, but granting too few freezes might result it a higher number of lost streaks. A good starting point is one freeze per user, but the trick is to experiment!
 </Tip>
 
 ### Freeze Accumulation
@@ -78,12 +77,13 @@ In Trophy you also configure the maximum number of freezes that each user can ha
 
 ## Tracking Streaks
 
-Trophy automatically calculates streaks for all users when users
-[increment a metric](/platform/events#tracking-metric-events). There's no extra work required of you to track streaks, and you can start using them right away. Just make sure that streaks are enabled in the Trophy dashboard.
+Trophy automatically calculates streaks for all users based on the [metric events](/platform/events#tracking-metric-events) you report to Trophy.
 
-<Frame>
-  <img height="200" noZoom src="../assets/quick-start/streak_configure.jpg" />
-</Frame>
+There's no extra work required to track streaks, and you can start using them right away. Just make sure that streaks are enabled in the Trophy dashboard.
+
+<Tip>
+For a full walkthrough on how to set up a streak feature using Trophy, check out our [official guide](/guides/how-to-build-a-streaks-feature).
+</Tip>
 
 ## Managing Streaks
 
@@ -92,6 +92,10 @@ This section outlines some of the operations you can perform to manage user's st
 ### Restoring A Users Streak
 
 To restore a user's streak, head to the user details page and use the 'Restore Streak' action. Restoring a user's streak sets it to the length it was when they last lost it.
+
+<Tip>
+You can also use the [restore streak admin API](/admin-api/endpoints/streaks/restore-streaks) to restore streaks programatically.
+</Tip>
 
 <Frame>
   <video
