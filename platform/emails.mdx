@@ -33,7 +33,7 @@ All emails are optional, but all four can be used simultaneously and can be cont
 
 ## Sending Emails
 
-To start sending emails with Trophy, you'll need to verify your domain and enable email triggers.
+To start sending emails with Trophy, you'll need to verify your domain and add and activate email templates for the types you want to send.
 
 <Tip>
   Users can control which email notifications they receive through Trophy's
@@ -218,11 +218,11 @@ Follow the steps below to set up DNS verification:
 
 ### Email Triggers
 
-You can manage email triggers on the [Email Configuration](https://app.trophy.so/emails/configure) page of the Trophy dashboard. There, you'll see a list of triggers that can be turned on or off:
+On the [email configuration](https://app.trophy.so/emails/configure) page, each email type has its own section. Add templates under the relevant type and activate one to start sending.
 
 #### Recap Emails
 
-The **Recap** trigger sends weekly or monthly progress reports to users. You can change the frequency of these emails on the [Integration](https://app.trophy.so/integration) page using the **Aggregation Period** setting.
+**Recap** emails send weekly or monthly progress reports to users. You can change the frequency of these emails on the [integration](https://app.trophy.so/integration) page using the **Aggregation Period** setting.
 
 <Frame>
   <img
@@ -235,7 +235,7 @@ The **Recap** trigger sends weekly or monthly progress reports to users. You can
 
 #### Reactivation Emails
 
-The **Reactivation** trigger sends win-back emails to users after they become inactive. These emails are sent according to the following timeline:
+**Reactivation** emails send win-back messages to users after they become inactive. These emails are sent according to the following timeline:
 
 - After 3 days of inactivity
 - After 5 days of inactivity
@@ -254,7 +254,7 @@ The **Reactivation** trigger sends win-back emails to users after they become in
 
 #### Streak Emails
 
-The **Streak** trigger sends an email to each user before their streak expires. These emails are sent according to the streak frequency you configured on the [Streaks page](https://app.trophy.so/streaks):
+**Streak** emails remind users to extend their streak before it expires. These emails are sent according to the streak frequency you configured on the [streaks page](https://app.trophy.so/streaks):
 
 - If your app uses a **daily streak**, this email will send four hours before the end of the day (in each user's timezone).
 - For **weekly streaks**, it will send on Friday morning.
@@ -271,7 +271,7 @@ The **Streak** trigger sends an email to each user before their streak expires. 
 
 #### Achievement Emails
 
-The **Achievement** trigger sends an email congratulating users when they complete an [achievements](/platform/achievements) you've configured in Trophy. These emails send between 5-9PM on the day the achievement is completed, or the next day at 5PM if it is past 9PM when the user completes the achievement.
+**Achievement** emails congratulate users when they complete an [achievement](/platform/achievements) you've configured in Trophy. These emails send between 5-9PM on the day the achievement is completed, or the next day at 5PM if it is past 9PM when the user completes the achievement.
 
 <Frame>
   <img
@@ -282,35 +282,18 @@ The **Achievement** trigger sends an email congratulating users when they comple
   />
 </Frame>
 
-#### Email Templates
-
-For each trigger, you can assign an **Email Template** that the trigger uses. You can leave this set to _Trophy Default_ or [design your own email templates](#designing-emails) right in the Trophy dashboard.
-
-<Frame>
-  <img
-    height="200"
-    width="100%"
-    noZoom
-    src="../assets/platform/emails/streak_trigger.png"
-  />
-</Frame>
-
-<Tip>
-  For **Achievement Emails**, you can configure a different template for each
-  type of achievement. For example, you could have a different template for API
-  achievements, streak achievements, and each metric with metric achievements.
-</Tip>
-
 #### Limiting Emails to Specific Types of Users
 
-Each email trigger can be limited to users with specific [custom user attribute](/platform/users#custom-user-attributes) values. For each attribute you'd like to restrict the email to, click the Plus icon next to the **User Filters** header for the email trigger, then select the attribute and enter the desired value. Only users that have **all** specified attribute values will receive emails from this trigger.
+Each email template can be limited to users with specific [custom user attribute](/platform/users#custom-user-attributes) values.
+
+For each attribute you'd like to restrict the email to, click the plus icon next to the **User Filters** header for the email template, then select the attribute and enter the desired value. Only users that have **all** specified attribute values will receive emails from this template.
 
 <Frame>
   <img
     height="200"
-    width="100%"
+    width="75%"
     noZoom
-    src="../assets/platform/emails/recap_trigger.png"
+    src="../assets/platform/emails/user_filters.png"
   />
 </Frame>
 
@@ -320,14 +303,7 @@ If you specify a timezone for each user through [User Identification](/platform/
 
 ## Designing Emails
 
-Trophy has a fully-featured block-based email builder that allows you to design templates, controlling all email copy and subject lines. Within the [Emails](https://app.trophy.so/emails/configure) page you can create templates and assign them to the 3 different [Email Types](#types-of-emails).
-
-<Tip>
-  When you create an email template, it can simultaneously be used across as
-  many email types as you want. So if you want your emails to be simple, just
-  having one email template might be enough. Otherwise, general best practice is
-  creating one template for each type of email you want to send.
-</Tip>
+Trophy has a fully-featured block-based email builder that allows you to design templates, controlling all email copy and subject lines. On the [emails](https://app.trophy.so/emails/configure) page, add templates under each [email type](#email-triggers) section you want to use.
 
 <Frame>
   <video
@@ -342,7 +318,7 @@ Trophy has a fully-featured block-based email builder that allows you to design 
 
 ### Default Templates
 
-By default, Trophy provides 3 email templates that are good starting points for the different [Email Types](#types-of-emails) that Trophy offers. The default templates can't be changed, but you can duplicate and customize these as you wish.
+By default, Trophy provides a template for each [email type](#types-of-emails) as a good starting point. The default templates can't be changed, but you can duplicate and customize these as you wish.
 
 <Tip>
   You can also create blank templates if you just want to start from scratch.
@@ -355,12 +331,10 @@ To create a new email template, follow the steps below.
 <Steps>
   <Step title="Head to the Emails page">
     Within the Emails page, you'll find the
-    [Configure](https://app.trophy.so/emails/configure) tab which is where all
-    your email templates live, as well as the configuration for deciding which
-    template to use for each type.
+    [Configure](https://app.trophy.so/emails/configure) tab, where each email type section contains its templates.
   </Step>
-  <Step title="Hit the Add Template button">
-    Choose an existing template to start from based on your use case, or create a new template from scratch.
+  <Step title="Add a template">
+    Click the *Add Template* button within the section for the email type you want to create a template for.
 
     <Frame>
       <img

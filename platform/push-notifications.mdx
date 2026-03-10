@@ -8,8 +8,6 @@ icon: bell
 import IdentifyUserWithDeviceTokensRequestBlock from "/snippets/identify-user-with-device-tokens-request-block.mdx";
 import MetricEventWithDeviceTokensRequestBlock from "/snippets/metric-event-with-device-tokens-request-block.mdx";
 
-<Note>This feature is currently **in beta** and is subject to change.</Note>
-
 Trophy can send automated push notifications to users based on key triggers without requiring any code. Here we’ll look at what these triggers are, and how they can form part of your product’s gamification experience.
 
 ## Types Of Push Notifications
@@ -132,25 +130,21 @@ Follow the steps below to start sending push notifications using Trophy.
 </Frame>
 
   </Step>
-  <Step title="Create templates">
+  <Step title="Add templates">
     Trophy provides a default template for each [type of push notification](#types-of-push-notifications) that Trophy supports.
 
-    However if you wish to customise the push notifications sent to users for each triggers, you can duplicate and modify these, or create new templates from scratch on the [configure page](https://app.trophy.so/push/configure).
-
+    On the [configure page](https://app.trophy.so/push/configure), each notification type has its own section. Add templates under the relevant type.
+    
     Follow the guide on [designing push notifications](#designing-push-notifications) to learn more.
 
     <Frame>
-    <video
-    autoPlay
-    muted
-    loop
-    playsInline
-    className="w-full aspect-15/4"
-    src="../assets/platform/push/create_push_template.mp4"
-
-> </video>
-
-</Frame>
+      <img
+        height="200"
+        width="100%"
+        noZoom
+        src="../assets/platform/push/create_push_template.png"
+      />
+    </Frame>
 
   </Step>
   <Step title="Associate device tokens">
@@ -173,12 +167,10 @@ Follow the steps below to start sending push notifications using Trophy.
     </Tip>
 
 </Step>
-  <Step title="Enable triggers">
-    The last step is to enable the [types of push notifications](#types-of-push-notifications) that you want to send and to choose the template that should be used for each.
+  <Step title="Activate templates">
+    The last step is to activate a template within each [type of push notification](#types-of-push-notifications) section that you want to send.
 
-    Head to the [configure page](https://app.trophy.so/push/configure) and enable each type of trigger that you want to use, and select the template that each trigger should use.
-
-    Once enabled, Trophy will start sending push notifications automatically.
+    On the [configure page](https://app.trophy.so/push/configure), activate one template in each type section you want to enable. Once activated, Trophy will start sending push notifications automatically.
 
     <Tip>
       Users can control which push notification types they receive through Trophy's [user preferences API](/platform/users#notification-preferences). When a user has disabled a notification type in their preferences, Trophy will respect that setting and won't send those notifications to that user.
@@ -192,7 +184,7 @@ Follow the steps below to start sending push notifications using Trophy.
     loop
     playsInline
     className="w-full aspect-15/4"
-    src="../assets/platform/push/enabling_push_triggers.mp4"
+    src="../assets/platform/push/activating_templates.mp4"
   ></video>
 </Frame>
 
@@ -201,7 +193,7 @@ Follow the steps below to start sending push notifications using Trophy.
 
 ## Designing Push Notifications
 
-By default, Trophy provides 3 templates that are good starting points for the different [types of push notifications](#types-of-push-notifications) that Trophy supports. The default templates can’t be changed, but you can duplicate and customize these as you wish.
+By default, Trophy provides a template for each [type of push notification](#types-of-push-notifications) as a good starting point. The default templates can’t be changed, but you can duplicate and customize these as you wish.
 
 <Tip>
   You can also create blank templates if you just want to start from scratch.

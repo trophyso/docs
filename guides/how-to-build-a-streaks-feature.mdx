@@ -44,11 +44,15 @@ In the Trophy dashboard, head to the [metrics page](https://app.trophy.so/metric
   ></video>
 </Frame>
 
-Once you've created your metric, head to the [streaks page](https://app.trophy.so/streaks/configure) and select the streak frequency you want (daily, weekly or monthly). Then select the metric you created in the dropdown.
+Once you've created your metric, head to the [streaks page](https://app.trophy.so/streaks/configure) and select the streak frequency you want (daily, weekly or monthly).
+
+Then add your metric to the streak conditions and set the threshold users must meet (e.g. at least 1 to extend their streak each period).
+
+You can also add multiple metrics and choose whether users must meet all of them or just one—see the [streak conditions docs](/platform/streaks#streak-conditions) for details.
 
 In Trophy you track user interactions by sending [Events](/platform/events) from your code to Trophy APIs against a specific metric.
 
-When events are recorded for a specific user, Trophy will automatically check if the event is against a metric that is selected in your streak settings and update the user's streak accordingly.
+When events are recorded for a specific user, Trophy will automatically check whether they've met their streak conditions for the current period and update the user's streak accordingly.
 
 This is what makes building gamified experiences with Trophy so easy, it does all the work for you behind the scenes.
 
