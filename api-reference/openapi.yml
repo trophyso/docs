@@ -1,7 +1,7 @@
 openapi: 3.1.0
 info:
   title: Trophy
-  version: '1.1.0'
+  version: '1.1.2'
 paths:
   # APPLICATION API -------------------------------------------------------
 
@@ -4711,7 +4711,7 @@ components:
           description: The name of this achievement.
         trigger:
           type: string
-          enum: ['metric', 'streak', 'api']
+          enum: ['metric', 'streak', 'api', 'achievement']
           description: The trigger of the achievement.
         description:
           type:
@@ -4731,6 +4731,11 @@ components:
         streakLength:
           type: integer
           description: The length of the streak required to complete the achievement (only applicable if trigger = 'streak')
+        achievementIds:
+          type: array
+          items:
+            type: string
+          description: The IDs of the prerequisite achievements that must be completed to earn this achievement (only applicable if trigger = 'achievement')
         metricId:
           type: string
           description: The ID of the metric associated with this achievement (only applicable if trigger = 'metric')
