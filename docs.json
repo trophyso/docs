@@ -147,6 +147,8 @@
             "pages": [
               "api-reference/endpoints/points/get-points",
               "api-reference/endpoints/points/get-points-boosts",
+              "api-reference/endpoints/points/get-points-levels",
+              "api-reference/endpoints/points/get-points-level-summary",
               "api-reference/endpoints/points/get-points-summary"
             ]
           },
@@ -238,6 +240,7 @@
             "group": "Points",
             "pages": [
               "webhooks/events/points/points-changed",
+              "webhooks/events/points/points-level-changed",
               "webhooks/events/points/points-boost-started",
               "webhooks/events/points/points-boost-finished"
             ]

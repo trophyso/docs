@@ -247,6 +247,16 @@ Here's how we'll configure Trophy for our fitness app:
       src="../assets/guides/example-apps/example-fitness-app/points-triggers.png"
     />
   </Frame>
+
+  Then configure **[Points Levels](/platform/points#points-levels)** on the same `xp` system so Trophy can track each user's tier. Use the keys and thresholds below so the code in this guide lines up with your dashboard:
+
+  | Name    | Key       | Points threshold |
+  | ------- | --------- | ---------------- |
+  | Rookie  | `rookie`  | 0                |
+  | Active  | `active`  | 100              |
+  | Mover   | `mover`   | 500              |
+  | Athlete | `athlete` | 2500             |
+  | Pro     | `pro`     | 10000            |
 </Accordion>
 
 <Accordion title="Configure daily streak" icon="flame">
@@ -303,23 +313,24 @@ export async function updateUserCity(userId: string, city: string) {
 export async function getUserStats(userId: string) {
   try {
     // Fetch all user data in parallel
-    const [streak, achievements, metrics] = await Promise.all([
-      trophy.users.streak(userId).catch(() => null),
-      trophy.users
-        .achievements(userId, { includeIncomplete: "true" })
-        .catch(() => []),
-      trophy.users.allMetrics(userId).catch(() => []),
-    ]);
+    const [streak, achievements, metrics, pointsResponse, pointsLevels] =
+      await Promise.all([
+        trophy.users.streak(userId).catch(() => null),
+        trophy.users
+          .achievements(userId, { includeIncomplete: "true" })
+          .catch(() => []),
+        trophy.users.allMetrics(userId).catch(() => []),
+        trophy.users.points(userId, "xp").catch(() => null),
+        trophy.points.levels("xp").catch(() => []),
+      ]);
 
-    // Try to get points (XP)
-    let pointsResponse = null;
-    try {
-      pointsResponse = await trophy.users.points(userId, "xp");
-    } catch {
-      // Points system might not be configured yet
-    }
-
-    return { streak, achievements, points: pointsResponse, metrics };
+    return {
+      streak,
+      achievements,
+      points: pointsResponse,
+      pointsLevels,
+      metrics,
+    };
   } catch (error) {
     console.error("Failed to fetch user stats:", error);
     return null;
@@ -448,55 +459,87 @@ export async function getUserIdFromCookies() {
 
 ## The Leveling System
 
-To normalize progress across different sports, we'll map XP to Levels locally. Create `src/lib/constants.ts`:
+Trophy stores each user's tier on the `xp` points system when you configure [Points Levels](/platform/points#points-levels). The [user points](/api-reference/endpoints/users/get-a-users-points) payload includes a `level` object. The [list levels API](/api-reference/endpoints/points/get-points-levels) returns every tier and threshold so you can show progress toward the next one.
+
+Add a small helper next to your app constants in `src/lib/constants.ts`:
 
 ```tsx src/lib/constants.ts
-export const LEVELS = [
-  { level: 1, xpThreshold: 0, name: "Rookie" },
-  { level: 2, xpThreshold: 100, name: "Active" },
-  { level: 3, xpThreshold: 500, name: "Mover" },
-  { level: 4, xpThreshold: 2500, name: "Athlete" },
-  { level: 5, xpThreshold: 10000, name: "Pro" },
-] as const;
+export type ActivityType = "run" | "cycle" | "swim";
 
-export function getLevelInfo(xp: number) {
-  // Find current level based on XP
-  let currentLevelIndex = 0;
-  for (let i = LEVELS.length - 1; i >= 0; i--) {
-    if (xp >= LEVELS[i].xpThreshold) {
-      currentLevelIndex = i;
-      break;
+/** Shape of a level from Trophy (`GET /points/{key}/levels`). */
+export type TrophyPointsLevel = {
+  id: string;
+  key: string;
+  name: string;
+  description: string | null;
+  badgeUrl: string | null;
+  points: number;
+};
+
+/**
+ * Derive progress from Trophy totals + levels. Prefer `currentLevel` from the user
+ * points API when present; otherwise infer from `total` and threshold order.
+ */
+export function getLevelProgress(
+  total: number,
+  levels: TrophyPointsLevel[],
+  currentLevel: TrophyPointsLevel | null | undefined,
+) {
+  const sorted = [...levels].sort((a, b) => a.points - b.points);
+  if (sorted.length === 0) {
+    return {
+      currentLevel: null as TrophyPointsLevel | null,
+      tierNumber: null as number | null,
+      nextLevel: null as TrophyPointsLevel | null,
+      progressToNextLevel: 0,
+      xpToNext: null as number | null,
+    };
+  }
+
+  let current = currentLevel ?? null;
+  if (!current) {
+    for (let i = sorted.length - 1; i >= 0; i--) {
+      if (total >= sorted[i].points) {
+        current = sorted[i];
+        break;
+      }
     }
   }
 
-  const currentLevel = LEVELS[currentLevelIndex];
+  const idx = current != null ? sorted.findIndex((l) => l.key === current.key) : -1;
+  const tierNumber = idx >= 0 ? idx + 1 : null;
   const nextLevel =
-    currentLevelIndex < LEVELS.length - 1
-      ? LEVELS[currentLevelIndex + 1]
-      : null;
+    idx >= 0 && idx < sorted.length - 1 ? sorted[idx + 1] : null;
 
-  // Calculate progress %
-  const xpInCurrentLevel = xp - currentLevel.xpThreshold;
-  const xpRequiredForNextLevel = nextLevel
-    ? nextLevel.xpThreshold - currentLevel.xpThreshold
-    : 0;
-  const progressToNextLevel = nextLevel
-    ? (xpInCurrentLevel / xpRequiredForNextLevel) * 100
-    : 100;
+  let progressToNextLevel = 100;
+  let xpToNext: number | null = null;
+
+  if (nextLevel != null && current != null) {
+    const span = nextLevel.points - current.points;
+    const into = total - current.points;
+    progressToNextLevel =
+      span > 0 ? Math.min(100, Math.max(0, (into / span) * 100)) : 100;
+    xpToNext = Math.max(0, nextLevel.points - total);
+  } else if (nextLevel != null && current == null) {
+    const span = nextLevel.points;
+    progressToNextLevel =
+      span > 0 ? Math.min(100, Math.max(0, (total / span) * 100)) : 0;
+    xpToNext = Math.max(0, nextLevel.points - total);
+  }
 
   return {
-    currentLevel,
+    currentLevel: current,
+    tierNumber,
     nextLevel,
     progressToNextLevel,
-    xpInCurrentLevel,
-    xpRequiredForNextLevel,
+    xpToNext,
   };
 }
 ```
 
 ## Building the Dashboard
 
-The dashboard aggregates all user stats. We fetch data server-side and calculate the level progress before rendering.
+The dashboard aggregates all user stats. We fetch data server-side and derive progress bars from thresholds returned by the API.
 
 ```tsx src/app/page.tsx [expandable]
 import {
@@ -504,7 +547,7 @@ import {
   getUserIdFromCookies,
   getRecentActivities,
 } from "./actions";
-import { getLevelInfo } from "@/lib/constants";
+import { getLevelProgress } from "@/lib/constants";
 import {
   Zap,
   Flame,
@@ -528,7 +571,11 @@ export default async function Dashboard() {
 
   const streakLength = stats?.streak?.length ?? 0;
   const totalXP = stats?.points?.total ?? 0;
-  const levelInfo = getLevelInfo(totalXP);
+  const levelProgress = getLevelProgress(
+    totalXP,
+    stats?.pointsLevels ?? [],
+    stats?.points?.level,
+  );
 
   // Helper to get total for a metric key
   const getMetricTotal = (key: string) =>
@@ -548,20 +595,21 @@ export default async function Dashboard() {
             </div>
             <div>
               <div className="text-sm text-muted-foreground">
-                Level {levelInfo.currentLevel.level}
+                {levelProgress.tierNumber != null
+                  ? `Level ${levelProgress.tierNumber}`
+                  : "Level"}
               </div>
               <div className="font-semibold text-lg">
-                {levelInfo.currentLevel.name}
+                {levelProgress.currentLevel?.name ?? "XP"}
               </div>
             </div>
           </div>
-          <Progress value={levelInfo.progressToNextLevel} className="h-2" />
+          <Progress value={levelProgress.progressToNextLevel} className="h-2" />
           <div className="flex justify-between text-xs text-muted-foreground">
             <span>{totalXP} XP</span>
-            {levelInfo.nextLevel && (
+            {levelProgress.nextLevel != null && levelProgress.xpToNext != null && (
               <span>
-                {levelInfo.xpRequiredForNextLevel - levelInfo.xpInCurrentLevel}{" "}
-                XP to {levelInfo.nextLevel.name}
+                {levelProgress.xpToNext} XP to {levelProgress.nextLevel.name}
               </span>
             )}
           </div>
@@ -1075,7 +1123,7 @@ Finally, the profile page brings it all together. It shows the user's "Lifetime 
 
 ```tsx src/app/profile/page.tsx [expandable]
 import { getUserStats, getUserIdFromCookies } from "@/app/actions";
-import { getLevelInfo } from "@/lib/constants";
+import { getLevelProgress } from "@/lib/constants";
 import { Avatar, AvatarFallback } from "@/components/ui/avatar";
 import { Card, CardContent } from "@/components/ui/card";
 import { Progress } from "@/components/ui/progress";
@@ -1084,7 +1132,11 @@ import { CitySetting } from "@/components/city-setting";
 export default async function ProfilePage() {
   const userId = await getUserIdFromCookies();
   const stats = await getUserStats(userId ?? "");
-  const levelInfo = getLevelInfo(stats?.points?.total ?? 0);
+  const levelProgress = getLevelProgress(
+    stats?.points?.total ?? 0,
+    stats?.pointsLevels ?? [],
+    stats?.points?.level,
+  );
 
   // Helper to safely get metric totals
   const getTotal = (key: string) =>
@@ -1101,7 +1153,7 @@ export default async function ProfilePage() {
         </Avatar>
         <h1 className="text-xl font-bold">Athlete Profile</h1>
         <div className="text-primary font-medium">
-          {levelInfo.currentLevel.name}
+          {levelProgress.currentLevel?.name ?? "Athlete"}
         </div>
       </div>
 
@@ -1116,7 +1168,7 @@ export default async function ProfilePage() {
               {stats?.points?.total ?? 0} XP
             </span>
           </div>
-          <Progress value={levelInfo.progressToNextLevel} className="h-2" />
+          <Progress value={levelProgress.progressToNextLevel} className="h-2" />
         </CardContent>
       </Card>
 
@@ -1146,7 +1198,7 @@ export default async function ProfilePage() {
 
 ## The Result
 
-You now have a fully functional fitness gamification loop! Users can log workouts across multiple sports, level up their profile, earn badges, and compete on leaderboards.
+You now have a fully functional fitness gamification loop! Users can log workouts across multiple sports, progress through points levels, earn badges, and compete on leaderboards.
 
 <Frame>
   <video

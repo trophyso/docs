@@ -1,7 +1,7 @@
 openapi: 3.1.0
 info:
   title: Trophy
-  version: '1.1.2'
+  version: '1.2.0'
 paths:
   # APPLICATION API -------------------------------------------------------
 
@@ -338,6 +338,13 @@ paths:
                         description: null
                         badgeUrl: null
                         total: 10
+                        level:
+                          id: 1140fe51-6bce-4b44-b0ad-bddc4e123534
+                          key: bronze
+                          name: Bronze
+                          description: Starting level
+                          badgeUrl: null
+                          points: 0
                         added: 10
                         awards:
                           - id: 0040fe51-6bce-4b44-b0ad-bddc4e123534
@@ -1773,6 +1780,13 @@ paths:
                     badgeUrl: null
                     maxPoints: null
                     total: 100
+                    level:
+                      id: 1140fe51-6bce-4b44-b0ad-bddc4e123534
+                      key: silver
+                      name: Silver
+                      description: Mid-tier level
+                      badgeUrl: null
+                      points: 50
                     awards:
                       - id: 0040fe51-6bce-4b44-b0ad-bddc4e123534
                         awarded: 10
@@ -2675,6 +2689,176 @@ paths:
               schema:
                 $ref: '#/components/schemas/ErrorBody'
       summary: Get boosts for a points system
+      security:
+        - ApiKeyAuth: []
+  /points/{key}/levels:
+    servers:
+      - url: https://api.trophy.so/v1
+        description: Application API
+    get:
+      description: Get all levels for a points system.
+      operationId: points_levels
+      x-fern-server-name: api
+      tags:
+        - Points
+      x-codeSamples:
+        - lang: javascript
+          source: |
+            import { TrophyApiClient } from '@trophyso/node';
+
+            const trophy = new TrophyApiClient({
+              apiKey: 'YOUR_API_KEY'
+            });
+
+            const response = await trophy.points.levels("points-system-key");
+        - lang: python
+          source: |
+            from trophy import TrophyApi
+
+            client = TrophyApi(api_key='YOUR_API_KEY')
+
+            response = client.points.levels(key="points-system-key")
+      parameters:
+        - name: key
+          in: path
+          description: Key of the points system.
+          required: true
+          schema:
+            type: string
+          example: points-system-key
+      responses:
+        '200':
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/PointsLevel'
+              examples:
+                Successful operation:
+                  value:
+                    - id: 1140fe51-6bce-4b44-b0ad-bddc4e123534
+                      key: bronze
+                      name: Bronze
+                      description: Starting level
+                      badgeUrl: https://example.com/bronze.png
+                      points: 0
+                    - id: 2240fe51-6bce-4b44-b0ad-bddc4e123534
+                      key: silver
+                      name: Silver
+                      description: Mid-tier level
+                      badgeUrl: null
+                      points: 50
+                    - id: 3340fe51-6bce-4b44-b0ad-bddc4e123534
+                      key: gold
+                      name: Gold
+                      description: Top level
+                      badgeUrl: https://example.com/gold.png
+                      points: 200
+        '401':
+          description: 'Unauthorized'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorBody'
+        '404':
+          description: 'Points system not found'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorBody'
+      summary: Get levels for a points system
+      security:
+        - ApiKeyAuth: []
+  /points/{key}/level-summary:
+    servers:
+      - url: https://api.trophy.so/v1
+        description: Application API
+    get:
+      description: Get a breakdown of the number of users at each level in a points system.
+      operationId: points_level_summary
+      x-fern-server-name: api
+      tags:
+        - Points
+      x-codeSamples:
+        - lang: javascript
+          source: |
+            import { TrophyApiClient } from '@trophyso/node';
+
+            const trophy = new TrophyApiClient({
+              apiKey: 'YOUR_API_KEY'
+            });
+
+            const response = await trophy.points.levelSummary("points-system-key");
+        - lang: python
+          source: |
+            from trophy import TrophyApi
+
+            client = TrophyApi(api_key='YOUR_API_KEY')
+
+            response = client.points.level_summary(key="points-system-key")
+      parameters:
+        - name: key
+          in: path
+          description: Key of the points system.
+          required: true
+          schema:
+            type: string
+          example: points-system-key
+      responses:
+        '200':
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PointsLevelSummaryResponse'
+              examples:
+                Successful operation:
+                  value:
+                    - level:
+                        id: 1140fe51-6bce-4b44-b0ad-bddc4e123534
+                        key: bronze
+                        name: Bronze
+                        description: Starting level
+                        badgeUrl: https://example.com/bronze.png
+                        points: 0
+                      users: 5012
+                    - level:
+                        id: 2240fe51-6bce-4b44-b0ad-bddc4e123534
+                        key: silver
+                        name: Silver
+                        description: Mid-tier level
+                        badgeUrl: null
+                        points: 50
+                      users: 1501
+                    - level:
+                        id: 3340fe51-6bce-4b44-b0ad-bddc4e123534
+                        key: gold
+                        name: Gold
+                        description: Top level
+                        badgeUrl: https://example.com/gold.png
+                        points: 200
+                      users: 102
+        '401':
+          description: 'Unauthorized'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorBody'
+        '404':
+          description: 'Points system not found'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorBody'
+        '422':
+          description: 'No levels configured on the points system'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorBody'
+      summary: Get level summary for a points system
       security:
         - ApiKeyAuth: []
   /leaderboards:
@@ -3827,6 +4011,90 @@ webhooks:
       responses:
         '200':
           description: Return a 200 status to indicate the webhook was received and processed.
+  points.level_changed:
+    post:
+      summary: Points level changed
+      operationId: webhooks_points_level_changed
+      description: Triggered when a user's level changes within a points system as a result of earning or losing points.
+      requestBody:
+        description: The webhook event.
+        content:
+          application/json:
+            schema:
+              properties:
+                type:
+                  type: string
+                  enum: ['points.level_changed']
+                  description: The webhook event type.
+                user:
+                  $ref: '#/components/schemas/User'
+                  description: The user whose level changed.
+                points:
+                  description: The points system in which the level changed.
+                  allOf:
+                    - $ref: '#/components/schemas/PointsResponse'
+                    - type: object
+                      properties:
+                        total:
+                          type: integer
+                          description: The user's total points in this system.
+                      required:
+                        - total
+                previousLevel:
+                  description: The user's previous level, or null if the user had no level.
+                  oneOf:
+                    - $ref: '#/components/schemas/PointsLevel'
+                    - type: 'null'
+                newLevel:
+                  description: The user's new level, or null if the user no longer has a level.
+                  oneOf:
+                    - $ref: '#/components/schemas/PointsLevel'
+                    - type: 'null'
+              required:
+                - type
+                - user
+                - points
+                - previousLevel
+                - newLevel
+            examples:
+              Level changed:
+                value:
+                  type: points.level_changed
+                  user:
+                    id: user-id
+                    email: user@example.com
+                    tz: Europe/London
+                    subscribedToEmails: true
+                    created: '2021-01-01T00:00:00Z'
+                    updated: '2021-01-01T00:00:00Z'
+                    attributes:
+                      department: engineering
+                      role: developer
+                  points:
+                    id: 0040fe51-6bce-4b44-b0ad-bddc4e123534
+                    key: xp
+                    name: XP
+                    description: Experience points
+                    badgeUrl: null
+                    maxPoints: null
+                    total: 100
+                  previousLevel:
+                    id: 1140fe51-6bce-4b44-b0ad-bddc4e123534
+                    key: bronze
+                    name: Bronze
+                    description: Starting level
+                    badgeUrl: https://example.com/bronze.png
+                    points: 0
+                  newLevel:
+                    id: 2240fe51-6bce-4b44-b0ad-bddc4e123534
+                    key: silver
+                    name: Silver
+                    description: Mid-tier level
+                    badgeUrl: null
+                    points: 50
+      responses:
+        '200':
+          description: Return a 200 status to indicate the webhook was received and processed.
   points.boost_started:
     post:
       summary: Points boost started
@@ -4446,9 +4714,10 @@ components:
         - end
         - multiplier
         - rounding
-    GetUserPointsResponse:
-      title: GetUserPointsResponse
+    PointsResponse:
+      title: PointsResponse
       type: object
+      description: Base points system fields shared across responses.
       properties:
         id:
           type: string
@@ -4474,14 +4743,6 @@ components:
             - number
             - 'null'
           description: The maximum number of points a user can be awarded in this points system
-        total:
-          type: integer
-          description: The user's total points
-        awards:
-          type: array
-          description: Array of trigger awards that added points.
-          items:
-            $ref: '#/components/schemas/PointsAward'
       required:
         - id
         - key
@@ -4489,8 +4750,77 @@ components:
         - description
         - badgeUrl
         - maxPoints
-        - total
-        - awards
+    GetUserPointsResponse:
+      title: GetUserPointsResponse
+      type: object
+      allOf:
+        - $ref: '#/components/schemas/PointsResponse'
+        - type: object
+          properties:
+            total:
+              type: integer
+              description: The user's total points
+            level:
+              description: The user's current level in this points system, or null if no levels are configured or the user hasn't reached any level yet.
+              oneOf:
+                - $ref: '#/components/schemas/PointsLevel'
+                - type: 'null'
+            awards:
+              type: array
+              description: Array of trigger awards that added points.
+              items:
+                $ref: '#/components/schemas/PointsAward'
+          required:
+            - total
+            - level
+            - awards
+    PointsLevelSummaryResponse:
+      title: PointsLevelSummaryResponse
+      type: array
+      description: A breakdown of users by level in a points system.
+      items:
+        type: object
+        properties:
+          level:
+            $ref: '#/components/schemas/PointsLevel'
+          users:
+            type: integer
+            description: The number of users currently at this level
+        required:
+          - level
+          - users
+    PointsLevel:
+      title: PointsLevel
+      type: object
+      description: A level within a points system.
+      properties:
+        id:
+          type: string
+          description: The ID of the level
+        key:
+          type: string
+          description: The unique key of the level
+        name:
+          type: string
+          description: The name of the level
+        description:
+          type: string
+          description: The description of the level
+        badgeUrl:
+          type:
+            - string
+            - 'null'
+          description: The URL of the badge image for the level
+        points:
+          type: integer
+          description: The points threshold required to reach this level
+      required:
+        - id
+        - key
+        - name
+        - description
+        - badgeUrl
+        - points
     LeaderboardResponse:
       title: LeaderboardResponse
       type: object
@@ -4606,54 +4936,32 @@ components:
     MetricEventPointsResponse:
       title: MetricEventPointsResponse
       type: object
-      description: Points system response for metric events.
-      properties:
-        id:
-          type: string
-          description: The ID of the points system
-        key:
-          type: string
-          description: The key of the points system
-        name:
-          type: string
-          description: The name of the points system
-        description:
-          type:
-            - string
-            - 'null'
-          description: The description of the points system
-        badgeUrl:
-          type:
-            - string
-            - 'null'
-          description: The URL of the badge image for the points system
-        maxPoints:
-          type:
-            - number
-            - 'null'
-          description: The maximum number of points a user can be awarded in this points system
-        total:
-          type: integer
-          description: The user's total points
-        added:
-          type: integer
-          description: The points added by this event.
-          example: 10
-        awards:
-          type: array
-          description: Array of trigger awards that added points.
-          items:
-            $ref: '#/components/schemas/PointsAward'
-      required:
-        - id
-        - key
-        - name
-        - description
-        - badgeUrl
-        - maxPoints
-        - total
-        - added
-        - awards
+      description: Points system response for metric events and achievement completions.
+      allOf:
+        - $ref: '#/components/schemas/PointsResponse'
+        - type: object
+          properties:
+            total:
+              type: integer
+              description: The user's total points
+            level:
+              description: The user's new level, included only when the level changed as a result of this event.
+              oneOf:
+                - $ref: '#/components/schemas/PointsLevel'
+                - type: 'null'
+            added:
+              type: integer
+              description: The points added by this event.
+              example: 10
+            awards:
+              type: array
+              description: Array of trigger awards that added points.
+              items:
+                $ref: '#/components/schemas/PointsAward'
+          required:
+            - total
+            - added
+            - awards
     MetricEventLeaderboardResponse:
       title: MetricEventLeaderboardResponse
       type: object
