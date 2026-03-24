@@ -121,10 +121,10 @@ To create new achievements, head to the [achievements page](https://app.trophy.s
   appropriate.
 </Step>
 
-<Step title="Upload a badge (Optional)">
-  You can upload and assign a badge to the achievement that will be returned in
-  API responses and made available in emails and other areas of Trophy where
-  appropriate.
+<Step title="Add a badge (Optional)">
+  You can add a badge by uploading an image or by entering a custom image URL.
+  The URL is returned in API responses and used in emails and other areas of
+  Trophy where appropriate.
 </Step>
 
 <Step title="Choose a trigger type">
@@ -297,7 +297,7 @@ You can check how many users have completed achievements at any time on the [ach
   ></video>
 </Frame>
 
-A badge can be uploaded and assigned to any achievement in Trophy. Trophy will host the image for you and return the URL back to you in relevant API responses to be used as the `src` property in `<img>` tags.
+You can assign a badge to any achievement by uploading an image—Trophy serves it and returns the URL—or by providing your own image URL. Relevant API responses include that value in `badgeUrl` for use as the `src` on `<img>` tags.
 
 ```json Response {8}
 {
