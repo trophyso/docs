@@ -336,9 +336,7 @@ Most teams combine three approaches: a static picture of every level (for progre
 
 Call the [get levels API](/api-reference/endpoints/points/get-points-levels) once per points system key (for example on app load or from your server when rendering a progression page).
 
-The response is an array of levels with `key`, `name`, `description`, optional `badgeUrl`, and the `points` threshold for each level and represents stable configuration based on your Trophy points system.
-
-Binding UI to this response will ensure it automatically updates as your levels evolve in Trophy.
+The response is an array of levels with `key`, `name`, `description`, optional `badgeUrl`, and the `points` threshold for each level. By binding your UI to the Trophy API response, you'll ensure that it automatically updates when you make changes to levels in the Trophy dashboard.
 
 <PointsLevelsListResponse />
 
