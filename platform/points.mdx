@@ -292,13 +292,13 @@ Simply choose your preferred rounding mode when [creating boosts](/platform/poin
 
 Points levels are discrete milestones you define on a points system in Trophy.
 
-Each level has a threshold that when a user's total points in that system reaches (through the [points triggers](#points-triggers) you configure), Trophy assigns them that level automatically. You do not need to maintain tier logic in your own codebase.
+Each level has a threshold. When a user's total points in the system exceeds this threshold, Trophy assigns them that level automatically. You do not need to maintain level logic in your own codebase.
 
-Use levels for rank tiers, progression UI, messaging when someone advances, or analytics. Trophy keeps each user's current level in sync whenever they earn or lose points in that system.
+Use levels for rank tiers, progression UI, reward tiers, or analytics. Trophy keeps each user's current level in sync whenever they earn or lose points in that system.
 
 ### Configuring levels
 
-To set up levels for a points system, open it from the [points page](https://app.trophy.so/points) in the Trophy dashboard and use the levels tab add manage levels.
+To set up levels for a points system, open it from the [points page](https://app.trophy.so/points) in the Trophy dashboard and use the levels tab to add or manage levels.
 
 <Frame>
   <video
@@ -330,21 +330,21 @@ To set up levels for a points system, open it from the [points page](https://app
 
 ### Displaying Levels
 
-Most teams combine three pieces: a static picture of every tier (for progression screens), the user’s current tier (for headers and profile), and immediate feedback when an action pushes them into a new tier.
+Most teams combine three approaches: a static picture of every level (for progression screens), the user’s current level (for headers and profile), and immediate feedback when an action pushes them into a new level.
 
 #### Displaying All Levels
 
 Call the [get levels API](/api-reference/endpoints/points/get-points-levels) once per points system key (for example on app load or from your server when rendering a progression page).
 
-The response is an array of levels with `key`, `name`, `description`, optional `badgeUrl`, and the `points` threshold for each tier. Sort by `points` ascending in your client if you want a clear ladder from lowest to highest threshold.
+The response is an array of levels with `key`, `name`, `description`, optional `badgeUrl`, and the `points` threshold for each level and represents stable configuration based on your Trophy points system.
 
-The data represents stable configuration based on your Trophy points system so binding UI to this will ensure it automatically updates as your levels evolve in Trophy:
+Binding UI to this response will ensure it automatically updates as your levels evolve in Trophy.
 
 <PointsLevelsListResponse />
 
 #### Displaying User Level
 
-The [user points API](/api-reference/endpoints/users/get-a-users-points) returns the user’s `total`, their current `level` object, and recent `awards`. The `level` field is the tier Trophy has computed for them right now, or `null` if levels are not configured on that system or they have not reached a tier yet.
+The [user points API](/api-reference/endpoints/users/get-a-users-points) returns the user’s `total`, their current `level` object, and recent `awards`. The `level` field contains the user's current level, or null if no levels exist or they have not reached the points threshold for any level yet.
 
 Pair `total` with the ordered level list from the previous step to draw a progress bar between the current threshold and the next.
 
@@ -354,7 +354,7 @@ Pair `total` with the ordered level list from the previous step to draw a progre
 
 When you send a [metric change event](/api-reference/endpoints/metrics/send-a-metric-change-event), the response will include a `points` map keyed by your points system keys for each system that changed as a result of the event.
 
-The data contains a `level` key only when the user’s tier changed because of this event. If their tier stayed the same, that key is omitted, so you can safely treat a present `level` as a level-up (or tier change) signal without extra bookkeeping.
+The data contains a `level` key only when the user’s level changed because of this event. If their level stayed the same, that key is omitted, so you can safely treat a present `level` as a level change signal without extra bookkeeping.
 
 <MetricChangeEventPointsLevelExcerpt />
 
@@ -363,9 +363,9 @@ A typical pattern is to check the object for your system after a successful even
 ```ts
 const pts = response.points?.xp; // use your points system key
 
-if (pts?.level != null) {
-  // Tier changed on this request — e.g. toast, modal, confetti
-  notifyLevelUp(pts.level.name, pts.total);
+if (pts?.level) {
+  // Level changed on this request — e.g. toast, modal, confetti if level up
+  notifyLevelChange(pts.level.name, pts.total);
 }
 ```
 
@@ -421,7 +421,7 @@ This makes it really simple to read the response and trigger any of the followin
 
 Trophy also has APIs that allow you fetch user's points data whenever you want.
 
-First, the [user points API](/api-reference/endpoints/users/get-a-users-points) returns the user's total points for a particular points system, their current **`level`** (or `null` if levels are not in use or they have not reached a tier yet), and up to 100 of the most recent events that awarded points to or deducted points from them.
+First, the [user points API](/api-reference/endpoints/users/get-a-users-points) returns the user's total points for a particular points system, their current **`level`** (or `null` if levels are not in use or they have not reached a level yet), and up to 100 of the most recent events that awarded points to or deducted points from them.
 
 You can use this API to display the user's total points anywhere in your platform as well as a 'Latest awards' section or similar.
 
@@ -455,7 +455,7 @@ Additionally there are a number of APIs that can be used to fetch and display po
 
 First, the [points summary API](/api-reference/endpoints/points/get-points-summary) returns aggregate points system data across your entire user base.
 
-Use this data to display a histogram of points for a particular points system and show users how they compare to others on the platform. When you use [Points Levels](#points-levels), the [level summary API](/api-reference/endpoints/points/get-points-level-summary) complements this with a per-tier user count.
+Use this data to display a histogram of points for a particular points system and show users how they compare to others on the platform. When you use [Points Levels](#points-levels), the [level summary API](/api-reference/endpoints/points/get-points-level-summary) complements this with a per-level user count.
 
 `GET /points/{key}/summary` — example **200** response (Trophy API spec):
 
