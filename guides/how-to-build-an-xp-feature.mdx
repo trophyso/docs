@@ -113,6 +113,10 @@ To track an event (user interaction) against your metric, use the [metric change
 
 The response to this API call is the complete set of changes to any features you've built with Trophy, including any XP that was awarded to the user as a result of the event, and from what triggers it was awarded.
 
+<Note>
+  If you use [Points Levels](/platform/points#points-levels), the `xp` object can include a **`level`** field **only when** the user's tier changed on this request; it may be omitted when their level stayed the same. See the [metric change API reference](/api-reference/endpoints/metrics/send-a-metric-change-event) for the full response schema.
+</Note>
+
 {/* vale off */}
 
 ```json Response [expandable]
@@ -124,9 +128,11 @@ The response to this API call is the complete set of changes to any features you
   "points": {
     "xp": {
       "id": "0040fe51-6bce-4b44-b0ad-bddc4e123534",
+      "key": "xp",
       "name": "XP",
       "description": null,
       "badgeUrl": null,
+      "maxPoints": null,
       "total": 450,
       "added": 50,
       "awards": [

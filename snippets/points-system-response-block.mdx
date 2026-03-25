@@ -1,0 +1,49 @@
+{/* vale off */}
+
+```json GET /points/{key} — 200 response [expandable]
+{
+  "id": "0040fe51-6bce-4b44-b0ad-bddc4e123534",
+  "name": "XP System",
+  "description": "Experience points for user engagement",
+  "badgeUrl": "https://example.com/badge.png",
+  "maxPoints": null,
+  "triggers": [
+    {
+      "id": "0040fe51-6bce-4b44-b0ad-bddc4e123534",
+      "type": "metric",
+      "points": 10,
+      "status": "active",
+      "metricId": "0040fe51-6bce-4b44-b0ad-bddc4e123534",
+      "metricName": "words written",
+      "metricThreshold": 1000,
+      "userAttributes": [
+        { "key": "plan-type", "value": "premium" },
+        { "key": "region", "value": "us-east" }
+      ],
+      "eventAttribute": { "key": "source", "value": "mobile-app" },
+      "created": "2021-01-01T00:00:00Z",
+      "updated": "2021-01-01T00:00:00Z"
+    },
+    {
+      "id": "0040fe51-6bce-4b44-b0ad-bddc4e123536",
+      "type": "streak",
+      "points": 10,
+      "status": "active",
+      "streakLengthThreshold": 7,
+      "created": "2021-01-01T00:00:00Z",
+      "updated": "2021-01-01T00:00:00Z"
+    },
+    {
+      "id": "0040fe51-6bce-4b44-b0ad-bddc4e123535",
+      "type": "achievement",
+      "points": 50,
+      "status": "active",
+      "achievementId": "0040fe51-6bce-4b44-b0ad-bddc4e123535",
+      "achievementName": "finish onboarding",
+      "userAttributes": [{ "key": "plan-type", "value": "premium" }],
+      "created": "2021-01-01T00:00:00Z",
+      "updated": "2021-01-01T00:00:00Z"
+    }
+  ]
+}
+```

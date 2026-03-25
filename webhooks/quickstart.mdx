@@ -89,6 +89,9 @@ Trophy will send requests to your handler, telling it what `type` of event it's 
         case "points.changed":
             // Handle points changed events
             break;
+        case "points.level_changed":
+            // Handle points level changed events
+            break;
         default:
             // Handle unrecognised event type
             break;
@@ -216,6 +219,9 @@ function handleEvent(payload: WebhookPayload) {
   switch (payload.type) {
     case "points.changed":
       console.log("Handling points changed event");
+      break;
+    case "points.level_changed":
+      console.log("Handling points level changed event");
       break;
     case "streak.extended":
       console.log("Handling streak extended event");

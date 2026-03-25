@@ -1073,7 +1073,7 @@ export default function Home() {
 }
 ```
 
-Next, to make sure NextJS shows our badges, we need to configure Trophy's image host as a trusted domain:
+Next, to make sure NextJS shows our badges, we need to configure Trophy's image host as a trusted domain. If you use custom badge URLs on your own domain or CDN, add those host names here too, or use a plain `<img>` and skip remote patterns.
 
 ```ts next.config.ts {4-11}
 import type { NextConfig } from "next";
