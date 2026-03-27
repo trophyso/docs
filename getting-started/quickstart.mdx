@@ -14,6 +14,8 @@ Here you'll integrate your backend web application with Trophy and start buildin
 
 <Tabs>
   <Tab title="I'm doing this myself" icon="user">
+    These instructions are for those who want to implement Trophy by hand. If instead you prefer to use coding agents, switch tabs above.
+    
     <Steps>
       <Step title="Create your Trophy account">
         First, [create a new account](https://app.trophy.so/sign-up?utm_source=docs&utm_medium=quickstart) if you don't already have one and head into the [Trophy dashboard](https://app.trophy.so).
@@ -131,6 +133,8 @@ Here you'll integrate your backend web application with Trophy and start buildin
     </Steps>
   </Tab>
   <Tab title="I'm using AI" icon="bot">
+    These instructions are for those who prefer to develop using coding agents like Cursor and Claude Code.
+
     <Steps>
       <Step title="Create your Trophy account">
         First, [create a new account](https://app.trophy.so/sign-up?utm_source=docs&utm_medium=quickstart) if you don't already have one and head into the [Trophy dashboard](https://app.trophy.so).
@@ -138,15 +142,88 @@ Here you'll integrate your backend web application with Trophy and start buildin
         Head through onboarding to get your account set up.
       </Step>
 
-      <Step title="Download Trophy agent context">
-        Download the [llms-full.txt](https://docs.trophy.so/llms-full.txt) - this is the full text content of this documentation site as a `.txt` file.
-        
+      <Step title="Configure Trophy MCP or Agent Skill">
+        For the best AI setup experience, connect Trophy through MCP, Agent Skill, or both:
+
+        - MCP server URL: `https://docs.trophy.so/mcp`
+        - Agent skill URL: `https://docs.trophy.so/skill.md`
+
         <Tip>
-          To get the best results, always attach this file to prompts when using coding agents.
+          MCP gives your agent live access to Trophy docs. Agent Skill gives it structured instructions about Trophy capabilities. Using both usually gives the best results.
         </Tip>
+
+        <Tabs>
+          <Tab title="Claude">
+            1. Open [Claude Connectors](https://claude.ai/settings/connectors).
+            2. Select **Add custom connector**.
+            3. Add:
+               - Name: `Trophy`
+               - URL: `https://docs.trophy.so/mcp`
+            4. In chat, use the plus button to enable the Trophy connector.
+            5. Optional but recommended: add Trophy Agent Skill in [Claude Skills settings](https://claude.ai/customize/skills) using `https://docs.trophy.so/skill.md` so Claude consistently uses Trophy's capability summary.
+          </Tab>
+          <Tab title="Claude Code">
+            Add Trophy MCP:
+
+            ```bash
+            claude mcp add --transport http Trophy https://docs.trophy.so/mcp
+            ```
+
+            Verify:
+
+            ```bash
+            claude mcp list
+            ```
+
+            Optional: add Trophy Agent Skill:
+
+            ```bash
+            npx skills add https://docs.trophy.so
+            ```
+          </Tab>
+          <Tab title="Cursor">
+            Open MCP settings and add this to your `mcp.json`:
+
+            ```json
+            {
+              "mcpServers": {
+                "Trophy": {
+                  "url": "https://docs.trophy.so/mcp"
+                }
+              }
+            }
+            ```
+
+            Optional: add Trophy Agent Skill:
+
+            ```bash
+            npx skills add https://docs.trophy.so
+            ```
+          </Tab>
+          <Tab title="VS Code">
+            Create `.vscode/mcp.json`:
+
+            ```json
+            {
+              "servers": {
+                "Trophy": {
+                  "type": "http",
+                  "url": "https://docs.trophy.so/mcp"
+                }
+              }
+            }
+            ```
+
+            Optional: add Trophy Agent Skill:
+
+            ```bash
+            npx skills add https://docs.trophy.so
+            ```
+          </Tab>
+        </Tabs>
       </Step>
       <Step title="Tell your agent to perform initial setup">
-        Copy and paste this prompt into Cursor, Claude Code, or your coding agent of choice.
+        Here's a prompt you can use with your coding agent to perform initial Trophy setup:
 
         <Prompt
           description="Perform initial Trophy setup"
@@ -156,6 +233,8 @@ Here you'll integrate your backend web application with Trophy and start buildin
         >
           I'm adding gamification to my app using Trophy.
 
+          Before making changes, verify the connected `Trophy` MCP server or Agent Skill is available and use it as the primary source of truth for Trophy integration details.
+
           Please do the full initial setup end-to-end:
           1. Detect the backend language/framework in this repo and install the relevant official Trophy SDK (or use HTTP calls if no SDK is available).
           2. Add `TROPHY_API_KEY` to environment config in a secure way (no secrets committed to git), and wire it into the Trophy client initialization.
@@ -164,7 +243,9 @@ Here you'll integrate your backend web application with Trophy and start buildin
           5. Add or update a short README section explaining how the integration works and how to extend it.
 
           Constraints:
-          - Reference the attached context for all information on Trophy integration specifics.
+          - Use Trophy MCP tool results for all Trophy-specific implementation decisions.
+          - If Trophy Agent Skill context is available in this environment, follow it.
+          - Do not rely on prior memory for Trophy API behavior when MCP or Agent provides an answer.
           - Keep secrets out of source control.
           - Use existing project patterns and naming conventions.
           - Show me a concise summary of changed files and how to test the setup.
@@ -172,7 +253,7 @@ Here you'll integrate your backend web application with Trophy and start buildin
         </Prompt>
 
         <Note>
-          Make sure to replace `<metric>` with the metric you set up during onboarding and attach the Trophy context you downloaded in the previous step.
+          Make sure to replace `<metric>` with the metric you set up during onboarding.
         </Note>
 
         This will:
@@ -195,17 +276,14 @@ Here you'll integrate your backend web application with Trophy and start buildin
         >
           Prepare to continue my Trophy integration from the existing setup.
 
-          First, do not implement a feature immediately. Instead, ask me which gamification feature I want to build next and present these options:
-          - Streaks
-          - Points (XP, Gems, Energy etc)
-          - Achievements
-          - Leaderboards
+          First, verify the connected `Trophy` MCP server or Agent skill is available and use it as the source of truth for feature-specific integration details.
+
+          Before implementing anything, ask me which gamification feature I want to build, providing options based on what the Trophy MCP or Agent Skill says Trophy supports.
 
           After I choose one option:
-          1. Implement only that selected feature using Trophy APIs and existing project patterns.
+          1. Implement only that selected feature using the relevant Trophy APIs and existing project patterns.
           2. Add the required server-side calls/endpoints/actions that use Trophy APIs and a minimal UI or API response surface.
-          3. Add tests (or a test script) where feasible.
-          4. Document any new env vars, routes, and usage steps.
+          3. Document any new env vars, routes, and usage steps.
 
           If I ask for a feature Trophy does not support, do not implement a workaround.
           Instead, tell me it's not currently supported and ask me to contact Trophy support at support@trophy.so to submit a feature request.
