@@ -6,121 +6,261 @@ description: Get up and running with Trophy in under 10 minutes
 
 import SdkInstallCommand from "/snippets/sdk-install-command.mdx";
 import AddEnvVarBlock from "/snippets/add-env-var-block.mdx";
+import TrophyClientInitBlock from "/snippets/trophy-client-init-block.mdx";
 import MetricChangeRequestBlock from "/snippets/metric-change-request-block.mdx";
 import MetricChangeResponseBlock from "/snippets/metric-change-response-block.mdx";
 
 Here you'll integrate your backend web application with Trophy and start building your first gamified feature.
 
-<Steps>
-  <Step title="Create your Trophy account">
-    First, [create a new account](https://app.trophy.so/sign-up?utm_source=docs&utm_medium=quickstart) if you don't already have one and head into the [Trophy dashboard](https://app.trophy.so).
+<Tabs>
+  <Tab title="I'm doing this myself" icon="user">
+    <Steps>
+      <Step title="Create your Trophy account">
+        First, [create a new account](https://app.trophy.so/sign-up?utm_source=docs&utm_medium=quickstart) if you don't already have one and head into the [Trophy dashboard](https://app.trophy.so).
 
-    Head through onboarding to get your account set up.
+        Head through onboarding to get your account set up.
 
-  </Step>
-  <Step title="Add the Trophy SDK to your backend">
-    We have SDK libraries available in most major programming languages but if you don't see yours listed, let us know and we'll make one!
+      </Step>
+      <Step title="Add the Trophy SDK to your backend">
+        We have SDK libraries available in most major programming languages but if you don't see yours listed, let us know and we'll make one!
 
-    <SdkInstallCommand />
+        <SdkInstallCommand />
 
-    Alternatively, you can directly call the API using any server-side HTTP library.
+        Alternatively, you can directly call the API using any server-side HTTP client.
 
-  </Step>
-  <Step title="Set up environment">
-    Add your API key that you created during onboarding (or [create a new one](https://app.trophy.so/integration)) as an environment variable in your backend application:
+      </Step>
+      <Step title="Set up environment">
+        Head to the [integration page](https://app.trophy.so/integration) of the Trophy dashboard and create a new API key.
+        
+        Add your API key as an environment variable in your backend application:
 
-    <AddEnvVarBlock />
+        <AddEnvVarBlock />
 
-    Make sure to pass this API key to the Trophy SDK or to your API client to authenticate.
+        Then initialize the Trophy API client in your backend using that API key:
 
-  </Step>
-  <Step title="Create your first metric">
-    All gamification features are driven by user interactions. In Trophy, you use [Metrics](/platform/metrics) to define and model those interactions and [Events](/platform/events) to track them.
-    
-    Here you'll create your first metric to get started. In the Trophy dashboard, head into the [metrics page](https://app.trophy.so/metrics) and hit the _New Metric_ button:
+        <TrophyClientInitBlock />
 
-    <Frame>
-      <video
-        autoPlay
-        muted
-        loop
-        playsInline
-        className="w-full aspect-video"
-        src="../assets/platform/metrics/create_new_metric.mp4"
-      ></video>
-    </Frame>
+        Make sure all Trophy SDK calls use this client for authentication.
+      </Step>
+      <Step title="Create your first metric">
+        All gamification features are driven by user interactions. In Trophy, you use [Metrics](/platform/metrics) to define and model those interactions and [Events](/platform/events) to track them.
+        
+        Here you'll create your first metric to get started. In the Trophy dashboard, head into the [metrics page](https://app.trophy.so/metrics) and hit the _New Metric_ button:
 
-    Give the metric a name and hit _Save_.
+        <Frame>
+          <video
+            autoPlay
+            muted
+            loop
+            playsInline
+            className="w-full aspect-video"
+            src="../assets/platform/metrics/create_new_metric.mp4"
+          ></video>
+        </Frame>
 
-  </Step>
-  <Step title="Integrate the metric into your backend">
-    Once you've created your metric, head to the configure tab and copy it's unique API reference key.
+        Give the metric a name and hit _Save_.
 
-    <Frame>
-      <video
-        autoPlay
-        muted
-        loop
-        playsInline
-        className="w-full aspect-video"
-        src="../assets/quick-start/copy_metric_key.mp4"
-      ></video>
-    </Frame>
+      </Step>
+      <Step title="Integrate the metric into your backend">
+        Once you've created your metric, head to the configure tab and copy it's unique API reference key.
 
-    To track an event against this metric when a user interacts with your product, call the [metric change event API](/api-reference/endpoints/metrics/send-a-metric-change-event), passing along details of the user that made the interaction. In this example the metric key would be `flashcards-flipped`:
+        <Frame>
+          <video
+            autoPlay
+            muted
+            loop
+            playsInline
+            className="w-full aspect-video"
+            src="../assets/quick-start/copy_metric_key.mp4"
+          ></video>
+        </Frame>
 
-    <MetricChangeRequestBlock />
+        To track an event against this metric when a user interacts with your product, call the [metric change event API](/api-reference/endpoints/metrics/send-a-metric-change-event), passing along details of the user that made the interaction. In this example the metric key would be `flashcards-flipped`:
 
-    By making this call, you're telling Trophy that a specific user made an interaction with your product. As a result, Trophy will process any gamification features like achievements or streaks that you've configured against the metric automatically.
+        <MetricChangeRequestBlock />
 
-  </Step>
-  <Step title="Continue building your gamification experience">
-    With a metric integrated into your backend, you're ready to start adding gamification features to your product.
-    
-    Follow the links below to learn more about each feature you can build with Trophy:
+        By making this call, you're telling Trophy that a specific user made an interaction with your product. As a result, Trophy will process any gamification features like achievements or streaks that you've configured against the metric automatically.
 
-    <CardGroup>
-      <Card title="Achievements" icon="trophy" href="/platform/achievements">
-        Reward users for continued progress or taking specific actions.
-      </Card>
-      <Card title="Streaks" icon="flame" href="/platform/streaks">
-        Motivate users to build regular usage habits.
-      </Card>
-      <Card title="Points" icon="sparkle" href="/platform/points">
-        Build sophisticated points systems to reward and retain users.
-      </Card>
-      <Card
-        title="Leaderboards"
-        icon={
-          <svg
-            width="20"
-            height="18"
-            viewBox="0 0 20 18"
-            fill="none"
-            xmlns="http://www.w3.org/2000/svg"
-            className="text-primary dark:text-primary-light"
-          >
-            <path
-              d="M2 16H6V8H2V16ZM8 16H12V2H8V16ZM14 16H18V10H14V16ZM0 16V8C0 7.45 0.195833 6.97917 0.5875 6.5875C0.979167 6.19583 1.45 6 2 6H6V2C6 1.45 6.19583 0.979167 6.5875 0.5875C6.97917 0.195833 7.45 0 8 0H12C12.55 0 13.0208 0.195833 13.4125 0.5875C13.8042 0.979167 14 1.45 14 2V8H18C18.55 8 19.0208 8.19583 19.4125 8.5875C19.8042 8.97917 20 9.45 20 10V16C20 16.55 19.8042 17.0208 19.4125 17.4125C19.0208 17.8042 18.55 18 18 18H2C1.45 18 0.979167 17.8042 0.5875 17.4125C0.195833 17.0208 0 16.55 0 16Z"
-              fill="currentColor"
-            />
-          </svg>
-        }
-        href="/platform/leaderboards">
-        Create friendly competitions to increase user engagement.
-      </Card>
-      <Card title="Emails" icon="mail" href="/platform/emails">
-        Deliver personalized lifecycle emails to users at the perfect moment.
-      </Card>
-      <Card title="Push Notifications" icon="bell" href="/platform/push-notifications">
-        Drive automated notification flows using personalized gamification data.
-      </Card>
-    </CardGroup>
+      </Step>
+      <Step title="Continue building your gamification experience">
+        With a metric integrated into your backend, you're ready to start adding gamification features to your product.
+        
+        Follow the links below to learn more about each feature you can build with Trophy:
 
-    Or, explore our [API reference](/api-reference/introduction) to get familiar with what Trophy can do.
+        <CardGroup>
+          <Card title="Achievements" icon="trophy" href="/platform/achievements">
+            Reward users for continued progress or taking specific actions.
+          </Card>
+          <Card title="Streaks" icon="flame" href="/platform/streaks">
+            Motivate users to build regular usage habits.
+          </Card>
+          <Card title="Points" icon="sparkle" href="/platform/points">
+            Build sophisticated points systems to reward and retain users.
+          </Card>
+          <Card
+            title="Leaderboards"
+            icon={
+              <svg
+                width="20"
+                height="18"
+                viewBox="0 0 20 18"
+                fill="none"
+                xmlns="http://www.w3.org/2000/svg"
+                className="text-primary dark:text-primary-light"
+              >
+                <path
+                  d="M2 16H6V8H2V16ZM8 16H12V2H8V16ZM14 16H18V10H14V16ZM0 16V8C0 7.45 0.195833 6.97917 0.5875 6.5875C0.979167 6.19583 1.45 6 2 6H6V2C6 1.45 6.19583 0.979167 6.5875 0.5875C6.97917 0.195833 7.45 0 8 0H12C12.55 0 13.0208 0.195833 13.4125 0.5875C13.8042 0.979167 14 1.45 14 2V8H18C18.55 8 19.0208 8.19583 19.4125 8.5875C19.8042 8.97917 20 9.45 20 10V16C20 16.55 19.8042 17.0208 19.4125 17.4125C19.0208 17.8042 18.55 18 18 18H2C1.45 18 0.979167 17.8042 0.5875 17.4125C0.195833 17.0208 0 16.55 0 16Z"
+                  fill="currentColor"
+                />
+              </svg>
+            }
+            href="/platform/leaderboards">
+            Create friendly competitions to increase user engagement.
+          </Card>
+          <Card title="Emails" icon="mail" href="/platform/emails">
+            Deliver personalized lifecycle emails to users at the perfect moment.
+          </Card>
+          <Card title="Push Notifications" icon="bell" href="/platform/push-notifications">
+            Drive automated notification flows using personalized gamification data.
+          </Card>
+        </CardGroup>
 
-  </Step>
-</Steps>
+        Or, explore our [API reference](/api-reference/introduction) to get familiar with what Trophy can do.
+
+      </Step>
+    </Steps>
+  </Tab>
+  <Tab title="I'm using AI" icon="bot">
+    <Steps>
+      <Step title="Create your Trophy account">
+        First, [create a new account](https://app.trophy.so/sign-up?utm_source=docs&utm_medium=quickstart) if you don't already have one and head into the [Trophy dashboard](https://app.trophy.so).
+
+        Head through onboarding to get your account set up.
+      </Step>
+
+      <Step title="Download Trophy agent context">
+        Download the [llms-full.txt](/llms-full.txt) - this is the full text content of this documentation site as a `.txt` file.
+        
+        <Tip>
+          To get the best results, always attach this file to prompts when using coding agents.
+        </Tip>
+      </Step>
+      <Step title="Tell your agent to perform initial setup">
+        Copy and paste this prompt into Cursor, Claude Code, or your coding agent of choice.
+
+        <Prompt
+          description="Perform initial Trophy setup"
+          icon="paperclip"
+          iconType="solid"
+          actions={["copy", "cursor"]}
+        >
+          I'm adding gamification to my app using Trophy.
+
+          Please do the full initial setup end-to-end:
+          1. Detect the backend language/framework in this repo and install the relevant official Trophy SDK (or use HTTP calls if no SDK is available).
+          2. Add `TROPHY_API_KEY` to environment config in a secure way (no secrets committed to git), and wire it into the Trophy client initialization.
+          3. Add code to track a metric change event for the metric `<metric>` using the Trophy API client, wiring all required user attributes like ID, and using placeholders for all optional attributes like name, email and tz.
+          4. Add basic error handling and logging around Trophy API calls.
+          5. Add or update a short README section explaining how the integration works and how to extend it.
+
+          Constraints:
+          - Reference the attached context for all information on Trophy integration specifics.
+          - Keep secrets out of source control.
+          - Use existing project patterns and naming conventions.
+          - Show me a concise summary of changed files and how to test the setup.
+          - Suggest next steps based on the gamification features Trophy supports.
+        </Prompt>
+
+        <Note>
+          Make sure to replace `<metric>` with the metric you set up during onboarding and attach the Trophy context you downloaded in the previous step.
+        </Note>
+
+        This will:
+
+        1. Add the relevant [Trophy SDK](/api-reference/client-libraries) to your app based on your tech stack
+        2. Add a new `TROPHY_API_KEY` variable to your environment settings
+        3. Add code to send events to Trophy based on the metric you set up during onboarding.
+      </Step>
+      <Step title="Grab your API key">
+        Once the set up is complete, [create an API key](https://app.trophy.so/integration) from the integration page of the Trophy dashboard and add it to your environment.
+      </Step>
+      <Step title="Build your first gamification feature">
+        Once initial setup is complete, use this follow-up prompt to prepare your agent for the next step and have it ask you what to build next:
+
+        <Prompt
+          description="Build your first gamification feature"
+          icon="paperclip"
+          iconType="solid"
+          actions={["copy", "cursor"]}
+        >
+          Prepare to continue my Trophy integration from the existing setup.
+
+          First, do not implement a feature immediately. Instead, ask me which gamification feature I want to build next and present these options:
+          - Streaks
+          - Points (XP, Gems, Energy etc)
+          - Achievements
+          - Leaderboards
+
+          After I choose one option:
+          1. Implement only that selected feature using Trophy APIs and existing project patterns.
+          2. Add the required server-side calls/endpoints/actions that use Trohpy APIs and a minimal UI or API response surface.
+          3. Add tests (or a test script) where feasible.
+          4. Document any new env vars, routes, and usage steps.
+
+          If I ask for a feature Trophy does not support, do not implement a workaround.
+          Instead, tell me it's not currently supported and ask me to contact Trophy support at support@trophy.so to submit a feature request.
+
+          Keep changes production-minded:
+          - Follow existing architecture and naming conventions.
+          - Handle API failures gracefully.
+          - Return a clear list of changed files and manual verification steps.
+        </Prompt>
+
+        For ideas on what to build next, explore:
+
+        <CardGroup>
+          <Card title="Achievements" icon="trophy" href="/platform/achievements">
+            Reward users for continued progress or taking specific actions.
+          </Card>
+          <Card title="Streaks" icon="flame" href="/platform/streaks">
+            Motivate users to build regular usage habits.
+          </Card>
+          <Card title="Points" icon="sparkle" href="/platform/points">
+            Build sophisticated points systems to reward and retain users.
+          </Card>
+          <Card
+            title="Leaderboards"
+            icon={
+              <svg
+                width="20"
+                height="18"
+                viewBox="0 0 20 18"
+                fill="none"
+                xmlns="http://www.w3.org/2000/svg"
+                className="text-primary dark:text-primary-light"
+              >
+                <path
+                  d="M2 16H6V8H2V16ZM8 16H12V2H8V16ZM14 16H18V10H14V16ZM0 16V8C0 7.45 0.195833 6.97917 0.5875 6.5875C0.979167 6.19583 1.45 6 2 6H6V2C6 1.45 6.19583 0.979167 6.5875 0.5875C6.97917 0.195833 7.45 0 8 0H12C12.55 0 13.0208 0.195833 13.4125 0.5875C13.8042 0.979167 14 1.45 14 2V8H18C18.55 8 19.0208 8.19583 19.4125 8.5875C19.8042 8.97917 20 9.45 20 10V16C20 16.55 19.8042 17.0208 19.4125 17.4125C19.0208 17.8042 18.55 18 18 18H2C1.45 18 0.979167 17.8042 0.5875 17.4125C0.195833 17.0208 0 16.55 0 16Z"
+                  fill="currentColor"
+                />
+              </svg>
+            }
+            href="/platform/leaderboards">
+            Create friendly competitions to increase user engagement.
+          </Card>
+          <Card title="Emails" icon="mail" href="/platform/emails">
+            Deliver personalized lifecycle emails to users at the perfect moment.
+          </Card>
+          <Card title="Push Notifications" icon="bell" href="/platform/push-notifications">
+            Drive automated notification flows using personalized gamification data.
+          </Card>
+        </CardGroup>
+
+        Or, explore our [API reference](/api-reference/introduction) to get familiar with what Trophy can do.
+      </Step>
+    </Steps>
+  </Tab>
+</Tabs>
 
 ## Get Support
 
