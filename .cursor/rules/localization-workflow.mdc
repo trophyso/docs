@@ -11,4 +11,6 @@ alwaysApply: true
 - Do not translate code snippets, inline code, URLs, route slugs, or API identifiers.
 - Treat `lingo/brand-voice.md` as the source of truth for brand voice text.
 - Do not add script-based brand voice sync; sync brand voice on demand via Lingo MCP tools from chat.
+- Treat `lingo/glossary.csv` as the glossary source of truth; use MCP sync with canonical key `sourceLocale|targetLocale|type|sourceText`.
+- For glossary sync, always do dry-run first, show create/update/delete counts, then apply on confirmation.
 - When adding locales, update both `docs.json` language blocks and `i18n.json` `locale.targets`.

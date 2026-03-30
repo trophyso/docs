@@ -8,6 +8,7 @@
     "dev": "mint dev",
     "translate:generate": "node --env-file=.env scripts/generate-translations.mjs --target es",
     "translate:docs-json": "node --env-file=.env scripts/translate-docs-json.mjs --target es",
+    "lingo:validate-glossary": "node scripts/validate-glossary-csv.mjs",
     "translate:verify": "npx lingo.dev@latest run --frozen",
     "translate:validate": "node --env-file=.env scripts/validate-translations.mjs"
   },

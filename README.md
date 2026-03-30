@@ -58,8 +58,8 @@ Notes:
 
 - `lingo/glossary.csv`: Terms that must stay fixed or use specific translations.
 - `lingo/brand-voice.md`: Single brand voice used for all locales.
-- `lingo/instructions.global.txt`: Global structural rules (preserve MDX, never translate code, keep links stable).
 - `scripts/translate-docs-json.mjs`: Translates language-specific `docs.json` navigation labels directly in the source-of-truth `docs.json`.
+- `scripts/validate-glossary-csv.mjs`: Validates glossary schema and duplicate canonical keys.
 
 #### Apply in Lingo.dev engine
 
@@ -70,16 +70,26 @@ Notes:
 2. In the Lingo.dev engine:
    - import/create glossary entries from `lingo/glossary.csv`
    - sync wildcard brand voice from `lingo/brand-voice.md` via Cursor chat + Lingo MCP (on demand)
-   - add instructions from `lingo/instructions.global.txt` (target locale `*` unless locale-specific)
 3. Run:
    - `npx lingo.dev@latest run` to generate/update translations
    - `node scripts/translate-docs-json.mjs --target es` to translate language-specific labels in `docs.json`
+   - `npm run lingo:validate-glossary` to validate glossary rows before MCP sync
    - `npx lingo.dev@latest run --frozen` to enforce no pending translation deltas
 
 Brand voice sync workflow (manual via Cursor + MCP):
 - Update `lingo/brand-voice.md`.
 - In Cursor chat ask: "Sync `lingo/brand-voice.md` to Lingo brand voice for engine `<engine_id>`."
 - The agent will use MCP tools to find the engine brand voice id and update it.
+
+Glossary sync workflow (manual via Cursor + MCP):
+- Validate first: `npm run lingo:validate-glossary`
+- Always run dry-run first, then apply
+- Canonical key used for reconciliation: `sourceLocale|targetLocale|type|sourceText`
+- Dry run prompt:
+  - `Dry-run glossary sync for engine <ENGINE_ID> using lingo/glossary.csv via Lingo MCP. Use canonical key sourceLocale|targetLocale|type|sourceText. Show counts and exact create/update/delete operations. Do not apply changes yet.`
+- Apply prompt:
+  - `Apply glossary sync for engine <ENGINE_ID> using lingo/glossary.csv via Lingo MCP. Use canonical key sourceLocale|targetLocale|type|sourceText. Perform create/update and prune missing entries (delete remote items not in CSV).`
+- Use prune only when you want remote glossary to match CSV exactly.
 
 #### Add a new language
 
@@ -94,7 +104,7 @@ Brand voice sync workflow (manual via Cursor + MCP):
    - Example: `en/platform/overview.mdx` -> `fr/platform/overview.mdx`.
 4. Configure Lingo.dev engine controls for the new locale:
    - Add/update brand voice for that locale.
-   - Add locale-specific glossary entries or instructions if needed.
+   - Add locale-specific glossary entries if needed.
 5. Generate translations:
    - One locale: `node scripts/generate-translations.mjs --target <locale>`
    - Multiple locales: `node scripts/generate-translations.mjs --target es,fr,de`
