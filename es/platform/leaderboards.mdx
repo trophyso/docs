@@ -1,16 +1,19 @@
 ---
-title: Leaderboards
-description: Learn how to use Leaderboards in a gamified product experience with Trophy.
-"og:description": Create daily, weekly or monthly competitions that rank users based on metrics, points or streaks and increase user engagement.
+title: Clasificaciones
+description: Aprende a usar Clasificaciones en una experiencia de producto
+  gamificada con Trophy.
+og:description: Crea competiciones diarias, semanales o mensuales que clasifican
+  a los usuarios según métricas, puntos o rachas y aumenta la participación de
+  los usuarios.
 icon: /icons/leaderboard.svg
 ---
 
 import LeaderboardSingleAttributeRequest from "/snippets/leaderboard-rankings-request-single-attribute.mdx";
 import LeaderboardMultiAttributeRequest from "/snippets/leaderboard-rankings-request-multiple-attributes.mdx";
 
-## What are Leaderboards?
+## ¿Qué son las Clasificaciones?
 
-Leaderboards are social competitions between users of your application. Use leaderboards to increase engagement and foster social interaction.
+Las clasificaciones son competiciones sociales entre los usuarios de tu aplicación. Usa las clasificaciones para aumentar la participación y fomentar la interacción social.
 
 <Frame>
   <img
@@ -21,49 +24,47 @@ Leaderboards are social competitions between users of your application. Use lead
   />
 </Frame>
 
-## Types of Leaderboards
+## Tipos de Clasificaciones
 
-In this section we outline the different types of leaderboards supported in Trophy and when to use each one.
+En esta sección describimos los diferentes tipos de clasificaciones admitidas en Trophy y cuándo usar cada una.
 
-### Perpetual Leaderboards
+### Clasificaciones Perpetuas
 
-Perpetual leaderboards never reset. Once started they continually track and rank users progress over time forever, or until the configured [end date](#end-dates).
+Las clasificaciones perpetuas nunca se reinician. Una vez iniciadas, rastrean y clasifican continuamente el progreso de los usuarios a lo largo del tiempo para siempre, o hasta la [fecha de finalización](#end-dates) configurada.
 
-Use perpetual leaderboards when you want to create all-time rankings of user activity.
+Usa clasificaciones perpetuas cuando quieras crear rankings históricos de la actividad de los usuarios.
 
-### Repeating Leaderboards
+### Clasificaciones Recurrentes
 
-Repeating leaderboards can be configured to reset after any arbitrary number of days, months or years.
+Las clasificaciones recurrentes se pueden configurar para reiniciarse después de cualquier número arbitrario de días, meses o años.
 
-In Trophy each instance of a repeating leaderboard is called a **'run'**. For example, a monthly leaderboard would have 12 runs in a year, but a daily leaderboard would have `n` runs in a month where `n` is the number of days in a given month.
+En Trophy, cada instancia de una clasificación recurrente se denomina **'ejecución'**. Por ejemplo, una clasificación mensual tendría 12 ejecuciones en un año, pero una clasificación diaria tendría `n` ejecuciones en un mes donde `n` es el número de días en un mes determinado.
 
-Trophy tracks the rankings in each run of a repeating leaderboard individually and provides [APIs](/api-reference/endpoints/leaderboards/get-leaderboard) to fetch ranking data on historical runs.
+Trophy rastrea las clasificaciones en cada ejecución de una clasificación recurrente individualmente y proporciona [APIs](/api-reference/endpoints/leaderboards/get-leaderboard) para obtener datos de clasificación de ejecuciones históricas.
 
 <Tip>
-  We recommend using repeating leaderboards over perpetual where possible as
-  repeating leaderboards give new users an equal chance to compete with existing
-  users, helping to prevent leaderboards from becoming stale.
+  Recomendamos usar clasificaciones recurrentes en lugar de perpetuas siempre que sea posible, ya que las clasificaciones recurrentes dan a los nuevos usuarios las mismas oportunidades de competir con los usuarios existentes, ayudando a evitar que las clasificaciones se vuelvan obsoletas.
 </Tip>
 
-#### Handling Time Zones
+#### Gestión de zonas horarias
 
-If you have tracked users' [time zones](/platform/users#param-tz) with Trophy, these will be used to ensure that each user has an equal chance of winning no matter where they are in the world.
+Si has rastreado las [zonas horarias](/platform/users#param-tz) de los usuarios con Trophy, estas se utilizarán para garantizar que cada usuario tenga las mismas oportunidades de ganar sin importar dónde se encuentre en el mundo.
 
-In practice this means leaderboards are finalized and winners chosen about 12 hours after they naturally finish in UTC to allow users in all time zones to make their final push.
+En la práctica, esto significa que las clasificaciones se finalizan y los ganadores se eligen aproximadamente 12 horas después de que terminen naturalmente en UTC para permitir que los usuarios de todas las zonas horarias realicen su último esfuerzo.
 
-#### Tips for Weekly Leaderboards
+#### Consejos para clasificaciones semanales
 
-To create a weekly leaderboard, set up a [repeating leaderboard](#repeating-leaderboards) on a 7 day schedule and set the start date to be the next occurring first day of the week.
+Para crear una clasificación semanal, configura una [clasificación recurrente](#repeating-leaderboards) con un calendario de 7 días y establece la fecha de inicio como el próximo primer día de la semana.
 
-While you wait for the start date to come around, the leaderboard will be in `scheduled` status and will automatically go live on the start date.
+Mientras esperas a que llegue la fecha de inicio, la clasificación estará en estado `scheduled` y se activará automáticamente en la fecha de inicio.
 
-## Ranking Logic
+## Lógica de clasificación
 
-Leaderboards in Trophy are configurable to rank participants in a number of different ways to support common use cases.
+Las clasificaciones en Trophy son configurables para clasificar a los participantes de diferentes maneras y así soportar casos de uso comunes.
 
-### Ranking Methods
+### Métodos de clasificación
 
-The ranking method of a leaderboard determines on what dimension participants will be ordered.
+El método de clasificación de una clasificación determina en qué dimensión se ordenarán los participantes.
 
 <Frame>
   <img
@@ -74,40 +75,40 @@ The ranking method of a leaderboard determines on what dimension participants wi
   />
 </Frame>
 
-#### Metric Rankings
+#### Clasificaciones por métricas
 
-Metric leaderboards are linked to an existing Trophy [Metric](/platform/metrics) and rank users based on their total metric value.
+Las clasificaciones por métricas están vinculadas a una [Métrica](/platform/metrics) existente de Trophy y clasifican a los usuarios según su valor total de métrica.
 
-Use metric leaderboards if you only want to rank users based on a single interaction.
+Utiliza clasificaciones por métricas si solo deseas clasificar a los usuarios según una única interacción.
 
-#### Points Rankings
+#### Clasificaciones por puntos
 
-Points leaderboards are linked to an existing Trophy [Points System](/platform/points) and automatically rank users according to their total points.
+Las clasificaciones por puntos están vinculadas a un [Sistema de puntos](/platform/points) existente de Trophy y clasifican automáticamente a los usuarios según sus puntos totales.
 
-Use a points leaderboard if you want to rank users based on a combination of metrics, achievements or other Trophy features.
+Utiliza una clasificación por puntos si deseas clasificar a los usuarios según una combinación de métricas, logros u otras funcionalidades de Trophy.
 
-#### Streak Rankings
+#### Clasificaciones de Racha
 
-Streak leaderboards rank users based on their current streak length.
+Las clasificaciones de racha clasifican a los usuarios según la longitud de su racha actual.
 
 <Note>
-  Streak leaderboards can only be [perpetual](#perpetual-leaderboards).
+  Las clasificaciones de racha solo pueden ser [perpetuas](#perpetual-leaderboards).
 </Note>
 
-### Ranking Breakdowns
+### Desglose de Clasificaciones
 
-If you have a large user base, it's best practice to split up leaderboard participants into smaller, more socially-connected groups. This often leads to higher engagement than when using global leaderboards.
+Si tienes una gran base de usuarios, es recomendable dividir a los participantes de la clasificación en grupos más pequeños y socialmente conectados. Esto a menudo genera mayor participación que cuando se utilizan clasificaciones globales.
 
-Leaderboards in Trophy can be configured to group users into smaller groups according to a specific [custom user attribute](#custom-user-attributes).
+Las clasificaciones en Trophy se pueden configurar para agrupar usuarios en grupos más pequeños según un [atributo de usuario personalizado](#custom-user-attributes) específico.
 
 <Tip>
-  When using leaderboard breakdowns, [participant limits](#participant-limits)
-  apply at the group level, not overall.
+  Al usar desgloses de clasificación, los [límites de participantes](#participant-limits)
+  se aplican a nivel de grupo, no globalmente.
 </Tip>
 
-To set up a leaderboard breakdown head to the leaderboard configuration page and create or select your user attribute in the 'Breakdown Attribute' field.
+Para configurar un desglose de clasificación, dirígete a la página de configuración de la clasificación y crea o selecciona tu atributo de usuario en el campo 'Breakdown Attribute'.
 
-Trophy will automatically start grouping users into smaller leaderboards based on the values of your chosen attribute for each of your users.
+Trophy comenzará automáticamente a agrupar usuarios en clasificaciones más pequeñas según los valores del atributo elegido para cada uno de tus usuarios.
 
 <Frame>
   <video
@@ -120,17 +121,17 @@ Trophy will automatically start grouping users into smaller leaderboards based o
   ></video>
 </Frame>
 
-To fetch rankings for a particular group of users with a specific attribute value, use the [leaderboard rankings API](/api-reference/endpoints/leaderboards/get-leaderboard), specifying the attribute value in the [`userAttributes` parameter](/api-reference/endpoints/leaderboards/get-leaderboard#parameter-user-attributes) as follows:
+Para obtener las clasificaciones de un grupo particular de usuarios con un valor de atributo específico, utiliza la [API de clasificaciones](/api-reference/endpoints/leaderboards/get-leaderboard), especificando el valor del atributo en el [parámetro `userAttributes`](/api-reference/endpoints/leaderboards/get-leaderboard#parameter-user-attributes) de la siguiente manera:
 
 <LeaderboardSingleAttributeRequest />
 
-If you wish to fetch rankings for a particular group of users with a specific combination of user attributes, create a new attribute to track the combination and use that as your breakdown attribute as follows:
+Si deseas obtener las clasificaciones de un grupo particular de usuarios con una combinación específica de atributos de usuario, crea un nuevo atributo para rastrear la combinación y utilízalo como tu atributo de desglose de la siguiente manera:
 
 <LeaderboardMultiAttributeRequest />
 
-## Start & End Dates
+## Fechas de Inicio y Fin
 
-Use start and end dates to control the window within which leaderboards are actively ranking users.
+Utiliza fechas de inicio y fin para controlar la ventana dentro de la cual las clasificaciones están clasificando activamente a los usuarios.
 
 <Frame>
   <img
@@ -141,25 +142,25 @@ Use start and end dates to control the window within which leaderboards are acti
   />
 </Frame>
 
-### Start Dates
+### Fechas de Inicio
 
-Leaderboards in Trophy can be set to start at a future date of your choice. This is often useful to allow some time for last minute changes or adjustments before leaderboards start ranking users.
+Las clasificaciones en Trophy se pueden configurar para iniciar en una fecha futura de tu elección. Esto suele ser útil para permitir algo de tiempo para cambios o ajustes de último momento antes de que las clasificaciones comiencen a clasificar a los usuarios.
 
-Leaderboards with a start date in the future are scheduled and automatically go live on the start date you choose.
+Las clasificaciones con una fecha de inicio en el futuro están programadas y se activan automáticamente en la fecha de inicio que elijas.
 
-### End Dates
+### Fechas de finalización
 
-Leaderboards in Trophy can have end dates. If you set an end date on a leaderboard then after that date it will enter `finished` status and rankings will be finalized and winners chosen.
+Las clasificaciones en Trophy pueden tener fechas de finalización. Si estableces una fecha de finalización en una clasificación, después de esa fecha entrará en estado `finished` y las clasificaciones se finalizarán y se elegirán los ganadores.
 
 <Note>
-  Due to differences in [time zones](#handling-time-zones), leaderboards can be
-  finalized up to 12 hours after the end date in UTC to allow all users to reach
-  the end date according to their local clock.
+  Debido a diferencias en [zonas horarias](#handling-time-zones), las clasificaciones pueden
+  finalizarse hasta 12 horas después de la fecha de finalización en UTC para permitir que todos los usuarios alcancen
+  la fecha de finalización según su reloj local.
 </Note>
 
-## Participant Limits
+## Límites de participantes
 
-Leaderboards in Trophy have a maximum number of participants of **1,000**. However a leaderboard can be configured to have any arbitrary number of participants to support use cases like _Top 100_ or similar.
+Las clasificaciones en Trophy tienen un número máximo de participantes de **1,000**. Sin embargo, una clasificación puede configurarse para tener cualquier número arbitrario de participantes para admitir casos de uso como _Top 100_ o similares.
 
 <Frame>
   <img
@@ -170,22 +171,22 @@ Leaderboards in Trophy have a maximum number of participants of **1,000**. Howev
   />
 </Frame>
 
-If a leaderboard already has a number of participants that matches its configured maximum, new users will have to surpass the score of the lowest rank to join the leaderboard.
+Si una clasificación ya tiene un número de participantes que coincide con su máximo configurado, los nuevos usuarios tendrán que superar la puntuación del rango más bajo para unirse a la clasificación.
 
 <Tip>
-We chose to limit leaderboard size to help guide customers on best practice.
+Elegimos limitar el tamaño de la clasificación para ayudar a guiar a los clientes sobre las mejores prácticas.
 
-Traditionally, leaderboards with lots of participants fail to engage users beyond the top 1%, and have a **negative** impact on users in the bottom half, particularly new users. To avoid this, keep your leaderboards small by breaking them down into smaller leaderboards using [breakdown attributes](#ranking-breakdowns).
+Tradicionalmente, las clasificaciones con muchos participantes no logran involucrar a los usuarios más allá del 1% superior, y tienen un impacto **negativo** en los usuarios de la mitad inferior, particularmente en los nuevos usuarios. Para evitar esto, mantén tus clasificaciones pequeñas dividiéndolas en clasificaciones más pequeñas usando [atributos de desglose](#ranking-breakdowns).
 
-For more background on the negative effects on global leaderboards, read this [blog post](https://www.trophy.so/blog/leaderboard-only-motivating-top-one-percent).
+Para obtener más información sobre los efectos negativos de las clasificaciones globales, lee esta [publicación del blog](https://www.trophy.so/blog/leaderboard-only-motivating-top-one-percent).
 
 </Tip>
 
-The only exception to this is when using [breakdown attributes](#ranking-breakdowns) to group participants into smaller cohorts. When using breakdown attributes the participant limit applies to each group, not overall.
+La única excepción a esto es cuando se usan [atributos de desglose](#ranking-breakdowns) para agrupar participantes en cohortes más pequeñas. Cuando se usan atributos de desglose, el límite de participantes se aplica a cada grupo, no en general.
 
-## Creating Leaderboards
+## Crear Clasificaciones
 
-To create a leaderboard, head to the [leaderboards page](https://app.trophy.so/leaderboards) in the Trophy dashboard and hit the _New Leaderboard_ button.
+Para crear una clasificación, dirígete a la [página de clasificaciones](https://app.trophy.so/leaderboards) en el panel de Trophy y presiona el botón _Nueva Clasificación_.
 
 <Frame>
   <video
@@ -199,42 +200,42 @@ To create a leaderboard, head to the [leaderboards page](https://app.trophy.so/l
 </Frame>
 
 <Steps>
-  <Step title="Enter a name">
-    Choose a name for the leaderboard.
+  <Step title="Introduce un nombre">
+    Elige un nombre para la clasificación.
   </Step>
   
-  <Step title="Enter a unique key">
-    Enter a unique reference key for the leaderboard. This is what you'll use to reference the leaderboard in your application code.
+  <Step title="Introduce una clave única">
+    Introduce una clave de referencia única para la clasificación. Esto es lo que usarás para referenciar la clasificación en el código de tu aplicación.
   </Step>
 
-   <Step title="Choose a ranking method">
-    Choose one of the [methods](#ranking-method) that the leaderboard will rank users by:
+   <Step title="Elige un método de clasificación">
+    Elige uno de los [métodos](#ranking-method) por el cual la clasificación ordenará a los usuarios:
 
-    - **Metric**: Ranks users by total value of a chosen metric
-    - **Points**: Ranks users by total points in a chosen points system
-    - **Streak**: Ranks users by current streak length
+    - **Métrica**: Ordena a los usuarios por el valor total de una métrica seleccionada
+    - **Puntos**: Ordena a los usuarios por el total de puntos en un sistema de puntos elegido
+    - **Racha**: Ordena a los usuarios por la duración de la racha actual
 
   </Step>
 
-    <Step title="Set max participants">
-    Choose the maximum number of participants the leaderboard should support. The
-    current upper limit supported by Trophy is 1,000. Read [this
-    section](#participant-limits) to learn more about how we chose this limit.
+    <Step title="Establece el máximo de participantes">
+    Elige el número máximo de participantes que la clasificación debe soportar. El
+    límite superior actual que soporta Trophy es 1,000. Lee [esta
+    sección](#participant-limits) para aprender más sobre cómo elegimos este límite.
     </Step>
 
-    <Step title="Hit save">
-    Hit save and head to the configure page to set up [start & end dates](#start-and-end-dates), [repeating leaderboard schedules](#repeating-leaderboards) and more.
+    <Step title="Guarda">
+    Guarda y dirígete a la página de configuración para establecer [fechas de inicio y finalización](#start-and-end-dates), [programaciones de clasificaciones repetidas](#repeating-leaderboards) y más.
     </Step>
 
 </Steps>
 
-## Managing Leaderboards
+## Gestionar Clasificaciones
 
-Leaderboards in Trophy have a number of statuses to help you control when users and how users can join them.
+Las clasificaciones en Trophy tienen varios estados para ayudarte a controlar cuándo y cómo los usuarios pueden unirse a ellas.
 
-### Leaderboard Statuses
+### Estados de Clasificación
 
-Leaderboards can have one of the following statuses:
+Las clasificaciones pueden tener uno de los siguientes estados:
 
 - `Inactive`
 - `Scheduled`
@@ -242,30 +243,30 @@ Leaderboards can have one of the following statuses:
 - `Finished`
 - `Archived`
 
-All new leaderboards are created as `Inactive`. While inactive, any properties or settings of the leaderboard can be changed, they won't be visible to users and users can't join them.
+Todas las nuevas clasificaciones se crean como `Inactive`. Mientras estén inactivas, cualquier propiedad o configuración de la clasificación puede cambiarse, no serán visibles para los usuarios y los usuarios no podrán unirse a ellas.
 
-Once you're ready for users to start participating, you can make it `Active`. This means Trophy will start tracking users' activity and entering them into leaderboards.
+Una vez que estés listo para que los usuarios comiencen a participar, puedes hacerla `Active`. Esto significa que Trophy comenzará a rastrear la actividad de los usuarios e ingresarlos en las clasificaciones.
 
-Leaderboards that have been configured with a [start date](#start-dates) in the future can't be made active, they can only be `Scheduled`. Once the start date is past, Trophy will automatically make them `Active` and start accepting participants.
+Las clasificaciones que han sido configuradas con una [fecha de inicio](#start-dates) en el futuro no pueden hacerse activas, solo pueden estar `Scheduled`. Una vez que la fecha de inicio haya pasado, Trophy automáticamente las hará `Active` y comenzará a aceptar participantes.
 
-If a leaderboard has an [end date](#end-dates), then once it has past Trophy will automatically move it to `Finished` status and stop monitoring user activity. Once a leaderboard has finished it won't be visible to users but you can still query APIs to get rankings for historical runs.
+Si una clasificación tiene una [fecha de finalización](#end-dates), una vez que haya pasado Trophy automáticamente la moverá al estado `Finished` y dejará de monitorear la actividad de los usuarios. Una vez que una clasificación haya finalizado no será visible para los usuarios, pero aún podrás consultar las APIs para obtener las posiciones de ejecuciones históricas.
 
-If you decide you no longer need a leaderboard, you can move it to `Archived` status.
+Si decides que ya no necesitas una clasificación, puedes moverla al estado `Archived`.
 
 <Warning>
-  Once a leaderboard is archived, it can only be restored by contacting support.
+  Una vez que una clasificación está archivada, solo puede restaurarse contactando al soporte.
 </Warning>
 
-## Displaying Leaderboards
+## Visualización de Clasificaciones
 
 <Tip>
-  Check out our [full guide](/guides/how-to-build-a-leaderboards-feature) on
-  adding leaderboards to your app for more details.
+  Consulta nuestra [guía completa](/guides/how-to-build-a-leaderboards-feature) sobre
+  cómo agregar clasificaciones a tu aplicación para más detalles.
 </Tip>
 
-## Leaderboard Analytics
+## Analíticas de Clasificaciones
 
-Trophy has built-in analytics to help you understand how users are engaging with your leaderboards.
+Trophy tiene analíticas integradas para ayudarte a entender cómo los usuarios están interactuando con tus clasificaciones.
 
 <Frame>
   <img
@@ -276,9 +277,9 @@ Trophy has built-in analytics to help you understand how users are engaging with
   />
 </Frame>
 
-### Total Unique Participants
+### Total de Participantes Únicos
 
-This chart shows how many unique users have participated in any run of a leaderboard over time. This is useful to understand how many of your users actually take part in leaderboards and how [participant limits](#participant-limits) are affecting this.
+Este gráfico muestra cuántos usuarios únicos han participado en cualquier ejecución de una clasificación a lo largo del tiempo. Esto es útil para entender cuántos de tus usuarios realmente participan en las clasificaciones y cómo los [límites de participantes](#participant-limits) están afectando esto.
 
 <Frame>
   <img
@@ -289,9 +290,9 @@ This chart shows how many unique users have participated in any run of a leaderb
   />
 </Frame>
 
-### Active Users
+### Usuarios Activos
 
-This chart show the number of users who have changed rank at least once in a given leaderboard. This is useful to get a sense of how competitive the average user is in a particular leaderboard.
+Este gráfico muestra el número de usuarios que han cambiado de posición al menos una vez en una clasificación determinada. Esto es útil para tener una idea de qué tan competitivo es el usuario promedio en una clasificación particular.
 
 <Frame>
   <img
@@ -302,9 +303,9 @@ This chart show the number of users who have changed rank at least once in a giv
   />
 </Frame>
 
-### Rank Changes
+### Cambios de Rango
 
-This chart shows the total number of rank changes in a particular leaderboard over time. This is useful to understand how competitive users are across the board.
+Este gráfico muestra el número total de cambios de rango en una clasificación particular a lo largo del tiempo. Esto es útil para entender qué tan competitivos son los usuarios en general.
 
 <Frame>
   <img
@@ -315,9 +316,9 @@ This chart shows the total number of rank changes in a particular leaderboard ov
   />
 </Frame>
 
-### Score Distribution
+### Distribución de Puntuación
 
-This chart is a histogram of users' scores in a particular leaderboard. This is useful to get a sense of how bunched up or spread out users are, and what sections of the rankings are the most competitive.
+Este gráfico es un histograma de las puntuaciones de los usuarios en una clasificación particular. Esto es útil para tener una idea de qué tan agrupados o dispersos están los usuarios, y qué secciones de las clasificaciones son las más competitivas.
 
 <Frame>
   <img
@@ -328,26 +329,26 @@ This chart is a histogram of users' scores in a particular leaderboard. This is 
   />
 </Frame>
 
-## Frequently Asked Questions
+## Preguntas Frecuentes
 
 <AccordionGroup>
-  <Accordion title="How many participants can be in a leaderboard at once?">
-    We limit leaderboards to 1,000 participants.
+  <Accordion title="¿Cuántos participantes pueden estar en una clasificación a la vez?">
+    Limitamos las clasificaciones a 1,000 participantes.
     
-    Read more about this in the [dedicated section](#participant-limits) of this page.
+    Lee más sobre esto en la [sección dedicada](#participant-limits) de esta página.
 
   </Accordion>
 
 {" "}
 
-<Accordion title="I don't see a weekly leaderboard option, how can I set one up?">
-  Trophy supports running repeating leaderboards on any arbitrary number of
-  days. So a weekly leaderboard would just be a leaderboard that repeats every 7
-  days. Read [this section](#tips-for-weekly-leaderboards) for more tips of
-  creating weekly leaderboards.
+<Accordion title="No veo una opción de clasificación semanal, ¿cómo puedo configurar una?">
+  Trophy permite ejecutar clasificaciones repetitivas en cualquier número arbitrario de
+  días. Así que una clasificación semanal sería simplemente una clasificación que se repite cada 7
+  días. Lee [esta sección](#tips-for-weekly-leaderboards) para obtener más consejos sobre
+  la creación de clasificaciones semanales.
 </Accordion>
 </AccordionGroup>
 
-## Get Support
+## Obtener Soporte
 
-Want to get in touch with the Trophy team? Reach out to us via [email](mailto:support@trophy.so). We're here to help!
+¿Quieres ponerte en contacto con el equipo de Trophy? Comunícate con nosotros por [correo electrónico](mailto:support@trophy.so). ¡Estamos aquí para ayudarte!

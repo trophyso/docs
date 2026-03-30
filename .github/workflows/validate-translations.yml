@@ -48,11 +48,11 @@ jobs:
 
       - name: Translation freshness gate
         env:
-          LINGO_API_KEY: ${{ secrets.LINGODOTDEV_API_KEY }}
+          LINGO_API_KEY: ${{ secrets.LINGO_API_KEY }}
           LINGO_ENGINE_ID: ${{ secrets.LINGO_ENGINE_ID }}
         run: |
           if [ -z "${LINGO_API_KEY}" ] || [ -z "${LINGO_ENGINE_ID}" ]; then
-            echo "LINGODOTDEV_API_KEY or LINGO_ENGINE_ID is not set, skipping frozen translation gate."
+            echo "LINGO_API_KEY or LINGO_ENGINE_ID is not set, skipping frozen translation gate."
           else
             npx lingo.dev@latest run --frozen
           fi

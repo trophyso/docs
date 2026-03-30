@@ -1,41 +1,45 @@
 ---
-title: Metrics
-description: Learn how to model user interactions using Trophy Metrics. Model any user interaction and trigger automated gamification flows with just a few lines of code.
-"og:description": Metrics are flexible data primitives that can be used to model any user interaction and drive a wide range of gamified features.
+title: Métricas
+description: Aprende a modelar las interacciones de los usuarios usando Trophy
+  Metrics. Modela cualquier interacción de usuario y activa flujos de
+  gamificación automatizados con solo unas pocas líneas de código.
+og:description: Las métricas son primitivas de datos flexibles que pueden usarse
+  para modelar cualquier interacción de usuario e impulsar una amplia gama de
+  funciones gamificadas.
 icon: box
 ---
 
-## What are Metrics?
+## ¿Qué son las Métricas?
 
-All gamification features are centered around user interactions. At Trophy, we use the term **Metrics** to refer to the data objects that model those interactions within your web or mobile app.
+Todas las funciones de gamificación se centran en las interacciones de los usuarios. En Trophy, utilizamos el término **Métricas** para referirnos a los objetos de datos que modelan esas interacciones dentro de tu aplicación web o móvil.
 
-Metrics are un-opinionated, meaning they can be used to model absolutely any user interaction you can think of. Examples could include:
+Las métricas no tienen opinión, lo que significa que pueden usarse para modelar absolutamente cualquier interacción de usuario que puedas imaginar. Algunos ejemplos podrían incluir:
 
-- Followers, likes or posts
-- Tasks completed
-- Miles ran
-- Lessons completed
-- Words written
+- Seguidores, me gusta o publicaciones
+- Tareas completadas
+- Millas recorridas
+- Lecciones completadas
+- Palabras escritas
 - ...
 
-Metrics are the building blocks of the infrastructure that powers Trophy's gamification features. Each user interaction that relates to a metric is stored as an [Event](/platform/events).
+Las métricas son los componentes básicos de la infraestructura que impulsa las funciones de gamificación de Trophy. Cada interacción de usuario relacionada con una métrica se almacena como un [Evento](/platform/events).
 
-Events are stored and processed in chronological order. At any particular point in time, the combined state of a user's event history reflects their overall progress on your platform.
+Los eventos se almacenan y procesan en orden cronológico. En cualquier momento dado, el estado combinado del historial de eventos de un usuario refleja su progreso general en tu plataforma.
 
-## Key Attributes
+## Atributos Clave
 
-Here we describe the key attributes that allow you to create metrics to best fit your use case.
+Aquí describimos los atributos clave que te permiten crear métricas que se adapten mejor a tu caso de uso.
 
-### Units
+### Unidades
 
-You can easily assign units to metrics in the dashboard for either:
+Puedes asignar fácilmente unidades a las métricas en el panel de control para:
 
-- Arbitrary numbers (tasks, posts, messages etc.)
-- Currencies ($, £, €)
+- Números arbitrarios (tareas, publicaciones, mensajes, etc.)
+- Monedas ($, £, €)
 
-## Creating Metrics
+## Creación de Métricas
 
-To create a Metric, head over to the [Metrics](https://app.trophy.so/metrics) page within Trophy and hit the **New Metric** button:
+Para crear una métrica, dirígete a la página de [Métricas](https://app.trophy.so/metrics) dentro de Trophy y haz clic en el botón **Nueva Métrica**:
 
 <Frame>
   <video
@@ -49,26 +53,26 @@ To create a Metric, head over to the [Metrics](https://app.trophy.so/metrics) pa
 </Frame>
 
 <Steps>
-  <Step title="Enter a name">
-    Choose a name for the metric.
+  <Step title="Introduce un nombre">
+    Elige un nombre para la métrica.
   </Step>
   
-  <Step title="Hit save">
-    Save the new metric.
+  <Step title="Guarda los cambios">
+    Guarda la nueva métrica.
   </Step>
 
-   <Step title="Configure settings">
-    Configure additional settings like metric units or currency if applicable on the metric configure page.
+   <Step title="Configura los ajustes">
+    Configura ajustes adicionales como las unidades de métrica o la moneda si corresponde en la página de configuración de la métrica.
   </Step>
 </Steps>
 
-## Metric Analytics
+## Analíticas de Métricas
 
-Trophy has a built-in analytics dashboard for each metric you create. It shows you:
+Trophy tiene un panel de analíticas integrado para cada métrica que crees. Te muestra:
 
-- The total value of all tracked events against the metric
-- The number of users actively making progress against the metric
-- The metric's [Achievement Completion Chart](#achievement-completion-chart)
+- El valor total de todos los eventos rastreados para la métrica
+- El número de usuarios que están progresando activamente en la métrica
+- El [Gráfico de Completitud de Logros](#achievement-completion-chart) de la métrica
 
 <Frame>
   <img
@@ -78,11 +82,11 @@ Trophy has a built-in analytics dashboard for each metric you create. It shows y
   />
 </Frame>
 
-### Achievement Completion Chart
+### Gráfico de Completitud de Logros
 
-The achievement completion chart shows the current state of the userbase in terms of the number of users who have completed each achievement that you've configured against this metric.
+El gráfico de completitud de logros muestra el estado actual de la base de usuarios en términos del número de usuarios que han completado cada logro que has configurado para esta métrica.
 
-[Learn more about achievements](/platform/achievements).
+[Más información sobre logros](/platform/achievements).
 
 <Frame>
   <img
@@ -92,21 +96,21 @@ The achievement completion chart shows the current state of the userbase in term
   />
 </Frame>
 
-## Frequently Asked Questions
+## Preguntas Frecuentes
 
 <AccordionGroup>
-  <Accordion title="How many metrics can I create?">
-    As many as you want!
+  <Accordion title="¿Cuántas métricas puedo crear?">
+    ¡Todas las que quieras!
   </Accordion>
 
-    <Accordion title="Can Trophy control my UI when events are tracked?">
-    No, metrics are purely server-side and only support the business logic around achievements, streaks and other workflows like sending emails.
+    <Accordion title="¿Puede Trophy controlar mi interfaz cuando se rastrean eventos?">
+    No, las métricas son puramente del lado del servidor y solo admiten la lógica de negocio relacionada con logros, rachas y otros flujos de trabajo como el envío de correos electrónicos.
 
-    They don't control any in-app UI, but our APIs provide all the data you need to build whatever UI you want.
+    No controlan ninguna interfaz dentro de la aplicación, pero nuestras APIs proporcionan todos los datos que necesitas para construir la interfaz que desees.
     </Accordion>
 
 </AccordionGroup>
 
-## Get Support
+## Obtener Soporte
 
-Want to get in touch with the Trophy team? Reach out to us via [email](mailto:support@trophy.so). We're here to help!
+¿Quieres contactar con el equipo de Trophy? Comunícate con nosotros por [correo electrónico](mailto:support@trophy.so). ¡Estamos aquí para ayudarte!

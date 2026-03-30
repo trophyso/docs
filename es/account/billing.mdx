@@ -1,111 +1,113 @@
 ---
-title: Billing
-description: Learn how Trophy controls costs by charging based on monthly active users.
-"og:description": Learn how Trophy controls costs by charging based on monthly active users.
+title: Facturación
+description: Aprende cómo Trophy controla los costos cobrando según los usuarios
+  activos mensuales.
+og:description: Aprende cómo Trophy controla los costos cobrando según los
+  usuarios activos mensuales.
 icon: gauge
 ---
 
 import { PlanBadge } from "/snippets/plan-badge.jsx";
 
-## Usage-based Billing
+## Facturación basada en uso
 
-Trophy follows a usage-based pricing model where customers only pay for the units of usage they consume. For Trophy, a unit of usage corresponds to a single [Monthly Active User](##monthly-active-users-maus) (MAU).
+Trophy sigue un modelo de precios basado en uso donde los clientes solo pagan por las unidades de uso que consumen. Para Trophy, una unidad de uso corresponde a un único [Usuario Activo Mensual](##monthly-active-users-maus) (MAU).
 
 <Info>
-  See our [pricing page](https://trophy.so/pricing) to get an estimate of your
-  costs based on your expected usage.
+  Consulta nuestra [página de precios](https://trophy.so/pricing) para obtener una estimación de tus
+  costos según tu uso esperado.
 </Info>
 
-## Monthly Active Users (MAUs)
+## Usuarios Activos Mensuales (MAU)
 
-Trophy defines an MAU as a single user that sends at least one [metric event](/platform/events) to Trophy in a given month.
-
-<Tip>
-  Bear in mind **you never pay for churned users**. If a user signs up for your
-  product in a given month but doesn't return, you only pay for that user once
-  and never again.
-</Tip>
-
-## Free Tier
-
-The free tier allows teams to test and evaluate Trophy up to **100 MAUs** without accruing usage charges.
+Trophy define un MAU como un único usuario que envía al menos un [evento métrico](/platform/events) a Trophy en un mes determinado.
 
 <Tip>
-  Once you exceed the free plan, your account will continue to function and
-  we'll reach out to you directly with a friendly reminder to upgrade.
+  Ten en cuenta que **nunca pagas por usuarios que abandonan**. Si un usuario se registra en tu
+  producto en un mes determinado pero no regresa, solo pagas por ese usuario una vez
+  y nunca más.
 </Tip>
 
-## Paid Plans
+## Nivel gratuito
 
-Trophy has two paid plans, [Starter](#starter-plan) and [Pro](#pro-plan).
-
-### Starter Plan
-
-The starter plan is for customers who have graduated from the testing and evaluation phase and are using Trophy in small-scale production deployments.
-
-Unlike the [Free Tier](#free-tier), the starter plan has no limits on MAUs.
+El nivel gratuito permite a los equipos probar y evaluar Trophy hasta **100 MAU** sin generar cargos por uso.
 
 <Tip>
-  Beyond ~`16,000` MAUs it's usually more cost-efficient to upgrade to the [Pro
-  Plan](#pro-plan).
+  Una vez que superes el plan gratuito, tu cuenta seguirá funcionando y
+  nos pondremos en contacto contigo directamente con un recordatorio amigable para actualizar.
 </Tip>
 
-### Pro Plan
+## Planes de pago
 
-The pro plan is for customers who are using Trophy in larger scale deployments or who require more advanced [features](#features).
+Trophy tiene dos planes de pago, [Starter](#starter-plan) y [Pro](#pro-plan).
 
-### Plan Allowances
+### Plan Starter
 
-Here's a comparison of the allowances of each paid plan:
+El plan starter es para clientes que han superado la fase de prueba y evaluación y están usando Trophy en implementaciones de producción a pequeña escala.
 
-| Item                        | Starter | Pro      |
-| --------------------------- | ------- | -------- |
-| Base price                  | `$99`   | `$299`   |
-| Included MAUs               | `1,000` | `10,000` |
-| Included Emails             | `5,000` | `50,000` |
-| Included Push Notifications | `5,000` | `50,000` |
+A diferencia del [Nivel gratuito](#free-tier), el plan starter no tiene límites en MAU.
 
-### Overages
+<Tip>
+  Más allá de ~`16,000` MAU, generalmente es más rentable actualizar al [Plan
+  Pro](#pro-plan).
+</Tip>
 
-Overages are charged on paid plans above the included [allowances](#plan-allowances) at the following rates:
+### Plan Pro
 
-| Item                     | Starter  | Pro      |
-| ------------------------ | -------- | -------- |
-| 1 MAU                    | `$0.015` | `$0.015` |
-| 1,000 Emails             | `$2.50`  | `$2.00`  |
-| 1,000 Push Notifications | `$1.50`  | `$1.00`  |
+El plan pro está diseñado para clientes que utilizan Trophy en implementaciones de mayor escala o que requieren [funciones](#features) más avanzadas.
 
-Volume discounts are available as part of [custom contracts](#custom-contracts).
+### Límites del Plan
 
-## Features
+Aquí hay una comparación de los límites de cada plan de pago:
 
-Here's a list of all Trophy features and the plan they become available on:
+| Elemento                        | Starter | Pro      |
+| ------------------------------- | ------- | -------- |
+| Precio base                     | `$99`   | `$299`   |
+| MAU incluidos                   | `1,000` | `10,000` |
+| Emails incluidos                | `5,000` | `50,000` |
+| Notificaciones push incluidas   | `5,000` | `50,000` |
+
+### Excedentes
+
+Los excedentes se cobran en los planes de pago por encima de los [límites](#plan-allowances) incluidos a las siguientes tarifas:
+
+| Elemento                     | Starter  | Pro      |
+| ---------------------------- | -------- | -------- |
+| 1 MAU                        | `$0.015` | `$0.015` |
+| 1.000 Emails                 | `$2.50`  | `$2.00`  |
+| 1.000 Notificaciones push    | `$1.50`  | `$1.00`  |
+
+Los descuentos por volumen están disponibles como parte de [contratos personalizados](#custom-contracts).
+
+## Funciones
+
+Aquí hay una lista de todas las funciones de Trophy y el plan en el que están disponibles:
 
 <PlanBadge plan="free" />
 
-- [Achievements](/platform/achievements)
-- [Streaks](/platform/streaks)
-- [Points](/platform/points)
-- [Leaderboards](/platform/leaderboards)
+- [Logros](/platform/achievements)
+- [Rachas](/platform/streaks)
+- [Puntos](/platform/points)
+- [Clasificaciones](/platform/leaderboards)
 - [Emails](/platform/emails)
-- [Push Notifications](/platform/push-notifications)
+- [Notificaciones push](/platform/push-notifications)
 
 <PlanBadge plan="starter" />
 
-- [DNS Verification](/platform/emails#dns-verification-advanced)
+- [Verificación DNS](/platform/emails#dns-verification-advanced)
 
 <PlanBadge plan="pro" />
 
 - [Webhooks](/webhooks)
-- [Custom Attributes](/platform/users#custom-user-attributes)
+- [Atributos Personalizados](/platform/users#custom-user-attributes)
 
-## Custom Contracts
+## Contratos Personalizados
 
-If you have more than 100K MAUs and would like to discuss custom contracts including volume discounts to suit your business needs then please [get in touch](mailto:hello@trophy.so) and we'll be happy to help.
+Si tiene más de 100K MAU y desea discutir contratos personalizados que incluyan descuentos por volumen adaptados a las necesidades de su negocio, [contáctenos](mailto:hello@trophy.so) y estaremos encantados de ayudarle.
 
-## Viewing Your Usage
+## Ver su Uso
 
-You can view your usage for the current billing period on the [billing page](https://app.trophy.so/billing) of the Trophy dashboard and view all past invoices in your billing portal.
+Puede ver su uso para el período de facturación actual en la [página de facturación](https://app.trophy.so/billing) del panel de Trophy y ver todas las facturas anteriores en su portal de facturación.
 
 <Frame>
   <img
@@ -116,14 +118,14 @@ You can view your usage for the current billing period on the [billing page](htt
   />
 </Frame>
 
-## Frequently Asked Questions
+## Preguntas frecuentes
 
 <AccordionGroup>
-  <Accordion title="When will I be charged?">
-    We charge all customers on the 1st of the month for usage in arrears.
+  <Accordion title="¿Cuándo se me cobrará?">
+    Cobramos a todos los clientes el día 1 de cada mes por el uso del mes anterior.
   </Accordion>
 </AccordionGroup>
 
-## Get Support
+## Obtener soporte
 
-Want to get in touch with the Trophy team? Reach out to us via [email](mailto:support@trophy.so). We're here to help!
+¿Quieres ponerte en contacto con el equipo de Trophy? Comunícate con nosotros por [correo electrónico](mailto:support@trophy.so). ¡Estamos aquí para ayudarte!

@@ -1,7 +1,9 @@
 ---
-title: How To Build An XP Feature
-description: Learn how to use Trophy to add an XP feature to your web or mobile app.
-subtitle: Learn how to use Trophy to add an XP feature to your web or mobile app.
+title: Cómo construir una funcionalidad de XP
+description: Aprende a usar Trophy para agregar una funcionalidad de XP a tu
+  aplicación web o móvil.
+subtitle: Aprende a usar Trophy para agregar una funcionalidad de XP a tu
+  aplicación web o móvil.
 noindex: true
 ---
 
@@ -13,28 +15,26 @@ import UserPointsResponse from "/snippets/user-points-response-block.mdx";
 import UserPointsEventSummaryRequest from "/snippets/user-points-summary-request-block.mdx";
 import UserPointsEventSummaryResponse from "/snippets/user-points-summary-response-block.mdx";
 
-The guide outlines the full process of adding an XP feature to your web or mobile app using Trophy.
+Esta guía describe el proceso completo para agregar una funcionalidad de XP a tu aplicación web o móvil usando Trophy.
 
-For illustration purposes we'll use the example of a study platform that uses XP to reward users for taking different interactions.
+Con fines ilustrativos, usaremos el ejemplo de una plataforma de estudio que utiliza XP para recompensar a los usuarios por realizar diferentes interacciones.
 
 <Tip>
-  To see a fully working example of this in practice, check out the [live
-  demo](https://examples.trophy.so) or [github
-  repo](https://github.com/trophyso/example-study-platform/tree/demo).
+  Para ver un ejemplo completamente funcional de esto en la práctica, consulta la [demostración en vivo](https://examples.trophy.so) o el [repositorio de github](https://github.com/trophyso/example-study-platform/tree/demo).
 </Tip>
 
-## Pre-requisites
+## Requisitos previos
 
-- A [Trophy](https://app.trophy.so/sign-up) account
-- About 10 minutes
+- Una cuenta de [Trophy](https://app.trophy.so/sign-up)
+- Aproximadamente 10 minutos
 
-## Trophy Setup
+## Configuración de Trophy
 
-In Trophy, [Metrics](/platform/metrics) are the building blocks of gamification and model the different interactions users make with your product.
+En Trophy, las [Métricas](/platform/metrics) son los bloques de construcción de la gamificación y modelan las diferentes interacciones que los usuarios realizan con tu producto.
 
-In this guide the interaction we're interested in is `flashcards-viewed`, but you can create any number of metrics that best represents the interactions you want to reward XP from.
+En esta guía, la interacción que nos interesa es `flashcards-viewed`, pero puedes crear cualquier cantidad de métricas que mejor representen las interacciones desde las cuales deseas recompensar XP.
 
-In the Trophy dashboard, head to the [metrics page](https://app.trophy.so/metrics) and create a metric.
+En el panel de Trophy, dirígete a la [página de métricas](https://app.trophy.so/metrics) y crea una métrica.
 
 <Frame>
   <video
@@ -47,7 +47,7 @@ In the Trophy dashboard, head to the [metrics page](https://app.trophy.so/metric
   ></video>
 </Frame>
 
-Once you've created your metric, head to the [points page](https://app.trophy.so/points) and create a new points system called 'XP'.
+Una vez que hayas creado tu métrica, dirígete a la [página de puntos](https://app.trophy.so/points) y crea un nuevo sistema de puntos llamado 'XP'.
 
 <Frame>
   <video
@@ -60,7 +60,7 @@ Once you've created your metric, head to the [points page](https://app.trophy.so
   ></video>
 </Frame>
 
-Once created, you'll be taken to the configure page for the XP system where you can create 'triggers' for each of the ways you want to reward users with XP.
+Una vez creado, serás dirigido a la página de configuración del sistema XP donde podrás crear 'disparadores' para cada una de las formas en que deseas recompensar a los usuarios con XP.
 
 <Frame>
   <video
@@ -73,48 +73,48 @@ Once created, you'll be taken to the configure page for the XP system where you 
   ></video>
 </Frame>
 
-In Trophy you track user interactions by sending [Events](/platform/events) from your code to Trophy APIs against a specific metric.
+En Trophy rastreás las interacciones del usuario enviando [Eventos](/platform/events) desde tu código a las APIs de Trophy contra una métrica específica.
 
-When events are recorded for a specific user, Trophy will automatically check if the event is against a metric that is configured as part of any XP triggers.
+Cuando se registran eventos para un usuario específico, Trophy verificará automáticamente si el evento está asociado a una métrica configurada como parte de algún disparador de XP.
 
-If so Trophy will award the user with the appropriate amount of XP according to the trigger configuration.
+Si es así, Trophy otorgará al usuario la cantidad apropiada de XP según la configuración del disparador.
 
-This is what makes building gamified experiences with Trophy so easy, it does all the work for you behind the scenes.
+Esto es lo que hace que construir experiencias gamificadas con Trophy sea tan fácil: hace todo el trabajo por vos detrás de escena.
 
 <Tip>
-  XP can also be awarded to users based on achievements, streaks and other
-  triggers. See the dedicated [points docs](/platform/points#points-triggers)
-  for more information.
+  Los XP también pueden otorgarse a los usuarios en base a logros, rachas y otros
+  disparadores. Consultá la [documentación de puntos](/platform/points#points-triggers)
+  para más información.
 </Tip>
 
-## Installing Trophy SDK
+## Instalación del SDK de Trophy
 
-To interact with Trophy from your code you'll use the Trophy SDK available in most major [programming languages](/api-reference/client-libraries).
+Para interactuar con Trophy desde tu código usarás el SDK de Trophy disponible en la mayoría de los principales [lenguajes de programación](/api-reference/client-libraries).
 
-Install the Trophy SDK:
+Instalá el SDK de Trophy:
 
 <SDKInstallCommand />
 
-Next, grab your API key from the Trophy [integration page](https://app.trophy.so/integration) and add this as a **server-side only** environment variable.
+A continuación, obtené tu clave de API desde la [página de integración](https://app.trophy.so/integration) de Trophy y agregala como una variable de entorno **solo del lado del servidor**.
 
 ```bash
 TROPHY_API_KEY='*******'
 ```
 
 <Warning>
-  Make sure you **don't** expose your API key in client-side code.
+  Asegurate de **no** exponer tu clave de API en código del lado del cliente.
 </Warning>
 
-## Tracking User Interactions
+## Rastreo de Interacciones del Usuario
 
-To track an event (user interaction) against your metric, use the [metric change API](/api-reference/endpoints/metrics/send-a-metric-change-event).
+Para rastrear un evento (interacción del usuario) contra tu métrica, usá la [API de cambio de métrica](/api-reference/endpoints/metrics/send-a-metric-change-event).
 
 <MetricChangeRequestBlock />
 
-The response to this API call is the complete set of changes to any features you've built with Trophy, including any XP that was awarded to the user as a result of the event, and from what triggers it was awarded.
+La respuesta a esta llamada de API es el conjunto completo de cambios a cualquier funcionalidad que hayas construido con Trophy, incluyendo cualquier XP que se le haya otorgado al usuario como resultado del evento, y de qué disparadores fue otorgado.
 
 <Note>
-  If you use [Points Levels](/platform/points#points-levels), the `xp` object can include a **`level`** field **only when** the user's tier changed on this request; it may be omitted when their level stayed the same. See the [metric change API reference](/api-reference/endpoints/metrics/send-a-metric-change-event) for the full response schema.
+  Si usás [Niveles de Puntos](/platform/points#points-levels), el objeto `xp` puede incluir un campo **`level`** **solo cuando** el nivel del usuario cambió en esta solicitud; puede omitirse cuando su nivel se mantuvo igual. Consultá la [referencia de API de cambio de métrica](/api-reference/endpoints/metrics/send-a-metric-change-event) para el esquema de respuesta completo.
 </Note>
 
 {/* vale off */}
@@ -158,17 +158,17 @@ The response to this API call is the complete set of changes to any features you
 
 {/* vale on */}
 
-Validate this is working by checking the Trophy [dashboard](https://app.trophy.so).
+Valida que esto funciona verificando el panel de Trophy [dashboard](https://app.trophy.so).
 
-## Displaying XP
+## Mostrando XP
 
-You have a number of options for displaying XP in your application. Here we'll look at the most common options.
+Tienes varias opciones para mostrar XP en tu aplicación. Aquí veremos las opciones más comunes.
 
-### Pop-up Notifications
+### Notificaciones Emergentes
 
-We can use the response of the [metric change API](/api-reference/endpoints/metrics/send-a-metric-change-event) to show users pop-up notifications when users are awarded new XP.
+Podemos usar la respuesta de la [API de cambio de métrica](/api-reference/endpoints/metrics/send-a-metric-change-event) para mostrar a los usuarios notificaciones emergentes cuando se les otorga nuevo XP.
 
-Here's an example of this in action:
+Aquí hay un ejemplo de esto en acción:
 
 ```ts XP Pop-ups
 // Sends event to Trophy
@@ -196,24 +196,20 @@ if (xp.awards.length > 0) {
 ```
 
 <Tip>
-  If you want to play sound effects, use the [HTML5 Audio
-  API](https://developer.mozilla.org/en-US/docs/Web/API/Web_Audio_API) and feel
-  free to steal these [audio
-  files](https://github.com/trophyso/example-study-platform/tree/demo/public/sounds)
-  we recommend.
+  Si quieres reproducir efectos de sonido, usa la [API de Audio HTML5](https://developer.mozilla.org/en-US/docs/Web/API/Web_Audio_API) y siéntete libre de usar estos [archivos de audio](https://github.com/trophyso/example-study-platform/tree/demo/public/sounds) que recomendamos.
 </Tip>
 
-### Displaying User XP
+### Mostrando el XP del Usuario
 
-To fetch a users XP use the [user points API](/api-reference/endpoints/users/get-a-users-points).
+Para obtener el XP de un usuario, usa la [API de puntos de usuario](/api-reference/endpoints/users/get-a-users-points).
 
 <UserPointsRequest />
 
-This API returns data on the user's total XP but can be configured to also return between 1 and 100 of the user's most recent XP awards by using the `awards` [query parameter](/api-reference/endpoints/users/get-a-users-points#parameter-awards).
+Esta API devuelve datos sobre el XP total del usuario, pero puede configurarse para devolver también entre 1 y 100 de los premios de XP más recientes del usuario usando el `awards` [parámetro de consulta](/api-reference/endpoints/users/get-a-users-points#parameter-awards).
 
 <UserPointsResponse />
 
-Here's an example of a UI that shows users a list of their most recent awards based on the data returned from the user points API.
+Aquí hay un ejemplo de una interfaz que muestra a los usuarios una lista de sus premios más recientes basada en los datos devueltos por la API de puntos de usuario.
 
 <Frame>
   <img
@@ -224,17 +220,17 @@ Here's an example of a UI that shows users a list of their most recent awards ba
   />
 </Frame>
 
-### User XP Chart
+### Gráfico de XP del Usuario
 
-The [user points summary API](/api-reference/endpoints/users/get-a-users-points-summary) returns chart-ready historical data for displaying how a user's XP has changed over time.
+La [API de resumen de puntos de usuario](/api-reference/endpoints/users/get-a-users-points-summary) devuelve datos históricos listos para gráficos que muestran cómo ha cambiado el XP de un usuario a lo largo del tiempo.
 
 <UserPointsEventSummaryRequest />
 
-Use the `aggregation`, `start_date` and `end_date` query parameters to control the data returned. Here's an example of XP data aggregated daily:
+Usa los parámetros de consulta `aggregation`, `start_date` y `end_date` para controlar los datos devueltos. Aquí hay un ejemplo de datos de XP agregados diariamente:
 
 <UserPointsEventSummaryResponse />
 
-And here's an example of the types of charts you can build with this data:
+Y aquí hay un ejemplo de los tipos de gráficos que puedes construir con estos datos:
 
 <Frame>
   <img
@@ -245,9 +241,9 @@ And here's an example of the types of charts you can build with this data:
   />
 </Frame>
 
-## Analytics
+## Analíticas
 
-In Trophy your [xp system page](https://app.trophy.so/points), includes analytics charts that shows data on total XP earned and a breakdown of exactly what triggers award the most XP.
+En Trophy, tu [página del sistema de XP](https://app.trophy.so/points) incluye gráficos analíticos que muestran datos sobre el total de XP ganado y un desglose detallado de qué desencadenantes otorgan más XP.
 
 <Frame>
   <img
@@ -258,6 +254,6 @@ In Trophy your [xp system page](https://app.trophy.so/points), includes analytic
   />
 </Frame>
 
-## Get Support
+## Obtener Soporte
 
-Want to get in touch with the Trophy team? Reach out to us via [email](mailto:support@trophy.so). We're here to help!
+¿Quieres ponerte en contacto con el equipo de Trophy? Contáctanos por [correo electrónico](mailto:support@trophy.so). ¡Estamos aquí para ayudarte!

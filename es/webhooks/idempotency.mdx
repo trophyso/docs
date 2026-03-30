@@ -1,23 +1,25 @@
 ---
-title: Idempotency
-description: Learn how to ensure your webhook endpoints only process events once to prevent unintended side effects.
-subtitle: Learn how to ensure your webhook endpoints only process events once to prevent unintended side effects.
+title: Idempotencia
+description: Aprenda cómo asegurar que sus endpoints de webhook procesen los
+  eventos solo una vez para prevenir efectos secundarios no deseados.
+subtitle: Aprenda cómo asegurar que sus endpoints de webhook procesen los
+  eventos solo una vez para prevenir efectos secundarios no deseados.
 icon: repeat
 ---
 
-## What is Idempotency?
+## ¿Qué es la Idempotencia?
 
-In the context of webhooks, [idempotence](https://en.wikipedia.org/wiki/Idempotence) is the property of an endpoint to ensure it processes duplicate events exactly once.
+En el contexto de los webhooks, la [idempotencia](https://en.wikipedia.org/wiki/Idempotence) es la propiedad de un endpoint de asegurar que procese eventos duplicados exactamente una vez.
 
-Most webhook emitters, including Trophy, operate on an "at least once" delivery guarantee. This means you may eventually receive the same webhook multiple times and your code needs to handle those scenarios without unintended consequences.
+La mayoría de los emisores de webhooks, incluyendo Trophy, operan con una garantía de entrega "al menos una vez". Esto significa que eventualmente puede recibir el mismo webhook múltiples veces y su código necesita manejar esos escenarios sin consecuencias no deseadas.
 
-For example, if your webhook handler is subscribed to [`leaderboard.finished`](/webhooks/events/leaderboards/leaderboard-finished) events and sends users gift cards if they place in the top 10, then your code needs to only send the gift cards once even if your code receives the same event from Trophy multiple times.
+Por ejemplo, si su manejador de webhook está suscrito a eventos [`leaderboard.finished`](/webhooks/events/leaderboards/leaderboard-finished) y envía tarjetas de regalo a los usuarios si se ubican en el top 10, entonces su código necesita enviar las tarjetas de regalo solo una vez incluso si recibe el mismo evento de Trophy múltiples veces.
 
-## Implementing Webhook Idempotency
+## Implementando la Idempotencia de Webhooks
 
-Making your webhook handlers more robust is trivial in most cases. Let's take the gift card example above.
+Hacer que sus manejadores de webhook sean más robustos es trivial en la mayoría de los casos. Tomemos el ejemplo de la tarjeta de regalo anterior.
 
-After sending out a gift card to a user, your code could insert a record into your database that represents that the gift card has been sent to the user.
+Después de enviar una tarjeta de regalo a un usuario, su código podría insertar un registro en su base de datos que represente que la tarjeta de regalo ha sido enviada al usuario.
 
 ```sql
 -- Create a table to store gift card receipts
@@ -38,7 +40,7 @@ AND gift_card_id = 'gift-card-id'
 LIMIT 1
 ```
 
-Then before sending gift cards add an `if` statement that checks if the gift card has already been sent to the user.
+Luego, antes de enviar tarjetas de regalo, agregue una declaración `if` que verifique si la tarjeta de regalo ya ha sido enviada al usuario.
 
 ```js
 var receipt = await getGiftcardReceipt();
@@ -50,8 +52,8 @@ if (!receipt) {
 }
 ```
 
-If your code receives a duplicate event, the gift card will not be sent again.
+Si su código recibe un evento duplicado, la tarjeta de regalo no se enviará nuevamente.
 
-## Get Support
+## Obtenga Soporte
 
-Want to get in touch with the Trophy team? Reach out to us via [email](mailto:support@trophy.so). We're here to help!
+¿Quiere ponerse en contacto con el equipo de Trophy? Comuníquese con nosotros por [correo electrónico](mailto:support@trophy.so). ¡Estamos aquí para ayudarlo!

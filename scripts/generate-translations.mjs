@@ -10,9 +10,13 @@ function getArg(name) {
   if (idx === -1) return null;
   return args[idx + 1] ?? null;
 }
+function hasFlag(name) {
+  return args.includes(name);
+}
 
 const targetArg = getArg("--target");
 const pathFilter = getArg("--paths");
+const forceRetranslate = hasFlag("--force");
 const filters = pathFilter
   ? pathFilter
       .split(",")
@@ -73,7 +77,8 @@ try {
   for (const target of targets) {
     cfg.locale.targets = [target];
     fs.writeFileSync(configPath, JSON.stringify(cfg, null, 2) + "\n");
-    execSync(`npx lingo.dev@latest run --target-locale ${target}`, { stdio: "inherit" });
+    const forceFlag = forceRetranslate ? " --force" : "";
+    execSync(`npx lingo.dev@latest run --target-locale ${target}${forceFlag}`, { stdio: "inherit" });
     execSync(`node scripts/translate-docs-json.mjs --target ${target}`, { stdio: "inherit" });
     console.log(`Translation generation completed for target locale: ${target}`);
   }

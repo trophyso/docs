@@ -1,28 +1,30 @@
 ---
-title: Security
-description: Build secure webhook endpoints using webhook signature verification.
-subtitle: Build secure webhook endpoints using webhook signature verification.
+title: Seguridad
+description: Cree endpoints de webhook seguros utilizando la verificación de
+  firma de webhook.
+subtitle: Cree endpoints de webhook seguros utilizando la verificación de firma
+  de webhook.
 icon: shield-check
 ---
 
-## Webhook Signatures
+## Firmas de Webhook
 
-To help you secure your webhook handlers so that they only respond to events sent from Trophy and not malicious attackers, Trophy includes a webhook signature with every event.
+Para ayudarle a proteger sus controladores de webhook de modo que solo respondan a eventos enviados desde Trophy y no de atacantes maliciosos, Trophy incluye una firma de webhook con cada evento.
 
-This signature is sent in the `X-Trophy-Signature` header and is a `base64` encoded hash of the request payload, hashed using a secure webhook secret provided by Trophy.
+Esta firma se envía en el encabezado `X-Trophy-Signature` y es un hash codificado en `base64` del payload de la solicitud, hasheado usando un secreto de webhook seguro proporcionado por Trophy.
 
-## Webhook Secrets
+## Secretos de Webhook
 
-Each webhook you set up in Trophy has a unique webhook secret which you can access from the [webhooks page](https://app.trophy.so/integration/webhooks) in the Trophy dashboard.
+Cada webhook que configure en Trophy tiene un secreto de webhook único al que puede acceder desde la [página de webhooks](https://app.trophy.so/integration/webhooks) en el panel de Trophy.
 
 <Warning>
-  Make sure you store your webhook secret in a **secure environment variable**
-  and do not commit it to source control.
+  Asegúrese de almacenar su secreto de webhook en una **variable de entorno segura**
+  y no lo confirme en el control de versiones.
 </Warning>
 
-## Securing Webhook Handlers
+## Protección de Controladores de Webhook
 
-To validate that events your webhook handler receives do actually come from Trophy, you need to create your own hash using your secure [webhook secret](#webhook-secrets) and compare it to the [webhook signature](#webhook-signatures) in the `X-Trophy-Signature` header.
+Para validar que los eventos que recibe su controlador de webhook realmente provienen de Trophy, necesita crear su propio hash usando su [secreto de webhook](#webhook-secrets) seguro y compararlo con la [firma de webhook](#webhook-signatures) en el encabezado `X-Trophy-Signature`.
 
 <Frame>
   <video
@@ -35,7 +37,7 @@ To validate that events your webhook handler receives do actually come from Trop
   ></video>
 </Frame>
 
-Once you have your webhook secret, you're ready to start validating events. Here's an example in NodeJS:
+Una vez que tenga su secreto de webhook, estará listo para comenzar a validar eventos. A continuación se muestra un ejemplo en Node.js:
 
 ```js Validating Webhook Events
   // Extract X-Trophy-Signature header from the request
@@ -58,10 +60,10 @@ Once you have your webhook secret, you're ready to start validating events. Here
 ```
 
 <Warning>
-  If your handler detects a request that did not originate from Trophy, it's
-  important to reject the request as early as possible with a `4XX` status code.
+  Si su controlador detecta una solicitud que no se originó en Trophy, es
+  importante rechazar la solicitud lo antes posible con un código de estado `4XX`.
 </Warning>
 
-## Get Support
+## Obtenga Soporte
 
-Want to get in touch with the Trophy team? Reach out to us via [email](mailto:support@trophy.so). We're here to help!
+¿Desea ponerse en contacto con el equipo de Trophy? Contáctenos por [correo electrónico](mailto:support@trophy.so). ¡Estamos aquí para ayudar!

@@ -38,7 +38,7 @@ This repository uses Lingo.dev for static-content localization of docs pages and
     "lingo": {
       "url": "https://mcp.lingo.dev/account",
       "headers": {
-        "x-api-key": "${env:LINGODOTDEV_API_KEY}"
+        "x-api-key": "${env:LINGO_API_KEY}"
       }
     }
   }
@@ -46,7 +46,7 @@ This repository uses Lingo.dev for static-content localization of docs pages and
 ```
 
 3. Ensure the API key is available to the Cursor app process as an environment variable:
-   - `LINGODOTDEV_API_KEY`
+   - `LINGO_API_KEY`
 4. Restart Cursor fully after updating `mcp.json` or environment variables.
 5. Verify by asking Cursor chat to list engines from the Lingo MCP server.
 

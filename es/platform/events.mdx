@@ -1,7 +1,9 @@
 ---
-title: Events
-description: Events are data objects that represent individual user interactions against metrics in Trophy.
-"og:description": Events are data objects that represent individual user interactions against metrics in Trophy.
+title: Eventos
+description: Los eventos son objetos de datos que representan interacciones
+  individuales de usuarios con métricas en Trophy.
+og:description: Los eventos son objetos de datos que representan interacciones
+  individuales de usuarios con métricas en Trophy.
 icon: radio
 ---
 
@@ -9,26 +11,26 @@ import MetricChangeRequestBlock from "/snippets/metric-change-request-block.mdx"
 import MetricChangeResponseBlock from "/snippets/metric-change-response-block.mdx";
 import IdempotentEventTracking from "/snippets/idempotent-event-tracking.mdx";
 
-## What are Events?
+## ¿Qué son los Eventos?
 
-Events represent individual user interactions against [Metrics](/platform/metrics) in Trophy. One event corresponds to a single interaction made by a single user.
+Los eventos representan interacciones individuales de usuarios con [Métricas](/platform/metrics) en Trophy. Un evento corresponde a una única interacción realizada por un único usuario.
 
-When you [integrate metrics](#tracking-metric-events) into your platform, you're setting up your platform to continuously stream events to your Trophy metrics for each user interaction. These interactions then drive all the gamification features you set up around these metrics.
+Cuando [integras métricas](#tracking-metric-events) en tu plataforma, estás configurando tu plataforma para transmitir continuamente eventos a tus métricas de Trophy por cada interacción de usuario. Estas interacciones impulsan todas las funciones de gamificación que configures en torno a estas métricas.
 
-## Key Attributes
+## Atributos Clave
 
-### Event Value
+### Valor del Evento
 
-The `value` of an event is the numerical amount that will be added to the user's total metric count as a result of the user interaction it relates to.
+El `value` de un evento es la cantidad numérica que se añadirá al recuento total de la métrica del usuario como resultado de la interacción de usuario con la que se relaciona.
 
 <Tip>
-The value of an event can be positive or negative, and can be a whole number or a decimal.
+El valor de un evento puede ser positivo o negativo, y puede ser un número entero o un decimal.
 </Tip>
 
-## Custom Event Attributes
+## Atributos Personalizados de Eventos
 
 <Note>
-  This feature is available on the [Pro](/account/billing#pro-plan) plan
+  Esta función está disponible en el plan [Pro](/account/billing#pro-plan)
 </Note>
 
 <Frame>
@@ -39,19 +41,19 @@ The value of an event can be positive or negative, and can be a whole number or 
   />
 </Frame>
 
-You can specify a number of custom event attributes to help you track additional information relevant to your use case against events you send to Trophy.
+Puedes especificar varios atributos personalizados de eventos para ayudarte a rastrear información adicional relevante para tu caso de uso en los eventos que envías a Trophy.
 
-For example, a language learning app might have a 'Questions Completed' metric and use a custom event attribute to store wether the answer to each question was correct.
+Por ejemplo, una aplicación de aprendizaje de idiomas podría tener una métrica de 'Preguntas Completadas' y usar un atributo personalizado de evento para almacenar si la respuesta a cada pregunta fue correcta.
 
-Similarly a fitness app might use an 'Exercises Completed' metric and use a custom event attribute to store the weight that was used in each exercise and another custom event attribute to store how long the exercise lasted.
+De manera similar, una aplicación de fitness podría usar una métrica de 'Ejercicios Completados' y usar un atributo personalizado de evento para almacenar el peso que se usó en cada ejercicio y otro atributo personalizado de evento para almacenar cuánto duró el ejercicio.
 
-Using custom event attributes in this way allows you to enrich events in Trophy with additional context relevant to your use case and use it to power even more engaging gamification features.
+El uso de atributos de eventos personalizados de esta manera te permite enriquecer los eventos en Trophy con contexto adicional relevante para tu caso de uso y utilizarlo para potenciar características de gamificación aún más atractivas.
 
-### Creating Attributes
+### Creación de Atributos
 
-To create a new custom event attribute, head to the metrics page in the Trophy dashboard and hit the _Add Event Attribute_ button.
+Para crear un nuevo atributo de evento personalizado, dirígete a la página de métricas en el panel de Trophy y presiona el botón _Agregar Atributo de Evento_.
 
-Give the attribute a name and a unique key, you'll use the key when referencing the attribute in API calls.
+Asigna un nombre y una clave única al atributo; usarás la clave al hacer referencia al atributo en las llamadas a la API.
 
 <Frame>
   <video
@@ -64,16 +66,16 @@ Give the attribute a name and a unique key, you'll use the key when referencing 
   ></video>
 </Frame>
 
-### Setting Attributes
+### Configuración de Atributos
 
-To set the value of a custom attribute on an event, pass its value in the `attributes` object in your metric tracking code.
+Para establecer el valor de un atributo personalizado en un evento, pasa su valor en el objeto `attributes` en tu código de seguimiento de métricas.
 
 <Warning>
-  Trophy will only set values of attributes that have first been created
-  in the dashboard. We do this to help you keep a clean set of attributes and
-  prevent accidental overwrites.
+  Trophy solo establecerá valores de atributos que hayan sido creados primero
+  en el panel. Hacemos esto para ayudarte a mantener un conjunto limpio de atributos y
+  prevenir sobrescrituras accidentales.
 
-If you receive an error similar to the following then you might have miss-spelled the attribute key in the request, or you need to create the attribute first in the Trophy dashboard:
+Si recibes un error similar al siguiente, es posible que hayas escrito incorrectamente la clave del atributo en la solicitud, o que necesites crear primero el atributo en el panel de Trophy:
 
 ```json
 {
@@ -83,7 +85,7 @@ If you receive an error similar to the following then you might have miss-spelle
 
 </Warning>
 
-Here's an example of an event payload where the values of two attributes, `device` and `duration`, are set:
+Aquí hay un ejemplo de una carga útil de evento donde se establecen los valores de dos atributos, `device` e `duration`:
 
 ```json {7-10}
 {
@@ -99,40 +101,40 @@ Here's an example of an event payload where the values of two attributes, `devic
 }
 ```
 
-### Using Attributes
+### Uso de Atributos
 
-Custom event attributes can be used to power more advanced triggers for achievements and points and can be used in email templates to customize copy and to control the data shown in charts.
+Los atributos de eventos personalizados se pueden utilizar para potenciar activadores más avanzados para logros y puntos, y pueden usarse en plantillas de correo electrónico para personalizar el texto y controlar los datos mostrados en gráficos.
 
-#### Advanced Feature Triggers
+#### Activadores de Características Avanzadas
 
-Custom event attributes can be used to set up achievements or points triggers that only track events with specific attribute values. Follow the links to the relevant pages below to learn more.
+Los atributos de eventos personalizados se pueden utilizar para configurar activadores de logros o puntos que solo rastreen eventos con valores de atributos específicos. Sigue los enlaces a las páginas relevantes a continuación para obtener más información.
 
 <CardGroup>
   <Card
-    title="Achievement Triggers"
+    title="Activadores de Logros"
     icon="trophy"
     href="/platform/achievements#creating-achievements"
   >
-    Configure achievements that can only be unlocked by events with certain
-    attribute values.
+    Configura logros que solo se pueden desbloquear mediante eventos con ciertos
+    valores de atributos.
   </Card>
   <Card
-    title="Points Triggers"
+    title="Activadores de Puntos"
     icon="sparkle"
     href="/platform/points#points-triggers"
   >
-    Set up points triggers to only award points from events with specific
-    attribute values.
+    Configura activadores de puntos para otorgar puntos únicamente desde eventos con
+    valores de atributos específicos.
   </Card>
 </CardGroup>
 
-#### Email Customization
+#### Personalización de correos electrónicos
 
-If you use any Trophy [Emails](/platform/emails), event attributes can be used to customize the data shown in certain email blocks.
+Si utilizas cualquier [correo electrónico](/platform/emails) de Trophy, los atributos de eventos se pueden usar para personalizar los datos mostrados en ciertos bloques de correo.
 
-Firstly, when using metric-based variables in email copy you can use event attributes to further control what data the variable refrences.
+En primer lugar, al usar variables basadas en métricas en el contenido del correo, puedes utilizar atributos de eventos para controlar con mayor precisión qué datos referencia la variable.
 
-For example here's a case where we use an email variable to tell users what their total number of workouts they've done on different gym equipment is using a metric 'Workouts' and an attribute 'Equipment':
+Por ejemplo, aquí hay un caso donde usamos una variable de correo para informar a los usuarios sobre el número total de entrenamientos que han realizado en diferentes equipos de gimnasio, utilizando una métrica 'Workouts' y un atributo 'Equipment':
 
 <Frame>
   <video
@@ -145,7 +147,7 @@ For example here's a case where we use an email variable to tell users what thei
   ></video>
 </Frame>
 
-Secondly, here's an example where we add a chart to an email that shows users how many workouts they've done on a bike over time:
+En segundo lugar, aquí hay un ejemplo donde agregamos un gráfico a un correo que muestra a los usuarios cuántos entrenamientos han realizado en una bicicleta a lo largo del tiempo:
 
 <Frame>
   <video
@@ -158,36 +160,36 @@ Secondly, here's an example where we add a chart to an email that shows users ho
   ></video>
 </Frame>
 
-There's a huge number of possibilities here, so get creative!
+Existen un gran número de posibilidades aquí, ¡así que sé creativo!
 
-## Tracking Metric Events
+## Seguimiento de eventos de Métricas
 
-Each metric has a unique `key` which you can use to reference and track events against it in your code. You can find the `key` in the metric settings page.
+Cada métrica tiene un `key` único que puedes usar para referenciar y hacer seguimiento de eventos en tu código. Puedes encontrar el `key` en la página de configuración de la métrica.
 
-To start tracking user interactions as events against your Trophy metrics, use the [Metrics API](/api-reference/endpoints/metrics/send-a-metric-change-event) or one of our type-safe [Client SDKs](/api-reference/client-libraries) supported in most major programming languages.
+Para empezar a hacer seguimiento de las interacciones de los usuarios como eventos en tus Métricas de Trophy, utiliza la [API de Métricas](/api-reference/endpoints/metrics/send-a-metric-change-event) o una de nuestras [bibliotecas cliente](/api-reference/client-libraries) con tipado seguro, compatibles con la mayoría de los lenguajes de programación principales.
 
-Here's an example where a fictional study platform is using a metric to track the number of flashcards flipped by each student. Each time an student interacts, the platform sends an event to Trophy telling it how many flashcards they viewed:
+Aquí hay un ejemplo donde una plataforma de estudio ficticia está utilizando una métrica para rastrear el número de tarjetas de memoria volteadas por cada estudiante. Cada vez que un estudiante interactúa, la plataforma envía un evento a Trophy indicándole cuántas tarjetas vieron:
 
 <MetricChangeRequestBlock />
 
-Any [Achievements](/platform/achievements), [Streaks](/platform/streaks), [Points](/platform/points) or [Leaderboards](/platform/leaderboards) that have been set up against this metric will be automatically processed, and the response will contain any updates to the user's progress that are a direct result of the event occurring:
+Cualquier [Logros](/platform/achievements), [Rachas](/platform/streaks), [Puntos](/platform/points) o [Clasificaciones](/platform/leaderboards) que se hayan configurado para esta métrica se procesarán automáticamente, y la respuesta contendrá cualquier actualización del progreso del usuario que sea resultado directo del evento ocurrido:
 
 <MetricChangeResponseBlock />
 
-In this example the response includes the following:
+En este ejemplo, la respuesta incluye lo siguiente:
 
-- The user's newly unlocked achievements as a result of the event
-- The user's latest streak as result of the event
-- The user's latest points for each points system that changed as a result of the event
-- The user's latest leaderboard data for each leaderboard that changed as a result of the event
+- Los logros recién desbloqueados del usuario como resultado del evento
+- La racha más reciente del usuario como resultado del evento
+- Los puntos más recientes del usuario para cada sistema de puntos que cambió como resultado del evento
+- Los datos de clasificación más recientes del usuario para cada clasificación que cambió como resultado del evento
 
-With a little bit of custom code, this response data can be used to drive any in-app experience you wish including:
+Con un poco de código personalizado, estos datos de respuesta se pueden utilizar para impulsar cualquier experiencia dentro de la aplicación que desees, incluyendo:
 
-- Triggering in-app notifications
-- Sound effects
-- Animations
+- Activar notificaciones dentro de la aplicación
+- Efectos de sonido
+- Animaciones
 
-Watch Charlie integrate metric tracking into a simple NextJS application using the Trophy [NodeJS SDK](/api-reference/client-libraries):
+Mira a Charlie integrar el seguimiento de métricas en una aplicación simple de NextJS usando el SDK de [Node.js](/api-reference/client-libraries) de Trophy:
 
 <Frame>
   <iframe
@@ -202,20 +204,20 @@ Watch Charlie integrate metric tracking into a simple NextJS application using t
   ></iframe>
 </Frame>
 
-### Idempotent Events
+### Eventos Idempotentes
 
-Trophy supports enforcing uniqueness on events so that users cannot increase a metric by taking the same exact action over and over.
+Trophy admite garantizar la unicidad de los eventos para que los usuarios no puedan aumentar una métrica realizando la misma acción una y otra vez.
 
-For example, a language learning app could specify that users can only increase the `lessons-completed` metric by 1 for each unique lesson completed, so if they complete the same lesson twice only the first counts.
+Por ejemplo, una aplicación de aprendizaje de idiomas podría especificar que los usuarios solo pueden aumentar la métrica `lessons-completed` en 1 por cada lección única completada, por lo que si completan la misma lección dos veces, solo cuenta la primera.
 
 <IdempotentEventTracking />
 
-This helps keep your codebase free of logic that checks if users have completed actions before, and can instead trust Trophy to uphold the constraints you need.
+Esto ayuda a mantener tu código libre de lógica que verifica si los usuarios han completado acciones previamente, y en su lugar puedes confiar en que Trophy mantendrá las restricciones que necesitas.
 
-To use idempotent events, use the `Idempotency-Key` header in the [metric event API](/api-reference/endpoints/metrics/send-a-metric-change-event).
+Para usar eventos idempotentes, utiliza el encabezado `Idempotency-Key` en la [API de eventos de métricas](/api-reference/endpoints/metrics/send-a-metric-change-event).
 
-[Learn more about idempotency](/api-reference/idempotency).
+[Más información sobre idempotencia](/api-reference/idempotency).
 
-## Get Support
+## Obtener Soporte
 
-Want to get in touch with the Trophy team? Reach out to us via [email](mailto:support@trophy.so). We're here to help!
+¿Quieres ponerte en contacto con el equipo de Trophy? Contáctanos por [correo electrónico](mailto:support@trophy.so). ¡Estamos aquí para ayudarte!

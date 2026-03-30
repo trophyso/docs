@@ -3,10 +3,10 @@ openapi: webhook leaderboard.started
 ---
 
 <Note>
-  Events fire at 10:00 UTC the day before the leaderboard's UTC start time. This
-  is because leaderboard runs are relative to each user's time zone, and the
-  start event must fire before users in the most advanced time zones begin
-  ranking.
+  Los eventos se activan a las 10:00 UTC el día anterior a la hora de inicio UTC de la clasificación. Esto
+  se debe a que las ejecuciones de clasificación son relativas a la zona horaria de cada usuario, y el
+  evento de inicio debe activarse antes de que los usuarios en las zonas horarias más avanzadas comiencen
+  a clasificar.
   
-  **Make sure to take into account users' time zones if scheduling notifications from this webhook event**.
+  **Asegúrate de tener en cuenta las zonas horarias de los usuarios al programar notificaciones desde este evento de webhook**.
 </Note>

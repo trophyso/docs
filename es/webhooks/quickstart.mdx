@@ -1,18 +1,18 @@
 ---
-title: Quick Start
-description: Start receiving webhook events from Trophy in under 10 minutes.
-subtitle: Start receiving webhook events from Trophy in under 10 minutes.
+title: Inicio rápido
+description: Comienza a recibir eventos de webhook de Trophy en menos de 10 minutos.
+subtitle: Comienza a recibir eventos de webhook de Trophy en menos de 10 minutos.
 icon: circle-play
 ---
 
-## Getting Started
+## Primeros pasos
 
 <Note>
-  If you don't already have a Trophy account, follow the [Trophy quick start
-  guide](/getting-started/quickstart) first to get started.
+  Si aún no tienes una cuenta de Trophy, sigue primero la [guía de inicio rápido
+  de Trophy](/getting-started/quickstart) para comenzar.
 </Note>
 
-In Trophy you can have multiple webhooks for handling one or more types of event. Follow the steps below to get started receiving webhook events from Trophy.
+En Trophy puedes tener múltiples webhooks para manejar uno o más tipos de eventos. Sigue los pasos a continuación para comenzar a recibir eventos de webhook de Trophy.
 
 <Frame>
   <iframe
@@ -27,14 +27,14 @@ In Trophy you can have multiple webhooks for handling one or more types of event
 </Frame>
 
 <Steps>
-  <Step title="Create test webhook">
-  To develop and test webhooks, it's useful to use a test service that can proxy events from Trophy and send them to your local development environment.
+  <Step title="Crear webhook de prueba">
+  Para desarrollar y probar webhooks, es útil usar un servicio de prueba que pueda hacer de proxy para los eventos de Trophy y enviarlos a tu entorno de desarrollo local.
 
-You can choose to use any webhook development tool you like, but we recommend [Hookdeck Console](https://console.hookdeck.com).
+Puedes elegir usar cualquier herramienta de desarrollo de webhooks que prefieras, pero recomendamos [Hookdeck Console](https://console.hookdeck.com).
 
-First up, head into your webhook testing platform of choice and create a new test endpoint.
+Primero, accede a la plataforma de pruebas de webhooks de tu elección y crea un nuevo endpoint de prueba.
 
-Then, set up this endpoint to proxy events it receives to your local development environment.
+Luego, configura este endpoint para hacer de proxy con los eventos que recibe hacia tu entorno de desarrollo local.
 
 <Frame>
   <img
@@ -46,16 +46,16 @@ Then, set up this endpoint to proxy events it receives to your local development
 </Frame>
 
   </Step>
-  <Step title="Configure test webhook in Trophy">
-    Once you have your test endpoint, head to the [webhooks](https://app.trophy.so/integration/webhooks) page of the Trophy dashboard and create a new webhook.
+  <Step title="Configurar webhook de prueba en Trophy">
+    Una vez que tengas tu endpoint de prueba, dirígete a la página de [webhooks](https://app.trophy.so/integration/webhooks) del panel de Trophy y crea un nuevo webhook.
 
-    - Give your new webhook a name like 'Local Testing' or similar
-    - Paste your test endpoint URL in the 'Webhook URL' field
-    - Select the webhook events you want to subscribe this webhook to
-    - Save the new webhook
+    - Asigna un nombre a tu nuevo webhook como 'Pruebas locales' o similar
+    - Pega la URL de tu endpoint de prueba en el campo 'Webhook URL'
+    - Selecciona los eventos de webhook a los que deseas suscribir este webhook
+    - Guarda el nuevo webhook
 
     <Tip>
-    You can modify the events the webhook is subscribed to at any time after creation.
+    Puedes modificar los eventos a los que el webhook está suscrito en cualquier momento después de su creación.
     </Tip>
 
     <Frame>
@@ -69,14 +69,14 @@ Then, set up this endpoint to proxy events it receives to your local development
 </Frame>
 
   </Step>
-  <Step title="Write webhook handler">
-  A webhook handler is just a standard HTTP endpoint that is capable of receiving `POST` requests.
+  <Step title="Escribir el manejador de webhook">
+  Un manejador de webhook es simplemente un endpoint HTTP estándar capaz de recibir solicitudes `POST`.
 
-Trophy will send requests to your handler, telling it what `type` of event it's sending. This allows you to construct a handler that can process multiple types of events.
+Trophy enviará solicitudes a tu manejador, indicándole qué `type` de evento está enviando. Esto te permite construir un manejador que puede procesar múltiples tipos de eventos.
 
-    It's up to you how you choose to write your handler, but a common pattern is to use a `switch` statement.
+    Depende de ti cómo elijas escribir tu manejador, pero un patrón común es usar una declaración `switch`.
 
-    Here's an example of this pattern in NodeJS:
+    Aquí hay un ejemplo de este patrón en NodeJS:
 
     ```js Handling Webhook Events
     switch (payload.type) {
@@ -99,28 +99,28 @@ Trophy will send requests to your handler, telling it what `type` of event it's 
     ```
 
     <Warning>
-    Make sure your webhook handler is set up to return a `200` status code. If Trophy detects your handler returns a non-`2XX` status code, it will treat this as a failure and [retry the request](/webhooks/retries).
+    Asegúrate de que tu manejador de webhook esté configurado para devolver un código de estado `200`. Si Trophy detecta que tu manejador devuelve un código de estado que no es `2XX`, lo tratará como un fallo e [intentará la solicitud nuevamente](/webhooks/retries).
     </Warning>
 
   </Step>
-  <Step title="Validate test webhook behavoir">
-    Once you've written and secured your handler, you're ready to send your first test event.
+  <Step title="Validar el comportamiento del webhook de prueba">
+    Una vez que hayas escrito y asegurado tu manejador, estás listo para enviar tu primer evento de prueba.
 
-    Using a test user, perform interactions in your product of the type that you want to test webhooks for. For example if you want to test the `achievement.completed` webhook, trigger an achievement completion in Trophy.
+    Usando un usuario de prueba, realiza interacciones en tu producto del tipo para el que deseas probar webhooks. Por ejemplo, si quieres probar el webhook `achievement.completed`, activa una finalización de logro en Trophy.
 
-    Trophy will fire the relevant events to your webhook URL and you should see these in your webhook testing tool. This will then forward the event to your local webhook handler, triggering your code to run.
+    Trophy enviará los eventos relevantes a tu URL de webhook y deberías verlos en tu herramienta de prueba de webhooks. Esto luego reenviará el evento a tu manejador de webhook local, activando la ejecución de tu código.
 
-    You can now iterate on your code until your happy you have the functionality you desire.
+    Ahora puedes iterar en tu código hasta que estés satisfecho con la funcionalidad que deseas.
 
   </Step>
-  <Step title="Secure webhook handler">
-  To help you secure your webhook handler so that it only responds to events sent from Trophy and not malicious attackers, Trophy includes a webhook signature with every event.
+  <Step title="Asegurar el manejador de webhook">
+  Para ayudarte a asegurar tu manejador de webhook de modo que solo responda a eventos enviados desde Trophy y no a atacantes maliciosos, Trophy incluye una firma de webhook con cada evento.
 
-This signature is sent in the `X-Trophy-Signature` header and is a `base64` encoded hash of the request payload, hashed using a secure webhook secret provided by Trophy.
+Esta firma se envía en el encabezado `X-Trophy-Signature` y es un hash codificado en `base64` de la carga útil de la solicitud, hash generado mediante un secreto de webhook seguro proporcionado por Trophy.
 
-To validate that events your webhook handler receives do actually come from Trophy, you need to create your own hash using your secure webhook secret and compare it to the signature in the `X-Trophy-Signature` header.
+Para validar que los eventos que recibe tu manejador de webhooks provienen efectivamente de Trophy, necesitas crear tu propio hash utilizando tu secreto de webhook seguro y compararlo con la firma en el encabezado `X-Trophy-Signature`.
 
-Grab your secure webhook secret from the webhooks page in Trophy.
+Obtén tu secreto de webhook seguro desde la página de webhooks en Trophy.
 
 <Frame>
   <video
@@ -134,11 +134,11 @@ Grab your secure webhook secret from the webhooks page in Trophy.
 </Frame>
 
 <Warning>
-  Make sure you store your webhook secret in a secure environment variable and
-  do not commit it to source control.
+  Asegúrate de almacenar tu secreto de webhook en una variable de entorno segura y
+  no lo envíes al control de versiones.
 </Warning>
 
-Once you have your webhook secret, you're ready to start validating events. Here's an example in NodeJS:
+Una vez que tengas tu secreto de webhook, estás listo para comenzar a validar eventos. Aquí tienes un ejemplo en Node.js:
 
 ```js Validating Webhook Events
   // Extract X-Trophy-Signature header from the request
@@ -161,24 +161,24 @@ Once you have your webhook secret, you're ready to start validating events. Here
 ```
 
 <Warning>
-  If your handler detects a request that did not originate from Trophy, it's
-  important to reject the request as early as possible with a `4XX` status code.
+  Si tu manejador detecta una solicitud que no se originó desde Trophy, es
+  importante rechazar la solicitud lo antes posible con un código de estado `4XX`.
 </Warning>
 
   </Step>
-  <Step title="Create production webhook">
-    Once your happy with your test webhook functionality, create a brand new webhook in Trophy with the same configuration as your test webhook, but this time with the URL of your production handler.
+  <Step title="Crear webhook de producción">
+    Una vez que estés satisfecho con la funcionalidad de tu webhook de prueba, crea un webhook completamente nuevo en Trophy con la misma configuración que tu webhook de prueba, pero esta vez con la URL de tu manejador de producción.
 
     <Note>
-    Each webhook in Trophy has a unique webhook secret so don't forget to add this as a new environment variable in your production deployment.
+    Cada webhook en Trophy tiene un secreto de webhook único, así que no olvides agregarlo como una nueva variable de entorno en tu despliegue de producción.
     </Note>
 
   </Step>
 </Steps>
 
-## Full Webhook Example
+## Ejemplo Completo de Webhook
 
-Here's a full working NextJS example webhook endpoint capable of securely receiving webhook events from Trophy.
+Aquí tienes un ejemplo completo y funcional de un endpoint de webhook en NextJS capaz de recibir de forma segura eventos de webhook desde Trophy.
 
 ```ts Example NextJS Webhook Endpoint
 import crypto from "crypto";
@@ -232,6 +232,6 @@ function handleEvent(payload: WebhookPayload) {
 }
 ```
 
-## Get Support
+## Obtener Soporte
 
-Want to get in touch with the Trophy team? Reach out to us via [email](mailto:support@trophy.so). We're here to help!
+¿Quieres ponerte en contacto con el equipo de Trophy? Comunícate con nosotros por [correo electrónico](mailto:support@trophy.so). ¡Estamos aquí para ayudarte!

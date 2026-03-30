@@ -1,7 +1,9 @@
 ---
-title: How To Build A Leaderboards Feature
-description: Learn how to use Trophy to add a leaderboards feature to your web or mobile app.
-subtitle: Learn how to use Trophy to add a leaderboards feature to your web or mobile app.
+title: Cómo Crear una Función de Clasificaciones
+description: Aprende a usar Trophy para añadir una función de clasificaciones a
+  tu aplicación web o móvil.
+subtitle: Aprende a usar Trophy para añadir una función de clasificaciones a tu
+  aplicación web o móvil.
 noindex: true
 ---
 
@@ -12,28 +14,26 @@ import LeaderboardRankingsResponse from "/snippets/leaderboard-rankings-response
 import UserLeaderboardRankingsRequest from "/snippets/user-leaderboard-rankings-request.mdx";
 import UserLeaderboardRankingsResponse from "/snippets/user-leaderboard-rankings-response.mdx";
 
-The guide outlines the full process of adding a leaderboards feature to your web or mobile app using Trophy.
+Esta guía describe el proceso completo para añadir una función de clasificaciones a tu aplicación web o móvil utilizando Trophy.
 
-For illustration purposes we'll use the example of a study platform that uses a daily leaderboard to create friendly competition around viewing flashcards.
+Para fines ilustrativos, usaremos el ejemplo de una plataforma de estudio que utiliza una clasificación diaria para crear competencia amistosa en torno a la visualización de tarjetas de estudio.
 
 <Tip>
-  To see a fully working example of this in practice, check out the [live
-  demo](https://examples.trophy.so) or [github
-  repo](https://github.com/trophyso/example-study-platform/tree/demo).
+  Para ver un ejemplo completamente funcional de esto en la práctica, consulta la [demostración en vivo](https://examples.trophy.so) o el [repositorio de github](https://github.com/trophyso/example-study-platform/tree/demo).
 </Tip>
 
-## Pre-requisites
+## Requisitos previos
 
-- A [Trophy](https://app.trophy.so/sign-up) account
-- About 10 minutes
+- Una cuenta de [Trophy](https://app.trophy.so/sign-up)
+- Aproximadamente 10 minutos
 
-## Trophy Setup
+## Configuración de Trophy
 
-In Trophy, [Metrics](/platform/metrics) are the building blocks of gamification and model the different interactions users make with your product.
+En Trophy, las [Métricas](/platform/metrics) son los componentes fundamentales de la gamificación y modelan las diferentes interacciones que los usuarios realizan con tu producto.
 
-In this guide the interaction we're interested in is `flashcards-viewed`, but you can create a metric that best represents the interaction you want to build leaderboards around.
+En esta guía, la interacción que nos interesa es `flashcards-viewed`, pero puedes crear una métrica que mejor represente la interacción en torno a la cual deseas crear clasificaciones.
 
-In the Trophy dashboard, head to the [metrics page](https://app.trophy.so/metrics) and create a metric.
+En el panel de Trophy, dirígete a la [página de métricas](https://app.trophy.so/metrics) y crea una métrica.
 
 <Frame>
   <video
@@ -46,7 +46,7 @@ In the Trophy dashboard, head to the [metrics page](https://app.trophy.so/metric
   ></video>
 </Frame>
 
-Once you've created your metric, head to the [leaderboards page](https://app.trophy.so/leaderboards) and create the leaderboards you want. You can find all the details on the types of leaderboards and the different use cases in the [leaderboards docs](/platform/leaderboards).
+Una vez que hayas creado tu métrica, dirígete a la [página de clasificaciones](https://app.trophy.so/leaderboards) y crea las clasificaciones que desees. Puedes encontrar todos los detalles sobre los tipos de clasificaciones y los diferentes casos de uso en la [documentación de clasificaciones](/platform/leaderboards).
 
 <Frame>
   <video
@@ -59,44 +59,44 @@ Once you've created your metric, head to the [leaderboards page](https://app.tro
   ></video>
 </Frame>
 
-For the purposes of this guide we've set up a daily leaderboard that tracks the total XP a user earns by viewing flashcards.
+Para los fines de esta guía, hemos configurado una clasificación diaria que rastrea el total de XP que un usuario gana al ver tarjetas de estudio.
 
 <Tip>
-  For a full guide on adding an XP feature to your web or mobile app, check out
-  our [full guide](/guides/how-to-build-an-xp-feature).
+  Para una guía completa sobre cómo agregar una función de XP a tu aplicación web o móvil, consulta
+  nuestra [guía completa](/guides/how-to-build-an-xp-feature).
 </Tip>
 
-In Trophy you track user interactions by sending [Events](/platform/events) from your code to Trophy APIs against a specific metric.
+En Trophy rastreas las interacciones de los usuarios enviando [Eventos](/platform/events) desde tu código a las API de Trophy contra una métrica específica.
 
-When events are recorded for a specific user, Trophy automatically updates their ranking in each leaderboard they are a part of.
+Cuando se registran eventos para un usuario específico, Trophy actualiza automáticamente su posición en cada clasificación de la que forma parte.
 
-This is what makes building gamified experiences with Trophy so easy, it does all the work for you behind the scenes.
+Esto es lo que hace que construir experiencias gamificadas con Trophy sea tan fácil: hace todo el trabajo por ti en segundo plano.
 
-## Installing Trophy SDK
+## Instalando el SDK de Trophy
 
-To interact with Trophy from your code you'll use the Trophy SDK available in most major [programming languages](/api-reference/client-libraries).
+Para interactuar con Trophy desde tu código, utilizarás el SDK de Trophy disponible en la mayoría de los principales [lenguajes de programación](/api-reference/client-libraries).
 
-Install the Trophy SDK:
+Instala el SDK de Trophy:
 
 <SDKInstallCommand />
 
-Next, grab your API key from the Trophy [integration page](https://app.trophy.so/integration) and add this as a **server-side only** environment variable.
+A continuación, obtén tu clave API desde la [página de integración](https://app.trophy.so/integration) de Trophy y agrégala como una variable de entorno **exclusivamente del lado del servidor**.
 
 ```bash
 TROPHY_API_KEY='*******'
 ```
 
 <Warning>
-  Make sure you **don't** expose your API key in client-side code.
+  Asegúrate de **no** exponer tu clave API en código del lado del cliente.
 </Warning>
 
-## Tracking User Interactions
+## Rastreando Interacciones de Usuarios
 
-To track an event (user interaction) against your metric, use the [metric change API](/api-reference/endpoints/metrics/send-a-metric-change-event).
+Para rastrear un evento (interacción de usuario) contra tu métrica, utiliza la [API de cambio de métrica](/api-reference/endpoints/metrics/send-a-metric-change-event).
 
 <MetricChangeRequestBlock />
 
-The response to this API call is the complete set of changes to any features you've built with Trophy, including any changes to their ranking in any leaderboards they are a part of.
+La respuesta a esta llamada API es el conjunto completo de cambios en cualquier función que hayas construido con Trophy, incluyendo cualquier cambio en su posición en cualquier clasificación de la que formen parte.
 
 {/* vale off */}
 
@@ -130,7 +130,7 @@ The response to this API call is the complete set of changes to any features you
 
 {/* vale on */}
 
-Validate this is working by checking the Trophy [dashboard](https://app.trophy.so).
+Valida que esto funcione revisando el [panel de control](https://app.trophy.so) de Trophy.
 
 <Frame>
   <img
@@ -141,15 +141,15 @@ Validate this is working by checking the Trophy [dashboard](https://app.trophy.s
   />
 </Frame>
 
-## Displaying Leaderboards
+## Mostrando Clasificaciones
 
-You have a number of options for displaying leaderboards in your application. Here we'll look at the most common options.
+Tienes varias opciones para mostrar clasificaciones en tu aplicación. Aquí veremos las opciones más comunes.
 
-### Pop-up Notifications
+### Notificaciones Emergentes
 
-We can use the response of the [metric change API](/api-reference/endpoints/metrics/send-a-metric-change-event) to show pop-up notifications (or 'toasts') when users move up the rankings.
+Podemos usar la respuesta de la [API de cambio de métrica](/api-reference/endpoints/metrics/send-a-metric-change-event) para mostrar notificaciones emergentes (o 'toasts') cuando los usuarios suban en las clasificaciones.
 
-Here's an example of this in action:
+Aquí hay un ejemplo de esto en acción:
 
 ```ts Leaderboard Rank Up Pop-up
 // Sends event to Trophy
@@ -175,43 +175,43 @@ if (leaderboard.rank > leaderboard.previousRank) {
 ```
 
 <Tip>
-  If you want to play sound effects, use the [HTML5 Audio
-  API](https://developer.mozilla.org/en-US/docs/Web/API/Web_Audio_API) and feel
-  free to steal these [audio
-  files](https://github.com/trophyso/example-study-platform/tree/demo/public/sounds)
-  we recommend.
+  Si quieres reproducir efectos de sonido, usa la [API de Audio
+  HTML5](https://developer.mozilla.org/en-US/docs/Web/API/Web_Audio_API) y siéntete
+  libre de usar estos [archivos de
+  audio](https://github.com/trophyso/example-study-platform/tree/demo/public/sounds)
+  que recomendamos.
 </Tip>
 
-### Displaying Leaderboard Rankings
+### Mostrar Clasificaciones de la Clasificación
 
-To fetch a leaderboard and its most up to date rankings, use the [leaderboard API](/api-reference/endpoints/leaderboards/get-leaderboard).
+Para obtener una clasificación y sus rankings más actualizados, usa la [API de clasificaciones](/api-reference/endpoints/leaderboards/get-leaderboard).
 
 <LeaderboardRankingsRequest />
 
 <Tip>
-  You can also use the `run` parameter with the date of the specific past 'run'
-  of a leaderboard you want to fetch data for.
+  También puedes usar el parámetro `run` con la fecha de la 'ejecución' pasada específica
+  de una clasificación para la que deseas obtener datos.
 </Tip>
 
-Here's an example of the data returned from the leaderboard API:
+Aquí hay un ejemplo de los datos devueltos por la API de clasificaciones:
 
 <LeaderboardRankingsResponse />
 
-### Displaying User Rank History
+### Mostrar Historial de Ranking del Usuario
 
-Use the [user leaderboard API](/api-reference/endpoints/users/get-a-users-leaderboard) to fetch data on how a specific user's rank has changed over time in a particular leaderboard.
+Usa la [API de clasificación de usuario](/api-reference/endpoints/users/get-a-users-leaderboard) para obtener datos sobre cómo ha cambiado el ranking de un usuario específico a lo largo del tiempo en una clasificación particular.
 
 <UserLeaderboardRankingsRequest />
 
-Here's an example of the data returned from the user leaderboard rankings API which includes the users current rank in the `rank` attribute and an array of previous ranks in the `history` attribute:
+Aquí hay un ejemplo de los datos devueltos por la API de rankings de clasificación de usuario que incluye el ranking actual del usuario en el atributo `rank` y un array de rankings anteriores en el atributo `history`:
 
 <UserLeaderboardRankingsResponse />
 
-## Analytics
+## Analítica
 
-The [leaderboards page](https://app.trophy.so/achievements) in Trophy shows how many users are actively participating in a leaderboard, as well as a measure of competitiveness based on how many rank changes are occurring.
+La [página de clasificaciones](https://app.trophy.so/achievements) en Trophy muestra cuántos usuarios están participando activamente en una clasificación, así como una medida de competitividad basada en cuántos cambios de ranking están ocurriendo.
 
-The analytics page also shows a distribution of users scores to help identify clusters of users within rankings.
+La página de analítica también muestra una distribución de las puntuaciones de los usuarios para ayudar a identificar grupos de usuarios dentro de los rankings.
 
 <Frame>
   <img
@@ -222,7 +222,7 @@ The analytics page also shows a distribution of users scores to help identify cl
   />
 </Frame>
 
-Additionally the leaderboard rankings page shows current and past rankings of a leaderboard:
+Además, la página de rankings de la clasificación muestra los rankings actuales y pasados de una clasificación:
 
 <Frame>
   <img
@@ -233,6 +233,6 @@ Additionally the leaderboard rankings page shows current and past rankings of a 
   />
 </Frame>
 
-## Get Support
+## Obtener Soporte
 
-Want to get in touch with the Trophy team? Reach out to us via [email](mailto:support@trophy.so). We're here to help!
+¿Quieres ponerte en contacto con el equipo de Trophy? Contáctanos por [correo electrónico](mailto:support@trophy.so). ¡Estamos aquí para ayudarte!

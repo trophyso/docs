@@ -1,26 +1,25 @@
 ---
-title: Rate Limiting
-description: Learn about the Trophy API and request rate limiting.
-"og:description": Learn about the Trophy API and request rate limiting.
+title: Limitación de tasa
+description: Aprende sobre la API de Trophy y la limitación de tasa de solicitudes.
+og:description: Aprende sobre la API de Trophy y la limitación de tasa de solicitudes.
 icon: circle-gauge
 ---
 
 import { RateLimitBadge } from "/snippets/rate-limit-badge.jsx";
 
-Trophy operates a tiered rate limiting model for each API endpoint. All rate limits are scoped at the organisation level. Exceeding rate limits will result in your application receiving a `429 Too Many Requests` response.
+Trophy opera un modelo de limitación de tasa por niveles para cada endpoint de la API. Todos los límites de tasa están definidos a nivel de organización. Superar los límites de tasa resultará en que tu aplicación reciba una respuesta `429 Too Many Requests`.
 
-## Rate Limit Tiers
+## Niveles de Limitación de Tasa
 
-| Tier | Rate Limit |
+| Nivel | Límite de Tasa |
 | ---- | ---------- |
-| <RateLimitBadge tier={1} noTooltip /> | 10 req/s |
-| <RateLimitBadge tier={2} noTooltip /> | 100 req/s |
+| <RateLimitBadge tier={1} noTooltip /> | 10 sol/s |
+| <RateLimitBadge tier={2} noTooltip /> | 100 sol/s |
 
 <Tip>
-  If you feel you need a higher rate limit, then please [contact
-  us](mailto:support@trophy.so) and we'll be happy to discuss your needs.
+  Si consideras que necesitas un límite de tasa mayor, [contáctanos](mailto:support@trophy.so) y estaremos encantados de discutir tus necesidades.
 </Tip>
 
-## Get Support
+## Obtener Soporte
 
-Want to get in touch with the Trophy team? Reach out to us via [email](mailto:support@trophy.so). We're here to help!
+¿Quieres ponerte en contacto con el equipo de Trophy? Comunícate con nosotros por [correo electrónico](mailto:support@trophy.so). ¡Estamos aquí para ayudarte!

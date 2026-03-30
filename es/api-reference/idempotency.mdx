@@ -1,50 +1,53 @@
 ---
-title: Idempotency
-description: Prevent unintended side effects when retrying requests with idempotency controls built into the Trophy API and SDKs.
-"og:description": Prevent unintended side effects when retrying requests with idempotency built into the Trophy API and SDKs using the `Idempotency-Key` request header.
+title: Idempotencia
+description: Previene efectos secundarios no deseados al reintentar solicitudes
+  con controles de idempotencia integrados en la API y SDKs de Trophy.
+og:description: Previene efectos secundarios no deseados al reintentar
+  solicitudes con idempotencia integrada en la API y SDKs de Trophy usando el
+  encabezado de solicitud `Idempotency-Key`.
 icon: repeat
 ---
 
 import IdempotentEventTracking from "/snippets/idempotent-event-tracking.mdx";
 
-## What is Idempotency?
+## ¿Qué es la Idempotencia?
 
-When describing APIs, [idempotence](https://en.wikipedia.org/wiki/Idempotence) is a property of a particular operation whereby subsequent invocations after the first have no additional effect on the state of the system.
+Al describir APIs, la [idempotencia](https://en.wikipedia.org/wiki/Idempotence) es una propiedad de una operación particular mediante la cual las invocaciones subsecuentes después de la primera no tienen efecto adicional sobre el estado del sistema.
 
-Trophy's [event tracking API](/api-reference/endpoints/metrics/send-a-metric-change-event) can be used to enforce idempotency preventing client retries from having unintended side effects such as overcounting user interactions, or awarding points to users multiple times for the same action.
+La [API de seguimiento de eventos](/api-reference/endpoints/metrics/send-a-metric-change-event) de Trophy puede utilizarse para garantizar la idempotencia, evitando que los reintentos del cliente tengan efectos secundarios no deseados como el conteo excesivo de interacciones de usuario o la concesión de Puntos a los usuarios múltiples veces por la misma acción.
 
-This is particularly important where rewards are tied to user actions to prevent users from 'gaming the system'.
+Esto es particularmente importante cuando las recompensas están vinculadas a acciones de usuario para prevenir que los usuarios 'manipulen el sistema'.
 
-## Sending Idempotent Requests
+## Envío de Solicitudes Idempotentes
 
-To ensure idempotency is respected when sending events to Trophy, include an `Idempotency-Key` header when using the [event tracking API](/api-reference/endpoints/metrics/send-a-metric-change-event). Additionally, all [client SDKs](/api-reference/client-libraries) support idempotency with built-in type safety.
+Para garantizar que se respete la idempotencia al enviar eventos a Trophy, incluye un encabezado `Idempotency-Key` al usar la [API de seguimiento de eventos](/api-reference/endpoints/metrics/send-a-metric-change-event). Además, todos los [SDKs de cliente](/api-reference/client-libraries) soportan idempotencia con seguridad de tipos integrada.
 
-You can choose what to use as your idempotency key, but it should reflect the level of 'uniqueness' that you want Trophy to respect.
+Puedes elegir qué usar como tu clave de idempotencia, pero debe reflejar el nivel de 'unicidad' que deseas que Trophy respete.
 
 <Tip>
-  For example, if you use Trophy to reward users for completing lessons, and
-  want to make sure each user can only redeem rewards once for each lesson, use
-  the unique ID of the lesson as your idempotency key.
+  Por ejemplo, si usas Trophy para recompensar a los usuarios por completar lecciones, y
+  quieres asegurarte de que cada usuario solo pueda canjear recompensas una vez por cada lección, usa
+  el ID único de la lección como tu clave de idempotencia.
 </Tip>
 
-Here's an example of what using an idempotency key looks like:
+Aquí hay un ejemplo de cómo se ve el uso de una clave de idempotencia:
 
 <IdempotentEventTracking />
 
-## How Idempotency Works
+## Cómo Funciona la Idempotencia
 
-When Trophy detects an idempotency key has been sent with an event, it will first check if the user the event relates to has used it before. It will then proceed to take one of the following actions:
+Cuando Trophy detecta que se ha enviado una clave de idempotencia con un evento, primero verificará si el usuario al que se refiere el evento la ha utilizado antes. Luego procederá a tomar una de las siguientes acciones:
 
-- If the user has used the idempotency key before, Trophy will not process the event, returning a `202 Accepted` response. The response will reflect the current state of the system, but will not increase the users metric total, complete any achievements, award any points, extend the streak, etc.
-- If instead Trophy detects the user hasn't used the idempotency key before, it will process the event as usual, returning a `201 Created` response. Finally Trophy will store the idempotency key for lookup during any subsequent requests.
+- Si el usuario ha utilizado la clave de idempotencia anteriormente, Trophy no procesará el evento y devolverá una respuesta `202 Accepted`. La respuesta reflejará el estado actual del sistema, pero no incrementará el total de métricas del usuario, no completará logros, no otorgará puntos, no extenderá la racha, etc.
+- Si por el contrario Trophy detecta que el usuario no ha utilizado la clave de idempotencia antes, procesará el evento de forma habitual y devolverá una respuesta `201 Created`. Finalmente, Trophy almacenará la clave de idempotencia para su consulta en solicitudes posteriores.
 
 <Note>
-  All Trophy [metrics](/platform/metrics) manage idempotency in isolation.
-  Trophy will accept a user using the same idempotency key for events against
-  different metrics as separate isolated requests.
+  Todas las [métricas](/platform/metrics) de Trophy gestionan la idempotencia de forma aislada.
+  Trophy aceptará que un usuario utilice la misma clave de idempotencia para eventos en
+  métricas diferentes como solicitudes aisladas independientes.
 </Note>
 
-Additionally, when using an idempotency key the response will contain two properties to help clients manage replayed requests effectively:
+Además, al utilizar una clave de idempotencia, la respuesta contendrá dos propiedades para ayudar a los clientes a gestionar las solicitudes repetidas de manera efectiva:
 
 {/* vale off */}
 
@@ -59,11 +62,11 @@ Additionally, when using an idempotency key the response will contain two proper
 {/* vale on */}
 
 <Note>
-  By default Trophy uses an infinite time window for detecting duplicate events.
-  If you feel you need different behavior, please [get in
-  touch](mailto:support@trophy.so) and we'll happily set that up for you.
+  Por defecto, Trophy utiliza una ventana de tiempo infinita para detectar eventos duplicados.
+  Si necesita un comportamiento diferente, por favor [póngase en
+  contacto](mailto:support@trophy.so) y con gusto lo configuraremos para usted.
 </Note>
 
-## Get Support
+## Obtener Soporte
 
-Want to get in touch with the Trophy team? Reach out to us via [email](mailto:support@trophy.so). We're here to help!
+¿Desea ponerse en contacto con el equipo de Trophy? Comuníquese con nosotros por [correo electrónico](mailto:support@trophy.so). ¡Estamos aquí para ayudar!

@@ -1,27 +1,29 @@
 ---
-title: Overview
-description: Learn how to use Trophy to experiment with the gamification experience and increase retention and user engagement.
-"og:description": Learn how to use Trophy to experiment with the gamification experience and increase retention and user engagement.
+title: Descripción general
+description: Aprende a usar Trophy para experimentar con la experiencia de
+  gamificación y aumentar la retención y el engagement de los usuarios.
+og:description: Aprende a usar Trophy para experimentar con la experiencia de
+  gamificación y aumentar la retención y el engagement de los usuarios.
 ---
 
 import ControlFlagBlock from "/snippets/control-flag-block.mdx";
 
-Trophy provides a core set of primitives to help you ship gamification experiences faster. But gamification is not something you can set and forget.
+Trophy proporciona un conjunto básico de primitivas para ayudarte a implementar experiencias de gamificación más rápido. Pero la gamificación no es algo que puedas configurar y olvidar.
 
-A key part of running a gamified platform is experimentation — tweaking and optimizing the user experience to ensure that users keep coming back.
+Una parte clave de administrar una plataforma gamificada es la experimentación: ajustar y optimizar la experiencia del usuario para asegurar que los usuarios sigan regresando.
 
-Usually, you'd have to build these tools yourself, but with Trophy you get a simple experimentation stack out-of-the-box.
+Normalmente, tendrías que construir estas herramientas tú mismo, pero con Trophy obtienes un stack de experimentación simple listo para usar.
 
 <Tip>
-  We have plans to extend Trophy's experimentation capabilities in the future to
-  support more granular A/B testing of your gamification features.
+  Tenemos planes de ampliar las capacidades de experimentación de Trophy en el futuro para
+  admitir pruebas A/B más granulares de tus funciones de gamificación.
 </Tip>
 
-## Control Ratio
+## Ratio de control
 
-Trophy has a built-in capability to automatically A/B test gamification features using a control ratio.
+Trophy tiene una capacidad integrada para realizar pruebas A/B automáticas de las funciones de gamificación mediante un ratio de control.
 
-Found on the [integration page](https://app.trophy.so/integration/configure) of the Trophy dashboard, the control ratio adjusts the percentage of users that are assigned to the 'control' group versus the 'experimental' group.
+Ubicado en la [página de integración](https://app.trophy.so/integration/configure) del panel de Trophy, el ratio de control ajusta el porcentaje de usuarios que se asignan al grupo de 'control' frente al grupo 'experimental'.
 
 <Frame>
   <video
@@ -34,37 +36,36 @@ Found on the [integration page](https://app.trophy.so/integration/configure) of 
   ></video>
 </Frame>
 
-Trophy returns the `control` attribute as `true` or `false` in most APIs that relate to user data allowing you to conditionally show gamification features to users who are in the experimental group.
+Trophy devuelve el atributo `control` como `true` o `false` en la mayoría de las APIs relacionadas con datos de usuario, lo que te permite mostrar condicionalmente funciones de gamificación a usuarios que están en el grupo experimental.
 
-If you plan to measure the overall impact of gamification features, make sure to only show those features to users with `control` set to `false`.
+Si planeas medir el impacto general de las funciones de gamificación, asegúrate de mostrar esas funciones solo a usuarios con `control` establecido en `false`.
 
 <ControlFlagBlock />
 
 <Note>
-  Trophy also doesn't send any [Emails](/platform/emails) or [Push
-  Notifications](/platform/push-notifications) to users who are in the control
-  group.
+  Trophy tampoco envía [Correos electrónicos](/platform/emails) ni [Notificaciones push](/platform/push-notifications) a usuarios que están en el
+  grupo de control.
 </Note>
 
-Analytics dashboards then compare retention and user engagement between users in the control and experimental groups allowing you to measure the impact of the features you build with Trophy and adjust mechanics where necessary.
+Los paneles de análisis comparan la retención y la interacción de usuarios entre los grupos de control y experimentales, lo que te permite medir el impacto de las funcionalidades que construyes con Trophy y ajustar las mecánicas cuando sea necesario.
 
 <Frame>
   <img height="200" noZoom src="../assets/experimentation/charts.png" />
 </Frame>
 
-## Retention & Engagement
+## Retención e Interacción
 
-Both retention and user engagement are important metrics to use when measuring the impact of changes on the user experience. The following sections outline what each means and how it relates to features you build with Trophy.
+Tanto la retención como la interacción de usuarios son métricas importantes para medir el impacto de los cambios en la experiencia del usuario. Las siguientes secciones explican qué significa cada una y cómo se relacionan con las funcionalidades que construyes con Trophy.
 
 <CardGroup>
-  <Card title="Retention" icon="refresh-cw" href="/experimentation/retention">
-    Learn how to measure the impact of gamification on retention
+  <Card title="Retención" icon="refresh-cw" href="/experimentation/retention">
+    Aprende a medir el impacto de la gamificación en la retención
   </Card>
-  <Card title="Engagement" icon="heart" href="/experimentation/engagement">
-    Learn how to measure the impact of gamification on user engagement
+  <Card title="Interacción" icon="heart" href="/experimentation/engagement">
+    Aprende a medir el impacto de la gamificación en la interacción de usuarios
   </Card>
 </CardGroup>
 
-## Get Support
+## Obtener Soporte
 
-Want to get in touch with the Trophy team? Reach out to us via [email](mailto:support@trophy.so). We're here to help!
+¿Quieres contactar al equipo de Trophy? Comunícate con nosotros por [correo electrónico](mailto:support@trophy.so). ¡Estamos aquí para ayudarte!

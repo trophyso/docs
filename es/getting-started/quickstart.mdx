@@ -1,7 +1,8 @@
 ---
-title: Quick Start
-description: Get up and running with Trophy in under 10 minutes
-"og:description": Follow this quick start guide to integrate Trophy into your backend and add gamified features like achievements and streaks into your app.
+title: Inicio rápido
+description: Ponte en marcha con Trophy en menos de 10 minutos
+og:description: Sigue esta guía de inicio rápido para integrar Trophy en tu
+  backend y añadir funciones gamificadas como logros y rachas a tu aplicación.
 ---
 
 import SdkInstallCommand from "/snippets/sdk-install-command.mdx";
@@ -9,35 +10,35 @@ import AddEnvVarBlock from "/snippets/add-env-var-block.mdx";
 import MetricChangeRequestBlock from "/snippets/metric-change-request-block.mdx";
 import MetricChangeResponseBlock from "/snippets/metric-change-response-block.mdx";
 
-Here you'll integrate your backend web application with Trophy and start building your first gamified feature.
+Aquí integrarás tu aplicación web backend con Trophy y comenzarás a construir tu primera función gamificada.
 
 <Steps>
-  <Step title="Create your Trophy account">
-    First, [create a new account](https://app.trophy.so/sign-up?utm_source=docs&utm_medium=quickstart) if you don't already have one and head into the [Trophy dashboard](https://app.trophy.so).
+  <Step title="Crea tu cuenta de Trophy">
+    Primero, [crea una nueva cuenta](https://app.trophy.so/sign-up?utm_source=docs&utm_medium=quickstart) si aún no tienes una y dirígete al [panel de Trophy](https://app.trophy.so).
 
-    Head through onboarding to get your account set up.
+    Completa el proceso de incorporación para configurar tu cuenta.
 
   </Step>
-  <Step title="Add the Trophy SDK to your backend">
-    We have SDK libraries available in most major programming languages but if you don't see yours listed, let us know and we'll make one!
+  <Step title="Añade el SDK de Trophy a tu backend">
+    Tenemos bibliotecas SDK disponibles en la mayoría de los principales lenguajes de programación, pero si no ves el tuyo en la lista, ¡háznoslo saber y crearemos uno!
 
     <SdkInstallCommand />
 
-    Alternatively, you can directly call the API using any server-side HTTP library.
+    Alternativamente, puedes llamar directamente a la API utilizando cualquier biblioteca HTTP del lado del servidor.
 
   </Step>
-  <Step title="Set up environment">
-    Add your API key that you created during onboarding (or [create a new one](https://app.trophy.so/integration)) as an environment variable in your backend application:
+  <Step title="Configura el entorno">
+    Añade tu clave API que creaste durante la incorporación (o [crea una nueva](https://app.trophy.so/integration)) como una variable de entorno en tu aplicación backend:
 
     <AddEnvVarBlock />
 
-    Make sure to pass this API key to the Trophy SDK or to your API client to authenticate.
+    Asegúrate de pasar esta clave API al SDK de Trophy o a tu cliente API para autenticarte.
 
   </Step>
-  <Step title="Create your first metric">
-    All gamification features are driven by user interactions. In Trophy, you use [Metrics](/platform/metrics) to define and model those interactions and [Events](/platform/events) to track them.
+  <Step title="Crea tu primera métrica">
+    Todas las funciones de gamificación están impulsadas por las interacciones del usuario. En Trophy, utilizas [Métricas](/platform/metrics) para definir y modelar esas interacciones y [Eventos](/platform/events) para rastrearlas.
     
-    Here you'll create your first metric to get started. In the Trophy dashboard, head into the [metrics page](https://app.trophy.so/metrics) and hit the _New Metric_ button:
+    Aquí crearás tu primera métrica para comenzar. En el panel de Trophy, dirígete a la [página de métricas](https://app.trophy.so/metrics) y pulsa el botón _Nueva Métrica_:
 
     <Frame>
       <video
@@ -50,11 +51,11 @@ Here you'll integrate your backend web application with Trophy and start buildin
       ></video>
     </Frame>
 
-    Give the metric a name and hit _Save_.
+    Asigna un nombre a la métrica y pulsa _Guardar_.
 
   </Step>
-  <Step title="Integrate the metric into your backend">
-    Once you've created your metric, head to the configure tab and copy it's unique API reference key.
+  <Step title="Integra la métrica en tu backend">
+    Una vez que hayas creado tu métrica, ve a la pestaña de configuración y copia su clave de referencia única de la API.
 
     <Frame>
       <video
@@ -67,30 +68,30 @@ Here you'll integrate your backend web application with Trophy and start buildin
       ></video>
     </Frame>
 
-    To track an event against this metric when a user interacts with your product, call the [metric change event API](/api-reference/endpoints/metrics/send-a-metric-change-event), passing along details of the user that made the interaction. In this example the metric key would be `flashcards-flipped`:
+    Para registrar un evento contra esta métrica cuando un usuario interactúa con tu producto, llama a la [API de evento de cambio de métrica](/api-reference/endpoints/metrics/send-a-metric-change-event), pasando los detalles del usuario que realizó la interacción. En este ejemplo, la clave de métrica sería `flashcards-flipped`:
 
     <MetricChangeRequestBlock />
 
-    By making this call, you're telling Trophy that a specific user made an interaction with your product. As a result, Trophy will process any gamification features like achievements or streaks that you've configured against the metric automatically.
+    Al realizar esta llamada, le estás indicando a Trophy que un usuario específico realizó una interacción con tu producto. Como resultado, Trophy procesará automáticamente cualquier función de gamificación como logros o rachas que hayas configurado contra la métrica.
 
   </Step>
-  <Step title="Continue building your gamification experience">
-    With a metric integrated into your backend, you're ready to start adding gamification features to your product.
+  <Step title="Continúa construyendo tu experiencia de gamificación">
+    Con una métrica integrada en tu backend, estás listo para comenzar a agregar funciones de gamificación a tu producto.
     
-    Follow the links below to learn more about each feature you can build with Trophy:
+    Sigue los enlaces a continuación para obtener más información sobre cada función que puedes construir con Trophy:
 
     <CardGroup>
-      <Card title="Achievements" icon="trophy" href="/platform/achievements">
-        Reward users for continued progress or taking specific actions.
+      <Card title="Logros" icon="trophy" href="/platform/achievements">
+        Recompensa a los usuarios por el progreso continuo o por realizar acciones específicas.
       </Card>
-      <Card title="Streaks" icon="flame" href="/platform/streaks">
-        Motivate users to build regular usage habits.
+      <Card title="Rachas" icon="flame" href="/platform/streaks">
+        Motiva a los usuarios a desarrollar hábitos de uso regulares.
       </Card>
-      <Card title="Points" icon="sparkle" href="/platform/points">
-        Build sophisticated points systems to reward and retain users.
+      <Card title="Puntos" icon="sparkle" href="/platform/points">
+        Construye sistemas de puntos sofisticados para recompensar y retener usuarios.
       </Card>
       <Card
-        title="Leaderboards"
+        title="Tablas de clasificación"
         icon={
           <svg
             width="20"
@@ -107,21 +108,21 @@ Here you'll integrate your backend web application with Trophy and start buildin
           </svg>
         }
         href="/platform/leaderboards">
-        Create friendly competitions to increase user engagement.
+        Crea competiciones amistosas para aumentar la participación de los usuarios.
       </Card>
-      <Card title="Emails" icon="mail" href="/platform/emails">
-        Deliver personalized lifecycle emails to users at the perfect moment.
+      <Card title="Correos electrónicos" icon="mail" href="/platform/emails">
+        Envía correos electrónicos personalizados del ciclo de vida a los usuarios en el momento perfecto.
       </Card>
-      <Card title="Push Notifications" icon="bell" href="/platform/push-notifications">
-        Drive automated notification flows using personalized gamification data.
+      <Card title="Notificaciones push" icon="bell" href="/platform/push-notifications">
+        Impulsa flujos de notificación automatizados utilizando datos de gamificación personalizados.
       </Card>
     </CardGroup>
 
-    Or, explore our [API reference](/api-reference/introduction) to get familiar with what Trophy can do.
+    O explora nuestra [referencia de API](/api-reference/introduction) para familiarizarte con lo que Trophy puede hacer.
 
   </Step>
 </Steps>
 
-## Get Support
+## Obtener Soporte
 
-Want to get in touch with the Trophy team? Reach out to us via [email](mailto:support@trophy.so). We're here to help!
+¿Quieres ponerte en contacto con el equipo de Trophy? Contáctanos por [correo electrónico](mailto:support@trophy.so). ¡Estamos aquí para ayudarte!

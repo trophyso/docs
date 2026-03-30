@@ -1,7 +1,9 @@
 ---
-title: How To Build A Streaks Feature
-description: Learn how to use Trophy to add a streaks feature to your web or mobile app.
-subtitle: Learn how to use Trophy to add a streaks feature to your web or mobile app.
+title: Cómo construir una función de rachas
+description: Aprende a usar Trophy para añadir una función de rachas a tu
+  aplicación web o móvil.
+subtitle: Aprende a usar Trophy para añadir una función de rachas a tu
+  aplicación web o móvil.
 noindex: true
 ---
 
@@ -10,28 +12,28 @@ import MetricChangeRequestBlock from "/snippets/metric-change-request-block.mdx"
 import StreakRequestBlock from "/snippets/streak-request-block.mdx";
 import StreakResponseBlock from "/snippets/streak-response-block.mdx";
 
-The guide outlines the full process of adding a streaks feature to your web or mobile app using Trophy.
+Esta guía describe el proceso completo para añadir una función de rachas a tu aplicación web o móvil usando Trophy.
 
-For illustration purposes we'll use the example of a study platform that uses a daily streak to incentivize and reward users for viewing flashcards.
+Con fines ilustrativos, usaremos el ejemplo de una plataforma de estudio que utiliza una racha diaria para incentivar y recompensar a los usuarios por ver tarjetas de estudio.
 
 <Tip>
-  To see a fully working example of this in practice, check out the [live
-  demo](https://examples.trophy.so) or [github
-  repo](https://github.com/trophyso/example-study-platform/tree/demo).
+  Para ver un ejemplo completamente funcional en la práctica, consulta la [demostración
+  en vivo](https://examples.trophy.so) o el [repositorio de
+  github](https://github.com/trophyso/example-study-platform/tree/demo).
 </Tip>
 
-## Pre-requisites
+## Requisitos previos
 
-- A [Trophy](https://app.trophy.so/sign-up) account
-- About 10 minutes
+- Una cuenta de [Trophy](https://app.trophy.so/sign-up)
+- Aproximadamente 10 minutos
 
-## Trophy Setup
+## Configuración de Trophy
 
-In Trophy, [Metrics](/platform/metrics) are the building blocks of gamification and model the different interactions users make with your product.
+En Trophy, las [Métricas](/platform/metrics) son los elementos fundamentales de la gamificación y modelan las diferentes interacciones que los usuarios realizan con tu producto.
 
-In this guide the interaction we're interested in is `flashcards-viewed`, but you can create a metric that best represents the interaction you want to drive streaks from.
+En esta guía, la interacción que nos interesa es `flashcards-viewed`, pero puedes crear una métrica que mejor represente la interacción desde la cual quieres generar rachas.
 
-In the Trophy dashboard, head to the [metrics page](https://app.trophy.so/metrics) and create a metric.
+En el panel de Trophy, dirígete a la [página de métricas](https://app.trophy.so/metrics) y crea una métrica.
 
 <Frame>
   <video
@@ -44,49 +46,49 @@ In the Trophy dashboard, head to the [metrics page](https://app.trophy.so/metric
   ></video>
 </Frame>
 
-Once you've created your metric, head to the [streaks page](https://app.trophy.so/streaks/configure) and select the streak frequency you want (daily, weekly or monthly).
+Una vez que hayas creado tu métrica, dirígete a la [página de rachas](https://app.trophy.so/streaks/configure) y selecciona la frecuencia de racha que deseas (diaria, semanal o mensual).
 
-Then add your metric to the streak conditions and set the threshold users must meet (e.g. at least 1 to extend their streak each period).
+Luego añade tu métrica a las condiciones de racha y establece el umbral que los usuarios deben cumplir (por ejemplo, al menos 1 para extender su racha cada período).
 
-You can also add multiple metrics and choose whether users must meet all of them or just one—see the [streak conditions docs](/platform/streaks#streak-conditions) for details.
+También puedes añadir múltiples métricas y elegir si los usuarios deben cumplir todas o solo una—consulta la [documentación de condiciones de racha](/platform/streaks#streak-conditions) para más detalles.
 
-In Trophy you track user interactions by sending [Events](/platform/events) from your code to Trophy APIs against a specific metric.
+En Trophy, registras las interacciones de los usuarios enviando [Eventos](/platform/events) desde tu código a las API de Trophy contra una métrica específica.
 
-When events are recorded for a specific user, Trophy will automatically check whether they've met their streak conditions for the current period and update the user's streak accordingly.
+Cuando se registran eventos para un usuario específico, Trophy verificará automáticamente si ha cumplido con las condiciones de su racha para el período actual y actualizará la racha del usuario en consecuencia.
 
-This is what makes building gamified experiences with Trophy so easy, it does all the work for you behind the scenes.
+Esto es lo que hace que construir experiencias gamificadas con Trophy sea tan fácil: realiza todo el trabajo por ti tras bambalinas.
 
-## Installing Trophy SDK
+## Instalación del SDK de Trophy
 
-To interact with Trophy from your code you'll use the Trophy SDK available in most major [programming languages](/api-reference/client-libraries).
+Para interactuar con Trophy desde tu código, utilizarás el SDK de Trophy disponible en la mayoría de los principales [lenguajes de programación](/api-reference/client-libraries).
 
-Install the Trophy SDK:
+Instala el SDK de Trophy:
 
 <SDKInstallCommand />
 
-Next, grab your API key from the Trophy [integration page](https://app.trophy.so/integration) and add this as a **server-side only** environment variable.
+A continuación, obtén tu clave de API desde la [página de integración](https://app.trophy.so/integration) de Trophy y añádela como una variable de entorno **exclusivamente del lado del servidor**.
 
 ```bash
 TROPHY_API_KEY='*******'
 ```
 
 <Warning>
-  Make sure you **don't** expose your API key in client-side code.
+  Asegúrate de **no** exponer tu clave de API en código del lado del cliente.
 </Warning>
 
-## Tracking User Interactions
+## Registro de Interacciones de Usuarios
 
-To track an event (user interaction) against your metric, use the [metric change API](/api-reference/endpoints/metrics/send-a-metric-change-event).
+Para registrar un evento (interacción del usuario) contra tu métrica, utiliza la [API de cambio de métrica](/api-reference/endpoints/metrics/send-a-metric-change-event).
 
 <MetricChangeRequestBlock />
 
 <Tip>
-  By including the user's timezone in the `tz` attribute, Trophy will
-  automatically track streaks according to the user's local clock and handle
-  awkward edge cases where users change time zones.
+  Al incluir la zona horaria del usuario en el atributo `tz`, Trophy
+  rastreará automáticamente las rachas según el reloj local del usuario y manejará
+  casos límite complicados donde los usuarios cambian de zona horaria.
 </Tip>
 
-The response to this API call is the complete set of changes to any features you've built with Trophy, including the latest data on the users streak.
+La respuesta a esta llamada de API es el conjunto completo de cambios en cualquier función que hayas construido con Trophy, incluidos los datos más recientes sobre la racha del usuario.
 
 {/* vale off */}
 
@@ -110,17 +112,17 @@ The response to this API call is the complete set of changes to any features you
 
 {/* vale on */}
 
-Validate this is working by checking the Trophy [dashboard](https://app.trophy.so).
+Valida que esto funciona verificando el [panel de control](https://app.trophy.so) de Trophy.
 
-## Displaying Streaks
+## Visualización de Rachas
 
-You have a number of options for displaying streaks in your application. Here we'll look at the most common options.
+Tienes varias opciones para mostrar rachas en tu aplicación. Aquí examinaremos las opciones más comunes.
 
-### Pop-up Notifications
+### Notificaciones Emergentes
 
-We can use the response of the [metric change API](/api-reference/endpoints/metrics/send-a-metric-change-event) to show pop-up notifications (or 'toasts') when user extends their streak.
+Podemos usar la respuesta de la [API de cambio de métrica](/api-reference/endpoints/metrics/send-a-metric-change-event) para mostrar notificaciones emergentes (o 'toasts') cuando el usuario extiende su racha.
 
-Here's an example of this in action:
+Aquí hay un ejemplo de esto en acción:
 
 ```ts Streak Extended Pop-up
 // Sends event to Trophy
@@ -151,24 +153,20 @@ if (response.currentStreak?.extended) {
 </Frame>
 
 <Tip>
-  If you want to play sound effects, use the [HTML5 Audio
-  API](https://developer.mozilla.org/en-US/docs/Web/API/Web_Audio_API) and feel
-  free to steal these [audio
-  files](https://github.com/trophyso/example-study-platform/tree/demo/public/sounds)
-  we recommend.
+  Si deseas reproducir efectos de sonido, usa la [API de Audio HTML5](https://developer.mozilla.org/en-US/docs/Web/API/Web_Audio_API) y siéntete libre de usar estos [archivos de audio](https://github.com/trophyso/example-study-platform/tree/demo/public/sounds) que recomendamos.
 </Tip>
 
-### Displaying User Streaks
+### Mostrar las Rachas de Usuario
 
-To fetch data on a user's streak use the [user streak API](/api-reference/endpoints/users/get-a-users-streak).
+Para obtener datos sobre la racha de un usuario, usa la [API de racha de usuario](/api-reference/endpoints/users/get-a-users-streak).
 
 <StreakRequestBlock />
 
-This API not only returns data on the user's current streak like `length` and `expires`, but it can also return historical streak data which can be used to display any kind of streak UI you like through the `historyPeriods` parameter.
+Esta API no solo devuelve datos sobre la racha actual del usuario como `length` y `expires`, sino que también puede devolver datos históricos de rachas que se pueden usar para mostrar cualquier tipo de interfaz de racha que desees mediante el parámetro `historyPeriods`.
 
 <StreakResponseBlock />
 
-Here's an example of a git-style streak calendar built using the data in the response above:
+Aquí hay un ejemplo de un calendario de rachas estilo git construido usando los datos de la respuesta anterior:
 
 <Frame>
   <img
@@ -180,14 +178,12 @@ Here's an example of a git-style streak calendar built using the data in the res
 </Frame>
 
 <Tip>
-  Check this [example
-  repo](https://github.com/trophyso/example-study-platform/blob/demo/src/app/user-center/study-center/default-view.tsx)
-  for a React component that drives this UI using data from Trophy.
+  Consulta este [repositorio de ejemplo](https://github.com/trophyso/example-study-platform/blob/demo/src/app/user-center/study-center/default-view.tsx) para un componente React que maneja esta interfaz usando datos de Trophy.
 </Tip>
 
-## Analytics
+## Analíticas
 
-The [streaks page](https://app.trophy.so/streaks) in Trophy shows data on active streaks, the average length of streaks and longest streaks.
+La [página de rachas](https://app.trophy.so/streaks) en Trophy muestra datos sobre rachas activas, la duración promedio de las rachas y las rachas más largas.
 
 <Frame>
   <img
@@ -198,12 +194,12 @@ The [streaks page](https://app.trophy.so/streaks) in Trophy shows data on active
   />
 </Frame>
 
-## Streak Freezes
+## Congelaciones de Racha
 
-Trophy also supports streak freezes which can help prevent users from losing their streak if they accidentally miss a period.
+Trophy también admite congelaciones de racha que pueden ayudar a evitar que los usuarios pierdan su racha si accidentalmente pierden un período.
 
-Learn more about streak freezes in the dedicated [streak freezes docs](/platform/streaks#streak-freezes).
+Obtén más información sobre las congelaciones de racha en la [documentación dedicada de congelaciones de racha](/platform/streaks#streak-freezes).
 
-## Get Support
+## Obtener Soporte
 
-Want to get in touch with the Trophy team? Reach out to us via [email](mailto:support@trophy.so). We're here to help!
+¿Quieres ponerte en contacto con el equipo de Trophy? Contáctanos por [correo electrónico](mailto:support@trophy.so). ¡Estamos aquí para ayudarte!

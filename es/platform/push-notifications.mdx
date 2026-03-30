@@ -1,20 +1,23 @@
 ---
-title: Push Notifications
-description: Learn how to use push notifications in a gamified product experience with Trophy.
-"og:description": Use automated push notification flows to extend your gamification experience outside your app and remind users to keep coming back.
+title: Notificaciones push
+description: Aprende a usar notificaciones push en una experiencia de producto
+  gamificada con Trophy.
+og:description: Usa flujos automatizados de notificaciones push para extender tu
+  experiencia de gamificación fuera de tu aplicación y recordar a los usuarios
+  que sigan regresando.
 icon: bell
 ---
 
 import IdentifyUserWithDeviceTokensRequestBlock from "/snippets/identify-user-with-device-tokens-request-block.mdx";
 import MetricEventWithDeviceTokensRequestBlock from "/snippets/metric-event-with-device-tokens-request-block.mdx";
 
-Trophy can send automated push notifications to users based on key triggers without requiring any code. Here we’ll look at what these triggers are, and how they can form part of your product’s gamification experience.
+Trophy puede enviar notificaciones push automatizadas a los usuarios basándose en eventos clave sin requerir ningún código. Aquí veremos cuáles son estos eventos y cómo pueden formar parte de la experiencia de gamificación de tu producto.
 
-## Types Of Push Notifications
+## Tipos de notificaciones push
 
-Trophy supports 4 types of push notifications, each of which is designed to suit a common scenario in building gamification experiences.
+Trophy admite 4 tipos de notificaciones push, cada una diseñada para adaptarse a un escenario común en la construcción de experiencias de gamificación.
 
-All push notifications are optional, but all four can be used simultaneously and can be controlled from the [Push Notifications](https://app.trophy.so/push/configure) page in the Trophy dashboard.
+Todas las notificaciones push son opcionales, pero las cuatro pueden usarse simultáneamente y pueden controlarse desde la página de [Notificaciones push](https://app.trophy.so/push/configure) en el panel de Trophy.
 
 <Frame>
   <video
@@ -27,35 +30,35 @@ All push notifications are optional, but all four can be used simultaneously and
   ></video>
 </Frame>
 
-- **Achievement notifications** are sent to users each time they unlock an [Achievement](/platform/achievements).
-- **Recap notifications** are sent to users on a pre-defined frequency to summarize progress. Recap notifications can be configured to be sent daily, weekly, monthly or yearly depending on your use case.
-- **Reactivation notifications** are sent to users after they become inactive with the goal of bringing them back to your app.
-- **Streak notifications** are automatically sent to users reminding them to extend their [Streak](/platform/streaks).
+- **Notificaciones de logros** se envían a los usuarios cada vez que desbloquean un [Logro](/platform/achievements).
+- **Notificaciones de resumen** se envían a los usuarios con una frecuencia predefinida para resumir el progreso. Las notificaciones de resumen pueden configurarse para enviarse diaria, semanal, mensual o anualmente según tu caso de uso.
+- **Notificaciones de reactivación** se envían a los usuarios después de que se vuelven inactivos con el objetivo de traerlos de vuelta a tu aplicación.
+- **Notificaciones de racha** se envían automáticamente a los usuarios recordándoles extender su [Racha](/platform/streaks).
 
-## Supported Channels
+## Canales compatibles
 
-Trophy supports sending push notifications using 3 channels which can all be configured on the [Channels](https://app.trophy.so/push/channels) page of the Trophy dashboard.
+Trophy admite el envío de notificaciones push usando 3 canales que pueden configurarse en la página de [Canales](https://app.trophy.so/push/channels) del panel de Trophy.
 
-### Apple Push Notification Service (APNs)
+### Servicio de notificaciones push de Apple (APNs)
 
-Trophy supports sending push notifications to users via APNs through a certificate-based connection.
+Trophy admite el envío de notificaciones push a los usuarios a través de APNs mediante una conexión basada en certificados.
 
-To send push notifications using APNs, you'll need to provide Trophy with the following credentials from your Apple Developer Account:
+Para enviar notificaciones push usando APNs, deberás proporcionar a Trophy las siguientes credenciales de tu cuenta de desarrollador de Apple:
 
-- **APN Signing Key**: Trophy uses this to securely send notifications via APNs
-- **Team ID**: The team ID of your Apple Developer Account
-- **Key ID**: The ID of your APNs authentication key
-- **Bundle ID**: Your app's unique bundle identifier
+- **Clave de firma APN**: Trophy la utiliza para enviar notificaciones de forma segura a través de APNs
+- **ID de equipo**: El ID de equipo de tu cuenta de desarrollador de Apple
+- **ID de clave**: El ID de tu clave de autenticación de APNs
+- **ID de bundle**: El identificador único de bundle de tu aplicación
 
 <Note>
-  For more information on how to configure certificate-based connection to APNs
-  from a third-party service, read the [official setup
-  guide](https://developer.apple.com/documentation/usernotifications/establishing-a-certificate-based-connection-to-apns).
+  Para obtener más información sobre cómo configurar una conexión basada en certificados a APNs
+  desde un servicio de terceros, consulta la [guía de configuración
+  oficial](https://developer.apple.com/documentation/usernotifications/establishing-a-certificate-based-connection-to-apns).
 </Note>
 
 ### Firebase Cloud Messaging (FCM)
 
-Trophy supports sending push notifications to users via FCM. To achieve this you'll need to provide Trophy with your Firebase Service Account JSON in the following format:
+Trophy admite el envío de notificaciones push a los usuarios a través de FCM. Para lograrlo, deberás proporcionar a Trophy tu JSON de cuenta de servicio de Firebase en el siguiente formato:
 
 {/* vale off */}
 
@@ -77,44 +80,44 @@ Trophy supports sending push notifications to users via FCM. To achieve this you
 {/* vale on */}
 
 <Note>
-  For more information on Firebase service accounts and how to authenticate
-  external services to use FCM, read the [official service accounts
-  guide](https://firebase.google.com/support/guides/service-accounts).
+  Para obtener más información sobre las cuentas de servicio de Firebase y cómo autenticar
+  servicios externos para usar FCM, consulta la [guía oficial de cuentas de
+  servicio](https://firebase.google.com/support/guides/service-accounts).
 </Note>
 
 ### Expo Push Service
 
-Trophy supports sending push notifications to users via Expo Push Service.
+Trophy admite el envío de notificaciones push a los usuarios a través de Expo Push Service.
 
-Expo Push Service saves you having to integreate with FCM and APNs individually and automatically directs notifications through the relevant service based on your users platform.
+Expo Push Service te evita tener que integrar FCM y APNs individualmente y dirige automáticamente las notificaciones a través del servicio correspondiente según la plataforma de tus usuarios.
 
-To achieve this you must provide Trophy with a few key details from your Expo account:
+Para lograrlo, debes proporcionar a Trophy algunos detalles clave de tu cuenta de Expo:
 
-- **Expo Project Name**: The name of your Expo project
-- **Expo Push Token**: Your authentication token for sending notifications via Expo (required if using [enhanced security](https://docs.expo.dev/push-notifications/sending-notifications/#additional-security)).
+- **Nombre del proyecto de Expo**: El nombre de tu proyecto de Expo
+- **Token push de Expo**: Tu token de autenticación para enviar notificaciones a través de Expo (requerido si utilizas [seguridad mejorada](https://docs.expo.dev/push-notifications/sending-notifications/#additional-security)).
 
 <Note>
-  For more information on Expo Push Service and how to authenticate external
-  providers, see the [official
-  guide](https://docs.expo.dev/push-notifications/sending-notifications).
+  Para obtener más información sobre Expo Push Service y cómo autenticar proveedores
+  externos, consulta la [guía
+  oficial](https://docs.expo.dev/push-notifications/sending-notifications).
 </Note>
 
-## Sending Push Notifications
+## Envío de notificaciones push
 
-Follow the steps below to start sending push notifications using Trophy.
+Sigue los pasos a continuación para comenzar a enviar notificaciones push usando Trophy.
 
 <Tip>
-  Users can control which push notifications they receive through Trophy's [user
-  preferences API](/platform/users#notification-preferences). This allows you to
-  build a preference center in your application where users can opt in or out of
-  specific notification types.
+  Los usuarios pueden controlar qué notificaciones push reciben a través de la [API de
+  preferencias de usuario](/platform/users#notification-preferences) de Trophy. Esto te permite
+  construir un centro de preferencias en tu aplicación donde los usuarios pueden activar o desactivar
+  tipos específicos de notificaciones.
 </Tip>
 
 <Steps>
-  <Step title="Set up channels">
-    Trophy support sending push notifications via 3 channels, [Apple Push Notification Service (APNs)](#apple-push-notification-service-apns), [Firebase Cloud Messaging (FCM)](#firebase-cloud-messaging-fcm) or [Expo Push Service](#expo-push-service).
+  <Step title="Configurar canales">
+    Trophy admite el envío de notificaciones push a través de 3 canales: [Apple Push Notification Service (APNs)](#apple-push-notification-service-apns), [Firebase Cloud Messaging (FCM)](#firebase-cloud-messaging-fcm) o [Expo Push Service](#expo-push-service).
 
-    Head into the [channels page](https://app.trophy.so/push/channels) of the Trophy dashboard and configure your preferred channel by following the dedicated guides above.
+    Dirígete a la [página de canales](https://app.trophy.so/push/channels) del panel de Trophy y configura tu canal preferido siguiendo las guías dedicadas anteriores.
 
 <Frame>
     <video
@@ -130,12 +133,12 @@ Follow the steps below to start sending push notifications using Trophy.
 </Frame>
 
   </Step>
-  <Step title="Add templates">
-    Trophy provides a default template for each [type of push notification](#types-of-push-notifications) that Trophy supports.
+  <Step title="Agregar plantillas">
+    Trophy proporciona una plantilla predeterminada para cada [tipo de notificación push](#types-of-push-notifications) que Trophy admite.
 
-    On the [configure page](https://app.trophy.so/push/configure), each notification type has its own section. Add templates under the relevant type.
+    En la [página de configuración](https://app.trophy.so/push/configure), cada tipo de notificación tiene su propia sección. Agrega plantillas bajo el tipo relevante.
     
-    Follow the guide on [designing push notifications](#designing-push-notifications) to learn more.
+    Sigue la guía sobre [diseño de notificaciones push](#designing-push-notifications) para obtener más información.
 
     <Frame>
       <img
@@ -147,33 +150,33 @@ Follow the steps below to start sending push notifications using Trophy.
     </Frame>
 
   </Step>
-  <Step title="Associate device tokens">
-    To send notifications to users, Trophy needs to know the unique tokens assigned to their devices. You tell Trophy about devices by associating device tokens with each user you identify.
+  <Step title="Asociar tokens de dispositivo">
+    Para enviar notificaciones a los usuarios, Trophy necesita conocer los tokens únicos asignados a sus dispositivos. Le informas a Trophy sobre los dispositivos asociando tokens de dispositivo con cada usuario que identificas.
     
-    Trophy will use the device tokens you associate with each user when communicating with supported [push notification channels](#supported-channels) to route notifications to the correct device.
+    Trophy utilizará los tokens de dispositivo que asocies con cada usuario al comunicarse con los [canales de notificaciones push](#supported-channels) compatibles para enrutar las notificaciones al dispositivo correcto.
 
-    To associate a device token with a user in Trophy, either assign `deviceTokens` when [identifying users explicitly](https://docs.trophy.so/api-reference/endpoints/users/identify-a-user#body-device-tokens), or when [sending metric events](https://docs.trophy.so/api-reference/endpoints/metrics/send-a-metric-change-event#body-user-device-tokens).
+    Para asociar un token de dispositivo con un usuario en Trophy, asigna `deviceTokens` al [identificar usuarios explícitamente](https://docs.trophy.so/api-reference/endpoints/users/identify-a-user#body-device-tokens), o al [enviar eventos de métricas](https://docs.trophy.so/api-reference/endpoints/metrics/send-a-metric-change-event#body-user-device-tokens).
 
-    Here's how to associated device tokens when identifying users:
+    Así es como se asocian tokens de dispositivo al identificar usuarios:
 
     <IdentifyUserWithDeviceTokensRequestBlock />
 
-    And here's how to associate device tokens when sending metric events:
+    Y aquí te mostramos cómo asociar tokens de dispositivo al enviar eventos de métricas:
 
     <MetricEventWithDeviceTokensRequestBlock />
 
     <Tip>
-    Each user can have multiple device tokens associated with them, to support users who use multiple devices.
+    Cada usuario puede tener múltiples tokens de dispositivo asociados, para soportar usuarios que utilizan varios dispositivos.
     </Tip>
 
 </Step>
-  <Step title="Activate templates">
-    The last step is to activate a template within each [type of push notification](#types-of-push-notifications) section that you want to send.
+  <Step title="Activar plantillas">
+    El último paso es activar una plantilla dentro de cada sección de [tipo de notificación push](#types-of-push-notifications) que desees enviar.
 
-    On the [configure page](https://app.trophy.so/push/configure), activate one template in each type section you want to enable. Once activated, Trophy will start sending push notifications automatically.
+    En la [página de configuración](https://app.trophy.so/push/configure), activa una plantilla en cada sección de tipo que quieras habilitar. Una vez activada, Trophy comenzará a enviar notificaciones push automáticamente.
 
     <Tip>
-      Users can control which push notification types they receive through Trophy's [user preferences API](/platform/users#notification-preferences). When a user has disabled a notification type in their preferences, Trophy will respect that setting and won't send those notifications to that user.
+      Los usuarios pueden controlar qué tipos de notificaciones push reciben a través de la [API de preferencias de usuario](/platform/users#notification-preferences) de Trophy. Cuando un usuario ha deshabilitado un tipo de notificación en sus preferencias, Trophy respetará esa configuración y no enviará esas notificaciones a ese usuario.
     </Tip>
 
     <Frame>
@@ -191,17 +194,17 @@ Follow the steps below to start sending push notifications using Trophy.
   </Step>
 </Steps>
 
-## Designing Push Notifications
+## Diseñar Notificaciones Push
 
-By default, Trophy provides a template for each [type of push notification](#types-of-push-notifications) as a good starting point. The default templates can’t be changed, but you can duplicate and customize these as you wish.
+Por defecto, Trophy proporciona una plantilla para cada [tipo de notificación push](#types-of-push-notifications) como un buen punto de partida. Las plantillas predeterminadas no se pueden modificar, pero puedes duplicarlas y personalizarlas como desees.
 
 <Tip>
-  You can also create blank templates if you just want to start from scratch.
+  También puedes crear plantillas en blanco si simplemente quieres empezar desde cero.
 </Tip>
 
-### Template Structure
+### Estructura de la Plantilla
 
-Each push notification has a title and body, and Trophy's no-code push notification template editor allows you to fully customize both fields.
+Cada notificación push tiene un título y un cuerpo, y el editor de plantillas de notificaciones push sin código de Trophy te permite personalizar completamente ambos campos.
 
 <Frame>
   <img
@@ -212,13 +215,13 @@ Each push notification has a title and body, and Trophy's no-code push notificat
   />
 </Frame>
 
-### Using Variables
+### Uso de Variables
 
-Trophy provides an expansive set of variables that can be used to insert highly relevant and personalized data into your push notifications.
+Trophy proporciona un amplio conjunto de variables que se pueden utilizar para insertar datos altamente relevantes y personalizados en tus notificaciones push.
 
-Variables can be inserted by typing `@` in the title or body of any push notification, and searching for your chosen variable.
+Las variables se pueden insertar escribiendo `@` en el título o cuerpo de cualquier notificación push, y buscando la variable elegida.
 
-This will open up the variable editor window where you can configure variables as in the demo below. You can also test different variable values and how your template behaves in different scenarios by using the preview sidebar.
+Esto abrirá la ventana del editor de variables donde puedes configurar variables como en la demostración a continuación. También puedes probar diferentes valores de variables y cómo se comporta tu plantilla en diferentes escenarios usando la barra lateral de vista previa.
 
 <Frame>
   <video
@@ -231,11 +234,11 @@ This will open up the variable editor window where you can configure variables a
   ></video>
 </Frame>
 
-### Using Variations
+### Usar Variaciones
 
-Variations can be used to add randomness to the title and body of push notifications sent by Trophy. This prevents notifications from getting boring and helps improve engagement rates.
+Las variaciones se pueden usar para agregar aleatoriedad al título y cuerpo de las notificaciones push enviadas por Trophy. Esto evita que las notificaciones se vuelvan aburridas y ayuda a mejorar las tasas de interacción.
 
-At send time, Trophy automatically picks one of your variations of the title and body at random and sends the notification to the user.
+En el momento del envío, Trophy selecciona automáticamente una de tus variaciones del título y cuerpo de forma aleatoria y envía la notificación al usuario.
 
 <Frame>
   <video
@@ -248,13 +251,13 @@ At send time, Trophy automatically picks one of your variations of the title and
   ></video>
 </Frame>
 
-### Using Conditions
+### Usar Condiciones
 
-Trophy's push notification template builder supports using conditions to send different content to each recipient based on their unique context.
+El constructor de plantillas de notificaciones push de Trophy permite usar condiciones para enviar contenido diferente a cada destinatario según su contexto único.
 
-All [template variables](#using-variables) can be used in conditions to control what content is used in the title and body of notifications sent by Trophy.
+Todas las [variables de plantilla](#using-variables) se pueden usar en condiciones para controlar qué contenido se utiliza en el título y cuerpo de las notificaciones enviadas por Trophy.
 
-At send time Trophy computes all conditions using each recipients unique context, delivering highly personalized and relevant notifications to each user.
+En el momento del envío, Trophy procesa todas las condiciones usando el contexto único de cada destinatario, entregando notificaciones altamente personalizadas y relevantes a cada usuario.
 
 <Frame>
   <video
@@ -267,6 +270,6 @@ At send time Trophy computes all conditions using each recipients unique context
   ></video>
 </Frame>
 
-## Get Support
+## Obtener Soporte
 
-Want to get in touch with the Trophy team? Reach out to us via [email](mailto:support@trophy.so). We're here to help!
+¿Quieres ponerte en contacto con el equipo de Trophy? Comunícate con nosotros por [correo electrónico](mailto:support@trophy.so). ¡Estamos aquí para ayudar!

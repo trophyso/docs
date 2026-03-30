@@ -37,7 +37,7 @@ jobs:
 
       - name: Run Lingo translation
         env:
-          LINGO_API_KEY: ${{ secrets.LINGODOTDEV_API_KEY }}
+          LINGO_API_KEY: ${{ secrets.LINGO_API_KEY }}
         run: |
           locales=$(node -e 'const fs=require("fs");const j=JSON.parse(fs.readFileSync("i18n.json","utf8"));console.log((j.locale?.targets||[]).join(" "));')
           if [ -z "$locales" ]; then
@@ -52,7 +52,7 @@ jobs:
       - name: Translate docs.json language-specific navigation
         env:
           LINGO_ENGINE_ID: ${{ secrets.LINGO_ENGINE_ID }}
-          LINGO_API_KEY: ${{ secrets.LINGODOTDEV_API_KEY }}
+          LINGO_API_KEY: ${{ secrets.LINGO_API_KEY }}
         run: |
           locales=$(node -e 'const fs=require("fs");const j=JSON.parse(fs.readFileSync("i18n.json","utf8"));console.log((j.locale?.targets||[]).join(" "));')
           for locale in $locales; do

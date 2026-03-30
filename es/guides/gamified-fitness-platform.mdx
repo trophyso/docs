@@ -1,12 +1,15 @@
 ---
-title: How to Build a Gamified Fitness Tracker
-description: Learn how to build a Strava-like fitness app with Next.js, featuring multi-sport tracking, city-based leaderboards, and normalized XP progression.
-subtitle: Build a high-retention fitness app with streaks and leaderboards.
+title: Cómo construir un rastreador de fitness gamificado
+description: Aprende a construir una aplicación de fitness similar a Strava con
+  Next.js, que incluye seguimiento multideportivo, clasificaciones por ciudad y
+  progresión de XP normalizada.
+subtitle: Construye una aplicación de fitness de alta retención con rachas y
+  clasificaciones.
 ---
 
-In this tutorial, we'll build **TrophyFitness**, a consumer fitness application that tracks running, cycling, and swimming. We'll implement a complete gamification loop including weekly leaderboards, habit-forming streaks, and a leveled progression system.
+En este tutorial, construiremos **TrophyFitness**, una aplicación de fitness para consumidores que rastrea carrera, ciclismo y natación. Implementaremos un bucle completo de gamificación que incluye clasificaciones semanales, rachas para formar hábitos y un sistema de progresión por niveles.
 
-If you want to skip straight to the code, check out the [example repository](https://github.com/trophyso/example-fitness-platform) or the [live demo](https://fitness.examples.trophy.so).
+Si quieres ir directo al código, consulta el [repositorio de ejemplo](https://github.com/trophyso/example-fitness-platform) o la [demostración en vivo](https://fitness.examples.trophy.so).
 
 <Frame>
   <video
@@ -19,74 +22,74 @@ If you want to skip straight to the code, check out the [example repository](htt
   ></video>
 </Frame>
 
-## Table of Contents
+## Tabla de contenidos
 
-- [Tech Stack](#tech-stack)
-- [Prerequisites](#prerequisites)
-- [Setup & Installation](#setup--installation)
-- [Designing the Data Model](#designing-the-data-model)
-- [How Trophy Works](#how-trophy-works)
-- [Setting Up Trophy](#setting-up-trophy)
+- [Stack tecnológico](#tech-stack)
+- [Requisitos previos](#prerequisites)
+- [Configuración e instalación](#setup--installation)
+- [Diseño del modelo de datos](#designing-the-data-model)
+- [Cómo funciona Trophy](#how-trophy-works)
+- [Configuración de Trophy](#setting-up-trophy)
 - [Server Actions](#server-actions)
-- [The Leveling System](#the-leveling-system)
-- [Building the Dashboard](#building-the-dashboard)
-- [Logging Workouts](#logging-workouts)
-- [Implementing Leaderboards](#implementing-leaderboards)
-- [Building the Achievements Page](#building-the-achievements-page)
-- [Building the Profile Page](#building-the-profile-page)
-- [The Result](#the-result)
+- [El sistema de niveles](#the-leveling-system)
+- [Construcción del panel de control](#building-the-dashboard)
+- [Registro de entrenamientos](#logging-workouts)
+- [Implementación de clasificaciones](#implementing-leaderboards)
+- [Construcción de la página de logros](#building-the-achievements-page)
+- [Construcción de la página de perfil](#building-the-profile-page)
+- [El resultado](#the-result)
 
-## Tech Stack
+## Stack tecnológico
 
 - **Framework:** [Next.js 15](https://nextjs.org) (App Router)
 - **UI:** [Shadcn/UI](https://ui.shadcn.com) + TailwindCSS
-- **Icons:** [Lucide React](https://lucide.dev)
-- **Gamification:** [Trophy](https://trophy.so)
+- **Iconos:** [Lucide React](https://lucide.dev)
+- **Gamificación:** [Trophy](https://trophy.so)
 
-## Prerequisites
+## Requisitos previos
 
-- A Trophy account (sign up [here](https://app.trophy.so/sign-up)).
-- Node.js 18+ installed.
+- Una cuenta de Trophy (regístrate [aquí](https://app.trophy.so/sign-up)).
+- Node.js 18+ instalado.
 
-## Setup & Installation
+## Configuración e instalación
 
-First, clone the starter repository or create a new Next.js app:
+Primero, clona el repositorio inicial o crea una nueva aplicación Next.js:
 
 ```bash
 npx create-next-app@latest trophy-fitness
 ```
 
-Install the required dependencies:
+Instala las dependencias requeridas:
 
 ```bash
 npm install @trophyso/node lucide-react clsx tailwind-merge
 ```
 
-Configure your environment variables in `.env.local`:
+Configura tus variables de entorno en `.env.local`:
 
 ```bash
 TROPHY_API_KEY=your_api_key_here
 ```
 
-## Designing the Data Model
+## Diseño del modelo de datos
 
-For a multi-sport fitness app, we need to normalize efforts. A 10km cycle is not the same as a 10km run. We'll use three distinct metrics to track raw data, and a unified XP system for progression.
+Para una aplicación de fitness multideportivo, necesitamos normalizar los esfuerzos. Un ciclo de 10 km no es lo mismo que una carrera de 10 km. Usaremos tres métricas distintas para rastrear datos sin procesar, y un sistema unificado de XP para la progresión.
 
-### 1. The Metrics
+### 1. Las Métricas
 
-We will track distance as the primary value.
+Rastrearemos la distancia como valor principal.
 
-- `distance_run` (km) - with `pace` attribute (walk/run).
+- `distance_run` (km) - con atributo `pace` (caminar/correr).
 - `distance_cycled` (km)
-- `distance_swum` (m) - with `style` attribute (freestyle/breaststroke).
+- `distance_swum` (m) - con atributo `style` (estilo libre/braza).
 
-### 2. The Attributes
+### 2. Los Atributos
 
-To enable local leaderboards, we'll tag every user with a `city` attribute.
+Para habilitar clasificaciones locales, etiquetaremos cada usuario con un atributo `city`.
 
-## How Trophy Works
+## Cómo Funciona Trophy
 
-Before diving into the code, let's understand how Trophy powers our gamification layer. In Trophy, [Metrics](/platform/metrics) represent different interactions users can make and drive features like [Achievements](/platform/achievements), [Streaks](/platform/streaks), and [Emails](/platform/emails).
+Antes de profundizar en el código, entendamos cómo Trophy impulsa nuestra capa de gamificación. En Trophy, las [Métricas](/platform/metrics) representan diferentes interacciones que los usuarios pueden realizar e impulsan funciones como [Logros](/platform/achievements), [Rachas](/platform/streaks) y [Correos electrónicos](/platform/emails).
 
 ```mermaid
 flowchart TD
@@ -105,23 +108,23 @@ flowchart TD
     B-->G
 ```
 
-When events are recorded for a specific user, any achievements linked to the specified metric will be unlocked if the requirements are met, streaks will be automatically calculated, leaderboards will update, and any configured emails will be scheduled.
+Cuando se registran eventos para un usuario específico, cualquier logro vinculado a la métrica especificada se desbloqueará si se cumplen los requisitos, las rachas se calcularán automáticamente, las clasificaciones se actualizarán y cualquier correo electrónico configurado se programará.
 
-This is what makes building gamified experiences with Trophy so powerful—it does all the work behind the scenes.
+Esto es lo que hace tan poderosa la construcción de experiencias gamificadas con Trophy: hace todo el trabajo entre bastidores.
 
-## Setting Up Trophy
+## Configuración de Trophy
 
-Here's how we'll configure Trophy for our fitness app:
+Así es como configuraremos Trophy para nuestra aplicación de fitness:
 
 <AccordionGroup>
-  <Accordion title="Create metrics" icon="box">
-    Head into the Trophy [metrics page](https://app.trophy.so/metrics) and create three metrics:
+  <Accordion title="Crear métricas" icon="box">
+    Dirígete a la [página de métricas](https://app.trophy.so/metrics) de Trophy y crea tres métricas:
     
-    - `distance_run` — Total kilometers run
-    - `distance_cycled` — Total kilometers cycled  
-    - `distance_swum` — Total meters swum
+    - `distance_run` — Kilómetros totales corridos
+    - `distance_cycled` — Kilómetros totales en bicicleta  
+    - `distance_swum` — Metros totales nadados
     
-    These keys are what we'll reference in our code when sending events.
+    Estas claves son las que referenciaremos en nuestro código al enviar eventos.
 
     <Frame>
       <img
@@ -134,21 +137,21 @@ Here's how we'll configure Trophy for our fitness app:
 
   </Accordion>
 
-  <Accordion title="Create attributes" icon="tag">
-    While still on the [metrics page](https://app.trophy.so/metrics), set up
-    the **pace** and **style** event attributes:
+  <Accordion title="Crear atributos" icon="tag">
+    Mientras sigues en la [página de métricas](https://app.trophy.so/metrics), configura
+    los atributos de evento **pace** y **style**:
 
     <Frame>
       <img
         height="200"
         width="100%"
-        noZoom
+        noZoom"
         src="../assets/guides/example-apps/example-fitness-app/event-attributes.png"
       />
     </Frame>
 
-    Then, go to the [user attributes page](https://app.trophy.so/users/attributes)
-    and create the **city** user atribute:
+    Luego, ve a la [página de atributos de usuario](https://app.trophy.so/users/attributes)
+    y crea el atributo de usuario **city**:
 
     <Frame>
       <img
@@ -161,26 +164,26 @@ Here's how we'll configure Trophy for our fitness app:
 
   </Accordion>
 
-<Accordion title="Create achievements" icon="trophy">
-  Head into the Trophy [achievements page](https://app.trophy.so/achievements)
-  and create milestone achievements for each sport. For example:
+<Accordion title="Crear logros" icon="trophy">
+  Dirígete a la [página de logros](https://app.trophy.so/achievements) de Trophy
+  y crea logros por hitos para cada deporte. Por ejemplo:
   
   **Running:** 
   
-  - First 5K (5km total) 
-  - Half Marathon Hero (21.1km total) 
-  - Marathon Master (42.2km total) 
+  - Primer 5K (5km en total) 
+  - Héroe de Media Maratón (21.1km en total) 
+  - Maestro de Maratón (42.2km en total) 
   
   **Cycling:** 
   
-  - Century Rider (100km total) 
-  - Tour Stage (200km total) 
+  - Ciclista del Centenario (100km en total) 
+  - Etapa del Tour (200km en total) 
   
   **Swimming:** 
-  - Pool Regular (1000m total) 
-  - Open Water Ready (5000m total) 
+  - Habitual de Piscina (1000m en total) 
+  - Listo para Aguas Abiertas (5000m en total) 
   
-  Link each achievement to the appropriate metric.
+  Vincula cada logro a la métrica correspondiente.
 
   <Frame>
     <img
@@ -192,11 +195,11 @@ Here's how we'll configure Trophy for our fitness app:
   </Frame>
 </Accordion>
 
-<Accordion title="Configure leaderboards" icon="chart-bar">
-  Head to the [leaderboards page](https://app.trophy.so/leaderboards) and set up
-  weekly leaderboards to drive competition. Each leaderboard should be
-  configured with **Repetition Unit: Days** and **Repetition Interval: 7** to
-  repeat weekly.
+<Accordion title="Configurar clasificaciones" icon="chart-bar">
+  Dirígete a la [página de clasificaciones](https://app.trophy.so/leaderboards) y configura
+  clasificaciones semanales para impulsar la competencia. Cada clasificación debe
+  configurarse con **Unidad de Repetición: Days** e **Intervalo de Repetición: 7** para
+  repetirse semanalmente.
 
   <Frame>
     <img
@@ -207,13 +210,13 @@ Here's how we'll configure Trophy for our fitness app:
     />
   </Frame>
   
-  **Global leaderboards:** 
+  **Clasificaciones globales:** 
   
   - `weekly-distance-run` 
   - `weekly-distance-cycled` 
   - `weekly-distance-swum`
   
-  **City-based leaderboards** (breakdown by user attribute **city**): 
+  **Clasificaciones por ciudad** (desglosadas por atributo de usuario **city**): 
   
   - `weekly-distance-run-cities` 
   - `weekly-distance-cycled-cities` 
@@ -229,15 +232,15 @@ Here's how we'll configure Trophy for our fitness app:
   </Frame>
 </Accordion>
 
-<Accordion title="Set up XP points" icon="star">
-  Head to the [points page](https://app.trophy.so/points) and create a points
-  system called `xp` that awards points based on activity: 
+<Accordion title="Configurar puntos XP" icon="star">
+  Dirígete a la [página de puntos](https://app.trophy.so/points) y crea un sistema de puntos
+  llamado `xp` que otorgue puntos según la actividad: 
   
-  - Running: 10 XP per km 
-  - Cycling: 3 XP per km 
-  - Swimming: 10 XP per 100m 
+  - Running: 10 XP por km 
+  - Cycling: 3 XP por km 
+  - Swimming: 10 XP por cada 100m 
   
-  This normalized approach ensures fair progression across sports.
+  Este enfoque normalizado garantiza una progresión equitativa entre deportes.
   
   <Frame>
     <img
@@ -248,9 +251,9 @@ Here's how we'll configure Trophy for our fitness app:
     />
   </Frame>
 
-  Then configure **[Points Levels](/platform/points#points-levels)** on the same `xp` system so Trophy can track each user's tier. Use the keys and thresholds below so the code in this guide lines up with your dashboard:
+  Luego configura **[Niveles de Puntos](/platform/points#points-levels)** en el mismo sistema `xp` para que Trophy pueda rastrear el nivel de cada usuario. Utiliza las claves y umbrales a continuación para que el código de esta guía se alinee con tu panel de control:
 
-  | Name    | Key       | Points threshold |
+  | Nombre  | Clave     | Umbral de puntos |
   | ------- | --------- | ---------------- |
   | Rookie  | `rookie`  | 0                |
   | Active  | `active`  | 100              |
@@ -259,26 +262,26 @@ Here's how we'll configure Trophy for our fitness app:
   | Pro     | `pro`     | 10000            |
 </Accordion>
 
-<Accordion title="Configure daily streak" icon="flame">
-  Head to the [streaks page](https://app.trophy.so/streaks) and configure a
-  daily streak linked to any of the distance metrics. Users will maintain their
-  streak by logging at least one activity per day.
+<Accordion title="Configurar racha diaria" icon="flame">
+  Dirígete a la [página de rachas](https://app.trophy.so/streaks) y configura una
+  racha diaria vinculada a cualquiera de las métricas de distancia. Los usuarios mantendrán su
+  racha registrando al menos una actividad por día.
 </Accordion>
 
-  <Accordion title="Configure emails" icon="mail">
-    Head to the [emails page](https://app.trophy.so/emails) and add and activate templates for these automated engagement emails:
+  <Accordion title="Configurar correos electrónicos" icon="mail">
+    Dirígete a la [página de correos electrónicos](https://app.trophy.so/emails) y añade y activa plantillas para estos correos electrónicos de engagement automatizados:
     
-    - **Achievement unlocked** — Celebrate new badges
-    - **Streak at risk** — Remind users before they lose their streak
-    - **Weekly recap** — Summary of progress and leaderboard position
+    - **Logro desbloqueado** — Celebra nuevas insignias
+    - **Racha en riesgo** — Recuerda a los usuarios antes de que pierdan su racha
+    - **Resumen semanal** — Resumen del progreso y posición en la clasificación
     
-    Each email type has its own section—add a template under each and activate it to start sending. Configure your branding in the [branding page](https://app.trophy.so/branding) for professional emails.
+    Cada tipo de correo electrónico tiene su propia sección—añade una plantilla en cada una y actívala para comenzar a enviar. Configura tu branding en la [página de branding](https://app.trophy.so/branding) para correos electrónicos profesionales.
   </Accordion>
 </AccordionGroup>
 
-## Server Actions
+## Acciones del Servidor
 
-We'll create a `src/app/actions.ts` file to handle all interactions with the Trophy API. This keeps our API keys secure and allows us to leverage Next.js Server Actions.
+Crearemos un archivo `src/app/actions.ts` para gestionar todas las interacciones con la API de Trophy. Esto mantiene nuestras claves API seguras y nos permite aprovechar las Server Actions de Next.js.
 
 ```tsx src/app/actions.ts [expandable]
 "use server";
@@ -457,11 +460,11 @@ export async function getUserIdFromCookies() {
 }
 ```
 
-## The Leveling System
+## El Sistema de Niveles
 
-Trophy stores each user's tier on the `xp` points system when you configure [Points Levels](/platform/points#points-levels). The [user points](/api-reference/endpoints/users/get-a-users-points) payload includes a `level` object. The [list levels API](/api-reference/endpoints/points/get-points-levels) returns every tier and threshold so you can show progress toward the next one.
+Trophy almacena el nivel de cada usuario en el sistema de puntos `xp` cuando configuras [Niveles de Puntos](/platform/points#points-levels). El payload de [puntos del usuario](/api-reference/endpoints/users/get-a-users-points) incluye un objeto `level`. La [API de listar niveles](/api-reference/endpoints/points/get-points-levels) devuelve cada nivel y umbral para que puedas mostrar el progreso hacia el siguiente.
 
-Add a small helper next to your app constants in `src/lib/constants.ts`:
+Añade un pequeño helper junto a las constantes de tu aplicación en `src/lib/constants.ts`:
 
 ```tsx src/lib/constants.ts
 export type ActivityType = "run" | "cycle" | "swim";
@@ -537,9 +540,9 @@ export function getLevelProgress(
 }
 ```
 
-## Building the Dashboard
+## Construyendo el Panel de Control
 
-The dashboard aggregates all user stats. We fetch data server-side and derive progress bars from thresholds returned by the API.
+El panel de control agrega todas las estadísticas del usuario. Obtenemos los datos del lado del servidor y derivamos barras de progreso de los umbrales devueltos por la API.
 
 ```tsx src/app/page.tsx [expandable]
 import {
@@ -669,19 +672,19 @@ export default async function Dashboard() {
 }
 ```
 
-Note the `LogActivityDialog` wrapper around the button—we'll build that next.
+Nota el wrapper `LogActivityDialog` alrededor del botón—lo construiremos a continuación.
 
-## Logging Workouts
+## Registrando Entrenamientos
 
-The Log Workout button opens a dialog where users select their activity type, enter distance, and submit. This triggers the `logActivity` server action which sends the event to Trophy.
+El botón Registrar Entrenamiento abre un diálogo donde los usuarios seleccionan su tipo de actividad, ingresan la distancia y envían. Esto activa la acción del servidor `logActivity` que envía el evento a Trophy.
 
-First, install the required shadcn/ui components:
+Primero, instala los componentes de shadcn/ui requeridos:
 
 ```bash
 npx shadcn@latest add dialog tabs input label select
 ```
 
-Then create the dialog component:
+Luego crea el componente de diálogo:
 
 ```tsx components/log-activity-dialog.tsx [expandable]
 "use client";
@@ -829,9 +832,9 @@ export function LogActivityDialog({ children }: { children: React.ReactNode }) {
 }
 ```
 
-### User Context
+### Contexto del Usuario
 
-The dialog needs access to the current user ID. Create a context provider:
+El diálogo necesita acceso al ID del usuario actual. Crea un proveedor de contexto:
 
 ```tsx components/user-provider.tsx [expandable]
 "use client";
@@ -884,7 +887,7 @@ export function UserProvider({ children }: { children: ReactNode }) {
 }
 ```
 
-Wrap your app with the provider in `layout.tsx`:
+Envuelve tu aplicación con el proveedor en `layout.tsx`:
 
 ```tsx app/layout.tsx
 import { UserProvider } from "@/components/user-provider";
@@ -902,9 +905,9 @@ export default function RootLayout({ children }) {
 }
 ```
 
-### Helper Utilities
+### Utilidades de Ayuda
 
-The user context relies on helper functions for managing user identity in localStorage:
+El contexto del usuario depende de funciones auxiliares para gestionar la identidad del usuario en localStorage:
 
 ```tsx lib/user.ts [expandable]
 const USER_ID_KEY = "trophy-fitness-user-id";
@@ -936,7 +939,7 @@ export function getUserName(): string | null {
 }
 ```
 
-For city-based leaderboards, we infer the user's city from their timezone:
+Para las clasificaciones basadas en ciudad, inferimos la ciudad del usuario a partir de su zona horaria:
 
 ```tsx lib/city.ts [expandable]
 const TIMEZONE_TO_CITY: Record<string, string> = {
@@ -965,9 +968,9 @@ export function setStoredCity(city: string): void {
 }
 ```
 
-## Implementing Leaderboards
+## Implementación de Clasificaciones
 
-We'll build a tabbed interface that allows users to switch between activities (Run/Cycle/Swim) and scopes (Global vs. Local City).
+Construiremos una interfaz con pestañas que permite a los usuarios cambiar entre actividades (Correr/Ciclismo/Natación) y ámbitos (Global vs. Ciudad Local).
 
 ```tsx src/app/leaderboards/page.tsx [expandable]
 "use client";
@@ -1048,9 +1051,9 @@ export default function LeaderboardsPage() {
 }
 ```
 
-## Building the Achievements Page
+## Construcción de la Página de Logros
 
-A dedicated space to show off badges is essential for long-term retention. We'll use the `stats.achievements` data to render a grid of badges, visually distinguishing between earned (colorful) and locked (grayscale) states.
+Un espacio dedicado para mostrar insignias es esencial para la retención a largo plazo. Usaremos los datos de `stats.achievements` para renderizar una cuadrícula de insignias, distinguiendo visualmente entre estados conseguidos (a color) y bloqueados (escala de grises).
 
 ```tsx src/app/achievements/page.tsx [expandable]
 import { getUserStats, getUserIdFromCookies } from "@/app/actions";
@@ -1117,9 +1120,9 @@ export default async function AchievementsPage() {
 }
 ```
 
-## Building the Profile Page
+## Construcción de la Página de Perfil
 
-Finally, the profile page brings it all together. It shows the user's "Lifetime Stats," their current XP progression, and allows them to update their settings (like their city).
+Finalmente, la página de perfil lo integra todo. Muestra las "Estadísticas de por Vida" del usuario, su progresión actual de XP y les permite actualizar su configuración (como su ciudad).
 
 ```tsx src/app/profile/page.tsx [expandable]
 import { getUserStats, getUserIdFromCookies } from "@/app/actions";
@@ -1196,9 +1199,9 @@ export default async function ProfilePage() {
 }
 ```
 
-## The Result
+## El Resultado
 
-You now have a fully functional fitness gamification loop! Users can log workouts across multiple sports, progress through points levels, earn badges, and compete on leaderboards.
+¡Ahora tienes un circuito de gamificación de fitness completamente funcional! Los usuarios pueden registrar entrenamientos en múltiples deportes, progresar a través de niveles de Puntos, conseguir Logros y competir en Clasificaciones.
 
 <Frame>
   <video
@@ -1211,17 +1214,17 @@ You now have a fully functional fitness gamification loop! Users can log workout
   ></video>
 </Frame>
 
-### What You've Built
+### Lo que has construido
 
-- **Multi-sport tracking** with normalized XP across running, cycling, and swimming
-- **Weekly leaderboards** with global and city-based competition
-- **Leveled progression** from Rookie to Pro
-- **Achievement system** with milestone badges
-- **Daily streaks** to drive retention
+- **Seguimiento multideporte** con XP normalizado para correr, ciclismo y natación
+- **Clasificaciones semanales** con competencia global y por ciudad
+- **Progresión por niveles** desde Novato hasta Profesional
+- **Sistema de logros** con insignias de hitos
+- **Rachas diarias** para impulsar la retención
 
-### Next Steps
+### Próximos pasos
 
-- **Connect fitness wearables** — Integrate with Strava, Apple Health, or Google Fit to auto-log workouts
-- **Add social features** — Let users follow friends, compare stats, and share achievements
-- **Build a mobile experience** — Convert to a PWA or wrap with Capacitor for app store distribution
-- **Add push notifications** — Alert users when their streak is at risk or they've been passed on the leaderboard
+- **Conecta dispositivos de fitness** — Integra con Strava, Apple Health o Google Fit para registrar entrenamientos automáticamente
+- **Agrega funciones sociales** — Permite que los usuarios sigan a amigos, comparen estadísticas y compartan logros
+- **Crea una experiencia móvil** — Convierte a PWA o envuelve con Capacitor para distribución en tiendas de aplicaciones
+- **Agrega notificaciones push** — Alerta a los usuarios cuando su racha está en riesgo o han sido superados en la clasificación

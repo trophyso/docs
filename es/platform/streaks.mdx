@@ -1,31 +1,32 @@
 ---
-title: Streaks
-description: Learn how to use streaks in a gamified product experience with Trophy.
-"og:description": Use daily, weekly or monthly streaks to create habitual usage patterns and keep users coming back to your app.
+title: Rachas
+description: Aprende a usar rachas en una experiencia de producto gamificada con Trophy.
+og:description: Usa rachas diarias, semanales o mensuales para crear patrones de
+  uso habituales y mantener a los usuarios regresando a tu aplicación.
 icon: flame
 ---
 
 import MetricChangeResponseBlock from "/snippets/metric-change-response-block.mdx";
 
-## What are Streaks?
+## ¿Qué son las Rachas?
 
-A streak is a period of consecutive days, weeks or months that a user has performed a key action on your platform. Streaks have been shown to meaningfully increase retention, particularly when the user action being tracked aligns with the core value of your product.
+Una racha es un período de días, semanas o meses consecutivos en los que un usuario ha realizado una acción clave en tu plataforma. Se ha demostrado que las rachas aumentan significativamente la retención, particularmente cuando la acción del usuario que se rastrea se alinea con el valor principal de tu producto.
 
-## Streak Frequency
+## Frecuencia de Racha
 
-Streaks in Trophy can be **daily, weekly or monthly**. This means that a user must meet their [streak conditions](#streak-conditions) at least once every calendar day, week or month to maintain their streak.
+Las rachas en Trophy pueden ser **diarias, semanales o mensuales**. Esto significa que un usuario debe cumplir sus [condiciones de racha](#streak-conditions) al menos una vez cada día, semana o mes calendario para mantener su racha.
 
-If you've [configured time zones](/platform/users#param-tz) for your users, Trophy will automatically track each user's streak in their local time zone (including taking into account when users change time zones) and keep streaks in tact.
+Si has [configurado zonas horarias](/platform/users#param-tz) para tus usuarios, Trophy rastreará automáticamente la racha de cada usuario en su zona horaria local (incluyendo cuando los usuarios cambien de zona horaria) y mantendrá las rachas intactas.
 
 <Note>
-Trophy automatically computes streak data for every streak frequency, meaning you can switch at any time.
+Trophy calcula automáticamente los datos de racha para cada frecuencia de racha, lo que significa que puedes cambiar en cualquier momento.
 </Note>
 
-## Streak Conditions
+## Condiciones de Racha
 
-In Trophy you can set the thresholds that a user must meet in order to extend their streak based on your configured [Metrics](/platform/metrics).
+En Trophy puedes establecer los umbrales que un usuario debe cumplir para extender su racha basándote en tus [Métricas](/platform/metrics) configuradas.
 
-You can choose which metrics should be part of your streak, and for those that you chose, you can set a custom threshold that users must meet.
+Puedes elegir qué métricas deben formar parte de tu racha, y para aquellas que elijas, puedes establecer un umbral personalizado que los usuarios deben cumplir.
 
 <Frame>
   <img
@@ -36,15 +37,15 @@ You can choose which metrics should be part of your streak, and for those that y
   />
 </Frame>
 
-When combining metrics in this way, you can choose between two evaluation modes:
-- `ALL` means a user must meet every metric threshold to extend their streak
-- `OR` means a user only has to meet one of your metric thresholds to extend their streak
+Al combinar métricas de esta manera, puedes elegir entre dos modos de evaluación:
+- `ALL` significa que un usuario debe cumplir todos los umbrales de métrica para extender su racha
+- `OR` significa que un usuario solo tiene que cumplir uno de tus umbrales de métrica para extender su racha
 
-In this way you can design your streak logic to match your application use case.
+De esta manera puedes diseñar la lógica de tus rachas para que se ajuste al caso de uso de tu aplicación.
 
-## Streak Freezes
+## Congelaciones de Rachas
 
-Streak freezes help users keep their streaks for longer by allowing them to miss periods without it resetting to zero. This helps keep streaks motivating even if users don't maintain a perfect usage habit.
+Las congelaciones de rachas ayudan a los usuarios a mantener sus rachas por más tiempo al permitirles perder períodos sin que se reinicie a cero. Esto ayuda a mantener las rachas motivadoras incluso si los usuarios no mantienen un hábito de uso perfecto.
 
 <Frame>
   <img
@@ -55,46 +56,46 @@ Streak freezes help users keep their streaks for longer by allowing them to miss
   />
 </Frame>
 
-Streak freezes are optional in Trophy but can be configured on the [streaks page](https://app.trophy.so/streaks) of the Trophy dashboard.
+Las congelaciones de rachas son opcionales en Trophy pero se pueden configurar en la [página de rachas](https://app.trophy.so/streaks) del panel de Trophy.
 
-### Granting Initial Freezes
+### Concesión de Congelaciones Iniciales
 
-You can configure any number of arbitrary freezes to grant to new users when you first identify them with Trophy.
+Puedes configurar cualquier número arbitrario de congelaciones para otorgar a los nuevos usuarios cuando los identificas por primera vez con Trophy.
 
 <Tip>
-Giving users too many freezes may decrease their perceived value, but granting too few freezes might result it a higher number of lost streaks. A good starting point is one freeze per user, but the trick is to experiment!
+Otorgar demasiadas congelaciones a los usuarios puede disminuir su valor percibido, pero conceder muy pocas congelaciones podría resultar en un mayor número de rachas perdidas. Un buen punto de partida es una congelación por usuario, ¡pero el secreto está en experimentar!
 </Tip>
 
-### Freeze Accumulation
+### Acumulación de Congelaciones
 
-As users use up streak freezes, they'll need a continuous supply of new ones to keep them going. To facilitate this, Trophy can automatically grant streak freezes to users over time. You can choose an arbitrary number of days over which to grant an arbitrary number of freezes to each user.
+A medida que los usuarios agotan las congelaciones de rachas, necesitarán un suministro continuo de nuevas para mantenerlas. Para facilitar esto, Trophy puede otorgar automáticamente congelaciones de rachas a los usuarios con el tiempo. Puedes elegir un número arbitrario de días durante los cuales otorgar un número arbitrario de congelaciones a cada usuario.
 
-If you've [configured time zones](/platform/users#param-tz) for your users, Trophy will automatically consume freezes at midnight in the user's time zone when necessary to extend their streak, and if any new freezes are due to be granted to a user, they will be granted up to ten minutes later.
+Si has [configurado zonas horarias](/platform/users#param-tz) para tus usuarios, Trophy consumirá automáticamente congelaciones a medianoche en la zona horaria del usuario cuando sea necesario para extender su racha, y si hay nuevas congelaciones programadas para otorgarse a un usuario, se concederán hasta diez minutos después.
 
-### Maximum Freeze Count
+### Número Máximo de Congelaciones
 
-In Trophy you also configure the maximum number of freezes that each user can have, up to a limit of 100. [Freeze accumulation](#freeze-accumulation) will only ever grant freezes up to this limit.
+En Trophy también puedes configurar el número máximo de congelaciones que cada usuario puede tener, hasta un límite de 100. La [acumulación de congelaciones](#freeze-accumulation) solo otorgará congelaciones hasta este límite.
 
-## Tracking Streaks
+## Seguimiento de Rachas
 
-Trophy automatically calculates streaks for all users based on the [metric events](/platform/events#tracking-metric-events) you report to Trophy.
+Trophy calcula automáticamente las rachas para todos los usuarios basándose en los [eventos de métrica](/platform/events#tracking-metric-events) que reportas a Trophy.
 
-There's no extra work required to track streaks, and you can start using them right away. Just make sure that streaks are enabled in the Trophy dashboard.
+No se requiere trabajo adicional para rastrear rachas, y puedes comenzar a usarlas de inmediato. Solo asegúrate de que las rachas estén habilitadas en el panel de Trophy.
 
 <Tip>
-For a full walk through on how to set up a streak feature using Trophy, check out our [official guide](/guides/how-to-build-a-streaks-feature).
+Para un tutorial completo sobre cómo configurar una función de rachas usando Trophy, consulta nuestra [guía oficial](/guides/how-to-build-a-streaks-feature).
 </Tip>
 
-## Managing Streaks
+## Gestión de Rachas
 
-This section outlines some of the operations you can perform to manage user's streaks in your application.
+Esta sección describe algunas de las operaciones que puedes realizar para gestionar las rachas de los usuarios en tu aplicación.
 
-### Restoring A Users Streak
+### Restaurar la Racha de un Usuario
 
-To restore a user's streak, head to the user details page and use the 'Restore Streak' action. Restoring a user's streak sets it to the length it was when they last lost it.
+Para restaurar la racha de un usuario, dirígete a la página de detalles del usuario y utiliza la acción 'Restaurar Racha'. Restaurar la racha de un usuario la establece a la longitud que tenía cuando la perdió por última vez.
 
 <Tip>
-You can also use the [restore streak admin API](/admin-api/endpoints/streaks/restore-streaks) to restore streaks programmatically.
+También puedes usar la [API de administración para restaurar rachas](/admin-api/endpoints/streaks/restore-streaks) para restaurar rachas de forma programática.
 </Tip>
 
 <Frame>
@@ -108,30 +109,30 @@ You can also use the [restore streak admin API](/admin-api/endpoints/streaks/res
   ></video>
 </Frame>
 
-## Displaying Streaks
+## Visualización de Rachas
 
-Trophy exposes streak data in two ways, which can be used to build UI elements within your applications and display streaks to users.
+Trophy expone los datos de rachas de dos maneras, que pueden utilizarse para construir elementos de interfaz dentro de tus aplicaciones y mostrar rachas a los usuarios.
 
 <Tip>
-  Check out our [full guide](/guides/how-to-build-a-streaks-feature) on adding a
-  streaks feature to your app for more details.
+  Consulta nuestra [guía completa](/guides/how-to-build-a-streaks-feature) sobre cómo agregar una
+  función de rachas a tu aplicación para más detalles.
 </Tip>
 
-### Metric Event Response
+### Respuesta del Evento de Métrica
 
-When you [increment a metric](/platform/events#tracking-metric-events) for a user, the [metric API](/api-reference/endpoints/metrics/send-a-metric-change-event) response will include the user's current
-streak.
+Cuando [incrementas una métrica](/platform/events#tracking-metric-events) para un usuario, la respuesta de la [API de métricas](/api-reference/endpoints/metrics/send-a-metric-change-event) incluirá la racha
+actual del usuario.
 
 <MetricChangeResponseBlock />
 
-This can be used to transactionally trigger UI/UX elements including:
+Esto puede utilizarse para activar transaccionalmente elementos de UI/UX incluyendo:
 
-- Showing in-app pop-ups
-- Playing sound effects
+- Mostrar ventanas emergentes en la aplicación
+- Reproducir efectos de sonido
 
-### User Streaks API
+### API de Rachas de Usuario
 
-The [user streaks API](/api-reference/endpoints/users/get-a-users-streak) returns the current streak for a single user, along with their recent streak history. Use the [`historyPeriods`](/api-reference/endpoints/users/get-a-users-streak#parameter-history-periods) query parameter to control how many periods to return.
+La [API de rachas de usuario](/api-reference/endpoints/users/get-a-users-streak) devuelve la racha actual de un solo usuario, junto con su historial reciente de rachas. Usa el parámetro de consulta [`historyPeriods`](/api-reference/endpoints/users/get-a-users-streak#parameter-history-periods) para controlar cuántos períodos devolver.
 
 {/* vale off */}
 
@@ -186,7 +187,7 @@ The [user streaks API](/api-reference/endpoints/users/get-a-users-streak) return
 
 {/* vale on */}
 
-Use this data to display a user's streak history within your application.
+Usa estos datos para mostrar el historial de rachas de un usuario dentro de tu aplicación.
 
 <Frame>
   <img
@@ -196,9 +197,9 @@ Use this data to display a user's streak history within your application.
   />
 </Frame>
 
-### List Multiple User's Streaks
+### Listar Rachas de Múltiples Usuarios
 
-If you want to display streaks for multiple users at once, for example to support a friend streak or user group feature, then use the [list user streaks API](/api-reference/endpoints/streaks/get-streaks).
+Si deseas mostrar rachas para múltiples usuarios a la vez, por ejemplo para soportar una función de racha de amigos o grupo de usuarios, utiliza la [API de listar rachas de usuarios](/api-reference/endpoints/streaks/get-streaks).
 
 ```json [expandable]
 [
@@ -220,6 +221,6 @@ If you want to display streaks for multiple users at once, for example to suppor
 ]
 ```
 
-## Get Support
+## Obtener Soporte
 
-Want to get in touch with the Trophy team? Reach out to us via [email](mailto:support@trophy.so). We're here to help!
+¿Quieres ponerte en contacto con el equipo de Trophy? Contáctanos por [correo electrónico](mailto:support@trophy.so). ¡Estamos aquí para ayudarte!
