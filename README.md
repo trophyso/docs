@@ -109,6 +109,7 @@ Glossary sync workflow (manual via Cursor + MCP):
    - One locale: `node scripts/generate-translations.mjs --target <locale>`
    - Multiple locales: `node scripts/generate-translations.mjs --target es,fr,de`
    - All configured targets: `node scripts/generate-translations.mjs`
+   - Force re-translation (bypass cache/lockfile delta): `node scripts/generate-translations.mjs --target <locale> --force`
 6. Validate before merge:
    - `npm run translate:validate`
    - `npx mint@latest validate`
@@ -117,3 +118,4 @@ Glossary sync workflow (manual via Cursor + MCP):
 Notes:
 - The workflow `.github/workflows/translate-on-main.yml` automatically reads locales from `i18n.json` `locale.targets`.
 - Keep `en` as source/default and preserve identical file paths across locales.
+- `--force` should be used only for recovery/backfill scenarios (for example, stale cache or major glossary/brand-voice reset). Do not use `--force` in CI; CI should run delta translation based on `i18n.lock`.
