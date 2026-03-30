@@ -1,0 +1,36 @@
+<CodeGroup>
+```bash cURL
+curl --request GET \
+  --url https://api.trophy.so/v1/users/user-123/preferences \
+  --header 'X-API-KEY: <api-key>'
+```
+
+```typescript Node
+const response = await trophy.users.getPreferences("user-123");
+```
+
+```python Python
+response = client.users.get_preferences(id="user-123")
+```
+
+```php PHP
+$response = $trophy->users()->getPreferences("user-123");
+```
+
+```java Java
+UserPreferencesResponse response = client.users().getPreferences("user-123");
+```
+
+```go Go
+response, err := client.Users.GetPreferences("user-123")
+```
+
+```csharp C#
+var response = await trophy.Users.GetPreferencesAsync("user-123");
+```
+
+```ruby Ruby
+response = client.users.get_preferences(id: "user-123")
+```
+
+</CodeGroup>

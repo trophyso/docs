@@ -1,0 +1,15 @@
+---
+openapi: webhook leaderboard.finished
+---
+
+<Note>
+  Events fire between 13:00-13:59 UTC the day following the end of a leaderboard
+  run. This is because each leaderboard run is relative to each user's time
+  zone, and users in the most delayed time zones must be given the chance to
+  finish.
+</Note>
+
+<Note>
+  Events only include the top 10 user rankings. To fetch more, use the [single
+  leaderboard API](/api-reference/endpoints/leaderboards/get-leaderboard).
+</Note>

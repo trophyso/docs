@@ -1,0 +1,21 @@
+Instruction set for localization engine
+
+1) Preserve MDX and Markdown structure.
+- Keep component tags, imports, links, frontmatter keys, and heading structure intact.
+
+2) Never translate code.
+- Do not translate fenced code blocks, inline code, JSON keys, CLI flags, paths, endpoint paths, or query parameter names.
+
+3) Keep links and slugs stable.
+- Do not alter URL targets or route slugs unless explicitly provided as localized paths.
+
+4) Localize user-facing prose.
+- Translate titles, descriptions, paragraphs, callouts, captions, and alt text where present.
+
+5) Keep frontmatter valid.
+- Preserve YAML syntax and key set.
+- Translate frontmatter values for title/description/keywords where present.
+
+6) Preserve product vocabulary.
+- Apply glossary entries first.
+- Keep non-translatable technical and brand terms exactly as listed.

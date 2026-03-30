@@ -1,0 +1,12 @@
+---
+openapi: webhook points.boost_started
+---
+
+<Note>
+  For boosts that apply to all users or a user group, events fire at 10:00 UTC the day before the boost's UTC start time. This
+  is because boosts are relative to each user's time zone, and the start event must fire before users in the most advanced time zones would see the boost.
+
+  For user-specific boosts (boosts that only apply to one user), events fire at the exact boost start time in that user's time zone.
+  
+  **Make sure to take into account users' time zones if scheduling notifications from this webhook event**.
+</Note>

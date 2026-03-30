@@ -1,0 +1,221 @@
+---
+title: Events
+description: Events are data objects that represent individual user interactions against metrics in Trophy.
+"og:description": Events are data objects that represent individual user interactions against metrics in Trophy.
+icon: radio
+---
+
+import MetricChangeRequestBlock from "/snippets/metric-change-request-block.mdx";
+import MetricChangeResponseBlock from "/snippets/metric-change-response-block.mdx";
+import IdempotentEventTracking from "/snippets/idempotent-event-tracking.mdx";
+
+## What are Events?
+
+Events represent individual user interactions against [Metrics](/platform/metrics) in Trophy. One event corresponds to a single interaction made by a single user.
+
+When you [integrate metrics](#tracking-metric-events) into your platform, you're setting up your platform to continuously stream events to your Trophy metrics for each user interaction. These interactions then drive all the gamification features you set up around these metrics.
+
+## Key Attributes
+
+### Event Value
+
+The `value` of an event is the numerical amount that will be added to the user's total metric count as a result of the user interaction it relates to.
+
+<Tip>
+The value of an event can be positive or negative, and can be a whole number or a decimal.
+</Tip>
+
+## Custom Event Attributes
+
+<Note>
+  This feature is available on the [Pro](/account/billing#pro-plan) plan
+</Note>
+
+<Frame>
+  <img
+    height="200"
+    noZoom
+    src="../assets/platform/events/custom_event_attributes.png"
+  />
+</Frame>
+
+You can specify a number of custom event attributes to help you track additional information relevant to your use case against events you send to Trophy.
+
+For example, a language learning app might have a 'Questions Completed' metric and use a custom event attribute to store wether the answer to each question was correct.
+
+Similarly a fitness app might use an 'Exercises Completed' metric and use a custom event attribute to store the weight that was used in each exercise and another custom event attribute to store how long the exercise lasted.
+
+Using custom event attributes in this way allows you to enrich events in Trophy with additional context relevant to your use case and use it to power even more engaging gamification features.
+
+### Creating Attributes
+
+To create a new custom event attribute, head to the metrics page in the Trophy dashboard and hit the _Add Event Attribute_ button.
+
+Give the attribute a name and a unique key, you'll use the key when referencing the attribute in API calls.
+
+<Frame>
+  <video
+    autoPlay
+    muted
+    loop
+    playsInline
+    className="w-full aspect-15/4"
+    src="../assets/platform/events/create_custom_event_attribute.mp4"
+  ></video>
+</Frame>
+
+### Setting Attributes
+
+To set the value of a custom attribute on an event, pass its value in the `attributes` object in your metric tracking code.
+
+<Warning>
+  Trophy will only set values of attributes that have first been created
+  in the dashboard. We do this to help you keep a clean set of attributes and
+  prevent accidental overwrites.
+
+If you receive an error similar to the following then you might have miss-spelled the attribute key in the request, or you need to create the attribute first in the Trophy dashboard:
+
+```json
+{
+  "error": "Invalid attribute keys: device. Please ensure all attribute keys match those set up at https://app.trophy.so/metrics."
+}
+```
+
+</Warning>
+
+Here's an example of an event payload where the values of two attributes, `device` and `duration`, are set:
+
+```json {7-10}
+{
+  "user": {
+    "id": "18",
+    "tz": "Europe/London"
+  },
+  "value": 25,
+  "attributes": {
+    "device": "ios",
+    "duration": "120"
+  }
+}
+```
+
+### Using Attributes
+
+Custom event attributes can be used to power more advanced triggers for achievements and points and can be used in email templates to customize copy and to control the data shown in charts.
+
+#### Advanced Feature Triggers
+
+Custom event attributes can be used to set up achievements or points triggers that only track events with specific attribute values. Follow the links to the relevant pages below to learn more.
+
+<CardGroup>
+  <Card
+    title="Achievement Triggers"
+    icon="trophy"
+    href="/platform/achievements#creating-achievements"
+  >
+    Configure achievements that can only be unlocked by events with certain
+    attribute values.
+  </Card>
+  <Card
+    title="Points Triggers"
+    icon="sparkle"
+    href="/platform/points#points-triggers"
+  >
+    Set up points triggers to only award points from events with specific
+    attribute values.
+  </Card>
+</CardGroup>
+
+#### Email Customization
+
+If you use any Trophy [Emails](/platform/emails), event attributes can be used to customize the data shown in certain email blocks.
+
+Firstly, when using metric-based variables in email copy you can use event attributes to further control what data the variable refrences.
+
+For example here's a case where we use an email variable to tell users what their total number of workouts they've done on different gym equipment is using a metric 'Workouts' and an attribute 'Equipment':
+
+<Frame>
+  <video
+    autoPlay
+    muted
+    loop
+    playsInline
+    className="w-full aspect-15/4"
+    src="../assets/platform/events/using_attributes_in_emails.mp4"
+  ></video>
+</Frame>
+
+Secondly, here's an example where we add a chart to an email that shows users how many workouts they've done on a bike over time:
+
+<Frame>
+  <video
+    autoPlay
+    muted
+    loop
+    playsInline
+    className="w-full aspect-15/4"
+    src="../assets/platform/events/using_attributes_in_email_charts.mp4"
+  ></video>
+</Frame>
+
+There's a huge number of possibilities here, so get creative!
+
+## Tracking Metric Events
+
+Each metric has a unique `key` which you can use to reference and track events against it in your code. You can find the `key` in the metric settings page.
+
+To start tracking user interactions as events against your Trophy metrics, use the [Metrics API](/api-reference/endpoints/metrics/send-a-metric-change-event) or one of our type-safe [Client SDKs](/api-reference/client-libraries) supported in most major programming languages.
+
+Here's an example where a fictional study platform is using a metric to track the number of flashcards flipped by each student. Each time an student interacts, the platform sends an event to Trophy telling it how many flashcards they viewed:
+
+<MetricChangeRequestBlock />
+
+Any [Achievements](/platform/achievements), [Streaks](/platform/streaks), [Points](/platform/points) or [Leaderboards](/platform/leaderboards) that have been set up against this metric will be automatically processed, and the response will contain any updates to the user's progress that are a direct result of the event occurring:
+
+<MetricChangeResponseBlock />
+
+In this example the response includes the following:
+
+- The user's newly unlocked achievements as a result of the event
+- The user's latest streak as result of the event
+- The user's latest points for each points system that changed as a result of the event
+- The user's latest leaderboard data for each leaderboard that changed as a result of the event
+
+With a little bit of custom code, this response data can be used to drive any in-app experience you wish including:
+
+- Triggering in-app notifications
+- Sound effects
+- Animations
+
+Watch Charlie integrate metric tracking into a simple NextJS application using the Trophy [NodeJS SDK](/api-reference/client-libraries):
+
+<Frame>
+  <iframe
+    width="560"
+    height="315"
+    src="https://www.youtube.com/embed/ZxbOylQ6kQU?si=2C8IvN0trlIzLeO7"
+    title="YouTube video player"
+    frameborder="0"
+    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+    referrerpolicy="strict-origin-when-cross-origin"
+    allowfullscreen
+  ></iframe>
+</Frame>
+
+### Idempotent Events
+
+Trophy supports enforcing uniqueness on events so that users cannot increase a metric by taking the same exact action over and over.
+
+For example, a language learning app could specify that users can only increase the `lessons-completed` metric by 1 for each unique lesson completed, so if they complete the same lesson twice only the first counts.
+
+<IdempotentEventTracking />
+
+This helps keep your codebase free of logic that checks if users have completed actions before, and can instead trust Trophy to uphold the constraints you need.
+
+To use idempotent events, use the `Idempotency-Key` header in the [metric event API](/api-reference/endpoints/metrics/send-a-metric-change-event).
+
+[Learn more about idempotency](/api-reference/idempotency).
+
+## Get Support
+
+Want to get in touch with the Trophy team? Reach out to us via [email](mailto:support@trophy.so). We're here to help!

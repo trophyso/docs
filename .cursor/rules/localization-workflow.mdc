@@ -1,0 +1,14 @@
+---
+description: Localization workflow and Lingo guardrails
+alwaysApply: true
+---
+
+# Localization Workflow
+
+- Treat `en/` as the canonical source locale and keep identical file paths/filenames across all locales.
+- Keep all locale navigation in `docs.json` under `navigation.languages`; do not reintroduce `navigation.global` or top-level `navbar`.
+- Keep SEO metatags in English unless explicitly requested otherwise.
+- Do not translate code snippets, inline code, URLs, route slugs, or API identifiers.
+- Treat `lingo/brand-voice.md` as the source of truth for brand voice text.
+- Do not add script-based brand voice sync; sync brand voice on demand via Lingo MCP tools from chat.
+- When adding locales, update both `docs.json` language blocks and `i18n.json` `locale.targets`.

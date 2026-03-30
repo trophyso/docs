@@ -1,0 +1,47 @@
+<CodeGroup>
+```bash cURL
+curl --request GET \
+  --url https://api.trophy.so/v1/leaderboards/{key} \
+  --header 'X-API-KEY: <api-key>'
+```
+
+```typescript Node
+trophy.leaderboards.get("daily_champions", {
+  offset: 0,
+  limit: 10,
+  run: "2025-01-15"
+});
+```
+
+```python Python
+client.leaderboards.get(
+    key="daily_champions",
+    offset=0,
+    limit=10,
+    run="2025-01-15"
+)
+```
+
+```php PHP
+$trophy->leaderboards->get("daily_champions");
+```
+
+```java Java
+client.leaderboards().get("daily_champions");
+```
+
+```go Go
+response, err := client.Leaderboards.Get("daily_champions")
+```
+
+```csharp C#
+trophy.Leaderboards.GetAsync("daily_champions");
+```
+
+```ruby Ruby
+result = client.Leaderboards.Get(
+  :key => "daily_champions"
+)
+```
+
+</CodeGroup>

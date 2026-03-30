@@ -1,0 +1,16 @@
+source_locale,target_locale,source_text,target_text,type,hint
+*,*,Trophy,Trophy,non_translatable,Brand name
+*,*,Lingo.dev,Lingo.dev,non_translatable,Product name
+en,*,API,API,non_translatable,Technical acronym
+en,*,SDK,SDK,non_translatable,Technical acronym
+en,*,CLI,CLI,non_translatable,Technical acronym
+en,*,OAuth,OAuth,non_translatable,Protocol
+en,*,JWT,JWT,non_translatable,Token format
+en,*,JSON,JSON,non_translatable,Data format
+en,*,MDX,MDX,non_translatable,File format
+en,es,Leaderboard,Clasificación,custom_translation,Gamification feature noun
+en,es,Leaderboards,Clasificaciones,custom_translation,Gamification feature noun plural
+en,es,Streak,Racha,custom_translation,Gamification feature noun
+en,es,Streaks,Rachas,custom_translation,Gamification feature noun plural
+en,es,Achievement,Logro,custom_translation,Gamification feature noun
+en,es,Achievements,Logros,custom_translation,Gamification feature noun plural

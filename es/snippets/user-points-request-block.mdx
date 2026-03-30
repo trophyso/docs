@@ -1,0 +1,45 @@
+<CodeGroup>
+```bash cURL
+curl --request GET \
+  --url https://api.trophy.so/v1/users/{id}/points/{key} \
+  --header 'X-API-KEY: <api-key>'
+```
+
+```typescript Node
+trophy.users.points("user-id", "points-system-key");
+```
+
+```python Python
+client.users.points(
+    id="user-id",
+    key="points-system-key",
+)
+```
+
+```php PHP
+$trophy->users->points("user-id", "points-system-key");
+```
+
+```java Java
+client.users().points("user-id","points-system-key");
+```
+
+```go Go
+response, err := client.Users.Points(
+    "user-id",
+    "points-system-key"
+)
+```
+
+```csharp C#
+trophy.Users.PointsAsync("user-id", "points-system-key");
+```
+
+```ruby Ruby
+result = client.users.points(
+  :id => 'user-id',
+  :key => "points-system-key"
+)
+```
+
+</CodeGroup>

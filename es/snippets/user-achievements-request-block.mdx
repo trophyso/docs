@@ -1,0 +1,38 @@
+<CodeGroup>
+```bash cURL
+curl --request GET \
+  --url https://api.trophy.so/v1/users/{id}/achievements \
+  --header 'X-API-KEY: <api-key>'
+```
+
+```typescript Node
+trophy.users.achievements("user-id");
+```
+
+```python Python
+client.users.achievements("user-id")
+```
+
+```php PHP
+$trophy->users->achievements("user-id");
+```
+
+```java Java
+UserAchievementsResponse response = client.users().achievements("user-id");
+```
+
+```go Go
+response, err := client.Users.Achievements("user-id")
+```
+
+```csharp C#
+await trophy.Users.AchievementsAsync("user-id");
+```
+
+```ruby Ruby
+result = client.users.achievements(
+  :id => 'user-id'
+)
+```
+
+</CodeGroup>

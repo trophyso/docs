@@ -5,7 +5,11 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "dev": "mint dev"
+    "dev": "mint dev",
+    "translate:generate": "node --env-file=.env scripts/generate-translations.mjs --target es",
+    "translate:docs-json": "node --env-file=.env scripts/translate-docs-json.mjs --target es",
+    "translate:verify": "npx lingo.dev@latest run --frozen",
+    "translate:validate": "node --env-file=.env scripts/validate-translations.mjs"
   },
   "repository": {
     "type": "git",

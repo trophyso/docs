@@ -1,0 +1,82 @@
+<CodeGroup>
+```bash cURL
+curl --request GET \
+  --url https://api.trophy.so/v1/leaderboards/{key}?userAttributes=city:london \
+  --header 'X-API-KEY: <api-key>'
+```
+
+```typescript Node
+trophy.leaderboards.get("daily_champions", {
+  offset: 0,
+  limit: 10,
+  run: "2025-01-15",
+  userAttributes: "city:london"
+});
+```
+
+```python Python
+client.leaderboards.get(
+    key="daily_champions",
+    offset=0,
+    limit=10,
+    run="2025-01-15",
+    user_attributes="city:london"
+)
+```
+
+```php PHP
+$request = new LeaderboardsGetRequest([
+    'offset' => 0,
+    'limit' => 10,
+    'run' => "2025-01-15",
+    'user_attributes' => "city:london"
+]);
+
+$trophy->leaderboards->get("daily_champions", $request);
+```
+
+```java Java
+LeaderboardsGetRequest request = LeaderboardsGetRequest.builder()
+      .offset(0)
+      .limit(10)
+      .run("2025-01-15")
+      .userAttributes("city:london")
+      .build();
+
+LeaderboardsGetResponse response = client.leaderboards().get("daily_champions", request);
+```
+
+```go Go
+response, err := client.Leaderboards.Get(
+    "daily_champions",
+    &api.LeaderboardsGetRequest{
+        Offset: 0,
+        Limit: 10,
+        Run: "2025-01-15",
+        UserAttributes: "city:london",
+    },
+)
+```
+
+```csharp C#
+var request = new LeaderboardsGetRequest {
+   Offset = 0,
+   Limit = 10,
+   Run = "2025-01-15",
+   UserAttributes = "city:london"
+};
+
+await trophy.Leaderboards.GetAsync("daily_champions", request);
+```
+
+```ruby Ruby
+result = client.Leaderboards.Get(
+  :key => "daily_champions",
+  :offset => 0,
+  :limit => 10,
+  :run => "2025-01-15",
+  :user_attributes => "city:london"
+)
+```
+
+</CodeGroup>

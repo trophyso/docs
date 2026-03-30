@@ -1,0 +1,21 @@
+---
+title: Retries
+description: Learn how Trophy handles webhook retries with configured endpoints.
+subtitle: Learn how Trophy handles webhook retries with configured endpoints.
+icon: rotate-ccw
+---
+
+Trophy will automatically retry any event that fails for one of the following reasons:
+
+- Timeout: If your webhook endpoint does not respond within 60 seconds.
+- Network error: If your webhook endpoint is unreachable due to network issues.
+- HTTP status code: If your webhook endpoint responds with a `non-2XX` HTTP status code.
+
+<Note>
+  Trophy will automatically retry events up to 3 times exponentially starting
+  with a 1 minute interval.
+</Note>
+
+## Get Support
+
+Want to get in touch with the Trophy team? Reach out to us via [email](mailto:support@trophy.so). We're here to help!

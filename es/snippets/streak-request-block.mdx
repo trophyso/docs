@@ -1,0 +1,61 @@
+<CodeGroup>
+```bash cURL
+curl --request GET \
+  --url https://api.trophy.so/v1/users/{id}/streak \
+  --header 'X-API-KEY: <api-key>'
+```
+
+```typescript Node
+trophy.users.streak("user-id", {
+  historyPeriods: 14
+});
+```
+
+```python Python
+client.users.streak(
+    id="user-id",
+    history_periods=14,
+)
+```
+
+```php PHP
+$request = new UsersStreakRequest([
+    'history_periods' => 14
+]);
+
+$trophy->users->streak("user-id", $request);
+```
+
+```java Java
+UsersStreakRequest request = UsersStreakRequest.builder()
+      .historyPeriods(14)
+      .build();
+
+UsersStreakResponse response = client.users().streak("user-id", request);
+```
+
+```go Go
+response, err := client.Users.Streak(
+    "user-id",
+    &api.UsersStreakRequest{
+        HistoryPeriods: 14,
+    },
+)
+```
+
+```csharp C#
+var request = new UsersStreakRequest {
+   HistoryPeriods = 14
+};
+
+await trophy.Users.StreaksAsync("user-id", request);
+```
+
+```ruby Ruby
+result = client.users.streak(
+  :id => 'user-id',
+  :history_periods => 14
+)
+```
+
+</CodeGroup>
