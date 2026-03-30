@@ -7,10 +7,10 @@ subtitle: Aprende a usar Trophy para agregar una función de logros a tu
 noindex: true
 ---
 
-import SDKInstallCommand from "/snippets/sdk-install-command.mdx";
-import MetricChangeRequestBlock from "/snippets/metric-change-request-block.mdx";
-import UserAchievementsRequestBlock from "/snippets/user-achievements-request-block.mdx";
-import AllAchievementsRequestBlock from "/snippets/all-achievements-request-block.mdx";
+import SDKInstallCommand from "../../snippets/sdk-install-command.mdx";
+import MetricChangeRequestBlock from "../../snippets/metric-change-request-block.mdx";
+import UserAchievementsRequestBlock from "../../snippets/user-achievements-request-block.mdx";
+import AllAchievementsRequestBlock from "../../snippets/all-achievements-request-block.mdx";
 
 Esta guía describe el proceso completo para agregar una función de logros a tu aplicación web o móvil utilizando Trophy.
 
@@ -22,14 +22,14 @@ A modo de ilustración, usaremos el ejemplo de una plataforma de estudio que uti
   github](https://github.com/trophyso/example-study-platform/tree/demo).
 </Tip>
 
-## Requisitos previos
+## Requisitos previos {#pre-requisites}
 
 - Una cuenta de [Trophy](https://app.trophy.so/sign-up)
 - Aproximadamente 10 minutos
 
-## Configuración de Trophy
+## Configuración de Trophy {#trophy-setup}
 
-En Trophy, las [Métricas](/platform/metrics) son los componentes fundamentales de la gamificación y modelan las diferentes interacciones que los usuarios realizan con tu producto.
+En Trophy, las [Métricas](/es/platform/metrics) son los componentes fundamentales de la gamificación y modelan las diferentes interacciones que los usuarios realizan con tu producto.
 
 En esta guía, la interacción que nos interesa es `flashcards-viewed`, pero puedes crear una métrica que represente mejor la interacción alrededor de la cual quieres construir logros.
 
@@ -42,11 +42,11 @@ En el panel de Trophy, dirígete a la [página de métricas](https://app.trophy.
     loop
     playsInline
     className="w-full aspect-video"
-    src="../assets/guides/achievements-feature/create_new_metric.mp4"
+    src="../../assets/guides/achievements-feature/create_new_metric.mp4"
   ></video>
 </Frame>
 
-Una vez que hayas creado tu métrica, dirígete a la [página de logros](https://app.trophy.so/achievements) y crea los logros que desees. Puedes encontrar todos los detalles sobre los tipos de logros y los diferentes casos de uso en la [documentación de logros](/platform/achievements).
+Una vez que hayas creado tu métrica, dirígete a la [página de logros](https://app.trophy.so/achievements) y crea los logros que desees. Puedes encontrar todos los detalles sobre los tipos de logros y los diferentes casos de uso en la [documentación de logros](/es/platform/achievements).
 
 Para los propósitos de esta guía, hemos configurado un par de logros basados en un número creciente de tarjetas de estudio volteadas:
 
@@ -56,22 +56,22 @@ Para los propósitos de esta guía, hemos configurado un par de logros basados e
 - 250 flashcards
 - 1,000 flashcards
 
-También hemos configurado algunos logros relacionados con [Rachas](/platform/streaks), pero no entraremos en detalle sobre estos en esta guía.
+También hemos configurado algunos logros relacionados con [Rachas](/es/platform/streaks), pero no entraremos en detalle sobre estos en esta guía.
 
 <Tip>
   Para una guía completa sobre cómo agregar una función de rachas a tu aplicación web o móvil, consulta
-  nuestra [guía completa](/guides/how-to-build-a-streaks-feature).
+  nuestra [guía completa](/es/guides/how-to-build-a-streaks-feature).
 </Tip>
 
-En Trophy realizas seguimiento de las interacciones de usuario enviando [Eventos](/platform/events) desde tu código a las API de Trophy contra una métrica específica.
+En Trophy realizas seguimiento de las interacciones de usuario enviando [Eventos](/es/platform/events) desde tu código a las API de Trophy contra una métrica específica.
 
 Cuando se registran eventos para un usuario específico, cualquier logro vinculado a la métrica especificada se **completará automáticamente** si se cumplen los requisitos.
 
 Esto es lo que hace que construir experiencias gamificadas con Trophy sea tan fácil: hace todo el trabajo por ti detrás de escena.
 
-## Instalación del SDK de Trophy
+## Instalación del SDK de Trophy {#installing-trophy-sdk}
 
-Para interactuar con Trophy desde tu código, utilizarás el SDK de Trophy disponible en la mayoría de los principales [lenguajes de programación](/api-reference/client-libraries).
+Para interactuar con Trophy desde tu código, utilizarás el SDK de Trophy disponible en la mayoría de los principales [lenguajes de programación](/es/api-reference/client-libraries).
 
 Instala el SDK de Trophy:
 
@@ -87,9 +87,9 @@ TROPHY_API_KEY='*******'
   Asegúrate de **no** exponer tu clave API en código del lado del cliente.
 </Warning>
 
-## Seguimiento de Interacciones de Usuario
+## Seguimiento de Interacciones de Usuario {#tracking-user-interactions}
 
-Para realizar seguimiento de un evento (interacción de usuario) contra tu métrica, utiliza la [API de cambio de métrica](/api-reference/endpoints/metrics/send-a-metric-change-event).
+Para realizar seguimiento de un evento (interacción de usuario) contra tu métrica, utiliza la [API de cambio de métrica](/es/api-reference/endpoints/metrics/send-a-metric-change-event).
 
 <MetricChangeRequestBlock />
 
@@ -127,17 +127,17 @@ Valida que esto funcione revisando el [panel](https://app.trophy.so) de Trophy.
     height="200"
     width="100%"
     noZoom
-    src="../assets/guides/achievements-feature/top-users.png"
+    src="../../assets/guides/achievements-feature/top-users.png"
   />
 </Frame>
 
-## Mostrar Logros
+## Mostrar Logros {#displaying-achievements}
 
 Tienes varias opciones para mostrar logros en tu aplicación. Aquí veremos las opciones más comunes.
 
-### Notificaciones Emergentes
+### Notificaciones Emergentes {#pop-up-notifications}
 
-Podemos usar la respuesta de la [API de cambio de métrica](/api-reference/endpoints/metrics/send-a-metric-change-event) para mostrar notificaciones emergentes (o 'toasts') cuando los usuarios completen logros.
+Podemos usar la respuesta de la [API de cambio de métrica](/es/api-reference/endpoints/metrics/send-a-metric-change-event) para mostrar notificaciones emergentes (o 'toasts') cuando los usuarios completen logros.
 
 Aquí hay un ejemplo de esto en acción:
 
@@ -169,7 +169,7 @@ response.achievements.forEach((achievement) => {
     loop
     playsInline
     className="w-full aspect-video"
-    src="../assets/guides/achievements-feature/displaying-toasts.mp4"
+    src="../../assets/guides/achievements-feature/displaying-toasts.mp4"
   ></video>
 </Frame>
 
@@ -177,9 +177,9 @@ response.achievements.forEach((achievement) => {
   Si deseas reproducir efectos de sonido, usa la [API de Audio HTML5](https://developer.mozilla.org/en-US/docs/Web/API/Web_Audio_API) y siéntete libre de usar estos [archivos de audio](https://github.com/trophyso/example-study-platform/tree/demo/public/sounds) que recomendamos.
 </Tip>
 
-### Mostrar Logros del Usuario
+### Mostrar Logros del Usuario {#displaying-user-achievements}
 
-Para obtener todos los logros que un usuario ha completado, usa la [API de logros de usuario](/api-reference/endpoints/users/get-a-users-completed-achievements).
+Para obtener todos los logros que un usuario ha completado, usa la [API de logros de usuario](/es/api-reference/endpoints/users/get-a-users-completed-achievements).
 
 <UserAchievementsRequestBlock />
 
@@ -194,17 +194,17 @@ Para obtener todos los logros que un usuario ha completado, usa la [API de logro
     loop
     playsInline
     className="w-full aspect-video"
-    src="../assets/guides/achievements-feature/displaying_trophy_cabinet.mp4"
+    src="../../assets/guides/achievements-feature/displaying_trophy_cabinet.mp4"
   ></video>
 </Frame>
 
-### Mostrar Todos los Logros
+### Mostrar Todos los Logros {#displaying-all-achievements}
 
-Si en cambio deseas mostrar todos los logros que has configurado en Trophy como parte de una interfaz globalmente accesible que no esté vinculada a un usuario en particular, puedes usar la [API de todos los logros](/api-reference/endpoints/achievements/all-achievements).
+Si en cambio deseas mostrar todos los logros que has configurado en Trophy como parte de una interfaz globalmente accesible que no esté vinculada a un usuario en particular, puedes usar la [API de todos los logros](/es/api-reference/endpoints/achievements/all-achievements).
 
 <AllAchievementsRequestBlock />
 
-### Estadísticas de Finalización de Logros
+### Estadísticas de Finalización de Logros {#achievement-completion-stats}
 
 Tanto la API de logros de usuario como la API de todos los logros incluyen estadísticas de finalización como `completions` (el número de usuarios que han completado un logro) y `rarity` (el porcentaje de usuarios que han completado un logro).
 
@@ -213,11 +213,11 @@ Tanto la API de logros de usuario como la API de todos los logros incluyen estad
     height="200"
     width="100%"
     noZoom
-    src="../assets/guides/achievements-feature/completion-stats.png"
+    src="../../assets/guides/achievements-feature/completion-stats.png"
   />
 </Frame>
 
-## Analíticas
+## Analíticas {#analytics}
 
 La [página de logros](https://app.trophy.so/achievements) en Trophy muestra cuántos usuarios han completado cada logro que has configurado.
 
@@ -226,7 +226,7 @@ La [página de logros](https://app.trophy.so/achievements) en Trophy muestra cu�
     height="200"
     width="100%"
     noZoom
-    src="../assets/guides/achievements-feature/check_user_completions.png"
+    src="../../assets/guides/achievements-feature/check_user_completions.png"
   />
 </Frame>
 
@@ -237,10 +237,10 @@ Además, la página de análisis de cualquier métrica en Trophy incluye un grá
     height="200"
     width="100%"
     noZoom
-    src="../assets/guides/achievements-feature/achievement_completions.png"
+    src="../../assets/guides/achievements-feature/achievement_completions.png"
   />
 </Frame>
 
-## Obtén Soporte
+## Obtén Soporte {#get-support}
 
 ¿Quieres ponerte en contacto con el equipo de Trophy? Contáctanos por [correo electrónico](mailto:support@trophy.so). ¡Estamos aquí para ayudarte!

@@ -8,19 +8,19 @@ og:description: Previene efectos secundarios no deseados al reintentar
 icon: repeat
 ---
 
-import IdempotentEventTracking from "/snippets/idempotent-event-tracking.mdx";
+import IdempotentEventTracking from "../../snippets/idempotent-event-tracking.mdx";
 
-## ¿Qué es la Idempotencia?
+## ¿Qué es la Idempotencia? {#what-is-idempotency}
 
 Al describir APIs, la [idempotencia](https://en.wikipedia.org/wiki/Idempotence) es una propiedad de una operación particular mediante la cual las invocaciones subsecuentes después de la primera no tienen efecto adicional sobre el estado del sistema.
 
-La [API de seguimiento de eventos](/api-reference/endpoints/metrics/send-a-metric-change-event) de Trophy puede utilizarse para garantizar la idempotencia, evitando que los reintentos del cliente tengan efectos secundarios no deseados como el conteo excesivo de interacciones de usuario o la concesión de Puntos a los usuarios múltiples veces por la misma acción.
+La [API de seguimiento de eventos](/es/api-reference/endpoints/metrics/send-a-metric-change-event) de Trophy puede utilizarse para garantizar la idempotencia, evitando que los reintentos del cliente tengan efectos secundarios no deseados como el conteo excesivo de interacciones de usuario o la concesión de Puntos a los usuarios múltiples veces por la misma acción.
 
 Esto es particularmente importante cuando las recompensas están vinculadas a acciones de usuario para prevenir que los usuarios 'manipulen el sistema'.
 
-## Envío de Solicitudes Idempotentes
+## Envío de Solicitudes Idempotentes {#sending-idempotent-requests}
 
-Para garantizar que se respete la idempotencia al enviar eventos a Trophy, incluye un encabezado `Idempotency-Key` al usar la [API de seguimiento de eventos](/api-reference/endpoints/metrics/send-a-metric-change-event). Además, todos los [SDKs de cliente](/api-reference/client-libraries) soportan idempotencia con seguridad de tipos integrada.
+Para garantizar que se respete la idempotencia al enviar eventos a Trophy, incluye un encabezado `Idempotency-Key` al usar la [API de seguimiento de eventos](/es/api-reference/endpoints/metrics/send-a-metric-change-event). Además, todos los [SDKs de cliente](/es/api-reference/client-libraries) soportan idempotencia con seguridad de tipos integrada.
 
 Puedes elegir qué usar como tu clave de idempotencia, pero debe reflejar el nivel de 'unicidad' que deseas que Trophy respete.
 
@@ -34,7 +34,7 @@ Aquí hay un ejemplo de cómo se ve el uso de una clave de idempotencia:
 
 <IdempotentEventTracking />
 
-## Cómo Funciona la Idempotencia
+## Cómo Funciona la Idempotencia {#how-idempotency-works}
 
 Cuando Trophy detecta que se ha enviado una clave de idempotencia con un evento, primero verificará si el usuario al que se refiere el evento la ha utilizado antes. Luego procederá a tomar una de las siguientes acciones:
 
@@ -42,7 +42,7 @@ Cuando Trophy detecta que se ha enviado una clave de idempotencia con un evento,
 - Si por el contrario Trophy detecta que el usuario no ha utilizado la clave de idempotencia antes, procesará el evento de forma habitual y devolverá una respuesta `201 Created`. Finalmente, Trophy almacenará la clave de idempotencia para su consulta en solicitudes posteriores.
 
 <Note>
-  Todas las [métricas](/platform/metrics) de Trophy gestionan la idempotencia de forma aislada.
+  Todas las [métricas](/es/platform/metrics) de Trophy gestionan la idempotencia de forma aislada.
   Trophy aceptará que un usuario utilice la misma clave de idempotencia para eventos en
   métricas diferentes como solicitudes aisladas independientes.
 </Note>
@@ -67,6 +67,6 @@ Además, al utilizar una clave de idempotencia, la respuesta contendrá dos prop
   contacto](mailto:support@trophy.so) y con gusto lo configuraremos para usted.
 </Note>
 
-## Obtener Soporte
+## Obtener Soporte {#get-support}
 
 ¿Desea ponerse en contacto con el equipo de Trophy? Comuníquese con nosotros por [correo electrónico](mailto:support@trophy.so). ¡Estamos aquí para ayudar!

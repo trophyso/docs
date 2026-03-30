@@ -7,13 +7,13 @@ subtitle: Cree endpoints de webhook seguros utilizando la verificación de firma
 icon: shield-check
 ---
 
-## Firmas de Webhook
+## Firmas de Webhook {#webhook-signatures}
 
 Para ayudarle a proteger sus controladores de webhook de modo que solo respondan a eventos enviados desde Trophy y no de atacantes maliciosos, Trophy incluye una firma de webhook con cada evento.
 
 Esta firma se envía en el encabezado `X-Trophy-Signature` y es un hash codificado en `base64` del payload de la solicitud, hasheado usando un secreto de webhook seguro proporcionado por Trophy.
 
-## Secretos de Webhook
+## Secretos de Webhook {#webhook-secrets}
 
 Cada webhook que configure en Trophy tiene un secreto de webhook único al que puede acceder desde la [página de webhooks](https://app.trophy.so/integration/webhooks) en el panel de Trophy.
 
@@ -22,7 +22,7 @@ Cada webhook que configure en Trophy tiene un secreto de webhook único al que p
   y no lo confirme en el control de versiones.
 </Warning>
 
-## Protección de Controladores de Webhook
+## Protección de Controladores de Webhook {#securing-webhook-handlers}
 
 Para validar que los eventos que recibe su controlador de webhook realmente provienen de Trophy, necesita crear su propio hash usando su [secreto de webhook](#webhook-secrets) seguro y compararlo con la [firma de webhook](#webhook-signatures) en el encabezado `X-Trophy-Signature`.
 
@@ -33,7 +33,7 @@ Para validar que los eventos que recibe su controlador de webhook realmente prov
     loop
     playsInline
     className="w-full aspect-15/4"
-    src="../assets/webhooks/copy_secret.mp4"
+    src="../../assets/webhooks/copy_secret.mp4"
   ></video>
 </Frame>
 
@@ -64,6 +64,6 @@ Una vez que tenga su secreto de webhook, estará listo para comenzar a validar e
   importante rechazar la solicitud lo antes posible con un código de estado `4XX`.
 </Warning>
 
-## Obtenga Soporte
+## Obtenga Soporte {#get-support}
 
 ¿Desea ponerse en contacto con el equipo de Trophy? Contáctenos por [correo electrónico](mailto:support@trophy.so). ¡Estamos aquí para ayudar!

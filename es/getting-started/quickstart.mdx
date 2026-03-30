@@ -5,10 +5,10 @@ og:description: Sigue esta guía de inicio rápido para integrar Trophy en tu
   backend y añadir funciones gamificadas como logros y rachas a tu aplicación.
 ---
 
-import SdkInstallCommand from "/snippets/sdk-install-command.mdx";
-import AddEnvVarBlock from "/snippets/add-env-var-block.mdx";
-import MetricChangeRequestBlock from "/snippets/metric-change-request-block.mdx";
-import MetricChangeResponseBlock from "/snippets/metric-change-response-block.mdx";
+import SdkInstallCommand from "../../snippets/sdk-install-command.mdx";
+import AddEnvVarBlock from "../../snippets/add-env-var-block.mdx";
+import MetricChangeRequestBlock from "../../snippets/metric-change-request-block.mdx";
+import MetricChangeResponseBlock from "../../snippets/metric-change-response-block.mdx";
 
 Aquí integrarás tu aplicación web backend con Trophy y comenzarás a construir tu primera función gamificada.
 
@@ -36,7 +36,7 @@ Aquí integrarás tu aplicación web backend con Trophy y comenzarás a construi
 
   </Step>
   <Step title="Crea tu primera métrica">
-    Todas las funciones de gamificación están impulsadas por las interacciones del usuario. En Trophy, utilizas [Métricas](/platform/metrics) para definir y modelar esas interacciones y [Eventos](/platform/events) para rastrearlas.
+    Todas las funciones de gamificación están impulsadas por las interacciones del usuario. En Trophy, utilizas [Métricas](/es/platform/metrics) para definir y modelar esas interacciones y [Eventos](/es/platform/events) para rastrearlas.
     
     Aquí crearás tu primera métrica para comenzar. En el panel de Trophy, dirígete a la [página de métricas](https://app.trophy.so/metrics) y pulsa el botón _Nueva Métrica_:
 
@@ -47,7 +47,7 @@ Aquí integrarás tu aplicación web backend con Trophy y comenzarás a construi
         loop
         playsInline
         className="w-full aspect-video"
-        src="../assets/platform/metrics/create_new_metric.mp4"
+        src="../../assets/platform/metrics/create_new_metric.mp4"
       ></video>
     </Frame>
 
@@ -64,11 +64,11 @@ Aquí integrarás tu aplicación web backend con Trophy y comenzarás a construi
         loop
         playsInline
         className="w-full aspect-video"
-        src="../assets/quick-start/copy_metric_key.mp4"
+        src="../../assets/quick-start/copy_metric_key.mp4"
       ></video>
     </Frame>
 
-    Para registrar un evento contra esta métrica cuando un usuario interactúa con tu producto, llama a la [API de evento de cambio de métrica](/api-reference/endpoints/metrics/send-a-metric-change-event), pasando los detalles del usuario que realizó la interacción. En este ejemplo, la clave de métrica sería `flashcards-flipped`:
+    Para registrar un evento contra esta métrica cuando un usuario interactúa con tu producto, llama a la [API de evento de cambio de métrica](/es/api-reference/endpoints/metrics/send-a-metric-change-event), pasando los detalles del usuario que realizó la interacción. En este ejemplo, la clave de métrica sería `flashcards-flipped`:
 
     <MetricChangeRequestBlock />
 
@@ -81,13 +81,13 @@ Aquí integrarás tu aplicación web backend con Trophy y comenzarás a construi
     Sigue los enlaces a continuación para obtener más información sobre cada función que puedes construir con Trophy:
 
     <CardGroup>
-      <Card title="Logros" icon="trophy" href="/platform/achievements">
+      <Card title="Logros" icon="trophy" href="/es/platform/achievements">
         Recompensa a los usuarios por el progreso continuo o por realizar acciones específicas.
       </Card>
-      <Card title="Rachas" icon="flame" href="/platform/streaks">
+      <Card title="Rachas" icon="flame" href="/es/platform/streaks">
         Motiva a los usuarios a desarrollar hábitos de uso regulares.
       </Card>
-      <Card title="Puntos" icon="sparkle" href="/platform/points">
+      <Card title="Puntos" icon="sparkle" href="/es/platform/points">
         Construye sistemas de puntos sofisticados para recompensar y retener usuarios.
       </Card>
       <Card
@@ -107,22 +107,22 @@ Aquí integrarás tu aplicación web backend con Trophy y comenzarás a construi
             />
           </svg>
         }
-        href="/platform/leaderboards">
+        href="/es/platform/leaderboards">
         Crea competiciones amistosas para aumentar la participación de los usuarios.
       </Card>
-      <Card title="Correos electrónicos" icon="mail" href="/platform/emails">
+      <Card title="Correos electrónicos" icon="mail" href="/es/platform/emails">
         Envía correos electrónicos personalizados del ciclo de vida a los usuarios en el momento perfecto.
       </Card>
-      <Card title="Notificaciones push" icon="bell" href="/platform/push-notifications">
+      <Card title="Notificaciones push" icon="bell" href="/es/platform/push-notifications">
         Impulsa flujos de notificación automatizados utilizando datos de gamificación personalizados.
       </Card>
     </CardGroup>
 
-    O explora nuestra [referencia de API](/api-reference/introduction) para familiarizarte con lo que Trophy puede hacer.
+    O explora nuestra [referencia de API](/es/api-reference/introduction) para familiarizarte con lo que Trophy puede hacer.
 
   </Step>
 </Steps>
 
-## Obtener Soporte
+## Obtener Soporte {#get-support}
 
 ¿Quieres ponerte en contacto con el equipo de Trophy? Contáctanos por [correo electrónico](mailto:support@trophy.so). ¡Estamos aquí para ayudarte!

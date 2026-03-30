@@ -6,35 +6,35 @@ og:description: Usa sistemas de puntos para recompensar a los usuarios por
 icon: sparkle
 ---
 
-import MetricChangeResponseBlock from "/snippets/metric-change-response-block.mdx";
-import MetricChangeEventPointsLevelExcerpt from "/snippets/metric-change-event-points-level-excerpt-block.mdx";
-import PointsHistogramSummaryResponse from "/snippets/points-histogram-summary-response-block.mdx";
-import PointsLevelSummaryResponse from "/snippets/points-level-summary-response-block.mdx";
-import PointsLevelsListResponse from "/snippets/points-levels-list-response-block.mdx";
-import PointsSystemResponse from "/snippets/points-system-response-block.mdx";
-import UserPointsResponse from "/snippets/user-points-response-block.mdx";
-import UserPointsEventSummaryResponse from "/snippets/user-points-summary-response-block.mdx";
-import WebhookPointsLevelChangedPayload from "/snippets/webhook-points-level-changed-payload-block.mdx";
+import MetricChangeResponseBlock from "../../snippets/metric-change-response-block.mdx";
+import MetricChangeEventPointsLevelExcerpt from "../../snippets/metric-change-event-points-level-excerpt-block.mdx";
+import PointsHistogramSummaryResponse from "../../snippets/points-histogram-summary-response-block.mdx";
+import PointsLevelSummaryResponse from "../../snippets/points-level-summary-response-block.mdx";
+import PointsLevelsListResponse from "../../snippets/points-levels-list-response-block.mdx";
+import PointsSystemResponse from "../../snippets/points-system-response-block.mdx";
+import UserPointsResponse from "../../snippets/user-points-response-block.mdx";
+import UserPointsEventSummaryResponse from "../../snippets/user-points-summary-response-block.mdx";
+import WebhookPointsLevelChangedPayload from "../../snippets/webhook-points-level-changed-payload-block.mdx";
 
-## ¿Qué es un Sistema de Puntos?
+## ¿Qué es un Sistema de Puntos? {#what-is-a-points-system}
 
-Los sistemas de puntos se utilizan para crear contadores que rastrean las interacciones de los usuarios con [Métricas](/platform/metrics), [Logros](/platform/achievements) y [Rachas](/platform/streaks). Luego puedes construir funcionalidades como 'XP' y 'Energía' alrededor de estos contadores dentro de tu producto.
+Los sistemas de puntos se utilizan para crear contadores que rastrean las interacciones de los usuarios con [Métricas](/es/platform/metrics), [Logros](/es/platform/achievements) y [Rachas](/es/platform/streaks). Luego puedes construir funcionalidades como 'XP' y 'Energía' alrededor de estos contadores dentro de tu producto.
 
-## Casos de Uso
+## Casos de Uso {#use-cases}
 
-### Recompensas
+### Recompensas {#rewards}
 
 Los sistemas de puntos se pueden usar para crear funcionalidades como 'XP' o 'Gemas' que recompensan a los usuarios por múltiples interacciones a diferentes tasas.
 
 De esta manera, los puntos se pueden usar para ponderar el valor de ciertas interacciones de manera diferente a otras, recompensando a los usuarios por realizar las acciones que consideras más correlacionadas con la retención.
 
-### Medición
+### Medición {#metering}
 
 Los sistemas de puntos también se pueden usar para crear funcionalidades como 'Energía' que miden el uso de tu producto de manera que te da control sobre promover y restringir la actividad del usuario.
 
 Esto te permite controlar la velocidad a la que los usuarios pueden usar tu producto con una mecánica flexible que está fuera de tu base de código.
 
-## Creación de Sistemas de Puntos
+## Creación de Sistemas de Puntos {#creating-points-systems}
 
 Trophy te permite configurar múltiples sistemas de puntos para diferentes casos de uso dentro de tu aplicación.
 
@@ -45,7 +45,7 @@ Trophy te permite configurar múltiples sistemas de puntos para diferentes casos
     loop
     playsInline
     className="w-full aspect-video"
-    src="../assets/platform/points/create_system.mp4"
+    src="../../assets/platform/points/create_system.mp4"
   ></video>
 </Frame>
 
@@ -75,37 +75,37 @@ Para crear un sistema de puntos, dirígete a la [página de puntos](https://app.
   </Step>
 </Steps>
 
-## Disparadores de Puntos
+## Disparadores de Puntos {#points-triggers}
 
 En Trophy, los puntos se otorgan o deducen a los usuarios mediante disparadores. Estos definen las diferentes mecánicas que conforman tu sistema de puntos.
 
 Puedes agregar tantos disparadores como desees a cada sistema de puntos que configures, lo que te permite crear diferentes lógicas para cómo se otorgan o deducen los puntos en diferentes sistemas de puntos.
 
-### Tipos de Disparadores
+### Tipos de Disparadores {#types-of-triggers}
 
 Existen múltiples tipos de disparadores en Trophy que se pueden usar para otorgar o deducir puntos de diferentes maneras.
 
-#### Disparadores de Métricas
+#### Disparadores de Métricas {#metric-triggers}
 
-Los puntos se pueden otorgar o deducir continuamente a medida que los usuarios incrementan [Métricas](/platform/metrics). Puedes elegir otorgar o deducir cualquier número arbitrario de puntos en cualquier umbral de métrica arbitrario, por ejemplo "otorgar 10 puntos por cada 3 tareas completadas".
+Los puntos se pueden otorgar o deducir continuamente a medida que los usuarios incrementan [Métricas](/es/platform/metrics). Puedes elegir otorgar o deducir cualquier número arbitrario de puntos en cualquier umbral de métrica arbitrario, por ejemplo "otorgar 10 puntos por cada 3 tareas completadas".
 
-#### Disparadores de Racha
+#### Disparadores de Racha {#streak-triggers}
 
-Se pueden otorgar o deducir Puntos al alcanzar cualquier longitud arbitraria de una [Racha](/platform/streaks), por ejemplo "otorgar 50 Puntos por cada Racha de 7 días".
+Se pueden otorgar o deducir Puntos al alcanzar cualquier longitud arbitraria de una [Racha](/es/platform/streaks), por ejemplo "otorgar 50 Puntos por cada Racha de 7 días".
 
-#### Disparadores de Logro
+#### Disparadores de Logro {#achievement-triggers}
 
-Se pueden otorgar o deducir Puntos cuando los usuarios desbloquean [Logros](/platform/achievements) específicos, por ejemplo "otorgar 100 Puntos cuando los usuarios completen el Logro `profile-completed`".
+Se pueden otorgar o deducir Puntos cuando los usuarios desbloquean [Logros](/es/platform/achievements) específicos, por ejemplo "otorgar 100 Puntos cuando los usuarios completen el Logro `profile-completed`".
 
-#### Disparadores basados en tiempo
+#### Disparadores basados en tiempo {#time-based-triggers}
 
 Se pueden otorgar o deducir Puntos en intervalos de tiempo repetidos, cada hora o cada día. Por ejemplo "otorgar 10 Puntos cada 3 horas".
 
-#### Disparadores de identificación de usuario
+#### Disparadores de identificación de usuario {#user-identification-triggers}
 
 Se pueden otorgar Puntos cuando los usuarios son identificados por primera vez en Trophy, útil para conceder una cantidad inicial de Puntos cuando se registran en tu producto.
 
-### Crear disparadores
+### Crear disparadores {#creating-triggers}
 
 Para crear un nuevo disparador de Puntos, dirígete al sistema de Puntos para el que deseas crear un disparador y sigue los pasos a continuación.
 
@@ -121,7 +121,7 @@ Para crear un nuevo disparador de Puntos, dirígete al sistema de Puntos para el
     loop
     playsInline
     className="w-full aspect-video"
-    src="../assets/platform/points/create_trigger.mp4"
+    src="../../assets/platform/points/create_trigger.mp4"
   ></video>
 </Frame>
 
@@ -153,9 +153,9 @@ Para crear un nuevo disparador de Puntos, dirígete al sistema de Puntos para el
 <Step title="Agrega filtros de atributos (Opcional)">
   Puedes asignar filtros de atributos a un activador de puntos para restringir aún más cuándo se aplican.
 
-- Para limitar un **activador de Métrica** a que solo se aplique a eventos con [atributos de evento personalizados](/platform/events#custom-event-attributes) específicos, selecciona un atributo e ingresa un valor en la sección **Atributo de Evento**.
+- Para limitar un **activador de Métrica** a que solo se aplique a eventos con [atributos de evento personalizados](/es/platform/events#custom-event-attributes) específicos, selecciona un atributo e ingresa un valor en la sección **Atributo de Evento**.
 
-- Para limitar cualquier tipo de activador a que solo se aplique a un usuario con uno o más [atributos de usuario personalizados](/platform/users#custom-user-attributes) específicos, agrega atributos y los valores deseados en la sección **Atributos de Usuario**.
+- Para limitar cualquier tipo de activador a que solo se aplique a un usuario con uno o más [atributos de usuario personalizados](/es/platform/users#custom-user-attributes) específicos, agrega atributos y los valores deseados en la sección **Atributos de Usuario**.
 
 </Step>
 
@@ -167,7 +167,7 @@ Para crear un nuevo disparador de Puntos, dirígete al sistema de Puntos para el
 </Step>
 </Steps>
 
-## Equilibrando los Puntos
+## Equilibrando los Puntos {#balancing-points}
 
 Administrar un sistema de puntos efectivo requiere encontrar el ritmo óptimo al que los usuarios ganan puntos. Demasiado rápido, y los usuarios experimentarán fatiga de puntos, volviéndolos inútiles. Demasiado lento, y los usuarios pueden aburrirse y abandonar.
 
@@ -180,31 +180,31 @@ La herramienta de vista previa de Trophy puede modelar diferentes escenarios par
     loop
     playsInline
     className="w-full aspect-video"
-    src="../assets/platform/points/points_preview.mp4"
+    src="../../assets/platform/points/points_preview.mp4"
   ></video>
 </Frame>
 
-## Impulsos de Puntos
+## Impulsos de Puntos {#points-boosts}
 
 Los impulsos de Puntos son multiplicadores que puedes usar para aumentar la cantidad de Puntos otorgados a los usuarios durante un período de tiempo específico.
 
 Esta sección explica cómo funcionan los impulsos y cómo pueden utilizarse para aumentar la retención y el compromiso de tu aplicación.
 
-### Segmentación de Impulsos
+### Segmentación de Impulsos {#boost-targeting}
 
 Hay varias formas diferentes en las que puedes usar impulsos en Trophy.
 
-- **Impulsos globales** multiplican los Puntos ganados por todos los usuarios durante la ventana del impulso, o pueden limitarse a una cohorte específica de usuarios mediante el uso de [atributos de usuario personalizados](/platform/users#custom-user-attributes).
+- **Impulsos globales** multiplican los Puntos ganados por todos los usuarios durante la ventana del impulso, o pueden limitarse a una cohorte específica de usuarios mediante el uso de [atributos de usuario personalizados](/es/platform/users#custom-user-attributes).
 - **Impulsos específicos de usuario** solo multiplican los Puntos ganados por un único usuario dentro de la ventana del impulso.
 
 Típicamente, los impulsos globales se utilizan para aumentar el compromiso en toda la plataforma durante eventos clave del calendario como Black Friday/Cyber Monday en comercio electrónico, Año Nuevo en fitness y temporada de exámenes en plataformas de tecnología educativa.
 
 Por el contrario, los impulsos específicos de usuario se usan comúnmente para proporcionar incentivos adicionales a los usuarios para que realicen acciones que estén correlacionadas con una mayor retención.
 
-### Crear Impulsos
+### Crear Impulsos {#creating-boosts}
 
 <Note>
-Los impulsos específicos de usuario solo se pueden crear programáticamente a través de la [API de administración](/admin-api/endpoints/points/create-boosts).
+Los impulsos específicos de usuario solo se pueden crear programáticamente a través de la [API de administración](/es/admin-api/endpoints/points/create-boosts).
 </Note>
 
 Para crear un impulso global de Puntos en el panel de Trophy, sigue los pasos a continuación.
@@ -216,7 +216,7 @@ Para crear un impulso global de Puntos en el panel de Trophy, sigue los pasos a 
     loop
     playsInline
     className="w-full aspect-15/4"
-    src="../assets/platform/points/create_points_boost.mp4"
+    src="../../assets/platform/points/create_points_boost.mp4"
   ></video>
 </Frame>
 
@@ -236,7 +236,7 @@ Para crear un impulso global de Puntos en el panel de Trophy, sigue los pasos a 
   <Step title="Agrega filtros de atributos (opcional)">
 
     <Note>
-      Esta función requiere [atributos de usuario personalizados](/platform/users#custom-user-attributes) que están disponibles en el plan [Pro](/account/billing#pro-plan).
+      Esta función requiere [atributos de usuario personalizados](/es/platform/users#custom-user-attributes) que están disponibles en el plan [Pro](/es/account/billing#pro-plan).
     </Note>
 
     Si desea que su impulso solo afecte a una cohorte de usuarios específica, establezca condiciones de atributos de usuario que coincidan con las de su cohorte objetivo. Trophy se encargará de aplicar el impulso únicamente a los puntos obtenidos por usuarios con valores de atributos de usuario coincidentes.
@@ -246,7 +246,7 @@ Para crear un impulso global de Puntos en el panel de Trophy, sigue los pasos a 
         height="200"
         width="100%"
         noZoom
-        src="../assets/platform/points/points_boost_attributes.png"
+        src="../../assets/platform/points/points_boost_attributes.png"
       />
     </Frame>
   </Step>
@@ -255,13 +255,13 @@ Para crear un impulso global de Puntos en el panel de Trophy, sigue los pasos a 
   </Step>
 </Steps>
 
-### Multiplicadores de Impulso
+### Multiplicadores de Impulso {#boost-multipliers}
 
 Cada impulso tiene un único valor multiplicador que aumenta los puntos totales obtenidos por los usuarios afectados por ese impulso.
 
 Los multiplicadores de impulso deben ser números positivos, pero pueden ser decimales para admitir escenarios donde se requieran impulsos porcentuales como '50% más de puntos'.
 
-### Acumulación de Impulsos
+### Acumulación de Impulsos {#boost-stacking}
 
 Los impulsos de puntos en Trophy se acumulan mediante [multiplicación](#boost-multipliers). Esto permite que los usuarios se beneficien de múltiples impulsos simultáneamente.
 
@@ -271,9 +271,9 @@ Para demostrar la acumulación, considere un impulso 2X, 1.5X y 3X todos activos
 Overall Multiplier (3 boosts) = 2X * 1.5X * 3X = 9X
 ```
 
-### Redondeo de Impulsos
+### Redondeo de Impulsos {#boost-rounding}
 
-Trophy admite [valores de evento métrico de punto flotante](/platform/events#event-value), pero se encarga de redondear los puntos a enteros automáticamente.
+Trophy admite [valores de evento métrico de punto flotante](/es/platform/events#event-value), pero se encarga de redondear los puntos a enteros automáticamente.
 
 Sin embargo, al usar [multiplicadores de impulso](#boost-multipliers) decimales, puede haber algunos escenarios donde este redondeo predeterminado no sea suficiente para producir siempre valores de puntos enteros.
 
@@ -287,9 +287,9 @@ Por lo tanto, Trophy ofrece tres modos de redondeo para proporcionar control adi
 En escenarios donde los Puntos se utilizan para imitar mecánicas de crédito de plataforma, se recomienda usar el comportamiento predeterminado de redondeo hacia abajo para protegerse contra deslizamientos.
 </Tip>
 
-Simplemente elige tu modo de redondeo preferido al [crear impulsos](/platform/points#creating-boosts) a través del panel de Trophy.
+Simplemente elige tu modo de redondeo preferido al [crear impulsos](/es/platform/points#creating-boosts) a través del panel de Trophy.
 
-## Niveles de Puntos
+## Niveles de Puntos {#points-levels}
 
 Los niveles de Puntos son hitos discretos que defines en un sistema de Puntos en Trophy.
 
@@ -297,7 +297,7 @@ Cada nivel tiene un umbral. Cuando el total de Puntos de un usuario en el sistem
 
 Usa niveles para rangos de jerarquía, interfaz de progresión, niveles de recompensa o análisis. Trophy mantiene sincronizado el nivel actual de cada usuario cada vez que gana o pierde Puntos en ese sistema.
 
-### Configuración de niveles
+### Configuración de niveles {#configuring-levels}
 
 Para configurar niveles para un sistema de Puntos, ábrelo desde la [página de Puntos](https://app.trophy.so/points) en el panel de Trophy y usa la pestaña de niveles para agregar o gestionar niveles.
 
@@ -308,7 +308,7 @@ Para configurar niveles para un sistema de Puntos, ábrelo desde la [página de 
     loop
     playsInline
     className="w-full aspect-video"
-    src="../assets/platform/points/create_points_level.mp4"
+    src="../../assets/platform/points/create_points_level.mp4"
   ></video>
 </Frame>
 
@@ -329,29 +329,29 @@ Para configurar niveles para un sistema de Puntos, ábrelo desde la [página de 
   </Step>
 </Steps>
 
-### Mostrar Niveles
+### Mostrar Niveles {#displaying-levels}
 
 La mayoría de los equipos combinan tres enfoques: una vista estática de cada nivel (para pantallas de progresión), el nivel actual del usuario (para encabezados y perfil) y retroalimentación inmediata cuando una acción lo impulsa a un nuevo nivel.
 
-#### Mostrar Todos los Niveles
+#### Mostrar Todos los Niveles {#displaying-all-levels}
 
-Llama al [API de obtener niveles](/api-reference/endpoints/points/get-points-levels) una vez por clave de sistema de puntos (por ejemplo, al cargar la aplicación o desde tu servidor al renderizar una página de progresión).
+Llama al [API de obtener niveles](/es/api-reference/endpoints/points/get-points-levels) una vez por clave de sistema de puntos (por ejemplo, al cargar la aplicación o desde tu servidor al renderizar una página de progresión).
 
 La respuesta es un array de niveles con `key`, `name`, `description`, `badgeUrl` opcional y el umbral `points` para cada nivel. Al vincular tu interfaz a la respuesta del API de Trophy, te asegurarás de que se actualice automáticamente cuando realices cambios en los niveles desde el panel de Trophy.
 
 <PointsLevelsListResponse />
 
-#### Mostrar Nivel de Usuario
+#### Mostrar Nivel de Usuario {#displaying-user-level}
 
-El [API de puntos de usuario](/api-reference/endpoints/users/get-a-users-points) devuelve los `total` del usuario, su objeto `level` actual y `awards` recientes. El campo `level` contiene el nivel actual del usuario, o null si no existen niveles o aún no ha alcanzado el umbral de puntos para ningún nivel.
+El [API de puntos de usuario](/es/api-reference/endpoints/users/get-a-users-points) devuelve los `total` del usuario, su objeto `level` actual y `awards` recientes. El campo `level` contiene el nivel actual del usuario, o null si no existen niveles o aún no ha alcanzado el umbral de puntos para ningún nivel.
 
 Empareja `total` con la lista ordenada de niveles del paso anterior para dibujar una barra de progreso entre el umbral actual y el siguiente.
 
 <UserPointsResponse />
 
-#### Notificaciones de Cambio de Nivel
+#### Notificaciones de Cambio de Nivel {#level-change-notifications}
 
-Cuando envías un [evento de cambio de métrica](/api-reference/endpoints/metrics/send-a-metric-change-event), la respuesta incluirá un mapa `points` indexado por las claves de tu sistema de puntos para cada sistema que cambió como resultado del evento.
+Cuando envías un [evento de cambio de métrica](/es/api-reference/endpoints/metrics/send-a-metric-change-event), la respuesta incluirá un mapa `points` indexado por las claves de tu sistema de puntos para cada sistema que cambió como resultado del evento.
 
 Los datos contienen una clave `level` solo cuando el nivel del usuario cambió debido a este evento. Si su nivel permaneció igual, esa clave se omite, por lo que puedes tratar de forma segura un `level` presente como una señal de cambio de nivel sin necesidad de contabilidad adicional.
 
@@ -368,26 +368,26 @@ if (pts?.level) {
 }
 ```
 
-El mismo comportamiento de `level` se aplica cuando los puntos cambian debido a la [finalización de un logro](/api-reference/endpoints/achievements/mark-an-achievement-as-completed).
+El mismo comportamiento de `level` se aplica cuando los puntos cambian debido a la [finalización de un logro](/es/api-reference/endpoints/achievements/mark-an-achievement-as-completed).
 
-Para notificaciones impulsadas por el servidor (correo electrónico, push, CRM) que no deben depender de que el cliente vea la respuesta HTTP, suscríbete al webhook [`points.level_changed`](/webhooks/events/points/points-level-changed) en su lugar.
+Para notificaciones impulsadas por el servidor (correo electrónico, push, CRM) que no deben depender de que el cliente vea la respuesta HTTP, suscríbete al webhook [`points.level_changed`](/es/webhooks/events/points/points-level-changed) en su lugar.
 
 Este webhook se activa cuando el nivel de un usuario cambia como resultado de ganar o perder puntos, e incluye `previousLevel` y `newLevel`.
 
-#### Analíticas a Nivel de Cuenta
+#### Analíticas a Nivel de Cuenta {#account-level-analytics}
 
-La [API de resumen de nivel](/api-reference/endpoints/points/get-points-level-summary) devuelve cuántos usuarios se encuentran actualmente en cada nivel, lo cual es útil para paneles de administración, vistas de embudo o equilibrar la progresión.
+La [API de resumen de nivel](/es/api-reference/endpoints/points/get-points-level-summary) devuelve cuántos usuarios se encuentran actualmente en cada nivel, lo cual es útil para paneles de administración, vistas de embudo o equilibrar la progresión.
 
 <PointsLevelSummaryResponse />
 
-## Mostrar Puntos
+## Mostrar Puntos {#displaying-points}
 
 Hay varias formas de usar Trophy para obtener y mostrar puntos en tu aplicación.
 
 <Note>
   Para ver ejemplos prácticos, consulta nuestras guías sobre cómo agregar una [función de
-  XP](/guides/how-to-build-an-xp-feature) o una [función de
-  energía](/guides/how-to-build-an-energy-feature) a tu aplicación web o móvil.
+  XP](/es/guides/how-to-build-an-xp-feature) o una [función de
+  energía](/es/guides/how-to-build-an-energy-feature) a tu aplicación web o móvil.
 </Note>
 
 <Frame>
@@ -397,15 +397,15 @@ Hay varias formas de usar Trophy para obtener y mostrar puntos en tu aplicación
     loop
     playsInline
     className="w-full aspect-video"
-    src="../assets/platform/points/displaying_points.mp4"
+    src="../../assets/platform/points/displaying_points.mp4"
   ></video>
 </Frame>
 
-### Activación de UI transaccional
+### Activación de UI transaccional {#triggering-transactional-ui}
 
-En primer lugar, cualquier punto otorgado o deducido de los usuarios como resultado de un evento de cambio de métrica se devuelve en la respuesta al usar la [API de eventos de cambio de métrica](/api-reference/endpoints/metrics/send-a-metric-change-event).
+En primer lugar, cualquier punto otorgado o deducido de los usuarios como resultado de un evento de cambio de métrica se devuelve en la respuesta al usar la [API de eventos de cambio de métrica](/es/api-reference/endpoints/metrics/send-a-metric-change-event).
 
-La respuesta incluye el nuevo total de Puntos del usuario, cuántos Puntos se otorgaron o dedujeron como resultado del evento, y los detalles de los activadores de Puntos específicos que se dispararon. Cuando los [Niveles de Puntos](#points-levels) están habilitados, cada objeto de Puntos en esa respuesta también puede incluir **`level`**: Trophy incluye el **nuevo** nivel del usuario **solo cuando cambió** como resultado de ese evento. El mismo comportamiento opcional de `level` se aplica cuando los Puntos cambian por una [finalización de Logro](/api-reference/endpoints/achievements/mark-an-achievement-as-completed).
+La respuesta incluye el nuevo total de Puntos del usuario, cuántos Puntos se otorgaron o dedujeron como resultado del evento, y los detalles de los activadores de Puntos específicos que se dispararon. Cuando los [Niveles de Puntos](#points-levels) están habilitados, cada objeto de Puntos en esa respuesta también puede incluir **`level`**: Trophy incluye el **nuevo** nivel del usuario **solo cuando cambió** como resultado de ese evento. El mismo comportamiento opcional de `level` se aplica cuando los Puntos cambian por una [finalización de Logro](/es/api-reference/endpoints/achievements/mark-an-achievement-as-completed).
 
 Ejemplo de respuesta `POST /metrics/{key}/event` (los campos coinciden con la especificación de la API de Trophy; tus claves bajo `points` e `leaderboards` dependen de tu cuenta):
 
@@ -416,11 +416,11 @@ Esto hace que sea muy sencillo leer la respuesta y activar cualquiera de las sig
 - Mostrar notificaciones y ventanas emergentes dentro de la aplicación
 - Reproducir efectos de sonido
 
-### Mostrar los Puntos del usuario
+### Mostrar los Puntos del usuario {#displaying-users-points}
 
 Trophy también cuenta con APIs que te permiten obtener los datos de Puntos del usuario cuando lo desees.
 
-Primero, la [API de Puntos de usuario](/api-reference/endpoints/users/get-a-users-points) devuelve el total de Puntos del usuario para un sistema de Puntos particular, su **`level`** actual (o `null` si los niveles no están en uso o aún no han alcanzado un nivel), y hasta 100 de los eventos más recientes que otorgaron Puntos o los dedujeron de ellos.
+Primero, la [API de Puntos de usuario](/es/api-reference/endpoints/users/get-a-users-points) devuelve el total de Puntos del usuario para un sistema de Puntos particular, su **`level`** actual (o `null` si los niveles no están en uso o aún no han alcanzado un nivel), y hasta 100 de los eventos más recientes que otorgaron Puntos o los dedujeron de ellos.
 
 Puedes usar esta API para mostrar el total de Puntos del usuario en cualquier lugar de tu plataforma, así como una sección de 'Últimas recompensas' o similar.
 
@@ -429,10 +429,10 @@ Puedes usar esta API para mostrar el total de Puntos del usuario en cualquier lu
 <UserPointsResponse />
 
 <Frame>
-  <img height="200" noZoom src="../assets/platform/points/points_awards.png" />
+  <img height="200" noZoom src="../../assets/platform/points/points_awards.png" />
 </Frame>
 
-Luego, la [API de resumen de puntos de usuario](/api-reference/endpoints/users/get-a-users-points-summary) puede utilizarse para obtener datos históricos de puntos de un usuario específico.
+Luego, la [API de resumen de puntos de usuario](/es/api-reference/endpoints/users/get-a-users-points-summary) puede utilizarse para obtener datos históricos de puntos de un usuario específico.
 
 Los datos pueden agregarse diariamente, semanalmente o mensualmente entre una fecha de inicio y una fecha de fin. Utiliza esta API para mostrar gráficos de progreso de puntos a los usuarios en cualquier período de tiempo.
 
@@ -444,46 +444,46 @@ Respuesta **200** de ejemplo (especificación de la API de Trophy; la estructura
   <img
     height="200"
     noZoom
-    src="../assets/platform/points/user_points_summary.png"
+    src="../../assets/platform/points/user_points_summary.png"
   />
 </Frame>
 
-### Mostrar Datos Agregados
+### Mostrar Datos Agregados {#displaying-aggregate-data}
 
 Además, hay varias APIs que pueden utilizarse para obtener y mostrar datos de puntos a nivel de cuenta.
 
-Primero, la [API de resumen de puntos](/api-reference/endpoints/points/get-points-summary) devuelve datos agregados del sistema de puntos de toda tu base de usuarios.
+Primero, la [API de resumen de puntos](/es/api-reference/endpoints/points/get-points-summary) devuelve datos agregados del sistema de puntos de toda tu base de usuarios.
 
-Utiliza estos datos para mostrar un histograma de puntos de un sistema de puntos particular y mostrar a los usuarios cómo se comparan con otros en la plataforma. Cuando utilizas [Niveles de Puntos](#points-levels), la [API de resumen de niveles](/api-reference/endpoints/points/get-points-level-summary) complementa esto con un recuento de usuarios por nivel.
+Utiliza estos datos para mostrar un histograma de puntos de un sistema de puntos particular y mostrar a los usuarios cómo se comparan con otros en la plataforma. Cuando utilizas [Niveles de Puntos](#points-levels), la [API de resumen de niveles](/es/api-reference/endpoints/points/get-points-level-summary) complementa esto con un recuento de usuarios por nivel.
 
 `GET /points/{key}/summary` — respuesta **200** de ejemplo (especificación de la API de Trophy):
 
 <PointsHistogramSummaryResponse />
 
-Por último, la [API del sistema de puntos](/api-reference/endpoints/points/get-points) devuelve los metadatos y desencadenadores del sistema. Respuesta **200** de ejemplo (especificación de la API de Trophy):
+Por último, la [API del sistema de puntos](/es/api-reference/endpoints/points/get-points) devuelve los metadatos y desencadenadores del sistema. Respuesta **200** de ejemplo (especificación de la API de Trophy):
 
 <PointsSystemResponse />
 
 <Tip>
   La API de resumen de puntos también puede filtrarse para devolver únicamente datos de usuarios con
-  [atributos de usuario personalizados](/platform/users#custom-user-attributes) específicos.
+  [atributos de usuario personalizados](/es/platform/users#custom-user-attributes) específicos.
 </Tip>
 
 <Frame>
-  <img height="200" noZoom src="../assets/platform/points/points_summary.png" />
+  <img height="200" noZoom src="../../assets/platform/points/points_summary.png" />
 </Frame>
 
-Utiliza la respuesta de la [API del sistema de puntos](/api-reference/endpoints/points/get-points) para mostrar a los usuarios cómo pueden ganar puntos en tu plataforma. Cualquier nuevo desencadenador que agregues se devolverá automáticamente desde esta API, reduciendo cambios de código en tu plataforma y trasladando las operaciones a Trophy.
+Utiliza la respuesta de la [API del sistema de puntos](/es/api-reference/endpoints/points/get-points) para mostrar a los usuarios cómo pueden ganar puntos en tu plataforma. Cualquier nuevo desencadenador que agregues se devolverá automáticamente desde esta API, reduciendo cambios de código en tu plataforma y trasladando las operaciones a Trophy.
 
 <Frame>
   <img
     height="200"
     noZoom
-    src="../assets/platform/points/points_triggers.png"
+    src="../../assets/platform/points/points_triggers.png"
   />
 </Frame>
 
-## Analíticas de Puntos
+## Analíticas de Puntos {#points-analytics}
 
 Trophy tiene analíticas integradas para rastrear las asignaciones de puntos para cada sistema de puntos que configures en tus usuarios en tiempo real, incluyendo:
 
@@ -496,10 +496,10 @@ Trophy tiene analíticas integradas para rastrear las asignaciones de puntos par
   <img
     height="200"
     noZoom
-    src="../assets/platform/points/points_analytics.png"
+    src="../../assets/platform/points/points_analytics.png"
   />
 </Frame>
 
-## Obtener Soporte
+## Obtener Soporte {#get-support}
 
 ¿Quieres ponerte en contacto con el equipo de Trophy? Contáctanos por [correo electrónico](mailto:support@trophy.so). ¡Estamos aquí para ayudarte!

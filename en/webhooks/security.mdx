@@ -5,13 +5,13 @@ subtitle: Build secure webhook endpoints using webhook signature verification.
 icon: shield-check
 ---
 
-## Webhook Signatures
+## Webhook Signatures {#webhook-signatures}
 
 To help you secure your webhook handlers so that they only respond to events sent from Trophy and not malicious attackers, Trophy includes a webhook signature with every event.
 
 This signature is sent in the `X-Trophy-Signature` header and is a `base64` encoded hash of the request payload, hashed using a secure webhook secret provided by Trophy.
 
-## Webhook Secrets
+## Webhook Secrets {#webhook-secrets}
 
 Each webhook you set up in Trophy has a unique webhook secret which you can access from the [webhooks page](https://app.trophy.so/integration/webhooks) in the Trophy dashboard.
 
@@ -20,7 +20,7 @@ Each webhook you set up in Trophy has a unique webhook secret which you can acce
   and do not commit it to source control.
 </Warning>
 
-## Securing Webhook Handlers
+## Securing Webhook Handlers {#securing-webhook-handlers}
 
 To validate that events your webhook handler receives do actually come from Trophy, you need to create your own hash using your secure [webhook secret](#webhook-secrets) and compare it to the [webhook signature](#webhook-signatures) in the `X-Trophy-Signature` header.
 
@@ -31,7 +31,7 @@ To validate that events your webhook handler receives do actually come from Trop
     loop
     playsInline
     className="w-full aspect-15/4"
-    src="../assets/webhooks/copy_secret.mp4"
+    src="../../assets/webhooks/copy_secret.mp4"
   ></video>
 </Frame>
 
@@ -62,6 +62,6 @@ Once you have your webhook secret, you're ready to start validating events. Here
   important to reject the request as early as possible with a `4XX` status code.
 </Warning>
 
-## Get Support
+## Get Support {#get-support}
 
 Want to get in touch with the Trophy team? Reach out to us via [email](mailto:support@trophy.so). We're here to help!

@@ -5,11 +5,12 @@ on:
     paths:
       - "docs.json"
       - "i18n.json"
+      - "package.json"
       - "en/**"
       - "es/**"
       - ".github/workflows/translate-on-main.yml"
       - ".github/workflows/validate-translations.yml"
-      - "scripts/validate-translations.mjs"
+      - "scripts/*.mjs"
 
 jobs:
   validate:
@@ -38,7 +39,13 @@ jobs:
           fi
 
       - name: Validate translation parity and frontmatter
-        run: node scripts/validate-translations.mjs
+        run: npm run translate:validate
+
+      - name: Ensure internal links are locale-localized
+        run: npm run translate:localize-links:check
+
+      - name: Ensure heading anchors match English slugs
+        run: npm run translate:sync-anchors:check
 
       - name: Mintlify validate
         run: npx mint@latest validate

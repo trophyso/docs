@@ -5,11 +5,11 @@ subtitle: Start receiving webhook events from Trophy in under 10 minutes.
 icon: circle-play
 ---
 
-## Getting Started
+## Getting Started {#getting-started}
 
 <Note>
   If you don't already have a Trophy account, follow the [Trophy quick start
-  guide](/getting-started/quickstart) first to get started.
+  guide](/en/getting-started/quickstart) first to get started.
 </Note>
 
 In Trophy you can have multiple webhooks for handling one or more types of event. Follow the steps below to get started receiving webhook events from Trophy.
@@ -41,7 +41,7 @@ Then, set up this endpoint to proxy events it receives to your local development
     height="200"
     width="100%"
     noZoom
-    src="../assets/webhooks/quickstart/hookdeck.png"
+    src="../../assets/webhooks/quickstart/hookdeck.png"
   />
 </Frame>
 
@@ -64,7 +64,7 @@ Then, set up this endpoint to proxy events it receives to your local development
     height="200"
     width="100%"
     noZoom
-    src="../assets/webhooks/quickstart/dashboard.png"
+    src="../../assets/webhooks/quickstart/dashboard.png"
   />
 </Frame>
 
@@ -99,7 +99,7 @@ Trophy will send requests to your handler, telling it what `type` of event it's 
     ```
 
     <Warning>
-    Make sure your webhook handler is set up to return a `200` status code. If Trophy detects your handler returns a non-`2XX` status code, it will treat this as a failure and [retry the request](/webhooks/retries).
+    Make sure your webhook handler is set up to return a `200` status code. If Trophy detects your handler returns a non-`2XX` status code, it will treat this as a failure and [retry the request](/en/webhooks/retries).
     </Warning>
 
   </Step>
@@ -129,7 +129,7 @@ Grab your secure webhook secret from the webhooks page in Trophy.
     loop
     playsInline
     className="w-full aspect-15/4"
-    src="../assets/webhooks/copy_secret.mp4"
+    src="../../assets/webhooks/copy_secret.mp4"
   ></video>
 </Frame>
 
@@ -176,7 +176,7 @@ Once you have your webhook secret, you're ready to start validating events. Here
   </Step>
 </Steps>
 
-## Full Webhook Example
+## Full Webhook Example {#full-webhook-example}
 
 Here's a full working NextJS example webhook endpoint capable of securely receiving webhook events from Trophy.
 
@@ -232,6 +232,6 @@ function handleEvent(payload: WebhookPayload) {
 }
 ```
 
-## Get Support
+## Get Support {#get-support}
 
 Want to get in touch with the Trophy team? Reach out to us via [email](mailto:support@trophy.so). We're here to help!

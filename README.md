@@ -58,8 +58,38 @@ Notes:
 
 - `lingo/glossary.csv`: Terms that must stay fixed or use specific translations.
 - `lingo/brand-voice.md`: Single brand voice used for all locales.
-- `scripts/translate-docs-json.mjs`: Translates language-specific `docs.json` navigation labels directly in the source-of-truth `docs.json`.
-- `scripts/validate-glossary-csv.mjs`: Validates glossary schema and duplicate canonical keys.
+- `scripts/translate-docs-json.mjs`: Translates language-specific `docs.json` navigation labels directly in the source-of-truth `docs.json`. Prefer `npm run translate:docs-json -- --target <locale>`.
+- `scripts/localize-internal-links.mjs`: Rewrites internal absolute **navigation** links in locale content (for example `/getting-started/quickstart` -> `/es/getting-started/quickstart`). It does **not** change relative image or video `src` paths, MDX/JSX **import** paths, or shared **snippets**; those must be correct in source so all locales stay aligned. Prefer `npm run translate:localize-links --` with `--target`, `--all`, or `--all --check`.
+- **Shared `snippets/`**: Reusable MDX and JSX live in repo-root `snippets/` (not under `en/` or `es/`). Import them with paths relative to each page (for example `../../snippets/foo.mdx` from `locale/<section>/<page>.mdx`, or more `../` segments for deeper pages). They are excluded from Lingo buckets in `i18n.json` so they stay English and identical everywhere.
+- **Media paths**: Pages live under `en/<section>/...` or `es/<section>/...`, while shared files sit in repo-root `assets/`. Use a path like `../../assets/...` from a typical `locale/<section>/<page>.mdx` file.
+- `scripts/sync-heading-anchors.mjs`: Writes Mintlify [custom heading IDs](https://www.mintlify.com/docs/create/text#custom-heading-ids) as **`## Title {#slug}`** markdown. Slugs match Mintlify’s auto rules from the **English** title so hashes like `#pro-plan` stay stable across locales. Run `npm run translate:sync-anchors` after bulk heading edits; translation pipelines run it automatically (see **Heading anchors and Lingo** below). The script can also migrate one-line **`<h2 id="slug">…</h2>`** left from older tooling back to `{#slug}` syntax.
+- `scripts/validate-glossary-csv.mjs`: Validates glossary schema and duplicate canonical keys. Prefer `npm run lingo:validate-glossary`.
+
+#### Heading anchors and Lingo
+
+- **Canonical behavior** is enforced by **`scripts/sync-heading-anchors.mjs`** (runs at the end of `translate:generate` and on the translate-on-main workflow). It rewrites `en/` from current English titles and reapplies the **same** `{#slug}` suffixes to translated headings in document order. Hash links stay aligned even if Lingo alters titles or fragments.
+- **Lingo:** Keep **`lingo/brand-voice.md`** to tone and style only. For structural rules (for example Mintlify `{#slug}` on headings), optionally add a separate line in your Lingo engine **Instructions** field (not brand voice), such as: “Preserve `{#…}` heading fragments exactly—do not translate or alter the slug.” That only reduces churn; **the script + `translate:sync-anchors:check` are authoritative.**
+- **Strict MDX parsers** (for example unconfigured `mdx-js`) can treat `{` as JSX and error on `{#slug}`; **Mintlify’s `mint dev` / deploy pipeline** is expected to handle this documented syntax. If you see Acorn errors locally, update the Mintlify CLI (`npm i -D mint@latest` or global `mintlify`) or check [Mintlify support](https://mintlify.com/docs); do not switch to raw HTML headings unless Mintlify asks you to.
+- **Do not** fold this into `localize-internal-links.mjs`: that script only handles absolute path `href`s; heading anchors are a separate structural pass and must run **after** Lingo (and after link localization) so all three stay consistent.
+
+#### npm scripts (localization and checks)
+
+Use `npm run <script> -- <args>` when a script needs CLI flags (the `--` forwards arguments to the underlying command).
+
+| Script | Purpose |
+| --- | --- |
+| `translate:generate` | Run Lingo for target locale(s), then `docs.json` labels, internal link localization, and heading-anchor sync. Requires `.env` with `LINGO_*` vars. |
+| `translate:docs-json` | Translate `docs.json` nav for one `--target` locale. Requires `.env`. |
+| `translate:localize-links` | Localize internal `href` paths; pass `--target`, `--all`, and/or `--check`. |
+| `translate:localize-links:all` | Same as `translate:localize-links -- --all`. |
+| `translate:localize-links:check` | CI-style check: all locales, no writes (`--all --check`). |
+| `translate:sync-anchors` | Apply English-derived `{#slug}` on ATX headings in `en/` and target locales (see `i18n.json` `locale.targets`). |
+| `translate:sync-anchors:check` | Fail if any MDX needs re-sync (CI). |
+| `lingo:validate-glossary` | Validate `lingo/glossary.csv`. |
+| `translate:validate` | MDX parity and frontmatter checks (`en` / `es`). No `.env` required. |
+| `translate:verify` | `lingo.dev run --frozen` (freshness gate). |
+| `mint:validate` | Mintlify `validate`. |
+| `mint:broken-links` | Mintlify `broken-links` with anchor and snippet checks. |
 
 #### Apply in Lingo.dev engine
 
@@ -72,9 +102,10 @@ Notes:
    - sync wildcard brand voice from `lingo/brand-voice.md` via Cursor chat + Lingo MCP (on demand)
 3. Run:
    - `npx lingo.dev@latest run` to generate/update translations
-   - `node scripts/translate-docs-json.mjs --target es` to translate language-specific labels in `docs.json`
+   - `npm run translate:docs-json -- --target es` to translate language-specific labels in `docs.json`
+   - `npm run translate:localize-links -- --target es` to localize on-page internal links for that locale
    - `npm run lingo:validate-glossary` to validate glossary rows before MCP sync
-   - `npx lingo.dev@latest run --frozen` to enforce no pending translation deltas
+   - `npx lingo.dev@latest run --frozen` or `npm run translate:verify` to enforce no pending translation deltas
 
 Brand voice sync workflow (manual via Cursor + MCP):
 - Update `lingo/brand-voice.md`.
@@ -102,18 +133,21 @@ Glossary sync workflow (manual via Cursor + MCP):
 3. Create the language content directory:
    - Mirror the `en/` structure under `<locale>/` with the same filenames.
    - Example: `en/platform/overview.mdx` -> `fr/platform/overview.mdx`.
+   - Do not create a per-locale `snippets/` tree: reuse repo-root `snippets/` and the same relative import paths as in `en/` (depth matches when folder structure matches).
 4. Configure Lingo.dev engine controls for the new locale:
    - Add/update brand voice for that locale.
    - Add locale-specific glossary entries if needed.
-5. Generate translations:
-   - One locale: `node scripts/generate-translations.mjs --target <locale>`
-   - Multiple locales: `node scripts/generate-translations.mjs --target es,fr,de`
-   - All configured targets: `node scripts/generate-translations.mjs`
-   - Force re-translation (bypass cache/lockfile delta): `node scripts/generate-translations.mjs --target <locale> --force`
+5. Generate translations (requires `.env` with `LINGO_API_KEY` and `LINGO_ENGINE_ID`):
+   - One locale: `npm run translate:generate -- --target <locale>`
+   - Multiple locales: `npm run translate:generate -- --target es,fr,de`
+   - All configured targets: `npm run translate:generate`
+   - Force re-translation (bypass cache/lockfile delta): `npm run translate:generate -- --target <locale> --force`
 6. Validate before merge:
    - `npm run translate:validate`
-   - `npx mint@latest validate`
-   - `npx mint@latest broken-links --check-anchors --check-snippets`
+   - `npm run translate:localize-links:check`
+   - `npm run translate:sync-anchors:check`
+   - `npm run mint:validate`
+   - `npm run mint:broken-links`
 
 Notes:
 - The workflow `.github/workflows/translate-on-main.yml` automatically reads locales from `i18n.json` `locale.targets`.

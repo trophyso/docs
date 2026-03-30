@@ -7,11 +7,11 @@ subtitle: Aprende a usar Trophy para añadir una función de energía a tu
 noindex: true
 ---
 
-import SDKInstallCommand from "/snippets/sdk-install-command.mdx";
-import MetricChangeRequestBlock from "/snippets/metric-change-request-block.mdx";
-import UserPointsRequest from "/snippets/user-points-request-block.mdx";
-import UserEnergyResponse from "/snippets/user-energy-response-block.mdx";
-import UserPointsEventSummaryRequest from "/snippets/user-points-summary-request-block.mdx";
+import SDKInstallCommand from "../../snippets/sdk-install-command.mdx";
+import MetricChangeRequestBlock from "../../snippets/metric-change-request-block.mdx";
+import UserPointsRequest from "../../snippets/user-points-request-block.mdx";
+import UserEnergyResponse from "../../snippets/user-energy-response-block.mdx";
+import UserPointsEventSummaryRequest from "../../snippets/user-points-summary-request-block.mdx";
 
 Esta guía describe el proceso completo para añadir una función de energía a tu aplicación web o móvil usando Trophy.
 
@@ -21,14 +21,14 @@ Con fines ilustrativos, usaremos el ejemplo de una plataforma de estudio que uti
   Para ver un ejemplo completamente funcional de esto en la práctica, consulta la [demostración en vivo](https://examples.trophy.so) o el [repositorio de github](https://github.com/trophyso/example-study-platform/tree/demo).
 </Tip>
 
-## Requisitos previos
+## Requisitos previos {#pre-requisites}
 
 - Una cuenta de [Trophy](https://app.trophy.so/sign-up)
 - Aproximadamente 10 minutos
 
-## Configuración de Trophy
+## Configuración de Trophy {#trophy-setup}
 
-En Trophy, las [Métricas](/platform/metrics) son los componentes básicos de la gamificación y modelan las diferentes interacciones que los usuarios realizan con tu producto.
+En Trophy, las [Métricas](/es/platform/metrics) son los componentes básicos de la gamificación y modelan las diferentes interacciones que los usuarios realizan con tu producto.
 
 En esta guía, la interacción que nos interesa es `flashcards-viewed`, pero puedes crear cualquier número de métricas que mejor representen las interacciones desde las cuales deseas otorgar y consumir energía.
 
@@ -41,7 +41,7 @@ En el panel de Trophy, dirígete a la [página de métricas](https://app.trophy.
     loop
     playsInline
     className="w-full aspect-video"
-    src="../assets/guides/achievements-feature/create_new_metric.mp4"
+    src="../../assets/guides/achievements-feature/create_new_metric.mp4"
   ></video>
 </Frame>
 
@@ -54,11 +54,11 @@ Una vez que hayas creado tu métrica, dirígete a la [página de puntos](https:/
     loop
     playsInline
     className="w-full aspect-video"
-    src="../assets/guides/xp-feature/create_system.mp4"
+    src="../../assets/guides/xp-feature/create_system.mp4"
   ></video>
 </Frame>
 
-Una vez creado, serás llevado a la página de configuración del sistema de energía donde podrás crear [activadores de puntos](/platform/points#types-of-triggers) para cada una de las formas en que deseas otorgar o consumir energía.
+Una vez creado, serás llevado a la página de configuración del sistema de energía donde podrás crear [activadores de puntos](/es/platform/points#types-of-triggers) para cada una de las formas en que deseas otorgar o consumir energía.
 
 <Frame>
   <video
@@ -67,13 +67,13 @@ Una vez creado, serás llevado a la página de configuración del sistema de ene
     loop
     playsInline
     className="w-full aspect-video"
-    src="../assets/guides/xp-feature/create_trigger.mp4"
+    src="../../assets/guides/xp-feature/create_trigger.mp4"
   ></video>
 </Frame>
 
-Usa disparadores 'time' para otorgar a los usuarios nueva energía cada hora o diariamente, y utiliza [otros tipos](/platform/points#types-of-triggers) de disparadores con valores negativos para consumir energía de las diferentes interacciones de usuario que desees.
+Usa disparadores 'time' para otorgar a los usuarios nueva energía cada hora o diariamente, y utiliza [otros tipos](/es/platform/points#types-of-triggers) de disparadores con valores negativos para consumir energía de las diferentes interacciones de usuario que desees.
 
-En Trophy rastreas las interacciones de los usuarios enviando [Eventos](/platform/events) desde tu código a las APIs de Trophy contra una métrica específica.
+En Trophy rastreas las interacciones de los usuarios enviando [Eventos](/es/platform/events) desde tu código a las APIs de Trophy contra una métrica específica.
 
 Cuando se registran eventos para un usuario específico, Trophy verificará automáticamente si alguno de los disparadores configurados contra tu sistema de energía debe activarse, y los procesará en consecuencia.
 
@@ -81,9 +81,9 @@ Trophy también se encarga de otorgar automáticamente nueva energía a los usua
 
 Esto es lo que hace que construir experiencias gamificadas con Trophy sea tan fácil: realiza todo el trabajo por ti en segundo plano.
 
-## Instalación del SDK de Trophy
+## Instalación del SDK de Trophy {#installing-trophy-sdk}
 
-Para interactuar con Trophy desde tu código utilizarás el SDK de Trophy disponible en los principales [lenguajes de programación](/api-reference/client-libraries).
+Para interactuar con Trophy desde tu código utilizarás el SDK de Trophy disponible en los principales [lenguajes de programación](/es/api-reference/client-libraries).
 
 Instala el SDK de Trophy:
 
@@ -99,9 +99,9 @@ TROPHY_API_KEY='*******'
   Asegúrate de **no** exponer tu clave de API en código del lado del cliente.
 </Warning>
 
-## Rastreo de Interacciones de Usuario
+## Rastreo de Interacciones de Usuario {#tracking-user-interactions}
 
-Para rastrear un evento (interacción de usuario) contra tu métrica, utiliza la [API de cambio de métrica](/api-reference/endpoints/metrics/send-a-metric-change-event).
+Para rastrear un evento (interacción de usuario) contra tu métrica, utiliza la [API de cambio de métrica](/es/api-reference/endpoints/metrics/send-a-metric-change-event).
 
 <MetricChangeRequestBlock />
 
@@ -148,9 +148,9 @@ La respuesta a esta llamada de API es el conjunto completo de cambios en cualqui
 
 Valida que esto funciona revisando el [panel de control](https://app.trophy.so) de Trophy.
 
-## Medición del Uso
+## Medición del Uso {#metering-usage}
 
-Para evitar que los usuarios realicen acciones en tu producto basándose en energía, usa la [API de puntos de usuario](/api-reference/endpoints/users/get-a-users-points) para obtener su total actual de energía.
+Para evitar que los usuarios realicen acciones en tu producto basándose en energía, usa la [API de puntos de usuario](/es/api-reference/endpoints/users/get-a-users-points) para obtener su total actual de energía.
 
 <UserPointsRequest />
 
@@ -174,17 +174,17 @@ if (energy.total > 0) {
 
 Luego puedes modificar tu configuración de triggers en Trophy y controlar la velocidad a la que los usuarios pueden interactuar con tu producto directamente desde el panel de Trophy sin necesidad de realizar cambios en el código.
 
-## Visualización de la Energía
+## Visualización de la Energía {#displaying-energy}
 
-Para obtener la energía de un usuario, usa la [API de puntos de usuario](/api-reference/endpoints/users/get-a-users-points).
+Para obtener la energía de un usuario, usa la [API de puntos de usuario](/es/api-reference/endpoints/users/get-a-users-points).
 
 <UserPointsRequest />
 
-Esta API devuelve datos sobre la energía total del usuario, pero puede configurarse para también devolver entre 1 y 100 de los cambios de energía más recientes del usuario utilizando el [parámetro de consulta](/api-reference/endpoints/users/get-a-users-points#parameter-awards) `awards`.
+Esta API devuelve datos sobre la energía total del usuario, pero puede configurarse para también devolver entre 1 y 100 de los cambios de energía más recientes del usuario utilizando el [parámetro de consulta](/es/api-reference/endpoints/users/get-a-users-points#parameter-awards) `awards`.
 
 <UserEnergyResponse />
 
-La [API de resumen de puntos de usuario](/api-reference/endpoints/users/get-a-users-points-summary) también puede utilizarse para impulsar interfaces basadas en gráficos, como mostrar a los usuarios su uso de energía a lo largo del tiempo.
+La [API de resumen de puntos de usuario](/es/api-reference/endpoints/users/get-a-users-points-summary) también puede utilizarse para impulsar interfaces basadas en gráficos, como mostrar a los usuarios su uso de energía a lo largo del tiempo.
 
 <UserPointsEventSummaryRequest />
 
@@ -195,11 +195,11 @@ Aquí hay un ejemplo de una interfaz que muestra a los usuarios su energía actu
     height="200"
     width="100%"
     noZoom
-    src="../assets/guides/energy-feature/ui.png"
+    src="../../assets/guides/energy-feature/ui.png"
   />
 </Frame>
 
-## Analíticas
+## Analíticas {#analytics}
 
 En Trophy, tu [página del sistema de energía](https://app.trophy.so/points) incluye gráficos de analíticas que muestran datos sobre la energía total otorgada/consumida y un desglose de exactamente qué triggers causan los cambios más frecuentes en energía.
 
@@ -208,10 +208,10 @@ En Trophy, tu [página del sistema de energía](https://app.trophy.so/points) in
     height="200"
     width="100%"
     noZoom
-    src="../assets/guides/energy-feature/analytics.png"
+    src="../../assets/guides/energy-feature/analytics.png"
   />
 </Frame>
 
-## Obtener soporte
+## Obtener soporte {#get-support}
 
 ¿Quieres contactar con el equipo de Trophy? Comunícate con nosotros por [correo electrónico](mailto:support@trophy.so). ¡Estamos aquí para ayudarte!

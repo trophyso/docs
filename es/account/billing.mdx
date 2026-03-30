@@ -7,9 +7,9 @@ og:description: Aprende cómo Trophy controla los costos cobrando según los
 icon: gauge
 ---
 
-import { PlanBadge } from "/snippets/plan-badge.jsx";
+import { PlanBadge } from "../../snippets/plan-badge.jsx";
 
-## Facturación basada en uso
+## Facturación basada en uso {#usage-based-billing}
 
 Trophy sigue un modelo de precios basado en uso donde los clientes solo pagan por las unidades de uso que consumen. Para Trophy, una unidad de uso corresponde a un único [Usuario Activo Mensual](##monthly-active-users-maus) (MAU).
 
@@ -18,9 +18,9 @@ Trophy sigue un modelo de precios basado en uso donde los clientes solo pagan po
   costos según tu uso esperado.
 </Info>
 
-## Usuarios Activos Mensuales (MAU)
+## Usuarios Activos Mensuales (MAU) {#monthly-active-users-maus}
 
-Trophy define un MAU como un único usuario que envía al menos un [evento métrico](/platform/events) a Trophy en un mes determinado.
+Trophy define un MAU como un único usuario que envía al menos un [evento métrico](/es/platform/events) a Trophy en un mes determinado.
 
 <Tip>
   Ten en cuenta que **nunca pagas por usuarios que abandonan**. Si un usuario se registra en tu
@@ -28,7 +28,7 @@ Trophy define un MAU como un único usuario que envía al menos un [evento métr
   y nunca más.
 </Tip>
 
-## Nivel gratuito
+## Nivel gratuito {#free-tier}
 
 El nivel gratuito permite a los equipos probar y evaluar Trophy hasta **100 MAU** sin generar cargos por uso.
 
@@ -37,11 +37,11 @@ El nivel gratuito permite a los equipos probar y evaluar Trophy hasta **100 MAU*
   nos pondremos en contacto contigo directamente con un recordatorio amigable para actualizar.
 </Tip>
 
-## Planes de pago
+## Planes de pago {#paid-plans}
 
 Trophy tiene dos planes de pago, [Starter](#starter-plan) y [Pro](#pro-plan).
 
-### Plan Starter
+### Plan Starter {#starter-plan}
 
 El plan starter es para clientes que han superado la fase de prueba y evaluación y están usando Trophy en implementaciones de producción a pequeña escala.
 
@@ -52,11 +52,11 @@ A diferencia del [Nivel gratuito](#free-tier), el plan starter no tiene límites
   Pro](#pro-plan).
 </Tip>
 
-### Plan Pro
+### Plan Pro {#pro-plan}
 
 El plan pro está diseñado para clientes que utilizan Trophy en implementaciones de mayor escala o que requieren [funciones](#features) más avanzadas.
 
-### Límites del Plan
+### Límites del Plan {#plan-allowances}
 
 Aquí hay una comparación de los límites de cada plan de pago:
 
@@ -67,7 +67,7 @@ Aquí hay una comparación de los límites de cada plan de pago:
 | Emails incluidos                | `5,000` | `50,000` |
 | Notificaciones push incluidas   | `5,000` | `50,000` |
 
-### Excedentes
+### Excedentes {#overages}
 
 Los excedentes se cobran en los planes de pago por encima de los [límites](#plan-allowances) incluidos a las siguientes tarifas:
 
@@ -79,33 +79,33 @@ Los excedentes se cobran en los planes de pago por encima de los [límites](#pla
 
 Los descuentos por volumen están disponibles como parte de [contratos personalizados](#custom-contracts).
 
-## Funciones
+## Funciones {#features}
 
 Aquí hay una lista de todas las funciones de Trophy y el plan en el que están disponibles:
 
 <PlanBadge plan="free" />
 
-- [Logros](/platform/achievements)
-- [Rachas](/platform/streaks)
-- [Puntos](/platform/points)
-- [Clasificaciones](/platform/leaderboards)
-- [Emails](/platform/emails)
-- [Notificaciones push](/platform/push-notifications)
+- [Logros](/es/platform/achievements)
+- [Rachas](/es/platform/streaks)
+- [Puntos](/es/platform/points)
+- [Clasificaciones](/es/platform/leaderboards)
+- [Emails](/es/platform/emails)
+- [Notificaciones push](/es/platform/push-notifications)
 
 <PlanBadge plan="starter" />
 
-- [Verificación DNS](/platform/emails#dns-verification-advanced)
+- [Verificación DNS](/es/platform/emails#dns-verification-advanced)
 
 <PlanBadge plan="pro" />
 
-- [Webhooks](/webhooks)
-- [Atributos Personalizados](/platform/users#custom-user-attributes)
+- [Webhooks](/es/webhooks)
+- [Atributos Personalizados](/es/platform/users#custom-user-attributes)
 
-## Contratos Personalizados
+## Contratos Personalizados {#custom-contracts}
 
 Si tiene más de 100K MAU y desea discutir contratos personalizados que incluyan descuentos por volumen adaptados a las necesidades de su negocio, [contáctenos](mailto:hello@trophy.so) y estaremos encantados de ayudarle.
 
-## Ver su Uso
+## Ver su Uso {#viewing-your-usage}
 
 Puede ver su uso para el período de facturación actual en la [página de facturación](https://app.trophy.so/billing) del panel de Trophy y ver todas las facturas anteriores en su portal de facturación.
 
@@ -114,11 +114,11 @@ Puede ver su uso para el período de facturación actual en la [página de factu
     height="200"
     width="50%"
     noZoom
-    src="../assets/account/billing/plan-usage.png"
+    src="../../assets/account/billing/plan-usage.png"
   />
 </Frame>
 
-## Preguntas frecuentes
+## Preguntas frecuentes {#frequently-asked-questions}
 
 <AccordionGroup>
   <Accordion title="¿Cuándo se me cobrará?">
@@ -126,6 +126,6 @@ Puede ver su uso para el período de facturación actual en la [página de factu
   </Accordion>
 </AccordionGroup>
 
-## Obtener soporte
+## Obtener soporte {#get-support}
 
 ¿Quieres ponerte en contacto con el equipo de Trophy? Comunícate con nosotros por [correo electrónico](mailto:support@trophy.so). ¡Estamos aquí para ayudarte!

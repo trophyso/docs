@@ -8,9 +8,16 @@
     "dev": "mint dev",
     "translate:generate": "node --env-file=.env scripts/generate-translations.mjs",
     "translate:docs-json": "node --env-file=.env scripts/translate-docs-json.mjs",
+    "translate:localize-links": "node scripts/localize-internal-links.mjs",
+    "translate:localize-links:all": "node scripts/localize-internal-links.mjs --all",
+    "translate:localize-links:check": "node scripts/localize-internal-links.mjs --all --check",
+    "translate:sync-anchors": "node scripts/sync-heading-anchors.mjs",
+    "translate:sync-anchors:check": "node scripts/sync-heading-anchors.mjs --check",
     "lingo:validate-glossary": "node scripts/validate-glossary-csv.mjs",
     "translate:verify": "npx lingo.dev@latest run --frozen",
-    "translate:validate": "node --env-file=.env scripts/validate-translations.mjs"
+    "translate:validate": "node scripts/validate-translations.mjs",
+    "mint:validate": "npx mint@latest validate",
+    "mint:broken-links": "npx mint@latest broken-links --check-anchors --check-snippets"
   },
   "repository": {
     "type": "git",

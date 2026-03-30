@@ -8,11 +8,11 @@ og:description: Usa flujos de correo automatizados para extender tu experiencia
 icon: mail
 ---
 
-import { PlanBadge } from "/snippets/plan-badge.jsx";
+import { PlanBadge } from "../../snippets/plan-badge.jsx";
 
 Trophy puede enviar correos electrónicos automatizados a los usuarios basándose en activadores clave sin necesidad de código. Aquí veremos cuáles son estos activadores y cómo pueden formar parte de la experiencia de gamificación de tu producto.
 
-## Tipos de correos electrónicos
+## Tipos de correos electrónicos {#types-of-emails}
 
 Trophy admite 4 tipos de correos electrónicos, cada uno diseñado para adaptarse a un escenario común en la construcción de experiencias de gamificación.
 
@@ -25,27 +25,27 @@ Todos los correos electrónicos son opcionales, pero los cuatro pueden usarse si
     loop
     playsInline
     className="w-full aspect-15/4"
-    src="../assets/platform/emails/email_types.mp4"
+    src="../../assets/platform/emails/email_types.mp4"
   ></video>
 </Frame>
 
-- **Correos de logros** se envían a los usuarios cada vez que desbloquean un [Logro](/platform/achievements).
+- **Correos de logros** se envían a los usuarios cada vez que desbloquean un [Logro](/es/platform/achievements).
 - **Correos de resumen** se envían a los usuarios con una frecuencia predefinida para resumir el progreso. Los correos de resumen pueden configurarse para enviarse diaria, semanal, mensual o anualmente según tu caso de uso.
 - **Correos de reactivación** se envían a los usuarios después de que se vuelven inactivos con el objetivo de traerlos de vuelta a tu aplicación.
-- **Correos de rachas** se envían automáticamente a los usuarios recordándoles extender su [Racha](/platform/streaks).
+- **Correos de rachas** se envían automáticamente a los usuarios recordándoles extender su [Racha](/es/platform/streaks).
 
-## Envío de correos electrónicos
+## Envío de correos electrónicos {#sending-emails}
 
 Para comenzar a enviar correos electrónicos con Trophy, necesitarás verificar tu dominio y agregar y activar plantillas de correo para los tipos que deseas enviar.
 
 <Tip>
   Los usuarios pueden controlar qué notificaciones por correo electrónico reciben a través del
-  [API de preferencias de usuario](/platform/users#notification-preferences) de Trophy. Esto te permite
+  [API de preferencias de usuario](/es/platform/users#notification-preferences) de Trophy. Esto te permite
   construir un centro de preferencias en tu aplicación donde los usuarios pueden activar o
   desactivar tipos específicos de correos electrónicos.
 </Tip>
 
-### Verificación de dominio
+### Verificación de dominio {#domain-verification}
 
 Trophy admite el envío de correos electrónicos desde tu propio dominio de forma nativa. Hay dos formas de configurar esto: Verificación del remitente y Verificación DNS.
 
@@ -70,7 +70,7 @@ Toda la configuración de dominios se encuentra en la página [Dominios](https:/
   </Card>
 </CardGroup>
 
-#### Verificación del remitente (Básica)
+#### Verificación del remitente (Básica) {#sender-verification-basic}
 
 Durante la configuración inicial, se te pedirá que configures la Verificación del remitente. Esta es una forma muy sencilla de verificar rápidamente una dirección de correo electrónico que deseas usar con Trophy sin necesidad de cambiar ningún código o configuración DNS.
 
@@ -81,7 +81,7 @@ Se te pedirá que ingreses la dirección de correo electrónico, el nombre del r
     height="200"
     width="75%"
     noZoom
-    src="../assets/platform/emails/sender_verification.jpg"
+    src="../../assets/platform/emails/sender_verification.jpg"
   />
 </Frame>
 
@@ -96,10 +96,10 @@ La Verificación del remitente es excelente para comenzar, pero tiene la limitac
 
 Además, si deseas cambiar la dirección en el futuro, tendrás que pasar por la Verificación del remitente nuevamente, lo cual puedes hacer en la [pantalla de configuración](https://app.trophy.so/integration?tab=domains).
 
-#### Verificación DNS (Avanzado)
+#### Verificación DNS (Avanzado) {#dns-verification-advanced}
 
 <Note>
-  Esta funcionalidad está disponible en el plan [Starter](/account/billing#starter-plan).
+  Esta funcionalidad está disponible en el plan [Starter](/es/account/billing#starter-plan).
 </Note>
 
 Para uso en producción recomendamos la Verificación DNS. Una vez configurada, esto te permite configurar Trophy para enviar correos desde cualquier dirección en tu dominio. Así que si deseas cambiar la dirección en el futuro, no necesitarás verificar nuevamente.
@@ -125,7 +125,7 @@ Sigue los pasos a continuación para configurar la verificación DNS:
         height="200"
         width="75%"
         noZoom
-        src="../assets/platform/emails/dns-verification-1.png"
+        src="../../assets/platform/emails/dns-verification-1.png"
       />
     </Frame>
 
@@ -140,7 +140,7 @@ Sigue los pasos a continuación para configurar la verificación DNS:
         height="200"
         width="75%"
         noZoom
-        src="../assets/platform/emails/dns-verification-2.png"
+        src="../../assets/platform/emails/dns-verification-2.png"
       />
     </Frame>
 
@@ -180,7 +180,7 @@ Sigue los pasos a continuación para configurar la verificación DNS:
         height="200"
         width="75%"
         noZoom
-        src="../assets/platform/emails/dns-verification-3.png"
+        src="../../assets/platform/emails/dns-verification-3.png"
       />
     </Frame>
 
@@ -193,7 +193,7 @@ Sigue los pasos a continuación para configurar la verificación DNS:
         height="200"
         width="75%"
         noZoom
-        src="../assets/platform/emails/dns-verification-4.png"
+        src="../../assets/platform/emails/dns-verification-4.png"
       />
     </Frame>
 
@@ -210,7 +210,7 @@ Sigue los pasos a continuación para configurar la verificación DNS:
         height="200"
         width="75%"
         noZoom
-        src="../assets/platform/emails/dns-verification-5.png"
+        src="../../assets/platform/emails/dns-verification-5.png"
       />
     </Frame>
 
@@ -218,11 +218,11 @@ Sigue los pasos a continuación para configurar la verificación DNS:
 
 </Steps>
 
-### Activadores de Email
+### Activadores de Email {#email-triggers}
 
 En la página de [configuración de email](https://app.trophy.so/emails/configure), cada tipo de email tiene su propia sección. Agrega plantillas bajo el tipo correspondiente y activa una para comenzar a enviar.
 
-#### Emails de Resumen
+#### Emails de Resumen {#recap-emails}
 
 Los emails de **Resumen** envían informes de progreso semanales o mensuales a los usuarios. Puedes cambiar la frecuencia de estos emails en la página de [integración](https://app.trophy.so/integration) usando la configuración **Período de Agregación**.
 
@@ -231,11 +231,11 @@ Los emails de **Resumen** envían informes de progreso semanales o mensuales a l
     height="200"
     width="100%"
     noZoom
-    src="../assets/platform/emails/recap_emails.png"
+    src="../../assets/platform/emails/recap_emails.png"
   />
 </Frame>
 
-#### Emails de Reactivación
+#### Emails de Reactivación {#reactivation-emails}
 
 Los emails de **Reactivación** envían mensajes de recuperación a los usuarios después de que se vuelven inactivos. Estos emails se envían según el siguiente cronograma:
 
@@ -250,11 +250,11 @@ Los emails de **Reactivación** envían mensajes de recuperación a los usuarios
     height="200"
     width="30%"
     noZoom
-    src="../assets/platform/emails/reactivation_emails.png"
+    src="../../assets/platform/emails/reactivation_emails.png"
   />
 </Frame>
 
-#### Emails de Rachas
+#### Emails de Rachas {#streak-emails}
 
 Los emails de **Rachas** recuerdan a los usuarios que extiendan su racha antes de que expire. Estos emails se envían según la frecuencia de racha que configuraste en la [página de rachas](https://app.trophy.so/streaks):
 
@@ -267,26 +267,26 @@ Los emails de **Rachas** recuerdan a los usuarios que extiendan su racha antes d
     height="200"
     width="50%"
     noZoom
-    src="../assets/platform/emails/streak_emails.png"
+    src="../../assets/platform/emails/streak_emails.png"
   />
 </Frame>
 
-#### Correos de Logros
+#### Correos de Logros {#achievement-emails}
 
-Los correos de **logros** felicitan a los usuarios cuando completan un [logro](/platform/achievements) que has configurado en Trophy. Estos correos se envían entre las 5-9PM el día en que se completa el logro, o al día siguiente a las 5PM si es después de las 9PM cuando el usuario completa el logro.
+Los correos de **logros** felicitan a los usuarios cuando completan un [logro](/es/platform/achievements) que has configurado en Trophy. Estos correos se envían entre las 5-9PM el día en que se completa el logro, o al día siguiente a las 5PM si es después de las 9PM cuando el usuario completa el logro.
 
 <Frame>
   <img
     height="200"
     width="75%"
     noZoom
-    src="../assets/platform/emails/achievement_emails.png"
+    src="../../assets/platform/emails/achievement_emails.png"
   />
 </Frame>
 
-#### Limitar Correos a Tipos Específicos de Usuarios
+#### Limitar Correos a Tipos Específicos de Usuarios {#limiting-emails-to-specific-types-of-users}
 
-Cada plantilla de correo puede limitarse a usuarios con valores específicos de [atributos personalizados de usuario](/platform/users#custom-user-attributes).
+Cada plantilla de correo puede limitarse a usuarios con valores específicos de [atributos personalizados de usuario](/es/platform/users#custom-user-attributes).
 
 Para cada atributo al que desees restringir el correo, haz clic en el icono más junto al encabezado **Filtros de Usuario** de la plantilla de correo, luego selecciona el atributo e ingresa el valor deseado. Solo los usuarios que tengan **todos** los valores de atributo especificados recibirán correos de esta plantilla.
 
@@ -295,15 +295,15 @@ Para cada atributo al que desees restringir el correo, haz clic en el icono más
     height="200"
     width="75%"
     noZoom
-    src="../assets/platform/emails/user_filters.png"
+    src="../../assets/platform/emails/user_filters.png"
   />
 </Frame>
 
-#### Zonas Horarias
+#### Zonas Horarias {#time-zones}
 
-Si especificas una zona horaria para cada usuario a través de [Identificación de Usuario](/platform/users#param-tz), Trophy utilizará esa zona horaria local para programar correos según la lógica especificada anteriormente. Si no proporcionas zonas horarias para los usuarios que identificas, Trophy utilizará por defecto la hora del Este.
+Si especificas una zona horaria para cada usuario a través de [Identificación de Usuario](/es/platform/users#param-tz), Trophy utilizará esa zona horaria local para programar correos según la lógica especificada anteriormente. Si no proporcionas zonas horarias para los usuarios que identificas, Trophy utilizará por defecto la hora del Este.
 
-## Diseñar Correos
+## Diseñar Correos {#designing-emails}
 
 Trophy cuenta con un constructor de correos basado en bloques con todas las funciones, que te permite diseñar plantillas controlando todo el contenido y las líneas de asunto de los correos. En la página de [correos](https://app.trophy.so/emails/configure), agrega plantillas en cada sección de [tipo de correo](#email-triggers) que desees utilizar.
 
@@ -314,11 +314,11 @@ Trophy cuenta con un constructor de correos basado en bloques con todas las func
     loop
     playsInline
     className="w-full aspect-15/4"
-    src="../assets/platform/emails/designing_emails.mp4"
+    src="../../assets/platform/emails/designing_emails.mp4"
   ></video>
 </Frame>
 
-### Plantillas Predeterminadas
+### Plantillas Predeterminadas {#default-templates}
 
 Por defecto, Trophy proporciona una plantilla para cada [tipo de correo electrónico](#types-of-emails) como punto de partida. Las plantillas predeterminadas no se pueden modificar, pero puedes duplicarlas y personalizarlas como desees.
 
@@ -326,7 +326,7 @@ Por defecto, Trophy proporciona una plantilla para cada [tipo de correo electró
   También puedes crear plantillas en blanco si prefieres empezar desde cero.
 </Tip>
 
-### Crear una Nueva Plantilla
+### Crear una Nueva Plantilla {#creating-a-new-template}
 
 Para crear una nueva plantilla de correo electrónico, sigue los pasos a continuación.
 
@@ -343,7 +343,7 @@ Para crear una nueva plantilla de correo electrónico, sigue los pasos a continu
         height="200"
         width="100%"
         noZoom
-        src="../assets/platform/emails/choose_template.png"
+        src="../../assets/platform/emails/choose_template.png"
       />
     </Frame>
 
@@ -358,14 +358,14 @@ Para crear una nueva plantilla de correo electrónico, sigue los pasos a continu
         loop
         playsInline
         className="w-full aspect-15/4"
-        src="../assets/platform/emails/designing_emails.mp4"
+        src="../../assets/platform/emails/designing_emails.mp4"
       ></video>
     </Frame>
 
   </Step>
 </Steps>
 
-### Tipos de Bloques
+### Tipos de Bloques {#block-types}
 
 El constructor de correos electrónicos de Trophy admite diversos tipos de bloques que cumplen diferentes funciones. Todos los componentes básicos que esperarías encontrar en un editor de correo electrónico, como párrafos, encabezados e imágenes, se denominan [Bloques Básicos](#basic-blocks). También existe un conjunto de componentes más potentes, como gráficos y rachas, que aprovechan los datos de actividad del usuario y las funciones de gamificación de Trophy. Estos se denominan [Bloques Inteligentes](#smart-blocks).
 
@@ -374,11 +374,11 @@ El constructor de correos electrónicos de Trophy admite diversos tipos de bloqu
     height="200"
     width="100%"
     noZoom
-    src="../assets/platform/emails/block_types_dialog.png"
+    src="../../assets/platform/emails/block_types_dialog.png"
   />
 </Frame>
 
-#### Bloques Básicos
+#### Bloques Básicos {#basic-blocks}
 
 Aquí está la lista completa de bloques básicos sin opinión que admite Trophy:
 
@@ -393,7 +393,7 @@ Aquí está la lista completa de bloques básicos sin opinión que admite Trophy
 - **Columnas** - Útiles para crear diseños de hasta 3 columnas con cualquier contenido.
 - **Logotipo** - Renderizará el logotipo de tu organización, configurado en la página de [Marca](https://app.trophy.so/branding).
 
-#### Bloques Condicionales
+#### Bloques Condicionales {#conditional-blocks}
 
 Trophy también cuenta con un potente sistema de renderizado condicional impulsado por el tipo de bloque _Condicional_.
 
@@ -422,13 +422,13 @@ Un caso de uso común para el bloque condicional es mostrar condicionalmente a u
     height="100"
     width="50%"
     noZoom
-    src="../assets/platform/emails/conditional_block.png"
+    src="../../assets/platform/emails/conditional_block.png"
   />
 </Frame>
 
 Esto crea un marco de trabajo potente para diseñar correos basados en datos de usuario altamente relevantes y personalizados, y puede utilizarse para crear una amplia gama de correos para casos de uso comunes de gamificación.
 
-#### Bloques Inteligentes
+#### Bloques Inteligentes {#smart-blocks}
 
 Los bloques inteligentes son componentes potentes diseñados para soportar casos de uso comunes de gamificación e integrarse con todas las funciones de Trophy, incluyendo métricas, logros y rachas.
 
@@ -463,7 +463,7 @@ Lee más sobre el caso de uso de cada bloque inteligente:
         loop
         playsInline
         className="w-full aspect-video"
-        src="../assets/platform/emails/achievement_progress_block.mp4"
+        src="../../assets/platform/emails/achievement_progress_block.mp4"
       ></video>
     </Frame>
 
@@ -483,7 +483,7 @@ Cuando los logros tienen insignias, estas se mostrarán automáticamente, junto 
         loop
         playsInline
         className="w-full aspect-video"
-        src="../assets/platform/emails/achievements_unlocked_block.mp4"
+        src="../../assets/platform/emails/achievements_unlocked_block.mp4"
       ></video>
     </Frame>
 </Accordion>
@@ -500,7 +500,7 @@ Cuando los logros tienen insignias, estas se mostrarán automáticamente, junto 
         loop
         playsInline
         className="w-full aspect-video"
-        src="../assets/platform/emails/progress_chart_block.mp4"
+        src="../../assets/platform/emails/progress_chart_block.mp4"
       ></video>
     </Frame>
 </Accordion>
@@ -517,14 +517,14 @@ Cuando los logros tienen insignias, estas se mostrarán automáticamente, junto 
         loop
         playsInline
         className="w-full aspect-video"
-        src="../assets/platform/emails/streak_block.mp4"
+        src="../../assets/platform/emails/streak_block.mp4"
       ></video>
     </Frame>
 
   </Accordion>
 </AccordionGroup>
 
-### Variables de correo
+### Variables de correo {#email-variables}
 
 Trophy proporciona un amplio conjunto de variables de correo que se pueden usar para insertar texto altamente relevante y personalizado en el cuerpo de los correos y en las líneas de asunto.
 
@@ -543,7 +543,7 @@ Esto abrirá la ventana del editor de variables donde puedes configurar las vari
     loop
     playsInline
     className="w-full aspect-video"
-    src="../assets/platform/emails/email_variables_demo.mp4"
+    src="../../assets/platform/emails/email_variables_demo.mp4"
   ></video>
 </Frame>
 
@@ -555,7 +555,7 @@ Variables relacionadas con el destinatario del correo electrónico.
 
 - **Nombre**: El nombre del destinatario, si está configurado
 
-Además, todos los [atributos personalizados de usuario](/platform/users#custom-user-attributes) están disponibles como variables de correo electrónico.
+Además, todos los [atributos personalizados de usuario](/es/platform/users#custom-user-attributes) están disponibles como variables de correo electrónico.
 
 </Accordion>
 <Accordion title="Métricas">
@@ -573,7 +573,7 @@ Cada métrica de Trophy admite las siguientes variables de correo electrónico:
 
 Además, los alias dinámicos **Más Alto** y **Más Bajo** admiten el mismo conjunto de variables. Al usar estos alias, Trophy seleccionará la métrica donde el destinatario tenga el total actual más alto o más bajo en el momento del envío.
 
-Al usar variables de métricas, también tiene la opción de filtrar los datos que cualquiera de las variables anteriores referencian a través de un [atributo de evento personalizado](/platform/events#custom-event-attributes).
+Al usar variables de métricas, también tiene la opción de filtrar los datos que cualquiera de las variables anteriores referencian a través de un [atributo de evento personalizado](/es/platform/events#custom-event-attributes).
 
     </Accordion>
 
@@ -638,7 +638,7 @@ Al configurar una plantilla para usar con correos electrónicos de logros, las s
 </Accordion>
 </AccordionGroup>
 
-#### Uso Avanzado
+#### Uso Avanzado {#advanced-usage}
 
 Hay un par de opciones adicionales a considerar al usar variables de correo.
 
@@ -651,7 +651,7 @@ Puede proporcionar un prefijo y sufijo para variables de texto como el nombre de
     height="200"
     width="75%"
     noZoom
-    src="../assets/platform/emails/advanced_variables_prefix_suffix.png"
+    src="../../assets/platform/emails/advanced_variables_prefix_suffix.png"
   />
 </Frame>
 
@@ -666,11 +666,11 @@ Al usar variables numéricas como el total de Puntos actual del destinatario o e
     height="200"
     width="75%"
     noZoom
-    src="../assets/platform/emails/advanced_usage_singular_plural.png"
+    src="../../assets/platform/emails/advanced_usage_singular_plural.png"
   />
 </Frame>
 
-### Variaciones de Texto
+### Variaciones de Texto {#text-variations}
 
 Las variaciones se pueden usar para agregar aleatoriedad al texto dentro de los correos enviados por Trophy. Esto evita que los correos se vuelvan aburridos y ayuda a mejorar las tasas de apertura y clics.
 
@@ -699,7 +699,7 @@ Para crear una variación, haga clic en el botón _Agregar Variación_ en cualqu
     loop
     playsInline
     className="w-full aspect-video"
-    src="../assets/platform/emails/creating_variations.mp4"
+    src="../../assets/platform/emails/creating_variations.mp4"
   ></video>
 </Frame>
 
@@ -707,11 +707,11 @@ Para crear una variación, haga clic en el botón _Agregar Variación_ en cualqu
   Las variaciones aún no admiten pruebas A/B, pero está en nuestra hoja de ruta, así que mantente atento...
 </Note>
 
-### Usar el Editor
+### Usar el Editor {#using-the-editor}
 
 El editor de plantillas de correo electrónico es un lienzo en blanco para diseñar correos que se vean geniales en la bandeja de entrada. Usar [Bloques](#block-types) preconfigurados facilita mucho la creación de plantillas de correo electrónico que se adapten a casos de uso comunes de gamificación. Aquí te mostraremos cómo usar mejor el editor para crear correos electrónicos de aspecto increíble.
 
-#### Agregar Bloques
+#### Agregar Bloques {#adding-blocks}
 
 Para agregar un nuevo bloque a una plantilla de correo electrónico, presiona la tecla <Icon icon="square-slash" />. Esto abrirá el cuadro de diálogo de selección de bloques donde puedes elegir el bloque que deseas agregar.
 
@@ -722,7 +722,7 @@ Para agregar un nuevo bloque a una plantilla de correo electrónico, presiona la
     loop
     playsInline
     className="w-full aspect-video"
-    src="../assets/platform/emails/add_new_block_slash.mp4"
+    src="../../assets/platform/emails/add_new_block_slash.mp4"
   ></video>
 </Frame>
 
@@ -735,11 +735,11 @@ O si deseas agregar un bloque inmediatamente después de otro bloque, usa el men
     loop
     playsInline
     className="w-full aspect-video"
-    src="../assets/platform/emails/add_new_block_by_block_menu.mp4"
+    src="../../assets/platform/emails/add_new_block_by_block_menu.mp4"
   ></video>
 </Frame>
 
-#### Organizar Bloques
+#### Organizar Bloques {#arranging-blocks}
 
 Los bloques se pueden arrastrar hacia arriba y hacia abajo usando el menú de bloques.
 
@@ -750,11 +750,11 @@ Los bloques se pueden arrastrar hacia arriba y hacia abajo usando el menú de bl
     loop
     playsInline
     className="w-full aspect-video"
-    src="../assets/platform/emails/arranging_blocks.mp4"
+    src="../../assets/platform/emails/arranging_blocks.mp4"
   ></video>
 </Frame>
 
-#### Formato de Texto
+#### Formato de Texto {#text-formatting}
 
 El editor de correo electrónico ofrece formato de texto enriquecido que incluye negrita, cursiva, [hipervínculos](https://www.youtube.com/watch?v=dQw4w9WgXcQ) y formato `code`.
 
@@ -765,11 +765,11 @@ El editor de correo electrónico ofrece formato de texto enriquecido que incluye
     loop
     playsInline
     className="w-full aspect-video"
-    src="../assets/platform/emails/rich_text_formatting.mp4"
+    src="../../assets/platform/emails/rich_text_formatting.mp4"
   ></video>
 </Frame>
 
-### Estilo de Fuente
+### Estilo de Fuente {#font-style}
 
 En la [página de configuración de correo electrónico](https://app.trophy.so/emails/configure), encontrarás una configuración para cambiar el estilo de fuente utilizado en todos los correos electrónicos.
 
@@ -778,13 +778,13 @@ En la [página de configuración de correo electrónico](https://app.trophy.so/e
     height="200"
     width="75%"
     noZoom
-    src="../assets/platform/emails/aggregation_period_setting.png"
+    src="../../assets/platform/emails/aggregation_period_setting.png"
   />
 </Frame>
 
 Otros estilos de correo electrónico se obtienen de la configuración de [Marca](https://app.trophy.so/branding) de tu cuenta de Trophy.
 
-## Gestión de Cancelaciones de Suscripción
+## Gestión de Cancelaciones de Suscripción {#handling-unsubscribes}
 
 Todos los correos electrónicos que envía Trophy incluyen un enlace y mensaje para cancelar la suscripción. Esto es importante para mantener el cumplimiento de las regulaciones y no es posible ocultarlo.
 
@@ -795,10 +795,10 @@ Todos los correos electrónicos que envía Trophy incluyen un enlace y mensaje p
 Cualquier destinatario que haga clic en este enlace será dirigido a una página de marca que le permite controlar qué notificaciones por correo electrónico recibe.
 
 <Tip>
-  Como alternativa al enlace de cancelación de suscripción, también puede crear un centro de preferencias en su aplicación utilizando la [API de preferencias de usuario de Trophy](/platform/users#notification-preferences). Esto brinda a los usuarios un control más granular sobre qué tipos de correos electrónicos reciben.
+  Como alternativa al enlace de cancelación de suscripción, también puede crear un centro de preferencias en su aplicación utilizando la [API de preferencias de usuario de Trophy](/es/platform/users#notification-preferences). Esto brinda a los usuarios un control más granular sobre qué tipos de correos electrónicos reciben.
 </Tip>
 
-## Analíticas de Correo Electrónico
+## Analíticas de Correo Electrónico {#email-analytics}
 
 Trophy tiene analíticas integradas para todos los correos electrónicos que envía. Esto incluye:
 
@@ -814,11 +814,11 @@ Trophy tiene analíticas integradas para todos los correos electrónicos que env
     loop
     playsInline
     className="w-full aspect-video"
-    src="../assets/platform/emails/email_analytics.mp4"
+    src="../../assets/platform/emails/email_analytics.mp4"
   ></video>
 </Frame>
 
-## Preguntas Frecuentes
+## Preguntas Frecuentes {#frequently-asked-questions}
 
 <AccordionGroup>
 <Accordion title="¿Puedo enviar correos electrónicos desde mi propio dominio?">
@@ -833,6 +833,6 @@ Trophy tiene analíticas integradas para todos los correos electrónicos que env
 
 </AccordionGroup>
 
-## Obtener soporte
+## Obtener soporte {#get-support}
 
 ¿Quieres ponerte en contacto con el equipo de Trophy? Comunícate con nosotros por [correo electrónico](mailto:support@trophy.so). ¡Estamos aquí para ayudarte!

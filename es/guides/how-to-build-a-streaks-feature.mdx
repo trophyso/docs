@@ -7,10 +7,10 @@ subtitle: Aprende a usar Trophy para añadir una función de rachas a tu
 noindex: true
 ---
 
-import SDKInstallCommand from "/snippets/sdk-install-command.mdx";
-import MetricChangeRequestBlock from "/snippets/metric-change-request-block.mdx";
-import StreakRequestBlock from "/snippets/streak-request-block.mdx";
-import StreakResponseBlock from "/snippets/streak-response-block.mdx";
+import SDKInstallCommand from "../../snippets/sdk-install-command.mdx";
+import MetricChangeRequestBlock from "../../snippets/metric-change-request-block.mdx";
+import StreakRequestBlock from "../../snippets/streak-request-block.mdx";
+import StreakResponseBlock from "../../snippets/streak-response-block.mdx";
 
 Esta guía describe el proceso completo para añadir una función de rachas a tu aplicación web o móvil usando Trophy.
 
@@ -22,14 +22,14 @@ Con fines ilustrativos, usaremos el ejemplo de una plataforma de estudio que uti
   github](https://github.com/trophyso/example-study-platform/tree/demo).
 </Tip>
 
-## Requisitos previos
+## Requisitos previos {#pre-requisites}
 
 - Una cuenta de [Trophy](https://app.trophy.so/sign-up)
 - Aproximadamente 10 minutos
 
-## Configuración de Trophy
+## Configuración de Trophy {#trophy-setup}
 
-En Trophy, las [Métricas](/platform/metrics) son los elementos fundamentales de la gamificación y modelan las diferentes interacciones que los usuarios realizan con tu producto.
+En Trophy, las [Métricas](/es/platform/metrics) son los elementos fundamentales de la gamificación y modelan las diferentes interacciones que los usuarios realizan con tu producto.
 
 En esta guía, la interacción que nos interesa es `flashcards-viewed`, pero puedes crear una métrica que mejor represente la interacción desde la cual quieres generar rachas.
 
@@ -42,7 +42,7 @@ En el panel de Trophy, dirígete a la [página de métricas](https://app.trophy.
     loop
     playsInline
     className="w-full aspect-video"
-    src="../assets/guides/achievements-feature/create_new_metric.mp4"
+    src="../../assets/guides/achievements-feature/create_new_metric.mp4"
   ></video>
 </Frame>
 
@@ -50,17 +50,17 @@ Una vez que hayas creado tu métrica, dirígete a la [página de rachas](https:/
 
 Luego añade tu métrica a las condiciones de racha y establece el umbral que los usuarios deben cumplir (por ejemplo, al menos 1 para extender su racha cada período).
 
-También puedes añadir múltiples métricas y elegir si los usuarios deben cumplir todas o solo una—consulta la [documentación de condiciones de racha](/platform/streaks#streak-conditions) para más detalles.
+También puedes añadir múltiples métricas y elegir si los usuarios deben cumplir todas o solo una—consulta la [documentación de condiciones de racha](/es/platform/streaks#streak-conditions) para más detalles.
 
-En Trophy, registras las interacciones de los usuarios enviando [Eventos](/platform/events) desde tu código a las API de Trophy contra una métrica específica.
+En Trophy, registras las interacciones de los usuarios enviando [Eventos](/es/platform/events) desde tu código a las API de Trophy contra una métrica específica.
 
 Cuando se registran eventos para un usuario específico, Trophy verificará automáticamente si ha cumplido con las condiciones de su racha para el período actual y actualizará la racha del usuario en consecuencia.
 
 Esto es lo que hace que construir experiencias gamificadas con Trophy sea tan fácil: realiza todo el trabajo por ti tras bambalinas.
 
-## Instalación del SDK de Trophy
+## Instalación del SDK de Trophy {#installing-trophy-sdk}
 
-Para interactuar con Trophy desde tu código, utilizarás el SDK de Trophy disponible en la mayoría de los principales [lenguajes de programación](/api-reference/client-libraries).
+Para interactuar con Trophy desde tu código, utilizarás el SDK de Trophy disponible en la mayoría de los principales [lenguajes de programación](/es/api-reference/client-libraries).
 
 Instala el SDK de Trophy:
 
@@ -76,9 +76,9 @@ TROPHY_API_KEY='*******'
   Asegúrate de **no** exponer tu clave de API en código del lado del cliente.
 </Warning>
 
-## Registro de Interacciones de Usuarios
+## Registro de Interacciones de Usuarios {#tracking-user-interactions}
 
-Para registrar un evento (interacción del usuario) contra tu métrica, utiliza la [API de cambio de métrica](/api-reference/endpoints/metrics/send-a-metric-change-event).
+Para registrar un evento (interacción del usuario) contra tu métrica, utiliza la [API de cambio de métrica](/es/api-reference/endpoints/metrics/send-a-metric-change-event).
 
 <MetricChangeRequestBlock />
 
@@ -114,13 +114,13 @@ La respuesta a esta llamada de API es el conjunto completo de cambios en cualqui
 
 Valida que esto funciona verificando el [panel de control](https://app.trophy.so) de Trophy.
 
-## Visualización de Rachas
+## Visualización de Rachas {#displaying-streaks}
 
 Tienes varias opciones para mostrar rachas en tu aplicación. Aquí examinaremos las opciones más comunes.
 
-### Notificaciones Emergentes
+### Notificaciones Emergentes {#pop-up-notifications}
 
-Podemos usar la respuesta de la [API de cambio de métrica](/api-reference/endpoints/metrics/send-a-metric-change-event) para mostrar notificaciones emergentes (o 'toasts') cuando el usuario extiende su racha.
+Podemos usar la respuesta de la [API de cambio de métrica](/es/api-reference/endpoints/metrics/send-a-metric-change-event) para mostrar notificaciones emergentes (o 'toasts') cuando el usuario extiende su racha.
 
 Aquí hay un ejemplo de esto en acción:
 
@@ -148,7 +148,7 @@ if (response.currentStreak?.extended) {
     loop
     playsInline
     className="w-full aspect-video"
-    src="../assets/guides/streaks-feature/streak-toasts.mp4"
+    src="../../assets/guides/streaks-feature/streak-toasts.mp4"
   ></video>
 </Frame>
 
@@ -156,9 +156,9 @@ if (response.currentStreak?.extended) {
   Si deseas reproducir efectos de sonido, usa la [API de Audio HTML5](https://developer.mozilla.org/en-US/docs/Web/API/Web_Audio_API) y siéntete libre de usar estos [archivos de audio](https://github.com/trophyso/example-study-platform/tree/demo/public/sounds) que recomendamos.
 </Tip>
 
-### Mostrar las Rachas de Usuario
+### Mostrar las Rachas de Usuario {#displaying-user-streaks}
 
-Para obtener datos sobre la racha de un usuario, usa la [API de racha de usuario](/api-reference/endpoints/users/get-a-users-streak).
+Para obtener datos sobre la racha de un usuario, usa la [API de racha de usuario](/es/api-reference/endpoints/users/get-a-users-streak).
 
 <StreakRequestBlock />
 
@@ -173,7 +173,7 @@ Aquí hay un ejemplo de un calendario de rachas estilo git construido usando los
     height="200"
     width="100%"
     noZoom
-    src="../assets/guides/streaks-feature/streak-calendar.png"
+    src="../../assets/guides/streaks-feature/streak-calendar.png"
   />
 </Frame>
 
@@ -181,7 +181,7 @@ Aquí hay un ejemplo de un calendario de rachas estilo git construido usando los
   Consulta este [repositorio de ejemplo](https://github.com/trophyso/example-study-platform/blob/demo/src/app/user-center/study-center/default-view.tsx) para un componente React que maneja esta interfaz usando datos de Trophy.
 </Tip>
 
-## Analíticas
+## Analíticas {#analytics}
 
 La [página de rachas](https://app.trophy.so/streaks) en Trophy muestra datos sobre rachas activas, la duración promedio de las rachas y las rachas más largas.
 
@@ -190,16 +190,16 @@ La [página de rachas](https://app.trophy.so/streaks) en Trophy muestra datos so
     height="200"
     width="100%"
     noZoom
-    src="../assets/guides/streaks-feature/analytics.png"
+    src="../../assets/guides/streaks-feature/analytics.png"
   />
 </Frame>
 
-## Congelaciones de Racha
+## Congelaciones de Racha {#streak-freezes}
 
 Trophy también admite congelaciones de racha que pueden ayudar a evitar que los usuarios pierdan su racha si accidentalmente pierden un período.
 
-Obtén más información sobre las congelaciones de racha en la [documentación dedicada de congelaciones de racha](/platform/streaks#streak-freezes).
+Obtén más información sobre las congelaciones de racha en la [documentación dedicada de congelaciones de racha](/es/platform/streaks#streak-freezes).
 
-## Obtener Soporte
+## Obtener Soporte {#get-support}
 
 ¿Quieres ponerte en contacto con el equipo de Trophy? Contáctanos por [correo electrónico](mailto:support@trophy.so). ¡Estamos aquí para ayudarte!

@@ -18,15 +18,15 @@ Si quieres ir directo al código, consulta el [repositorio de ejemplo](https://g
     loop
     playsInline
     className="w-full aspect-video"
-    src="../assets/guides/example-apps/example-fitness-app/demo.mp4"
+    src="../../assets/guides/example-apps/example-fitness-app/demo.mp4"
   ></video>
 </Frame>
 
-## Tabla de contenidos
+## Tabla de contenidos {#table-of-contents}
 
 - [Stack tecnológico](#tech-stack)
 - [Requisitos previos](#prerequisites)
-- [Configuración e instalación](#setup--installation)
+- [Configuración e instalación](#setup-installation)
 - [Diseño del modelo de datos](#designing-the-data-model)
 - [Cómo funciona Trophy](#how-trophy-works)
 - [Configuración de Trophy](#setting-up-trophy)
@@ -39,19 +39,19 @@ Si quieres ir directo al código, consulta el [repositorio de ejemplo](https://g
 - [Construcción de la página de perfil](#building-the-profile-page)
 - [El resultado](#the-result)
 
-## Stack tecnológico
+## Stack tecnológico {#tech-stack}
 
 - **Framework:** [Next.js 15](https://nextjs.org) (App Router)
 - **UI:** [Shadcn/UI](https://ui.shadcn.com) + TailwindCSS
 - **Iconos:** [Lucide React](https://lucide.dev)
 - **Gamificación:** [Trophy](https://trophy.so)
 
-## Requisitos previos
+## Requisitos previos {#prerequisites}
 
 - Una cuenta de Trophy (regístrate [aquí](https://app.trophy.so/sign-up)).
 - Node.js 18+ instalado.
 
-## Configuración e instalación
+## Configuración e instalación {#setup-installation}
 
 Primero, clona el repositorio inicial o crea una nueva aplicación Next.js:
 
@@ -71,11 +71,11 @@ Configura tus variables de entorno en `.env.local`:
 TROPHY_API_KEY=your_api_key_here
 ```
 
-## Diseño del modelo de datos
+## Diseño del modelo de datos {#designing-the-data-model}
 
 Para una aplicación de fitness multideportivo, necesitamos normalizar los esfuerzos. Un ciclo de 10 km no es lo mismo que una carrera de 10 km. Usaremos tres métricas distintas para rastrear datos sin procesar, y un sistema unificado de XP para la progresión.
 
-### 1. Las Métricas
+### 1. Las Métricas {#1-the-metrics}
 
 Rastrearemos la distancia como valor principal.
 
@@ -83,13 +83,13 @@ Rastrearemos la distancia como valor principal.
 - `distance_cycled` (km)
 - `distance_swum` (m) - con atributo `style` (estilo libre/braza).
 
-### 2. Los Atributos
+### 2. Los Atributos {#2-the-attributes}
 
 Para habilitar clasificaciones locales, etiquetaremos cada usuario con un atributo `city`.
 
-## Cómo Funciona Trophy
+## Cómo Funciona Trophy {#how-trophy-works}
 
-Antes de profundizar en el código, entendamos cómo Trophy impulsa nuestra capa de gamificación. En Trophy, las [Métricas](/platform/metrics) representan diferentes interacciones que los usuarios pueden realizar e impulsan funciones como [Logros](/platform/achievements), [Rachas](/platform/streaks) y [Correos electrónicos](/platform/emails).
+Antes de profundizar en el código, entendamos cómo Trophy impulsa nuestra capa de gamificación. En Trophy, las [Métricas](/es/platform/metrics) representan diferentes interacciones que los usuarios pueden realizar e impulsan funciones como [Logros](/es/platform/achievements), [Rachas](/es/platform/streaks) y [Correos electrónicos](/es/platform/emails).
 
 ```mermaid
 flowchart TD
@@ -112,7 +112,7 @@ Cuando se registran eventos para un usuario específico, cualquier logro vincula
 
 Esto es lo que hace tan poderosa la construcción de experiencias gamificadas con Trophy: hace todo el trabajo entre bastidores.
 
-## Configuración de Trophy
+## Configuración de Trophy {#setting-up-trophy}
 
 Así es como configuraremos Trophy para nuestra aplicación de fitness:
 
@@ -131,7 +131,7 @@ Así es como configuraremos Trophy para nuestra aplicación de fitness:
         height="200"
         width="100%"
         noZoom
-        src="../assets/guides/example-apps/example-fitness-app/metrics.png"
+        src="../../assets/guides/example-apps/example-fitness-app/metrics.png"
       />
     </Frame>
 
@@ -145,8 +145,8 @@ Así es como configuraremos Trophy para nuestra aplicación de fitness:
       <img
         height="200"
         width="100%"
-        noZoom"
-        src="../assets/guides/example-apps/example-fitness-app/event-attributes.png"
+        noZoom
+        src="../../assets/guides/example-apps/example-fitness-app/event-attributes.png"
       />
     </Frame>
 
@@ -158,7 +158,7 @@ Así es como configuraremos Trophy para nuestra aplicación de fitness:
         height="200"
         width="100%"
         noZoom
-        src="../assets/guides/example-apps/example-fitness-app/user-attributes.png"
+        src="../../assets/guides/example-apps/example-fitness-app/user-attributes.png"
       />
     </Frame>
 
@@ -190,7 +190,7 @@ Así es como configuraremos Trophy para nuestra aplicación de fitness:
       height="200"
       width="100%"
       noZoom
-      src="../assets/guides/example-apps/example-fitness-app/achievements.png"
+      src="../../assets/guides/example-apps/example-fitness-app/achievements.png"
     />
   </Frame>
 </Accordion>
@@ -206,7 +206,7 @@ Así es como configuraremos Trophy para nuestra aplicación de fitness:
       height="200"
       width="100%"
       noZoom
-      src="../assets/guides/example-apps/example-fitness-app/leaderboard-config.png"
+      src="../../assets/guides/example-apps/example-fitness-app/leaderboard-config.png"
     />
   </Frame>
   
@@ -227,7 +227,7 @@ Así es como configuraremos Trophy para nuestra aplicación de fitness:
       height="200"
       width="100%"
       noZoom
-      src="../assets/guides/example-apps/example-fitness-app/leaderboards.png"
+      src="../../assets/guides/example-apps/example-fitness-app/leaderboards.png"
     />
   </Frame>
 </Accordion>
@@ -247,11 +247,11 @@ Así es como configuraremos Trophy para nuestra aplicación de fitness:
       height="200"
       width="100%"
       noZoom
-      src="../assets/guides/example-apps/example-fitness-app/points-triggers.png"
+      src="../../assets/guides/example-apps/example-fitness-app/points-triggers.png"
     />
   </Frame>
 
-  Luego configura **[Niveles de Puntos](/platform/points#points-levels)** en el mismo sistema `xp` para que Trophy pueda rastrear el nivel de cada usuario. Utiliza las claves y umbrales a continuación para que el código de esta guía se alinee con tu panel de control:
+  Luego configura **[Niveles de Puntos](/es/platform/points#points-levels)** en el mismo sistema `xp` para que Trophy pueda rastrear el nivel de cada usuario. Utiliza las claves y umbrales a continuación para que el código de esta guía se alinee con tu panel de control:
 
   | Nombre  | Clave     | Umbral de puntos |
   | ------- | --------- | ---------------- |
@@ -279,7 +279,7 @@ Así es como configuraremos Trophy para nuestra aplicación de fitness:
   </Accordion>
 </AccordionGroup>
 
-## Acciones del Servidor
+## Acciones del Servidor {#server-actions}
 
 Crearemos un archivo `src/app/actions.ts` para gestionar todas las interacciones con la API de Trophy. Esto mantiene nuestras claves API seguras y nos permite aprovechar las Server Actions de Next.js.
 
@@ -460,9 +460,9 @@ export async function getUserIdFromCookies() {
 }
 ```
 
-## El Sistema de Niveles
+## El Sistema de Niveles {#the-leveling-system}
 
-Trophy almacena el nivel de cada usuario en el sistema de puntos `xp` cuando configuras [Niveles de Puntos](/platform/points#points-levels). El payload de [puntos del usuario](/api-reference/endpoints/users/get-a-users-points) incluye un objeto `level`. La [API de listar niveles](/api-reference/endpoints/points/get-points-levels) devuelve cada nivel y umbral para que puedas mostrar el progreso hacia el siguiente.
+Trophy almacena el nivel de cada usuario en el sistema de puntos `xp` cuando configuras [Niveles de Puntos](/es/platform/points#points-levels). El payload de [puntos del usuario](/es/api-reference/endpoints/users/get-a-users-points) incluye un objeto `level`. La [API de listar niveles](/es/api-reference/endpoints/points/get-points-levels) devuelve cada nivel y umbral para que puedas mostrar el progreso hacia el siguiente.
 
 Añade un pequeño helper junto a las constantes de tu aplicación en `src/lib/constants.ts`:
 
@@ -540,7 +540,7 @@ export function getLevelProgress(
 }
 ```
 
-## Construyendo el Panel de Control
+## Construyendo el Panel de Control {#building-the-dashboard}
 
 El panel de control agrega todas las estadísticas del usuario. Obtenemos los datos del lado del servidor y derivamos barras de progreso de los umbrales devueltos por la API.
 
@@ -674,7 +674,7 @@ export default async function Dashboard() {
 
 Nota el wrapper `LogActivityDialog` alrededor del botón—lo construiremos a continuación.
 
-## Registrando Entrenamientos
+## Registrando Entrenamientos {#logging-workouts}
 
 El botón Registrar Entrenamiento abre un diálogo donde los usuarios seleccionan su tipo de actividad, ingresan la distancia y envían. Esto activa la acción del servidor `logActivity` que envía el evento a Trophy.
 
@@ -832,7 +832,7 @@ export function LogActivityDialog({ children }: { children: React.ReactNode }) {
 }
 ```
 
-### Contexto del Usuario
+### Contexto del Usuario {#user-context}
 
 El diálogo necesita acceso al ID del usuario actual. Crea un proveedor de contexto:
 
@@ -905,7 +905,7 @@ export default function RootLayout({ children }) {
 }
 ```
 
-### Utilidades de Ayuda
+### Utilidades de Ayuda {#helper-utilities}
 
 El contexto del usuario depende de funciones auxiliares para gestionar la identidad del usuario en localStorage:
 
@@ -968,7 +968,7 @@ export function setStoredCity(city: string): void {
 }
 ```
 
-## Implementación de Clasificaciones
+## Implementación de Clasificaciones {#implementing-leaderboards}
 
 Construiremos una interfaz con pestañas que permite a los usuarios cambiar entre actividades (Correr/Ciclismo/Natación) y ámbitos (Global vs. Ciudad Local).
 
@@ -1051,7 +1051,7 @@ export default function LeaderboardsPage() {
 }
 ```
 
-## Construcción de la Página de Logros
+## Construcción de la Página de Logros {#building-the-achievements-page}
 
 Un espacio dedicado para mostrar insignias es esencial para la retención a largo plazo. Usaremos los datos de `stats.achievements` para renderizar una cuadrícula de insignias, distinguiendo visualmente entre estados conseguidos (a color) y bloqueados (escala de grises).
 
@@ -1120,7 +1120,7 @@ export default async function AchievementsPage() {
 }
 ```
 
-## Construcción de la Página de Perfil
+## Construcción de la Página de Perfil {#building-the-profile-page}
 
 Finalmente, la página de perfil lo integra todo. Muestra las "Estadísticas de por Vida" del usuario, su progresión actual de XP y les permite actualizar su configuración (como su ciudad).
 
@@ -1199,7 +1199,7 @@ export default async function ProfilePage() {
 }
 ```
 
-## El Resultado
+## El Resultado {#the-result}
 
 ¡Ahora tienes un circuito de gamificación de fitness completamente funcional! Los usuarios pueden registrar entrenamientos en múltiples deportes, progresar a través de niveles de Puntos, conseguir Logros y competir en Clasificaciones.
 
@@ -1210,11 +1210,11 @@ export default async function ProfilePage() {
     loop
     playsInline
     className="w-full aspect-video"
-    src="../assets/guides/example-apps/example-fitness-app/demo.mp4"
+    src="../../assets/guides/example-apps/example-fitness-app/demo.mp4"
   ></video>
 </Frame>
 
-### Lo que has construido
+### Lo que has construido {#what-youve-built}
 
 - **Seguimiento multideporte** con XP normalizado para correr, ciclismo y natación
 - **Clasificaciones semanales** con competencia global y por ciudad
@@ -1222,7 +1222,7 @@ export default async function ProfilePage() {
 - **Sistema de logros** con insignias de hitos
 - **Rachas diarias** para impulsar la retención
 
-### Próximos pasos
+### Próximos pasos {#next-steps}
 
 - **Conecta dispositivos de fitness** — Integra con Strava, Apple Health o Google Fit para registrar entrenamientos automáticamente
 - **Agrega funciones sociales** — Permite que los usuarios sigan a amigos, comparen estadísticas y compartan logros

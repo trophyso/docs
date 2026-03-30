@@ -7,13 +7,13 @@ subtitle: Aprende a usar Trophy para agregar una funcionalidad de XP a tu
 noindex: true
 ---
 
-import SDKInstallCommand from "/snippets/sdk-install-command.mdx";
-import MetricChangeRequestBlock from "/snippets/metric-change-request-block.mdx";
-import MetricChangeResponseBlock from "/snippets/metric-change-response-block.mdx";
-import UserPointsRequest from "/snippets/user-points-request-block.mdx";
-import UserPointsResponse from "/snippets/user-points-response-block.mdx";
-import UserPointsEventSummaryRequest from "/snippets/user-points-summary-request-block.mdx";
-import UserPointsEventSummaryResponse from "/snippets/user-points-summary-response-block.mdx";
+import SDKInstallCommand from "../../snippets/sdk-install-command.mdx";
+import MetricChangeRequestBlock from "../../snippets/metric-change-request-block.mdx";
+import MetricChangeResponseBlock from "../../snippets/metric-change-response-block.mdx";
+import UserPointsRequest from "../../snippets/user-points-request-block.mdx";
+import UserPointsResponse from "../../snippets/user-points-response-block.mdx";
+import UserPointsEventSummaryRequest from "../../snippets/user-points-summary-request-block.mdx";
+import UserPointsEventSummaryResponse from "../../snippets/user-points-summary-response-block.mdx";
 
 Esta guía describe el proceso completo para agregar una funcionalidad de XP a tu aplicación web o móvil usando Trophy.
 
@@ -23,14 +23,14 @@ Con fines ilustrativos, usaremos el ejemplo de una plataforma de estudio que uti
   Para ver un ejemplo completamente funcional de esto en la práctica, consulta la [demostración en vivo](https://examples.trophy.so) o el [repositorio de github](https://github.com/trophyso/example-study-platform/tree/demo).
 </Tip>
 
-## Requisitos previos
+## Requisitos previos {#pre-requisites}
 
 - Una cuenta de [Trophy](https://app.trophy.so/sign-up)
 - Aproximadamente 10 minutos
 
-## Configuración de Trophy
+## Configuración de Trophy {#trophy-setup}
 
-En Trophy, las [Métricas](/platform/metrics) son los bloques de construcción de la gamificación y modelan las diferentes interacciones que los usuarios realizan con tu producto.
+En Trophy, las [Métricas](/es/platform/metrics) son los bloques de construcción de la gamificación y modelan las diferentes interacciones que los usuarios realizan con tu producto.
 
 En esta guía, la interacción que nos interesa es `flashcards-viewed`, pero puedes crear cualquier cantidad de métricas que mejor representen las interacciones desde las cuales deseas recompensar XP.
 
@@ -43,7 +43,7 @@ En el panel de Trophy, dirígete a la [página de métricas](https://app.trophy.
     loop
     playsInline
     className="w-full aspect-video"
-    src="../assets/guides/achievements-feature/create_new_metric.mp4"
+    src="../../assets/guides/achievements-feature/create_new_metric.mp4"
   ></video>
 </Frame>
 
@@ -56,7 +56,7 @@ Una vez que hayas creado tu métrica, dirígete a la [página de puntos](https:/
     loop
     playsInline
     className="w-full aspect-video"
-    src="../assets/guides/xp-feature/create_system.mp4"
+    src="../../assets/guides/xp-feature/create_system.mp4"
   ></video>
 </Frame>
 
@@ -69,11 +69,11 @@ Una vez creado, serás dirigido a la página de configuración del sistema XP do
     loop
     playsInline
     className="w-full aspect-video"
-    src="../assets/guides/xp-feature/create_trigger.mp4"
+    src="../../assets/guides/xp-feature/create_trigger.mp4"
   ></video>
 </Frame>
 
-En Trophy rastreás las interacciones del usuario enviando [Eventos](/platform/events) desde tu código a las APIs de Trophy contra una métrica específica.
+En Trophy rastreás las interacciones del usuario enviando [Eventos](/es/platform/events) desde tu código a las APIs de Trophy contra una métrica específica.
 
 Cuando se registran eventos para un usuario específico, Trophy verificará automáticamente si el evento está asociado a una métrica configurada como parte de algún disparador de XP.
 
@@ -83,13 +83,13 @@ Esto es lo que hace que construir experiencias gamificadas con Trophy sea tan f�
 
 <Tip>
   Los XP también pueden otorgarse a los usuarios en base a logros, rachas y otros
-  disparadores. Consultá la [documentación de puntos](/platform/points#points-triggers)
+  disparadores. Consultá la [documentación de puntos](/es/platform/points#points-triggers)
   para más información.
 </Tip>
 
-## Instalación del SDK de Trophy
+## Instalación del SDK de Trophy {#installing-trophy-sdk}
 
-Para interactuar con Trophy desde tu código usarás el SDK de Trophy disponible en la mayoría de los principales [lenguajes de programación](/api-reference/client-libraries).
+Para interactuar con Trophy desde tu código usarás el SDK de Trophy disponible en la mayoría de los principales [lenguajes de programación](/es/api-reference/client-libraries).
 
 Instalá el SDK de Trophy:
 
@@ -105,16 +105,16 @@ TROPHY_API_KEY='*******'
   Asegurate de **no** exponer tu clave de API en código del lado del cliente.
 </Warning>
 
-## Rastreo de Interacciones del Usuario
+## Rastreo de Interacciones del Usuario {#tracking-user-interactions}
 
-Para rastrear un evento (interacción del usuario) contra tu métrica, usá la [API de cambio de métrica](/api-reference/endpoints/metrics/send-a-metric-change-event).
+Para rastrear un evento (interacción del usuario) contra tu métrica, usá la [API de cambio de métrica](/es/api-reference/endpoints/metrics/send-a-metric-change-event).
 
 <MetricChangeRequestBlock />
 
 La respuesta a esta llamada de API es el conjunto completo de cambios a cualquier funcionalidad que hayas construido con Trophy, incluyendo cualquier XP que se le haya otorgado al usuario como resultado del evento, y de qué disparadores fue otorgado.
 
 <Note>
-  Si usás [Niveles de Puntos](/platform/points#points-levels), el objeto `xp` puede incluir un campo **`level`** **solo cuando** el nivel del usuario cambió en esta solicitud; puede omitirse cuando su nivel se mantuvo igual. Consultá la [referencia de API de cambio de métrica](/api-reference/endpoints/metrics/send-a-metric-change-event) para el esquema de respuesta completo.
+  Si usás [Niveles de Puntos](/es/platform/points#points-levels), el objeto `xp` puede incluir un campo **`level`** **solo cuando** el nivel del usuario cambió en esta solicitud; puede omitirse cuando su nivel se mantuvo igual. Consultá la [referencia de API de cambio de métrica](/es/api-reference/endpoints/metrics/send-a-metric-change-event) para el esquema de respuesta completo.
 </Note>
 
 {/* vale off */}
@@ -160,13 +160,13 @@ La respuesta a esta llamada de API es el conjunto completo de cambios a cualquie
 
 Valida que esto funciona verificando el panel de Trophy [dashboard](https://app.trophy.so).
 
-## Mostrando XP
+## Mostrando XP {#displaying-xp}
 
 Tienes varias opciones para mostrar XP en tu aplicación. Aquí veremos las opciones más comunes.
 
-### Notificaciones Emergentes
+### Notificaciones Emergentes {#pop-up-notifications}
 
-Podemos usar la respuesta de la [API de cambio de métrica](/api-reference/endpoints/metrics/send-a-metric-change-event) para mostrar a los usuarios notificaciones emergentes cuando se les otorga nuevo XP.
+Podemos usar la respuesta de la [API de cambio de métrica](/es/api-reference/endpoints/metrics/send-a-metric-change-event) para mostrar a los usuarios notificaciones emergentes cuando se les otorga nuevo XP.
 
 Aquí hay un ejemplo de esto en acción:
 
@@ -199,13 +199,13 @@ if (xp.awards.length > 0) {
   Si quieres reproducir efectos de sonido, usa la [API de Audio HTML5](https://developer.mozilla.org/en-US/docs/Web/API/Web_Audio_API) y siéntete libre de usar estos [archivos de audio](https://github.com/trophyso/example-study-platform/tree/demo/public/sounds) que recomendamos.
 </Tip>
 
-### Mostrando el XP del Usuario
+### Mostrando el XP del Usuario {#displaying-user-xp}
 
-Para obtener el XP de un usuario, usa la [API de puntos de usuario](/api-reference/endpoints/users/get-a-users-points).
+Para obtener el XP de un usuario, usa la [API de puntos de usuario](/es/api-reference/endpoints/users/get-a-users-points).
 
 <UserPointsRequest />
 
-Esta API devuelve datos sobre el XP total del usuario, pero puede configurarse para devolver también entre 1 y 100 de los premios de XP más recientes del usuario usando el `awards` [parámetro de consulta](/api-reference/endpoints/users/get-a-users-points#parameter-awards).
+Esta API devuelve datos sobre el XP total del usuario, pero puede configurarse para devolver también entre 1 y 100 de los premios de XP más recientes del usuario usando el `awards` [parámetro de consulta](/es/api-reference/endpoints/users/get-a-users-points#parameter-awards).
 
 <UserPointsResponse />
 
@@ -216,13 +216,13 @@ Aquí hay un ejemplo de una interfaz que muestra a los usuarios una lista de sus
     height="200"
     width="100%"
     noZoom
-    src="../assets/guides/xp-feature/awards.png"
+    src="../../assets/guides/xp-feature/awards.png"
   />
 </Frame>
 
-### Gráfico de XP del Usuario
+### Gráfico de XP del Usuario {#user-xp-chart}
 
-La [API de resumen de puntos de usuario](/api-reference/endpoints/users/get-a-users-points-summary) devuelve datos históricos listos para gráficos que muestran cómo ha cambiado el XP de un usuario a lo largo del tiempo.
+La [API de resumen de puntos de usuario](/es/api-reference/endpoints/users/get-a-users-points-summary) devuelve datos históricos listos para gráficos que muestran cómo ha cambiado el XP de un usuario a lo largo del tiempo.
 
 <UserPointsEventSummaryRequest />
 
@@ -237,11 +237,11 @@ Y aquí hay un ejemplo de los tipos de gráficos que puedes construir con estos 
     height="200"
     width="100%"
     noZoom
-    src="../assets/guides/xp-feature/chart.png"
+    src="../../assets/guides/xp-feature/chart.png"
   />
 </Frame>
 
-## Analíticas
+## Analíticas {#analytics}
 
 En Trophy, tu [página del sistema de XP](https://app.trophy.so/points) incluye gráficos analíticos que muestran datos sobre el total de XP ganado y un desglose detallado de qué desencadenantes otorgan más XP.
 
@@ -250,10 +250,10 @@ En Trophy, tu [página del sistema de XP](https://app.trophy.so/points) incluye 
     height="200"
     width="100%"
     noZoom
-    src="../assets/guides/xp-feature/analytics.png"
+    src="../../assets/guides/xp-feature/analytics.png"
   />
 </Frame>
 
-## Obtener Soporte
+## Obtener Soporte {#get-support}
 
 ¿Quieres ponerte en contacto con el equipo de Trophy? Contáctanos por [correo electrónico](mailto:support@trophy.so). ¡Estamos aquí para ayudarte!

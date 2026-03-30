@@ -5,19 +5,19 @@ description: Events are data objects that represent individual user interactions
 icon: radio
 ---
 
-import MetricChangeRequestBlock from "/snippets/metric-change-request-block.mdx";
-import MetricChangeResponseBlock from "/snippets/metric-change-response-block.mdx";
-import IdempotentEventTracking from "/snippets/idempotent-event-tracking.mdx";
+import MetricChangeRequestBlock from "../../snippets/metric-change-request-block.mdx";
+import MetricChangeResponseBlock from "../../snippets/metric-change-response-block.mdx";
+import IdempotentEventTracking from "../../snippets/idempotent-event-tracking.mdx";
 
-## What are Events?
+## What are Events? {#what-are-events}
 
-Events represent individual user interactions against [Metrics](/platform/metrics) in Trophy. One event corresponds to a single interaction made by a single user.
+Events represent individual user interactions against [Metrics](/en/platform/metrics) in Trophy. One event corresponds to a single interaction made by a single user.
 
 When you [integrate metrics](#tracking-metric-events) into your platform, you're setting up your platform to continuously stream events to your Trophy metrics for each user interaction. These interactions then drive all the gamification features you set up around these metrics.
 
-## Key Attributes
+## Key Attributes {#key-attributes}
 
-### Event Value
+### Event Value {#event-value}
 
 The `value` of an event is the numerical amount that will be added to the user's total metric count as a result of the user interaction it relates to.
 
@@ -25,17 +25,17 @@ The `value` of an event is the numerical amount that will be added to the user's
 The value of an event can be positive or negative, and can be a whole number or a decimal.
 </Tip>
 
-## Custom Event Attributes
+## Custom Event Attributes {#custom-event-attributes}
 
 <Note>
-  This feature is available on the [Pro](/account/billing#pro-plan) plan
+  This feature is available on the [Pro](/en/account/billing#pro-plan) plan
 </Note>
 
 <Frame>
   <img
     height="200"
     noZoom
-    src="../assets/platform/events/custom_event_attributes.png"
+    src="../../assets/platform/events/custom_event_attributes.png"
   />
 </Frame>
 
@@ -47,7 +47,7 @@ Similarly a fitness app might use an 'Exercises Completed' metric and use a cust
 
 Using custom event attributes in this way allows you to enrich events in Trophy with additional context relevant to your use case and use it to power even more engaging gamification features.
 
-### Creating Attributes
+### Creating Attributes {#creating-attributes}
 
 To create a new custom event attribute, head to the metrics page in the Trophy dashboard and hit the _Add Event Attribute_ button.
 
@@ -60,11 +60,11 @@ Give the attribute a name and a unique key, you'll use the key when referencing 
     loop
     playsInline
     className="w-full aspect-15/4"
-    src="../assets/platform/events/create_custom_event_attribute.mp4"
+    src="../../assets/platform/events/create_custom_event_attribute.mp4"
   ></video>
 </Frame>
 
-### Setting Attributes
+### Setting Attributes {#setting-attributes}
 
 To set the value of a custom attribute on an event, pass its value in the `attributes` object in your metric tracking code.
 
@@ -99,11 +99,11 @@ Here's an example of an event payload where the values of two attributes, `devic
 }
 ```
 
-### Using Attributes
+### Using Attributes {#using-attributes}
 
 Custom event attributes can be used to power more advanced triggers for achievements and points and can be used in email templates to customize copy and to control the data shown in charts.
 
-#### Advanced Feature Triggers
+#### Advanced Feature Triggers {#advanced-feature-triggers}
 
 Custom event attributes can be used to set up achievements or points triggers that only track events with specific attribute values. Follow the links to the relevant pages below to learn more.
 
@@ -111,7 +111,7 @@ Custom event attributes can be used to set up achievements or points triggers th
   <Card
     title="Achievement Triggers"
     icon="trophy"
-    href="/platform/achievements#creating-achievements"
+    href="/en/platform/achievements#creating-achievements"
   >
     Configure achievements that can only be unlocked by events with certain
     attribute values.
@@ -119,16 +119,16 @@ Custom event attributes can be used to set up achievements or points triggers th
   <Card
     title="Points Triggers"
     icon="sparkle"
-    href="/platform/points#points-triggers"
+    href="/en/platform/points#points-triggers"
   >
     Set up points triggers to only award points from events with specific
     attribute values.
   </Card>
 </CardGroup>
 
-#### Email Customization
+#### Email Customization {#email-customization}
 
-If you use any Trophy [Emails](/platform/emails), event attributes can be used to customize the data shown in certain email blocks.
+If you use any Trophy [Emails](/en/platform/emails), event attributes can be used to customize the data shown in certain email blocks.
 
 Firstly, when using metric-based variables in email copy you can use event attributes to further control what data the variable refrences.
 
@@ -141,7 +141,7 @@ For example here's a case where we use an email variable to tell users what thei
     loop
     playsInline
     className="w-full aspect-15/4"
-    src="../assets/platform/events/using_attributes_in_emails.mp4"
+    src="../../assets/platform/events/using_attributes_in_emails.mp4"
   ></video>
 </Frame>
 
@@ -154,23 +154,23 @@ Secondly, here's an example where we add a chart to an email that shows users ho
     loop
     playsInline
     className="w-full aspect-15/4"
-    src="../assets/platform/events/using_attributes_in_email_charts.mp4"
+    src="../../assets/platform/events/using_attributes_in_email_charts.mp4"
   ></video>
 </Frame>
 
 There's a huge number of possibilities here, so get creative!
 
-## Tracking Metric Events
+## Tracking Metric Events {#tracking-metric-events}
 
 Each metric has a unique `key` which you can use to reference and track events against it in your code. You can find the `key` in the metric settings page.
 
-To start tracking user interactions as events against your Trophy metrics, use the [Metrics API](/api-reference/endpoints/metrics/send-a-metric-change-event) or one of our type-safe [Client SDKs](/api-reference/client-libraries) supported in most major programming languages.
+To start tracking user interactions as events against your Trophy metrics, use the [Metrics API](/en/api-reference/endpoints/metrics/send-a-metric-change-event) or one of our type-safe [Client SDKs](/en/api-reference/client-libraries) supported in most major programming languages.
 
 Here's an example where a fictional study platform is using a metric to track the number of flashcards flipped by each student. Each time an student interacts, the platform sends an event to Trophy telling it how many flashcards they viewed:
 
 <MetricChangeRequestBlock />
 
-Any [Achievements](/platform/achievements), [Streaks](/platform/streaks), [Points](/platform/points) or [Leaderboards](/platform/leaderboards) that have been set up against this metric will be automatically processed, and the response will contain any updates to the user's progress that are a direct result of the event occurring:
+Any [Achievements](/en/platform/achievements), [Streaks](/en/platform/streaks), [Points](/en/platform/points) or [Leaderboards](/en/platform/leaderboards) that have been set up against this metric will be automatically processed, and the response will contain any updates to the user's progress that are a direct result of the event occurring:
 
 <MetricChangeResponseBlock />
 
@@ -187,7 +187,7 @@ With a little bit of custom code, this response data can be used to drive any in
 - Sound effects
 - Animations
 
-Watch Charlie integrate metric tracking into a simple NextJS application using the Trophy [NodeJS SDK](/api-reference/client-libraries):
+Watch Charlie integrate metric tracking into a simple NextJS application using the Trophy [NodeJS SDK](/en/api-reference/client-libraries):
 
 <Frame>
   <iframe
@@ -202,7 +202,7 @@ Watch Charlie integrate metric tracking into a simple NextJS application using t
   ></iframe>
 </Frame>
 
-### Idempotent Events
+### Idempotent Events {#idempotent-events}
 
 Trophy supports enforcing uniqueness on events so that users cannot increase a metric by taking the same exact action over and over.
 
@@ -212,10 +212,10 @@ For example, a language learning app could specify that users can only increase 
 
 This helps keep your codebase free of logic that checks if users have completed actions before, and can instead trust Trophy to uphold the constraints you need.
 
-To use idempotent events, use the `Idempotency-Key` header in the [metric event API](/api-reference/endpoints/metrics/send-a-metric-change-event).
+To use idempotent events, use the `Idempotency-Key` header in the [metric event API](/en/api-reference/endpoints/metrics/send-a-metric-change-event).
 
-[Learn more about idempotency](/api-reference/idempotency).
+[Learn more about idempotency](/en/api-reference/idempotency).
 
-## Get Support
+## Get Support {#get-support}
 
 Want to get in touch with the Trophy team? Reach out to us via [email](mailto:support@trophy.so). We're here to help!

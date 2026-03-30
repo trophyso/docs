@@ -5,11 +5,11 @@ subtitle: Comienza a recibir eventos de webhook de Trophy en menos de 10 minutos
 icon: circle-play
 ---
 
-## Primeros pasos
+## Primeros pasos {#getting-started}
 
 <Note>
   Si aún no tienes una cuenta de Trophy, sigue primero la [guía de inicio rápido
-  de Trophy](/getting-started/quickstart) para comenzar.
+  de Trophy](/es/getting-started/quickstart) para comenzar.
 </Note>
 
 En Trophy puedes tener múltiples webhooks para manejar uno o más tipos de eventos. Sigue los pasos a continuación para comenzar a recibir eventos de webhook de Trophy.
@@ -41,7 +41,7 @@ Luego, configura este endpoint para hacer de proxy con los eventos que recibe ha
     height="200"
     width="100%"
     noZoom
-    src="../assets/webhooks/quickstart/hookdeck.png"
+    src="../../assets/webhooks/quickstart/hookdeck.png"
   />
 </Frame>
 
@@ -64,7 +64,7 @@ Luego, configura este endpoint para hacer de proxy con los eventos que recibe ha
     height="200"
     width="100%"
     noZoom
-    src="../assets/webhooks/quickstart/dashboard.png"
+    src="../../assets/webhooks/quickstart/dashboard.png"
   />
 </Frame>
 
@@ -99,7 +99,7 @@ Trophy enviará solicitudes a tu manejador, indicándole qué `type` de evento e
     ```
 
     <Warning>
-    Asegúrate de que tu manejador de webhook esté configurado para devolver un código de estado `200`. Si Trophy detecta que tu manejador devuelve un código de estado que no es `2XX`, lo tratará como un fallo e [intentará la solicitud nuevamente](/webhooks/retries).
+    Asegúrate de que tu manejador de webhook esté configurado para devolver un código de estado `200`. Si Trophy detecta que tu manejador devuelve un código de estado que no es `2XX`, lo tratará como un fallo e [intentará la solicitud nuevamente](/es/webhooks/retries).
     </Warning>
 
   </Step>
@@ -129,7 +129,7 @@ Obtén tu secreto de webhook seguro desde la página de webhooks en Trophy.
     loop
     playsInline
     className="w-full aspect-15/4"
-    src="../assets/webhooks/copy_secret.mp4"
+    src="../../assets/webhooks/copy_secret.mp4"
   ></video>
 </Frame>
 
@@ -176,7 +176,7 @@ Una vez que tengas tu secreto de webhook, estás listo para comenzar a validar e
   </Step>
 </Steps>
 
-## Ejemplo Completo de Webhook
+## Ejemplo Completo de Webhook {#full-webhook-example}
 
 Aquí tienes un ejemplo completo y funcional de un endpoint de webhook en NextJS capaz de recibir de forma segura eventos de webhook desde Trophy.
 
@@ -232,6 +232,6 @@ function handleEvent(payload: WebhookPayload) {
 }
 ```
 
-## Obtener Soporte
+## Obtener Soporte {#get-support}
 
 ¿Quieres ponerte en contacto con el equipo de Trophy? Comunícate con nosotros por [correo electrónico](mailto:support@trophy.so). ¡Estamos aquí para ayudarte!

@@ -9,17 +9,17 @@ og:description: Integre de forma segura con la API de Trophy utilizando claves
 icon: key
 ---
 
-## Claves API
+## Claves API {#api-keys}
 
 Cada cuenta puede crear un máximo de 3 claves API desde la [Página de Integración](https://app.trophy.so/integration). Si ya se ha registrado, habrá creado una durante la incorporación inicial.
 
 Trophy registra y muestra cuándo se creó cada clave API en su cuenta y cuándo se usó por última vez para que pueda hacer un seguimiento fácil del uso.
 
 <Frame>
-  <img height="200" noZoom src="../assets/api/authentication/api_keys.png" />
+  <img height="200" noZoom src="../../assets/api/authentication/api_keys.png" />
 </Frame>
 
-### Estructura de una clave API
+### Estructura de una clave API {#anatomy-of-an-api-key}
 
 Cada clave API se compone de 2 partes separadas por un punto:
 
@@ -34,7 +34,7 @@ Cada clave API se compone de 2 partes separadas por un punto:
   Al usar la API, ambas partes de su clave API deben enviarse en el encabezado `X-API-KEY`.
 </Note>
 
-### Autenticación de solicitudes
+### Autenticación de solicitudes {#authenticating-requests}
 
 Al realizar solicitudes a la API, asegúrese de incluir **ambas** partes de su clave API en el encabezado `X-API-KEY` como en este ejemplo:
 
@@ -45,7 +45,7 @@ curl https://app.trophy.so/api/users/<userId>/metrics/<key> \
 
 Si no pasa una clave API o su clave API no es válida, recibirá un código de respuesta `401`.
 
-## Gestión de claves API
+## Gestión de claves API {#managing-api-keys}
 
 Hay varias operaciones diferentes que puede realizar en las claves API desde su panel de Trophy para gestionar su integración.
 
@@ -53,11 +53,11 @@ Hay varias operaciones diferentes que puede realizar en las claves API desde su 
   <img
     height="200"
     noZoom
-    src="../assets/api/authentication/api_key_options.png"
+    src="../../assets/api/authentication/api_key_options.png"
   />
 </Frame>
 
-### Rotación de claves
+### Rotación de claves {#rotating-keys}
 
 Las claves de API se pueden rotar si deseas cambiarlas por cualquier motivo. En el momento de la rotación, la clave de API original dejará de funcionar y cualquier solicitud que todavía la utilice comenzará a recibir respuestas `401` inmediatamente.
 
@@ -65,7 +65,7 @@ Las claves de API se pueden rotar si deseas cambiarlas por cualquier motivo. En 
   Ten en cuenta que al rotar las claves, tanto el prefijo como el cuerpo cambiarán.
 </Note>
 
-### Revocación de claves
+### Revocación de claves {#revoking-keys}
 
 Las claves de API también se pueden revocar por completo, momento en el que pasan a estar _Inactivas_. En el momento de la revocación, la clave de API dejará de funcionar y cualquier solicitud que todavía la utilice comenzará a recibir respuestas `401` inmediatamente.
 
@@ -75,12 +75,12 @@ Una vez revocada, puedes reactivar la clave de API en cualquier momento.
   Ni el prefijo ni el cuerpo de la clave cambian cuando se revoca o se reactiva.
 </Note>
 
-### Eliminación de claves de API
+### Eliminación de claves de API {#deleting-api-keys}
 
 Si estás 100% seguro de que ya no necesitas una clave de API, se pueden eliminar.
 
 <Error>Una vez que las claves de API se eliminan, no se pueden recuperar.</Error>
 
-## Obtener soporte
+## Obtener soporte {#get-support}
 
 ¿Quieres ponerte en contacto con el equipo de Trophy? Comunícate con nosotros por [correo electrónico](mailto:support@trophy.so). ¡Estamos aquí para ayudarte!

@@ -80,8 +80,10 @@ try {
     const forceFlag = forceRetranslate ? " --force" : "";
     execSync(`npx lingo.dev@latest run --target-locale ${target}${forceFlag}`, { stdio: "inherit" });
     execSync(`node scripts/translate-docs-json.mjs --target ${target}`, { stdio: "inherit" });
+    execSync(`node scripts/localize-internal-links.mjs --target ${target}`, { stdio: "inherit" });
     console.log(`Translation generation completed for target locale: ${target}`);
   }
+  execSync("node scripts/sync-heading-anchors.mjs", { stdio: "inherit" });
 } finally {
   if (fs.existsSync(backupPath)) {
     fs.copyFileSync(backupPath, configPath);

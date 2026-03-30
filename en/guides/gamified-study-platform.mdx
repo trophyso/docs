@@ -5,8 +5,8 @@ subtitle: Follow along as we build out a gamified study platform using Trophy.
 noindex: true
 ---
 
-import MetricChangeRequestBlock from "/snippets/metric-change-request-block.mdx";
-import MetricChangeResponseBlock from "/snippets/metric-change-response-block.mdx";
+import MetricChangeRequestBlock from "../../snippets/metric-change-request-block.mdx";
+import MetricChangeResponseBlock from "../../snippets/metric-change-response-block.mdx";
 
 In this tutorial we'll build an example study platform using Trophy for gamification. If you want to just skip to the end then feel free to check out the [example repository](https://github.com/trophyso/example-study-platform) or the [live demo](https://study.examples.trophy.so).
 
@@ -17,11 +17,11 @@ In this tutorial we'll build an example study platform using Trophy for gamifica
     loop
     playsInline
     className="w-full aspect-15/4"
-    src="../assets/guides/example-apps/example-study-app/intro-demo.mp4"
+    src="../../assets/guides/example-apps/example-study-app/intro-demo.mp4"
   ></video>
 </Frame>
 
-## Table of Contents
+## Table of Contents {#table-of-contents}
 
 - [Tech Stack](#tech-stack)
 - [Pre-requisites](#pre-requisites)
@@ -33,7 +33,7 @@ In this tutorial we'll build an example study platform using Trophy for gamifica
 - [Adding an Energy System](#adding-an-energy-system)
 - [The Result](#the-result)
 
-## Tech Stack
+## Tech Stack {#tech-stack}
 
 - [NextJS 15](https://nextjs.org/docs) (React 19)
 - [Shadcn/Ui](https://ui.shadcn.com)
@@ -42,11 +42,11 @@ In this tutorial we'll build an example study platform using Trophy for gamifica
 - [HTML5 Audio API](https://developer.mozilla.org/en-US/docs/Web/API/Web_Audio_API) for sound effects
 - [Trophy](https://trophy.so) for gamification
 
-## Pre-requisites
+## Pre-requisites {#pre-requisites}
 
 - A Trophy account (don't worry we'll set this up as we go along...)
 
-## Setup & Installation
+## Setup & Installation {#setup-installation}
 
 <Tip>
   Want to skip the setup? Head straight to [the fun
@@ -91,9 +91,9 @@ Some packages may fail to install due to peer dependency issues in npm (see http
 
 For the purposes of this tutorial I chose `--force` but you should choose whichever setting you feel suits your requirements.
 
-## Building the Flashcards Feature
+## Building the Flashcards Feature {#building-the-flashcards-feature}
 
-### Setting Up Flashcard Data
+### Setting Up Flashcard Data {#setting-up-flashcard-data}
 
 For the purposes of this tutorial, we're going to be using some simple types with an in-memory data store. In a production application you'd probably want to consider storing this information in a database.
 
@@ -216,7 +216,7 @@ export const flashcards: IFlashcard[] = [
 ];
 ```
 
-### Basic Flashcard Layout
+### Basic Flashcard Layout {#basic-flashcard-layout}
 
 With some basic data set up, we need to add a way for users to flick through their flashcards.
 
@@ -292,11 +292,11 @@ At the end of this step, you should have a working flashcard UI that allows you 
     loop
     playsInline
     className="w-full aspect-video"
-    src="../assets/guides/example-apps/example-study-app/basic-flashcard-ui.mp4"
+    src="../../assets/guides/example-apps/example-study-app/basic-flashcard-ui.mp4"
   ></video>
 </Frame>
 
-### Flipping Flashcards
+### Flipping Flashcards {#flipping-flashcards}
 
 Now this is great, but it's not much use as a study app right now as there's no way to see if you got the answer right! We need to add a way to flip flashcards over and check our answer...
 
@@ -475,7 +475,7 @@ You'll notice we also added a couple of styles here. These do a couple of things
 }
 ```
 
-### A Flippin' Bug!
+### A Flippin' Bug! {#a-flippin-bug}
 
 Sweet! Our project is now starting to feel like a real study tool! However the keen eyed (or maybe not so keen...) will notice there's one major bug here. When we flip a card over, the answer on the back appears in reverse 😢...
 
@@ -486,7 +486,7 @@ Sweet! Our project is now starting to feel like a real study tool! However the k
     loop
     playsInline
     className="w-full aspect-video"
-    src="../assets/guides/example-apps/example-study-app/flipping-flashcards.mp4"
+    src="../../assets/guides/example-apps/example-study-app/flipping-flashcards.mp4"
   ></video>
 </Frame>
 
@@ -534,11 +534,11 @@ Ok awesome. Now when we flip over a card the answer on the back should read in t
     loop
     playsInline
     className="w-full aspect-video"
-    src="../assets/guides/example-apps/example-study-app/flipping-flashcards-fixed.mp4"
+    src="../../assets/guides/example-apps/example-study-app/flipping-flashcards-fixed.mp4"
   ></video>
 </Frame>
 
-### Tracking Progress
+### Tracking Progress {#tracking-progress}
 
 The next step is to add some UI to show the user how many flashcards they've looked at, and how many in the set they have left. We'll use a simple progress bar to achieve this.
 
@@ -665,13 +665,13 @@ Sweet! Now things are really starting to come together.
     loop
     playsInline
     className="w-full aspect-video"
-    src="../assets/guides/example-apps/example-study-app/progress-tracking.mp4"
+    src="../../assets/guides/example-apps/example-study-app/progress-tracking.mp4"
   ></video>
 </Frame>
 
 Now the real fun begins...
 
-## Adding Basic Gamification
+## Adding Basic Gamification {#adding-basic-gamification}
 
 In this section we'll be adding the following gamification elements to the flashcard project:
 
@@ -691,11 +691,11 @@ Yup, you can. Trophy makes it super easy to build these features with a few line
 
 So, let's get started...
 
-### How Trophy Works
+### How Trophy Works {#how-trophy-works}
 
 First off, we need a new [Trophy account](https://app.trophy.so/sign-up). Then we can start to piece together the various parts of our gamification experience.
 
-In Trophy, [Metrics](/platform/metrics) represent different interactions users can make and can drive features like [Achievements](/platform/achievements), [Streaks](/platform/streaks) and [Emails](/platform/emails).
+In Trophy, [Metrics](/en/platform/metrics) represent different interactions users can make and can drive features like [Achievements](/en/platform/achievements), [Streaks](/en/platform/streaks) and [Emails](/en/platform/emails).
 
 ```mermaid
 flowchart TD
@@ -712,19 +712,19 @@ flowchart TD
     B-->F
 ```
 
-In Trophy we track user interactions by sending [Events](/platform/events) from our code to Trophy against a specific metric.
+In Trophy we track user interactions by sending [Events](/en/platform/events) from our code to Trophy against a specific metric.
 
 When events are recorded for a specific user, any achievements linked to the specified metric will be unlocked if the requirements are met, daily streaks will be automatically calculated and kept up to date, points are awarded, and leaderboards are updated.
 
 This is what makes building gamified experiences with Trophy so easy, is does all the work for you behind the scenes.
 
-Recording an event against a metric for a specific user makes use of Trophy's [metric event API](/api-reference/endpoints/metrics/send-a-metric-change-event), which in practice looks like this:
+Recording an event against a metric for a specific user makes use of Trophy's [metric event API](/en/api-reference/endpoints/metrics/send-a-metric-change-event), which in practice looks like this:
 
 <MetricChangeRequestBlock />
 
 That's how in just a few lines of code we can power a whole suite of gamification features. However, before we can start sending events, we need to set up our new Trophy account.
 
-### Setting Up Trophy
+### Setting Up Trophy {#setting-up-trophy}
 
 Here's how we'll setup our Trophy account for our study app:
 
@@ -746,7 +746,7 @@ Let's get into it...
         loop
         playsInline
         className="w-full aspect-video"
-        src="../assets/guides/example-apps/example-study-app/create-metric.mp4"
+        src="../../assets/guides/example-apps/example-study-app/create-metric.mp4"
       ></video>
     </Frame>
 
@@ -764,7 +764,7 @@ Let's get into it...
 <Tip>
   Free free to download and use this zip of badges (ready made for this example
   app):
-  [flashcard_badges.zip](../assets/guides/example-apps/example-study-app/flashcard_badges.zip)
+  [flashcard_badges.zip](../../assets/guides/example-apps/example-study-app/flashcard_badges.zip)
 </Tip>
 
 <Frame>
@@ -772,7 +772,7 @@ Let's get into it...
     height="200"
     width="100%"
     noZoom
-    src="../assets/guides/example-apps/example-study-app/achievements.png"
+    src="../../assets/guides/example-apps/example-study-app/achievements.png"
   />
 </Frame>
 
@@ -788,7 +788,7 @@ Let's get into it...
         loop
         playsInline
         className="w-full aspect-video"
-        src="../assets/guides/example-apps/example-study-app/configure-streak.mp4"
+        src="../../assets/guides/example-apps/example-study-app/configure-streak.mp4"
       ></video>
     </Frame>
 
@@ -812,7 +812,7 @@ Trophy also gives us a preview of the emails which is nice. Plus, feel free to c
     loop
     playsInline
     className="w-full aspect-video"
-    src="../assets/guides/example-apps/example-study-app/configure-emails.mp4"
+    src="../../assets/guides/example-apps/example-study-app/configure-emails.mp4"
   ></video>
 </Frame>
 
@@ -820,14 +820,14 @@ Trophy also gives us a preview of the emails which is nice. Plus, feel free to c
 
 <Note>
   Before you can start sending emails, you'll need to [configure your sending
-  address](/platform/emails#sending-emails) with Trophy. But this can be done
+  address](/en/platform/emails#sending-emails) with Trophy. But this can be done
   later on if preferred.
 </Note>
 
   </Accordion>
 </AccordionGroup>
 
-### Integrating Trophy SDK
+### Integrating Trophy SDK {#integrating-trophy-sdk}
 
 First we need to grab our API key from the Trophy [integration page](https://app.trophy.so/integration) and add this as a **server-side only** environment variable.
 
@@ -957,13 +957,13 @@ We can validate this is working by checking the Trophy [dashboard](https://app.t
     height="200"
     width="100%"
     noZoom
-    src="../assets/guides/example-apps/example-study-app/top-users.png"
+    src="../../assets/guides/example-apps/example-study-app/top-users.png"
   />
 </Frame>
 
 Next, we'll add some UI to show off our gamification features in practice.
 
-### Adding Gamification UX
+### Adding Gamification UX {#adding-gamification-ux}
 
 The response to the API call that we make to track events in Trophy helpfully gives us back any changes to the users progress as a result of that event:
 
@@ -979,7 +979,7 @@ This makes it really easy for us to react to changes in the users progress and d
 - Show a pop-up toast
 - Play a sound effect
 
-#### Achievement Unlocked Toasts
+#### Achievement Unlocked Toasts {#achievement-unlocked-toasts}
 
 First, we'll show a toast when users unlock new achievements. For this we need to add the `sonner` component from shadcn/ui to our project:
 
@@ -1178,11 +1178,11 @@ To see this in action, all we need to do is unlock our first achievement by view
     loop
     playsInline
     className="w-full aspect-video"
-    src="../assets/guides/example-apps/example-study-app/displaying-toasts.mp4"
+    src="../../assets/guides/example-apps/example-study-app/displaying-toasts.mp4"
   ></video>
 </Frame>
 
-#### Streak Extended Toasts
+#### Streak Extended Toasts {#streak-extended-toasts}
 
 We'll use the same methods to show similar toasts when a user extends their streak. As we've set up a daily streak in Trophy, this will trigger the first time a user views a flashcard each day.
 
@@ -1287,11 +1287,11 @@ Now the first time a user views a flashcard each day, they'll see one of our str
     loop
     playsInline
     className="w-full aspect-video"
-    src="../assets/guides/example-apps/example-study-app/streak-toasts.mp4"
+    src="../../assets/guides/example-apps/example-study-app/streak-toasts.mp4"
   ></video>
 </Frame>
 
-#### Sound Effects
+#### Sound Effects {#sound-effects}
 
 Gamification is first and foremost about increasing user retention. The best way to do this is to make the features we build as engaging as possible. A great way to do this that's often overlooked is with sound effects.
 
@@ -1411,7 +1411,7 @@ export default function Flashcards({ flashcards }: Props) {
 }
 ```
 
-#### Displaying Study Journey
+#### Displaying Study Journey {#displaying-study-journey}
 
 The last piece of UI we'll add will be a dialog to display the user's study progress, including their streak and any achievements they've unlocked so far.
 
@@ -1740,15 +1740,15 @@ export default async function Home() {
     loop
     playsInline
     className="w-full aspect-video"
-    src="../assets/guides/example-apps/example-study-app/study-journey.mp4"
+    src="../../assets/guides/example-apps/example-study-app/study-journey.mp4"
   ></video>
 </Frame>
 
-## Adding an XP System
+## Adding an XP System {#adding-an-xp-system}
 
 Now let's take our study platform to the next level by adding an XP (points) system. This will give users a sense of progression and reward them for their study activity.
 
-### Setting Up Points in Trophy
+### Setting Up Points in Trophy {#setting-up-points-in-trophy}
 
 First, head to the Trophy [points page](https://app.trophy.so/points) and create a new points system. We'll call ours "XP" with the key `points`.
 
@@ -1759,13 +1759,13 @@ First, head to the Trophy [points page](https://app.trophy.so/points) and create
     loop
     playsInline
     className="w-full aspect-video"
-    src="../assets/guides/example-apps/example-study-app/configure-points.mp4"
+    src="../../assets/guides/example-apps/example-study-app/configure-points.mp4"
   ></video>
 </Frame>
 
 Configure your points system to award XP for viewing flashcards. You can also set up bonus XP for streak milestones.
 
-### Integrating Points API
+### Integrating Points API {#integrating-points-api}
 
 Add new server actions to fetch points data:
 
@@ -1820,7 +1820,7 @@ export async function getPointsSummary(
 }
 ```
 
-### Creating a Points Context
+### Creating a Points Context {#creating-a-points-context}
 
 To manage points state across the app, create a React context:
 
@@ -1913,7 +1913,7 @@ export function useUserPoints() {
 }
 ```
 
-### Building the Points Center UI
+### Building the Points Center UI {#building-the-points-center-ui}
 
 Create a points display component that shows the user's XP with a satisfying number animation:
 
@@ -1976,7 +1976,7 @@ export default function PointsCenter() {
 }
 ```
 
-### Updating Points on Flashcard View
+### Updating Points on Flashcard View {#updating-points-on-flashcard-view}
 
 Finally, re-fetch points whenever a user views a flashcard to show real-time XP updates:
 
@@ -2012,15 +2012,15 @@ Now when users view flashcards, they'll see their XP update in real-time with a 
     loop
     playsInline
     className="w-full aspect-video"
-    src="../assets/guides/example-apps/example-study-app/points-animation.mp4"
+    src="../../assets/guides/example-apps/example-study-app/points-animation.mp4"
   ></video>
 </Frame>
 
-## Adding Leaderboards
+## Adding Leaderboards {#adding-leaderboards}
 
 Nothing drives engagement like friendly competition. Let's add a leaderboard to show how users stack up against each other.
 
-### Setting Up Leaderboards in Trophy
+### Setting Up Leaderboards in Trophy {#setting-up-leaderboards-in-trophy}
 
 Head to the Trophy [leaderboards page](https://app.trophy.so/leaderboards) and create a new leaderboard. We'll create a daily leaderboard with the key `daily-champions` that ranks users by flashcards viewed.
 
@@ -2031,11 +2031,11 @@ Head to the Trophy [leaderboards page](https://app.trophy.so/leaderboards) and c
     loop
     playsInline
     className="w-full aspect-video"
-    src="../assets/guides/example-apps/example-study-app/configure-leaderboard.mp4"
+    src="../../assets/guides/example-apps/example-study-app/configure-leaderboard.mp4"
   ></video>
 </Frame>
 
-### Leaderboard API Integration
+### Leaderboard API Integration {#leaderboard-api-integration}
 
 Add server actions for fetching leaderboard data:
 
@@ -2082,7 +2082,7 @@ export async function getUserLeaderboard(
 }
 ```
 
-### Building the Leaderboard UI
+### Building the Leaderboard UI {#building-the-leaderboard-ui}
 
 Create a leaderboard component that displays rankings with pagination:
 
@@ -2142,11 +2142,11 @@ export default function LeaderboardCenter() {
 
 The leaderboard automatically updates as users study, creating a dynamic competitive environment that encourages daily engagement.
 
-## Adding an Energy System
+## Adding an Energy System {#adding-an-energy-system}
 
 Energy (or "lives") systems are a proven retention mechanic that encourages users to return throughout the day. Let's add one to our study platform.
 
-### Setting Up Energy in Trophy
+### Setting Up Energy in Trophy {#setting-up-energy-in-trophy}
 
 Trophy's points system is flexible enough to handle energy mechanics. Create a new points system with the key `energy` and configure it with:
 
@@ -2159,11 +2159,11 @@ Trophy's points system is flexible enough to handle energy mechanics. Create a n
     height="200"
     width="100%"
     noZoom
-    src="../assets/guides/example-apps/example-study-app/energy-triggers.png"
+    src="../../assets/guides/example-apps/example-study-app/energy-triggers.png"
   />
 </Frame>
 
-### Energy API Integration
+### Energy API Integration {#energy-api-integration}
 
 Add server actions for energy management:
 
@@ -2199,7 +2199,7 @@ export async function getUserEnergy(
 }
 ```
 
-### Creating an Energy Context
+### Creating an Energy Context {#creating-an-energy-context}
 
 Similar to points, create a context for managing energy state:
 
@@ -2267,7 +2267,7 @@ export function useUserEnergy() {
 }
 ```
 
-### Building the Energy UI
+### Building the Energy UI {#building-the-energy-ui}
 
 Create an energy display that shows remaining energy with visual indicators:
 
@@ -2295,7 +2295,7 @@ export default function EnergyCenter() {
 
 With energy in place, users have a reason to return multiple times throughout the day as their energy regenerates, boosting your daily active users.
 
-## The Result
+## The Result {#the-result}
 
 Congrats! If you're reading this you made it to the end of the tutorial and built yourself a fully-functioning study platform. Of course there's loads more we could do to this, so here's a few ideas:
 
@@ -2309,6 +2309,6 @@ Congrats! If you're reading this you made it to the end of the tutorial and buil
   a star on [GitHub](https://github.com/trophyso/example-study-platform)!
 </Tip>
 
-## Get Support
+## Get Support {#get-support}
 
 Want to get in touch with the Trophy team? Reach out to us via [email](mailto:support@trophy.so). We're here to help!

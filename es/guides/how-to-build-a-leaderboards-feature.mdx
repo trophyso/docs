@@ -7,12 +7,12 @@ subtitle: Aprende a usar Trophy para añadir una función de clasificaciones a t
 noindex: true
 ---
 
-import SDKInstallCommand from "/snippets/sdk-install-command.mdx";
-import MetricChangeRequestBlock from "/snippets/metric-change-request-block.mdx";
-import LeaderboardRankingsRequest from "/snippets/leaderboard-rankings-request.mdx";
-import LeaderboardRankingsResponse from "/snippets/leaderboard-rankings-response.mdx";
-import UserLeaderboardRankingsRequest from "/snippets/user-leaderboard-rankings-request.mdx";
-import UserLeaderboardRankingsResponse from "/snippets/user-leaderboard-rankings-response.mdx";
+import SDKInstallCommand from "../../snippets/sdk-install-command.mdx";
+import MetricChangeRequestBlock from "../../snippets/metric-change-request-block.mdx";
+import LeaderboardRankingsRequest from "../../snippets/leaderboard-rankings-request.mdx";
+import LeaderboardRankingsResponse from "../../snippets/leaderboard-rankings-response.mdx";
+import UserLeaderboardRankingsRequest from "../../snippets/user-leaderboard-rankings-request.mdx";
+import UserLeaderboardRankingsResponse from "../../snippets/user-leaderboard-rankings-response.mdx";
 
 Esta guía describe el proceso completo para añadir una función de clasificaciones a tu aplicación web o móvil utilizando Trophy.
 
@@ -22,14 +22,14 @@ Para fines ilustrativos, usaremos el ejemplo de una plataforma de estudio que ut
   Para ver un ejemplo completamente funcional de esto en la práctica, consulta la [demostración en vivo](https://examples.trophy.so) o el [repositorio de github](https://github.com/trophyso/example-study-platform/tree/demo).
 </Tip>
 
-## Requisitos previos
+## Requisitos previos {#pre-requisites}
 
 - Una cuenta de [Trophy](https://app.trophy.so/sign-up)
 - Aproximadamente 10 minutos
 
-## Configuración de Trophy
+## Configuración de Trophy {#trophy-setup}
 
-En Trophy, las [Métricas](/platform/metrics) son los componentes fundamentales de la gamificación y modelan las diferentes interacciones que los usuarios realizan con tu producto.
+En Trophy, las [Métricas](/es/platform/metrics) son los componentes fundamentales de la gamificación y modelan las diferentes interacciones que los usuarios realizan con tu producto.
 
 En esta guía, la interacción que nos interesa es `flashcards-viewed`, pero puedes crear una métrica que mejor represente la interacción en torno a la cual deseas crear clasificaciones.
 
@@ -42,11 +42,11 @@ En el panel de Trophy, dirígete a la [página de métricas](https://app.trophy.
     loop
     playsInline
     className="w-full aspect-video"
-    src="../assets/guides/achievements-feature/create_new_metric.mp4"
+    src="../../assets/guides/achievements-feature/create_new_metric.mp4"
   ></video>
 </Frame>
 
-Una vez que hayas creado tu métrica, dirígete a la [página de clasificaciones](https://app.trophy.so/leaderboards) y crea las clasificaciones que desees. Puedes encontrar todos los detalles sobre los tipos de clasificaciones y los diferentes casos de uso en la [documentación de clasificaciones](/platform/leaderboards).
+Una vez que hayas creado tu métrica, dirígete a la [página de clasificaciones](https://app.trophy.so/leaderboards) y crea las clasificaciones que desees. Puedes encontrar todos los detalles sobre los tipos de clasificaciones y los diferentes casos de uso en la [documentación de clasificaciones](/es/platform/leaderboards).
 
 <Frame>
   <video
@@ -55,7 +55,7 @@ Una vez que hayas creado tu métrica, dirígete a la [página de clasificaciones
     loop
     playsInline
     className="w-full aspect-video"
-    src="../assets/guides/leaderboards-feature/creating_leaderboards.mp4"
+    src="../../assets/guides/leaderboards-feature/creating_leaderboards.mp4"
   ></video>
 </Frame>
 
@@ -63,18 +63,18 @@ Para los fines de esta guía, hemos configurado una clasificación diaria que ra
 
 <Tip>
   Para una guía completa sobre cómo agregar una función de XP a tu aplicación web o móvil, consulta
-  nuestra [guía completa](/guides/how-to-build-an-xp-feature).
+  nuestra [guía completa](/es/guides/how-to-build-an-xp-feature).
 </Tip>
 
-En Trophy rastreas las interacciones de los usuarios enviando [Eventos](/platform/events) desde tu código a las API de Trophy contra una métrica específica.
+En Trophy rastreas las interacciones de los usuarios enviando [Eventos](/es/platform/events) desde tu código a las API de Trophy contra una métrica específica.
 
 Cuando se registran eventos para un usuario específico, Trophy actualiza automáticamente su posición en cada clasificación de la que forma parte.
 
 Esto es lo que hace que construir experiencias gamificadas con Trophy sea tan fácil: hace todo el trabajo por ti en segundo plano.
 
-## Instalando el SDK de Trophy
+## Instalando el SDK de Trophy {#installing-trophy-sdk}
 
-Para interactuar con Trophy desde tu código, utilizarás el SDK de Trophy disponible en la mayoría de los principales [lenguajes de programación](/api-reference/client-libraries).
+Para interactuar con Trophy desde tu código, utilizarás el SDK de Trophy disponible en la mayoría de los principales [lenguajes de programación](/es/api-reference/client-libraries).
 
 Instala el SDK de Trophy:
 
@@ -90,9 +90,9 @@ TROPHY_API_KEY='*******'
   Asegúrate de **no** exponer tu clave API en código del lado del cliente.
 </Warning>
 
-## Rastreando Interacciones de Usuarios
+## Rastreando Interacciones de Usuarios {#tracking-user-interactions}
 
-Para rastrear un evento (interacción de usuario) contra tu métrica, utiliza la [API de cambio de métrica](/api-reference/endpoints/metrics/send-a-metric-change-event).
+Para rastrear un evento (interacción de usuario) contra tu métrica, utiliza la [API de cambio de métrica](/es/api-reference/endpoints/metrics/send-a-metric-change-event).
 
 <MetricChangeRequestBlock />
 
@@ -137,17 +137,17 @@ Valida que esto funcione revisando el [panel de control](https://app.trophy.so) 
     height="200"
     width="100%"
     noZoom
-    src="../assets/guides/achievements-feature/top-users.png"
+    src="../../assets/guides/achievements-feature/top-users.png"
   />
 </Frame>
 
-## Mostrando Clasificaciones
+## Mostrando Clasificaciones {#displaying-leaderboards}
 
 Tienes varias opciones para mostrar clasificaciones en tu aplicación. Aquí veremos las opciones más comunes.
 
-### Notificaciones Emergentes
+### Notificaciones Emergentes {#pop-up-notifications}
 
-Podemos usar la respuesta de la [API de cambio de métrica](/api-reference/endpoints/metrics/send-a-metric-change-event) para mostrar notificaciones emergentes (o 'toasts') cuando los usuarios suban en las clasificaciones.
+Podemos usar la respuesta de la [API de cambio de métrica](/es/api-reference/endpoints/metrics/send-a-metric-change-event) para mostrar notificaciones emergentes (o 'toasts') cuando los usuarios suban en las clasificaciones.
 
 Aquí hay un ejemplo de esto en acción:
 
@@ -182,9 +182,9 @@ if (leaderboard.rank > leaderboard.previousRank) {
   que recomendamos.
 </Tip>
 
-### Mostrar Clasificaciones de la Clasificación
+### Mostrar Clasificaciones de la Clasificación {#displaying-leaderboard-rankings}
 
-Para obtener una clasificación y sus rankings más actualizados, usa la [API de clasificaciones](/api-reference/endpoints/leaderboards/get-leaderboard).
+Para obtener una clasificación y sus rankings más actualizados, usa la [API de clasificaciones](/es/api-reference/endpoints/leaderboards/get-leaderboard).
 
 <LeaderboardRankingsRequest />
 
@@ -197,9 +197,9 @@ Aquí hay un ejemplo de los datos devueltos por la API de clasificaciones:
 
 <LeaderboardRankingsResponse />
 
-### Mostrar Historial de Ranking del Usuario
+### Mostrar Historial de Ranking del Usuario {#displaying-user-rank-history}
 
-Usa la [API de clasificación de usuario](/api-reference/endpoints/users/get-a-users-leaderboard) para obtener datos sobre cómo ha cambiado el ranking de un usuario específico a lo largo del tiempo en una clasificación particular.
+Usa la [API de clasificación de usuario](/es/api-reference/endpoints/users/get-a-users-leaderboard) para obtener datos sobre cómo ha cambiado el ranking de un usuario específico a lo largo del tiempo en una clasificación particular.
 
 <UserLeaderboardRankingsRequest />
 
@@ -207,7 +207,7 @@ Aquí hay un ejemplo de los datos devueltos por la API de rankings de clasificac
 
 <UserLeaderboardRankingsResponse />
 
-## Analítica
+## Analítica {#analytics}
 
 La [página de clasificaciones](https://app.trophy.so/achievements) en Trophy muestra cuántos usuarios están participando activamente en una clasificación, así como una medida de competitividad basada en cuántos cambios de ranking están ocurriendo.
 
@@ -218,7 +218,7 @@ La página de analítica también muestra una distribución de las puntuaciones 
     height="200"
     width="100%"
     noZoom
-    src="../assets/guides/leaderboards-feature/analytics.png"
+    src="../../assets/guides/leaderboards-feature/analytics.png"
   />
 </Frame>
 
@@ -229,10 +229,10 @@ Además, la página de rankings de la clasificación muestra los rankings actual
     height="200"
     width="100%"
     noZoom
-    src="../assets/guides/leaderboards-feature/rankings.png"
+    src="../../assets/guides/leaderboards-feature/rankings.png"
   />
 </Frame>
 
-## Obtener Soporte
+## Obtener Soporte {#get-support}
 
 ¿Quieres ponerte en contacto con el equipo de Trophy? Contáctanos por [correo electrónico](mailto:support@trophy.so). ¡Estamos aquí para ayudarte!

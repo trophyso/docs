@@ -7,15 +7,15 @@ subtitle: Aprenda cómo asegurar que sus endpoints de webhook procesen los
 icon: repeat
 ---
 
-## ¿Qué es la Idempotencia?
+## ¿Qué es la Idempotencia? {#what-is-idempotency}
 
 En el contexto de los webhooks, la [idempotencia](https://en.wikipedia.org/wiki/Idempotence) es la propiedad de un endpoint de asegurar que procese eventos duplicados exactamente una vez.
 
 La mayoría de los emisores de webhooks, incluyendo Trophy, operan con una garantía de entrega "al menos una vez". Esto significa que eventualmente puede recibir el mismo webhook múltiples veces y su código necesita manejar esos escenarios sin consecuencias no deseadas.
 
-Por ejemplo, si su manejador de webhook está suscrito a eventos [`leaderboard.finished`](/webhooks/events/leaderboards/leaderboard-finished) y envía tarjetas de regalo a los usuarios si se ubican en el top 10, entonces su código necesita enviar las tarjetas de regalo solo una vez incluso si recibe el mismo evento de Trophy múltiples veces.
+Por ejemplo, si su manejador de webhook está suscrito a eventos [`leaderboard.finished`](/es/webhooks/events/leaderboards/leaderboard-finished) y envía tarjetas de regalo a los usuarios si se ubican en el top 10, entonces su código necesita enviar las tarjetas de regalo solo una vez incluso si recibe el mismo evento de Trophy múltiples veces.
 
-## Implementando la Idempotencia de Webhooks
+## Implementando la Idempotencia de Webhooks {#implementing-webhook-idempotency}
 
 Hacer que sus manejadores de webhook sean más robustos es trivial en la mayoría de los casos. Tomemos el ejemplo de la tarjeta de regalo anterior.
 
@@ -54,6 +54,6 @@ if (!receipt) {
 
 Si su código recibe un evento duplicado, la tarjeta de regalo no se enviará nuevamente.
 
-## Obtenga Soporte
+## Obtenga Soporte {#get-support}
 
 ¿Quiere ponerse en contacto con el equipo de Trophy? Comuníquese con nosotros por [correo electrónico](mailto:support@trophy.so). ¡Estamos aquí para ayudarlo!
