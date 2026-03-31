@@ -51,11 +51,17 @@ if (!cfg.engineId || cfg.engineId === "${LINGO_ENGINE_ID}") {
   process.exit(1);
 }
 
-if (filters.length > 0 && cfg.buckets.mdx?.include) {
-  cfg.buckets.mdx.include = cfg.buckets.mdx.include.filter((pattern) =>
-    filters.some((f) => pattern.includes(f))
-  );
-  if (cfg.buckets.mdx.include.length === 0) {
+if (filters.length > 0 && cfg.buckets) {
+  let matched = 0;
+  for (const bucket of Object.values(cfg.buckets)) {
+    if (!bucket?.include) continue;
+    bucket.include = bucket.include.filter((pattern) => {
+      const keep = filters.some((f) => pattern.includes(f));
+      if (keep) matched += 1;
+      return keep;
+    });
+  }
+  if (matched === 0) {
     console.error("No files matched --paths filters.");
     process.exit(1);
   }
@@ -92,6 +98,7 @@ try {
     execSync(`npx lingo.dev@latest run --target-locale ${target}${runForce}`, { stdio: "inherit" });
     execSync(`node scripts/translate-docs-json.mjs --target ${target}`, { stdio: "inherit" });
     execSync(`node scripts/localize-internal-links.mjs --target ${target}`, { stdio: "inherit" });
+    execSync(`node scripts/localize-component-imports.mjs --target ${target}`, { stdio: "inherit" });
     console.log(`Translation generation completed for target locale: ${target}`);
   }
   execSync("node scripts/sync-heading-anchors.mjs", { stdio: "inherit" });

@@ -7,7 +7,7 @@ og:description: Usa flujos de correo automatizados para extender tu experiencia
 icon: mail
 ---
 
-import { PlanBadge } from "../../snippets/plan-badge.jsx";
+import { PlanBadge } from "../../es/components/plan-badge.jsx";
 
 Trophy puede enviar correos electrónicos automatizados a los usuarios según activadores clave sin requerir código. Aquí veremos cuáles son estos activadores y cómo pueden formar parte de la experiencia de gamificación de tu producto.
 
@@ -555,7 +555,7 @@ Además, todos los [atributos personalizados de usuario](/es/platform/users#cust
 
 </Accordion>
 <Accordion title="Métricas">
-  Variables relacionadas con los datos de eventos rastreados de los destinatarios según las métricas.
+  Variables relacionadas con los datos de eventos rastreados de los destinatarios contra métricas.
 
 Cada métrica de Trophy admite las siguientes variables de correo electrónico:
 
@@ -564,7 +564,7 @@ Cada métrica de Trophy admite las siguientes variables de correo electrónico:
 - **Total Actual**: La suma de todos los valores de eventos del destinatario hasta la fecha
 - **Cambio en Este Periodo**: Cambio absoluto en el total actual del destinatario en el periodo de agregación actual
 - **Cambio en Este Periodo (%)**: Cambio porcentual en el total actual del destinatario en el periodo de agregación actual
-- **Percentil (Histórico)**: El total actual del destinatario comparado con todos los demás usuarios de todos los tiempos
+- **Percentil (Todo el Tiempo)**: El total actual del destinatario comparado con todos los demás usuarios de todo el tiempo
 - **Percentil (Este Periodo)**: El total actual del destinatario comparado con todos los demás usuarios en el periodo de agregación actual
 
 Además, los alias dinámicos **Highest** y **Lowest** admiten el mismo conjunto de variables. Al usar estos alias, Trophy seleccionará la métrica donde el destinatario tenga el total actual más alto o más bajo en el momento del envío.
@@ -580,7 +580,7 @@ De manera similar a las métricas, cada sistema de puntos tiene las siguientes v
 - **Total Actual**: Los puntos totales del destinatario
 - **Cambio en Este Periodo**: Cambio absoluto en los puntos totales del destinatario en el periodo de agregación actual
 - **Cambio en Este Periodo (%)**: Cambio porcentual en los puntos totales del destinatario en el periodo de agregación actual
-- **Percentil (Histórico)**: Los puntos totales del destinatario comparados con todos los demás usuarios de todos los tiempos
+- **Percentil (Todo el Tiempo)**: Los puntos totales del destinatario comparados con todos los demás usuarios de todo el tiempo
 - **Percentil (Este Periodo)**: Los puntos totales del destinatario comparados con todos los demás usuarios en el periodo de agregación actual
 
 .
@@ -682,7 +682,7 @@ Las variaciones se pueden usar para agregar aleatoriedad al texto dentro de los 
   ></iframe>
 </Frame>
 
-Cualquier bloque que admita entrada de texto, incluidos H1, H2, H3 y párrafo, admite variaciones.
+Cualquier bloque que admita entrada de texto, incluyendo H1, H2, H3 y párrafo, admite variaciones.
 
 <Tip>También puedes usar variaciones para agregar aleatoriedad a las líneas de asunto del correo electrónico.</Tip>
 
@@ -785,7 +785,7 @@ Otros estilos de correo electrónico se extraen de la configuración de [Marca](
 Todos los correos electrónicos que Trophy envía incluyen un enlace y mensaje para darse de baja. Esto es importante para mantener el cumplimiento normativo y no es posible ocultarlo.
 
 <Info>
-  El mensaje dirá lo siguiente: _Estás recibiendo este correo electrónico porque estás suscrito a informes de progreso y correos de logros. Si ya no deseas recibir estos correos electrónicos, puedes darte de baja._
+  El mensaje se leerá de la siguiente manera: Está recibiendo este correo electrónico porque está suscrito a informes de progreso y correos de logros. Si ya no desea recibir estos correos electrónicos, puede cancelar la suscripción.
 </Info>
 
 Cualquier destinatario que haga clic en este enlace será dirigido a una página con marca que le permite controlar qué notificaciones por correo electrónico recibe.
@@ -803,7 +803,7 @@ Trophy tiene analíticas integradas para todos los correos electrónicos que env
 
 - Destinatarios (El número total de personas que recibieron el correo electrónico)
 - Tasa de apertura (El porcentaje de destinatarios que abrieron el correo electrónico)
-- Tasa de clics (El porcentaje de destinatarios que hicieron clic en al menos un enlace del correo electrónico)
+- Tasa de clics (El porcentaje de destinatarios que hicieron clic en al menos un enlace en el correo electrónico)
 - Tasa de retención (El porcentaje de usuarios que abrieron el correo electrónico y regresaron a usar tu plataforma después de al menos 2 días)
 
 <Frame>

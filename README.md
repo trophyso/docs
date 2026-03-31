@@ -59,8 +59,10 @@ Notes:
 - `lingo/glossary.csv`: Terms that must stay fixed or use specific translations.
 - `lingo/brand-voice.md`: Single brand voice used for all locales.
 - `scripts/translate-docs-json.mjs`: Translates language-specific `docs.json` navigation labels directly in the source-of-truth `docs.json`. Prefer `npm run translate:docs-json -- --target <locale>`.
-- `scripts/localize-internal-links.mjs`: Rewrites internal absolute **navigation** links in each locale’s MDX for whatever locale is being processed (`--target`, `--all`, or default targets): bare paths get that locale’s prefix (e.g. `/platform/points` → `/es/platform/points` when processing `es/`), and any path already prefixed with **another** locale from `i18n.json` (`en`, `es`, future `fr`, etc.) is re-prefixed to the active locale (so `/en/...` or stale `/es/...` on a `fr/` page become `/fr/...`). Longer codes are matched first (e.g. `en-US` before `en`). It does **not** change relative image or video `src` paths, MDX/JSX **import** paths, or shared **snippets**; those must be correct in source so all locales stay aligned. Prefer `npm run translate:localize-links --` with `--target`, `--all`, or `--all --check`.
-- **Shared `snippets/`**: Reusable MDX and JSX live in repo-root `snippets/` (not under `en/` or `es/`). Import them with paths relative to each page (for example `../../snippets/foo.mdx` from `locale/<section>/<page>.mdx`, or more `../` segments for deeper pages). They are excluded from Lingo buckets in `i18n.json` so they stay English and identical everywhere.
+- `scripts/localize-internal-links.mjs`: Rewrites internal absolute **navigation** links in each locale’s MDX for whatever locale is being processed (`--target`, `--all`, or default targets): bare paths get that locale’s prefix (e.g. `/platform/points` → `/es/platform/points` when processing `es/`), and any path already prefixed with **another** locale from `i18n.json` (`en`, `es`, future `fr`, etc.) is re-prefixed to the active locale (so `/en/...` or stale `/es/...` on a `fr/` page become `/fr/...`). Longer codes are matched first (e.g. `en-US` before `en`). It does **not** change relative image or video `src` paths, MDX/JSX **import** paths, or shared **MDX snippets**; those must be correct in source so all locales stay aligned. Prefer `npm run translate:localize-links --` with `--target`, `--all`, or `--all --check`.
+- `scripts/localize-component-imports.mjs`: Rewrites MDX `import ... from ".../<locale>/components/...jsx"` paths so they match the active locale being processed (`--target`, `--all`, or default targets). This keeps locale pages importing locale-local components after PIT/CI translation.
+- **Shared MDX snippets (`snippets/*.mdx`)**: Reusable MDX blocks stay in repo-root `snippets/` (not per-locale). Import them with relative paths from each page (for example `../../snippets/foo.mdx` from `locale/<section>/<page>.mdx`, or more `../` segments for deeper pages). They are excluded from Lingo buckets in `i18n.json` so they stay English and identical everywhere.
+- **Localized React components (`[locale]/components/*.jsx`)**: UI components that can contain locale text are stored per locale (for example `en/components/rate-limit-badge.jsx`, `es/components/rate-limit-badge.jsx`) and manually maintained per locale (not translated by PIT/CI automation).
 - **Media paths**: Pages live under `en/<section>/...` or `es/<section>/...`, while shared files sit in repo-root `assets/`. Use a path like `../../assets/...` from a typical `locale/<section>/<page>.mdx` file.
 - **`openapi.yml`**: One OpenAPI 3.1 spec at the **repository root** (alongside `docs.json`). API and webhook pages reference it explicitly in frontmatter, for example `openapi: openapi.yml get /users/{id}` or `openapi: openapi.yml webhook points.changed`. Do not duplicate the YAML under locale folders; Lingo must not alter `openapi:` lines.
 - **`scripts/sync-openapi-titles.mjs`**: Copies each operation/webhook **`summary`** from `openapi.yml` into the English page’s **`title:`** frontmatter (Mintlify’s default when `title` is omitted). Target locales get an English `title` only if missing (bootstrap); run **`npm run translate:generate`** so Lingo translates those titles. Runs automatically at the start of `translate:generate` and in translate-on-main before Lingo.
@@ -85,6 +87,8 @@ Use `npm run <script> -- <args>` when a script needs CLI flags (the `--` forward
 | `translate:localize-links` | Localize internal `href` paths; pass `--target`, `--all`, and/or `--check`. |
 | `translate:localize-links:all` | Same as `translate:localize-links -- --all`. |
 | `translate:localize-links:check` | CI-style check: all locales, no writes (`--all --check`). |
+| `translate:localize-component-imports` | Localize MDX imports that reference `<locale>/components/*.jsx` to the active locale. |
+| `translate:localize-component-imports:check` | CI-style check: fail if any MDX imports point at another locale’s components. |
 | `translate:sync-anchors` | Apply English-derived `{#slug}` on ATX headings in `en/` and target locales (see `i18n.json` `locale.targets`). |
 | `translate:sync-anchors:check` | Fail if any MDX needs re-sync (CI). |
 | `translate:sync-openapi-titles` | Set `en/` API & webhook `title:` from `openapi.yml` summaries; bootstrap missing target `title` from English. |
@@ -137,7 +141,8 @@ Glossary sync workflow (manual via Cursor + MCP):
 3. Create the language content directory:
    - Mirror the `en/` structure under `<locale>/` with the same filenames.
    - Example: `en/platform/overview.mdx` -> `fr/platform/overview.mdx`.
-   - Do not create a per-locale `snippets/` tree: reuse repo-root `snippets/` and the same relative import paths as in `en/` (depth matches when folder structure matches).
+   - Keep MDX snippets shared in repo-root `snippets/` (no per-locale snippet trees).
+   - Keep React components locale-local under `<locale>/components/*.jsx` and mirror updates manually across locales (not via Lingo automation).
 4. Configure Lingo.dev engine controls for the new locale:
    - Add/update brand voice for that locale.
    - Add locale-specific glossary entries if needed.

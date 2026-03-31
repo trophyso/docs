@@ -45,6 +45,9 @@ jobs:
       - name: Ensure internal links are locale-localized
         run: npm run translate:localize-links:check
 
+      - name: Ensure component imports are locale-localized
+        run: npm run translate:localize-component-imports:check
+
       - name: Ensure heading anchors match English slugs
         run: npm run translate:sync-anchors:check
 

@@ -21,14 +21,14 @@ export const RateLimitBadge = ({ tier, noTooltip = false }) => {
 
   return (
     noTooltip ? (
-      <Badge stroke color={getColor(tier)}>Tier {tier}</Badge>
+      <Badge stroke color={getColor(tier)}>Nivel {tier}</Badge>
     ) : (
       <Tooltip
         headline="Rate Limit"
-        tip={`This endpoint is rate limited to ${getLimit(tier)} req/s`}
-        cta="Learn about rate limiting" href="/api-reference/rate-limiting"
+        tip={`Este endpoint tiene un límite de velocidad de ${getLimit(tier)} req/s`}
+        cta="Aprende sobre el límite de solicitudes" href="/es/api-reference/rate-limiting"
       >
-        <Badge stroke color={getColor(tier)}>Tier {tier}</Badge>
+        <Badge stroke color={getColor(tier)}>Nivel {tier}</Badge>
       </Tooltip>
     )
   );

@@ -63,6 +63,8 @@ jobs:
             node scripts/translate-docs-json.mjs --target "$locale"
             echo "Localizing internal links for $locale"
             node scripts/localize-internal-links.mjs --target "$locale"
+            echo "Localizing component imports for $locale"
+            node scripts/localize-component-imports.mjs --target "$locale"
           done
 
       - name: Sync Mintlify heading anchors

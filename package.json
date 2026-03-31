@@ -11,6 +11,8 @@
     "translate:localize-links": "node scripts/localize-internal-links.mjs",
     "translate:localize-links:all": "node scripts/localize-internal-links.mjs --all",
     "translate:localize-links:check": "node scripts/localize-internal-links.mjs --all --check",
+    "translate:localize-component-imports": "node scripts/localize-component-imports.mjs",
+    "translate:localize-component-imports:check": "node scripts/localize-component-imports.mjs --all --check",
     "translate:sync-anchors": "node scripts/sync-heading-anchors.mjs",
     "translate:sync-anchors:check": "node scripts/sync-heading-anchors.mjs --check",
     "translate:sync-openapi-titles": "node scripts/sync-openapi-titles.mjs",

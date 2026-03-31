@@ -97,6 +97,5 @@
         "[locale]/webhooks/security.mdx"
       ]
     }
-  },
-  "engineId": "${LINGO_ENGINE_ID}"
+  }
 }
