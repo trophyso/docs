@@ -1,0 +1,44 @@
+source_locale,target_locale,source_text,target_text,type,hint
+*,*,Trophy,Trophy,non_translatable,Brand name
+*,*,Lingo.dev,Lingo.dev,non_translatable,Product name
+en,*,API,API,non_translatable,Technical acronym
+en,*,SDK,SDK,non_translatable,Technical acronym
+en,*,CLI,CLI,non_translatable,Technical acronym
+en,*,OAuth,OAuth,non_translatable,Protocol
+en,*,JWT,JWT,non_translatable,Token format
+en,*,JSON,JSON,non_translatable,Data format
+en,*,MDX,MDX,non_translatable,File format
+en,*,HTTP,HTTP,non_translatable,Protocol acronym
+en,*,URL,URL,non_translatable,Web address acronym
+en,*,UTC,UTC,non_translatable,Timezone standard
+en,*,DNS,DNS,non_translatable,Domain naming system acronym
+en,*,FCM,FCM,non_translatable,Firebase Cloud Messaging acronym
+en,*,DKIM,DKIM,non_translatable,Email authentication acronym
+en,*,CNAME,CNAME,non_translatable,DNS record type acronym
+en,*,MAU,MAU,non_translatable,Metric acronym
+en,*,Python,Python,non_translatable,Programming language name
+en,*,Ruby,Ruby,non_translatable,Programming language name
+en,*,Go,Go,non_translatable,Programming language name
+en,*,React,React,non_translatable,Framework/library name
+en,*,Node.js,Node.js,non_translatable,Runtime name
+en,*,TypeScript,TypeScript,non_translatable,Programming language name
+en,*,JavaScript,JavaScript,non_translatable,Programming language name
+en,*,Swift,Swift,non_translatable,Programming language name
+en,*,Duolingo,Duolingo,non_translatable,Brand reference
+en,*,Expo Push Service,Expo Push Service,non_translatable,Brand/service reference
+en,es,Leaderboard,Clasificación,custom_translation,Gamification feature noun
+en,es,Leaderboards,Clasificaciones,custom_translation,Gamification feature noun plural
+en,es,Streak,Racha,custom_translation,Gamification feature noun
+en,es,Streaks,Rachas,custom_translation,Gamification feature noun plural
+en,es,Achievement,Logro,custom_translation,Gamification feature noun
+en,es,Achievements,Logros,custom_translation,Gamification feature noun plural
+en,es,Points,Puntos,custom_translation,Gamification feature noun plural
+en,es,Metrics,Métricas,custom_translation,Product domain term plural
+en,es,Push Notifications,Notificaciones push,custom_translation,Product domain term
+en,es,Idempotency,Idempotencia,custom_translation,API behavior concept
+en,es,Rate Limiting,Límite de solicitudes,custom_translation,API behavior concept
+en,es,Quickstart,Inicio rápido,custom_translation,Docs navigation term
+en,es,Reactivation,Reactivación,custom_translation,Lifecycle/product term
+en,es,Sender Verification,Verificación del remitente,custom_translation,Email product domain term
+en,es,Wrapped,Resumen anual,custom_translation,Feature naming term
+en,*,XP,XP,non_translatable,Gamification abbreviation

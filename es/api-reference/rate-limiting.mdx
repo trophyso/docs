@@ -1,0 +1,25 @@
+---
+title: Límite de solicitudes
+description: Aprende sobre la API de Trophy y la Límite de solicitudes de solicitudes.
+og:description: Aprende sobre la API de Trophy y la Límite de solicitudes de solicitudes.
+icon: circle-gauge
+---
+
+import { RateLimitBadge } from "../../es/components/rate-limit-badge.jsx";
+
+Trophy opera un modelo de Límite de solicitudes escalonado para cada endpoint de la API. Todos los límites de tasa están delimitados a nivel de organización. Exceder los límites de tasa resultará en que tu aplicación reciba una respuesta `429 Too Many Requests`.
+
+## Niveles de Límite de solicitudes {#rate-limit-tiers}
+
+| Nivel | Límite de tasa |
+| ---- | ---------- |
+| <RateLimitBadge tier={1} noTooltip /> | 10 req/s |
+| <RateLimitBadge tier={2} noTooltip /> | 100 req/s |
+
+<Tip>
+  Si consideras que necesitas un límite de tasa más alto, por favor [contáctanos](mailto:support@trophy.so) y estaremos encantados de discutir tus necesidades.
+</Tip>
+
+## Obtener soporte {#get-support}
+
+¿Quieres ponerte en contacto con el equipo de Trophy? Comunícate con nosotros por [correo electrónico](mailto:support@trophy.so). ¡Estamos aquí para ayudarte!

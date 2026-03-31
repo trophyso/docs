@@ -1,0 +1,128 @@
+---
+title: Inicio rápido
+description: Comienza a usar Trophy en menos de 10 minutos
+og:description: Sigue esta guía de inicio rápido para integrar Trophy en tu
+  backend y añadir funciones gamificadas como logros y rachas a tu aplicación.
+---
+
+import SdkInstallCommand from "../../snippets/sdk-install-command.mdx";
+import AddEnvVarBlock from "../../snippets/add-env-var-block.mdx";
+import MetricChangeRequestBlock from "../../snippets/metric-change-request-block.mdx";
+import MetricChangeResponseBlock from "../../snippets/metric-change-response-block.mdx";
+
+Aquí integrarás tu aplicación web backend con Trophy y comenzarás a construir tu primera función gamificada.
+
+<Steps>
+  <Step title="Crea tu cuenta de Trophy">
+    Primero, [crea una nueva cuenta](https://app.trophy.so/sign-up?utm_source=docs&utm_medium=quickstart) si aún no tienes una y dirígete al [panel de Trophy](https://app.trophy.so).
+
+    Añade la información de tu app para configurar tu cuenta
+
+  </Step>
+  <Step title="Añade el SDK de Trophy a tu backend">
+    Tenemos bibliotecas SDK disponibles en la mayoría de los principales lenguajes de programación, pero si no ves el tuyo en la lista, ¡háznoslo saber y crearemos uno!
+
+    <SdkInstallCommand />
+
+    Alternativamente, puedes llamar directamente a la API usando cualquier biblioteca HTTP del lado del servidor.
+
+  </Step>
+  <Step title="Configura el entorno">
+    Añade tu clave API que creaste durante la incorporación (o [crea una nueva](https://app.trophy.so/integration)) como una variable de entorno en tu aplicación backend:
+
+    <AddEnvVarBlock />
+
+    Asegúrate de pasar esta clave API al SDK de Trophy o a tu cliente API para autenticarte.
+
+  </Step>
+  <Step title="Crea tu primera métrica">
+    Todas las funciones de gamificación se basan en las interacciones del usuario. En Trophy, usas [Métricas](/es/platform/metrics) para definir y modelar esas interacciones y [Eventos](/es/platform/events) para rastrearlas.
+    
+    Aquí crearás tu primera métrica para comenzar. En el panel de Trophy, dirígete a la [página de métricas](https://app.trophy.so/metrics) y haz clic en el botón _Nueva Métrica_:
+
+    <Frame>
+      <video
+        autoPlay
+        muted
+        loop
+        playsInline
+        className="w-full aspect-video"
+        src="../../assets/platform/metrics/create_new_metric.mp4"
+      ></video>
+    </Frame>
+
+    Asigna un nombre a la métrica y pulsa _Guardar_.
+
+  </Step>
+  <Step title="Integra la métrica en tu backend">
+    Una vez creada la métrica, dirígete a la pestaña de configuración y copia su clave de referencia API única.
+
+    <Frame>
+      <video
+        autoPlay
+        muted
+        loop
+        playsInline
+        className="w-full aspect-video"
+        src="../../assets/quick-start/copy_metric_key.mp4"
+      ></video>
+    </Frame>
+
+    Para registrar un evento contra esta métrica cuando un usuario interactúa con tu producto, llama a la [API de evento de cambio de métrica](/es/api-reference/endpoints/metrics/send-a-metric-change-event), pasando los detalles del usuario que realizó la interacción. En este ejemplo, la clave de métrica sería `flashcards-flipped`:
+
+    <MetricChangeRequestBlock />
+
+    Al realizar esta llamada, le indicas a Trophy que un usuario específico realizó una interacción con tu producto. Como resultado, Trophy procesará automáticamente cualquier función de gamificación como logros o rachas que hayas configurado para la métrica.
+
+  </Step>
+  <Step title="Continúa construyendo tu experiencia de gamificación">
+    Con una métrica integrada en tu backend, estás listo para empezar a añadir funciones de gamificación a tu producto.
+    
+    Sigue los enlaces a continuación para obtener más información sobre cada función que puedes construir con Trophy:
+
+    <CardGroup>
+      <Card title="Logros" icon="trophy" href="/es/platform/achievements">
+        Recompensa a los usuarios por su progreso continuo o por realizar acciones específicas.
+      </Card>
+      <Card title="Rachas" icon="flame" href="/es/platform/streaks">
+        Motiva a los usuarios a desarrollar hábitos de uso regulares.
+      </Card>
+      <Card title="Puntos" icon="sparkle" href="/es/platform/points">
+        Construye sistemas de puntos sofisticados para recompensar y retener usuarios.
+      </Card>
+      <Card
+        title="Tablas de clasificación"
+        icon={
+          <svg
+            width="20"
+            height="18"
+            viewBox="0 0 20 18"
+            fill="none"
+            xmlns="http://www.w3.org/2000/svg"
+            className="text-primary dark:text-primary-light"
+          >
+            <path
+              d="M2 16H6V8H2V16ZM8 16H12V2H8V16ZM14 16H18V10H14V16ZM0 16V8C0 7.45 0.195833 6.97917 0.5875 6.5875C0.979167 6.19583 1.45 6 2 6H6V2C6 1.45 6.19583 0.979167 6.5875 0.5875C6.97917 0.195833 7.45 0 8 0H12C12.55 0 13.0208 0.195833 13.4125 0.5875C13.8042 0.979167 14 1.45 14 2V8H18C18.55 8 19.0208 8.19583 19.4125 8.5875C19.8042 8.97917 20 9.45 20 10V16C20 16.55 19.8042 17.0208 19.4125 17.4125C19.0208 17.8042 18.55 18 18 18H2C1.45 18 0.979167 17.8042 0.5875 17.4125C0.195833 17.0208 0 16.55 0 16Z"
+              fill="currentColor"
+            />
+          </svg>
+        }
+        href="/es/platform/leaderboards">
+        Crea competencias amistosas para aumentar la participación de los usuarios.
+      </Card>
+      <Card title="Correos electrónicos" icon="mail" href="/es/platform/emails">
+        Envía correos electrónicos personalizados del ciclo de vida a los usuarios en el momento perfecto.
+      </Card>
+      <Card title="Notificaciones push" icon="bell" href="/es/platform/push-notifications">
+        Impulsa flujos de notificaciones automatizadas utilizando datos de gamificación personalizados.
+      </Card>
+    </CardGroup>
+
+    O explora nuestra [referencia de API](/es/api-reference/introduction) para familiarizarte con lo que Trophy puede hacer.
+
+  </Step>
+</Steps>
+
+## Obtener Soporte {#get-support}
+
+¿Quieres ponerte en contacto con el equipo de Trophy? Contáctanos por [correo electrónico](mailto:support@trophy.so). ¡Estamos aquí para ayudarte!

@@ -1,0 +1,69 @@
+---
+title: Seguridad
+description: Crea endpoints de webhook seguros utilizando la verificación de
+  firma de webhook.
+subtitle: Crea endpoints de webhook seguros utilizando la verificación de firma
+  de webhook.
+icon: shield-check
+---
+
+## Firmas de Webhook {#webhook-signatures}
+
+Para ayudarte a proteger tus manejadores de webhook para que solo respondan a eventos enviados desde Trophy y no a atacantes maliciosos, Trophy incluye una firma de webhook con cada evento.
+
+Esta firma se envía en el encabezado `X-Trophy-Signature` y es un hash codificado en `base64` de la carga útil de la solicitud, hasheado utilizando un secreto de webhook seguro proporcionado por Trophy.
+
+## Secretos de Webhook {#webhook-secrets}
+
+Cada webhook que configuras en Trophy tiene un secreto de webhook único al que puedes acceder desde la [página de webhooks](https://app.trophy.so/integration/webhooks) en el panel de Trophy.
+
+<Warning>
+  Asegúrate de almacenar tu secreto de webhook en una **variable de entorno segura**
+  y no lo incluyas en el control de versiones.
+</Warning>
+
+## Protección de Manejadores de Webhook {#securing-webhook-handlers}
+
+Para validar que los eventos que recibe tu manejador de webhook realmente provienen de Trophy, necesitas crear tu propio hash utilizando tu [secreto de webhook](#webhook-secrets) seguro y compararlo con la [firma de webhook](#webhook-signatures) en el encabezado `X-Trophy-Signature`.
+
+<Frame>
+  <video
+    autoPlay
+    muted
+    loop
+    playsInline
+    className="w-full aspect-15/4"
+    src="../../assets/webhooks/copy_secret.mp4"
+  ></video>
+</Frame>
+
+Una vez que tengas tu secreto de webhook, estás listo para comenzar a validar eventos. Aquí tienes un ejemplo en Node.js:
+
+```js Validating Webhook Events
+  // Extract X-Trophy-Signature header from the request
+  const hmacHeader = request.headers.get("X-Trophy-Signature");
+
+  // Create a hash based on the parsed body
+  const hash = crypto
+      .createHmac("sha256", process.env.TROPHY_WEBHOOK_SECRET as string)
+      .update(await request.text())
+      .digest("base64");
+
+  // Compare the created hash with the value of the X-Trophy-Signature header
+  if (hash === hmacHeader) {
+      console.log("Webhook is originating from Trophy");
+      // Request validated, continue processing
+  } else {
+      console.log("Signature is invalid, rejected");
+      // Request is not from Trophy, reject with 4XX status
+  }
+```
+
+<Warning>
+  Si tu manejador detecta una solicitud que no se originó en Trophy, es
+  importante rechazar la solicitud lo antes posible con un código de estado `4XX`.
+</Warning>
+
+## Obtener Soporte {#get-support}
+
+¿Quieres ponerte en contacto con el equipo de Trophy? Comunícate con nosotros por [correo electrónico](mailto:support@trophy.so). ¡Estamos aquí para ayudarte!
