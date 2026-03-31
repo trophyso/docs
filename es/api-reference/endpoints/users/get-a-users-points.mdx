@@ -1,9 +1,10 @@
 ---
-openapi: get /users/{id}/points/{key}
+title: Obtener los datos de puntos de un usuario
+openapi: openapi.yml get /users/{id}/points/{key}
 ---
 
 import { RateLimitBadge } from "../../../../snippets/rate-limit-badge.jsx";
 
-**Límites de Tasa**
+**Límites de tasa**
 
 <RateLimitBadge tier={2} />

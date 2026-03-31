@@ -1,11 +1,16 @@
 ---
-openapi: webhook leaderboard.finished
+title: Clasificación finalizada
+openapi: openapi.yml webhook leaderboard.finished
 ---
 
 <Note>
-  Los eventos se activan entre las 13:00 y las 13:59 UTC el día siguiente al final de una ejecución de clasificación. Esto se debe a que cada ejecución de clasificación es relativa a la zona horaria de cada usuario, y los usuarios en las zonas horarias más retrasadas deben tener la oportunidad de finalizar.
+  Los eventos se activan entre las 13:00 y las 13:59 UTC del día siguiente al final de una
+  ejecución de clasificación. Esto se debe a que cada ejecución de clasificación es relativa a la zona horaria
+  de cada usuario, y los usuarios en las zonas horarias más retrasadas deben tener la oportunidad de
+  finalizar.
 </Note>
 
 <Note>
-  Los eventos solo incluyen las 10 primeras posiciones de usuarios. Para obtener más, utiliza la [API de clasificación individual](/es/api-reference/endpoints/leaderboards/get-leaderboard).
+  Los eventos solo incluyen las 10 clasificaciones principales de usuarios. Para obtener más, utiliza la [API de
+  clasificación individual](/es/api-reference/endpoints/leaderboards/get-leaderboard).
 </Note>

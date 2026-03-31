@@ -43,17 +43,65 @@ const excludedPrefixes = [
   "favicon/"
 ];
 
-function shouldPrefix(rawPath, locale) {
-  if (!rawPath || rawPath.startsWith("#")) return false;
-  if (rawPath.startsWith("http://") || rawPath.startsWith("https://") || rawPath.startsWith("mailto:")) {
-    return false;
-  }
-  if (excludedPrefixes.some((prefix) => rawPath.startsWith(prefix))) return false;
-  if (knownLocales.some((l) => rawPath === l || rawPath.startsWith(`${l}/`))) return false;
+/** Longest first so `en-US` wins over `en` when both exist. */
+const knownLocalesLongestFirst = [...knownLocales].sort(
+  (a, b) => b.length - a.length
+);
 
-  const first = rawPath.split("/")[0];
-  if (first.includes(".") && !rawPath.includes("/")) return false;
-  return true;
+/** If `b` starts with a configured locale segment, return the path after that prefix ("" if exact). */
+function stripKnownLocalePrefix(b) {
+  for (const l of knownLocalesLongestFirst) {
+    if (b === l) return "";
+    if (b.startsWith(`${l}/`)) return b.slice(l.length + 1);
+  }
+  return null;
+}
+
+/** Split `/path#hash` so we rewrite the path and keep the fragment. */
+function splitHash(pathPart) {
+  const hashIdx = pathPart.indexOf("#");
+  if (hashIdx === -1) {
+    return { base: pathPart, suffix: "" };
+  }
+  return { base: pathPart.slice(0, hashIdx), suffix: pathPart.slice(hashIdx) };
+}
+
+/**
+ * Path without leading slash (e.g. `en/platform/metrics` or `platform/metrics`).
+ * Returns new path (no leading slash) or null if unchanged / skip.
+ */
+function rewriteInternalPath(base, locale) {
+  const b = base.trim();
+  if (!b) return null;
+  if (b.startsWith("http://") || b.startsWith("https://") || b.startsWith("mailto:")) {
+    return null;
+  }
+  if (excludedPrefixes.some((prefix) => b.startsWith(prefix))) return null;
+
+  const firstSeg = b.split("/")[0];
+  if (firstSeg.includes(".") && !b.includes("/")) return null;
+
+  // Already matches the locale of the file we're editing
+  if (b === locale || b.startsWith(`${locale}/`)) {
+    return null;
+  }
+
+  const restAfterLocale = stripKnownLocalePrefix(b);
+  if (restAfterLocale !== null) {
+    return restAfterLocale === "" ? locale : `${locale}/${restAfterLocale}`;
+  }
+
+  // Bare internal path: platform/foo -> {locale}/platform/foo
+  return `${locale}/${b}`;
+}
+
+function transformCapturedPath(p1, locale) {
+  const trimmed = p1.trim();
+  if (!trimmed || trimmed.startsWith("#")) return null;
+  const { base, suffix } = splitHash(trimmed);
+  const out = rewriteInternalPath(base, locale);
+  if (out === null) return null;
+  return out + suffix;
 }
 
 function rewriteContent(content, locale) {
@@ -61,16 +109,16 @@ function rewriteContent(content, locale) {
 
   // Markdown links: [label](/path)
   next = next.replace(/\]\(\/([^)]+)\)/g, (full, p1) => {
-    const p = p1.trim();
-    if (!shouldPrefix(p, locale)) return full;
-    return `](/${locale}/${p})`;
+    const out = transformCapturedPath(p1, locale);
+    if (out === null) return full;
+    return `](/${out})`;
   });
 
   // JSX/HTML attrs: href="/path" only (keep relative image/video src unchanged)
   next = next.replace(/\bhref=(["'])\/([^"']+)\1/g, (full, quote, p1) => {
-    const p = p1.trim();
-    if (!shouldPrefix(p, locale)) return full;
-    return `href=${quote}/${locale}/${p}${quote}`;
+    const out = transformCapturedPath(p1, locale);
+    if (out === null) return full;
+    return `href=${quote}/${out}${quote}`;
   });
 
   return next;

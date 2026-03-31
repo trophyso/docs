@@ -1,5 +1,5 @@
 ---
-title: Cómo Construir una Plataforma de Estudio Gamificada
+title: Cómo construir una plataforma de estudio gamificada
 description: Sigue el proceso mientras construimos una plataforma de estudio
   gamificada usando Trophy con logros, una racha diaria, XP y clasificaciones.
 subtitle: Sigue el proceso mientras construimos una plataforma de estudio
@@ -10,7 +10,7 @@ noindex: true
 import MetricChangeRequestBlock from "../../snippets/metric-change-request-block.mdx";
 import MetricChangeResponseBlock from "../../snippets/metric-change-response-block.mdx";
 
-En este tutorial construiremos una plataforma de estudio de ejemplo usando Trophy para la gamificación. Si prefieres ir directamente al resultado final, no dudes en consultar el [repositorio de ejemplo](https://github.com/trophyso/example-study-platform) o la [demostración en vivo](https://study.examples.trophy.so).
+En este tutorial construiremos una plataforma de estudio de ejemplo usando Trophy para gamificación. Si prefieres ir directamente al final, puedes revisar el [repositorio de ejemplo](https://github.com/trophyso/example-study-platform) o la [demostración en vivo](https://study.examples.trophy.so).
 
 <Frame>
   <video
@@ -23,19 +23,19 @@ En este tutorial construiremos una plataforma de estudio de ejemplo usando Troph
   ></video>
 </Frame>
 
-## Tabla de Contenidos {#table-of-contents}
+## Tabla de contenidos {#table-of-contents}
 
-- [Stack Tecnológico](#tech-stack)
-- [Requisitos Previos](#pre-requisites)
-- [Configuración e Instalación](#setup-%26-installation)
-- [Construyendo la Funcionalidad de Flashcards](#building-the-flashcards-feature)
-- [Agregando Gamificación Básica](#adding-basic-gamification)
-- [Agregando un Sistema de XP](#adding-an-xp-system)
-- [Agregando Clasificaciones](#adding-leaderboards)
-- [Agregando un Sistema de Energía](#adding-an-energy-system)
-- [El Resultado](#the-result)
+- [Stack tecnológico](#tech-stack)
+- [Requisitos previos](#pre-requisites)
+- [Configuración e instalación](#setup-%26-installation)
+- [Construcción de la función de tarjetas didácticas](#building-the-flashcards-feature)
+- [Añadiendo gamificación básica](#adding-basic-gamification)
+- [Añadiendo un sistema de XP](#adding-an-xp-system)
+- [Añadiendo clasificaciones](#adding-leaderboards)
+- [Añadiendo un sistema de energía](#adding-an-energy-system)
+- [El resultado](#the-result)
 
-## Stack Tecnológico {#tech-stack}
+## Stack tecnológico {#tech-stack}
 
 - [NextJS 15](https://nextjs.org/docs) (React 19)
 - [Shadcn/Ui](https://ui.shadcn.com)
@@ -44,14 +44,14 @@ En este tutorial construiremos una plataforma de estudio de ejemplo usando Troph
 - [HTML5 Audio API](https://developer.mozilla.org/en-US/docs/Web/API/Web_Audio_API) para efectos de sonido
 - [Trophy](https://trophy.so) para gamificación
 
-## Requisitos Previos {#pre-requisites}
+## Requisitos previos {#pre-requisites}
 
 - Una cuenta de Trophy (no te preocupes, la configuraremos sobre la marcha...)
 
-## Configuración e Instalación {#setup-installation}
+## Configuración e instalación {#setup-installation}
 
 <Tip>
-  ¿Quieres saltarte la configuración? Ve directamente a [la parte
+  ¿Quieres omitir la configuración? Ve directamente a [la parte
   divertida](#setting-up-flashcard-data).
 </Tip>
 
@@ -61,7 +61,7 @@ Primero necesitamos crear un nuevo proyecto NextJS:
 npx create-next-app@latest
 ```
 
-Configura este nuevo proyecto como prefieras, pero para los propósitos de este tutorial nos apegaremos principalmente a los valores predeterminados:
+Configura este nuevo proyecto como prefieras, pero para los propósitos de este tutorial nos ceñiremos principalmente a los valores predeterminados:
 
 ```bash
 What is your project named? my-app
@@ -74,7 +74,7 @@ Would you like to use Turbopack for `next dev`?  Yes
 Would you like to customize the import alias (`@/*` by default)? No
 ```
 
-A continuación, inicializaremos una nueva instalación de la biblioteca de interfaz favorita de todos, shadcn/ui:
+A continuación, inicializaremos una nueva instalación de la biblioteca de UI favorita de todos, shadcn/ui:
 
 ```bash
 npx shadcn@latest init
@@ -91,13 +91,13 @@ Some packages may fail to install due to peer dependency issues in npm (see http
     Use --legacy-peer-deps
 ```
 
-Para los propósitos de este tutorial elegí `--force`, pero debes elegir la configuración que mejor se adapte a tus requisitos.
+Para los propósitos de este tutorial elegí `--force`, pero debes elegir la configuración que consideres más adecuada para tus requisitos.
 
-## Construcción de la Funcionalidad de Tarjetas de Estudio {#building-the-flashcards-feature}
+## Construcción de la Función de Tarjetas de Estudio {#building-the-flashcards-feature}
 
 ### Configuración de Datos de Tarjetas de Estudio {#setting-up-flashcard-data}
 
-Para los propósitos de este tutorial, vamos a usar algunos tipos simples con un almacén de datos en memoria. En una aplicación de producción probablemente querrías considerar almacenar esta información en una base de datos.
+Para los propósitos de este tutorial, vamos a usar algunos tipos simples con un almacén de datos en memoria. En una aplicación de producción probablemente querrás considerar almacenar esta información en una base de datos.
 
 Aquí tendremos un tipo muy simple que almacena información sobre cada tarjeta de estudio donde usaremos la propiedad `front` para almacenar las preguntas cuyas respuestas el estudiante quiere aprender, y la propiedad `back` para almacenar las respuestas a cada pregunta:
 
@@ -109,7 +109,7 @@ export interface IFlashcard {
 }
 ```
 
-Luego, para comenzar, almacenaremos algunas tarjetas de estudio en memoria centradas en el aprendizaje de ciudades capitales:
+Luego, para comenzar, almacenaremos algunas tarjetas de estudio en memoria centradas en aprender las capitales de ciudades:
 
 ```ts src/data.ts [expandable]
 import { IFlashcard } from "./types/flashcard";
@@ -220,7 +220,7 @@ export const flashcards: IFlashcard[] = [
 
 ### Diseño Básico de Tarjetas de Estudio {#basic-flashcard-layout}
 
-Con algunos datos básicos configurados, necesitamos agregar una forma para que los usuarios naveguen por sus tarjetas de estudio.
+Con algunos datos básicos configurados, necesitamos agregar una forma para que los usuarios puedan recorrer sus tarjetas de estudio.
 
 Para esto usaremos los componentes `carousel` e `card` de shadcn/ui, por lo que necesitamos agregarlos a nuestro proyecto:
 
@@ -228,7 +228,7 @@ Para esto usaremos los componentes `carousel` e `card` de shadcn/ui, por lo que 
 npx shadcn@latest add carousel card
 ```
 
-Luego, crearemos un nuevo componente `<Flashcards />` que combine estos en una solución funcional, especificando que podemos pasar cualquier lista de objetos `IFlashcard` como props
+Luego, crearemos un nuevo componente `<Flashcards />` que combina estos elementos en una solución funcional, especificando que podemos pasar cualquier lista de objetos `IFlashcard` como props
 
 ```tsx src/app/flashcards.tsx [expandable]
 import {
@@ -270,7 +270,7 @@ export default function Flashcards({ flashcards }: Props) {
 }
 ```
 
-Después actualizaremos nuestro archivo `page.tsx` para mostrar nuestro componente `<Flashcards />`, pasando nuestros datos de ejemplo de tarjetas de estudio:
+Luego actualizaremos nuestro archivo `page.tsx` para mostrar nuestro componente `<Flashcards />`, pasando nuestros datos de tarjetas de estudio de ejemplo:
 
 ```tsx src/app/page.tsx
 import { flashcards } from "@/data";
@@ -285,7 +285,7 @@ export default function Home() {
 }
 ```
 
-Al final de este paso, debes tener una interfaz de tarjetas de estudio funcional que te permita navegar por cada tarjeta en nuestro conjunto de datos de ciudades.
+Al final de este paso, deberías tener una interfaz de usuario de tarjetas de estudio funcional que te permita recorrer cada tarjeta de estudio en nuestro conjunto de datos de ciudades.
 
 <Frame>
   <video
@@ -300,7 +300,7 @@ Al final de este paso, debes tener una interfaz de tarjetas de estudio funcional
 
 ### Voltear Tarjetas de Estudio {#flipping-flashcards}
 
-Ahora esto está genial, pero no es muy útil como aplicación de estudio en este momento, ya que no hay forma de ver si obtuviste la respuesta correcta. Necesitamos agregar una forma de voltear las tarjetas de estudio y verificar nuestra respuesta...
+Ahora esto está genial, pero no es muy útil como aplicación de estudio en este momento ya que no hay forma de ver si obtuviste la respuesta correcta. Necesitamos agregar una manera de voltear las tarjetas y verificar nuestra respuesta...
 
 Para simplificar esto, primero crearemos un componente `<Flashcard />` que será responsable de toda la lógica para cada tarjeta de estudio:
 
@@ -363,8 +363,8 @@ export default function Flashcards({ flashcards }: Props) {
 
 Ahora estamos listos para agregar interactividad a cada tarjeta de estudio. Esto es lo que haremos:
 
-- Primero, agregaremos una variable de estado `side` que contendrá el lado actual de la tarjeta de estudio que se está mostrando.
-- A continuación, agregaremos un callback `onClick()` al componente `<Card />` que actualizará el estado `side` a `back` cuando se haga clic, si el frente de la tarjeta se está mostrando actualmente.
+- Primero, agregaremos una variable de estado `side` que contendrá el lado actual de la tarjeta que se está mostrando.
+- A continuación, agregaremos un callback `onClick()` al componente `<Card />` que actualizará el estado `side` a `back` cuando se haga clic si el frente de la tarjeta se está mostrando actualmente.
 - Finalmente, renderizaremos condicionalmente el texto en el `<Card />` según el valor de la variable de estado `side`.
 
 Aquí está el archivo terminado:
@@ -403,13 +403,13 @@ export default function Flashcard({ flashcard }: Props) {
 }
 ```
 
-Luego, usaremos [Motion](https://motion.dev) para agregar una animación de volteo elegante a la tarjeta cuando hagamos clic en ella. Para esto, primero necesitamos instalar el paquete en nuestro proyecto:
+Luego, usaremos [Motion](https://motion.dev) para agregar una animación de volteo elegante a la tarjeta cuando hagamos clic en ella. Para esto primero necesitamos instalar el paquete en nuestro proyecto:
 
 ```bash
 npm install motion
 ```
 
-Si lo piensas bien, cuando volteas una tarjeta de estudio, tiendes a hacerlo en el eje Y. Así que aquí usaremos un `<motion.div />` con una animación de resorte ligera en el eje y para crear el efecto:
+Si lo piensas, cuando volteas una tarjeta de estudio, tiendes a hacerlo en el eje Y. Así que aquí usaremos un `<motion.div />` con una animación de resorte ligera en el eje y para crear el efecto:
 
 ```tsx src/app/flashcard.tsx [expandable] {7-8,26-37}
 "use client";
@@ -462,8 +462,8 @@ export default function Flashcard({ flashcard }: Props) {
 
 Notarás que también agregamos un par de estilos aquí. Estos hacen un par de cosas:
 
-- Asegúrate de que cuando un `<Card />` está girando, la 'cara posterior' no sea visible durante la animación con `backface-visibility: hidden;`
-- Como el componente `<Card />` es hijo de `<motion.div />`, normalmente aparecería plano cuando su padre rota en 3D. Agregar `transform-style: preserve-3d;` al `<Card />` asegura que mantenga su efecto 3D cuando su padre se anima.
+- Asegúrate de que cuando un `<Card />` se está volteando, la 'cara trasera' no sea visible durante la animación con `backface-visibility: hidden;`
+- Como el componente `<Card />` es un hijo del `<motion.div />`, normalmente aparecería plano cuando su padre rota en 3D. Agregar `transform-style: preserve-3d;` al `<Card />` asegura que mantenga su efecto 3D cuando su padre se anima.
 
 ```css src/app/flashcard.module.css
 .backface-hidden {
@@ -479,7 +479,7 @@ Notarás que también agregamos un par de estilos aquí. Estos hacen un par de c
 
 ### ¡Un Error de Volteo! {#a-flippin-bug}
 
-¡Genial! Nuestro proyecto ahora está empezando a sentirse como una verdadera herramienta de estudio. Sin embargo, los observadores atentos (o quizás no tanto...) notarán que hay un error importante aquí. Cuando volteamos una tarjeta, la respuesta en el reverso aparece al revés 😢...
+¡Genial! Nuestro proyecto ahora está empezando a sentirse como una verdadera herramienta de estudio. Sin embargo, los observadores perspicaces (o tal vez no tanto...) notarán que hay un error importante aquí. Cuando volteamos una tarjeta, la respuesta en la parte trasera aparece invertida 😢...
 
 <Frame>
   <video
@@ -492,7 +492,7 @@ Notarás que también agregamos un par de estilos aquí. Estos hacen un par de c
   ></video>
 </Frame>
 
-Si lo piensas bien, cuando escribes una tarjeta de estudio, en realidad escribes la respuesta en el reverso en dirección opuesta a la pregunta del frente.
+Si lo piensas bien, cuando escribes una tarjeta de estudio, en realidad escribes la respuesta en la parte trasera en la dirección opuesta a la pregunta en el frente.
 
 Y como estamos usando `motion` para literalmente voltear nuestra tarjeta en el eje Y, necesitamos asegurarnos de escribir nuestras respuestas al revés también.
 
@@ -527,7 +527,7 @@ Luego agregaremos condicionalmente este estilo al texto de nuestra tarjeta segú
 </span>
 ```
 
-Perfecto. Ahora cuando volteemos una tarjeta, la respuesta en el reverso debería leerse en la dirección correcta:
+Perfecto. Ahora cuando volteemos una tarjeta, la respuesta en la parte trasera debería leerse en la dirección correcta:
 
 <Frame>
   <video
@@ -542,9 +542,9 @@ Perfecto. Ahora cuando volteemos una tarjeta, la respuesta en el reverso deberí
 
 ### Seguimiento del Progreso {#tracking-progress}
 
-El siguiente paso es agregar una interfaz para mostrar al usuario cuántas tarjetas de estudio ha revisado y cuántas le quedan en el conjunto. Usaremos una barra de progreso simple para lograr esto.
+El siguiente paso es agregar interfaz de usuario para mostrar al usuario cuántas tarjetas de estudio ha revisado y cuántas le quedan en el conjunto. Usaremos una barra de progreso simple para lograr esto.
 
-Antes de comenzar a rastrear este nivel de información, necesitamos configurar el seguimiento de una nueva variable de estado que contenga el índice de la tarjeta de estudio que el usuario está viendo actualmente. Utilizaremos la [API del carrusel](https://ui.shadcn.com/docs/components/carousel#api) para integrarnos con esta funcionalidad y mantener nuestra variable de estado actualizada:
+Antes de poder comenzar a rastrear este nivel de información, necesitamos configurar el seguimiento de una nueva variable de estado que contenga el índice de la tarjeta que el usuario está viendo actualmente. Usaremos la [API del carrusel](https://ui.shadcn.com/docs/components/carousel#api) para conectarnos a esta funcionalidad y mantener nuestra variable de estado actualizada:
 
 ```tsx src/app/flashcards.tsx [expandable] {1,8,19-34,37}
 "use client";
@@ -658,7 +658,7 @@ export default function Flashcards({ flashcards }: Props) {
 }
 ```
 
-¡Excelente! Ahora las cosas realmente están empezando a tomar forma.
+¡Genial! Ahora las cosas realmente están empezando a tomar forma.
 
 <Frame>
   <video
@@ -675,27 +675,27 @@ Ahora comienza la verdadera diversión...
 
 ## Agregando Gamificación Básica {#adding-basic-gamification}
 
-En esta sección agregaremos los siguientes elementos de gamificación al proyecto de tarjetas de estudio:
+En esta sección agregaremos los siguientes elementos de gamificación al proyecto de tarjetas:
 
 - Logros por completar:
-  - 10 tarjetas de estudio
-  - 50 tarjetas de estudio
-  - 100 tarjetas de estudio
-  - 250 tarjetas de estudio
-- Racha diaria por completar al menos una tarjeta de estudio al día.
+  - 10 tarjetas
+  - 50 tarjetas
+  - 100 tarjetas
+  - 250 tarjetas
+- Racha diaria por completar al menos una tarjeta al día.
 - Correos electrónicos automatizados para:
   - Logro desbloqueado
-  - Resúmenes de progreso semanales
+  - Resúmenes de progreso semanal
 
-Esto puede sonar como mucho, ¿pero te sorprendería si te dijera que puedes construir todo esto en menos de 10 líneas de código?
+Esto puede sonar como mucho, pero ¿te sorprendería si te dijera que puedes construir todo esto en menos de 10 líneas de código?
 
-Así es. Trophy hace que sea muy fácil construir estas funcionalidades con unas pocas líneas de código de integración.
+Sí, puedes. Trophy lo hace muy fácil para construir estas funcionalidades con unas pocas líneas de código de integración.
 
-Entonces, comencemos...
+Entonces, empecemos...
 
 ### Cómo Funciona Trophy {#how-trophy-works}
 
-Primero, necesitamos una nueva [cuenta de Trophy](https://app.trophy.so/sign-up). Luego podemos empezar a ensamblar las diferentes partes de nuestra experiencia de gamificación.
+Primero, necesitamos una nueva [cuenta de Trophy](https://app.trophy.so/sign-up). Luego podemos comenzar a ensamblar las diversas partes de nuestra experiencia de gamificación.
 
 En Trophy, las [Métricas](/es/platform/metrics) representan diferentes interacciones que los usuarios pueden realizar y pueden impulsar funcionalidades como [Logros](/es/platform/achievements), [Rachas](/es/platform/streaks) y [Correos electrónicos](/es/platform/emails).
 
@@ -714,25 +714,25 @@ flowchart TD
     B-->F
 ```
 
-En Trophy rastreamos las interacciones del usuario enviando [Eventos](/es/platform/events) desde nuestro código a Trophy contra una métrica específica.
+En Trophy rastreamos las interacciones de los usuarios enviando [Eventos](/es/platform/events) desde nuestro código a Trophy contra una métrica específica.
 
-Cuando se registran eventos para un usuario específico, cualquier logro vinculado a la métrica especificada se desbloqueará si se cumplen los requisitos, las rachas diarias se calcularán automáticamente y se mantendrán actualizadas, se otorgarán puntos y se actualizarán las clasificaciones.
+Cuando se registran eventos para un usuario específico, cualquier logro vinculado a la métrica especificada se desbloqueará si se cumplen los requisitos, las rachas diarias se calcularán automáticamente y se mantendrán actualizadas, se otorgan puntos y las clasificaciones se actualizan.
 
 Esto es lo que hace que construir experiencias gamificadas con Trophy sea tan fácil: hace todo el trabajo por ti detrás de escena.
 
-Registrar un evento contra una métrica para un usuario específico hace uso de la [API de eventos de métrica](/es/api-reference/endpoints/metrics/send-a-metric-change-event) de Trophy, que en la práctica se ve así:
+Registrar un evento contra una métrica para un usuario específico utiliza la [API de eventos de métricas](/es/api-reference/endpoints/metrics/send-a-metric-change-event) de Trophy, que en la práctica se ve así:
 
 <MetricChangeRequestBlock />
 
-Así es como con solo unas pocas líneas de código podemos impulsar todo un conjunto de funciones de gamificación. Sin embargo, antes de poder empezar a enviar eventos, necesitamos configurar nuestra nueva cuenta de Trophy.
+Así es como con solo unas pocas líneas de código podemos impulsar todo un conjunto de funciones de gamificación. Sin embargo, antes de poder comenzar a enviar eventos, necesitamos configurar nuestra nueva cuenta de Trophy.
 
-### Configurando Trophy {#setting-up-trophy}
+### Configuración de Trophy {#setting-up-trophy}
 
 Así es como configuraremos nuestra cuenta de Trophy para nuestra aplicación de estudio:
 
 - Primero, configuraremos una métrica _Tarjetas Volteadas_
-- Luego, configuraremos logros vinculados a esta métrica
-- Después, configuraremos una racha diaria vinculada a esta métrica
+- A continuación, configuraremos logros vinculados a esta métrica
+- Luego, configuraremos una racha diaria vinculada a esta métrica
 - Finalmente, configuraremos secuencias de correo electrónico automatizadas para esta métrica
 
 Comencemos...
@@ -756,15 +756,15 @@ Comencemos...
 
 <Accordion title="Crear logros" icon="trophy">
   A continuación, crea un logro para cada uno de los siguientes hitos:
-  - 10 tarjetas de estudio (Elemental)
-  - 50 tarjetas de estudio (Principiante)
-  - 100 tarjetas de estudio (Erudito)
-  - 250 tarjetas de estudio (Experto)
+  - 10 tarjetas (Elemental)
+  - 50 tarjetas (Principiante)
+  - 100 tarjetas (Erudito)
+  - 250 tarjetas (Experto)
 
 {" "}
 
 <Tip>
-  Descarga y usa libremente este archivo zip de insignias (ya preparadas para esta aplicación de ejemplo):
+  Siéntete libre de descargar y usar este archivo zip de insignias (listas para esta aplicación de ejemplo):
   [flashcard_badges.zip](../../assets/guides/example-apps/example-study-app/flashcard_badges.zip)
 </Tip>
 
@@ -802,7 +802,7 @@ Comencemos...
 
   Cada tipo de correo tiene su propia sección: añade una plantilla en cada una y actívala para comenzar a enviar.
 
-Trophy también nos ofrece una vista previa de los correos electrónicos, lo cual es útil. Además, puedes configurar un logotipo y colores de marca en la [página de branding](https://app.trophy.so/branding). Estos ajustes se utilizan automáticamente en todos los correos enviados por Trophy.
+Trophy también nos proporciona una vista previa de los correos, lo cual es útil. Además, siéntete libre de configurar un logo atractivo y colores de marca en la [página de personalización](https://app.trophy.so/branding). Estos ajustes se usan automáticamente en todos los correos enviados por Trophy.
 
 {" "}
 
@@ -820,15 +820,15 @@ Trophy también nos ofrece una vista previa de los correos electrónicos, lo cua
 {" "}
 
 <Note>
-  Antes de poder empezar a enviar correos, necesitarás [configurar tu dirección de envío](/es/platform/emails#sending-emails) con Trophy. Esto puede hacerse más adelante si lo prefieres.
+  Antes de poder comenzar a enviar correos, necesitarás [configurar tu dirección de envío](/es/platform/emails#sending-emails) con Trophy. Pero esto puede hacerse más adelante si lo prefieres.
 </Note>
 
   </Accordion>
 </AccordionGroup>
 
-### Integrar el SDK de Trophy {#integrating-trophy-sdk}
+### Integración del SDK de Trophy {#integrating-trophy-sdk}
 
-Primero necesitamos obtener nuestra clave API de la [página de integración](https://app.trophy.so/integration) de Trophy y añadirla como una variable de entorno **únicamente del lado del servidor**.
+Primero necesitamos obtener nuestra clave API de la [página de integración](https://app.trophy.so/integration) de Trophy y añadirla como una variable de entorno **exclusiva del servidor**.
 
 <Warning>
   Asegúrate de **no** exponer tu clave API en código del lado del cliente
@@ -844,9 +844,9 @@ A continuación, instalaremos el SDK de Trophy:
 npm install @trophyso/node
 ```
 
-Luego, cada vez que un usuario vea una tarjeta de estudio, simplemente enviamos un evento a Trophy con los detalles del usuario que realizó la acción (que simularemos), y el número de tarjetas de estudio que visualizó (1 en este caso).
+Luego, cada vez que un usuario vea una tarjeta de estudio, simplemente enviamos un evento a Trophy con los detalles del usuario que realizó la acción (que simularemos) y el número de tarjetas que vieron (1 en este caso).
 
-En NextJS haremos esto con una server action que realiza la llamada a Trophy para enviar el evento, y llamaremos a esta acción cuando el usuario pase a la siguiente tarjeta de estudio en el carrusel.
+En NextJS haremos esto con una server action que realiza la llamada a Trophy para enviar el evento, y llamaremos a esta acción cuando el usuario avance a la siguiente tarjeta en el carrusel.
 
 Primero, crea la server action:
 
@@ -889,7 +889,7 @@ export async function viewFlashcard(): Promise<EventResponse | null> {
 }
 ```
 
-Luego llámala cuando el usuario visualice la siguiente tarjeta de estudio:
+Luego llámala cuando el usuario vea la siguiente tarjeta:
 
 ```tsx src/app/flashcards.tsx [expandable] {14,36-37}
 "use client";
@@ -949,7 +949,7 @@ export default function Flashcards({ flashcards }: Props) {
 }
 ```
 
-Podemos validar que esto funciona verificando el [panel de control](https://app.trophy.so) de Trophy, que debería mostrar nuestro primer usuario registrado en la tabla _Mejores Usuarios_:
+Podemos validar que esto funciona revisando el [panel de control](https://app.trophy.so) de Trophy, que debería mostrar nuestro primer usuario registrado en la tabla _Usuarios Principales_:
 
 <Frame>
   <img
@@ -960,33 +960,33 @@ Podemos validar que esto funciona verificando el [panel de control](https://app.
   />
 </Frame>
 
-A continuación, añadiremos algo de interfaz de usuario para mostrar nuestras funciones de gamificación en la práctica.
+A continuación, agregaremos interfaz de usuario para demostrar nuestras funciones de gamificación en la práctica.
 
-### Añadiendo UX de Gamificación {#adding-gamification-ux}
+### Agregando UX de Gamificación {#adding-gamification-ux}
 
-La respuesta a la llamada de API que hacemos para rastrear eventos en Trophy nos devuelve útilmente cualquier cambio en el progreso del usuario como resultado de ese evento:
+La respuesta a la llamada API que hacemos para rastrear eventos en Trophy nos devuelve útilmente cualquier cambio en el progreso del usuario como resultado de ese evento:
 
 <MetricChangeResponseBlock />
 
 Esto incluye:
 
 - El array `achievements` que es una lista de logros recién desbloqueados como resultado del evento.
-- El objeto `currentStreak` que son los datos de racha más actualizados del usuario después de que el evento haya tenido lugar.
+- El objeto `currentStreak` que contiene los datos de racha más actualizados del usuario después de que el evento haya tenido lugar.
 
-Esto nos facilita reaccionar a los cambios en el progreso del usuario y hacer lo que queramos. En este ejemplo, cada vez que Trophy nos indique que un usuario ha desbloqueado un nuevo logro, o ha extendido su racha, haremos lo siguiente:
+Esto hace que sea muy fácil reaccionar a los cambios en el progreso del usuario y hacer lo que queramos. En este ejemplo, cada vez que Trophy nos indique que un usuario ha desbloqueado un nuevo logro o ha extendido su racha:
 
-- Mostrar una notificación emergente tipo toast
+- Mostrar una notificación emergente
 - Reproducir un efecto de sonido
 
 #### Notificaciones de Logro Desbloqueado {#achievement-unlocked-toasts}
 
-Primero, mostraremos una notificación toast cuando los usuarios desbloqueen nuevos logros. Para esto necesitamos añadir el componente `sonner` de shadcn/ui a nuestro proyecto:
+Primero, mostraremos una notificación cuando los usuarios desbloqueen nuevos logros. Para esto necesitamos agregar el componente `sonner` de shadcn/ui a nuestro proyecto:
 
 ```bash
 npx shadcn@latest add sonner
 ```
 
-Luego crearemos el componente de UI `<Toast />` que necesitamos para mostrar las notificaciones toast y una función de utilidad `toast()` para activarlas:
+Luego crearemos el componente de interfaz `<Toast />` que necesitamos para mostrar las notificaciones y una función de utilidad `toast()` para activarlas:
 
 ```tsx src/lib/toast.tsx [expandable]
 "use client";
@@ -1055,7 +1055,7 @@ export function Toast(props: ToastProps) {
 }
 ```
 
-A continuación, necesitamos actualizar el archivo `page.tsx` con el componente principal `<Toaster />`. Este es el componente de `sonner` que es responsable de mostrar nuestras notificaciones toast en la pantalla cuando las activamos:
+A continuación, necesitamos actualizar el archivo `page.tsx` con el componente principal `<Toaster />`. Este es el componente de `sonner` que se encarga de mostrar nuestras notificaciones en la pantalla cuando las activamos:
 
 ```tsx src/app/page.tsx {3,9}
 import { flashcards } from "@/data";
@@ -1072,7 +1072,7 @@ export default function Home() {
 }
 ```
 
-Luego, para asegurar que NextJS muestre nuestras insignias, necesitamos configurar el host de imágenes de Trophy como un dominio de confianza. Si usas URLs de insignias personalizadas en tu propio dominio o CDN, añade esos nombres de host aquí también, o usa un `<img>` simple y omite los patrones remotos.
+A continuación, para asegurarnos de que NextJS muestre nuestras insignias, necesitamos configurar el host de imágenes de Trophy como un dominio de confianza. Si usas URLs de insignias personalizadas en tu propio dominio o CDN, agrega esos nombres de host aquí también, o usa un `<img>` simple y omite los patrones remotos.
 
 ```ts next.config.ts {4-11}
 import type { NextConfig } from "next";
@@ -1091,7 +1091,7 @@ const nextConfig: NextConfig = {
 export default nextConfig;
 ```
 
-Y finalmente, actualizamos nuestro componente `<Flashcards />` para leer la respuesta de Trophy y mostrar notificaciones toast para cualquier logro desbloqueado:
+Y finalmente, actualizamos nuestro componente `<Flashcards />` para leer la respuesta de Trophy y mostrar notificaciones para cualquier logro desbloqueado:
 
 ```tsx src/app/flashcards.tsx [expandable] {15,33,38-56}
 "use client";
@@ -1188,7 +1188,7 @@ Usaremos los mismos métodos para mostrar notificaciones similares cuando un usu
 <Tip>
   Si quisiéramos experimentar con una cadencia de racha diferente, como una
   racha semanal, entonces nada de este código cambia - lo genial de Trophy es
-  que todo se puede configurar desde el panel de control y no requiere ningún
+  que todo puede configurarse desde el panel de control y no requiere ningún
   cambio de código.
 </Tip>
 
@@ -1277,7 +1277,7 @@ export default function Flashcards({ flashcards }: Props) {
 }
 ```
 
-Ahora, la primera vez que un usuario vea una flashcard cada día, verá uno de nuestros toasts de racha extendida:
+Ahora, la primera vez que un usuario vea una tarjeta de estudio cada día, verá uno de nuestros toasts de racha extendida:
 
 <Frame>
   <video
@@ -1292,17 +1292,17 @@ Ahora, la primera vez que un usuario vea una flashcard cada día, verá uno de n
 
 #### Efectos de Sonido {#sound-effects}
 
-La gamificación se trata principalmente de aumentar la retención de usuarios. La mejor forma de hacerlo es hacer que las funcionalidades que construimos sean lo más atractivas posible. Una excelente manera de lograrlo que a menudo se pasa por alto es mediante efectos de sonido.
+La gamificación se trata, ante todo, de aumentar la retención de usuarios. La mejor manera de lograr esto es hacer que las funciones que construimos sean lo más atractivas posible. Una excelente manera de hacerlo que a menudo se pasa por alto es con efectos de sonido.
 
-Aquí agregaremos dos efectos de sonido distintos para cada caso en el que mostremos un toast para involucrar aún más al usuario. Esto ayuda a distinguir los diferentes toasts y ayuda a los usuarios a construir una expectativa de lo que significa cada sonido.
+Aquí agregaremos dos efectos de sonido distintos para cada caso donde mostramos un toast para involucrar aún más al usuario. Esto ayuda a distinguir los diferentes toasts y ayuda a los usuarios a desarrollar una expectativa de lo que significa cada sonido.
 
-Para esto utilizaremos el [API de Audio HTML5](https://developer.mozilla.org/en-US/docs/Web/API/Web_Audio_API) y usaremos sonidos de [freesounds.org](https://freesounds.org).
+Para esto utilizaremos la [API de Audio HTML5](https://developer.mozilla.org/en-US/docs/Web/API/Web_Audio_API) y usaremos sonidos de [freesounds.org](https://freesounds.org).
 
 <Tip>
   Los sonidos utilizados en este ejemplo están en el repositorio en el directorio `public/sounds`. ¡Siéntete libre de usarlos o elegir otros que te gusten!
 </Tip>
 
-Para cargar los archivos de sonido en nuestra aplicación, crearemos un ref para cada uno, luego simplemente llamamos al método `play()` en cada uno cuando queramos reproducir el sonido:
+Para cargar los archivos de sonido en nuestra aplicación, crearemos una referencia para cada uno, luego simplemente llamamos al método `play()` en cada uno cuando queramos reproducir realmente el sonido:
 
 ```tsx src/app/flashcards.tsx [expandable] {25-31,53-57,73-77}
 "use client";
@@ -1409,11 +1409,11 @@ export default function Flashcards({ flashcards }: Props) {
 }
 ```
 
-#### Mostrando el Progreso de Estudio {#displaying-study-journey}
+#### Mostrar el Progreso de Estudio {#displaying-study-journey}
 
-La última pieza de UI que agregaremos será un diálogo para mostrar el progreso de estudio del usuario, incluyendo su racha y cualquier logro que haya desbloqueado hasta ahora.
+La última pieza de interfaz que agregaremos será un diálogo para mostrar el progreso de estudio del usuario, incluyendo su racha y cualquier logro que haya desbloqueado hasta ahora.
 
-Primero, agregaremos un par de nuevas acciones de servidor para obtener la racha y logros del usuario desde Trophy. Como estamos usando una racha diaria aquí, obtendremos los últimos 14 días de datos de racha de Trophy para tener suficiente información con la que trabajar en nuestra UI:
+Primero, agregaremos un par de nuevas acciones de servidor para obtener la racha y los logros del usuario desde Trophy. Como estamos usando una racha diaria aquí, obtendremos los últimos 14 días de datos de racha de Trophy para darnos suficiente información para trabajar en nuestra interfaz:
 
 ```tsx src/app/actions.ts [expandable] {6-7,10-11,24,33,45-58,60-73}
 "use server";
@@ -1512,13 +1512,13 @@ export default async function Home() {
 }
 ```
 
-Luego crearemos un nuevo componente `<StudyJourney />` que reciba los datos de logros y racha como props y los renderice de forma atractiva en un diálogo. Antes de agregar esto, necesitamos añadir el componente `dialog` de shadcn/ui a nuestro proyecto, y ya que estamos, también añadiremos el componente `seperator`:
+Después crearemos un nuevo componente `<StudyJourney />` que reciba los datos de logros y rachas como props y los renderice de manera atractiva en un diálogo. Antes de añadir esto, necesitamos agregar el componente `dialog` de shadcn/ui a nuestro proyecto, y mientras lo hacemos, también añadiremos el componente `seperator`:
 
 ```bash
 npx shadcn@latest add dialog separator
 ```
 
-También necesitaremos `dayjs` para ayudarnos a mostrar las fechas de forma clara:
+También necesitaremos `dayjs` para ayudarnos a mostrar las fechas de manera agradable:
 
 ```bash
 npm i dayjs
@@ -1761,11 +1761,11 @@ Primero, dirígete a la [página de puntos](https://app.trophy.so/points) de Tro
   ></video>
 </Frame>
 
-Configura tu sistema de puntos para otorgar XP por ver tarjetas de estudio. También puedes configurar XP de bonificación por hitos de racha.
+Configura tu sistema de puntos para otorgar XP por ver tarjetas de estudio. También puedes configurar XP adicional por hitos de racha.
 
 ### Integrando la API de Puntos {#integrating-points-api}
 
-Agrega nuevas acciones de servidor para obtener los datos de puntos:
+Añade nuevas acciones de servidor para obtener datos de puntos:
 
 ```tsx src/app/actions.ts [expandable]
 const POINTS_SYSTEM_KEY = "points";
@@ -1911,9 +1911,9 @@ export function useUserPoints() {
 }
 ```
 
-### Construyendo la UI del Centro de Puntos {#building-the-points-center-ui}
+### Construyendo la Interfaz del Centro de Puntos {#building-the-points-center-ui}
 
-Crea un componente de visualización de puntos que muestre los XP del usuario con una animación de números satisfactoria:
+Crea un componente de visualización de puntos que muestre la XP del usuario con una animación de números satisfactoria:
 
 ```tsx src/app/user-center/points-center/points-center.tsx [expandable]
 import {
@@ -1974,9 +1974,9 @@ export default function PointsCenter() {
 }
 ```
 
-### Actualización de Puntos en la Vista de Tarjetas {#updating-points-on-flashcard-view}
+### Actualizar Puntos en la Vista de Tarjetas {#updating-points-on-flashcard-view}
 
-Finalmente, vuelve a consultar los puntos cada vez que un usuario visualice una tarjeta para mostrar actualizaciones de XP en tiempo real:
+Finalmente, vuelve a obtener los puntos cada vez que un usuario vea una tarjeta para mostrar actualizaciones de XP en tiempo real:
 
 ```tsx src/app/flashcards.tsx {4,8,45}
 import { useUserPoints } from "@/contexts/UserPointsContext";
@@ -2001,7 +2001,7 @@ export default function Flashcards({ flashcards }: Props) {
 }
 ```
 
-¡Ahora cuando los usuarios visualicen tarjetas, verán sus XP actualizarse en tiempo real con una animación satisfactoria!
+¡Ahora, cuando los usuarios vean tarjetas, verán su XP actualizarse en tiempo real con una animación satisfactoria!
 
 <Frame>
   <video
@@ -2014,13 +2014,13 @@ export default function Flashcards({ flashcards }: Props) {
   ></video>
 </Frame>
 
-## Añadir Clasificaciones {#adding-leaderboards}
+## Agregar Clasificaciones {#adding-leaderboards}
 
-Nada impulsa el compromiso como la competencia amistosa. Añadamos una clasificación para mostrar cómo se comparan los usuarios entre sí.
+Nada impulsa el compromiso como una competencia amistosa. Agreguemos una clasificación para mostrar cómo se comparan los usuarios entre sí.
 
-### Configuración de Clasificaciones en Trophy {#setting-up-leaderboards-in-trophy}
+### Configurar Clasificaciones en Trophy {#setting-up-leaderboards-in-trophy}
 
-Dirígete a la [página de clasificaciones](https://app.trophy.so/leaderboards) de Trophy y crea una nueva clasificación. Crearemos una clasificación diaria con la clave `daily-champions` que clasifique a los usuarios por tarjetas visualizadas.
+Ve a la [página de clasificaciones](https://app.trophy.so/leaderboards) de Trophy y crea una nueva clasificación. Crearemos una clasificación diaria con la clave `daily-champions` que clasifica a los usuarios por tarjetas vistas.
 
 <Frame>
   <video
@@ -2033,9 +2033,9 @@ Dirígete a la [página de clasificaciones](https://app.trophy.so/leaderboards) 
   ></video>
 </Frame>
 
-### Integración del API de Clasificación {#leaderboard-api-integration}
+### Integración de API de Clasificación {#leaderboard-api-integration}
 
-Añade acciones del servidor para obtener datos de la clasificación:
+Agrega acciones de servidor para obtener datos de la clasificación:
 
 ```tsx src/app/actions.ts [expandable]
 const LEADERBOARD_KEY = "daily-champions";
@@ -2080,9 +2080,9 @@ export async function getUserLeaderboard(
 }
 ```
 
-### Construcción de la UI de Clasificación {#building-the-leaderboard-ui}
+### Construir la Interfaz de Clasificación {#building-the-leaderboard-ui}
 
-Crea un componente de clasificación que muestre las clasificaciones con paginación:
+Crea un componente de clasificación que muestre los rankings con paginación:
 
 ```tsx src/app/leaderboard-center/leaderboard-center.tsx [expandable]
 import {
@@ -2140,17 +2140,17 @@ export default function LeaderboardCenter() {
 
 La clasificación se actualiza automáticamente a medida que los usuarios estudian, creando un entorno competitivo dinámico que fomenta el compromiso diario.
 
-## Añadir un Sistema de Energía {#adding-an-energy-system}
+## Agregar un Sistema de Energía {#adding-an-energy-system}
 
-Los sistemas de energía (o "vidas") son una mecánica de retención comprobada que anima a los usuarios a regresar durante el día. Añadamos uno a nuestra plataforma de estudio.
+Los sistemas de energía (o "vidas") son una mecánica de retención probada que anima a los usuarios a regresar durante el día. Agreguemos uno a nuestra plataforma de estudio.
 
-### Configuración de Energía en Trophy {#setting-up-energy-in-trophy}
+### Configurar Energía en Trophy {#setting-up-energy-in-trophy}
 
 El sistema de puntos de Trophy es lo suficientemente flexible para manejar mecánicas de energía. Crea un nuevo sistema de puntos con la clave `energy` y configúralo con:
 
-- Un límite máximo (p. ej., 5 de energía)
+- Un límite máximo (por ejemplo, 5 de energía)
 - Reglas de regeneración automática
-- Costos por acción (p. ej., -1 de energía por sesión de tarjeta)
+- Costos por acción (por ejemplo, -1 de energía por sesión de tarjeta)
 
 <Frame>
   <img
@@ -2161,9 +2161,9 @@ El sistema de puntos de Trophy es lo suficientemente flexible para manejar mecá
   />
 </Frame>
 
-### Integración de la API de energía {#energy-api-integration}
+### Integración con la API de energía {#energy-api-integration}
 
-Agrega acciones del servidor para la gestión de energía:
+Añade acciones de servidor para la gestión de energía:
 
 ```tsx src/app/actions.ts [expandable]
 const ENERGY_SYSTEM_KEY = "energy";
@@ -2197,9 +2197,9 @@ export async function getUserEnergy(
 }
 ```
 
-### Creación de un contexto de energía {#creating-an-energy-context}
+### Crear un contexto de energía {#creating-an-energy-context}
 
-Similar a los puntos, crea un contexto para gestionar el estado de energía:
+De forma similar a los puntos, crea un contexto para gestionar el estado de energía:
 
 ```tsx src/contexts/UserEnergyContext.tsx [expandable]
 "use client";
@@ -2265,7 +2265,7 @@ export function useUserEnergy() {
 }
 ```
 
-### Construcción de la interfaz de energía {#building-the-energy-ui}
+### Construir la interfaz de energía {#building-the-energy-ui}
 
 Crea una visualización de energía que muestre la energía restante con indicadores visuales:
 
@@ -2291,19 +2291,19 @@ export default function EnergyCenter() {
 }
 ```
 
-Con la energía implementada, los usuarios tienen un motivo para regresar varias veces al día a medida que su energía se regenera, aumentando tus usuarios activos diarios.
+Con el sistema de energía implementado, los usuarios tendrán un motivo para regresar varias veces a lo largo del día mientras su energía se regenera, aumentando tus usuarios activos diarios.
 
 ## El resultado {#the-result}
 
-¡Felicitaciones! Si estás leyendo esto, llegaste al final del tutorial y construiste una plataforma de estudio completamente funcional. Por supuesto, hay mucho más que podríamos hacer con esto, así que aquí hay algunas ideas:
+¡Felicidades! Si estás leyendo esto, llegaste al final del tutorial y construiste una plataforma de estudio completamente funcional. Por supuesto, hay mucho más que podríamos hacer con esto, así que aquí tienes algunas ideas:
 
 - Persistir las tarjetas de estudio en una base de datos
-- Crear múltiples conjuntos de tarjetas de estudio para otros temas
-- Agregar autenticación
-- Permitir a los usuarios crear sus propios conjuntos de tarjetas de estudio
+- Crear múltiples conjuntos de tarjetas para otros temas
+- Añadir autenticación
+- Permitir que los usuarios creen sus propios conjuntos de tarjetas
 
 <Tip>
-  Si te divertiste o crees que aprendiste algo en el camino, ¡dale una estrella al repositorio en [GitHub](https://github.com/trophyso/example-study-platform)!
+  Si te divertiste o crees que aprendiste algo en el camino, dale una estrella al repositorio en [GitHub](https://github.com/trophyso/example-study-platform)!
 </Tip>
 
 ## Obtener soporte {#get-support}

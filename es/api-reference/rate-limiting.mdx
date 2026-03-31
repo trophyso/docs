@@ -7,19 +7,19 @@ icon: circle-gauge
 
 import { RateLimitBadge } from "../../snippets/rate-limit-badge.jsx";
 
-Trophy opera un modelo de limitación de tasa por niveles para cada endpoint de la API. Todos los límites de tasa están definidos a nivel de organización. Superar los límites de tasa resultará en que tu aplicación reciba una respuesta `429 Too Many Requests`.
+Trophy opera un modelo de limitación de tasa escalonado para cada endpoint de la API. Todos los límites de tasa están delimitados a nivel de organización. Exceder los límites de tasa resultará en que tu aplicación reciba una respuesta `429 Too Many Requests`.
 
-## Niveles de Limitación de Tasa {#rate-limit-tiers}
+## Niveles de limitación de tasa {#rate-limit-tiers}
 
-| Nivel | Límite de Tasa |
+| Nivel | Límite de tasa |
 | ---- | ---------- |
-| <RateLimitBadge tier={1} noTooltip /> | 10 sol/s |
-| <RateLimitBadge tier={2} noTooltip /> | 100 sol/s |
+| <RateLimitBadge tier={1} noTooltip /> | 10 req/s |
+| <RateLimitBadge tier={2} noTooltip /> | 100 req/s |
 
 <Tip>
-  Si consideras que necesitas un límite de tasa mayor, [contáctanos](mailto:support@trophy.so) y estaremos encantados de discutir tus necesidades.
+  Si consideras que necesitas un límite de tasa más alto, por favor [contáctanos](mailto:support@trophy.so) y estaremos encantados de discutir tus necesidades.
 </Tip>
 
-## Obtener Soporte {#get-support}
+## Obtener soporte {#get-support}
 
 ¿Quieres ponerte en contacto con el equipo de Trophy? Comunícate con nosotros por [correo electrónico](mailto:support@trophy.so). ¡Estamos aquí para ayudarte!

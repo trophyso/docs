@@ -1,9 +1,10 @@
 ---
-openapi: get /users/{id}/achievements
+title: Obtener los logros de un usuario
+openapi: openapi.yml get /users/{id}/achievements
 ---
 
 import { RateLimitBadge } from "../../../../snippets/rate-limit-badge.jsx";
 
-**Límites de velocidad**
+**Límites de tasa**
 
 <RateLimitBadge tier={2} />

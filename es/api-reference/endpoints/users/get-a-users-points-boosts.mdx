@@ -1,9 +1,10 @@
 ---
-openapi: get /users/{id}/points/{key}/boosts
+title: Obtener los potenciadores de puntos activos de un usuario
+openapi: openapi.yml get /users/{id}/points/{key}/boosts
 ---
 
 import { RateLimitBadge } from "../../../../snippets/rate-limit-badge.jsx";
 
-**Límites de tasa**
+**Límites de Velocidad**
 
 <RateLimitBadge tier={2} />

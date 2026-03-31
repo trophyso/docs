@@ -59,9 +59,11 @@ Notes:
 - `lingo/glossary.csv`: Terms that must stay fixed or use specific translations.
 - `lingo/brand-voice.md`: Single brand voice used for all locales.
 - `scripts/translate-docs-json.mjs`: Translates language-specific `docs.json` navigation labels directly in the source-of-truth `docs.json`. Prefer `npm run translate:docs-json -- --target <locale>`.
-- `scripts/localize-internal-links.mjs`: Rewrites internal absolute **navigation** links in locale content (for example `/getting-started/quickstart` -> `/es/getting-started/quickstart`). It does **not** change relative image or video `src` paths, MDX/JSX **import** paths, or shared **snippets**; those must be correct in source so all locales stay aligned. Prefer `npm run translate:localize-links --` with `--target`, `--all`, or `--all --check`.
+- `scripts/localize-internal-links.mjs`: Rewrites internal absolute **navigation** links in each locale’s MDX for whatever locale is being processed (`--target`, `--all`, or default targets): bare paths get that locale’s prefix (e.g. `/platform/points` → `/es/platform/points` when processing `es/`), and any path already prefixed with **another** locale from `i18n.json` (`en`, `es`, future `fr`, etc.) is re-prefixed to the active locale (so `/en/...` or stale `/es/...` on a `fr/` page become `/fr/...`). Longer codes are matched first (e.g. `en-US` before `en`). It does **not** change relative image or video `src` paths, MDX/JSX **import** paths, or shared **snippets**; those must be correct in source so all locales stay aligned. Prefer `npm run translate:localize-links --` with `--target`, `--all`, or `--all --check`.
 - **Shared `snippets/`**: Reusable MDX and JSX live in repo-root `snippets/` (not under `en/` or `es/`). Import them with paths relative to each page (for example `../../snippets/foo.mdx` from `locale/<section>/<page>.mdx`, or more `../` segments for deeper pages). They are excluded from Lingo buckets in `i18n.json` so they stay English and identical everywhere.
 - **Media paths**: Pages live under `en/<section>/...` or `es/<section>/...`, while shared files sit in repo-root `assets/`. Use a path like `../../assets/...` from a typical `locale/<section>/<page>.mdx` file.
+- **`openapi.yml`**: One OpenAPI 3.1 spec at the **repository root** (alongside `docs.json`). API and webhook pages reference it explicitly in frontmatter, for example `openapi: openapi.yml get /users/{id}` or `openapi: openapi.yml webhook points.changed`. Do not duplicate the YAML under locale folders; Lingo must not alter `openapi:` lines.
+- **`scripts/sync-openapi-titles.mjs`**: Copies each operation/webhook **`summary`** from `openapi.yml` into the English page’s **`title:`** frontmatter (Mintlify’s default when `title` is omitted). Target locales get an English `title` only if missing (bootstrap); run **`npm run translate:generate`** so Lingo translates those titles. Runs automatically at the start of `translate:generate` and in translate-on-main before Lingo.
 - `scripts/sync-heading-anchors.mjs`: Writes Mintlify [custom heading IDs](https://www.mintlify.com/docs/create/text#custom-heading-ids) as **`## Title {#slug}`** markdown. Slugs match Mintlify’s auto rules from the **English** title so hashes like `#pro-plan` stay stable across locales. Run `npm run translate:sync-anchors` after bulk heading edits; translation pipelines run it automatically (see **Heading anchors and Lingo** below). The script can also migrate one-line **`<h2 id="slug">…</h2>`** left from older tooling back to `{#slug}` syntax.
 - `scripts/validate-glossary-csv.mjs`: Validates glossary schema and duplicate canonical keys. Prefer `npm run lingo:validate-glossary`.
 
@@ -85,6 +87,8 @@ Use `npm run <script> -- <args>` when a script needs CLI flags (the `--` forward
 | `translate:localize-links:check` | CI-style check: all locales, no writes (`--all --check`). |
 | `translate:sync-anchors` | Apply English-derived `{#slug}` on ATX headings in `en/` and target locales (see `i18n.json` `locale.targets`). |
 | `translate:sync-anchors:check` | Fail if any MDX needs re-sync (CI). |
+| `translate:sync-openapi-titles` | Set `en/` API & webhook `title:` from `openapi.yml` summaries; bootstrap missing target `title` from English. |
+| `translate:sync-openapi-titles:check` | CI: fail if any OpenAPI-backed page title differs from the spec. |
 | `lingo:validate-glossary` | Validate `lingo/glossary.csv`. |
 | `translate:validate` | MDX parity and frontmatter checks (`en` / `es`). No `.env` required. |
 | `translate:verify` | `lingo.dev run --frozen` (freshness gate). |
@@ -141,7 +145,7 @@ Glossary sync workflow (manual via Cursor + MCP):
    - One locale: `npm run translate:generate -- --target <locale>`
    - Multiple locales: `npm run translate:generate -- --target es,fr,de`
    - All configured targets: `npm run translate:generate`
-   - Force re-translation (bypass cache/lockfile delta): `npm run translate:generate -- --target <locale> --force`
+   - Force full re-translation for a locale: `npm run translate:generate -- --target <locale> --force`. This deletes local `i18n.cache` if present, runs `lingo.dev purge --locale <target> --yes-really` (all managed keys for that locale per `i18n.json`), then **`lingo.dev run --target-locale <target> --force`**. Both **purge** and **`run --force`** matter: without `--force`, Lingo may **skip** every file (“from cache” in the summary) when the delta is empty; `--force` pushes all keys through the engine. For narrower purges, use [`lingo.dev purge`](https://lingo.dev/en/docs/cli/remove-translations) with filters, then run `lingo.dev run --force --target-locale …` yourself.
 6. Validate before merge:
    - `npm run translate:validate`
    - `npm run translate:localize-links:check`
@@ -152,4 +156,4 @@ Glossary sync workflow (manual via Cursor + MCP):
 Notes:
 - The workflow `.github/workflows/translate-on-main.yml` automatically reads locales from `i18n.json` `locale.targets`.
 - Keep `en` as source/default and preserve identical file paths across locales.
-- `--force` should be used only for recovery/backfill scenarios (for example, stale cache or major glossary/brand-voice reset). Do not use `--force` in CI; CI should run delta translation based on `i18n.lock`.
+- `--force` on `translate:generate` purges **all** Lingo-managed content for that target locale, then re-runs translation—use only for recovery/backfill (for example, cache stuck after bootstrap). Do not use `--force` in CI; CI should run delta translation based on `i18n.lock`.

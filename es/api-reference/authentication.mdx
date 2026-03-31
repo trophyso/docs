@@ -11,43 +11,43 @@ icon: key
 
 ## Claves API {#api-keys}
 
-Cada cuenta puede crear un máximo de 3 claves API desde la [Página de Integración](https://app.trophy.so/integration). Si ya se ha registrado, habrá creado una durante la incorporación inicial.
+Cada cuenta puede crear un máximo de 3 claves API desde la [Página de Integración](https://app.trophy.so/integration). Si ya te has registrado, habrás creado una durante la incorporación.
 
-Trophy registra y muestra cuándo se creó cada clave API en su cuenta y cuándo se usó por última vez para que pueda hacer un seguimiento fácil del uso.
+Trophy realiza un seguimiento y muestra cuándo se creó cada clave API en tu cuenta y cuándo se usó por última vez para que puedas rastrear fácilmente el uso.
 
 <Frame>
   <img height="200" noZoom src="../../assets/api/authentication/api_keys.png" />
 </Frame>
 
-### Estructura de una clave API {#anatomy-of-an-api-key}
+### Anatomía de una clave API {#anatomy-of-an-api-key}
 
-Cada clave API se compone de 2 partes separadas por un punto:
+Cada clave API está compuesta por 2 partes separadas por un punto:
 
 ```bash
 {prefix}•{body}
 ```
 
-- El _prefijo_ son los primeros 8 caracteres. Es legible y siempre permanecerá igual, por lo que es fácilmente reconocible.
-- El _cuerpo_ es la parte secreta y solo se le muestra una vez cuando crea la clave.
+- El _prefijo_ son los primeros 8 caracteres. Es legible y siempre permanecerá igual para que sea fácilmente reconocible.
+- El _cuerpo_ es la parte secreta y solo se te muestra una vez cuando creas la clave.
 
 <Note>
-  Al usar la API, ambas partes de su clave API deben enviarse en el encabezado `X-API-KEY`.
+  Al utilizar la API, ambas partes de tu clave API deben enviarse en el encabezado `X-API-KEY`.
 </Note>
 
-### Autenticación de solicitudes {#authenticating-requests}
+### Autenticación de Solicitudes {#authenticating-requests}
 
-Al realizar solicitudes a la API, asegúrese de incluir **ambas** partes de su clave API en el encabezado `X-API-KEY` como en este ejemplo:
+Al realizar solicitudes a la API, asegúrate de incluir **ambas** partes de tu clave API en el encabezado `X-API-KEY` como en este ejemplo:
 
 ```bash
 curl https://app.trophy.so/api/users/<userId>/metrics/<key> \
      -H "X-API-KEY: ********.***********************"
 ```
 
-Si no pasa una clave API o su clave API no es válida, recibirá un código de respuesta `401`.
+Si no pasas una clave API o tu clave API no es válida, recibirás un código de respuesta `401`.
 
 ## Gestión de claves API {#managing-api-keys}
 
-Hay varias operaciones diferentes que puede realizar en las claves API desde su panel de Trophy para gestionar su integración.
+Existen varias operaciones diferentes que puedes realizar con las claves API desde tu panel de Trophy para gestionar tu integración.
 
 <Frame>
   <img
@@ -59,7 +59,7 @@ Hay varias operaciones diferentes que puede realizar en las claves API desde su 
 
 ### Rotación de claves {#rotating-keys}
 
-Las claves de API se pueden rotar si deseas cambiarlas por cualquier motivo. En el momento de la rotación, la clave de API original dejará de funcionar y cualquier solicitud que todavía la utilice comenzará a recibir respuestas `401` inmediatamente.
+Las claves de API se pueden rotar si deseas cambiarlas por cualquier motivo. En el momento de la rotación, la clave de API original dejará de funcionar inmediatamente y cualquier solicitud que aún la utilice comenzará a recibir respuestas `401`.
 
 <Note>
   Ten en cuenta que al rotar las claves, tanto el prefijo como el cuerpo cambiarán.
@@ -67,7 +67,7 @@ Las claves de API se pueden rotar si deseas cambiarlas por cualquier motivo. En 
 
 ### Revocación de claves {#revoking-keys}
 
-Las claves de API también se pueden revocar por completo, momento en el que pasan a estar _Inactivas_. En el momento de la revocación, la clave de API dejará de funcionar y cualquier solicitud que todavía la utilice comenzará a recibir respuestas `401` inmediatamente.
+Las claves de API también se pueden revocar por completo, momento en el cual pasan a estar _Inactivas_. En el momento de la revocación, la clave de API dejará de funcionar inmediatamente y cualquier solicitud que aún la utilice comenzará a recibir respuestas `401`.
 
 Una vez revocada, puedes reactivar la clave de API en cualquier momento.
 
@@ -83,4 +83,4 @@ Si estás 100% seguro de que ya no necesitas una clave de API, se pueden elimina
 
 ## Obtener soporte {#get-support}
 
-¿Quieres ponerte en contacto con el equipo de Trophy? Comunícate con nosotros por [correo electrónico](mailto:support@trophy.so). ¡Estamos aquí para ayudarte!
+¿Quieres ponerte en contacto con el equipo de Trophy? Contáctanos por [correo electrónico](mailto:support@trophy.so). ¡Estamos aquí para ayudarte!

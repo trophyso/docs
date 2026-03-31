@@ -1,7 +1,8 @@
 ---
-openapi: webhook points.level_changed
+title: Nivel de puntos cambiado
+openapi: openapi.yml webhook points.level_changed
 ---
 
 <Note>
-  Este evento se activa cuando el **nivel** de un usuario cambia dentro de un sistema de puntos **debido a que ganó o perdió puntos**. Es independiente de [`points.changed`](/es/webhooks/events/points/points-changed), que refleja cambios en el saldo de puntos de manera más amplia. Utiliza `points.level_changed` cuando te interese específicamente las transiciones de nivel.
+  Este evento se activa cuando el **nivel** de un usuario cambia dentro de un sistema de puntos **porque ganó o perdió puntos**. Es independiente de [`points.changed`](/es/webhooks/events/points/points-changed), que refleja cambios en el saldo de puntos de manera más amplia. Utiliza `points.level_changed` cuando te interese específicamente las transiciones de nivel.
 </Note>

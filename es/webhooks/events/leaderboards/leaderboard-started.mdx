@@ -1,10 +1,11 @@
 ---
-openapi: webhook leaderboard.started
+title: Clasificación iniciada
+openapi: openapi.yml webhook leaderboard.started
 ---
 
 <Note>
   Los eventos se activan a las 10:00 UTC el día anterior a la hora de inicio UTC de la clasificación. Esto
-  se debe a que las ejecuciones de clasificación son relativas a la zona horaria de cada usuario, y el
+  es porque las ejecuciones de clasificación son relativas a la zona horaria de cada usuario, y el
   evento de inicio debe activarse antes de que los usuarios en las zonas horarias más avanzadas comiencen
   a clasificar.
   

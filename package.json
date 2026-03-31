@@ -13,6 +13,8 @@
     "translate:localize-links:check": "node scripts/localize-internal-links.mjs --all --check",
     "translate:sync-anchors": "node scripts/sync-heading-anchors.mjs",
     "translate:sync-anchors:check": "node scripts/sync-heading-anchors.mjs --check",
+    "translate:sync-openapi-titles": "node scripts/sync-openapi-titles.mjs",
+    "translate:sync-openapi-titles:check": "node scripts/sync-openapi-titles.mjs --check",
     "lingo:validate-glossary": "node scripts/validate-glossary-csv.mjs",
     "translate:verify": "npx lingo.dev@latest run --frozen",
     "translate:validate": "node scripts/validate-translations.mjs",
@@ -29,5 +31,8 @@
   "bugs": {
     "url": "https://github.com/trophyso/docs/issues"
   },
-  "homepage": "https://github.com/trophyso/docs#readme"
+  "homepage": "https://github.com/trophyso/docs#readme",
+  "devDependencies": {
+    "yaml": "^2.7.0"
+  }
 }

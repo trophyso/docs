@@ -1,9 +1,9 @@
 ---
-title: Cómo Crear una Función de Clasificaciones
-description: Aprende a usar Trophy para añadir una función de clasificaciones a
-  tu aplicación web o móvil.
-subtitle: Aprende a usar Trophy para añadir una función de clasificaciones a tu
-  aplicación web o móvil.
+title: Cómo Crear una Funcionalidad de Clasificaciones
+description: Aprende a usar Trophy para agregar una funcionalidad de
+  clasificaciones a tu aplicación web o móvil.
+subtitle: Aprende a usar Trophy para agregar una funcionalidad de
+  clasificaciones a tu aplicación web o móvil.
 noindex: true
 ---
 
@@ -14,9 +14,9 @@ import LeaderboardRankingsResponse from "../../snippets/leaderboard-rankings-res
 import UserLeaderboardRankingsRequest from "../../snippets/user-leaderboard-rankings-request.mdx";
 import UserLeaderboardRankingsResponse from "../../snippets/user-leaderboard-rankings-response.mdx";
 
-Esta guía describe el proceso completo para añadir una función de clasificaciones a tu aplicación web o móvil utilizando Trophy.
+Esta guía describe el proceso completo para agregar una funcionalidad de clasificaciones a tu aplicación web o móvil usando Trophy.
 
-Para fines ilustrativos, usaremos el ejemplo de una plataforma de estudio que utiliza una clasificación diaria para crear competencia amistosa en torno a la visualización de tarjetas de estudio.
+Con fines ilustrativos, utilizaremos el ejemplo de una plataforma de estudio que usa una clasificación diaria para crear competencia amistosa en torno a la visualización de tarjetas de memoria.
 
 <Tip>
   Para ver un ejemplo completamente funcional de esto en la práctica, consulta la [demostración en vivo](https://examples.trophy.so) o el [repositorio de github](https://github.com/trophyso/example-study-platform/tree/demo).
@@ -31,7 +31,7 @@ Para fines ilustrativos, usaremos el ejemplo de una plataforma de estudio que ut
 
 En Trophy, las [Métricas](/es/platform/metrics) son los componentes fundamentales de la gamificación y modelan las diferentes interacciones que los usuarios realizan con tu producto.
 
-En esta guía, la interacción que nos interesa es `flashcards-viewed`, pero puedes crear una métrica que mejor represente la interacción en torno a la cual deseas crear clasificaciones.
+En esta guía, la interacción que nos interesa es `flashcards-viewed`, pero puedes crear una métrica que represente mejor la interacción en torno a la cual deseas crear clasificaciones.
 
 En el panel de Trophy, dirígete a la [página de métricas](https://app.trophy.so/metrics) y crea una métrica.
 
@@ -59,7 +59,7 @@ Una vez que hayas creado tu métrica, dirígete a la [página de clasificaciones
   ></video>
 </Frame>
 
-Para los fines de esta guía, hemos configurado una clasificación diaria que rastrea el total de XP que un usuario gana al ver tarjetas de estudio.
+Para los propósitos de esta guía, hemos configurado una clasificación diaria que rastrea el XP total que un usuario gana al ver tarjetas de estudio.
 
 <Tip>
   Para una guía completa sobre cómo agregar una función de XP a tu aplicación web o móvil, consulta
@@ -68,26 +68,26 @@ Para los fines de esta guía, hemos configurado una clasificación diaria que ra
 
 En Trophy rastreas las interacciones de los usuarios enviando [Eventos](/es/platform/events) desde tu código a las API de Trophy contra una métrica específica.
 
-Cuando se registran eventos para un usuario específico, Trophy actualiza automáticamente su posición en cada clasificación de la que forma parte.
+Cuando se registran eventos para un usuario específico, Trophy actualiza automáticamente su clasificación en cada clasificación de la que forma parte.
 
-Esto es lo que hace que construir experiencias gamificadas con Trophy sea tan fácil: hace todo el trabajo por ti en segundo plano.
+Esto es lo que hace que construir experiencias gamificadas con Trophy sea tan fácil, hace todo el trabajo por ti en segundo plano.
 
-## Instalando el SDK de Trophy {#installing-trophy-sdk}
+## Instalando Trophy SDK {#installing-trophy-sdk}
 
-Para interactuar con Trophy desde tu código, utilizarás el SDK de Trophy disponible en la mayoría de los principales [lenguajes de programación](/es/api-reference/client-libraries).
+Para interactuar con Trophy desde tu código, utilizarás el Trophy SDK disponible en la mayoría de los principales [lenguajes de programación](/es/api-reference/client-libraries).
 
-Instala el SDK de Trophy:
+Instala el Trophy SDK:
 
 <SDKInstallCommand />
 
-A continuación, obtén tu clave API desde la [página de integración](https://app.trophy.so/integration) de Trophy y agrégala como una variable de entorno **exclusivamente del lado del servidor**.
+A continuación, obtén tu clave de API desde la [página de integración](https://app.trophy.so/integration) de Trophy y agrégala como una variable de entorno **solo del lado del servidor**.
 
 ```bash
 TROPHY_API_KEY='*******'
 ```
 
 <Warning>
-  Asegúrate de **no** exponer tu clave API en código del lado del cliente.
+  Asegúrate de **no** exponer tu clave de API en código del lado del cliente.
 </Warning>
 
 ## Rastreando Interacciones de Usuarios {#tracking-user-interactions}
@@ -96,7 +96,7 @@ Para rastrear un evento (interacción de usuario) contra tu métrica, utiliza la
 
 <MetricChangeRequestBlock />
 
-La respuesta a esta llamada API es el conjunto completo de cambios en cualquier función que hayas construido con Trophy, incluyendo cualquier cambio en su posición en cualquier clasificación de la que formen parte.
+La respuesta a esta llamada de API es el conjunto completo de cambios a cualquier función que hayas construido con Trophy, incluyendo cualquier cambio en su clasificación en cualquier clasificación de la que formen parte.
 
 {/* vale off */}
 
@@ -130,7 +130,7 @@ La respuesta a esta llamada API es el conjunto completo de cambios en cualquier 
 
 {/* vale on */}
 
-Valida que esto funcione revisando el [panel de control](https://app.trophy.so) de Trophy.
+Valida que esto esté funcionando revisando el [panel de control](https://app.trophy.so) de Trophy.
 
 <Frame>
   <img
@@ -147,7 +147,7 @@ Tienes varias opciones para mostrar clasificaciones en tu aplicación. Aquí ver
 
 ### Notificaciones Emergentes {#pop-up-notifications}
 
-Podemos usar la respuesta de la [API de cambio de métrica](/es/api-reference/endpoints/metrics/send-a-metric-change-event) para mostrar notificaciones emergentes (o 'toasts') cuando los usuarios suban en las clasificaciones.
+Podemos utilizar la respuesta de la [API de cambio de métrica](/es/api-reference/endpoints/metrics/send-a-metric-change-event) para mostrar notificaciones emergentes (o 'toasts') cuando los usuarios suben en las clasificaciones.
 
 Aquí hay un ejemplo de esto en acción:
 
@@ -175,43 +175,43 @@ if (leaderboard.rank > leaderboard.previousRank) {
 ```
 
 <Tip>
-  Si quieres reproducir efectos de sonido, usa la [API de Audio
+  Si quieres reproducir efectos de sonido, utiliza la [API de Audio
   HTML5](https://developer.mozilla.org/en-US/docs/Web/API/Web_Audio_API) y siéntete
   libre de usar estos [archivos de
   audio](https://github.com/trophyso/example-study-platform/tree/demo/public/sounds)
   que recomendamos.
 </Tip>
 
-### Mostrar Clasificaciones de la Clasificación {#displaying-leaderboard-rankings}
+### Mostrar las Clasificaciones {#displaying-leaderboard-rankings}
 
-Para obtener una clasificación y sus rankings más actualizados, usa la [API de clasificaciones](/es/api-reference/endpoints/leaderboards/get-leaderboard).
+Para obtener una clasificación y sus rankings más actualizados, utiliza la [API de clasificación](/es/api-reference/endpoints/leaderboards/get-leaderboard).
 
 <LeaderboardRankingsRequest />
 
 <Tip>
-  También puedes usar el parámetro `run` con la fecha de la 'ejecución' pasada específica
-  de una clasificación para la que deseas obtener datos.
+  También puedes utilizar el parámetro `run` con la fecha de la 'ejecución' pasada específica
+  de una clasificación para la cual deseas obtener datos.
 </Tip>
 
-Aquí hay un ejemplo de los datos devueltos por la API de clasificaciones:
+Aquí hay un ejemplo de los datos devueltos por la API de clasificación:
 
 <LeaderboardRankingsResponse />
 
-### Mostrar Historial de Ranking del Usuario {#displaying-user-rank-history}
+### Mostrar el Historial de Rango del Usuario {#displaying-user-rank-history}
 
-Usa la [API de clasificación de usuario](/es/api-reference/endpoints/users/get-a-users-leaderboard) para obtener datos sobre cómo ha cambiado el ranking de un usuario específico a lo largo del tiempo en una clasificación particular.
+Utiliza la [API de clasificación de usuario](/es/api-reference/endpoints/users/get-a-users-leaderboard) para obtener datos sobre cómo ha cambiado el rango de un usuario específico a lo largo del tiempo en una clasificación particular.
 
 <UserLeaderboardRankingsRequest />
 
-Aquí hay un ejemplo de los datos devueltos por la API de rankings de clasificación de usuario que incluye el ranking actual del usuario en el atributo `rank` y un array de rankings anteriores en el atributo `history`:
+Aquí hay un ejemplo de los datos devueltos por la API de rankings de clasificación de usuario, que incluye el rango actual del usuario en el atributo `rank` y un array de rangos anteriores en el atributo `history`:
 
 <UserLeaderboardRankingsResponse />
 
-## Analítica {#analytics}
+## Analíticas {#analytics}
 
-La [página de clasificaciones](https://app.trophy.so/achievements) en Trophy muestra cuántos usuarios están participando activamente en una clasificación, así como una medida de competitividad basada en cuántos cambios de ranking están ocurriendo.
+La [página de clasificaciones](https://app.trophy.so/achievements) en Trophy muestra cuántos usuarios están participando activamente en una clasificación, así como una medida de competitividad basada en cuántos cambios de rango están ocurriendo.
 
-La página de analítica también muestra una distribución de las puntuaciones de los usuarios para ayudar a identificar grupos de usuarios dentro de los rankings.
+La página de analíticas también muestra una distribución de las puntuaciones de los usuarios para ayudar a identificar grupos de usuarios dentro de las clasificaciones.
 
 <Frame>
   <img
@@ -222,7 +222,7 @@ La página de analítica también muestra una distribución de las puntuaciones 
   />
 </Frame>
 
-Además, la página de rankings de la clasificación muestra los rankings actuales y pasados de una clasificación:
+Además, la página de clasificaciones de la clasificación muestra las posiciones actuales y pasadas de una clasificación:
 
 <Frame>
   <img
@@ -233,6 +233,6 @@ Además, la página de rankings de la clasificación muestra los rankings actual
   />
 </Frame>
 
-## Obtener Soporte {#get-support}
+## Obtener soporte {#get-support}
 
-¿Quieres ponerte en contacto con el equipo de Trophy? Contáctanos por [correo electrónico](mailto:support@trophy.so). ¡Estamos aquí para ayudarte!
+¿Quieres ponerte en contacto con el equipo de Trophy? Comunícate con nosotros por [correo electrónico](mailto:support@trophy.so). ¡Estamos aquí para ayudarte!

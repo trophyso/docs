@@ -1,9 +1,10 @@
 ---
-openapi: get /users/{id}/leaderboards/{key}
+title: Obtener los datos de clasificación de un usuario
+openapi: openapi.yml get /users/{id}/leaderboards/{key}
 ---
 
 import { RateLimitBadge } from "../../../../snippets/rate-limit-badge.jsx";
 
-**Límites de Tasa**
+**Límites de velocidad**
 
 <RateLimitBadge tier={2} />

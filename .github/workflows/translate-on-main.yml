@@ -35,6 +35,9 @@ jobs:
           fi
           node -e 'const fs=require("fs");const p="i18n.json";const j=JSON.parse(fs.readFileSync(p,"utf8"));j.engineId=process.env.LINGO_ENGINE_ID;fs.writeFileSync(p,JSON.stringify(j,null,2)+"\n");'
 
+      - name: Sync API and webhook titles from OpenAPI
+        run: node scripts/sync-openapi-titles.mjs
+
       - name: Run Lingo translation
         env:
           LINGO_API_KEY: ${{ secrets.LINGO_API_KEY }}

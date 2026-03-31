@@ -5,6 +5,7 @@ on:
     paths:
       - "docs.json"
       - "i18n.json"
+      - "openapi.yml"
       - "package.json"
       - "en/**"
       - "es/**"
@@ -46,6 +47,9 @@ jobs:
 
       - name: Ensure heading anchors match English slugs
         run: npm run translate:sync-anchors:check
+
+      - name: Ensure API and webhook titles match OpenAPI summaries
+        run: npm run translate:sync-openapi-titles:check
 
       - name: Mintlify validate
         run: npx mint@latest validate

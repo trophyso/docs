@@ -1,9 +1,10 @@
 ---
-openapi: post /metrics/{key}/event
+title: Enviar un evento de cambio de métrica
+openapi: openapi.yml post /metrics/{key}/event
 ---
 
 import { RateLimitBadge } from "../../../../snippets/rate-limit-badge.jsx";
 
-**Límites de tasa**
+**Límites de velocidad**
 
 <RateLimitBadge tier={1} />

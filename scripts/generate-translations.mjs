@@ -1,6 +1,7 @@
 #!/usr/bin/env node
 
 import fs from "node:fs";
+import path from "node:path";
 import { execSync } from "node:child_process";
 
 const args = process.argv.slice(2);
@@ -74,11 +75,21 @@ if (targets.length === 0) {
 }
 
 try {
+  execSync("node scripts/sync-openapi-titles.mjs", { stdio: "inherit" });
   for (const target of targets) {
     cfg.locale.targets = [target];
     fs.writeFileSync(configPath, JSON.stringify(cfg, null, 2) + "\n");
-    const forceFlag = forceRetranslate ? " --force" : "";
-    execSync(`npx lingo.dev@latest run --target-locale ${target}${forceFlag}`, { stdio: "inherit" });
+    // Lingo prints "from cache" when per-file work is *skipped* because there is nothing in
+    // `processableData` (delta empty vs lock). `run --force` forces every key into that set and
+    // passes empty targetData into the localizer for fresh output (see lingo.dev CLI). Purge first
+    // clears target strings + lock entries for the locale so files and checksums stay consistent.
+    if (forceRetranslate) {
+      const cacheFile = path.join(process.cwd(), "i18n.cache");
+      if (fs.existsSync(cacheFile)) fs.unlinkSync(cacheFile);
+      execSync(`npx lingo.dev@latest purge --locale ${target} --yes-really`, { stdio: "inherit" });
+    }
+    const runForce = forceRetranslate ? " --force" : "";
+    execSync(`npx lingo.dev@latest run --target-locale ${target}${runForce}`, { stdio: "inherit" });
     execSync(`node scripts/translate-docs-json.mjs --target ${target}`, { stdio: "inherit" });
     execSync(`node scripts/localize-internal-links.mjs --target ${target}`, { stdio: "inherit" });
     console.log(`Translation generation completed for target locale: ${target}`);
