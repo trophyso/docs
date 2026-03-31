@@ -100,7 +100,7 @@ Use `npm run <script> -- <args>` when a script needs CLI flags (the `--` forward
 1. Configure `LINGO_ENGINE_ID` as an environment variable/secret.
    - Local: `export LINGO_ENGINE_ID=eng_...`
    - CI: set repository secret `LINGO_ENGINE_ID`
-   - `i18n.json` uses `"engineId": "${LINGO_ENGINE_ID}"` and workflows/scripts inject the real value at runtime.
+   - `i18n.json` intentionally omits `engineId`; workflows/scripts inject `engineId` from `LINGO_ENGINE_ID` at runtime.
 2. In the Lingo.dev engine:
    - import/create glossary entries from `lingo/glossary.csv`
    - sync wildcard brand voice from `lingo/brand-voice.md` via Cursor chat + Lingo MCP (on demand)
