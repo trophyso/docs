@@ -7,7 +7,15 @@ on:
       - "i18n.json"
       - "openapi.yml"
       - "package.json"
-      - "en/**"
+      - "account/**"
+      - "admin-api/**"
+      - "api-reference/**"
+      - "components/**"
+      - "experimentation/**"
+      - "getting-started/**"
+      - "guides/**"
+      - "platform/**"
+      - "webhooks/**"
       - "es/**"
       - ".github/workflows/translate-on-main.yml"
       - ".github/workflows/validate-translations.yml"
@@ -15,7 +23,7 @@ on:
 
 jobs:
   validate:
-    if: ${{ !contains(fromJson('["translations-setup"]'), github.head_ref) }}
+    if: ${{ !contains(fromJson('["translations-setup", "restructure-translations"]'), github.head_ref) }}
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
@@ -48,6 +56,9 @@ jobs:
 
       - name: Ensure component imports are locale-localized
         run: npm run translate:localize-component-imports:check
+
+      - name: Ensure fragile link fragments are not used
+        run: npm run translate:validate-links
 
       - name: Ensure heading anchors match English slugs
         run: npm run translate:sync-anchors:check

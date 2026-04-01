@@ -4,7 +4,7 @@
  * Set Mintlify MDX `title:` from root `openapi.yml` operation / webhook `summary`
  * (matches what Mintlify infers when title is omitted).
  *
- * - Source locale (`en/`): always rewrite title to match the spec.
+ * - Source locale (repo root): always rewrite title to match the spec.
  * - Target locales: only add `title` when missing or blank (keeps Lingo translations).
  *
  * Expects frontmatter: `openapi: openapi.yml <method> <path>` or
@@ -39,6 +39,26 @@ function walkMdx(dir) {
     if (entry.isFile() && abs.endsWith(".mdx")) files.push(abs);
   }
   return files;
+}
+
+function walkRootMdx(root, opts = {}) {
+  const excludeDirs = new Set(opts.excludeDirs || []);
+  const out = [];
+  const stack = [root];
+  while (stack.length) {
+    const cur = stack.pop();
+    for (const entry of fs.readdirSync(cur, { withFileTypes: true })) {
+      const abs = path.join(cur, entry.name);
+      const rel = path.relative(root, abs).replace(/\\/g, "/");
+      if (entry.isDirectory()) {
+        if (excludeDirs.has(entry.name)) continue;
+        stack.push(abs);
+        continue;
+      }
+      if (entry.isFile() && rel.endsWith(".mdx")) out.push(abs);
+    }
+  }
+  return out.sort();
 }
 
 function splitFrontmatter(content) {
@@ -154,8 +174,20 @@ const config = JSON.parse(fs.readFileSync(CONFIG_PATH, "utf8"));
 const sourceLocale = config.locale?.source || "en";
 const targets = Array.isArray(config.locale?.targets) ? config.locale.targets : [];
 
-const sourceDir = path.join(ROOT, sourceLocale);
-const sourceFiles = walkMdx(sourceDir).filter((f) => {
+const excludedSourceDirs = new Set([
+  sourceLocale,
+  ...targets,
+  ".git",
+  ".github",
+  "node_modules",
+  "scripts",
+  "snippets",
+  "lingo",
+  "styles",
+  ".cursor",
+]);
+
+const sourceFiles = walkRootMdx(ROOT, { excludeDirs: excludedSourceDirs }).filter((f) => {
   const raw = fs.readFileSync(f, "utf8");
   const sp = splitFrontmatter(raw);
   if (!sp) return false;
@@ -203,7 +235,7 @@ if (!checkOnly && targets.length > 0) {
     const tDir = path.join(ROOT, target);
     if (!fs.existsSync(tDir)) continue;
     for (const abs of sourceFiles) {
-      const rel = path.relative(sourceDir, abs);
+      const rel = path.relative(ROOT, abs);
       const dst = path.join(tDir, rel);
       if (!fs.existsSync(dst)) continue;
       const srcRaw = fs.readFileSync(abs, "utf8");

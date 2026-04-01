@@ -81,17 +81,22 @@ function rewriteInternalPath(base, locale) {
   const firstSeg = b.split("/")[0];
   if (firstSeg.includes(".") && !b.includes("/")) return null;
 
-  // Already matches the locale of the file we're editing
-  if (b === locale || b.startsWith(`${locale}/`)) {
-    return null;
+  const isSourceLocale = locale === sourceLocale;
+  if (isSourceLocale) {
+    const restAfterLocale = stripKnownLocalePrefix(b);
+    if (restAfterLocale === null) return null;
+    return restAfterLocale;
   }
+
+  // Already matches the locale of the file we're editing.
+  if (b === locale || b.startsWith(`${locale}/`)) return null;
 
   const restAfterLocale = stripKnownLocalePrefix(b);
   if (restAfterLocale !== null) {
     return restAfterLocale === "" ? locale : `${locale}/${restAfterLocale}`;
   }
 
-  // Bare internal path: platform/foo -> {locale}/platform/foo
+  // Bare internal path: platform/foo -> {locale}/platform/foo.
   return `${locale}/${b}`;
 }
 
@@ -140,10 +145,31 @@ function walkMdx(dir) {
   return out;
 }
 
+function walkRootMdx(root, excludedTopDirs) {
+  const out = [];
+  const stack = [root];
+  while (stack.length) {
+    const current = stack.pop();
+    const entries = fs.readdirSync(current, { withFileTypes: true });
+    for (const entry of entries) {
+      const abs = path.join(current, entry.name);
+      const rel = path.relative(root, abs).replace(/\\/g, "/");
+      if (entry.isDirectory()) {
+        if (current === root && excludedTopDirs.has(entry.name)) continue;
+        stack.push(abs);
+      }
+      if (entry.isFile() && rel.endsWith(".mdx")) out.push(abs);
+    }
+  }
+  return out;
+}
+
 let changedFiles = 0;
 
 for (const locale of locales) {
-  const files = walkMdx(locale);
+  const files = locale === sourceLocale
+    ? walkRootMdx(".", new Set([sourceLocale, ...targetLocales, "node_modules", ".git", ".github", "scripts", "lingo", "styles", ".cursor"]))
+    : walkMdx(locale);
   for (const file of files) {
     const raw = fs.readFileSync(file, "utf8");
     const next = rewriteContent(raw, locale);

@@ -5,7 +5,7 @@
  * “Custom heading IDs”). Migrates legacy one-line HTML `<hN id="…">` from older
  * runs back to `## Title {#slug}`.
  *
- * - en/: slugs from English visible title (Mintlify-style + duplicate suffixes).
+ * - source root: slugs from English visible title (Mintlify-style + duplicate suffixes).
  * - targets: same `{#slug}` list in document order.
  * Skips lines inside fenced code blocks (```).
  */
@@ -170,8 +170,24 @@ function walkMdx(dir) {
   return out.sort();
 }
 
-function relUnderLocale(abs, locale) {
-  return path.relative(path.join(ROOT, locale), abs).replace(/\\/g, "/");
+function walkRootMdx(root, opts = {}) {
+  const excludeDirs = new Set(opts.excludeDirs || []);
+  const out = [];
+  const stack = [root];
+  while (stack.length) {
+    const cur = stack.pop();
+    for (const e of fs.readdirSync(cur, { withFileTypes: true })) {
+      const abs = path.join(cur, e.name);
+      const rel = path.relative(root, abs).replace(/\\/g, "/");
+      if (e.isDirectory()) {
+        if (excludeDirs.has(e.name)) continue;
+        stack.push(abs);
+      } else if (e.isFile() && rel.endsWith(".mdx")) {
+        out.push(abs);
+      }
+    }
+  }
+  return out.sort();
 }
 
 function processSourceFile(absPath) {
@@ -185,8 +201,19 @@ function processSourceFile(absPath) {
 let errorCount = 0;
 let changedFiles = 0;
 
-const sourceDir = path.join(ROOT, sourceLocale);
-const sourceFiles = walkMdx(sourceDir);
+const excludedSourceDirs = new Set([
+  sourceLocale,
+  ...configuredTargets,
+  ".git",
+  ".github",
+  "node_modules",
+  "scripts",
+  "snippets",
+  "lingo",
+  "styles",
+  ".cursor",
+]);
+const sourceFiles = walkRootMdx(ROOT, { excludeDirs: excludedSourceDirs });
 
 for (const abs of sourceFiles) {
   try {
@@ -205,7 +232,7 @@ for (const locale of targets) {
   if (locale === sourceLocale) continue;
   const localeDir = path.join(ROOT, locale);
   for (const abs of sourceFiles) {
-    const rel = relUnderLocale(abs, sourceLocale);
+    const rel = path.relative(ROOT, abs).replace(/\\/g, "/");
     const targetPath = path.join(localeDir, rel);
     if (!fs.existsSync(targetPath)) continue;
     try {

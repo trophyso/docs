@@ -17,6 +17,7 @@
     "translate:sync-anchors:check": "node scripts/sync-heading-anchors.mjs --check",
     "translate:sync-openapi-titles": "node scripts/sync-openapi-titles.mjs",
     "translate:sync-openapi-titles:check": "node scripts/sync-openapi-titles.mjs --check",
+    "translate:validate-links": "node scripts/validate-link-fragments.mjs",
     "lingo:validate-glossary": "node scripts/validate-glossary-csv.mjs",
     "translate:verify": "npx lingo.dev@latest run --frozen",
     "translate:validate": "node scripts/validate-translations.mjs",
