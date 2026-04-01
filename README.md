@@ -62,8 +62,8 @@ Notes:
 - `scripts/localize-internal-links.mjs`: Rewrites internal absolute **navigation** links in each locale’s MDX for whatever locale is being processed (`--target`, `--all`, or default targets): bare paths get that locale’s prefix (e.g. `/platform/points` → `/es/platform/points` when processing `es/`), and any path already prefixed with **another** locale from `i18n.json` (`en`, `es`, future `fr`, etc.) is re-prefixed to the active locale (so `/en/...` or stale `/es/...` on a `fr/` page become `/fr/...`). Longer codes are matched first (e.g. `en-US` before `en`). It does **not** change relative image or video `src` paths, MDX/JSX **import** paths, or shared **MDX snippets**; those must be correct in source so all locales stay aligned. Prefer `npm run translate:localize-links --` with `--target`, `--all`, or `--all --check`.
 - `scripts/localize-component-imports.mjs`: Rewrites MDX `import ... from ".../<locale>/components/...jsx"` paths so they match the active locale being processed (`--target`, `--all`, or default targets). This keeps locale pages importing locale-local components after PIT/CI translation.
 - **Shared MDX snippets (`snippets/*.mdx`)**: Reusable MDX blocks stay in repo-root `snippets/` (not per-locale). Import them with relative paths from each page (for example `../../snippets/foo.mdx` from `locale/<section>/<page>.mdx`, or more `../` segments for deeper pages). They are excluded from Lingo buckets in `i18n.json` so they stay English and identical everywhere.
-- **Localized React components (`[locale]/components/*.jsx`)**: UI components that can contain locale text are stored per locale (for example `en/components/rate-limit-badge.jsx`, `es/components/rate-limit-badge.jsx`) and manually maintained per locale (not translated by PIT/CI automation).
-- **Media paths**: Pages live under `en/<section>/...` or `es/<section>/...`, while shared files sit in repo-root `assets/`. Use a path like `../../assets/...` from a typical `locale/<section>/<page>.mdx` file.
+- **Localized React components (`components/*.jsx` for default language, `<locale>/components/*.jsx` for targets)**: UI components that can contain locale text are stored per locale (for example `components/rate-limit-badge.jsx`, `es/components/rate-limit-badge.jsx`) and manually maintained per locale (not translated by PIT/CI automation).
+- **Media paths**: Default-language pages live at repo root paths like `<section>/<page>.mdx` and target locales live under `<locale>/<section>/<page>.mdx`; shared files sit in repo-root `assets/`. Keep relative media paths correct for each file depth.
 - **`openapi.yml`**: One OpenAPI 3.1 spec at the **repository root** (alongside `docs.json`). API and webhook pages reference it explicitly in frontmatter, for example `openapi: openapi.yml get /users/{id}` or `openapi: openapi.yml webhook points.changed`. Do not duplicate the YAML under locale folders; Lingo must not alter `openapi:` lines.
 - **`scripts/sync-openapi-titles.mjs`**: Copies each operation/webhook **`summary`** from `openapi.yml` into the English page’s **`title:`** frontmatter (Mintlify’s default when `title` is omitted). Target locales get an English `title` only if missing (bootstrap); run **`npm run translate:generate`** so Lingo translates those titles. Runs automatically at the start of `translate:generate` and in translate-on-main before Lingo.
 - `scripts/sync-heading-anchors.mjs`: Writes Mintlify [custom heading IDs](https://www.mintlify.com/docs/create/text#custom-heading-ids) as **`## Title {#slug}`** markdown. Slugs match Mintlify’s auto rules from the **English** title so hashes like `#pro-plan` stay stable across locales. Run `npm run translate:sync-anchors` after bulk heading edits; translation pipelines run it automatically (see **Heading anchors and Lingo** below). The script can also migrate one-line **`<h2 id="slug">…</h2>`** left from older tooling back to `{#slug}` syntax.
@@ -71,7 +71,7 @@ Notes:
 
 #### Heading anchors and Lingo
 
-- **Canonical behavior** is enforced by **`scripts/sync-heading-anchors.mjs`** (runs at the end of `translate:generate` and on the translate-on-main workflow). It rewrites `en/` from current English titles and reapplies the **same** `{#slug}` suffixes to translated headings in document order. Hash links stay aligned even if Lingo alters titles or fragments.
+- **Canonical behavior** is enforced by **`scripts/sync-heading-anchors.mjs`** (runs at the end of `translate:generate` and on the translate-on-main workflow). It rewrites default-language root files from current English titles and reapplies the **same** `{#slug}` suffixes to translated headings in document order. Hash links stay aligned even if Lingo alters titles or fragments.
 - **Lingo:** Keep **`lingo/brand-voice.md`** to tone and style only. For structural rules (for example Mintlify `{#slug}` on headings), optionally add a separate line in your Lingo engine **Instructions** field (not brand voice), such as: “Preserve `{#…}` heading fragments exactly—do not translate or alter the slug.” That only reduces churn; **the script + `translate:sync-anchors:check` are authoritative.**
 - **Strict MDX parsers** (for example unconfigured `mdx-js`) can treat `{` as JSX and error on `{#slug}`; **Mintlify’s `mint dev` / deploy pipeline** is expected to handle this documented syntax. If you see Acorn errors locally, update the Mintlify CLI (`npm i -D mint@latest` or global `mintlify`) or check [Mintlify support](https://mintlify.com/docs); do not switch to raw HTML headings unless Mintlify asks you to.
 - **Do not** fold this into `localize-internal-links.mjs`: that script only handles absolute path `href`s; heading anchors are a separate structural pass and must run **after** Lingo (and after link localization) so all three stay consistent.
@@ -89,12 +89,12 @@ Use `npm run <script> -- <args>` when a script needs CLI flags (the `--` forward
 | `translate:localize-links:check` | CI-style check: all locales, no writes (`--all --check`). |
 | `translate:localize-component-imports` | Localize MDX imports that reference `<locale>/components/*.jsx` to the active locale. |
 | `translate:localize-component-imports:check` | CI-style check: fail if any MDX imports point at another locale’s components. |
-| `translate:sync-anchors` | Apply English-derived `{#slug}` on ATX headings in `en/` and target locales (see `i18n.json` `locale.targets`). |
+| `translate:sync-anchors` | Apply English-derived `{#slug}` on default-language root MDX and target locales (see `i18n.json` `locale.targets`). |
 | `translate:sync-anchors:check` | Fail if any MDX needs re-sync (CI). |
-| `translate:sync-openapi-titles` | Set `en/` API & webhook `title:` from `openapi.yml` summaries; bootstrap missing target `title` from English. |
+| `translate:sync-openapi-titles` | Set default-language API & webhook `title:` from `openapi.yml` summaries; bootstrap missing target `title` from English. |
 | `translate:sync-openapi-titles:check` | CI: fail if any OpenAPI-backed page title differs from the spec. |
 | `lingo:validate-glossary` | Validate `lingo/glossary.csv`. |
-| `translate:validate` | MDX parity and frontmatter checks (`en` / `es`). No `.env` required. |
+| `translate:validate` | MDX parity and frontmatter checks (source root -> target locales, e.g. `es`). No `.env` required. |
 | `translate:verify` | `lingo.dev run --frozen` (freshness gate). |
 | `mint:validate` | Mintlify `validate`. |
 | `mint:broken-links` | Mintlify `broken-links` with anchor and snippet checks. |
@@ -134,13 +134,13 @@ Glossary sync workflow (manual via Cursor + MCP):
 
 1. Add the locale to `docs.json`:
    - In `navigation.languages`, add a new object with `language: "<locale>"`.
-   - Copy the structure from `en` (tabs/groups/pages) and prefix pages with `<locale>/...`.
+   - Copy the default-language structure (tabs/groups/pages) and prefix pages with `<locale>/...`.
    - Add language-specific `anchors` and `navbar` fields in that locale block.
 2. Add the locale to `i18n.json`:
    - In `locale.targets`, append the locale code (for example `fr` or `de`).
 3. Create the language content directory:
-   - Mirror the `en/` structure under `<locale>/` with the same filenames.
-   - Example: `en/platform/overview.mdx` -> `fr/platform/overview.mdx`.
+   - Mirror the root default-language structure under `<locale>/` with the same filenames.
+   - Example: `platform/overview.mdx` -> `fr/platform/overview.mdx`.
    - Keep MDX snippets shared in repo-root `snippets/` (no per-locale snippet trees).
    - Keep React components locale-local under `<locale>/components/*.jsx` and mirror updates manually across locales (not via Lingo automation).
 4. Configure Lingo.dev engine controls for the new locale:
@@ -160,5 +160,5 @@ Glossary sync workflow (manual via Cursor + MCP):
 
 Notes:
 - The workflow `.github/workflows/translate-on-main.yml` automatically reads locales from `i18n.json` `locale.targets`.
-- Keep `en` as source/default and preserve identical file paths across locales.
+- Keep English as source/default and preserve identical relative file paths across locales.
 - `--force` on `translate:generate` purges **all** Lingo-managed content for that target locale, then re-runs translation—use only for recovery/backfill (for example, cache stuck after bootstrap). Do not use `--force` in CI; CI should run delta translation based on `i18n.lock`.

@@ -99,7 +99,7 @@ Las clasificaciones de racha ordenan a los usuarios según la longitud de su rac
 
 Si tienes una gran base de usuarios, es una buena práctica dividir a los participantes de la clasificación en grupos más pequeños y socialmente conectados. Esto suele generar mayor participación que el uso de clasificaciones globales.
 
-Las clasificaciones en Trophy pueden configurarse para agrupar a los usuarios en grupos más pequeños según un [atributo de usuario personalizado](#custom-user-attributes) específico.
+Las clasificaciones en Trophy pueden configurarse para agrupar a los usuarios en grupos más pequeños según un [atributo de usuario personalizado](/es/platform/users#custom-user-attributes) específico.
 
 <Tip>
   Al usar desgloses de clasificación, los [límites de participantes](#participant-limits)
@@ -121,7 +121,7 @@ Trophy comenzará automáticamente a agrupar a los usuarios en clasificaciones m
   ></video>
 </Frame>
 
-Para obtener las clasificaciones de un grupo particular de usuarios con un valor de atributo específico, utiliza la [API de clasificaciones](/es/api-reference/endpoints/leaderboards/get-leaderboard), especificando el valor del atributo en el [parámetro `userAttributes`](/es/api-reference/endpoints/leaderboards/get-leaderboard#parameter-user-attributes) de la siguiente manera:
+Para obtener las clasificaciones de un grupo particular de usuarios con un valor de atributo específico, utiliza la [API de clasificaciones](/es/api-reference/endpoints/leaderboards/get-leaderboard), especificando el valor del atributo en el parámetro `userAttributes` de la siguiente manera:
 
 <LeaderboardSingleAttributeRequest />
 
@@ -209,7 +209,7 @@ Para crear una clasificación, ve a la [página de clasificaciones](https://app.
   </Step>
 
    <Step title="Elige un método de clasificación">
-    Elige uno de los [métodos](#ranking-method) por el cual la clasificación clasificará a los usuarios:
+    Elige uno de los [métodos](#ranking-methods) por el cual la clasificación clasificará a los usuarios:
 
     - **Métrica**: Clasifica a los usuarios por el valor total de una métrica elegida
     - **Puntos**: Clasifica a los usuarios por el total de puntos en un sistema de puntos elegido
@@ -224,7 +224,7 @@ Para crear una clasificación, ve a la [página de clasificaciones](https://app.
     </Step>
 
     <Step title="Guarda los cambios">
-    Guarda y ve a la página de configuración para establecer [fechas de inicio y finalización](#start-and-end-dates), [programaciones de clasificaciones repetidas](#repeating-leaderboards) y más.
+    Guarda y ve a la página de configuración para establecer [fechas de inicio y finalización](#start-end-dates), [programaciones de clasificaciones repetidas](#repeating-leaderboards) y más.
     </Step>
 
 </Steps>
@@ -332,7 +332,7 @@ Este gráfico es un histograma de las puntuaciones de los usuarios en una clasif
 ## Preguntas Frecuentes {#frequently-asked-questions}
 
 <AccordionGroup>
-  <Accordion title="¿Cuántos participantes puede tener una clasificación a la vez?">
+  <Accordion id="leaderboard-participant-limit-faq" title="¿Cuántos participantes puede tener una clasificación a la vez?">
     Limitamos las clasificaciones a 1,000 participantes.
     
     Lee más sobre esto en la [sección dedicada](#participant-limits) de esta página.
@@ -341,7 +341,7 @@ Este gráfico es un histograma de las puntuaciones de los usuarios en una clasif
 
 {" "}
 
-<Accordion title="No veo una opción de clasificación semanal, ¿cómo puedo configurar una?">
+<Accordion id="leaderboard-weekly-faq" title="No veo una opción de clasificación semanal, ¿cómo puedo configurar una?">
   Trophy permite ejecutar clasificaciones recurrentes cada número arbitrario de
   días. Por lo tanto, una clasificación semanal sería simplemente una clasificación que se repite cada 7
   días. Lee [esta sección](#tips-for-weekly-leaderboards) para obtener más consejos sobre
