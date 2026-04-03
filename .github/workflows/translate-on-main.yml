@@ -1,6 +1,7 @@
 name: Translate on main
 
 on:
+  workflow_dispatch:
   push:
     branches:
       - main
