@@ -21,6 +21,7 @@
     "lingo:validate-glossary": "node scripts/validate-glossary-csv.mjs",
     "translate:verify": "npx lingo.dev@latest run --frozen",
     "translate:validate": "node scripts/validate-translations.mjs",
+    "translate:lock": "npx lingo.dev@latest lockfile --force",
     "mint:validate": "npx mint@latest validate",
     "mint:broken-links": "npx mint@latest broken-links --check-anchors --check-snippets"
   },
