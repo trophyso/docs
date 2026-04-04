@@ -1,0 +1,398 @@
+---
+title: Logros
+description: Aprende a usar Logros en una experiencia de producto gamificada con Trophy.
+og:description: Utiliza logros de métrica, API, racha y compuestos para
+  recompensar a los usuarios por su progreso continuo y animarlos a descubrir
+  nuevas partes de tu aplicación.
+icon: trophy
+---
+
+import MetricChangeResponseBlock from "../../snippets/metric-change-response-block.mdx";
+import AllAchievementsResponseBlock from "../../snippets/all-achievements-response-block.mdx";
+
+## ¿Qué Son los Logros? {#what-are-achievements}
+
+Los logros son recompensas que los usuarios pueden desbloquear a medida que utilizan tu plataforma. Pueden usarse para recompensar a los usuarios por su progreso continuo en los recorridos principales del usuario, o para motivarlos a explorar funciones más nuevas.
+
+Los logros funcionan mejor cuando están diseñados para incentivar a los usuarios a realizar acciones que probablemente conduzcan a una mayor retención.
+
+<Tip>
+  Utiliza las [analíticas de métricas](/es/platform/metrics#metric-analytics) de Trophy para comparar
+  la retención de cada interacción del usuario, luego configura logros basados en
+  estas interacciones para maximizar el impacto en la retención.
+</Tip>
+
+Aquí examinaremos los tipos de logros que puedes crear con Trophy, las diferentes formas de utilizarlos y cómo integrarlos en tu plataforma.
+
+Mira a Charlie ejecutar un recorrido sobre el uso de logros en una aplicación NextJS:
+
+<Frame>
+  <iframe
+    width="560"
+    height="315"
+    src="https://www.youtube.com/embed/U6TRxV036Lk?si=pAX37TXL8rNeFzz7"
+    title="YouTube video player"
+    frameborder="0"
+    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+    allowfullscreen
+  ></iframe>
+</Frame>
+
+## Tipos de Logros {#achievement-types}
+
+Trophy ofrece cuatro tipos de logros: [Métrica](#metric-achievements), [API](#api-achievements), [Racha](#streak-achievements) y [Logros compuestos](#composite-achievements), detallados a continuación.
+
+### Logros de Métrica {#metric-achievements}
+
+Los logros de métrica están vinculados a [Métricas](/es/platform/metrics) y son más útiles cuando deseas incentivar a los usuarios a realizar la misma acción una y otra vez.
+
+Tomemos el ejemplo de una plataforma de estudio que utiliza Trophy para animar a los usuarios a ver más tarjetas de memoria con logros de métrica de la siguiente manera:
+
+- 1.000 tarjetas
+- 2.500 tarjetas
+- 5.000 tarjetas
+- 10.000 tarjetas
+- 25.000 tarjetas
+- 50.000 tarjetas
+
+En este caso, crearías una métrica llamada _Tarjetas Volteadas_ y crearías logros asociados a la métrica para cada hito.
+
+Dado que estos logros están directamente vinculados a la métrica _Tarjetas Volteadas_, Trophy rastreará automáticamente cuándo los usuarios desbloquean estos logros a medida que [incrementan la métrica](/es/platform/events#tracking-metric-events).
+
+Cuando se desbloquean logros, Trophy incluye información sobre los logros desbloqueados en la respuesta del [Event API](/es/api-reference/endpoints/metrics/send-a-metric-change-event), y activa automáticamente [correos electrónicos de logros](/es/platform/emails#achievement-emails) si están configurados.
+
+<MetricChangeResponseBlock />
+
+### Logros de API {#api-achievements}
+
+Los logros de API solo pueden completarse una vez y son útiles para recompensar a los usuarios por realizar acciones específicas.
+
+Ejemplos comunes incluyen:
+
+- Un usuario que completa su perfil después de registrarse
+- Un usuario que vincula su cuenta de redes sociales a una plataforma
+- Un usuario que comparte su experiencia con el producto en redes sociales
+
+Los logros de API sirven como una manera sencilla de recompensar a los usuarios por completar cualquier acción que consideres importante para la retención.
+
+Al igual que los logros de métricas, los logros de API también pueden activar [correos electrónicos de logros](/es/platform/emails#achievement-emails) automatizados si están configurados.
+
+### Logros de Racha {#streak-achievements}
+
+Los logros de racha están directamente vinculados a la [Racha](/es/platform/streaks) de un usuario y se desbloquean automáticamente cuando los usuarios alcanzan una duración de racha específica.
+
+Puedes crear tantos logros de racha como desees para duraciones cada vez mayores, por ejemplo 7 días, 30 días y 365 días para motivar a los usuarios a usar tu aplicación cada vez más.
+
+Al igual que los logros de métricas y API, puedes agregar un nombre personalizado y asignar una insignia a los logros de racha.
+
+### Logros Compuestos {#composite-achievements}
+
+Los logros compuestos se desbloquean automáticamente cuando un usuario ha completado todos los logros prerequisito que selecciones. Son ideales para crear recompensas escalonadas o de nivel maestría que reconocen a los usuarios que han alcanzado un conjunto específico de hitos.
+
+Por ejemplo, podrías crear un logro compuesto "Maestro de Estudio" que se desbloquea cuando un usuario ha completado:
+- 1,000 tarjetas de estudio
+- Racha de 7 días
+- Completar onboarding
+
+Los logros compuestos son útiles para crear rutas de progresión y alentar a los usuarios a interactuar en diferentes áreas de tu aplicación. Al igual que otros tipos de logros, pueden activar [Correos de Logros](/es/platform/emails#achievement-emails) cuando se desbloquean.
+
+## Crear Logros {#creating-achievements}
+
+Para crear nuevos logros, dirígete a la [página de logros](https://app.trophy.so/achievements) en el panel de Trophy y presiona el botón **Nuevo Logro**:
+
+<Frame>
+  <video
+    autoPlay
+    muted
+    loop
+    playsInline
+    className="w-full aspect-video"
+    src="../../assets/platform/achievements/create_new_achievement.mp4"
+  ></video>
+</Frame>
+
+<Steps>
+<Step title="Ingresa un nombre">
+  Ingresa un nombre para el logro. Este será devuelto desde las API y estará disponible para usar en correos y otras áreas de Trophy donde sea apropiado.
+</Step>
+
+<Step title="Ingresa una descripción (Opcional)">
+  Ingresa una breve descripción del logro. Esta será devuelta desde las API
+  y estará disponible para usar en correos y otras áreas de Trophy donde sea
+  apropiado.
+</Step>
+
+<Step title="Agrega una insignia (Opcional)">
+  Puedes agregar una insignia cargando una imagen o ingresando un URL de imagen personalizado.
+  El URL se devuelve en las respuestas de la API y se usa en correos y otras áreas de
+  Trophy donde sea apropiado.
+</Step>
+
+<Step title="Elige un tipo de activación">
+  Elige cómo quieres que este logro se desbloquee.
+  
+- Elegir **Metric** significará que el logro se desbloqueará automáticamente cuando el total de la métrica del usuario alcance el valor de activación del logro.
+
+- Elegir **Racha** significará que el logro se desbloqueará automáticamente cuando la longitud de la racha del usuario alcance el valor de activación del logro.
+
+- Elegir **Llamada API** significará que el logro solo se desbloqueará cuando se marque explícitamente como completado por tu código mediante una solicitud a la [API de completar logro](/es/api-reference/endpoints/achievements/mark-an-achievement-as-completed).
+
+- Elegir **Compuesto** significará que el logro se desbloqueará automáticamente cuando el usuario haya completado todos los logros prerrequisito que selecciones.
+
+</Step>
+
+<Step title="Configurar activador">
+  Una vez que hayas elegido el tipo de activador para el logro, necesitas configurar los ajustes del activador.
+
+- Si elegiste el activador **Métrica**, deberás elegir la métrica y el valor total del usuario que debe desbloquear el logro al alcanzarse.
+
+- Si elegiste el activador **Racha**, deberás establecer la longitud de racha que debe desbloquear el logro.
+
+- Si elegiste el activador **Llamada API**, deberás elegir una referencia única `key` que usarás para completar el logro a través de la [API](/es/api-reference/endpoints/achievements/mark-an-achievement-as-completed).
+
+- Si elegiste el activador **Compuesto**, deberás seleccionar los logros prerrequisito que deben completarse todos para que este logro se desbloquee. El logro compuesto se desbloqueará automáticamente cuando un usuario complete el último prerrequisito.
+
+</Step>
+
+<Step title="Agregar filtros de atributos (Opcional)">
+Puedes asignar filtros de atributos a un logro para restringir aún más quién puede desbloquearlos y cuándo.
+
+- Para limitar un logro de **Métrica** a que solo se aplique a eventos con [atributos de evento personalizados](/es/platform/events#custom-event-attributes) específicos, selecciona un atributo e ingresa un valor en la sección **Atributo de Evento**.
+
+- Para limitar cualquier tipo de logro de modo que solo se aplique a un usuario con uno o más [atributos de usuario personalizados](/es/platform/users#custom-user-attributes) específicos, añade los atributos y los valores deseados en la sección **User Attributes**.
+
+</Step>
+
+<Step title="Guarda los cambios">
+  Guarda el nuevo logro.
+</Step>
+</Steps>
+
+## Gestión de Logros {#managing-achievements}
+
+Trophy incluye herramientas integradas para ayudarte a probar y controlar qué logros se pueden desbloquear, por quién y cuándo, sin afectar el entorno de producción.
+
+### Estados de Logros {#achievement-statuses}
+
+A continuación se presenta una descripción general de los diferentes estados de logros y su significado.
+
+**Inactivo**
+
+Todos los logros se crean como inactivos. Los logros inactivos no pueden completarse y no se devuelven en ninguna API de logros. Los usuarios no los verán hasta que los actives.
+
+**Activo**
+
+Cuando activas un logro, lo pones 'en funcionamiento'. Los usuarios pueden completarlo y se devolverá desde todas las API de logros.
+
+**Bloqueado**
+
+Cuando bloqueas un logro, los usuarios que aún no lo hayan desbloqueado ya no podrán hacerlo, pero los usuarios que ya lo hayan desbloqueado no se verán afectados.
+
+Los logros bloqueados solo se devuelven en las API para los usuarios que ya los han conseguido.
+
+**Archivado**
+
+Los logros archivados no pueden completarse y no se devuelven en ninguna API de logros.
+
+<Warning>
+  Una vez que archivas un logro, desaparece de Trophy, así que asegúrate de archivar únicamente
+  los logros que ya no necesites.
+</Warning>
+
+Los logros archivados pueden restaurarse [contactando con soporte](#get-support).
+
+### Flujo de Trabajo de Logros {#achievement-workflow}
+
+Los logros pueden moverse a través de diferentes estados según el siguiente flujo de trabajo:
+
+```mermaid
+flowchart LR
+    A@{ shape: rounded, label: "Inactive" }
+    B@{ shape: rounded, label: "Active" }
+    C@{ shape: rounded, label: "Active" }
+    D@{ shape: rounded, label: "Locked" }
+    E@{ shape: rounded, label: "Archived" }
+    F@{ shape: rounded, label: "Locked" }
+    G@{ shape: rounded, label: "Active" }
+    H@{ shape: rounded, label: "Archived" }
+    A-->B
+    C-->D
+    D-->E
+    C-->E
+    F-->G
+    F-->H
+    style A fill:#FDFDEA,stroke:#F7F0D5
+    style B fill:#F2FAF7,stroke:#E2F6E6
+    style C fill:#F2FAF7,stroke:#E2F6E6
+    style D fill:#eee,stroke:#ddd
+    style E fill:#ddd,stroke:#ccc
+    style F fill:#eee,stroke:#ddd
+    style G fill:#F2FAF7,stroke:#E2F6E6
+    style H fill:#ddd,stroke:#ccc
+
+```
+
+## Completar Logros {#completing-achievements}
+
+Si estás utilizando logros basados en métricas, no es necesario _completar_ explícitamente los logros. Una vez que hayas configurado el [seguimiento de métricas](/es/platform/events#tracking-metric-events) en tu código, todos los logros vinculados a la métrica se rastrearán automáticamente.
+
+De manera similar, si estás utilizando logros de racha, todos los logros relacionados con la racha del usuario se desbloquearán automáticamente cuando un usuario alcance la longitud de racha correspondiente.
+
+Los logros compuestos también se completan automáticamente. Se desbloquean tan pronto como un usuario haya completado todos sus logros prerequisitos. No se necesitan llamadas adicionales a la API.
+
+Sin embargo, si estás utilizando logros de API, tendrás que marcarlos como completados para cada usuario según corresponda. Para hacer esto, puedes usar la [API de Completar Logro](/es/api-reference/endpoints/achievements/mark-an-achievement-as-completed) utilizando el `key` del logro que deseas completar.
+
+Esto devolverá una respuesta que contiene detalles del logro que se completó, que puede usarse en cualquier flujo de trabajo posterior a la finalización, como mostrar una notificación dentro de la aplicación.
+
+{/* vale off */}
+
+```json Response
+{
+  "completionId": "0040fe51-6bce-4b44-b0ad-bddc4e123534",
+  "achievement": {
+    "id": "5100fe51-6bce-6j44-b0hs-bddc4e123682",
+    "trigger": "api",
+    "name": "Finish onboarding",
+    "description": "Complete the onboarding process.",
+    "badgeUrl": "https://example.com/badge.png",
+    "key": "finish-onboarding",
+    "achievedAt": "2021-01-01T00:00:00Z"
+  }
+}
+```
+
+{/* vale on */}
+
+## Retroactividad de Logros {#backdating-achievements}
+
+Por defecto, cada vez que cambias un logro al [estado](#managing-achievements) 'Activo', Trophy verificará si algún usuario existente cumple con los requisitos del logro y lo completará para ellos en segundo plano.
+
+Esto significa que cuando lanzas nuevos logros en producción, o editas un logro activo existente, la retroactividad ocurrirá automáticamente.
+
+<Note>
+  Cuando los logros se completan de esta manera, los usuarios no reciben notificaciones de que esto ha ocurrido. Esto es para evitar que los cambios en tus logros en Trophy resulten en que los usuarios reciban muchas notificaciones.
+</Note>
+
+Puedes verificar cuántos usuarios han completado logros en cualquier momento en la [página de logros](https://app.trophy.so/achievements) en el panel de Trophy. La columna _Usuarios_ en los logros puede actualizarse durante la retroactividad.
+
+<Frame>
+  <img
+    height="200"
+    noZoom
+    src="../../assets/platform/achievements/check_user_completions.png"
+  />
+</Frame>
+
+## Uso de insignias {#using-badges}
+
+<Frame>
+  <video
+    autoPlay
+    muted
+    loop
+    playsInline
+    className="w-full aspect-video"
+    src="../../assets/platform/achievements/upload_badge.mp4"
+  ></video>
+</Frame>
+
+Puedes asignar una insignia a cualquier logro subiendo una imagen—Trophy la sirve y devuelve la URL—o proporcionando tu propia URL de imagen. Las respuestas relevantes de la API incluyen ese valor en `badgeUrl` para usarse como `src` en etiquetas `<img>`.
+
+```json Response {8}
+{
+  "completionId": "0040fe51-6bce-4b44-b0ad-bddc4e123534",
+  "achievement": {
+    "id": "5100fe51-6bce-6j44-b0hs-bddc4e123682",
+    "trigger": "api",
+    "name": "Finish onboarding",
+    "description": "Complete the onboarding process.",
+    "badgeUrl": "https://example.com/badge.png",
+    "key": "finish-onboarding",
+    "achievedAt": "2021-01-01T00:00:00Z"
+  }
+}
+```
+
+## Mostrar logros {#displaying-achievements}
+
+Trophy cuenta con varias APIs que facilitan la visualización de logros dentro de tus aplicaciones. Aquí veremos las diferentes formas de usarlas y los tipos de interfaces que puedes construir.
+
+<Tip>
+  Consulta nuestra [guía completa](/es/guides/how-to-build-an-achievements-feature) sobre
+  cómo agregar una función de logros a tu aplicación para obtener más detalles.
+</Tip>
+
+### Todos los logros {#all-achievements}
+
+Para mostrar una vista general de todos los logros que los usuarios pueden completar, utiliza el [endpoint de todos los logros](/es/api-reference/endpoints/achievements/all-achievements). Usa estos datos para construir interfaces que den a los usuarios una idea de las vías de progresión dentro de tu aplicación.
+
+<Frame>
+  <video
+    autoPlay
+    muted
+    loop
+    playsInline
+    className="w-full aspect-video"
+    src="../../assets/platform/achievements/displaying_trophy_cabinet.mp4"
+  ></video>
+</Frame>
+
+El endpoint de todos los logros devuelve una lista de todos los logros dentro de tu cuenta de Trophy. Cada logro devuelto también incluye `completions` (el número de usuarios que han completado el logro) y `rarity` (el porcentaje de usuarios que han completado el logro) de la siguiente manera:
+
+<AllAchievementsResponseBlock />
+
+### Logros del usuario {#user-achievements}
+
+Si en cambio estás construyendo elementos de interfaz específicos del usuario, entonces utiliza el [endpoint de logros del usuario](/es/api-reference/endpoints/users/get-a-users-completed-achievements) para devolver los logros que un usuario específico ha completado.
+
+<Tip>
+  También puedes incluir logros que un usuario aún no ha completado al incluir
+  el parámetro de consulta `includeIncomplete=true`.
+</Tip>
+
+<Frame>
+  <img
+    height="200"
+    noZoom
+    src="../../assets/platform/achievements/user_achievements.png"
+  />
+</Frame>
+
+## Analítica de Logros {#achievement-analytics}
+
+Si tienes logros configurados para cualquiera de tus [Métricas](/es/platform/metrics), la página de analítica de métricas muestra un gráfico que te indica el progreso actual de todos los usuarios de la siguiente manera:
+
+<Frame>
+  <img
+    width="75%"
+    noZoom
+    src="../../assets/platform/metrics/achievement_completions.png"
+  />
+</Frame>
+
+## Preguntas Frecuentes {#frequently-asked-questions}
+
+<AccordionGroup>
+  <Accordion title="¿Qué tipo de logros debo usar?">
+    Usa logros de métrica para recompensar a los usuarios por realizar la misma acción una y otra vez, e incentivarlos a hacerlo más.
+
+    Usa logros de racha para recompensar a los usuarios por mantener su racha.
+
+    Usa logros de API cuando quieras recompensar a los usuarios por realizar acciones específicas que solo necesitan hacer una vez.
+
+    Usa logros compuestos cuando quieras crear recompensas escalonadas o de nivel de maestría que se desbloqueen cuando los usuarios completen un conjunto específico de logros prerequisito.
+
+  </Accordion>
+
+    <Accordion title="¿Qué logros debo crear?">
+    Los logros, como toda la gamificación, ofrecen la mejor retención cuando están estrechamente alineados con la razón principal del usuario para usar tu plataforma.
+
+    Usa la [analítica de métricas](/es/platform/metrics#metric-analytics) de Trophy para comparar la retención de cada interacción del usuario, luego configura logros alrededor de estas interacciones para maximizar el impacto en la retención.
+
+</Accordion>
+
+</AccordionGroup>
+
+## Obtener Soporte {#get-support}
+
+¿Quieres ponerte en contacto con el equipo de Trophy? Comunícate con nosotros por [correo electrónico](mailto:support@trophy.so). ¡Estamos aquí para ayudarte!

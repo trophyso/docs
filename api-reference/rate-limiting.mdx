@@ -1,15 +1,15 @@
 ---
 title: Rate Limiting
 description: Learn about the Trophy API and request rate limiting.
-"og:description": Learn about the Trophy API and request rate limiting.
+og:description: Learn about the Trophy API and request rate limiting.
 icon: circle-gauge
 ---
 
-import { RateLimitBadge } from "/snippets/rate-limit-badge.jsx";
+import { RateLimitBadge } from "../components/rate-limit-badge.jsx";
 
 Trophy operates a tiered rate limiting model for each API endpoint. All rate limits are scoped at the organisation level. Exceeding rate limits will result in your application receiving a `429 Too Many Requests` response.
 
-## Rate Limit Tiers
+## Rate Limit Tiers {#rate-limit-tiers}
 
 | Tier | Rate Limit |
 | ---- | ---------- |
@@ -21,6 +21,6 @@ Trophy operates a tiered rate limiting model for each API endpoint. All rate lim
   us](mailto:support@trophy.so) and we'll be happy to discuss your needs.
 </Tip>
 
-## Get Support
+## Get Support {#get-support}
 
 Want to get in touch with the Trophy team? Reach out to us via [email](mailto:support@trophy.so). We're here to help!

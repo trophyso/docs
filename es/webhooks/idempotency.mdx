@@ -1,0 +1,59 @@
+---
+title: Idempotencia
+description: Aprende cómo asegurar que tus endpoints de webhooks procesen los
+  eventos solo una vez para prevenir efectos secundarios no deseados.
+subtitle: Aprende cómo asegurar que tus endpoints de webhooks procesen los
+  eventos solo una vez para prevenir efectos secundarios no deseados.
+icon: repeat
+---
+
+## ¿Qué es la Idempotencia? {#what-is-idempotency}
+
+En el contexto de webhooks, la [idempotencia](https://en.wikipedia.org/wiki/Idempotence) es la propiedad de un endpoint que asegura que procese eventos duplicados exactamente una vez.
+
+La mayoría de los emisores de webhooks, incluido Trophy, operan con una garantía de entrega "al menos una vez". Esto significa que eventualmente puedes recibir el mismo webhook varias veces y tu código necesita manejar esos escenarios sin consecuencias no deseadas.
+
+Por ejemplo, si tu manejador de webhooks está suscrito a eventos [`leaderboard.finished`](/es/webhooks/events/leaderboards/leaderboard-finished) y envía tarjetas de regalo a los usuarios que quedan en el top 10, entonces tu código necesita enviar las tarjetas de regalo solo una vez incluso si recibe el mismo evento de Trophy varias veces.
+
+## Implementar la Idempotencia de Webhooks {#implementing-webhook-idempotency}
+
+Hacer que tus manejadores de webhooks sean más robustos es trivial en la mayoría de los casos. Tomemos el ejemplo de la tarjeta de regalo anterior.
+
+Después de enviar una tarjeta de regalo a un usuario, tu código podría insertar un registro en tu base de datos que represente que la tarjeta de regalo ha sido enviada al usuario.
+
+```sql
+-- Create a table to store gift card receipts
+CREATE TABLE gift_card_receipts (
+    id text PRIMARY KEY,
+    user_id text NOT NULL,
+    gift_card_id text NOT NULL
+)
+
+-- Insert a row after sending gift card
+INSERT INTO gift_card_receipts (id, user_id, gift_card_id)
+VALUES ('webhook_event_id', 'user_123', 'gift_card_abc')
+
+-- Check before sending gift card
+SELECT * FROM gift_card_receipts
+WHERE user_id = 'user-id'
+AND gift_card_id = 'gift-card-id'
+LIMIT 1
+```
+
+Luego, antes de enviar tarjetas de regalo, agrega una declaración `if` que verifique si la tarjeta de regalo ya ha sido enviada al usuario.
+
+```js
+var receipt = await getGiftcardReceipt();
+
+if (!receipt) {
+  sendGiftCard();
+} else {
+  // Duplicate event - do nothing
+}
+```
+
+Si tu código recibe un evento duplicado, la tarjeta de regalo no se enviará nuevamente.
+
+## Obtener Soporte {#get-support}
+
+¿Quieres ponerte en contacto con el equipo de Trophy? Contáctanos por [correo electrónico](mailto:support@trophy.so). ¡Estamos aquí para ayudarte!

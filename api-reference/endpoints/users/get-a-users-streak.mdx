@@ -1,8 +1,9 @@
 ---
-openapi: get /users/{id}/streak
+title: Get a user's streak status
+openapi: openapi.yml get /users/{id}/streak
 ---
 
-import { RateLimitBadge } from "/snippets/rate-limit-badge.jsx";
+import { RateLimitBadge } from "../../../components/rate-limit-badge.jsx";
 
 **Rate Limits**
 

@@ -1,0 +1,13 @@
+---
+title: Impulso de puntos iniciado
+openapi: openapi.yml webhook points.boost_started
+---
+
+<Note>
+  Para impulsos que aplican a todos los usuarios o a un grupo de usuarios, los eventos se disparan a las 10:00 UTC el día anterior a la hora de inicio UTC del impulso. Esto
+  se debe a que los impulsos son relativos a la zona horaria de cada usuario, y el evento de inicio debe dispararse antes de que los usuarios en las zonas horarias más adelantadas vean el impulso.
+
+  Para impulsos específicos de usuario (impulsos que solo aplican a un usuario), los eventos se disparan en el momento exacto de inicio del impulso en la zona horaria de ese usuario.
+  
+  **Asegúrate de tener en cuenta las zonas horarias de los usuarios al programar notificaciones desde este evento webhook**.
+</Note>

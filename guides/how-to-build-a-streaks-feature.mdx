@@ -5,10 +5,10 @@ subtitle: Learn how to use Trophy to add a streaks feature to your web or mobile
 noindex: true
 ---
 
-import SDKInstallCommand from "/snippets/sdk-install-command.mdx";
-import MetricChangeRequestBlock from "/snippets/metric-change-request-block.mdx";
-import StreakRequestBlock from "/snippets/streak-request-block.mdx";
-import StreakResponseBlock from "/snippets/streak-response-block.mdx";
+import SDKInstallCommand from "../snippets/sdk-install-command.mdx";
+import MetricChangeRequestBlock from "../snippets/metric-change-request-block.mdx";
+import StreakRequestBlock from "../snippets/streak-request-block.mdx";
+import StreakResponseBlock from "../snippets/streak-response-block.mdx";
 
 The guide outlines the full process of adding a streaks feature to your web or mobile app using Trophy.
 
@@ -20,12 +20,12 @@ For illustration purposes we'll use the example of a study platform that uses a 
   repo](https://github.com/trophyso/example-study-platform/tree/demo).
 </Tip>
 
-## Pre-requisites
+## Pre-requisites {#pre-requisites}
 
 - A [Trophy](https://app.trophy.so/sign-up) account
 - About 10 minutes
 
-## Trophy Setup
+## Trophy Setup {#trophy-setup}
 
 In Trophy, [Metrics](/platform/metrics) are the building blocks of gamification and model the different interactions users make with your product.
 
@@ -56,7 +56,7 @@ When events are recorded for a specific user, Trophy will automatically check wh
 
 This is what makes building gamified experiences with Trophy so easy, it does all the work for you behind the scenes.
 
-## Installing Trophy SDK
+## Installing Trophy SDK {#installing-trophy-sdk}
 
 To interact with Trophy from your code you'll use the Trophy SDK available in most major [programming languages](/api-reference/client-libraries).
 
@@ -74,7 +74,7 @@ TROPHY_API_KEY='*******'
   Make sure you **don't** expose your API key in client-side code.
 </Warning>
 
-## Tracking User Interactions
+## Tracking User Interactions {#tracking-user-interactions}
 
 To track an event (user interaction) against your metric, use the [metric change API](/api-reference/endpoints/metrics/send-a-metric-change-event).
 
@@ -112,11 +112,11 @@ The response to this API call is the complete set of changes to any features you
 
 Validate this is working by checking the Trophy [dashboard](https://app.trophy.so).
 
-## Displaying Streaks
+## Displaying Streaks {#displaying-streaks}
 
 You have a number of options for displaying streaks in your application. Here we'll look at the most common options.
 
-### Pop-up Notifications
+### Pop-up Notifications {#pop-up-notifications}
 
 We can use the response of the [metric change API](/api-reference/endpoints/metrics/send-a-metric-change-event) to show pop-up notifications (or 'toasts') when user extends their streak.
 
@@ -158,7 +158,7 @@ if (response.currentStreak?.extended) {
   we recommend.
 </Tip>
 
-### Displaying User Streaks
+### Displaying User Streaks {#displaying-user-streaks}
 
 To fetch data on a user's streak use the [user streak API](/api-reference/endpoints/users/get-a-users-streak).
 
@@ -185,7 +185,7 @@ Here's an example of a git-style streak calendar built using the data in the res
   for a React component that drives this UI using data from Trophy.
 </Tip>
 
-## Analytics
+## Analytics {#analytics}
 
 The [streaks page](https://app.trophy.so/streaks) in Trophy shows data on active streaks, the average length of streaks and longest streaks.
 
@@ -198,12 +198,12 @@ The [streaks page](https://app.trophy.so/streaks) in Trophy shows data on active
   />
 </Frame>
 
-## Streak Freezes
+## Streak Freezes {#streak-freezes}
 
 Trophy also supports streak freezes which can help prevent users from losing their streak if they accidentally miss a period.
 
 Learn more about streak freezes in the dedicated [streak freezes docs](/platform/streaks#streak-freezes).
 
-## Get Support
+## Get Support {#get-support}
 
 Want to get in touch with the Trophy team? Reach out to us via [email](mailto:support@trophy.so). We're here to help!

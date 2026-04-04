@@ -1,14 +1,16 @@
 ---
 title: Achievements
 description: Learn how to use Achievements in a gamified product experience with Trophy.
-"og:description": Use metric, API, streak and composite achievements to reward users for continued progress and to encourage them to discover new parts of your app.
+og:description: Use metric, API, streak and composite achievements to reward
+  users for continued progress and to encourage them to discover new parts of
+  your app.
 icon: trophy
 ---
 
-import MetricChangeResponseBlock from "/snippets/metric-change-response-block.mdx";
-import AllAchievementsResponseBlock from "/snippets/all-achievements-response-block.mdx";
+import MetricChangeResponseBlock from "../snippets/metric-change-response-block.mdx";
+import AllAchievementsResponseBlock from "../snippets/all-achievements-response-block.mdx";
 
-## What Are Achievements?
+## What Are Achievements? {#what-are-achievements}
 
 Achievements are rewards that users can unlock as they use your platform. They can be used to reward users for making continued progress along core user journeys, or to motivate users to explore more nascent features.
 
@@ -37,11 +39,11 @@ Watch Charlie run walk through using achievements in a NextJS application:
   ></iframe>
 </Frame>
 
-## Achievement Types
+## Achievement Types {#achievement-types}
 
 Trophy offers four types of achievements, [Metric](#metric-achievements), [API](#api-achievements), [Streak](#streak-achievements) and [Composite achievements](#composite-achievements), detailed below.
 
-### Metric Achievements
+### Metric Achievements {#metric-achievements}
 
 Metric achievements are tied to [Metrics](/platform/metrics) and are best used when you want to incentivize users to take the same action over and over again.
 
@@ -62,7 +64,7 @@ When achievements are unlocked, Trophy includes information about the unlocked a
 
 <MetricChangeResponseBlock />
 
-### API Achievements
+### API Achievements {#api-achievements}
 
 API achievements can only be completed once and are useful for rewarding users for taking specific actions.
 
@@ -76,7 +78,7 @@ API achievements serve as an easy way to reward users for completing any action 
 
 Just like metric achievements, API achievements can also trigger automated [Achievement Emails](/platform/emails#achievement-emails) if configured.
 
-### Streak Achievements
+### Streak Achievements {#streak-achievements}
 
 Streak achievements are directly tied to a user's [Streak](/platform/streaks) and are automatically unlocked when users reach a particular streak length.
 
@@ -84,7 +86,7 @@ You can create as many streak achievements as you like for increasing lengths of
 
 Just like metric and API achievements, you can add a custom name and assign a badge to streak achievements.
 
-### Composite Achievements
+### Composite Achievements {#composite-achievements}
 
 Composite achievements unlock automatically when a user has completed all of the prerequisite achievements you select. They're ideal for creating tiered or mastery-level rewards that recognize users who have accomplished a specific set of milestones.
 
@@ -95,7 +97,7 @@ For example, you could create a "Study Master" composite achievement that unlock
 
 Composite achievements are useful for creating progression pathways and encouraging users to engage across different areas of your app. Just like other achievement types, they can trigger [Achievement Emails](/platform/emails#achievement-emails) when unlocked.
 
-## Creating Achievements
+## Creating Achievements {#creating-achievements}
 
 To create new achievements, head to the [achievements page](https://app.trophy.so/achievements) in the Trophy dashboard and hit the **New Achievement** button:
 
@@ -167,11 +169,11 @@ You can assign attribute filters to an achievement to further restrict who can u
 </Step>
 </Steps>
 
-## Managing Achievements
+## Managing Achievements {#managing-achievements}
 
 Trophy has built in tools to help you test and control which achievements can be unlocked, by who and when, without affecting production.
 
-### Achievement Statuses
+### Achievement Statuses {#achievement-statuses}
 
 Here's an overview of the different achievement statuses and what they mean.
 
@@ -200,7 +202,7 @@ Archived achievements can't be completed and aren't returned in any achievement 
 
 Archived achievements can be restored by [contacting support](#get-support).
 
-### Achievement Workflow
+### Achievement Workflow {#achievement-workflow}
 
 Achievements can be moved through different statuses according to the following workflow:
 
@@ -231,7 +233,7 @@ flowchart LR
 
 ```
 
-## Completing Achievements
+## Completing Achievements {#completing-achievements}
 
 If you're using metric achievements, there's no need to explicitly _complete_ achievements. Once you've set up [metric tracking](/platform/events#tracking-metric-events) in your code, all achievements linked to the metric will be automatically tracked.
 
@@ -262,7 +264,7 @@ This will return back a response that contains details of the achievement that w
 
 {/* vale on */}
 
-## Backdating Achievements
+## Backdating Achievements {#backdating-achievements}
 
 By default, whenever you move an achievement to 'Active' [status](#managing-achievements), Trophy will check if any existing users meet the requirements of the achievement and complete it for them behind the scenes.
 
@@ -284,7 +286,7 @@ You can check how many users have completed achievements at any time on the [ach
   />
 </Frame>
 
-## Using Badges
+## Using Badges {#using-badges}
 
 <Frame>
   <video
@@ -314,7 +316,7 @@ You can assign a badge to any achievement by uploading an image—Trophy serves 
 }
 ```
 
-## Displaying Achievements
+## Displaying Achievements {#displaying-achievements}
 
 Trophy has a number of APIs that support displaying achievements within your applications. Here we'll look at the different ways to use them and the types of UI's you can build.
 
@@ -323,7 +325,7 @@ Trophy has a number of APIs that support displaying achievements within your app
   adding an achievements feature to your app for more details.
 </Tip>
 
-### All Achievements
+### All Achievements {#all-achievements}
 
 To display a high-level overview of all achievements users can complete, use the [all achievements endpoint](/api-reference/endpoints/achievements/all-achievements). Use this data to build UI that gives users an idea of the progression pathways within your application.
 
@@ -338,11 +340,11 @@ To display a high-level overview of all achievements users can complete, use the
   ></video>
 </Frame>
 
-The all achievements endpoint returns a list of all achievements within your Trophy account. Each achievement returned also includes `completions` (the number of users who have compeleted the achievement) and `rarity` (the percentage of users who have completed the achievement) as follows:
+The all achievements endpoint returns a list of all achievements within your Trophy account. Each achievement returned also includes `completions` (the number of users who have completed the achievement) and `rarity` (the percentage of users who have completed the achievement) as follows:
 
 <AllAchievementsResponseBlock />
 
-### User Achievements
+### User Achievements {#user-achievements}
 
 If instead you're building user-specific UI elements, then use the [user achievements endpoint](/api-reference/endpoints/users/get-a-users-completed-achievements) to return achievements a specific user has completed.
 
@@ -359,7 +361,7 @@ If instead you're building user-specific UI elements, then use the [user achieve
   />
 </Frame>
 
-## Achievement Analytics
+## Achievement Analytics {#achievement-analytics}
 
 If you have achievements set up for any of your [Metrics](/platform/metrics), then the metric analytics page displays a chart that shows you the current progress of all Users as follows:
 
@@ -371,7 +373,7 @@ If you have achievements set up for any of your [Metrics](/platform/metrics), th
   />
 </Frame>
 
-## Frequently Asked Questions
+## Frequently Asked Questions {#frequently-asked-questions}
 
 <AccordionGroup>
   <Accordion title="What type of achievements should I use?">
@@ -394,6 +396,6 @@ If you have achievements set up for any of your [Metrics](/platform/metrics), th
 
 </AccordionGroup>
 
-## Get Support
+## Get Support {#get-support}
 
 Want to get in touch with the Trophy team? Reach out to us via [email](mailto:support@trophy.so). We're here to help!

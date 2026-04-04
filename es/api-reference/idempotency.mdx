@@ -1,0 +1,72 @@
+---
+title: Idempotencia
+description: Evita efectos secundarios no deseados al reintentar solicitudes con
+  controles de idempotencia integrados en la API y SDKs de Trophy.
+og:description: Evita efectos secundarios no deseados al reintentar solicitudes
+  con idempotencia integrada en la API y SDKs de Trophy utilizando el encabezado
+  de solicitud `Idempotency-Key`.
+icon: repeat
+---
+
+import IdempotentEventTracking from "../../snippets/idempotent-event-tracking.mdx";
+
+## ¿Qué es la Idempotencia? {#what-is-idempotency}
+
+Al describir APIs, la [idempotencia](https://en.wikipedia.org/wiki/Idempotence) es una propiedad de una operación particular en la que las invocaciones subsecuentes después de la primera no tienen ningún efecto adicional sobre el estado del sistema.
+
+La [API de seguimiento de eventos](/es/api-reference/endpoints/metrics/send-a-metric-change-event) de Trophy puede utilizarse para garantizar la idempotencia, evitando que los reintentos del cliente tengan efectos secundarios no deseados como el conteo excesivo de interacciones del usuario o la asignación múltiple de puntos a los usuarios por la misma acción.
+
+Esto es particularmente importante cuando las recompensas están vinculadas a acciones del usuario para evitar que los usuarios "manipulen el sistema".
+
+## Envío de Solicitudes Idempotentes {#sending-idempotent-requests}
+
+Para garantizar que se respete la idempotencia al enviar eventos a Trophy, incluye un encabezado `Idempotency-Key` al usar la [API de seguimiento de eventos](/es/api-reference/endpoints/metrics/send-a-metric-change-event). Además, todos los [SDKs de cliente](/es/api-reference/client-libraries) admiten idempotencia con seguridad de tipos integrada.
+
+Puedes elegir qué utilizar como clave de idempotencia, pero debe reflejar el nivel de 'unicidad' que deseas que Trophy respete.
+
+<Tip>
+  Por ejemplo, si utilizas Trophy para recompensar a los usuarios por completar lecciones y
+  quieres asegurarte de que cada usuario solo pueda canjear recompensas una vez por cada lección, utiliza
+  el ID único de la lección como tu clave de idempotencia.
+</Tip>
+
+Aquí hay un ejemplo de cómo se ve el uso de una clave de idempotencia:
+
+<IdempotentEventTracking />
+
+## Cómo Funciona la Idempotencia {#how-idempotency-works}
+
+Cuando Trophy detecta que se ha enviado una clave de idempotencia con un evento, primero verificará si el usuario al que se refiere el evento la ha utilizado antes. Luego procederá a tomar una de las siguientes acciones:
+
+- Si el usuario ha utilizado la clave de idempotencia anteriormente, Trophy no procesará el evento y devolverá una respuesta `202 Accepted`. La respuesta reflejará el estado actual del sistema, pero no incrementará el total de métricas del usuario, no completará ningún logro, no otorgará puntos, no extenderá la racha, etc.
+- Si en cambio Trophy detecta que el usuario no ha utilizado la clave de idempotencia anteriormente, procesará el evento de forma habitual y devolverá una respuesta `201 Created`. Finalmente, Trophy almacenará la clave de idempotencia para su búsqueda durante solicitudes posteriores.
+
+<Note>
+  Todas las [métricas](/es/platform/metrics) de Trophy gestionan la idempotencia de forma aislada.
+  Trophy aceptará que un usuario utilice la misma clave de idempotencia para eventos contra
+  diferentes métricas como solicitudes aisladas independientes.
+</Note>
+
+Además, al utilizar una clave de idempotencia, la respuesta contendrá dos propiedades para ayudar a los clientes a gestionar las solicitudes repetidas de manera efectiva:
+
+{/* vale off */}
+
+```json
+{
+    ...,
+    "idempotentReplayed": true, // true if replayed, false otherwise
+    "idempotencyKey": "test" // the original idempotency key
+}
+```
+
+{/* vale on */}
+
+<Note>
+  Por defecto, Trophy utiliza una ventana de tiempo infinita para detectar eventos duplicados.
+  Si necesitas un comportamiento diferente, [ponte en
+  contacto](mailto:support@trophy.so) y con gusto lo configuraremos para ti.
+</Note>
+
+## Obtener Soporte {#get-support}
+
+¿Quieres comunicarte con el equipo de Trophy? Contáctanos por [correo electrónico](mailto:support@trophy.so). ¡Estamos aquí para ayudarte!

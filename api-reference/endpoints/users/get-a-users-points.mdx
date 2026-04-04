@@ -1,8 +1,9 @@
 ---
-openapi: get /users/{id}/points/{key}
+title: Get a user's points data
+openapi: openapi.yml get /users/{id}/points/{key}
 ---
 
-import { RateLimitBadge } from "/snippets/rate-limit-badge.jsx";
+import { RateLimitBadge } from "../../../components/rate-limit-badge.jsx";
 
 **Rate Limits**
 

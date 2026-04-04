@@ -1,0 +1,93 @@
+name: Translate on main
+
+on:
+  workflow_dispatch:
+  push:
+    branches:
+      - main
+
+permissions:
+  contents: write
+  pull-requests: write
+
+jobs:
+  translate:
+    runs-on: ubuntu-latest
+    if: >-
+      github.event_name == 'workflow_dispatch'
+      || (github.event_name == 'push'
+          && (github.event.head_commit == null
+              || (!contains(github.event.head_commit.message, '[i18n-ci]')
+                  && !contains(github.event.head_commit.message, format(' from {0}/ci/', github.repository_owner)))))
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: npm
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Inject Lingo engine id into i18n config
+        env:
+          LINGO_ENGINE_ID: ${{ secrets.LINGO_ENGINE_ID }}
+        run: |
+          if [ -z "${LINGO_ENGINE_ID}" ]; then
+            echo "LINGO_ENGINE_ID secret is required."
+            exit 1
+          fi
+          node -e 'const fs=require("fs");const p="i18n.json";const j=JSON.parse(fs.readFileSync(p,"utf8"));j.engineId=process.env.LINGO_ENGINE_ID;fs.writeFileSync(p,JSON.stringify(j,null,2)+"\n");'
+
+      - name: Sync API and webhook titles from OpenAPI
+        run: node scripts/sync-openapi-titles.mjs
+
+      - name: Run Lingo translation
+        env:
+          LINGO_API_KEY: ${{ secrets.LINGO_API_KEY }}
+        run: |
+          locales=$(node -e 'const fs=require("fs");const j=JSON.parse(fs.readFileSync("i18n.json","utf8"));console.log((j.locale?.targets||[]).join(" "));')
+          if [ -z "$locales" ]; then
+            echo "No target locales configured in i18n.json locale.targets"
+            exit 1
+          fi
+          for locale in $locales; do
+            echo "Running Lingo translation for $locale"
+            npx lingo.dev@latest run --target-locale "$locale"
+          done
+
+      - name: Translate docs.json language-specific navigation
+        env:
+          LINGO_ENGINE_ID: ${{ secrets.LINGO_ENGINE_ID }}
+          LINGO_API_KEY: ${{ secrets.LINGO_API_KEY }}
+        run: |
+          locales=$(node -e 'const fs=require("fs");const j=JSON.parse(fs.readFileSync("i18n.json","utf8"));console.log((j.locale?.targets||[]).join(" "));')
+          for locale in $locales; do
+            echo "Translating docs.json labels for $locale"
+            node scripts/translate-docs-json.mjs --target "$locale"
+            echo "Localizing internal links for $locale"
+            node scripts/localize-internal-links.mjs --target "$locale"
+            echo "Localizing component imports for $locale"
+            node scripts/localize-component-imports.mjs --target "$locale"
+          done
+
+      - name: Sync Mintlify heading anchors
+        run: node scripts/sync-heading-anchors.mjs
+
+      - name: Remove engineId from i18n.json before PR
+        run: |
+          node -e 'const fs=require("fs");const p="i18n.json";const j=JSON.parse(fs.readFileSync(p,"utf8"));delete j.engineId;fs.writeFileSync(p,JSON.stringify(j,null,2)+"\n");'
+          node -e 'const fs=require("fs");const j=JSON.parse(fs.readFileSync("i18n.json","utf8"));if(Object.prototype.hasOwnProperty.call(j,"engineId")){console.error("i18n.json still contains engineId; refusing to open PR.");process.exit(1);}'
+
+      - name: Create translation PR
+        uses: peter-evans/create-pull-request@v6
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+          commit-message: "chore(i18n): update translations from main [i18n-ci]"
+          title: "chore(i18n): update translations from main"
+          body: "Automated translation update from main branch push."
+          branch: "ci/i18n/auto-translations"
+          delete-branch: true

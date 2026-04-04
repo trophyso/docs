@@ -28,6 +28,7 @@ modeToggle
 ModeToggle
 isHidden
 autoplay
+playsInline
 
 _italic_
 Strikethrough

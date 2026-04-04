@@ -1,0 +1,84 @@
+name: Validate translations
+
+on:
+  workflow_dispatch:
+  pull_request:
+    paths:
+      - "docs.json"
+      - "i18n.json"
+      - "openapi.yml"
+      - "package.json"
+      - "account/**"
+      - "admin-api/**"
+      - "api-reference/**"
+      - "components/**"
+      - "experimentation/**"
+      - "getting-started/**"
+      - "guides/**"
+      - "platform/**"
+      - "webhooks/**"
+      - "es/**"
+      - ".github/workflows/translate-on-main.yml"
+      - ".github/workflows/validate-translations.yml"
+      - "scripts/*.mjs"
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: npm
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Inject Lingo engine id into i18n config
+        env:
+          LINGO_ENGINE_ID: ${{ secrets.LINGO_ENGINE_ID }}
+        run: |
+          if [ -z "${LINGO_ENGINE_ID}" ]; then
+            echo "LINGO_ENGINE_ID is not set, skipping engine injection."
+          else
+            node -e 'const fs=require("fs");const p="i18n.json";const j=JSON.parse(fs.readFileSync(p,"utf8"));j.engineId=process.env.LINGO_ENGINE_ID;fs.writeFileSync(p,JSON.stringify(j,null,2)+"\n");'
+          fi
+
+      - name: Validate translation parity and frontmatter
+        run: npm run translate:validate
+
+      - name: Ensure internal links are locale-localized
+        run: npm run translate:localize-links:check
+
+      - name: Ensure component imports are locale-localized
+        run: npm run translate:localize-component-imports:check
+
+      - name: Ensure fragile link fragments are not used
+        run: npm run translate:validate-links
+
+      - name: Ensure heading anchors match English slugs
+        run: npm run translate:sync-anchors:check
+
+      - name: Ensure API and webhook titles match OpenAPI summaries
+        run: npm run translate:sync-openapi-titles:check
+
+      - name: Mintlify validate
+        run: npx mint@latest validate
+
+      - name: Check broken links
+        run: npx mint@latest broken-links --check-anchors --check-snippets
+
+      - name: Translation freshness gate
+        env:
+          LINGO_API_KEY: ${{ secrets.LINGO_API_KEY }}
+          LINGO_ENGINE_ID: ${{ secrets.LINGO_ENGINE_ID }}
+        run: |
+          if [ -z "${LINGO_API_KEY}" ] || [ -z "${LINGO_ENGINE_ID}" ]; then
+            echo "LINGO_API_KEY or LINGO_ENGINE_ID is not set, skipping frozen translation gate."
+          else
+            npx lingo.dev@latest run --frozen
+          fi

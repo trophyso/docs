@@ -1,26 +1,27 @@
 ---
 title: Users
 description: Learn how to track interactions across your userbase using Trophy.
-"og:description": Users are the people that use your platform. Learn how to tell Trophy about them.
+og:description: Users are the people that use your platform. Learn how to tell
+  Trophy about them.
 icon: users
 ---
 
-import MetricChangeRequestBlock from "/snippets/metric-change-request-block.mdx";
-import IdentifyUserRequestBlock from "/snippets/identify-user-request-block.mdx";
-import UpdateUserNotificationPreferencesBlock from "/snippets/update-user-notification-preferences-block.mdx";
-import GetUserNotificationPreferencesBlock from "/snippets/get-user-notification-preferences-block.mdx";
+import MetricChangeRequestBlock from "../snippets/metric-change-request-block.mdx";
+import IdentifyUserRequestBlock from "../snippets/identify-user-request-block.mdx";
+import UpdateUserNotificationPreferencesBlock from "../snippets/update-user-notification-preferences-block.mdx";
+import GetUserNotificationPreferencesBlock from "../snippets/get-user-notification-preferences-block.mdx";
 
-## What are Users?
+## What are Users? {#what-are-users}
 
 Users are the individual people that use your product. You tell Trophy about your users through APIs and use the dashboard to design gamification experiences around them.
 
 Users must be individuals, they cannot be companies or organisations. To create organizational structures or user groupings, consider using a [custom user attribute](#custom-user-attributes).
 
-## Key Attributes
+## Key Attributes {#key-attributes}
 
 Key attributes are properties of users controlled and managed by Trophy and are for things like `id` or `email`, some are required while others are optional.
 
-### Required Attributes
+### Required Attributes {#required-attributes}
 
 Trophy only requires one key attribute, `id`. Every user you tell Trophy about must have an `id`, this is what identifies them as a unique person.
 
@@ -33,7 +34,7 @@ Trophy only requires one key attribute, `id`. Every user you tell Trophy about m
   in your database instead of needing to manage another one just for Trophy.
 </Tip>
 
-### Optional Attributes
+### Optional Attributes {#optional-attributes}
 
 Additionally, you can tell Trophy about any of the following optional key attributes and it will make them available to you as part of your gamification experience:
 
@@ -75,7 +76,7 @@ const timezone = Intl.DateTimeFormat().resolvedOptions().timeZone;
   be sent to a user when this field is provided.
 </ParamField>
 
-## Custom User Attributes
+## Custom User Attributes {#custom-user-attributes}
 
 <Note>
   This feature is available on the [Pro](/account/billing#pro-plan) plan
@@ -95,7 +96,7 @@ For example a language learning app might use a custom user attribute for the la
 
 Custom user attributes let you tell Trophy about this contextual information and use it to personalize gamification features.
 
-### Creating Attributes
+### Creating Attributes {#creating-attributes}
 
 To create a new custom user attribute, head to the [attributes tab](https://app.trophy.so/users/attributes) of the users page in the Trophy dashboard and hit the _Add User Attribute_ button.
 
@@ -112,9 +113,9 @@ Give the attribute a name and a unique key. The key is what you'll use to refere
   ></video>
 </Frame>
 
-### Setting Attributes
+### Setting Attributes {#setting-attributes}
 
-Attributes can be assigned values for specific users using their unique key either inline, as users increment metrics through the [metric increment API](/api-reference/endpoints/metrics/send-a-metric-change-event), or explicitly through the [user identification](/api-reference/endpoints/users/identify-a-user), [create user](/api-reference/endpoints/users/create-a-user), or [update user](api-reference/endpoints/users/update-a-user) APIs.
+Attributes can be assigned values for specific users using their unique key either inline, as users increment metrics through the [metric increment API](/api-reference/endpoints/metrics/send-a-metric-change-event), or explicitly through the [user identification](/api-reference/endpoints/users/identify-a-user), [create user](/api-reference/endpoints/users/create-a-user), or [update user](/api-reference/endpoints/users/update-a-user) APIs.
 
 <Warning>
   Trophy will only set values of attributes that have first been created
@@ -148,11 +149,11 @@ Across all APIs, the schema for setting attribute values is consistent. Here's a
 }
 ```
 
-### Using Attributes
+### Using Attributes {#using-attributes}
 
 Use custom user attributes across Trophy to personalize gamification features , aggregate and filter data returned from APIs, and to segment and compare user cohorts in analytics.
 
-#### Feature Personalization
+#### Feature Personalization {#feature-personalization}
 
 Custom user attributes can be used to personalize achievements, customize the way points are earned by different users and more. Follow the links to the relevant pages below to learn more.
 
@@ -187,7 +188,7 @@ Custom user attributes can be used to personalize achievements, customize the wa
   </Card>
 </CardGroup>
 
-#### Data Aggregation and Filtering
+#### Data Aggregation and Filtering {#data-aggregation-and-filtering}
 
 You can use custom user attributes to aggregate and filter data returned from some APIs to support a wide range of gamification use cases. In all cases, attributes are included in the `userAttributes` query parameter using a consistent schema:
 
@@ -197,7 +198,7 @@ Here's a list of all APIs that support the `userAttributes` query parameter:
 
 - [Points Summary](/api-reference/endpoints/points/get-points-summary)
 
-#### Segmented Analytics
+#### Segmented Analytics {#segmented-analytics}
 
 Custom user attributes can be used to segment and compare retention and engagement charts between user groups.
 
@@ -214,7 +215,7 @@ This is useful to understand which cohorts are making full use of your gamificat
   ></video>
 </Frame>
 
-## Identifying Users
+## Identifying Users {#identifying-users}
 
 When you tell Trophy about a user in your platform, we call this **identification**. There are two ways you can identify users with Trophy, [inline](#inline-identification) and [explicit](#explicit-identification) identification.
 
@@ -223,7 +224,7 @@ When you tell Trophy about a user in your platform, we call this **identificatio
   Trophy. If you decide you need more control, try explicit identification.
 </Tip>
 
-### Inline Identification
+### Inline Identification {#inline-identification}
 
 Inline identification is the easiest way of telling Trophy about your users as it doesn't require any specific user identification code. You simply tell Trophy about users as they go about normal use of your platform.
 
@@ -268,7 +269,7 @@ In this way inline identification allows you to keep your entire userbase in con
 
 This is why we recommend starting with inline identification first, then exploring explicit identification if you discover you need more control.
 
-### Explicit Identification
+### Explicit Identification {#explicit-identification}
 
 Explicit identification is when you write code in your application that explicitly tells Trophy about users separate from any metric interactions. This is useful if you want complete control over how and when Trophy learns about your users.
 
@@ -288,11 +289,11 @@ In this case, you can tell Trophy about new users using the [User Identification
   with Trophy automatically.
 </Tip>
 
-## Creating Users
+## Creating Users {#creating-users}
 
 To explicitly create a new user in Trophy, use the [Create User API](/api-reference/endpoints/users/create-a-user).
 
-## Keeping Users Up To Date
+## Keeping Users Up To Date {#keeping-users-up-to-date}
 
 To tell Trophy about an update to a user in your platform you can use the [Update User API](/api-reference/endpoints/users/update-a-user).
 
@@ -305,13 +306,13 @@ Any properties that you pass to Trophy will be updated to the new values you spe
   update API is there if you really need it.
 </Tip>
 
-## Setting User Preferences
+## Setting User Preferences {#setting-user-preferences}
 
 Trophy has APIs to help you power a preference center that your users can use to control and customize how they interact with your gamification features.
 
 This section walks through all the preferences that you can expose to your users, and their function.
 
-### Notification Preferences
+### Notification Preferences {#notification-preferences}
 
 You can use Trophy to send gamified [Emails](/platform/emails) and [Push Notifications](/platform/push-notifications) to your users.
 
@@ -365,7 +366,7 @@ You can use this response to:
 
 Once you've fetched and displayed the preferences, users can make changes in your UI, and you can use the [update preferences API](/api-reference/endpoints/users/update-user-preferences) to save their selections back to Trophy.
 
-## Retrieving User Information
+## Retrieving User Information {#retrieving-user-information}
 
 To fetch the details of a user that you've already identified with Trophy, use the [Get User API](/api-reference/endpoints/users/get-a-single-user).
 
@@ -384,9 +385,9 @@ This will return the full details of the user along with the `control` attribute
 }
 ```
 
-## User Analytics
+## User Analytics {#user-analytics}
 
-### Basic Analytics
+### Basic Analytics {#basic-analytics}
 
 By default Trophy includes high-level user analytics including on the [Users page](https://app.trophy.so/users) including:
 
@@ -400,13 +401,13 @@ By default Trophy includes high-level user analytics including on the [Users pag
 
 On this page you can also search through every user that Trophy has recorded, which can be useful for debugging.
 
-### Top Users
+### Top Users {#top-users}
 
 Additionally, on the [Dashboard](https://app.trophy.so), Trophy shows a _Top Users_ list with the set of users who have made the most progress against your platform's metrics.
 
 These are your most engaged users, so it's useful to know who they are!
 
-## Frequently Asked Questions
+## Frequently Asked Questions {#frequently-asked-questions}
 
 <AccordionGroup>
   <Accordion title="How many users can I tell Trophy about?">
@@ -430,6 +431,6 @@ These are your most engaged users, so it's useful to know who they are!
 
 </AccordionGroup>
 
-## Get Support
+## Get Support {#get-support}
 
 Want to get in touch with the Trophy team? Reach out to us via [email](mailto:support@trophy.so). We're here to help!

@@ -1,8 +1,9 @@
 ---
-openapi: post /achievements/{key}/complete
+title: Mark an achievement as completed
+openapi: openapi.yml post /achievements/{key}/complete
 ---
 
-import { RateLimitBadge } from "/snippets/rate-limit-badge.jsx";
+import { RateLimitBadge } from "../../../components/rate-limit-badge.jsx";
 
 **Rate Limits**
 

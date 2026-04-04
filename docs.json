@@ -35,270 +35,545 @@
     }
   },
   "contextual": {
-    "options": ["copy", "view", "chatgpt", "claude", "perplexity"]
+    "options": [
+      "copy",
+      "view",
+      "chatgpt",
+      "claude",
+      "perplexity"
+    ]
   },
   "navigation": {
-    "tabs": [
+    "languages": [
       {
-        "tab": "Home",
-        "icon": "house",
-        "groups": [
+        "language": "en",
+        "default": true,
+        "tabs": [
           {
-            "group": "Getting Started",
-            "pages": [
-              "getting-started/introduction",
-              "getting-started/quickstart"
+            "tab": "Home",
+            "icon": "house",
+            "groups": [
+              {
+                "group": "Getting Started",
+                "pages": [
+                  "getting-started/introduction",
+                  "getting-started/quickstart"
+                ]
+              },
+              {
+                "group": "Platform",
+                "pages": [
+                  "platform/overview",
+                  "platform/metrics",
+                  "platform/events",
+                  "platform/users",
+                  "platform/achievements",
+                  "platform/streaks",
+                  "platform/points",
+                  "platform/leaderboards",
+                  "platform/emails",
+                  "platform/push-notifications"
+                ]
+              },
+              {
+                "group": "Experimentation",
+                "pages": [
+                  "experimentation/overview",
+                  "experimentation/retention",
+                  "experimentation/engagement"
+                ]
+              },
+              {
+                "group": "Account",
+                "pages": [
+                  "account/overview",
+                  "account/members",
+                  "account/branding",
+                  "account/billing"
+                ]
+              }
             ]
           },
           {
-            "group": "Platform",
-            "pages": [
-              "platform/overview",
-              "platform/metrics",
-              "platform/events",
-              "platform/users",
-              "platform/achievements",
-              "platform/streaks",
-              "platform/points",
-              "platform/leaderboards",
-              "platform/emails",
-              "platform/push-notifications"
+            "tab": "Guides",
+            "icon": "rocket",
+            "description": "Gamification how-to guides",
+            "groups": [
+              {
+                "group": "Feature Guides",
+                "pages": [
+                  "guides/how-to-build-an-achievements-feature",
+                  "guides/how-to-build-a-streaks-feature",
+                  "guides/how-to-build-an-xp-feature",
+                  "guides/how-to-build-an-energy-feature",
+                  "guides/how-to-build-a-leaderboards-feature"
+                ]
+              },
+              {
+                "group": "Use Cases",
+                "pages": [
+                  "guides/gamified-study-platform",
+                  "guides/gamified-fitness-platform"
+                ]
+              }
             ]
           },
           {
-            "group": "Experimentation",
-            "pages": [
-              "experimentation/overview",
-              "experimentation/retention",
-              "experimentation/engagement"
+            "tab": "Application API",
+            "icon": "globe",
+            "groups": [
+              {
+                "group": "Overview",
+                "pages": [
+                  "api-reference/introduction",
+                  "api-reference/authentication",
+                  "api-reference/rate-limiting",
+                  "api-reference/idempotency",
+                  "api-reference/client-libraries"
+                ]
+              },
+              {
+                "group": "Achievements",
+                "pages": [
+                  "api-reference/endpoints/achievements/mark-an-achievement-as-completed",
+                  "api-reference/endpoints/achievements/all-achievements"
+                ]
+              },
+              {
+                "group": "Streaks",
+                "pages": [
+                  "api-reference/endpoints/streaks/get-streaks",
+                  "api-reference/endpoints/streaks/get-streak-rankings"
+                ]
+              },
+              {
+                "group": "Metrics",
+                "pages": [
+                  "api-reference/endpoints/metrics/send-a-metric-change-event"
+                ]
+              },
+              {
+                "group": "Points",
+                "pages": [
+                  "api-reference/endpoints/points/get-points",
+                  "api-reference/endpoints/points/get-points-boosts",
+                  "api-reference/endpoints/points/get-points-levels",
+                  "api-reference/endpoints/points/get-points-level-summary",
+                  "api-reference/endpoints/points/get-points-summary"
+                ]
+              },
+              {
+                "group": "Leaderboards",
+                "pages": [
+                  "api-reference/endpoints/leaderboards/get-all-active-leaderboards",
+                  "api-reference/endpoints/leaderboards/get-leaderboard"
+                ]
+              },
+              {
+                "group": "Users",
+                "pages": [
+                  "api-reference/endpoints/users/identify-a-user",
+                  "api-reference/endpoints/users/create-a-user",
+                  "api-reference/endpoints/users/get-a-single-user",
+                  "api-reference/endpoints/users/update-a-user",
+                  "api-reference/endpoints/users/get-all-metrics-for-a-user",
+                  "api-reference/endpoints/users/get-a-single-metric-for-a-user",
+                  "api-reference/endpoints/users/get-a-single-metric-event-summary-for-a-user",
+                  "api-reference/endpoints/users/get-a-users-completed-achievements",
+                  "api-reference/endpoints/users/get-a-users-streak",
+                  "api-reference/endpoints/users/get-a-users-points",
+                  "api-reference/endpoints/users/get-a-users-points-boosts",
+                  "api-reference/endpoints/users/get-a-users-points-summary",
+                  "api-reference/endpoints/users/get-a-users-leaderboard",
+                  "api-reference/endpoints/users/get-a-users-wrapped",
+                  "api-reference/endpoints/users/get-user-preferences",
+                  "api-reference/endpoints/users/update-user-preferences"
+                ]
+              }
             ]
           },
           {
-            "group": "Account",
-            "pages": [
-              "account/overview",
-              "account/members",
-              "account/branding",
-              "account/billing"
+            "tab": "Admin API",
+            "icon": "globe-lock",
+            "groups": [
+              {
+                "group": "Overview",
+                "pages": [
+                  "admin-api/introduction"
+                ]
+              },
+              {
+                "group": "Streaks",
+                "pages": [
+                  "admin-api/endpoints/streaks/grant-freezes",
+                  "admin-api/endpoints/streaks/restore-streaks"
+                ]
+              },
+              {
+                "group": "Points",
+                "pages": [
+                  "admin-api/endpoints/points/create-boosts",
+                  "admin-api/endpoints/points/archive-boosts-batch",
+                  "admin-api/endpoints/points/archive-a-boost"
+                ]
+              }
+            ]
+          },
+          {
+            "tab": "Webhooks",
+            "icon": "webhook",
+            "groups": [
+              {
+                "group": "Overview",
+                "pages": [
+                  "webhooks/introduction",
+                  "webhooks/quickstart",
+                  "webhooks/security",
+                  "webhooks/retries",
+                  "webhooks/idempotency",
+                  "webhooks/observability"
+                ]
+              },
+              {
+                "group": "Achievements",
+                "pages": [
+                  "webhooks/events/achievements/achievement-completed"
+                ]
+              },
+              {
+                "group": "Streaks",
+                "pages": [
+                  "webhooks/events/streaks/streak-started",
+                  "webhooks/events/streaks/streak-extended",
+                  "webhooks/events/streaks/streak-lost",
+                  "webhooks/events/streaks/streak-freeze-consumed",
+                  "webhooks/events/streaks/streak-freeze-earned"
+                ]
+              },
+              {
+                "group": "Points",
+                "pages": [
+                  "webhooks/events/points/points-changed",
+                  "webhooks/events/points/points-level-changed",
+                  "webhooks/events/points/points-boost-started",
+                  "webhooks/events/points/points-boost-finished"
+                ]
+              },
+              {
+                "group": "Leaderboards",
+                "pages": [
+                  "webhooks/events/leaderboards/leaderboard-started",
+                  "webhooks/events/leaderboards/leaderboard-changed",
+                  "webhooks/events/leaderboards/leaderboard-rank-changed",
+                  "webhooks/events/leaderboards/leaderboard-finished"
+                ]
+              }
             ]
           }
-        ]
-      },
-      {
-        "tab": "Guides",
-        "icon": "rocket",
-        "description": "Gamification how-to guides",
-        "groups": [
+        ],
+        "anchors": [
           {
-            "group": "Feature Guides",
-            "pages": [
-              "guides/how-to-build-an-achievements-feature",
-              "guides/how-to-build-a-streaks-feature",
-              "guides/how-to-build-an-xp-feature",
-              "guides/how-to-build-an-energy-feature",
-              "guides/how-to-build-a-leaderboards-feature"
-            ]
+            "anchor": "GitHub",
+            "href": "https://github.com/trophyso",
+            "icon": "github"
           },
           {
-            "group": "Use Cases",
-            "pages": [
-              "guides/gamified-study-platform",
-              "guides/gamified-fitness-platform"
-            ]
+            "anchor": "Status",
+            "href": "https://status.trophy.so",
+            "icon": "radio-tower"
+          },
+          {
+            "anchor": "llms.txt",
+            "href": "https://docs.trophy.so/llms-full.txt",
+            "icon": "bot"
+          },
+          {
+            "anchor": "Help",
+            "href": "mailto:support@trophy.so",
+            "icon": "life-buoy"
           }
-        ]
-      },
-      {
-        "tab": "Application API",
-        "icon": "globe",
-        "groups": [
-          {
-            "group": "Overview",
-            "pages": [
-              "api-reference/introduction",
-              "api-reference/authentication",
-              "api-reference/rate-limiting",
-              "api-reference/idempotency",
-              "api-reference/client-libraries"
-            ]
-          },
-          {
-            "group": "Achievements",
-            "pages": [
-              "api-reference/endpoints/achievements/mark-an-achievement-as-completed",
-              "api-reference/endpoints/achievements/all-achievements"
-            ]
-          },
-          {
-            "group": "Streaks",
-            "pages": [
-              "api-reference/endpoints/streaks/get-streaks",
-              "api-reference/endpoints/streaks/get-streak-rankings"
-            ]
-          },
-          {
-            "group": "Metrics",
-            "pages": [
-              "api-reference/endpoints/metrics/send-a-metric-change-event"
-            ]
-          },
-          {
-            "group": "Points",
-            "pages": [
-              "api-reference/endpoints/points/get-points",
-              "api-reference/endpoints/points/get-points-boosts",
-              "api-reference/endpoints/points/get-points-levels",
-              "api-reference/endpoints/points/get-points-level-summary",
-              "api-reference/endpoints/points/get-points-summary"
-            ]
-          },
-          {
-            "group": "Leaderboards",
-            "pages": [
-              "api-reference/endpoints/leaderboards/get-all-active-leaderboards",
-              "api-reference/endpoints/leaderboards/get-leaderboard"
-            ]
-          },
-          {
-            "group": "Users",
-            "pages": [
-              "api-reference/endpoints/users/identify-a-user",
-              "api-reference/endpoints/users/create-a-user",
-              "api-reference/endpoints/users/get-a-single-user",
-              "api-reference/endpoints/users/update-a-user",
-              "api-reference/endpoints/users/get-all-metrics-for-a-user",
-              "api-reference/endpoints/users/get-a-single-metric-for-a-user",
-              "api-reference/endpoints/users/get-a-single-metric-event-summary-for-a-user",
-              "api-reference/endpoints/users/get-a-users-completed-achievements",
-              "api-reference/endpoints/users/get-a-users-streak",
-              "api-reference/endpoints/users/get-a-users-points",
-              "api-reference/endpoints/users/get-a-users-points-boosts",
-              "api-reference/endpoints/users/get-a-users-points-summary",
-              "api-reference/endpoints/users/get-a-users-leaderboard",
-              "api-reference/endpoints/users/get-a-users-wrapped",
-              "api-reference/endpoints/users/get-user-preferences",
-              "api-reference/endpoints/users/update-user-preferences"
-            ]
+        ],
+        "navbar": {
+          "links": [
+            {
+              "label": "Dashboard",
+              "href": "https://app.trophy.so"
+            }
+          ],
+          "primary": {
+            "type": "button",
+            "label": "Start for free",
+            "href": "https://app.trophy.so/sign-up?utm_source=docs&utm_medium=navbar-links"
           }
-        ]
-      },
-      {
-        "tab": "Admin API",
-        "icon": "globe-lock",
-        "groups": [
-          {
-            "group": "Overview",
-            "pages": ["admin-api/introduction"]
-          },
-          {
-            "group": "Streaks",
-            "pages": [
-              "admin-api/endpoints/streaks/grant-freezes",
-              "admin-api/endpoints/streaks/restore-streaks"
-            ]
-          },
-          {
-            "group": "Points",
-            "pages": [
-              "admin-api/endpoints/points/create-boosts",
-              "admin-api/endpoints/points/archive-boosts-batch",
-              "admin-api/endpoints/points/archive-a-boost"
-            ]
-          }
-        ]
-      },
-      {
-        "tab": "Webhooks",
-        "icon": "webhook",
-        "groups": [
-          {
-            "group": "Overview",
-            "pages": [
-              "webhooks/introduction",
-              "webhooks/quickstart",
-              "webhooks/security",
-              "webhooks/retries",
-              "webhooks/idempotency",
-              "webhooks/observability"
-            ]
-          },
-          {
-            "group": "Achievements",
-            "pages": ["webhooks/events/achievements/achievement-completed"]
-          },
-          {
-            "group": "Streaks",
-            "pages": [
-              "webhooks/events/streaks/streak-started",
-              "webhooks/events/streaks/streak-extended",
-              "webhooks/events/streaks/streak-lost",
-              "webhooks/events/streaks/streak-freeze-consumed",
-              "webhooks/events/streaks/streak-freeze-earned"
-            ]
-          },
-          {
-            "group": "Points",
-            "pages": [
-              "webhooks/events/points/points-changed",
-              "webhooks/events/points/points-level-changed",
-              "webhooks/events/points/points-boost-started",
-              "webhooks/events/points/points-boost-finished"
-            ]
-          },
-          {
-            "group": "Leaderboards",
-            "pages": [
-              "webhooks/events/leaderboards/leaderboard-started",
-              "webhooks/events/leaderboards/leaderboard-changed",
-              "webhooks/events/leaderboards/leaderboard-rank-changed",
-              "webhooks/events/leaderboards/leaderboard-finished"
-            ]
-          }
-        ]
-      }
-    ],
-    "global": {
-      "anchors": [
-        {
-          "anchor": "GitHub",
-          "href": "https://github.com/trophyso",
-          "icon": "github"
-        },
-        {
-          "anchor": "Status",
-          "href": "https://status.trophy.so",
-          "icon": "radio-tower"
-        },
-        {
-          "anchor": "llms.txt",
-          "href": "https://docs.trophy.so/llms-full.txt",
-          "icon": "bot"
-        },
-        {
-          "anchor": "Help",
-          "href": "mailto:support@trophy.so",
-          "icon": "life-buoy"
         }
-      ]
-    }
+      },
+      {
+        "language": "es",
+        "tabs": [
+          {
+            "tab": "Inicio",
+            "icon": "house",
+            "groups": [
+              {
+                "group": "Primeros pasos",
+                "pages": [
+                  "es/getting-started/introduction",
+                  "es/getting-started/quickstart"
+                ]
+              },
+              {
+                "group": "Plataforma",
+                "pages": [
+                  "es/platform/overview",
+                  "es/platform/metrics",
+                  "es/platform/events",
+                  "es/platform/users",
+                  "es/platform/achievements",
+                  "es/platform/streaks",
+                  "es/platform/points",
+                  "es/platform/leaderboards",
+                  "es/platform/emails",
+                  "es/platform/push-notifications"
+                ]
+              },
+              {
+                "group": "Experimentación",
+                "pages": [
+                  "es/experimentation/overview",
+                  "es/experimentation/retention",
+                  "es/experimentation/engagement"
+                ]
+              },
+              {
+                "group": "Cuenta",
+                "pages": [
+                  "es/account/overview",
+                  "es/account/members",
+                  "es/account/branding",
+                  "es/account/billing"
+                ]
+              }
+            ]
+          },
+          {
+            "tab": "Guías",
+            "icon": "rocket",
+            "description": "Guías prácticas de gamificación",
+            "groups": [
+              {
+                "group": "Guías de funcionalidades",
+                "pages": [
+                  "es/guides/how-to-build-an-achievements-feature",
+                  "es/guides/how-to-build-a-streaks-feature",
+                  "es/guides/how-to-build-an-xp-feature",
+                  "es/guides/how-to-build-an-energy-feature",
+                  "es/guides/how-to-build-a-leaderboards-feature"
+                ]
+              },
+              {
+                "group": "Casos de uso",
+                "pages": [
+                  "es/guides/gamified-study-platform",
+                  "es/guides/gamified-fitness-platform"
+                ]
+              }
+            ]
+          },
+          {
+            "tab": "API de Aplicación",
+            "icon": "globe",
+            "groups": [
+              {
+                "group": "Resumen",
+                "pages": [
+                  "es/api-reference/introduction",
+                  "es/api-reference/authentication",
+                  "es/api-reference/rate-limiting",
+                  "es/api-reference/idempotency",
+                  "es/api-reference/client-libraries"
+                ]
+              },
+              {
+                "group": "Logros",
+                "pages": [
+                  "es/api-reference/endpoints/achievements/mark-an-achievement-as-completed",
+                  "es/api-reference/endpoints/achievements/all-achievements"
+                ]
+              },
+              {
+                "group": "Rachas",
+                "pages": [
+                  "es/api-reference/endpoints/streaks/get-streaks",
+                  "es/api-reference/endpoints/streaks/get-streak-rankings"
+                ]
+              },
+              {
+                "group": "Métricas",
+                "pages": [
+                  "es/api-reference/endpoints/metrics/send-a-metric-change-event"
+                ]
+              },
+              {
+                "group": "Puntos",
+                "pages": [
+                  "es/api-reference/endpoints/points/get-points",
+                  "es/api-reference/endpoints/points/get-points-boosts",
+                  "es/api-reference/endpoints/points/get-points-levels",
+                  "es/api-reference/endpoints/points/get-points-level-summary",
+                  "es/api-reference/endpoints/points/get-points-summary"
+                ]
+              },
+              {
+                "group": "Clasificaciones",
+                "pages": [
+                  "es/api-reference/endpoints/leaderboards/get-all-active-leaderboards",
+                  "es/api-reference/endpoints/leaderboards/get-leaderboard"
+                ]
+              },
+              {
+                "group": "Usuarios",
+                "pages": [
+                  "es/api-reference/endpoints/users/identify-a-user",
+                  "es/api-reference/endpoints/users/create-a-user",
+                  "es/api-reference/endpoints/users/get-a-single-user",
+                  "es/api-reference/endpoints/users/update-a-user",
+                  "es/api-reference/endpoints/users/get-all-metrics-for-a-user",
+                  "es/api-reference/endpoints/users/get-a-single-metric-for-a-user",
+                  "es/api-reference/endpoints/users/get-a-single-metric-event-summary-for-a-user",
+                  "es/api-reference/endpoints/users/get-a-users-completed-achievements",
+                  "es/api-reference/endpoints/users/get-a-users-streak",
+                  "es/api-reference/endpoints/users/get-a-users-points",
+                  "es/api-reference/endpoints/users/get-a-users-points-boosts",
+                  "es/api-reference/endpoints/users/get-a-users-points-summary",
+                  "es/api-reference/endpoints/users/get-a-users-leaderboard",
+                  "es/api-reference/endpoints/users/get-a-users-wrapped",
+                  "es/api-reference/endpoints/users/get-user-preferences",
+                  "es/api-reference/endpoints/users/update-user-preferences"
+                ]
+              }
+            ]
+          },
+          {
+            "tab": "API de Administración",
+            "icon": "globe-lock",
+            "groups": [
+              {
+                "group": "Resumen",
+                "pages": [
+                  "es/admin-api/introduction"
+                ]
+              },
+              {
+                "group": "Rachas",
+                "pages": [
+                  "es/admin-api/endpoints/streaks/grant-freezes",
+                  "es/admin-api/endpoints/streaks/restore-streaks"
+                ]
+              },
+              {
+                "group": "Puntos",
+                "pages": [
+                  "es/admin-api/endpoints/points/create-boosts",
+                  "es/admin-api/endpoints/points/archive-boosts-batch",
+                  "es/admin-api/endpoints/points/archive-a-boost"
+                ]
+              }
+            ]
+          },
+          {
+            "tab": "Webhooks",
+            "icon": "webhook",
+            "groups": [
+              {
+                "group": "Resumen",
+                "pages": [
+                  "es/webhooks/introduction",
+                  "es/webhooks/quickstart",
+                  "es/webhooks/security",
+                  "es/webhooks/retries",
+                  "es/webhooks/idempotency",
+                  "es/webhooks/observability"
+                ]
+              },
+              {
+                "group": "Logros",
+                "pages": [
+                  "es/webhooks/events/achievements/achievement-completed"
+                ]
+              },
+              {
+                "group": "Rachas",
+                "pages": [
+                  "es/webhooks/events/streaks/streak-started",
+                  "es/webhooks/events/streaks/streak-extended",
+                  "es/webhooks/events/streaks/streak-lost",
+                  "es/webhooks/events/streaks/streak-freeze-consumed",
+                  "es/webhooks/events/streaks/streak-freeze-earned"
+                ]
+              },
+              {
+                "group": "Puntos",
+                "pages": [
+                  "es/webhooks/events/points/points-changed",
+                  "es/webhooks/events/points/points-level-changed",
+                  "es/webhooks/events/points/points-boost-started",
+                  "es/webhooks/events/points/points-boost-finished"
+                ]
+              },
+              {
+                "group": "Clasificaciones",
+                "pages": [
+                  "es/webhooks/events/leaderboards/leaderboard-started",
+                  "es/webhooks/events/leaderboards/leaderboard-changed",
+                  "es/webhooks/events/leaderboards/leaderboard-rank-changed",
+                  "es/webhooks/events/leaderboards/leaderboard-finished"
+                ]
+              }
+            ]
+          }
+        ],
+        "anchors": [
+          {
+            "anchor": "GitHub",
+            "href": "https://github.com/trophyso",
+            "icon": "github"
+          },
+          {
+            "anchor": "Estado",
+            "href": "https://status.trophy.so",
+            "icon": "radio-tower"
+          },
+          {
+            "anchor": "llms.txt",
+            "href": "https://docs.trophy.so/llms-full.txt",
+            "icon": "bot"
+          },
+          {
+            "anchor": "Ayuda",
+            "href": "mailto:support@trophy.so",
+            "icon": "life-buoy"
+          }
+        ],
+        "navbar": {
+          "links": [
+            {
+              "label": "Panel",
+              "href": "https://app.trophy.so"
+            }
+          ],
+          "primary": {
+            "type": "button",
+            "label": "Comenzar gratis",
+            "href": "https://app.trophy.so/sign-up?utm_source=docs&utm_medium=navbar-links"
+          }
+        }
+      }
+    ]
   },
   "logo": {
     "light": "/logo/logo_light.svg",
     "dark": "/logo/logo_dark.svg",
     "href": "https://trophy.so"
-  },
-  "navbar": {
-    "links": [
-      {
-        "label": "Dashboard",
-        "href": "https://app.trophy.so"
-      }
-    ],
-    "primary": {
-      "type": "button",
-      "label": "Start for free",
-      "href": "https://app.trophy.so/sign-up?utm_source=docs&utm_medium=navbar-links"
-    }
   },
   "footer": {
     "socials": {
@@ -307,5 +582,11 @@
       "youtube": "https://youtube.com/@trophylabsinc",
       "linkedin": "https://linkedin.com/company/trophylabs"
     }
-  }
+  },
+  "redirects": [
+    {
+      "source": "/en/:slug*",
+      "destination": "/:slug*"
+    }
+  ]
 }

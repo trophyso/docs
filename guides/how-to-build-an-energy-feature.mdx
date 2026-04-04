@@ -5,11 +5,11 @@ subtitle: Learn how to use Trophy to add an energy feature to your web or mobile
 noindex: true
 ---
 
-import SDKInstallCommand from "/snippets/sdk-install-command.mdx";
-import MetricChangeRequestBlock from "/snippets/metric-change-request-block.mdx";
-import UserPointsRequest from "/snippets/user-points-request-block.mdx";
-import UserEnergyResponse from "/snippets/user-energy-response-block.mdx";
-import UserPointsEventSummaryRequest from "/snippets/user-points-summary-request-block.mdx";
+import SDKInstallCommand from "../snippets/sdk-install-command.mdx";
+import MetricChangeRequestBlock from "../snippets/metric-change-request-block.mdx";
+import UserPointsRequest from "../snippets/user-points-request-block.mdx";
+import UserEnergyResponse from "../snippets/user-energy-response-block.mdx";
+import UserPointsEventSummaryRequest from "../snippets/user-points-summary-request-block.mdx";
 
 The guide outlines the full process of adding an energy feature to your web or mobile app using Trophy.
 
@@ -21,12 +21,12 @@ For illustration purposes we'll use the example of a study platform that uses en
   repo](https://github.com/trophyso/example-study-platform/tree/demo).
 </Tip>
 
-## Pre-requisites
+## Pre-requisites {#pre-requisites}
 
 - A [Trophy](https://app.trophy.so/sign-up) account
 - About 10 minutes
 
-## Trophy Setup
+## Trophy Setup {#trophy-setup}
 
 In Trophy, [Metrics](/platform/metrics) are the building blocks of gamification and model the different interactions users make with your product.
 
@@ -81,7 +81,7 @@ Trophy also takes care of automatically granting new energy to users over time i
 
 This is what makes building gamified experiences with Trophy so easy, it does all the work for you behind the scenes.
 
-## Installing Trophy SDK
+## Installing Trophy SDK {#installing-trophy-sdk}
 
 To interact with Trophy from your code you'll use the Trophy SDK available in most major [programming languages](/api-reference/client-libraries).
 
@@ -99,7 +99,7 @@ TROPHY_API_KEY='*******'
   Make sure you **don't** expose your API key in client-side code.
 </Warning>
 
-## Tracking User Interactions
+## Tracking User Interactions {#tracking-user-interactions}
 
 To track an event (user interaction) against your metric, use the [metric change API](/api-reference/endpoints/metrics/send-a-metric-change-event).
 
@@ -148,7 +148,7 @@ The response to this API call is the complete set of changes to any features you
 
 Validate this is working by checking the Trophy [dashboard](https://app.trophy.so).
 
-## Metering Usage
+## Metering Usage {#metering-usage}
 
 To prevent users from taking actions in your product based on energy, use the [user points API](/api-reference/endpoints/users/get-a-users-points) to fetch their current total energy.
 
@@ -174,13 +174,13 @@ if (energy.total > 0) {
 
 You can then modify your trigger setup in Trophy and control the rate at which users can interact with your product right from the Trophy dashboard without needing to make any code changes.
 
-## Displaying Energy
+## Displaying Energy {#displaying-energy}
 
 To fetch a users energy use the [user points API](/api-reference/endpoints/users/get-a-users-points).
 
 <UserPointsRequest />
 
-This API returns data on the user's total energy but can be configured to also return between 1 and 100 of the user's most recent energy changes by using the `awards` [query parameter](/api-reference/endpoints/users/get-a-users-points#parameter-awards).
+This API returns data on the user's total energy but can be configured to also return between 1 and 100 of the user's most recent energy changes by using the `awards` query parameter.
 
 <UserEnergyResponse />
 
@@ -199,7 +199,7 @@ Here's an example of a UI that shows users their current energy, a chart showing
   />
 </Frame>
 
-## Analytics
+## Analytics {#analytics}
 
 In Trophy your [energy system page](https://app.trophy.so/points), includes analytics charts that shows data on total energy awarded/consumed and a breakdown of exactly what triggers cause the most frequent changes in energy.
 
@@ -212,6 +212,6 @@ In Trophy your [energy system page](https://app.trophy.so/points), includes anal
   />
 </Frame>
 
-## Get Support
+## Get Support {#get-support}
 
 Want to get in touch with the Trophy team? Reach out to us via [email](mailto:support@trophy.so). We're here to help!

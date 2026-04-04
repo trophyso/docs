@@ -5,7 +5,25 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "dev": "mint dev"
+    "dev": "mint dev",
+    "translate:generate": "node --env-file=.env scripts/generate-translations.mjs",
+    "translate:docs-json": "node --env-file=.env scripts/translate-docs-json.mjs",
+    "translate:localize-links": "node scripts/localize-internal-links.mjs",
+    "translate:localize-links:all": "node scripts/localize-internal-links.mjs --all",
+    "translate:localize-links:check": "node scripts/localize-internal-links.mjs --all --check",
+    "translate:localize-component-imports": "node scripts/localize-component-imports.mjs",
+    "translate:localize-component-imports:check": "node scripts/localize-component-imports.mjs --all --check",
+    "translate:sync-anchors": "node scripts/sync-heading-anchors.mjs",
+    "translate:sync-anchors:check": "node scripts/sync-heading-anchors.mjs --check",
+    "translate:sync-openapi-titles": "node scripts/sync-openapi-titles.mjs",
+    "translate:sync-openapi-titles:check": "node scripts/sync-openapi-titles.mjs --check",
+    "translate:validate-links": "node scripts/validate-link-fragments.mjs",
+    "lingo:validate-glossary": "node scripts/validate-glossary-csv.mjs",
+    "translate:verify": "npx lingo.dev@latest run --frozen",
+    "translate:validate": "node scripts/validate-translations.mjs",
+    "translate:lock": "npx lingo.dev@latest lockfile --force",
+    "mint:validate": "npx mint@latest validate",
+    "mint:broken-links": "npx mint@latest broken-links --check-anchors --check-snippets"
   },
   "repository": {
     "type": "git",
@@ -17,5 +35,8 @@
   "bugs": {
     "url": "https://github.com/trophyso/docs/issues"
   },
-  "homepage": "https://github.com/trophyso/docs#readme"
+  "homepage": "https://github.com/trophyso/docs#readme",
+  "devDependencies": {
+    "yaml": "^2.7.0"
+  }
 }

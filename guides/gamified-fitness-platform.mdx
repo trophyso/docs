@@ -1,6 +1,8 @@
 ---
 title: How to Build a Gamified Fitness Tracker
-description: Learn how to build a Strava-like fitness app with Next.js, featuring multi-sport tracking, city-based leaderboards, and normalized XP progression.
+description: Learn how to build a Strava-like fitness app with Next.js,
+  featuring multi-sport tracking, city-based leaderboards, and normalized XP
+  progression.
 subtitle: Build a high-retention fitness app with streaks and leaderboards.
 ---
 
@@ -19,11 +21,11 @@ If you want to skip straight to the code, check out the [example repository](htt
   ></video>
 </Frame>
 
-## Table of Contents
+## Table of Contents {#table-of-contents}
 
 - [Tech Stack](#tech-stack)
 - [Prerequisites](#prerequisites)
-- [Setup & Installation](#setup--installation)
+- [Setup & Installation](#setup-installation)
 - [Designing the Data Model](#designing-the-data-model)
 - [How Trophy Works](#how-trophy-works)
 - [Setting Up Trophy](#setting-up-trophy)
@@ -36,19 +38,19 @@ If you want to skip straight to the code, check out the [example repository](htt
 - [Building the Profile Page](#building-the-profile-page)
 - [The Result](#the-result)
 
-## Tech Stack
+## Tech Stack {#tech-stack}
 
 - **Framework:** [Next.js 15](https://nextjs.org) (App Router)
 - **UI:** [Shadcn/UI](https://ui.shadcn.com) + TailwindCSS
 - **Icons:** [Lucide React](https://lucide.dev)
 - **Gamification:** [Trophy](https://trophy.so)
 
-## Prerequisites
+## Prerequisites {#prerequisites}
 
 - A Trophy account (sign up [here](https://app.trophy.so/sign-up)).
 - Node.js 18+ installed.
 
-## Setup & Installation
+## Setup & Installation {#setup-installation}
 
 First, clone the starter repository or create a new Next.js app:
 
@@ -68,11 +70,11 @@ Configure your environment variables in `.env.local`:
 TROPHY_API_KEY=your_api_key_here
 ```
 
-## Designing the Data Model
+## Designing the Data Model {#designing-the-data-model}
 
 For a multi-sport fitness app, we need to normalize efforts. A 10km cycle is not the same as a 10km run. We'll use three distinct metrics to track raw data, and a unified XP system for progression.
 
-### 1. The Metrics
+### 1. The Metrics {#1-the-metrics}
 
 We will track distance as the primary value.
 
@@ -80,11 +82,11 @@ We will track distance as the primary value.
 - `distance_cycled` (km)
 - `distance_swum` (m) - with `style` attribute (freestyle/breaststroke).
 
-### 2. The Attributes
+### 2. The Attributes {#2-the-attributes}
 
 To enable local leaderboards, we'll tag every user with a `city` attribute.
 
-## How Trophy Works
+## How Trophy Works {#how-trophy-works}
 
 Before diving into the code, let's understand how Trophy powers our gamification layer. In Trophy, [Metrics](/platform/metrics) represent different interactions users can make and drive features like [Achievements](/platform/achievements), [Streaks](/platform/streaks), and [Emails](/platform/emails).
 
@@ -109,7 +111,7 @@ When events are recorded for a specific user, any achievements linked to the spe
 
 This is what makes building gamified experiences with Trophy so powerful—it does all the work behind the scenes.
 
-## Setting Up Trophy
+## Setting Up Trophy {#setting-up-trophy}
 
 Here's how we'll configure Trophy for our fitness app:
 
@@ -276,7 +278,7 @@ Here's how we'll configure Trophy for our fitness app:
   </Accordion>
 </AccordionGroup>
 
-## Server Actions
+## Server Actions {#server-actions}
 
 We'll create a `src/app/actions.ts` file to handle all interactions with the Trophy API. This keeps our API keys secure and allows us to leverage Next.js Server Actions.
 
@@ -457,7 +459,7 @@ export async function getUserIdFromCookies() {
 }
 ```
 
-## The Leveling System
+## The Leveling System {#the-leveling-system}
 
 Trophy stores each user's tier on the `xp` points system when you configure [Points Levels](/platform/points#points-levels). The [user points](/api-reference/endpoints/users/get-a-users-points) payload includes a `level` object. The [list levels API](/api-reference/endpoints/points/get-points-levels) returns every tier and threshold so you can show progress toward the next one.
 
@@ -537,7 +539,7 @@ export function getLevelProgress(
 }
 ```
 
-## Building the Dashboard
+## Building the Dashboard {#building-the-dashboard}
 
 The dashboard aggregates all user stats. We fetch data server-side and derive progress bars from thresholds returned by the API.
 
@@ -671,7 +673,7 @@ export default async function Dashboard() {
 
 Note the `LogActivityDialog` wrapper around the button—we'll build that next.
 
-## Logging Workouts
+## Logging Workouts {#logging-workouts}
 
 The Log Workout button opens a dialog where users select their activity type, enter distance, and submit. This triggers the `logActivity` server action which sends the event to Trophy.
 
@@ -829,7 +831,7 @@ export function LogActivityDialog({ children }: { children: React.ReactNode }) {
 }
 ```
 
-### User Context
+### User Context {#user-context}
 
 The dialog needs access to the current user ID. Create a context provider:
 
@@ -902,7 +904,7 @@ export default function RootLayout({ children }) {
 }
 ```
 
-### Helper Utilities
+### Helper Utilities {#helper-utilities}
 
 The user context relies on helper functions for managing user identity in localStorage:
 
@@ -965,7 +967,7 @@ export function setStoredCity(city: string): void {
 }
 ```
 
-## Implementing Leaderboards
+## Implementing Leaderboards {#implementing-leaderboards}
 
 We'll build a tabbed interface that allows users to switch between activities (Run/Cycle/Swim) and scopes (Global vs. Local City).
 
@@ -1048,7 +1050,7 @@ export default function LeaderboardsPage() {
 }
 ```
 
-## Building the Achievements Page
+## Building the Achievements Page {#building-the-achievements-page}
 
 A dedicated space to show off badges is essential for long-term retention. We'll use the `stats.achievements` data to render a grid of badges, visually distinguishing between earned (colorful) and locked (grayscale) states.
 
@@ -1117,7 +1119,7 @@ export default async function AchievementsPage() {
 }
 ```
 
-## Building the Profile Page
+## Building the Profile Page {#building-the-profile-page}
 
 Finally, the profile page brings it all together. It shows the user's "Lifetime Stats," their current XP progression, and allows them to update their settings (like their city).
 
@@ -1196,7 +1198,7 @@ export default async function ProfilePage() {
 }
 ```
 
-## The Result
+## The Result {#the-result}
 
 You now have a fully functional fitness gamification loop! Users can log workouts across multiple sports, progress through points levels, earn badges, and compete on leaderboards.
 
@@ -1211,7 +1213,7 @@ You now have a fully functional fitness gamification loop! Users can log workout
   ></video>
 </Frame>
 
-### What You've Built
+### What You've Built {#what-youve-built}
 
 - **Multi-sport tracking** with normalized XP across running, cycling, and swimming
 - **Weekly leaderboards** with global and city-based competition
@@ -1219,7 +1221,7 @@ You now have a fully functional fitness gamification loop! Users can log workout
 - **Achievement system** with milestone badges
 - **Daily streaks** to drive retention
 
-### Next Steps
+### Next Steps {#next-steps}
 
 - **Connect fitness wearables** — Integrate with Strava, Apple Health, or Google Fit to auto-log workouts
 - **Add social features** — Let users follow friends, compare stats, and share achievements

@@ -1,14 +1,16 @@
 ---
 title: How To Build An Achievements Feature
-description: Learn how to use Trophy to add an achievements feature to your web or mobile app.
-subtitle: Learn how to use Trophy to add an achievements feature to your web or mobile app.
+description: Learn how to use Trophy to add an achievements feature to your web
+  or mobile app.
+subtitle: Learn how to use Trophy to add an achievements feature to your web or
+  mobile app.
 noindex: true
 ---
 
-import SDKInstallCommand from "/snippets/sdk-install-command.mdx";
-import MetricChangeRequestBlock from "/snippets/metric-change-request-block.mdx";
-import UserAchievementsRequestBlock from "/snippets/user-achievements-request-block.mdx";
-import AllAchievementsRequestBlock from "/snippets/all-achievements-request-block.mdx";
+import SDKInstallCommand from "../snippets/sdk-install-command.mdx";
+import MetricChangeRequestBlock from "../snippets/metric-change-request-block.mdx";
+import UserAchievementsRequestBlock from "../snippets/user-achievements-request-block.mdx";
+import AllAchievementsRequestBlock from "../snippets/all-achievements-request-block.mdx";
 
 The guide outlines the full process of adding an achievements feature to your web or mobile app using Trophy.
 
@@ -20,12 +22,12 @@ For illustration purposes we'll use the example of a study platform that uses ac
   repo](https://github.com/trophyso/example-study-platform/tree/demo).
 </Tip>
 
-## Pre-requisites
+## Pre-requisites {#pre-requisites}
 
 - A [Trophy](https://app.trophy.so/sign-up) account
 - About 10 minutes
 
-## Trophy Setup
+## Trophy Setup {#trophy-setup}
 
 In Trophy, [Metrics](/platform/metrics) are the building blocks of gamification and model the different interactions users make with your product.
 
@@ -67,7 +69,7 @@ When events are recorded for a specific user, any achievements linked to the spe
 
 This is what makes building gamified experiences with Trophy so easy, it does all the work for you behind the scenes.
 
-## Installing Trophy SDK
+## Installing Trophy SDK {#installing-trophy-sdk}
 
 To interact with Trophy from your code you'll use the Trophy SDK available in most major [programming languages](/api-reference/client-libraries).
 
@@ -85,7 +87,7 @@ TROPHY_API_KEY='*******'
   Make sure you **don't** expose your API key in client-side code.
 </Warning>
 
-## Tracking User Interactions
+## Tracking User Interactions {#tracking-user-interactions}
 
 To track an event (user interaction) against your metric, use the [metric change API](/api-reference/endpoints/metrics/send-a-metric-change-event).
 
@@ -129,11 +131,11 @@ Validate this is working by checking the Trophy [dashboard](https://app.trophy.s
   />
 </Frame>
 
-## Displaying Achievements
+## Displaying Achievements {#displaying-achievements}
 
 You have a number of options for displaying achievements in your application. Here we'll look at the most common options.
 
-### Pop-up Notifications
+### Pop-up Notifications {#pop-up-notifications}
 
 We can use the response of the [metric change API](/api-reference/endpoints/metrics/send-a-metric-change-event) to show pop-up notifications (or 'toasts') when users complete achievements.
 
@@ -179,7 +181,7 @@ response.achievements.forEach((achievement) => {
   we recommend.
 </Tip>
 
-### Displaying User Achievements
+### Displaying User Achievements {#displaying-user-achievements}
 
 To fetch all achievements a user has completed, use the [user achievements API](/api-reference/endpoints/users/get-a-users-completed-achievements).
 
@@ -201,13 +203,13 @@ To fetch all achievements a user has completed, use the [user achievements API](
   ></video>
 </Frame>
 
-### Displaying All Achievements
+### Displaying All Achievements {#displaying-all-achievements}
 
 If instead you want to display all achievements you've set up in Trophy as part of a globally accessible UI that isn't linked to a particular user, you can use the [all achievements API](/api-reference/endpoints/achievements/all-achievements).
 
 <AllAchievementsRequestBlock />
 
-### Achievement Completion Stats
+### Achievement Completion Stats {#achievement-completion-stats}
 
 Both the user achievements API and the all achievements API include completion
 statistics like `completions` (the number of users that have completed an
@@ -223,7 +225,7 @@ achievement).
   />
 </Frame>
 
-## Analytics
+## Analytics {#analytics}
 
 The [achievements page](https://app.trophy.so/achievements) in Trophy shows how many users have completed each achievement you've set up.
 
@@ -247,6 +249,6 @@ Additionally the analytics page on any metric in Trophy includes a chart that sh
   />
 </Frame>
 
-## Get Support
+## Get Support {#get-support}
 
 Want to get in touch with the Trophy team? Reach out to us via [email](mailto:support@trophy.so). We're here to help!

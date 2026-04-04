@@ -1,16 +1,18 @@
 ---
 title: Push Notifications
-description: Learn how to use push notifications in a gamified product experience with Trophy.
-"og:description": Use automated push notification flows to extend your gamification experience outside your app and remind users to keep coming back.
+description: Learn how to use push notifications in a gamified product
+  experience with Trophy.
+og:description: Use automated push notification flows to extend your
+  gamification experience outside your app and remind users to keep coming back.
 icon: bell
 ---
 
-import IdentifyUserWithDeviceTokensRequestBlock from "/snippets/identify-user-with-device-tokens-request-block.mdx";
-import MetricEventWithDeviceTokensRequestBlock from "/snippets/metric-event-with-device-tokens-request-block.mdx";
+import IdentifyUserWithDeviceTokensRequestBlock from "../snippets/identify-user-with-device-tokens-request-block.mdx";
+import MetricEventWithDeviceTokensRequestBlock from "../snippets/metric-event-with-device-tokens-request-block.mdx";
 
 Trophy can send automated push notifications to users based on key triggers without requiring any code. Here we’ll look at what these triggers are, and how they can form part of your product’s gamification experience.
 
-## Types Of Push Notifications
+## Types Of Push Notifications {#types-of-push-notifications}
 
 Trophy supports 4 types of push notifications, each of which is designed to suit a common scenario in building gamification experiences.
 
@@ -32,11 +34,11 @@ All push notifications are optional, but all four can be used simultaneously and
 - **Reactivation notifications** are sent to users after they become inactive with the goal of bringing them back to your app.
 - **Streak notifications** are automatically sent to users reminding them to extend their [Streak](/platform/streaks).
 
-## Supported Channels
+## Supported Channels {#supported-channels}
 
 Trophy supports sending push notifications using 3 channels which can all be configured on the [Channels](https://app.trophy.so/push/channels) page of the Trophy dashboard.
 
-### Apple Push Notification Service (APNs)
+### Apple Push Notification Service (APNs) {#apple-push-notification-service-apns}
 
 Trophy supports sending push notifications to users via APNs through a certificate-based connection.
 
@@ -53,7 +55,7 @@ To send push notifications using APNs, you'll need to provide Trophy with the fo
   guide](https://developer.apple.com/documentation/usernotifications/establishing-a-certificate-based-connection-to-apns).
 </Note>
 
-### Firebase Cloud Messaging (FCM)
+### Firebase Cloud Messaging (FCM) {#firebase-cloud-messaging-fcm}
 
 Trophy supports sending push notifications to users via FCM. To achieve this you'll need to provide Trophy with your Firebase Service Account JSON in the following format:
 
@@ -82,11 +84,11 @@ Trophy supports sending push notifications to users via FCM. To achieve this you
   guide](https://firebase.google.com/support/guides/service-accounts).
 </Note>
 
-### Expo Push Service
+### Expo Push Service {#expo-push-service}
 
 Trophy supports sending push notifications to users via Expo Push Service.
 
-Expo Push Service saves you having to integreate with FCM and APNs individually and automatically directs notifications through the relevant service based on your users platform.
+Expo Push Service saves you having to integrate with FCM and APNs individually and automatically directs notifications through the relevant service based on your users platform.
 
 To achieve this you must provide Trophy with a few key details from your Expo account:
 
@@ -99,7 +101,7 @@ To achieve this you must provide Trophy with a few key details from your Expo ac
   guide](https://docs.expo.dev/push-notifications/sending-notifications).
 </Note>
 
-## Sending Push Notifications
+## Sending Push Notifications {#sending-push-notifications}
 
 Follow the steps below to start sending push notifications using Trophy.
 
@@ -191,7 +193,7 @@ Follow the steps below to start sending push notifications using Trophy.
   </Step>
 </Steps>
 
-## Designing Push Notifications
+## Designing Push Notifications {#designing-push-notifications}
 
 By default, Trophy provides a template for each [type of push notification](#types-of-push-notifications) as a good starting point. The default templates can’t be changed, but you can duplicate and customize these as you wish.
 
@@ -199,7 +201,7 @@ By default, Trophy provides a template for each [type of push notification](#typ
   You can also create blank templates if you just want to start from scratch.
 </Tip>
 
-### Template Structure
+### Template Structure {#template-structure}
 
 Each push notification has a title and body, and Trophy's no-code push notification template editor allows you to fully customize both fields.
 
@@ -212,7 +214,7 @@ Each push notification has a title and body, and Trophy's no-code push notificat
   />
 </Frame>
 
-### Using Variables
+### Using Variables {#using-variables}
 
 Trophy provides an expansive set of variables that can be used to insert highly relevant and personalized data into your push notifications.
 
@@ -231,7 +233,7 @@ This will open up the variable editor window where you can configure variables a
   ></video>
 </Frame>
 
-### Using Variations
+### Using Variations {#using-variations}
 
 Variations can be used to add randomness to the title and body of push notifications sent by Trophy. This prevents notifications from getting boring and helps improve engagement rates.
 
@@ -248,7 +250,7 @@ At send time, Trophy automatically picks one of your variations of the title and
   ></video>
 </Frame>
 
-### Using Conditions
+### Using Conditions {#using-conditions}
 
 Trophy's push notification template builder supports using conditions to send different content to each recipient based on their unique context.
 
@@ -267,6 +269,6 @@ At send time Trophy computes all conditions using each recipients unique context
   ></video>
 </Frame>
 
-## Get Support
+## Get Support {#get-support}
 
 Want to get in touch with the Trophy team? Reach out to us via [email](mailto:support@trophy.so). We're here to help!

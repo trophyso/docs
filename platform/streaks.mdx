@@ -1,17 +1,18 @@
 ---
 title: Streaks
 description: Learn how to use streaks in a gamified product experience with Trophy.
-"og:description": Use daily, weekly or monthly streaks to create habitual usage patterns and keep users coming back to your app.
+og:description: Use daily, weekly or monthly streaks to create habitual usage
+  patterns and keep users coming back to your app.
 icon: flame
 ---
 
-import MetricChangeResponseBlock from "/snippets/metric-change-response-block.mdx";
+import MetricChangeResponseBlock from "../snippets/metric-change-response-block.mdx";
 
-## What are Streaks?
+## What are Streaks? {#what-are-streaks}
 
 A streak is a period of consecutive days, weeks or months that a user has performed a key action on your platform. Streaks have been shown to meaningfully increase retention, particularly when the user action being tracked aligns with the core value of your product.
 
-## Streak Frequency
+## Streak Frequency {#streak-frequency}
 
 Streaks in Trophy can be **daily, weekly or monthly**. This means that a user must meet their [streak conditions](#streak-conditions) at least once every calendar day, week or month to maintain their streak.
 
@@ -21,7 +22,7 @@ If you've [configured time zones](/platform/users#param-tz) for your users, Trop
 Trophy automatically computes streak data for every streak frequency, meaning you can switch at any time.
 </Note>
 
-## Streak Conditions
+## Streak Conditions {#streak-conditions}
 
 In Trophy you can set the thresholds that a user must meet in order to extend their streak based on your configured [Metrics](/platform/metrics).
 
@@ -42,7 +43,7 @@ When combining metrics in this way, you can choose between two evaluation modes:
 
 In this way you can design your streak logic to match your application use case.
 
-## Streak Freezes
+## Streak Freezes {#streak-freezes}
 
 Streak freezes help users keep their streaks for longer by allowing them to miss periods without it resetting to zero. This helps keep streaks motivating even if users don't maintain a perfect usage habit.
 
@@ -57,7 +58,7 @@ Streak freezes help users keep their streaks for longer by allowing them to miss
 
 Streak freezes are optional in Trophy but can be configured on the [streaks page](https://app.trophy.so/streaks) of the Trophy dashboard.
 
-### Granting Initial Freezes
+### Granting Initial Freezes {#granting-initial-freezes}
 
 You can configure any number of arbitrary freezes to grant to new users when you first identify them with Trophy.
 
@@ -65,17 +66,17 @@ You can configure any number of arbitrary freezes to grant to new users when you
 Giving users too many freezes may decrease their perceived value, but granting too few freezes might result it a higher number of lost streaks. A good starting point is one freeze per user, but the trick is to experiment!
 </Tip>
 
-### Freeze Accumulation
+### Freeze Accumulation {#freeze-accumulation}
 
 As users use up streak freezes, they'll need a continuous supply of new ones to keep them going. To facilitate this, Trophy can automatically grant streak freezes to users over time. You can choose an arbitrary number of days over which to grant an arbitrary number of freezes to each user.
 
 If you've [configured time zones](/platform/users#param-tz) for your users, Trophy will automatically consume freezes at midnight in the user's time zone when necessary to extend their streak, and if any new freezes are due to be granted to a user, they will be granted up to ten minutes later.
 
-### Maximum Freeze Count
+### Maximum Freeze Count {#maximum-freeze-count}
 
 In Trophy you also configure the maximum number of freezes that each user can have, up to a limit of 100. [Freeze accumulation](#freeze-accumulation) will only ever grant freezes up to this limit.
 
-## Tracking Streaks
+## Tracking Streaks {#tracking-streaks}
 
 Trophy automatically calculates streaks for all users based on the [metric events](/platform/events#tracking-metric-events) you report to Trophy.
 
@@ -85,11 +86,11 @@ There's no extra work required to track streaks, and you can start using them ri
 For a full walk through on how to set up a streak feature using Trophy, check out our [official guide](/guides/how-to-build-a-streaks-feature).
 </Tip>
 
-## Managing Streaks
+## Managing Streaks {#managing-streaks}
 
 This section outlines some of the operations you can perform to manage user's streaks in your application.
 
-### Restoring A Users Streak
+### Restoring A Users Streak {#restoring-a-users-streak}
 
 To restore a user's streak, head to the user details page and use the 'Restore Streak' action. Restoring a user's streak sets it to the length it was when they last lost it.
 
@@ -108,7 +109,7 @@ You can also use the [restore streak admin API](/admin-api/endpoints/streaks/res
   ></video>
 </Frame>
 
-## Displaying Streaks
+## Displaying Streaks {#displaying-streaks}
 
 Trophy exposes streak data in two ways, which can be used to build UI elements within your applications and display streaks to users.
 
@@ -117,7 +118,7 @@ Trophy exposes streak data in two ways, which can be used to build UI elements w
   streaks feature to your app for more details.
 </Tip>
 
-### Metric Event Response
+### Metric Event Response {#metric-event-response}
 
 When you [increment a metric](/platform/events#tracking-metric-events) for a user, the [metric API](/api-reference/endpoints/metrics/send-a-metric-change-event) response will include the user's current
 streak.
@@ -129,9 +130,9 @@ This can be used to transactionally trigger UI/UX elements including:
 - Showing in-app pop-ups
 - Playing sound effects
 
-### User Streaks API
+### User Streaks API {#user-streaks-api}
 
-The [user streaks API](/api-reference/endpoints/users/get-a-users-streak) returns the current streak for a single user, along with their recent streak history. Use the [`historyPeriods`](/api-reference/endpoints/users/get-a-users-streak#parameter-history-periods) query parameter to control how many periods to return.
+The [user streaks API](/api-reference/endpoints/users/get-a-users-streak) returns the current streak for a single user, along with their recent streak history. Use the `historyPeriods` query parameter to control how many periods to return.
 
 {/* vale off */}
 
@@ -196,7 +197,7 @@ Use this data to display a user's streak history within your application.
   />
 </Frame>
 
-### List Multiple User's Streaks
+### List Multiple User's Streaks {#list-multiple-users-streaks}
 
 If you want to display streaks for multiple users at once, for example to support a friend streak or user group feature, then use the [list user streaks API](/api-reference/endpoints/streaks/get-streaks).
 
@@ -220,6 +221,6 @@ If you want to display streaks for multiple users at once, for example to suppor
 ]
 ```
 
-## Get Support
+## Get Support {#get-support}
 
 Want to get in touch with the Trophy team? Reach out to us via [email](mailto:support@trophy.so). We're here to help!
