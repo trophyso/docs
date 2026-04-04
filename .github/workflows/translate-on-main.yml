@@ -13,6 +13,12 @@ permissions:
 jobs:
   translate:
     runs-on: ubuntu-latest
+    if: >-
+      github.event_name == 'workflow_dispatch'
+      || (github.event_name == 'push'
+          && (github.event.head_commit == null
+              || (!contains(github.event.head_commit.message, '[i18n-ci]')
+                  && !contains(github.event.head_commit.message, format(' from {0}/ci/', github.repository_owner)))))
     steps:
       - name: Checkout
         uses: actions/checkout@v4
@@ -75,8 +81,8 @@ jobs:
         uses: peter-evans/create-pull-request@v6
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
-          commit-message: "chore(i18n): update translations from main"
+          commit-message: "chore(i18n): update translations from main [i18n-ci]"
           title: "chore(i18n): update translations from main"
           body: "Automated translation update from main branch push."
-          branch: "chore/i18n/auto-translations"
+          branch: "ci/i18n/auto-translations"
           delete-branch: true
