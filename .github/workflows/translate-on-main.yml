@@ -71,6 +71,11 @@ jobs:
       - name: Sync Mintlify heading anchors
         run: node scripts/sync-heading-anchors.mjs
 
+      - name: Remove engineId from i18n.json before PR
+        run: |
+          node -e 'const fs=require("fs");const p="i18n.json";const j=JSON.parse(fs.readFileSync(p,"utf8"));delete j.engineId;fs.writeFileSync(p,JSON.stringify(j,null,2)+"\n");'
+          node -e 'const fs=require("fs");const j=JSON.parse(fs.readFileSync("i18n.json","utf8"));if(Object.prototype.hasOwnProperty.call(j,"engineId")){console.error("i18n.json still contains engineId; refusing to open PR.");process.exit(1);}'
+
       - name: Create translation PR
         uses: peter-evans/create-pull-request@v6
         with:
