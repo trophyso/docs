@@ -1,5 +1,12 @@
 #!/usr/bin/env node
 
+/**
+ * localize-mdx-paths.mjs — After Lingo, normalize MDX paths per file location and locale:
+ * 1) `import ... from ".../<locale>/components/*.jsx|tsx"` → active target locale.
+ * 2) `import ... from ".../snippets/..."` relative depth → repo-root `snippets/`.
+ * 3) JSX `src=".../assets/..."` relative depth → repo-root `assets/`.
+ */
+
 import fs from "node:fs";
 import path from "node:path";
 
@@ -40,13 +47,48 @@ const knownLocalesPattern = knownLocales
   .join("|");
 
 // import ... from ".../en/components/foo.jsx|tsx"
-const IMPORT_RE = new RegExp(
+const COMPONENT_IMPORT_RE = new RegExp(
   `(from\\s+["'])([^"']*?/)(?:${knownLocalesPattern})(/components/[^"']+\\.(?:jsx|tsx))(["'])`,
   "g"
 );
 
-function rewriteContent(content, locale) {
-  return content.replace(IMPORT_RE, (_full, p1, p2, p3, p4) => `${p1}${p2}${locale}${p3}${p4}`);
+// import ... from "../snippets/foo.mdx" (one or more ../)
+const SNIPPET_IMPORT_RE = /(from\s+["'])(?:\.\.\/)+(snippets\/[^"']+)(["'])/g;
+
+// src="../assets/foo.png" or src='...' (closing quote must match opener)
+const ASSET_SRC_RE = /(src=)(["'])(?:\.\.\/)+(assets\/[^"']+)\2/g;
+
+function rewriteComponentImports(content, locale) {
+  return content.replace(COMPONENT_IMPORT_RE, (_full, p1, p2, p3, p4) => `${p1}${p2}${locale}${p3}${p4}`);
+}
+
+function dirDepthFromRepoRoot(fileAbs) {
+  const rel = path.relative(process.cwd(), fileAbs).replace(/\\/g, "/");
+  const dir = path.dirname(rel);
+  if (dir === ".") return 0;
+  return dir.split("/").filter(Boolean).length;
+}
+
+function snippetImportPrefix(depth) {
+  if (depth <= 0) return "./";
+  return "../".repeat(depth);
+}
+
+function rewriteSnippetImports(content, fileAbs) {
+  const prefix = snippetImportPrefix(dirDepthFromRepoRoot(fileAbs));
+  return content.replace(SNIPPET_IMPORT_RE, (_full, p1, p2, p3) => `${p1}${prefix}${p2}${p3}`);
+}
+
+function rewriteAssetSrc(content, fileAbs) {
+  const prefix = snippetImportPrefix(dirDepthFromRepoRoot(fileAbs));
+  return content.replace(ASSET_SRC_RE, (_full, p1, q, p3) => `${p1}${q}${prefix}${p3}${q}`);
+}
+
+function rewriteFile(content, locale, fileAbs) {
+  let next = rewriteComponentImports(content, locale);
+  next = rewriteSnippetImports(next, fileAbs);
+  next = rewriteAssetSrc(next, fileAbs);
+  return next;
 }
 
 function walkMdx(dir) {
@@ -84,15 +126,29 @@ function walkRootMdx(root, excludedTopDirs) {
   return out;
 }
 
+const excludedTop = new Set([
+  sourceLocale,
+  ...targetLocales,
+  "node_modules",
+  ".git",
+  ".github",
+  "scripts",
+  "lingo",
+  "styles",
+  ".cursor",
+  "snippets",
+  "assets",
+]);
+
 let changedFiles = 0;
 
 for (const locale of locales) {
   const files = locale === sourceLocale
-    ? walkRootMdx(".", new Set([sourceLocale, ...targetLocales, "node_modules", ".git", ".github", "scripts", "lingo", "styles", ".cursor"]))
+    ? walkRootMdx(".", excludedTop)
     : walkMdx(locale);
   for (const file of files) {
     const raw = fs.readFileSync(file, "utf8");
-    const next = rewriteContent(raw, locale);
+    const next = rewriteFile(raw, locale, file);
     if (next !== raw) {
       changedFiles += 1;
       if (!checkOnly) fs.writeFileSync(file, next);
@@ -102,10 +158,10 @@ for (const locale of locales) {
 
 if (checkOnly) {
   if (changedFiles > 0) {
-    console.error(`Found ${changedFiles} file(s) with non-localized component imports.`);
+    console.error(`Found ${changedFiles} file(s) with incorrect localized MDX paths.`);
     process.exit(1);
   }
-  console.log("Component imports are locale-localized.");
+  console.log("Localized MDX paths are correct.");
 } else {
-  console.log(`Localized component imports in ${changedFiles} file(s).`);
+  console.log(`Updated localized MDX paths in ${changedFiles} file(s).`);
 }
