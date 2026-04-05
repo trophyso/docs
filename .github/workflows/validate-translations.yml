@@ -54,8 +54,8 @@ jobs:
       - name: Ensure internal links are locale-localized
         run: npm run translate:localize-links:check
 
-      - name: Ensure component imports are locale-localized
-        run: npm run translate:localize-component-imports:check
+      - name: Ensure localized MDX paths are correct
+        run: npm run translate:localize-mdx-paths:check
 
       - name: Ensure fragile link fragments are not used
         run: npm run translate:validate-links

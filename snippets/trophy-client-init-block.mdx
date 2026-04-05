@@ -1,0 +1,57 @@
+{/* vale off */}
+
+<CodeGroup>
+```typescript Node
+import { TrophyApiClient } from "@trophyso/node";
+
+const trophy = new TrophyApiClient({
+  apiKey: process.env.TROPHY_API_KEY as string,
+});
+```
+
+```ruby Ruby
+client = TrophyApiClient::Client.new(
+  :api_key => ENV["TROPHY_API_KEY"]
+)
+```
+
+```python Python
+from trophy import Trophy
+
+client = Trophy(
+    api_key=os.environ.get("TROPHY_API_KEY"),
+)
+```
+
+```php PHP
+use Trophy\TrophyClient;
+
+$trophy = new TrophyClient([
+    'apiKey' => getenv('TROPHY_API_KEY')
+]);
+```
+
+```java Java (Gradle)
+TrophyApiClient client = TrophyApiClient.builder()
+    .apiKey(System.getenv("TROPHY_API_KEY"))
+    .build();
+```
+
+```java Java (Maven)
+TrophyApiClient client = TrophyApiClient.builder()
+    .apiKey(System.getenv("TROPHY_API_KEY"))
+    .build();
+```
+
+```go Go
+client, err := trophy.NewClient(
+    option.WithAPIKey(os.Getenv("TROPHY_API_KEY")),
+)
+```
+
+```csharp .NET (C#)
+var trophy = new TrophyClient(
+    Environment.GetEnvironmentVariable("TROPHY_API_KEY")
+);
+```
+</CodeGroup>

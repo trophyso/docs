@@ -98,7 +98,7 @@ try {
     execSync(`npx lingo.dev@latest run --target-locale ${target}${runForce}`, { stdio: "inherit" });
     execSync(`node scripts/translate-docs-json.mjs --target ${target}`, { stdio: "inherit" });
     execSync(`node scripts/localize-internal-links.mjs --target ${target}`, { stdio: "inherit" });
-    execSync(`node scripts/localize-component-imports.mjs --target ${target}`, { stdio: "inherit" });
+    execSync(`node scripts/localize-mdx-paths.mjs --target ${target}`, { stdio: "inherit" });
     console.log(`Translation generation completed for target locale: ${target}`);
   }
   execSync("node scripts/sync-heading-anchors.mjs", { stdio: "inherit" });
