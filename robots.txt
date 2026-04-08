@@ -1,0 +1,10 @@
+User-agent: *
+Disallow: /api-reference/endpoints/
+Disallow: /admin-api/endpoints/
+Disallow: /webhooks/events/
+
+Disallow: /*/api-reference/endpoints/
+Disallow: /*/admin-api/endpoints/
+Disallow: /*/webhooks/events/
+
+Sitemap: https://docs.trophy.so/sitemap.xml
