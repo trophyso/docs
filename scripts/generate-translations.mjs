@@ -3,7 +3,7 @@
 import fs from "node:fs";
 import path from "node:path";
 import crypto from "node:crypto";
-import { execSync } from "node:child_process";
+import { execSync, spawnSync } from "node:child_process";
 
 const args = process.argv.slice(2);
 
@@ -124,6 +124,29 @@ function copyStagedTargetToLocale(stagingRoot, target, sourceFiles) {
   }
 }
 
+/**
+ * Purge Lingo translation entries for a target locale.
+ * When `scopedFiles` is set (file-scoped --paths + --force), only those bucket paths are purged.
+ * Otherwise the entire locale is purged (full --force without --paths).
+ */
+function runLingoPurge(target, scopedFiles) {
+  const purgeArgs = ["lingo.dev@latest", "purge", "--locale", target];
+  if (scopedFiles && scopedFiles.length > 0) {
+    purgeArgs.push("--bucket", "mdx");
+    for (const rel of scopedFiles) {
+      purgeArgs.push("--file", rel);
+    }
+  }
+  purgeArgs.push("--yes-really");
+  const result = spawnSync("npx", purgeArgs, {
+    stdio: "inherit",
+    cwd: process.cwd(),
+    shell: false,
+  });
+  if (result.error) throw result.error;
+  if (result.status !== 0) process.exit(result.status ?? 1);
+}
+
 const targetArg = getArg("--target");
 const pathFilter = getArg("--paths");
 const forceRetranslate = hasFlag("--force");
@@ -207,11 +230,14 @@ try {
     // Lingo prints "from cache" when per-file work is *skipped* because there is nothing in
     // `processableData` (delta empty vs lock). `run --force` forces every key into that set and
     // passes empty targetData into the localizer for fresh output (see lingo.dev CLI). Purge first
-    // clears target strings + lock entries for the locale so files and checksums stay consistent.
+    // clears target strings + lock entries so files and checksums stay consistent.
+    // With `--paths`, purge only those files (`lingo purge --file ...`); without `--paths`, purge
+    // the whole target locale (legacy full-regeneration behavior).
     if (forceRetranslate) {
       const cacheFile = path.join(process.cwd(), "i18n.cache");
       if (fs.existsSync(cacheFile)) fs.unlinkSync(cacheFile);
-      execSync(`npx lingo.dev@latest purge --locale ${target} --yes-really`, { stdio: "inherit" });
+      const scopedPurgeFiles = filters.length > 0 ? sourceFiles : null;
+      runLingoPurge(target, scopedPurgeFiles);
     }
     const runForce = forceRetranslate ? " --force" : "";
     execSync(`npx lingo.dev@latest run --target-locale ${target}${runForce}`, { stdio: "inherit" });
