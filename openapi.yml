@@ -1,7 +1,7 @@
 openapi: 3.1.0
 info:
   title: Trophy
-  version: '1.3.3'
+  version: '1.3.4'
 paths:
   # APPLICATION API -------------------------------------------------------
 
@@ -4592,6 +4592,16 @@ components:
         points:
           type: integer
           description: The points awarded by this trigger.
+        status:
+          type: string
+          enum: ['active', 'inactive', 'archived']
+          description: The status of the trigger.
+        achievementId:
+          type: string
+          description: The unique ID of the achievement associated with this trigger, if the trigger is an achievement.
+        metricId:
+          type: string
+          description: The unique ID of the metric associated with this trigger, if the trigger is a metric.
         metricName:
           type: string
           description: If the trigger has type 'metric', the name of the metric
@@ -4611,6 +4621,39 @@ components:
         timeInterval:
           type: integer
           description: If the trigger has type 'time', the numer of units of timeUnit after which to award points
+        userAttributes:
+          type: array
+          description: User attribute filters that must be met for this trigger to award points. Empty when the trigger has no user attribute filters configured.
+          items:
+            type: object
+            properties:
+              key:
+                type: string
+                description: The key of the user attribute.
+                example: plan-type
+              value:
+                type: string
+                description: The required value of the user attribute.
+                example: premium
+            required:
+              - key
+              - value
+        eventAttribute:
+          type: object
+          description: Deprecated. Event attribute filter that must be met for this trigger to award points. Only present if the trigger has an event filter configured.
+          deprecated: true
+          properties:
+            key:
+              type: string
+              description: The key of the event attribute.
+              example: source
+            value:
+              type: string
+              description: The required value of the event attribute.
+              example: mobile-app
+          required:
+            - key
+            - value
         eventAttributes:
           type: array
           description: If the trigger has type 'metric', the event attributes that must match for the trigger to award points. Empty when the trigger is metric-based and has no event attribute filters. Omitted for non-metric triggers.
@@ -4628,6 +4671,22 @@ components:
             required:
               - key
               - value
+        created:
+          type: string
+          format: date-time
+          description: The date and time the trigger was created, in ISO 8601 format.
+        updated:
+          type: string
+          format: date-time
+          description: The date and time the trigger was last updated, in ISO 8601 format.
+      required:
+        - id
+        - type
+        - points
+        - status
+        - userAttributes
+        - created
+        - updated
     PointsAward:
       title: PointsAward
       type: object
@@ -5547,115 +5606,6 @@ components:
         power of 10.
       items:
         $ref: '#/components/schemas/PointsRange'
-    PointsTriggerResponse:
-      title: PointsTriggerResponse
-      type: object
-      properties:
-        id:
-          type: string
-          description: The unique ID of the trigger.
-        type:
-          type: string
-          enum: ['metric', 'achievement', 'streak', 'time', 'user_creation']
-          description: The type of trigger.
-        points:
-          type: integer
-          description: The points awarded by this trigger.
-        status:
-          type: string
-          enum: ['active', 'archived']
-          description: The status of the trigger.
-        achievementId:
-          type: string
-          description: The unique ID of the achievement associated with this trigger, if the trigger is an achievement.
-        metricId:
-          type: string
-          description: The unique ID of the metric associated with this trigger, if the trigger is a metric.
-        metricThreshold:
-          type: integer
-          description: The amount that a user must increase the metric to earn the points, if the trigger is a metric.
-        streakLengthThreshold:
-          type: integer
-          description: The number of consecutive streak periods that a user must complete to earn the points, if the trigger is a streak.
-        metricName:
-          type: string
-          description: The name of the metric associated with this trigger, if the trigger is a metric.
-        achievementName:
-          type: string
-          description: The name of the achievement associated with this trigger, if the trigger is an achievement.
-        timeUnit:
-          type: string
-          enum: ['hour', 'day']
-          description: The time unit of the trigger, if the trigger is a time interval.
-        timeInterval:
-          type: integer
-          description: The interval of the trigger in the time unit, if the trigger is a time interval.
-        userAttributes:
-          type: array
-          description: User attribute filters that must be met for this trigger to activate.
-          items:
-            type: object
-            properties:
-              key:
-                type: string
-                description: The key of the user attribute.
-                example: plan-type
-              value:
-                type: string
-                description: The value of the user attribute.
-                example: premium
-            required:
-              - key
-              - value
-        eventAttribute:
-          type: object
-          description: Deprecated. Event attribute filter that must be met for this trigger to activate. Only present if the trigger has an event filter configured.
-          deprecated: true
-          properties:
-            key:
-              type: string
-              description: The key of the event attribute.
-              example: source
-            value:
-              type: string
-              description: The required value of the event attribute.
-              example: mobile-app
-          required:
-            - key
-            - value
-        eventAttributes:
-          type: array
-          description: Event attribute filters that must be met for this trigger to activate. Present when the trigger uses one or more event attribute filters.
-          items:
-            type: object
-            properties:
-              key:
-                type: string
-                description: The key of the event attribute.
-                example: source
-              value:
-                type: string
-                description: The required value of the event attribute.
-                example: mobile-app
-            required:
-              - key
-              - value
-        created:
-          type: string
-          format: date-time
-          description: The date and time the trigger was created, in ISO 8601 format.
-        updated:
-          type: string
-          format: date-time
-          description: The date and time the trigger was last updated, in ISO 8601 format.
-      required:
-        - id
-        - type
-        - points
-        - status
-        - userAttributes
-        - created
-        - updated
     PointsSystemResponse:
       title: PointsSystemResponse
       type: object
@@ -5685,7 +5635,7 @@ components:
           type: array
           description: Array of active triggers for this points system.
           items:
-            $ref: '#/components/schemas/PointsTriggerResponse'
+            $ref: '#/components/schemas/PointsTrigger'
       required:
         - id
         - name
