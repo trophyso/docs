@@ -158,9 +158,15 @@ To create new achievements, head to the [achievements page](https://app.trophy.s
 <Step title="Add attribute filters (Optional)">
 You can assign attribute filters to an achievement to further restrict who can unlock them and when.
 
-- To limit a **Metric** achievement to only apply to events with specific [custom event attributes](/platform/events#custom-event-attributes), select an attribute and enter a value in the **Event Attribute** section.
+- To limit a **Metric** achievement to only apply to events with specific [custom event attributes](/platform/events#custom-event-attributes), add one or more filters in the **Event Attributes** section.
 
 - To limit any type of achievement to only apply to a user with one or more specific [custom user attributes](/platform/users#custom-user-attributes), add attributes and the desired values in the **User Attributes** section.
+
+<Note>
+  When you set multiple event attribute filters, all of them must match for the
+  metric achievement to apply. In API responses, `eventAttributes` is the
+  canonical field and `eventAttribute` is deprecated for legacy compatibility.
+</Note>
 
 </Step>
 

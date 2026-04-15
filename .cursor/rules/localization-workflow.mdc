@@ -6,6 +6,7 @@ alwaysApply: true
 # Localization Workflow
 
 - Treat repo-root docs paths as the canonical English source and keep identical relative file paths/filenames across all locales.
+- For planned doc changes, default scope to English source files only. Do not plan or execute manual edits to non-English locale content (for example `es/**`) unless the user explicitly asks for localized updates; rely on the existing translation workflow to propagate English changes.
 - Keep all locale navigation in `docs.json` under `navigation.languages`; do not reintroduce `navigation.global` or top-level `navbar`.
 - Keep SEO metatags in English unless explicitly requested otherwise.
 - Do not translate code snippets, inline code, URLs, route slugs, or API identifiers.

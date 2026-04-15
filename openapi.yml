@@ -1,7 +1,7 @@
 openapi: 3.1.0
 info:
   title: Trophy
-  version: '1.2.0'
+  version: '1.3.3'
 paths:
   # APPLICATION API -------------------------------------------------------
 
@@ -78,6 +78,11 @@ paths:
                       eventAttribute:
                         key: source
                         value: mobile-app
+                      eventAttributes:
+                        - key: source
+                          value: mobile-app
+                        - key: plan
+                          value: premium
                     - id: 5100fe51-6bce-6j44-b0hs-bddc4e123684
                       trigger: streak
                       name: 10 days of exercise
@@ -2573,6 +2578,11 @@ paths:
                         eventAttribute:
                           key: source
                           value: mobile-app
+                        eventAttributes:
+                          - key: source
+                            value: mobile-app
+                          - key: plan
+                            value: premium
                         created: '2021-01-01T00:00:00Z'
                         updated: '2021-01-01T00:00:00Z'
                       - id: 0040fe51-6bce-4b44-b0ad-bddc4e123536
@@ -2930,6 +2940,9 @@ paths:
                       end: null
                       maxParticipants: 100
                       breakdownAttribute: null
+                      breakdownAttributes:
+                        - country
+                        - plan
                       runUnit: day
                       runInterval: 7
                     - id: 5100fe51-6bce-6j44-b0hs-bddc4e123683
@@ -2944,6 +2957,7 @@ paths:
                       end: null
                       maxParticipants: 50
                       breakdownAttribute: null
+                      breakdownAttributes: []
                       runUnit: null
                       runInterval: null
         '401':
@@ -4559,7 +4573,8 @@ components:
               type:
                 - integer
                 - 'null'
-              description: The user's rank across all users. Null if the user has no active streak.
+              description: Deprecated. The user's rank across all users. Null if the user has no active streak.
+              deprecated: true
               example: 5
           required:
             - rank
@@ -4596,6 +4611,23 @@ components:
         timeInterval:
           type: integer
           description: If the trigger has type 'time', the numer of units of timeUnit after which to award points
+        eventAttributes:
+          type: array
+          description: If the trigger has type 'metric', the event attributes that must match for the trigger to award points. Empty when the trigger is metric-based and has no event attribute filters. Omitted for non-metric triggers.
+          items:
+            type: object
+            properties:
+              key:
+                type: string
+                description: The key of the event attribute.
+                example: source
+              value:
+                type: string
+                description: The required value of the event attribute.
+                example: mobile-app
+            required:
+              - key
+              - value
     PointsAward:
       title: PointsAward
       type: object
@@ -4847,8 +4879,16 @@ components:
           type:
             - string
             - 'null'
-          description: The key of the attribute to break down this leaderboard by.
+          description: Deprecated. The key of the attribute to break down this leaderboard by.
+          deprecated: true
           example: country
+        breakdownAttributes:
+          type: array
+          description: The user attribute keys that this leaderboard is broken down by.
+          items:
+            type: string
+            description: The key of a user attribute in this leaderboard breakdown.
+            example: country
         metricKey:
           type: string
           description: The key of the metric to rank by, if rankBy is 'metric'.
@@ -4908,6 +4948,7 @@ components:
         - description
         - rankBy
         - breakdownAttribute
+        - breakdownAttributes
         - start
         - end
         - maxParticipants
@@ -4999,8 +5040,26 @@ components:
               example: 25000
             breakdownAttributeValue:
               type: string
-              description: For leaderboards with a breakdown attribute, the value of the attribute for the user.
+              description: Deprecated. For leaderboards with a single breakdown attribute, the value of that attribute for the user.
+              deprecated: true
               example: USA
+            breakdownAttributeValues:
+              type: array
+              description: For leaderboards with breakdown attributes, the user's values for each breakdown attribute.
+              items:
+                type: object
+                properties:
+                  key:
+                    type: string
+                    description: The key of the breakdown attribute.
+                    example: country
+                  value:
+                    type: string
+                    description: The user's value for the breakdown attribute.
+                    example: USA
+                required:
+                  - key
+                  - value
           required:
             - start
             - end
@@ -5057,7 +5116,7 @@ components:
           description: The name of the metric associated with this achievement (only applicable if trigger = 'metric')
         userAttributes:
           type: array
-          description: User attribute filters that must be met for this achievement to be completed. Only present if the achievement has user attribute filters configured.
+          description: User attribute filters that must be met for this achievement to be completed.
           items:
             type: object
             properties:
@@ -5074,7 +5133,8 @@ components:
               - value
         eventAttribute:
           type: object
-          description: Event attribute filter that must be met for this achievement to be completed. Only present if the achievement has an event filter configured.
+          description: Deprecated. Event attribute filter that must be met for this achievement to be completed. Only present if the achievement has an event filter configured.
+          deprecated: true
           properties:
             key:
               type: string
@@ -5087,12 +5147,30 @@ components:
           required:
             - key
             - value
+        eventAttributes:
+          type: array
+          description: Event attribute filters that must be met for this achievement to be completed. Omitted for non-metric achievements.
+          items:
+            type: object
+            properties:
+              key:
+                type: string
+                description: The key of the event attribute.
+                example: source
+              value:
+                type: string
+                description: The value of the event attribute.
+                example: mobile-app
+            required:
+              - key
+              - value
       required:
         - id
         - name
         - trigger
         - description
         - badgeUrl
+        - userAttributes
     UserAchievementResponse:
       title: UserAchievementResponse
       type: object
@@ -5514,7 +5592,7 @@ components:
           description: The interval of the trigger in the time unit, if the trigger is a time interval.
         userAttributes:
           type: array
-          description: User attribute filters that must be met for this trigger to activate. Only present if the trigger has user attribute filters configured.
+          description: User attribute filters that must be met for this trigger to activate.
           items:
             type: object
             properties:
@@ -5531,7 +5609,8 @@ components:
               - value
         eventAttribute:
           type: object
-          description: Event attribute filter that must be met for this trigger to activate. Only present if the trigger has an event filter configured.
+          description: Deprecated. Event attribute filter that must be met for this trigger to activate. Only present if the trigger has an event filter configured.
+          deprecated: true
           properties:
             key:
               type: string
@@ -5544,6 +5623,23 @@ components:
           required:
             - key
             - value
+        eventAttributes:
+          type: array
+          description: Event attribute filters that must be met for this trigger to activate. Present when the trigger uses one or more event attribute filters.
+          items:
+            type: object
+            properties:
+              key:
+                type: string
+                description: The key of the event attribute.
+                example: source
+              value:
+                type: string
+                description: The required value of the event attribute.
+                example: mobile-app
+            required:
+              - key
+              - value
         created:
           type: string
           format: date-time
@@ -5557,6 +5653,7 @@ components:
         - type
         - points
         - status
+        - userAttributes
         - created
         - updated
     PointsSystemResponse:
