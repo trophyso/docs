@@ -1,0 +1,104 @@
+<CodeGroup>
+```bash cURL {10}
+curl -X POST https://app.trophy.so/api/metrics/lessons-completed/event \
+     -H "X-API-KEY: <apiKey>" \
+     -H "Content-Type: application/json" \
+     -d '{
+  "user": {
+    "id": "18",
+    "email": "user@example.com",
+    "tz": "Europe/London"
+  },
+  "value": 5
+}'
+```
+
+```typescript Node {7}
+trophy.metrics.event("lessons-completed", {
+  user: {
+    id: "18",
+    email: "user@example.com",
+    tz: "Europe/London",
+  },
+  value: 5,
+});
+```
+
+```python Python {8}
+client.metrics.event(
+    key="lessons-completed",
+    user=EventRequestUser(
+        id="18",
+        email="user@example.com",
+        tz="Europe/London",
+    ),
+    value=5,
+)
+```
+
+```php PHP {8}
+$user = new EventRequestUser([
+    'id' => '18',
+    'email' => 'user@example.com'
+]);
+
+$request = new MetricsEventRequest([
+    'user' => $user,
+    'value' => 5,
+]);
+
+$trophy->metrics->event("lessons-completed", $request);
+```
+
+```java Java {8}
+MetricsEventRequest request = MetricsEventRequest.builder()
+      .user(
+        EventRequestUser.builder()
+          .id("18")
+          .email("user@example.com")
+          .build()
+      )
+      .value(5)
+      .build();
+
+EventResponse response = client.metrics().event("lessons-completed", request);
+```
+
+```go Go {8}
+response, err := client.Metrics.Event(
+    "lessons-completed",
+    &api.MetricsEventRequest{
+        User: &api.EventRequestUser{
+            Id: "18",
+            Email: "user@example.com",
+        },
+        Value: 5,
+    },
+)
+```
+
+```csharp C# {8}
+var user = new EventRequestUser {
+   Id = "18",
+   Email = "user@example.com"
+};
+
+var request = new MetricsEventRequest {
+   User = user,
+   Value = 5,
+};
+
+await trophy.Metrics.EventAsync("lessons-completed", request);
+```
+
+```ruby Ruby {7}
+result = client.metrics.event(
+  :key => 'lessons-completed',
+  :user => {
+    :id => '18',
+    :email => 'user@example.com'
+  },
+  :value => 5
+)
+```
+</CodeGroup>
