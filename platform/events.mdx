@@ -10,6 +10,7 @@ icon: radio
 import MetricChangeRequestBlock from "../snippets/metric-change-request-block.mdx";
 import MetricChangeResponseBlock from "../snippets/metric-change-response-block.mdx";
 import IdempotentEventTracking from "../snippets/idempotent-event-tracking.mdx";
+import ParallelEventsValueExample from "../snippets/parallel-events-value-example.mdx";
 
 ## What are Events? {#what-are-events}
 
@@ -217,6 +218,12 @@ This helps keep your codebase free of logic that checks if users have completed 
 To use idempotent events, use the `Idempotency-Key` header in the [metric event API](/api-reference/endpoints/metrics/send-a-metric-change-event).
 
 [Learn more about idempotency](/api-reference/idempotency).
+
+### Parallel Events {#parallel-events}
+
+Trophy does not support parallel events to same metric for the same user. Instead, use the `value` parameter to increment the metric by the total amount of all individual events that you need to track.
+
+<ParallelEventsValueExample />
 
 ## Get Support {#get-support}
 
