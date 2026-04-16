@@ -99,16 +99,16 @@ Streak leaderboards rank users based on their current streak length.
 
 If you have a large user base, it's best practice to split up leaderboard participants into smaller, more socially-connected groups. This often leads to higher engagement than when using global leaderboards.
 
-Leaderboards in Trophy can be configured to group users into smaller groups according to a specific [custom user attribute](/platform/users#custom-user-attributes).
+Leaderboards in Trophy can be configured to group users into smaller groups according to one or more [custom user attributes](/platform/users#custom-user-attributes).
 
 <Tip>
   When using leaderboard breakdowns, [participant limits](#participant-limits)
   apply at the group level, not overall.
 </Tip>
 
-To set up a leaderboard breakdown head to the leaderboard configuration page and create or select your user attribute in the 'Breakdown Attribute' field.
+To set up a leaderboard breakdown, head to the leaderboard configuration page and create or select one or more user attributes in the 'Breakdown Attributes' field.
 
-Trophy will automatically start grouping users into smaller leaderboards based on the values of your chosen attribute for each of your users.
+Trophy will automatically start grouping users into smaller leaderboards based on the values of your chosen attributes for each user.
 
 <Frame>
   <video
@@ -121,13 +121,18 @@ Trophy will automatically start grouping users into smaller leaderboards based o
   ></video>
 </Frame>
 
-To fetch rankings for a particular group of users with a specific attribute value, use the [leaderboard rankings API](/api-reference/endpoints/leaderboards/get-leaderboard), specifying the attribute value in the `userAttributes` parameter as follows:
+To fetch rankings for a particular group of users with a specific attribute value, use the [leaderboard rankings API](/api-reference/endpoints/leaderboards/get-leaderboard), specifying one attribute filter in the `userAttributes` parameter as follows:
 
 <LeaderboardSingleAttributeRequest />
 
-If you wish to fetch rankings for a particular group of users with a specific combination of user attributes, create a new attribute to track the combination and use that as your breakdown attribute as follows:
+To fetch rankings for a particular group of users with a specific combination of user attributes, pass multiple comma-delimited `key:value` filters in `userAttributes` as follows:
 
 <LeaderboardMultiAttributeRequest />
+
+<Note>
+  When multiple `userAttributes` filters are provided, all filters must match
+  for a user to be included in the returned rankings.
+</Note>
 
 ## Start & End Dates {#start-end-dates}
 

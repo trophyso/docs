@@ -1,7 +1,7 @@
 <CodeGroup>
 ```bash cURL
 curl --request GET \
-  --url https://api.trophy.so/v1/leaderboards/{key}?userAttributes=region_city:southeast_london \
+  --url https://api.trophy.so/v1/leaderboards/{key}?userAttributes=region:southeast,city:london \
   --header 'X-API-KEY: <api-key>'
 ```
 
@@ -10,7 +10,7 @@ trophy.leaderboards.get("daily_champions", {
   offset: 0,
   limit: 10,
   run: "2025-01-15",
-  userAttributes: "region_city:southeast_london"
+  userAttributes: "region:southeast,city:london"
 });
 ```
 
@@ -20,7 +20,7 @@ client.leaderboards.get(
     offset=0,
     limit=10,
     run="2025-01-15",
-    user_attributes="region_city:southeast_london"
+    user_attributes="region:southeast,city:london"
 )
 ```
 
@@ -29,7 +29,7 @@ $request = new LeaderboardsGetRequest([
     'offset' => 0,
     'limit' => 10,
     'run' => "2025-01-15",
-    'user_attributes' => "region_city:southeast_london"
+    'user_attributes' => "region:southeast,city:london"
 ]);
 
 $trophy->leaderboards->get("daily_champions", $request);
@@ -40,7 +40,7 @@ LeaderboardsGetRequest request = LeaderboardsGetRequest.builder()
       .offset(0)
       .limit(10)
       .run("2025-01-15")
-      .userAttributes("region_city:southeast_london")
+      .userAttributes("region:southeast,city:london")
       .build();
 
 LeaderboardsGetResponse response = client.leaderboards().get("daily_champions", request);
@@ -53,7 +53,7 @@ response, err := client.Leaderboards.Get(
         Offset: 0,
         Limit: 10,
         Run: "2025-01-15",
-        UserAttributes: "region_city:southeast_london",
+        UserAttributes: "region:southeast,city:london",
     },
 )
 ```
@@ -63,7 +63,7 @@ var request = new LeaderboardsGetRequest {
    Offset = 0,
    Limit = 10,
    Run = "2025-01-15",
-   UserAttributes = "region_city:southeast_london"
+   UserAttributes = "region:southeast,city:london"
 };
 
 await trophy.Leaderboards.GetAsync("daily_champions", request);
@@ -75,7 +75,7 @@ result = client.Leaderboards.Get(
   :offset => 0,
   :limit => 10,
   :run => "2025-01-15",
-  :user_attributes => "region_city:southeast_london"
+  :user_attributes => "region:southeast,city:london"
 )
 ```
 

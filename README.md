@@ -82,7 +82,7 @@ Use `npm run <script> -- <args>` when a script needs CLI flags (the `--` forward
 
 | Script | Purpose |
 | --- | --- |
-| `translate:generate` | Run Lingo for target locale(s), then `docs.json` labels, internal links, `translate:localize-mdx-paths`, and heading-anchor sync. Requires `.env` with `LINGO_*` vars. |
+| `translate:generate` | Run Lingo for target locale(s), then `docs.json` labels, internal links, `translate:localize-mdx-paths`, and heading-anchor sync. Requires `.env` with `LINGO_*` vars. Optional: `--target <locale>` (comma-separated), `--paths <substring>` (comma-separated; matches English source MDX paths by substring), `--force` (with `--paths`, purge is file-scoped; without `--paths`, full locale—see step 5). |
 | `translate:docs-json` | Translate `docs.json` nav for one `--target` locale. Requires `.env`. |
 | `translate:localize-links` | Localize internal `href` paths; pass `--target`, `--all`, and/or `--check`. |
 | `translate:localize-links:all` | Same as `translate:localize-links -- --all`. |
@@ -150,7 +150,12 @@ Glossary sync workflow (manual via Cursor + MCP):
    - One locale: `npm run translate:generate -- --target <locale>`
    - Multiple locales: `npm run translate:generate -- --target es,fr,de`
    - All configured targets: `npm run translate:generate`
-   - Force full re-translation for a locale: `npm run translate:generate -- --target <locale> --force`. This deletes local `i18n.cache` if present, runs `lingo.dev purge --locale <target> --yes-really` (all managed keys for that locale per `i18n.json`), then **`lingo.dev run --target-locale <target> --force`**. Both **purge** and **`run --force`** matter: without `--force`, Lingo may **skip** every file (“from cache” in the summary) when the delta is empty; `--force` pushes all keys through the engine. For narrower purges, use [`lingo.dev purge`](https://lingo.dev/en/docs/cli/remove-translations) with filters, then run `lingo.dev run --force --target-locale …` yourself.
+   - **Single-page (or subset) regeneration:** pass `--paths` with a substring of each English source path (repo root, no `en/` prefix). Example for Spanish points page only:
+     - Delta run (no purge): `npm run translate:generate -- --target es --paths platform/points.mdx`
+     - Full re-run for those files only: `npm run translate:generate -- --target es --paths platform/points.mdx --force`
+     - Multiple paths: `npm run translate:generate -- --target es --paths platform/points.mdx,platform/achievements.mdx`
+   - **Full-locale force** (no `--paths`): `npm run translate:generate -- --target <locale> --force`. This deletes local `i18n.cache` if present, runs `lingo.dev purge --locale <target> --yes-really` for **all** managed keys for that locale, then `lingo.dev run --target-locale <target> --force`. Use for recovery or when you need every file reprocessed.
+   - **File-scoped `--force`:** when `--paths` is set, purge is limited to the MDX bucket and only paths that matched `--paths` (`lingo.dev purge --locale <target> --bucket mdx --file <path> … --yes-really`), then `lingo.dev run --target-locale <target> --force` for the same staged set. Both purge and `run --force` matter when the lock/cache would otherwise skip work (“from cache”). For ad-hoc narrower purges outside this script, see [`lingo.dev purge`](https://lingo.dev/en/docs/cli/remove-translations).
 6. Validate before merge:
    - `npm run translate:validate`
    - `npm run translate:localize-links:check`
@@ -161,4 +166,5 @@ Glossary sync workflow (manual via Cursor + MCP):
 Notes:
 - The workflow `.github/workflows/translate-on-main.yml` automatically reads locales from `i18n.json` `locale.targets`.
 - Keep English as source/default and preserve identical relative file paths across locales.
-- `--force` on `translate:generate` purges **all** Lingo-managed content for that target locale, then re-runs translation—use only for recovery/backfill (for example, cache stuck after bootstrap). Do not use `--force` in CI; CI should run delta translation based on `i18n.lock`.
+- `--force` without `--paths` purges **all** Lingo-managed content for that target locale—use only for recovery/backfill (for example, cache stuck after bootstrap). With `--paths`, purge is scoped to the matched source files only. Do not use `--force` in CI; CI should run delta translation based on `i18n.lock`.
+- Shared `snippets/*.mdx` are not in the MDX translation bucket; changing a snippet does not run Lingo on that path—update English pages that import it, or run a wider `--paths` / full generate as needed.
