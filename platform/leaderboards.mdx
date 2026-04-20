@@ -246,7 +246,6 @@ Leaderboards can have one of the following statuses:
 - `Scheduled`
 - `Active`
 - `Finished`
-- `Archived`
 
 All new leaderboards are created as `Inactive`. While inactive, any properties or settings of the leaderboard can be changed, they won't be visible to users and users can't join them.
 
@@ -255,12 +254,6 @@ Once you're ready for users to start participating, you can make it `Active`. Th
 Leaderboards that have been configured with a [start date](#start-dates) in the future can't be made active, they can only be `Scheduled`. Once the start date is past, Trophy will automatically make them `Active` and start accepting participants.
 
 If a leaderboard has an [end date](#end-dates), then once it has past Trophy will automatically move it to `Finished` status and stop monitoring user activity. Once a leaderboard has finished it won't be visible to users but you can still query APIs to get rankings for historical runs.
-
-If you decide you no longer need a leaderboard, you can move it to `Archived` status.
-
-<Warning>
-  Once a leaderboard is archived, it can only be restored by contacting support.
-</Warning>
 
 ## Displaying Leaderboards {#displaying-leaderboards}
 
