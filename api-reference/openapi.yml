@@ -1,7 +1,7 @@
 openapi: 3.1.0
 info:
   title: Trophy
-  version: '1.4.0'
+  version: '1.5.0'
 paths:
   # APPLICATION API -------------------------------------------------------
 
@@ -3553,14 +3553,14 @@ paths:
       security:
         - ApiKeyAuth: []
     delete:
-      description: Archive multiple points boosts by ID.
-      operationId: admin_points_boosts_batch_archive
+      description: Delete multiple points boosts by ID.
+      operationId: admin_points_boosts_delete
       x-fern-server-name: admin
       x-fern-sdk-group-name:
         - admin
         - points
         - boosts
-      x-fern-sdk-method-name: batchArchive
+      x-fern-sdk-method-name: delete
       tags:
         - Admin
       x-codeSamples:
@@ -3572,22 +3572,22 @@ paths:
               apiKey: 'YOUR_API_KEY'
             });
 
-            const response = await trophy.admin.points.boosts.batchArchive({
+            const response = await trophy.admin.points.boosts.delete({
               ids: ['boost-uuid-1', 'boost-uuid-2', 'boost-uuid-3']
             });
 
-            console.log(`Archived ${response.deleted.length} boosts`);
+            console.log(`Deleted ${response.deleted.length} boosts`);
         - lang: python
           source: |
             from trophy import TrophyApi
 
             client = TrophyApi(api_key='YOUR_API_KEY')
 
-            response = client.admin.points.boosts.batch_archive(
+            response = client.admin.points.boosts.delete(
               ids=['boost-uuid-1', 'boost-uuid-2', 'boost-uuid-3']
             )
 
-            print(f"Archived {len(response.deleted)} boosts")
+            print(f"Deleted {len(response.deleted)} boosts")
       parameters:
         - name: ids
           in: query
@@ -3608,7 +3608,7 @@ paths:
               schema:
                 $ref: '#/components/schemas/DeletePointsBoostsResponse'
               examples:
-                All boosts archived:
+                All boosts deleted:
                   value:
                     deleted:
                       - id: '550e8400-e29b-41d4-a716-446655440000'
@@ -3642,86 +3642,7 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/ErrorBody'
-      summary: Archive multiple points boosts
-      security:
-        - ApiKeyAuth: []
-
-  /points/boosts/{id}:
-    servers:
-      - url: https://admin.trophy.so/v1
-        description: Admin API
-    delete:
-      description: Archive a points boost by ID.
-      operationId: admin_points_boosts_archive
-      x-fern-server-name: admin
-      x-fern-sdk-group-name:
-        - admin
-        - points
-        - boosts
-      x-fern-sdk-method-name: archive
-      tags:
-        - Admin
-      x-codeSamples:
-        - lang: javascript
-          source: |
-            import { TrophyApiClient } from '@trophyso/node';
-
-            const trophy = new TrophyApiClient({
-              apiKey: 'YOUR_API_KEY'
-            });
-
-            const response = await trophy.admin.points.boosts.archive('boost-uuid-here');
-
-            console.log(response.deleted);
-        - lang: python
-          source: |
-            from trophy import TrophyApi
-
-            client = TrophyApi(api_key='YOUR_API_KEY')
-
-            response = client.admin.points.boosts.archive('boost-uuid-here')
-
-            print(response.deleted)
-      parameters:
-        - name: id
-          in: path
-          required: true
-          description: The UUID of the points boost to archive
-          schema:
-            type: string
-            format: uuid
-      responses:
-        '200':
-          description: Successfully archived the points boost
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/DeletePointsBoostsResponse'
-              examples:
-                Archived:
-                  value:
-                    deleted:
-                      - id: '550e8400-e29b-41d4-a716-446655440000'
-                    issues: []
-        '400':
-          description: 'Bad Request (invalid UUID format)'
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ErrorBody'
-        '401':
-          description: 'Unauthorized'
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ErrorBody'
-        '404':
-          description: 'Not Found'
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ErrorBody'
-      summary: Archive a points boost
+      summary: Delete multiple points boosts
       security:
         - ApiKeyAuth: []
 
@@ -6017,13 +5938,13 @@ components:
     DeletePointsBoostsResponse:
       title: DeletePointsBoostsResponse
       type: object
-      description: Response containing the points boosts that were archived and any per-item issues.
+      description: Response containing the points boosts that were deleted and any per-item issues.
       properties:
         deleted:
           type: array
           items:
             $ref: '#/components/schemas/DeletedResource'
-          description: Array of archived points boosts represented by ID.
+          description: Array of deleted points boosts represented by ID.
         issues:
           type: array
           items:
@@ -6111,12 +6032,12 @@ components:
     DeletedResource:
       title: DeletedResource
       type: object
-      description: A soft-deleted resource represented by ID.
+      description: A deleted resource represented by ID.
       properties:
         id:
           type: string
           format: uuid
-          description: The ID of the archived resource.
+          description: The ID of the deleted resource.
       required:
         - id
     WrappedMetric:
