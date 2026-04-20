@@ -1,7 +1,7 @@
 openapi: 3.1.0
 info:
   title: Trophy
-  version: '1.3.4'
+  version: '1.4.0'
 paths:
   # APPLICATION API -------------------------------------------------------
 
@@ -3211,7 +3211,29 @@ paths:
                     - userId: user-123
       responses:
         '200':
-          description: Successful operation
+          description: Successful operation (no freezes created)
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CreateStreakFreezesResponse'
+              examples:
+                Success with warnings:
+                  value:
+                    issues:
+                      - userId: user-789
+                        severity: warning
+                        message: Would exceed maximum freeze limit
+                Mixed success and errors:
+                  value:
+                    issues:
+                      - userId: non-existent-user
+                        severity: error
+                        message: User does not exist
+                      - userId: user-456
+                        severity: warning
+                        message: Would exceed maximum freeze limit
+        '201':
+          description: Created (at least one freeze created)
           content:
             application/json:
               schema:
@@ -3220,21 +3242,12 @@ paths:
                 Success with no issues:
                   value:
                     issues: []
-                Success with warnings:
+                Mixed success and warnings:
                   value:
                     issues:
-                      - userId: user-789
-                        level: warning
-                        reason: Would exceed maximum freeze limit
-                Mixed success and errors:
-                  value:
-                    issues:
-                      - userId: non-existent-user
-                        level: error
-                        reason: User does not exist
                       - userId: user-456
-                        level: warning
-                        reason: Would exceed maximum freeze limit
+                        severity: warning
+                        message: Would exceed maximum freeze limit
         '400':
           description: 'Bad Request'
           content:
@@ -3262,7 +3275,7 @@ paths:
       - url: https://admin.trophy.so/v1
         description: Admin API
     post:
-      description: Restore streaks for multiple users to the maximum length in the last 90 days (in the case of daily streaks), one year (in the case of weekly streaks), or two years (in the case of monthly streaks).
+      description: 'Restore streaks for multiple users to the maximum previously achieved streak length found within the current restore window: the last 90 days for daily streaks, weekly periods starting with the week containing the start of the current calendar year for weekly streaks, and monthly periods starting at the beginning of the previous calendar year for monthly streaks.'
       operationId: admin_streaks_restore
       x-fern-server-name: admin
       x-fern-sdk-group-name:
@@ -3307,7 +3320,31 @@ paths:
                     - id: user-456
       responses:
         '200':
-          description: Successful operation
+          description: Successful operation (no streaks restored)
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RestoreStreaksResponse'
+              examples:
+                Success with warnings:
+                  value:
+                    restoredUsers: []
+                    issues:
+                      - userId: user-123
+                        severity: warning
+                        message: No streak to restore
+                Mixed success and errors:
+                  value:
+                    restoredUsers: []
+                    issues:
+                      - userId: non-existent-user
+                        severity: error
+                        message: User does not exist
+                      - userId: user-789
+                        severity: warning
+                        message: No streak to restore
+        '201':
+          description: Created (at least one streak restored)
           content:
             application/json:
               schema:
@@ -3319,25 +3356,14 @@ paths:
                       - user-123
                       - user-456
                     issues: []
-                Success with warnings:
-                  value:
-                    restoredUsers:
-                      - user-123
-                    issues:
-                      - userId: user-456
-                        level: warning
-                        reason: No streak to restore
                 Mixed success and errors:
                   value:
                     restoredUsers:
                       - user-123
                     issues:
                       - userId: non-existent-user
-                        level: error
-                        reason: User does not exist
-                      - userId: user-789
-                        level: warning
-                        reason: Streak is already at maximum length
+                        severity: error
+                        message: User does not exist
         '400':
           description: 'Bad Request'
           content:
@@ -3463,8 +3489,8 @@ paths:
                     created: []
                     issues:
                       - userId: non-existent-user
-                        level: error
-                        reason: User does not exist
+                        severity: error
+                        message: User does not exist
         '201':
           description: Created (at least one boost created)
           content:
@@ -3497,8 +3523,8 @@ paths:
                         userId: user-456
                     issues:
                       - userId: non-existent-user
-                        level: error
-                        reason: User does not exist
+                        severity: error
+                        message: User does not exist
         '400':
           description: 'Bad Request'
           content:
@@ -3550,7 +3576,7 @@ paths:
               ids: ['boost-uuid-1', 'boost-uuid-2', 'boost-uuid-3']
             });
 
-            console.log(`Archived ${response.archivedCount} boosts`);
+            console.log(`Archived ${response.deleted.length} boosts`);
         - lang: python
           source: |
             from trophy import TrophyApi
@@ -3561,7 +3587,7 @@ paths:
               ids=['boost-uuid-1', 'boost-uuid-2', 'boost-uuid-3']
             )
 
-            print(f"Archived {response.archived_count} boosts")
+            print(f"Archived {len(response.deleted)} boosts")
       parameters:
         - name: ids
           in: query
@@ -3580,17 +3606,30 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ArchivePointsBoostsResponse'
+                $ref: '#/components/schemas/DeletePointsBoostsResponse'
               examples:
                 All boosts archived:
                   value:
-                    archivedCount: 3
+                    deleted:
+                      - id: '550e8400-e29b-41d4-a716-446655440000'
+                      - id: '550e8400-e29b-41d4-a716-446655440001'
+                      - id: '550e8400-e29b-41d4-a716-446655440002'
+                    issues: []
                 Some boosts not found:
                   value:
-                    archivedCount: 1
+                    deleted:
+                      - id: '550e8400-e29b-41d4-a716-446655440000'
+                    issues:
+                      - boostId: '550e8400-e29b-41d4-a716-446655440001'
+                        severity: warning
+                        message: Points boost not found or already archived
                 No boosts found:
                   value:
-                    archivedCount: 0
+                    deleted: []
+                    issues:
+                      - boostId: '550e8400-e29b-41d4-a716-446655440999'
+                        severity: warning
+                        message: Points boost not found or already archived
         '400':
           description: 'Bad Request (no IDs provided or invalid UUID format)'
           content:
@@ -3631,14 +3670,18 @@ paths:
               apiKey: 'YOUR_API_KEY'
             });
 
-            await trophy.admin.points.boosts.archive('boost-uuid-here');
+            const response = await trophy.admin.points.boosts.archive('boost-uuid-here');
+
+            console.log(response.deleted);
         - lang: python
           source: |
             from trophy import TrophyApi
 
             client = TrophyApi(api_key='YOUR_API_KEY')
 
-            client.admin.points.boosts.archive('boost-uuid-here')
+            response = client.admin.points.boosts.archive('boost-uuid-here')
+
+            print(response.deleted)
       parameters:
         - name: id
           in: path
@@ -3648,8 +3691,24 @@ paths:
             type: string
             format: uuid
       responses:
-        '204':
+        '200':
           description: Successfully archived the points boost
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DeletePointsBoostsResponse'
+              examples:
+                Archived:
+                  value:
+                    deleted:
+                      - id: '550e8400-e29b-41d4-a716-446655440000'
+                    issues: []
+        '400':
+          description: 'Bad Request (invalid UUID format)'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorBody'
         '401':
           description: 'Unauthorized'
           content:
@@ -5811,8 +5870,8 @@ components:
                 example: user-123
             required:
               - userId
-          description: Array of freezes to create. Maximum 1,000 freezes per request.
-          maxItems: 1000
+          description: Array of freezes to create. Maximum 100 freezes per request.
+          maxItems: 100
           minItems: 1
       required:
         - freezes
@@ -5824,7 +5883,7 @@ components:
         issues:
           type: array
           items:
-            $ref: '#/components/schemas/BulkInsertIssue'
+            $ref: '#/components/schemas/AdminIssue'
           description: Array of issues encountered during freeze creation.
       required:
         - issues
@@ -5883,8 +5942,8 @@ components:
               - name
               - start
               - multiplier
-          description: Array of boosts to create. Maximum 1,000 boosts per request.
-          maxItems: 1000
+          description: Array of boosts to create. Maximum 100 boosts per request.
+          maxItems: 100
           minItems: 1
       required:
         - systemKey
@@ -5950,22 +6009,29 @@ components:
         issues:
           type: array
           items:
-            $ref: '#/components/schemas/BulkInsertIssue'
+            $ref: '#/components/schemas/AdminIssue'
           description: Array of issues encountered during boost creation.
       required:
         - created
         - issues
-    ArchivePointsBoostsResponse:
-      title: ArchivePointsBoostsResponse
+    DeletePointsBoostsResponse:
+      title: DeletePointsBoostsResponse
       type: object
-      description: Response containing the count of archived points boosts.
+      description: Response containing the points boosts that were archived and any per-item issues.
       properties:
-        archivedCount:
-          type: integer
-          description: The number of boosts that were archived.
-          example: 3
+        deleted:
+          type: array
+          items:
+            $ref: '#/components/schemas/DeletedResource'
+          description: Array of archived points boosts represented by ID.
+        issues:
+          type: array
+          items:
+            $ref: '#/components/schemas/AdminIssue'
+          description: Array of issues encountered during boost archival.
       required:
-        - archivedCount
+        - deleted
+        - issues
     RestoreStreaksRequest:
       title: RestoreStreaksRequest
       type: object
@@ -6006,35 +6072,53 @@ components:
         issues:
           type: array
           items:
-            $ref: '#/components/schemas/BulkInsertIssue'
+            $ref: '#/components/schemas/AdminIssue'
           description: Array of issues encountered during streak restoration.
       required:
         - restoredUsers
         - issues
-    BulkInsertIssue:
-      title: BulkInsertIssue
+    AdminIssue:
+      title: AdminIssue
       type: object
-      description: An issue encountered while bulk inserting data.
+      description: An issue encountered while processing an item in an admin API request.
       properties:
         userId:
           type: string
-          description: The ID of the user the issue relates to.
+          description: The ID of the user the issue relates to, when applicable.
           example: user-123
-        level:
+        boostId:
+          type: string
+          description: The ID of the points boost the issue relates to, when applicable.
+          example: 550e8400-e29b-41d4-a716-446655440000
+        index:
+          type: integer
+          description: The zero-based index of the item the issue relates to, when no resource ID exists yet.
+          example: 0
+        severity:
           type: string
           enum:
             - error
             - warning
           description: The severity level of the issue.
           example: warning
-        reason:
+        message:
           type: string
           description: A human-readable description of the issue.
           example: Would exceed maximum freeze limit
       required:
-        - userId
-        - level
-        - reason
+        - severity
+        - message
+    DeletedResource:
+      title: DeletedResource
+      type: object
+      description: A soft-deleted resource represented by ID.
+      properties:
+        id:
+          type: string
+          format: uuid
+          description: The ID of the archived resource.
+      required:
+        - id
     WrappedMetric:
       title: WrappedMetric
       type: object
