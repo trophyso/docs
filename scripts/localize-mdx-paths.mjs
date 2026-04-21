@@ -141,6 +141,7 @@ const excludedTop = new Set([
 ]);
 
 let changedFiles = 0;
+const changedFilePaths = [];
 
 for (const locale of locales) {
   const files = locale === sourceLocale
@@ -151,6 +152,7 @@ for (const locale of locales) {
     const next = rewriteFile(raw, locale, file);
     if (next !== raw) {
       changedFiles += 1;
+      changedFilePaths.push(path.relative(process.cwd(), file).replace(/\\/g, "/"));
       if (!checkOnly) fs.writeFileSync(file, next);
     }
   }
@@ -159,9 +161,17 @@ for (const locale of locales) {
 if (checkOnly) {
   if (changedFiles > 0) {
     console.error(`Found ${changedFiles} file(s) with incorrect localized MDX paths.`);
+    for (const filePath of changedFilePaths.sort()) {
+      console.error(` - ${filePath}`);
+    }
     process.exit(1);
   }
   console.log("Localized MDX paths are correct.");
 } else {
   console.log(`Updated localized MDX paths in ${changedFiles} file(s).`);
+  if (changedFiles > 0) {
+    for (const filePath of changedFilePaths.sort()) {
+      console.log(` - ${filePath}`);
+    }
+  }
 }
