@@ -56,6 +56,7 @@ Notes:
 
 #### Localization files
 
+- **New file bootstrap behavior**: New docs pages should be created in the default-language source tree (repo root) first. The translation pipeline may create the corresponding locale file with English bootstrap content before Lingo processes localized text. If Lingo reports `from cache` / `0 processed`, those new locale files can remain English until you re-run with scoped `--force` (see workflow below).
 - `lingo/glossary.csv`: Terms that must stay fixed or use specific translations.
 - `lingo/brand-voice.md`: Single brand voice used for all locales.
 - `scripts/translate-docs-json.mjs`: Translates language-specific `docs.json` navigation labels directly in the source-of-truth `docs.json`. Prefer `npm run translate:docs-json -- --target <locale>`.
@@ -98,6 +99,29 @@ Use `npm run <script> -- <args>` when a script needs CLI flags (the `--` forward
 | `translate:verify` | `lingo.dev run --frozen` (freshness gate). |
 | `mint:validate` | Mintlify `validate`. |
 | `mint:broken-links` | Mintlify `broken-links` with anchor and snippet checks. |
+
+#### Translation workflow for new files
+
+When you add new docs pages and want translated locale copies, use this sequence:
+
+1. Create/update the English source pages at repo root (for example `admin-api/endpoints/...`), and keep locale paths/filenames mirrored.
+2. Ensure the new source paths are covered by `i18n.json` `buckets.mdx.include` (for example add `admin-api/endpoints/attributes/*.mdx` and `admin-api/endpoints/metrics/*.mdx` when introducing those folders).
+3. Run a scoped generation pass:
+   - `npm run translate:generate -- --target es --paths <comma-separated English source path substrings>`
+4. If new locale files are still English (Lingo output shows `from cache` and `0 processed`), rerun the same scoped command with `--force`:
+   - `npm run translate:generate -- --target es --paths <paths> --force`
+5. Validate before merge:
+   - `npm run translate:validate`
+   - `npm run translate:localize-links:check`
+   - `npm run translate:sync-anchors:check`
+   - `npm run mint:validate`
+
+Example for newly added Admin attributes and metrics endpoint pages:
+
+- Delta run:
+  - `npm run translate:generate -- --target es --paths admin-api/endpoints/attributes,admin-api/endpoints/metrics`
+- Force reprocess for those files only:
+  - `npm run translate:generate -- --target es --paths admin-api/endpoints/attributes,admin-api/endpoints/metrics --force`
 
 #### Apply in Lingo.dev engine
 
