@@ -483,6 +483,26 @@
                 ]
               },
               {
+                "group": "Métricas",
+                "pages": [
+                  "es/admin-api/endpoints/metrics/list-metrics",
+                  "es/admin-api/endpoints/metrics/create-metrics-in-bulk",
+                  "es/admin-api/endpoints/metrics/update-metrics-in-bulk",
+                  "es/admin-api/endpoints/metrics/delete-metrics-in-bulk",
+                  "es/admin-api/endpoints/metrics/get-a-metric-by-id"
+                ]
+              },
+              {
+                "group": "Atributos",
+                "pages": [
+                  "es/admin-api/endpoints/attributes/list-attributes",
+                  "es/admin-api/endpoints/attributes/create-attributes-in-bulk",
+                  "es/admin-api/endpoints/attributes/update-attributes-in-bulk",
+                  "es/admin-api/endpoints/attributes/delete-attributes-in-bulk",
+                  "es/admin-api/endpoints/attributes/get-an-attribute"
+                ]
+              },
+              {
                 "group": "Rachas",
                 "pages": [
                   "es/admin-api/endpoints/streaks/grant-freezes",
