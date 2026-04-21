@@ -203,18 +203,13 @@
                 ]
               },
               {
-                "group": "Streaks",
+                "group": "Metrics",
                 "pages": [
-                  "admin-api/endpoints/streaks/grant-freezes",
-                  "admin-api/endpoints/streaks/restore-streaks"
-                ]
-              },
-              {
-                "group": "Points",
-                "pages": [
-                  "admin-api/endpoints/points/create-boosts",
-                  "admin-api/endpoints/points/archive-boosts-batch",
-                  "admin-api/endpoints/points/archive-a-boost"
+                  "admin-api/endpoints/metrics/list-metrics",
+                  "admin-api/endpoints/metrics/create-metrics-in-bulk",
+                  "admin-api/endpoints/metrics/update-metrics-in-bulk",
+                  "admin-api/endpoints/metrics/delete-metrics-in-bulk",
+                  "admin-api/endpoints/metrics/get-a-metric-by-id"
                 ]
               },
               {
@@ -228,13 +223,18 @@
                 ]
               },
               {
-                "group": "Metrics",
+                "group": "Streaks",
                 "pages": [
-                  "admin-api/endpoints/metrics/list-metrics",
-                  "admin-api/endpoints/metrics/create-metrics-in-bulk",
-                  "admin-api/endpoints/metrics/update-metrics-in-bulk",
-                  "admin-api/endpoints/metrics/delete-metrics-in-bulk",
-                  "admin-api/endpoints/metrics/get-a-metric-by-id"
+                  "admin-api/endpoints/streaks/grant-freezes",
+                  "admin-api/endpoints/streaks/restore-streaks"
+                ]
+              },
+              {
+                "group": "Points",
+                "pages": [
+                  "admin-api/endpoints/points/create-boosts",
+                  "admin-api/endpoints/points/archive-boosts-batch",
+                  "admin-api/endpoints/points/archive-a-boost"
                 ]
               }
             ]
