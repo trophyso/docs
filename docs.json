@@ -493,8 +493,7 @@
                 "group": "Puntos",
                 "pages": [
                   "es/admin-api/endpoints/points/create-boosts",
-                  "es/admin-api/endpoints/points/archive-boosts-batch",
-                  "es/admin-api/endpoints/points/archive-a-boost"
+                  "es/admin-api/endpoints/points/archive-boosts-batch"
                 ]
               }
             ]
