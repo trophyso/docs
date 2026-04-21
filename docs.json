@@ -233,8 +233,7 @@
                 "group": "Points",
                 "pages": [
                   "admin-api/endpoints/points/create-boosts",
-                  "admin-api/endpoints/points/archive-boosts-batch",
-                  "admin-api/endpoints/points/archive-a-boost"
+                  "admin-api/endpoints/points/archive-boosts-batch"
                 ]
               }
             ]
