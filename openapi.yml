@@ -1,7 +1,7 @@
 openapi: 3.1.0
 info:
   title: Trophy
-  version: '1.5.0'
+  version: '1.6.0'
 paths:
   # APPLICATION API -------------------------------------------------------
 
@@ -1044,7 +1044,6 @@ paths:
                     - id: d01dcbcb-d51e-4c12-b054-dc811dcdc623
                       key: words-written
                       name: Words written
-                      status: active
                       current: 4500
                       achievements:
                         - id: abe3120f-5ca9-4344-92c8-5b891643a04b
@@ -1147,7 +1146,6 @@ paths:
                     id: d01dcbcb-d51e-4c12-b054-dc811dcdc623
                     key: words-written
                     name: Words written
-                    status: active
                     current: 1500
                     achievements:
                       - id: abe3120f-5ca9-4344-92c8-5b891643a04b
@@ -3386,6 +3384,1002 @@ paths:
       security:
         - ApiKeyAuth: []
 
+  /attributes:
+    servers:
+      - url: https://admin.trophy.so/v1
+        description: Admin API
+    get:
+      description: List attributes.
+      operationId: admin_attributes_list
+      x-fern-server-name: admin
+      x-fern-sdk-group-name:
+        - admin
+        - attributes
+      x-fern-sdk-method-name: list
+      tags:
+        - Admin
+      x-codeSamples:
+        - lang: javascript
+          source: |
+            import { TrophyApiClient } from '@trophyso/node';
+
+            const trophy = new TrophyApiClient({
+              apiKey: 'YOUR_API_KEY'
+            });
+
+            const attributes = await trophy.admin.attributes.list({
+              limit: 10,
+              skip: 0
+            });
+        - lang: python
+          source: |
+            from trophy import TrophyApi
+
+            client = TrophyApi(api_key='YOUR_API_KEY')
+
+            attributes = client.admin.attributes.list(
+              limit=10,
+              skip=0
+            )
+      parameters:
+        - name: limit
+          in: query
+          description: Number of records to return.
+          required: false
+          schema:
+            type: integer
+            minimum: 1
+            maximum: 100
+            default: 10
+          example: 10
+        - name: skip
+          in: query
+          description: Number of records to skip from the start of the list.
+          required: false
+          schema:
+            type: integer
+            minimum: 0
+            default: 0
+          example: 0
+      responses:
+        '200':
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ListAttributesResponse'
+              examples:
+                Attributes list:
+                  value:
+                    - id: '550e8400-e29b-41d4-a716-446655440000'
+                      name: Plan
+                      key: plan
+                      type: user
+                    - id: '550e8400-e29b-41d4-a716-446655440001'
+                      name: Device
+                      key: device
+                      type: event
+        '401':
+          description: 'Unauthorized'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorBody'
+        '422':
+          description: 'Unprocessible Entity'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorBody'
+      summary: List attributes
+      security:
+        - ApiKeyAuth: []
+    post:
+      description: Create attributes in bulk.
+      operationId: admin_attributes_create
+      x-fern-server-name: admin
+      x-fern-sdk-group-name:
+        - admin
+        - attributes
+      x-fern-sdk-method-name: create
+      tags:
+        - Admin
+      x-codeSamples:
+        - lang: javascript
+          source: |
+            import { TrophyApiClient } from '@trophyso/node';
+
+            const trophy = new TrophyApiClient({
+              apiKey: 'YOUR_API_KEY'
+            });
+
+            const response = await trophy.admin.attributes.create([
+              {
+                name: 'Plan',
+                key: 'plan',
+                type: 'user'
+              },
+              {
+                name: 'Device',
+                key: 'device',
+                type: 'event'
+              }
+            ]);
+        - lang: python
+          source: |
+            from trophy import TrophyApi
+
+            client = TrophyApi(api_key='YOUR_API_KEY')
+
+            response = client.admin.attributes.create([
+              {
+                "name": "Plan",
+                "key": "plan",
+                "type": "user"
+              },
+              {
+                "name": "Device",
+                "key": "device",
+                "type": "event"
+              }
+            ])
+      requestBody:
+        description: Array of attributes to create. Maximum 100 attributes per request.
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreateAttributesRequest'
+            examples:
+              Create user and event attributes:
+                value:
+                  - name: Plan
+                    key: plan
+                    type: user
+                  - name: Device
+                    key: device
+                    type: event
+      responses:
+        '200':
+          description: Successful operation (no attributes created)
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CreateAttributesResponse'
+              examples:
+                All requests had errors:
+                  value:
+                    created: []
+                    issues:
+                      - index: 0
+                        severity: error
+                        message: Name not a string
+                      - index: 1
+                        severity: error
+                        message: Key already in use by another attribute of this type
+        '201':
+          description: Created (at least one attribute created)
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CreateAttributesResponse'
+              examples:
+                Success with no issues:
+                  value:
+                    created:
+                      - id: '550e8400-e29b-41d4-a716-446655440000'
+                        name: Plan
+                        key: plan
+                        type: user
+                      - id: '550e8400-e29b-41d4-a716-446655440001'
+                        name: Device
+                        key: device
+                        type: event
+                    issues: []
+        '401':
+          description: 'Unauthorized'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorBody'
+        '422':
+          description: 'Unprocessible Entity'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorBody'
+      summary: Create attributes in bulk
+      security:
+        - ApiKeyAuth: []
+    patch:
+      description: Update attributes in bulk by ID.
+      operationId: admin_attributes_update
+      x-fern-server-name: admin
+      x-fern-sdk-group-name:
+        - admin
+        - attributes
+      x-fern-sdk-method-name: update
+      tags:
+        - Admin
+      x-codeSamples:
+        - lang: javascript
+          source: |
+            import { TrophyApiClient } from '@trophyso/node';
+
+            const trophy = new TrophyApiClient({
+              apiKey: 'YOUR_API_KEY'
+            });
+
+            const response = await trophy.admin.attributes.update([
+              {
+                id: '550e8400-e29b-41d4-a716-446655440000',
+                name: 'Subscription Plan'
+              }
+            ]);
+        - lang: python
+          source: |
+            from trophy import TrophyApi
+
+            client = TrophyApi(api_key='YOUR_API_KEY')
+
+            response = client.admin.attributes.update([
+              {
+                "id": "550e8400-e29b-41d4-a716-446655440000",
+                "name": "Subscription Plan"
+              }
+            ])
+      requestBody:
+        description: Array of attributes to update. Each item must include an ID and may include `name`. `key` and `type` cannot be changed.
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UpdateAttributesRequest'
+            examples:
+              Rename attributes:
+                value:
+                  - id: 550e8400-e29b-41d4-a716-446655440000
+                    name: Subscription Plan
+      responses:
+        '200':
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UpdateAttributesResponse'
+              examples:
+                Success with no issues:
+                  value:
+                    updated:
+                      - id: '550e8400-e29b-41d4-a716-446655440000'
+                        name: Subscription Plan
+                        key: plan
+                        type: user
+                    issues: []
+                Mixed success and errors:
+                  value:
+                    updated:
+                      - id: '550e8400-e29b-41d4-a716-446655440001'
+                        name: Device
+                        key: device
+                        type: event
+                    issues:
+                      - id: '550e8400-e29b-41d4-a716-446655440999'
+                        severity: error
+                        message: Attribute not found by ID
+        '401':
+          description: 'Unauthorized'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorBody'
+        '422':
+          description: 'Unprocessible Entity'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorBody'
+      summary: Update attributes in bulk
+      security:
+        - ApiKeyAuth: []
+    delete:
+      description: Delete attributes in bulk by ID.
+      operationId: admin_attributes_delete
+      x-fern-server-name: admin
+      x-fern-sdk-group-name:
+        - admin
+        - attributes
+      x-fern-sdk-method-name: delete
+      tags:
+        - Admin
+      x-codeSamples:
+        - lang: javascript
+          source: |
+            import { TrophyApiClient } from '@trophyso/node';
+
+            const trophy = new TrophyApiClient({
+              apiKey: 'YOUR_API_KEY'
+            });
+
+            const response = await trophy.admin.attributes.delete({
+              ids: [
+                '550e8400-e29b-41d4-a716-446655440000',
+                '550e8400-e29b-41d4-a716-446655440001'
+              ]
+            });
+        - lang: python
+          source: |
+            from trophy import TrophyApi
+
+            client = TrophyApi(api_key='YOUR_API_KEY')
+
+            response = client.admin.attributes.delete(
+              ids=[
+                '550e8400-e29b-41d4-a716-446655440000',
+                '550e8400-e29b-41d4-a716-446655440001'
+              ]
+            )
+      parameters:
+        - name: ids
+          in: query
+          description: Attribute IDs to delete. Repeat the query param or provide a comma-separated list.
+          required: true
+          schema:
+            type: array
+            items:
+              type: string
+              format: uuid
+            minItems: 1
+            maxItems: 100
+          style: form
+          explode: true
+          examples:
+            Multiple query params:
+              value:
+                - 550e8400-e29b-41d4-a716-446655440000
+                - 550e8400-e29b-41d4-a716-446655440001
+      responses:
+        '200':
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DeleteAttributesResponse'
+              examples:
+                Success with no issues:
+                  value:
+                    deleted:
+                      - id: '550e8400-e29b-41d4-a716-446655440000'
+                    issues: []
+                Mixed success and errors:
+                  value:
+                    deleted:
+                      - id: '550e8400-e29b-41d4-a716-446655440000'
+                    issues:
+                      - id: not-a-uuid
+                        severity: error
+                        message: id must be a valid UUID
+                      - id: '550e8400-e29b-41d4-a716-446655440999'
+                        severity: error
+                        message: Attribute not found by ID
+        '401':
+          description: 'Unauthorized'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorBody'
+        '422':
+          description: 'Unprocessible Entity'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorBody'
+      summary: Delete attributes in bulk
+      security:
+        - ApiKeyAuth: []
+
+  /attributes/{id}:
+    servers:
+      - url: https://admin.trophy.so/v1
+        description: Admin API
+    get:
+      description: Get an attribute by ID.
+      operationId: admin_attributes_get
+      x-fern-server-name: admin
+      x-fern-sdk-group-name:
+        - admin
+        - attributes
+      x-fern-sdk-method-name: get
+      tags:
+        - Admin
+      x-codeSamples:
+        - lang: javascript
+          source: |
+            import { TrophyApiClient } from '@trophyso/node';
+
+            const trophy = new TrophyApiClient({
+              apiKey: 'YOUR_API_KEY'
+            });
+
+            const attribute = await trophy.admin.attributes.get(
+              '550e8400-e29b-41d4-a716-446655440000'
+            );
+        - lang: python
+          source: |
+            from trophy import TrophyApi
+
+            client = TrophyApi(api_key='YOUR_API_KEY')
+
+            attribute = client.admin.attributes.get(
+              "550e8400-e29b-41d4-a716-446655440000"
+            )
+      parameters:
+        - name: id
+          in: path
+          description: The UUID of the attribute to retrieve.
+          required: true
+          schema:
+            type: string
+            format: uuid
+          example: 550e8400-e29b-41d4-a716-446655440000
+      responses:
+        '200':
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AdminAttribute'
+              examples:
+                User attribute:
+                  value:
+                    id: '550e8400-e29b-41d4-a716-446655440000'
+                    name: Plan
+                    key: plan
+                    type: user
+                Event attribute:
+                  value:
+                    id: '550e8400-e29b-41d4-a716-446655440001'
+                    name: Device
+                    key: device
+                    type: event
+        '401':
+          description: 'Unauthorized'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorBody'
+        '404':
+          description: 'Attribute Not Found'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorBody'
+        '422':
+          description: 'Unprocessible Entity'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorBody'
+      summary: Get an attribute
+      security:
+        - ApiKeyAuth: []
+
+  /metrics:
+    servers:
+      - url: https://admin.trophy.so/v1
+        description: Admin API
+    get:
+      description: List metrics.
+      operationId: admin_metrics_list
+      x-fern-server-name: admin
+      x-fern-sdk-group-name:
+        - admin
+        - metrics
+      x-fern-sdk-method-name: list
+      tags:
+        - Admin
+      x-codeSamples:
+        - lang: javascript
+          source: |
+            import { TrophyApiClient } from '@trophyso/node';
+
+            const trophy = new TrophyApiClient({
+              apiKey: 'YOUR_API_KEY'
+            });
+
+            const metrics = await trophy.admin.metrics.list({
+              limit: 10,
+              skip: 0
+            });
+        - lang: python
+          source: |
+            from trophy import TrophyApi
+
+            client = TrophyApi(api_key='YOUR_API_KEY')
+
+            metrics = client.admin.metrics.list(
+              limit=10,
+              skip=0
+            )
+      parameters:
+        - name: limit
+          in: query
+          description: Number of records to return.
+          required: false
+          schema:
+            type: integer
+            minimum: 1
+            maximum: 100
+            default: 10
+          example: 10
+        - name: skip
+          in: query
+          description: Number of records to skip from the start of the list.
+          required: false
+          schema:
+            type: integer
+            minimum: 0
+            default: 0
+          example: 0
+      responses:
+        '200':
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ListMetricsResponse'
+              examples:
+                Metrics list:
+                  value:
+                    - id: '550e8400-e29b-41d4-a716-446655440000'
+                      name: Oldest Metric
+                      key: oldest-metric
+                      unitType: number
+                      units: ''
+                    - id: '550e8400-e29b-41d4-a716-446655440001'
+                      name: Revenue
+                      key: revenue
+                      unitType: currency
+                      units: USD
+        '401':
+          description: 'Unauthorized'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorBody'
+        '422':
+          description: 'Unprocessible Entity'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorBody'
+      summary: List metrics
+      security:
+        - ApiKeyAuth: []
+    post:
+      description: Create metrics in bulk.
+      operationId: admin_metrics_create
+      x-fern-server-name: admin
+      x-fern-sdk-group-name:
+        - admin
+        - metrics
+      x-fern-sdk-method-name: create
+      tags:
+        - Admin
+      x-codeSamples:
+        - lang: javascript
+          source: |
+            import { TrophyApiClient } from '@trophyso/node';
+
+            const trophy = new TrophyApiClient({
+              apiKey: 'YOUR_API_KEY'
+            });
+
+            const response = await trophy.admin.metrics.create([
+              {
+                name: 'Invites Sent',
+                key: 'invites-sent'
+              },
+              {
+                name: 'Revenue',
+                key: 'revenue',
+                unitType: 'currency',
+                units: 'USD'
+              }
+            ]);
+        - lang: python
+          source: |
+            from trophy import TrophyApi
+
+            client = TrophyApi(api_key='YOUR_API_KEY')
+
+            response = client.admin.metrics.create([
+              {
+                "name": "Invites Sent",
+                "key": "invites-sent"
+              },
+              {
+                "name": "Revenue",
+                "key": "revenue",
+                "unitType": "currency",
+                "units": "USD"
+              }
+            ])
+      requestBody:
+        description: Array of metrics to create. Maximum 100 metrics per request.
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreateMetricsRequest'
+            examples:
+              Create number and currency metrics:
+                value:
+                  - name: Invites Sent
+                    key: invites-sent
+                  - name: Revenue
+                    key: revenue
+                    unitType: currency
+                    units: USD
+      responses:
+        '200':
+          description: Successful operation (no metrics created)
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CreateMetricsResponse'
+              examples:
+                All requests had errors:
+                  value:
+                    created: []
+                    issues:
+                      - index: 0
+                        severity: error
+                        message: Name not a string
+                      - index: 1
+                        severity: error
+                        message: Key already in use by another metric
+        '201':
+          description: Created (at least one metric created)
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CreateMetricsResponse'
+              examples:
+                Success with no issues:
+                  value:
+                    created:
+                      - id: '550e8400-e29b-41d4-a716-446655440000'
+                        name: Invites Sent
+                        key: invites-sent
+                        unitType: number
+                        units: ''
+                      - id: '550e8400-e29b-41d4-a716-446655440001'
+                        name: Revenue
+                        key: revenue
+                        unitType: currency
+                        units: USD
+                    issues: []
+                Mixed success and errors:
+                  value:
+                    created:
+                      - id: '550e8400-e29b-41d4-a716-446655440002'
+                        name: Signups
+                        key: signups
+                        unitType: number
+                        units: ''
+                    issues:
+                      - index: 0
+                        severity: error
+                        message: Key already in use by another metric
+        '401':
+          description: 'Unauthorized'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorBody'
+        '422':
+          description: 'Unprocessible Entity'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorBody'
+      summary: Create metrics in bulk
+      security:
+        - ApiKeyAuth: []
+    patch:
+      description: Update metrics in bulk by ID.
+      operationId: admin_metrics_update
+      x-fern-server-name: admin
+      x-fern-sdk-group-name:
+        - admin
+        - metrics
+      x-fern-sdk-method-name: update
+      tags:
+        - Admin
+      x-codeSamples:
+        - lang: javascript
+          source: |
+            import { TrophyApiClient } from '@trophyso/node';
+
+            const trophy = new TrophyApiClient({
+              apiKey: 'YOUR_API_KEY'
+            });
+
+            const response = await trophy.admin.metrics.update([
+              {
+                id: '550e8400-e29b-41d4-a716-446655440000',
+                name: 'Invites Completed',
+                units: 'invites'
+              },
+              {
+                id: '550e8400-e29b-41d4-a716-446655440001',
+                unitType: 'number',
+                units: 'dollars'
+              }
+            ]);
+        - lang: python
+          source: |
+            from trophy import TrophyApi
+
+            client = TrophyApi(api_key='YOUR_API_KEY')
+
+            response = client.admin.metrics.update([
+              {
+                "id": "550e8400-e29b-41d4-a716-446655440000",
+                "name": "Invites Completed",
+                "units": "invites"
+              },
+              {
+                "id": "550e8400-e29b-41d4-a716-446655440001",
+                "unitType": "number",
+                "units": "dollars"
+              }
+            ])
+      requestBody:
+        description: Array of metrics to update. Each item must include an ID and may include any subset of mutable metric fields except `key`.
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UpdateMetricsRequest'
+            examples:
+              Update metric fields:
+                value:
+                  - id: 550e8400-e29b-41d4-a716-446655440000
+                    name: Invites Completed
+                    units: invites
+                  - id: 550e8400-e29b-41d4-a716-446655440001
+                    unitType: number
+                    units: dollars
+      responses:
+        '200':
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UpdateMetricsResponse'
+              examples:
+                Success with no issues:
+                  value:
+                    updated:
+                      - id: '550e8400-e29b-41d4-a716-446655440000'
+                        name: Invites Completed
+                        key: invites-sent
+                        unitType: number
+                        units: invites
+                    issues: []
+                Mixed success and errors:
+                  value:
+                    updated:
+                      - id: '550e8400-e29b-41d4-a716-446655440001'
+                        name: Revenue
+                        key: revenue
+                        unitType: number
+                        units: dollars
+                    issues:
+                      - id: '550e8400-e29b-41d4-a716-446655440999'
+                        severity: error
+                        message: Metric not found by ID
+        '401':
+          description: 'Unauthorized'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorBody'
+        '422':
+          description: 'Unprocessible Entity'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorBody'
+      summary: Update metrics in bulk
+      security:
+        - ApiKeyAuth: []
+    delete:
+      description: Delete metrics in bulk by ID.
+      operationId: admin_metrics_delete
+      x-fern-server-name: admin
+      x-fern-sdk-group-name:
+        - admin
+        - metrics
+      x-fern-sdk-method-name: delete
+      tags:
+        - Admin
+      x-codeSamples:
+        - lang: javascript
+          source: |
+            import { TrophyApiClient } from '@trophyso/node';
+
+            const trophy = new TrophyApiClient({
+              apiKey: 'YOUR_API_KEY'
+            });
+
+            const response = await trophy.admin.metrics.delete({
+              ids: [
+                '550e8400-e29b-41d4-a716-446655440000',
+                '550e8400-e29b-41d4-a716-446655440001'
+              ]
+            });
+        - lang: python
+          source: |
+            from trophy import TrophyApi
+
+            client = TrophyApi(api_key='YOUR_API_KEY')
+
+            response = client.admin.metrics.delete(
+              ids=[
+                '550e8400-e29b-41d4-a716-446655440000',
+                '550e8400-e29b-41d4-a716-446655440001'
+              ]
+            )
+      parameters:
+        - name: ids
+          in: query
+          description: Metric IDs to delete. Repeat the query param or provide a comma-separated list.
+          required: true
+          schema:
+            type: array
+            items:
+              type: string
+              format: uuid
+            minItems: 1
+            maxItems: 100
+          style: form
+          explode: true
+          examples:
+            Multiple query params:
+              value:
+                - 550e8400-e29b-41d4-a716-446655440000
+                - 550e8400-e29b-41d4-a716-446655440001
+      responses:
+        '200':
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DeleteMetricsResponse'
+              examples:
+                Success with no issues:
+                  value:
+                    deleted:
+                      - id: '550e8400-e29b-41d4-a716-446655440000'
+                    issues: []
+                Mixed success and errors:
+                  value:
+                    deleted:
+                      - id: '550e8400-e29b-41d4-a716-446655440000'
+                    issues:
+                      - id: not-a-uuid
+                        severity: error
+                        message: id must be a valid UUID
+                      - id: '550e8400-e29b-41d4-a716-446655440999'
+                        severity: error
+                        message: Metric not found by ID
+        '401':
+          description: 'Unauthorized'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorBody'
+        '422':
+          description: 'Unprocessible Entity'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorBody'
+      summary: Delete metrics in bulk
+      security:
+        - ApiKeyAuth: []
+
+  /metrics/{id}:
+    servers:
+      - url: https://admin.trophy.so/v1
+        description: Admin API
+    get:
+      description: Get a metric by ID.
+      operationId: admin_metrics_get
+      x-fern-server-name: admin
+      x-fern-sdk-group-name:
+        - admin
+        - metrics
+      x-fern-sdk-method-name: get
+      tags:
+        - Admin
+      x-codeSamples:
+        - lang: javascript
+          source: |
+            import { TrophyApiClient } from '@trophyso/node';
+
+            const trophy = new TrophyApiClient({
+              apiKey: 'YOUR_API_KEY'
+            });
+
+            const metric = await trophy.admin.metrics.get(
+              '550e8400-e29b-41d4-a716-446655440000'
+            );
+        - lang: python
+          source: |
+            from trophy import TrophyApi
+
+            client = TrophyApi(api_key='YOUR_API_KEY')
+
+            metric = client.admin.metrics.get(
+              "550e8400-e29b-41d4-a716-446655440000"
+            )
+      parameters:
+        - name: id
+          in: path
+          description: The UUID of the metric to retrieve.
+          required: true
+          schema:
+            type: string
+            format: uuid
+          example: 550e8400-e29b-41d4-a716-446655440000
+      responses:
+        '200':
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CreatedMetric'
+              examples:
+                Number metric:
+                  value:
+                    id: '550e8400-e29b-41d4-a716-446655440000'
+                    name: Invites Sent
+                    key: invites-sent
+                    unitType: number
+                    units: ''
+                Currency metric:
+                  value:
+                    id: '550e8400-e29b-41d4-a716-446655440001'
+                    name: Revenue
+                    key: revenue
+                    unitType: currency
+                    units: USD
+        '401':
+          description: 'Unauthorized'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorBody'
+        '404':
+          description: 'Not Found'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorBody'
+        '422':
+          description: 'Unprocessible Entity'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorBody'
+      summary: Get a metric by ID
+      security:
+        - ApiKeyAuth: []
+
   /points/boosts:
     servers:
       - url: https://admin.trophy.so/v1
@@ -3622,14 +4616,14 @@ paths:
                     issues:
                       - boostId: '550e8400-e29b-41d4-a716-446655440001'
                         severity: warning
-                        message: Points boost not found or already archived
+                        message: Points boost not found
                 No boosts found:
                   value:
                     deleted: []
                     issues:
                       - boostId: '550e8400-e29b-41d4-a716-446655440999'
                         severity: warning
-                        message: Points boost not found or already archived
+                        message: Points boost not found
         '400':
           description: 'Bad Request (no IDs provided or invalid UUID format)'
           content:
@@ -4409,13 +5403,6 @@ webhooks:
           description: Return a 200 status to indicate the webhook was received and processed.
 components:
   schemas:
-    MetricStatus:
-      title: MetricStatus
-      type: string
-      enum:
-        - archived
-        - active
-      description: The status of the achievement.
     StreakFrequency:
       title: StreakFrequency
       type: string
@@ -5273,9 +6260,6 @@ components:
           type: string
           description: The name of the metric.
           example: Words written
-        status:
-          $ref: '#/components/schemas/MetricStatus'
-          description: The status of the metric.
         current:
           type: number
           format: double
@@ -5292,7 +6276,6 @@ components:
         - id
         - key
         - name
-        - status
         - current
         - achievements
     UpdatedUser:
@@ -5808,6 +6791,311 @@ components:
           description: Array of issues encountered during freeze creation.
       required:
         - issues
+    CreateAttributesRequest:
+      title: CreateAttributesRequest
+      type: array
+      description: Request body for creating attributes.
+      items:
+        $ref: '#/components/schemas/CreateAttributeRequestItem'
+      minItems: 1
+      maxItems: 100
+    CreateAttributeRequestItem:
+      title: CreateAttributeRequestItem
+      type: object
+      description: An attribute to create.
+      properties:
+        name:
+          type: string
+          description: The attribute name.
+          example: Plan
+        key:
+          type: string
+          pattern: '^[a-zA-Z\d-_]+$'
+          description: The attribute key. Only alphanumeric characters, hyphens, and underscores are permitted.
+          example: plan
+        type:
+          type: string
+          enum:
+            - user
+            - event
+          description: The attribute type.
+          example: user
+      required:
+        - name
+        - key
+        - type
+    AdminAttribute:
+      title: AdminAttribute
+      type: object
+      description: An attribute returned from the admin attributes endpoints.
+      properties:
+        id:
+          type: string
+          format: uuid
+          description: The UUID of the attribute.
+        name:
+          type: string
+          description: The attribute name.
+        key:
+          type: string
+          description: The attribute key.
+        type:
+          type: string
+          enum:
+            - user
+            - event
+          description: The attribute type.
+      required:
+        - id
+        - name
+        - key
+        - type
+    CreateAttributesResponse:
+      title: CreateAttributesResponse
+      type: object
+      description: Response containing created attributes and any per-item issues.
+      properties:
+        created:
+          type: array
+          items:
+            $ref: '#/components/schemas/AdminAttribute'
+          description: Array of successfully created attributes.
+        issues:
+          type: array
+          items:
+            $ref: '#/components/schemas/AdminIssue'
+          description: Array of issues encountered during attribute creation.
+      required:
+        - created
+        - issues
+    UpdateAttributesRequest:
+      title: UpdateAttributesRequest
+      type: array
+      description: Request body for updating attributes.
+      items:
+        $ref: '#/components/schemas/UpdateAttributeRequestItem'
+      minItems: 1
+      maxItems: 100
+    UpdateAttributeRequestItem:
+      title: UpdateAttributeRequestItem
+      type: object
+      description: 'An attribute update object. `id` is required and `name` is optional. `key` and `type` cannot be changed through this endpoint.'
+      properties:
+        id:
+          type: string
+          format: uuid
+          description: The UUID of the attribute to update.
+          example: 550e8400-e29b-41d4-a716-446655440000
+        name:
+          type: string
+          description: The updated attribute name.
+          example: Subscription Plan
+      required:
+        - id
+    UpdateAttributesResponse:
+      title: UpdateAttributesResponse
+      type: object
+      description: Response containing updated attributes and any per-item issues identified by attribute ID.
+      properties:
+        updated:
+          type: array
+          items:
+            $ref: '#/components/schemas/AdminAttribute'
+          description: Array of successfully updated attributes.
+        issues:
+          type: array
+          items:
+            $ref: '#/components/schemas/AdminIssue'
+          description: Array of issues encountered during attribute update.
+      required:
+        - updated
+        - issues
+    DeleteAttributesResponse:
+      title: DeleteAttributesResponse
+      type: object
+      description: Response containing deleted attributes represented by ID and any per-item issues, including invalid or missing attribute IDs.
+      properties:
+        deleted:
+          type: array
+          items:
+            $ref: '#/components/schemas/DeletedResource'
+          description: Array of deleted attributes represented by ID.
+        issues:
+          type: array
+          items:
+            $ref: '#/components/schemas/AdminIssue'
+          description: Array of issues encountered during attribute deletion.
+      required:
+        - deleted
+        - issues
+    ListAttributesResponse:
+      title: ListAttributesResponse
+      type: array
+      description: A paginated list of attributes.
+      items:
+        $ref: '#/components/schemas/AdminAttribute'
+    CreateMetricsRequest:
+      title: CreateMetricsRequest
+      type: array
+      description: Request body for creating metrics.
+      items:
+        $ref: '#/components/schemas/CreateMetricRequestItem'
+      minItems: 1
+      maxItems: 100
+    CreateMetricRequestItem:
+      title: CreateMetricRequestItem
+      type: object
+      description: A metric to create.
+      properties:
+        name:
+          type: string
+          description: The metric name.
+          example: Invites Sent
+        key:
+          type: string
+          pattern: '^[a-zA-Z\d-_]+$'
+          description: The metric key. Only alphanumeric characters, hyphens, and underscores are permitted.
+          example: invites-sent
+        unitType:
+          type: string
+          enum:
+            - number
+            - currency
+          default: number
+          description: The metric unit type. Defaults to `number`.
+          example: currency
+        units:
+          type: string
+          description: 'For `unitType: currency`, this must be a supported `MetricCurrency` code such as `USD`. For `number`, this is an optional freeform unit label.'
+          example: USD
+      required:
+        - name
+        - key
+    CreatedMetric:
+      title: CreatedMetric
+      type: object
+      description: A successfully created metric returned from the create endpoint.
+      properties:
+        id:
+          type: string
+          format: uuid
+          description: The UUID of the created metric.
+        name:
+          type: string
+          description: The metric name.
+        key:
+          type: string
+          description: The metric key.
+        unitType:
+          type: string
+          enum:
+            - number
+            - currency
+          description: The metric unit type.
+        units:
+          type: string
+          description: The stored units value for the metric.
+      required:
+        - id
+        - name
+        - key
+        - unitType
+        - units
+    CreateMetricsResponse:
+      title: CreateMetricsResponse
+      type: object
+      description: Response containing created metrics and any per-item issues.
+      properties:
+        created:
+          type: array
+          items:
+            $ref: '#/components/schemas/CreatedMetric'
+          description: Array of successfully created metrics.
+        issues:
+          type: array
+          items:
+            $ref: '#/components/schemas/AdminIssue'
+          description: Array of issues encountered during metric creation.
+      required:
+        - created
+        - issues
+    UpdateMetricsRequest:
+      title: UpdateMetricsRequest
+      type: array
+      description: Request body for updating metrics.
+      items:
+        $ref: '#/components/schemas/UpdateMetricRequestItem'
+      minItems: 1
+      maxItems: 100
+    UpdateMetricRequestItem:
+      title: UpdateMetricRequestItem
+      type: object
+      description: 'A metric update object. `id` is required; `name`, `unitType`, and `units` are optional. `key` cannot be changed through this endpoint.'
+      properties:
+        id:
+          type: string
+          format: uuid
+          description: The UUID of the metric to update.
+          example: 550e8400-e29b-41d4-a716-446655440000
+        name:
+          type: string
+          description: The updated metric name.
+          example: Invites Completed
+        unitType:
+          type: string
+          enum:
+            - number
+            - currency
+          description: The updated metric unit type.
+          example: currency
+        units:
+          type: string
+          description: 'The updated units value. For `unitType: currency`, this must be a supported `MetricCurrency` code such as `USD`.'
+          example: USD
+      required:
+        - id
+    UpdateMetricsResponse:
+      title: UpdateMetricsResponse
+      type: object
+      description: Response containing updated metrics and any per-item issues identified by metric ID.
+      properties:
+        updated:
+          type: array
+          items:
+            $ref: '#/components/schemas/CreatedMetric'
+          description: Array of successfully updated metrics.
+        issues:
+          type: array
+          items:
+            $ref: '#/components/schemas/AdminIssue'
+          description: Array of issues encountered during metric update.
+      required:
+        - updated
+        - issues
+    DeleteMetricsResponse:
+      title: DeleteMetricsResponse
+      type: object
+      description: Response containing deleted metrics represented by ID and any per-item issues, including invalid or missing metric IDs.
+      properties:
+        deleted:
+          type: array
+          items:
+            $ref: '#/components/schemas/DeletedResource'
+          description: Array of deleted metrics represented by ID.
+        issues:
+          type: array
+          items:
+            $ref: '#/components/schemas/AdminIssue'
+          description: Array of issues encountered during metric deletion.
+      required:
+        - deleted
+        - issues
+    ListMetricsResponse:
+      title: ListMetricsResponse
+      type: array
+      description: A paginated list of metrics.
+      items:
+        $ref: '#/components/schemas/CreatedMetric'
     CreatePointsBoostsRequest:
       title: CreatePointsBoostsRequest
       type: object
@@ -5949,7 +7237,7 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/AdminIssue'
-          description: Array of issues encountered during boost archival.
+          description: Array of issues encountered during boost deletion.
       required:
         - deleted
         - issues
