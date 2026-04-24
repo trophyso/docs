@@ -235,6 +235,16 @@
                   "admin-api/endpoints/points/create-boosts",
                   "admin-api/endpoints/points/archive-boosts-batch"
                 ]
+              },
+              {
+                "group": "Leaderboards",
+                "pages": [
+                  "admin-api/endpoints/leaderboards/list-leaderboards",
+                  "admin-api/endpoints/leaderboards/get-a-leaderboard",
+                  "admin-api/endpoints/leaderboards/update-leaderboards-in-bulk",
+                  "admin-api/endpoints/leaderboards/create-leaderboards-in-bulk",
+                  "admin-api/endpoints/leaderboards/delete-leaderboards-in-bulk"
+                ]
               }
             ]
           },
