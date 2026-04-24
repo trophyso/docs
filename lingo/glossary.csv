@@ -37,6 +37,7 @@ en,es,Metrics,Métricas,custom_translation,Product domain term plural
 en,es,Push Notifications,Notificaciones push,custom_translation,Product domain term
 en,es,Idempotency,Idempotencia,custom_translation,API behavior concept
 en,es,Rate Limiting,Límite de solicitudes,custom_translation,API behavior concept
+en,es,Rate Limits,Límites de velocidad,custom_translation,API docs heading term
 en,es,Quickstart,Inicio rápido,custom_translation,Docs navigation term
 en,es,Reactivation,Reactivación,custom_translation,Lifecycle/product term
 en,es,Sender Verification,Verificación del remitente,custom_translation,Email product domain term
