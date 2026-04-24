@@ -199,7 +199,10 @@
               {
                 "group": "Overview",
                 "pages": [
-                  "admin-api/introduction"
+                  "admin-api/introduction",
+                  "admin-api/authentication",
+                  "admin-api/rate-limiting",
+                  "admin-api/client-libraries"
                 ]
               },
               {

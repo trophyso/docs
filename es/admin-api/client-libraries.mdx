@@ -1,0 +1,36 @@
+---
+title: Bibliotecas de Cliente
+description: Utiliza los SDK con seguridad de tipos de Trophy para integrarte con la API.
+og:description: Utiliza los SDK con seguridad de tipos de Trophy para integrarte
+  con la API y comenzar a crear experiencias de producto gamificadas.
+icon: code-xml
+---
+
+La API de Administración de Trophy está disponible en los mismos SDK que la [API de Aplicación](/es/api-reference/client-libraries), bajo el espacio de nombres `trophy.admin`.
+
+Por ejemplo, en Node.js puedes usar el siguiente código para crear un impulso de puntos a través del espacio de nombres `admin`:
+
+```javascript Admin API Usage
+import { TrophyApiClient } from '@trophyso/node';
+
+const trophy = new TrophyApiClient({
+  apiKey: 'YOUR_API_KEY'
+});
+
+const response = await trophy.admin.points.boosts.create({
+  systemKey: 'xp',
+  boosts: [
+    {
+      userId: 'user-123',
+      name: 'Double XP Weekend',
+      start: '2024-01-01',
+      end: '2024-01-03',
+      multiplier: 2
+    }
+  ]
+});
+```
+
+## Obtener Soporte {#get-support}
+
+¿Quieres ponerte en contacto con el equipo de Trophy? Comunícate con nosotros por [correo electrónico](mailto:support@trophy.so). ¡Estamos aquí para ayudarte!
