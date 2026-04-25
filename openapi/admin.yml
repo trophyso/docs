@@ -999,12 +999,112 @@ paths:
       security:
         - ApiKeyAuth: []
 
-  /points/boosts:
+  /points/{systemId}/boosts:
     servers:
       - url: https://admin.trophy.so/v1
         description: Admin API
+    get:
+      description: List points boosts for a system.
+      operationId: admin_points_boosts_list
+      x-fern-server-name: admin
+      x-fern-sdk-group-name:
+        - admin
+        - points
+        - boosts
+      x-fern-sdk-method-name: list
+      tags:
+        - Admin
+      x-codeSamples:
+        - lang: javascript
+          source: |
+            import { TrophyApiClient } from '@trophyso/node';
+
+            const trophy = new TrophyApiClient({
+              apiKey: 'YOUR_API_KEY'
+            });
+
+            const boosts = await trophy.admin.points.boosts.list('system-uuid', {
+              limit: 10,
+              skip: 0
+            });
+        - lang: python
+          source: |
+            from trophy import TrophyApi
+
+            client = TrophyApi(api_key='YOUR_API_KEY')
+
+            boosts = client.admin.points.boosts.list(
+              system_id='system-uuid',
+              limit=10,
+              skip=0
+            )
+      parameters:
+        - name: systemId
+          in: path
+          description: The UUID of the points system.
+          required: true
+          schema:
+            type: string
+            format: uuid
+          example: '550e8400-e29b-41d4-a716-446655440000'
+        - name: limit
+          in: query
+          description: Maximum number of results to return (1-100, default 10).
+          required: false
+          schema:
+            type: integer
+            minimum: 1
+            maximum: 100
+            default: 10
+        - name: skip
+          in: query
+          description: Number of results to skip for pagination (default 0).
+          required: false
+          schema:
+            type: integer
+            minimum: 0
+            default: 0
+      responses:
+        '200':
+          description: A paginated list of points boosts.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ListPointsBoostsResponse'
+              examples:
+                Boosts list:
+                  value:
+                    - id: '550e8400-e29b-41d4-a716-446655440000'
+                      name: Double XP Weekend
+                      status: active
+                      start: '2024-01-01'
+                      end: '2024-01-03'
+                      multiplier: 2
+                      rounding: down
+                      userId: user-123
+        '401':
+          description: 'Unauthorized'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorBody'
+        '404':
+          description: 'Not Found (points system not found)'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorBody'
+        '422':
+          description: 'Unprocessible Entity'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorBody'
+      summary: List points boosts
+      security:
+        - ApiKeyAuth: []
     post:
-      description: Create points boosts for multiple users.
+      description: Create points boosts.
       operationId: admin_points_boosts_create
       x-fern-server-name: admin
       x-fern-sdk-group-name:
@@ -1023,34 +1123,38 @@ paths:
               apiKey: 'YOUR_API_KEY'
             });
 
-            const response = await trophy.admin.points.boosts.create({
-              systemKey: 'xp',
-              boosts: [
-                {
-                  userId: 'user-123',
-                  name: 'Double XP Weekend',
-                  start: '2024-01-01',
-                  end: '2024-01-03',
-                  multiplier: 2
-                },
-                {
-                  userId: 'user-456',
-                  name: 'Holiday Bonus',
-                  start: '2024-12-25',
-                  multiplier: 1.5,
-                  rounding: 'up'
-                }
-              ]
-            });
+            const response = await trophy.admin.points.boosts.create('system-uuid', [
+              {
+                userId: 'user-123',
+                name: 'Double XP Weekend',
+                start: '2024-01-01',
+                end: '2024-01-03',
+                multiplier: 2
+              },
+              {
+                name: 'Global Holiday Bonus',
+                start: '2024-12-25',
+                multiplier: 1.5,
+                rounding: 'up'
+              },
+              {
+                name: 'Premium User Boost',
+                start: '2024-01-01',
+                multiplier: 2,
+                userAttributes: [
+                  { attributeId: 'attr-uuid', attributeValue: 'premium' }
+                ]
+              }
+            ]);
         - lang: python
           source: |
             from trophy import TrophyApi
 
             client = TrophyApi(api_key='YOUR_API_KEY')
 
-            response = client.admin.points.boosts.create({
-              "systemKey": "xp",
-              "boosts": [
+            response = client.admin.points.boosts.create(
+              system_id='system-uuid',
+              boosts=[
                 {
                   "userId": "user-123",
                   "name": "Double XP Weekend",
@@ -1059,36 +1163,59 @@ paths:
                   "multiplier": 2
                 },
                 {
-                  "userId": "user-456",
-                  "name": "Holiday Bonus",
+                  "name": "Global Holiday Bonus",
                   "start": "2024-12-25",
                   "multiplier": 1.5,
                   "rounding": "up"
+                },
+                {
+                  "name": "Premium User Boost",
+                  "start": "2024-01-01",
+                  "multiplier": 2,
+                  "userAttributes": [
+                    {"attributeId": "attr-uuid", "attributeValue": "premium"}
+                  ]
                 }
               ]
-            })
+            )
+      parameters:
+        - name: systemId
+          in: path
+          description: The UUID of the points system.
+          required: true
+          schema:
+            type: string
+            format: uuid
+          example: '550e8400-e29b-41d4-a716-446655440000'
       requestBody:
-        description: The points system key and array of boosts to create
+        description: Array of boosts to create.
         required: true
         content:
           application/json:
             schema:
               $ref: '#/components/schemas/CreatePointsBoostsRequest'
             examples:
-              Create boosts for multiple users:
+              Create user-specific boost:
                 value:
-                  systemKey: xp
-                  boosts:
-                    - userId: user-123
-                      name: Double XP Weekend
-                      start: '2024-01-01'
-                      end: '2024-01-03'
-                      multiplier: 2
-                    - userId: user-456
-                      name: Holiday Bonus
-                      start: '2024-12-25'
-                      multiplier: 1.5
-                      rounding: up
+                  - userId: user-123
+                    name: Double XP Weekend
+                    start: '2024-01-01'
+                    end: '2024-01-03'
+                    multiplier: 2
+              Create global boost:
+                value:
+                  - name: Global Holiday Bonus
+                    start: '2024-12-25'
+                    multiplier: 1.5
+                    rounding: up
+              Create boost with user attributes:
+                value:
+                  - name: Premium User Boost
+                    start: '2024-01-01'
+                    multiplier: 2
+                    userAttributes:
+                      - attributeId: '550e8400-e29b-41d4-a716-446655440000'
+                        attributeValue: premium
       responses:
         '200':
           description: Successful operation (no boosts created)
@@ -1101,7 +1228,7 @@ paths:
                   value:
                     created: []
                     issues:
-                      - userId: non-existent-user
+                      - index: 0
                         severity: error
                         message: User does not exist
         '201':
@@ -1123,6 +1250,19 @@ paths:
                         rounding: down
                         userId: user-123
                     issues: []
+                Global boost created:
+                  value:
+                    created:
+                      - id: '550e8400-e29b-41d4-a716-446655440001'
+                        name: Global Holiday Bonus
+                        status: active
+                        start: '2024-01-15'
+                        end: null
+                        multiplier: 1.5
+                        rounding: down
+                        userId: null
+                        userAttributes: []
+                    issues: []
                 Mixed success and errors:
                   value:
                     created:
@@ -1133,17 +1273,14 @@ paths:
                         end: null
                         multiplier: 1.5
                         rounding: down
-                        userId: user-456
+                        userId: null
+                        userAttributes:
+                          - attributeId: '550e8400-e29b-41d4-a716-446655440000'
+                            attributeValue: premium
                     issues:
-                      - userId: non-existent-user
+                      - index: 1
                         severity: error
                         message: User does not exist
-        '400':
-          description: 'Bad Request'
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ErrorBody'
         '401':
           description: 'Unauthorized'
           content:
@@ -1162,7 +1299,113 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/ErrorBody'
-      summary: Create points boosts for multiple users
+      summary: Create points boosts
+      security:
+        - ApiKeyAuth: []
+    patch:
+      description: Update multiple points boosts.
+      operationId: admin_points_boosts_update
+      x-fern-server-name: admin
+      x-fern-sdk-group-name:
+        - admin
+        - points
+        - boosts
+      x-fern-sdk-method-name: update
+      tags:
+        - Admin
+      x-codeSamples:
+        - lang: javascript
+          source: |
+            import { TrophyApiClient } from '@trophyso/node';
+
+            const trophy = new TrophyApiClient({
+              apiKey: 'YOUR_API_KEY'
+            });
+
+            const response = await trophy.admin.points.boosts.update('system-uuid', [
+              {
+                id: 'boost-uuid-1',
+                name: 'Updated Boost Name',
+                multiplier: 3
+              }
+            ]);
+        - lang: python
+          source: |
+            from trophy import TrophyApi
+
+            client = TrophyApi(api_key='YOUR_API_KEY')
+
+            response = client.admin.points.boosts.update(
+              system_id='system-uuid',
+              boosts=[
+                {
+                  "id": "boost-uuid-1",
+                  "name": "Updated Boost Name",
+                  "multiplier": 3
+                }
+              ]
+            )
+      parameters:
+        - name: systemId
+          in: path
+          description: The UUID of the points system.
+          required: true
+          schema:
+            type: string
+            format: uuid
+          example: '550e8400-e29b-41d4-a716-446655440000'
+      requestBody:
+        description: Array of boost patches.
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PatchPointsBoostsRequest'
+            examples:
+              Update boost names and multipliers:
+                value:
+                  - id: '550e8400-e29b-41d4-a716-446655440000'
+                    name: Updated Boost Name
+                    multiplier: 3
+      responses:
+        '200':
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PatchPointsBoostsResponse'
+              examples:
+                Success:
+                  value:
+                    updated:
+                      - id: '550e8400-e29b-41d4-a716-446655440000'
+                        name: Updated Boost Name
+                        status: active
+                        start: '2024-01-01'
+                        end: '2024-01-03'
+                        multiplier: 3
+                        rounding: down
+                        userId: user-123
+                    issues: []
+        '401':
+          description: 'Unauthorized'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorBody'
+        '404':
+          description: 'Not Found (points system not found)'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorBody'
+        '422':
+          description: 'Unprocessible Entity'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorBody'
+      summary: Update multiple points boosts
       security:
         - ApiKeyAuth: []
     delete:
@@ -1185,7 +1428,7 @@ paths:
               apiKey: 'YOUR_API_KEY'
             });
 
-            const response = await trophy.admin.points.boosts.delete({
+            const response = await trophy.admin.points.boosts.delete('system-uuid', {
               ids: ['boost-uuid-1', 'boost-uuid-2', 'boost-uuid-3']
             });
 
@@ -1197,11 +1440,20 @@ paths:
             client = TrophyApi(api_key='YOUR_API_KEY')
 
             response = client.admin.points.boosts.delete(
+              system_id='system-uuid',
               ids=['boost-uuid-1', 'boost-uuid-2', 'boost-uuid-3']
             )
 
             print(f"Deleted {len(response.deleted)} boosts")
       parameters:
+        - name: systemId
+          in: path
+          description: The UUID of the points system.
+          required: true
+          schema:
+            type: string
+            format: uuid
+          example: '550e8400-e29b-41d4-a716-446655440000'
         - name: ids
           in: query
           description: A list of up to 100 boost IDs.
@@ -1233,29 +1485,627 @@ paths:
                     deleted:
                       - id: '550e8400-e29b-41d4-a716-446655440000'
                     issues:
-                      - boostId: '550e8400-e29b-41d4-a716-446655440001'
-                        severity: warning
-                        message: Points boost not found
-                No boosts found:
-                  value:
-                    deleted: []
-                    issues:
-                      - boostId: '550e8400-e29b-41d4-a716-446655440999'
-                        severity: warning
-                        message: Points boost not found
-        '400':
-          description: 'Bad Request (no IDs provided or invalid UUID format)'
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ErrorBody'
+                      - id: '550e8400-e29b-41d4-a716-446655440001'
+                        severity: error
+                        message: Points boost not found by ID
         '401':
           description: 'Unauthorized'
           content:
             application/json:
               schema:
                 $ref: '#/components/schemas/ErrorBody'
+        '404':
+          description: 'Not Found (points system not found)'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorBody'
+        '422':
+          description: 'Unprocessible Entity (no IDs provided or too many IDs)'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorBody'
       summary: Delete multiple points boosts
+      security:
+        - ApiKeyAuth: []
+  /points/{systemId}/boosts/{id}:
+    servers:
+      - url: https://admin.trophy.so/v1
+        description: Admin API
+    get:
+      description: Get a single points boost by ID.
+      operationId: admin_points_boosts_get
+      x-fern-server-name: admin
+      x-fern-sdk-group-name:
+        - admin
+        - points
+        - boosts
+      x-fern-sdk-method-name: get
+      tags:
+        - Admin
+      x-codeSamples:
+        - lang: javascript
+          source: |
+            import { TrophyApiClient } from '@trophyso/node';
+
+            const trophy = new TrophyApiClient({
+              apiKey: 'YOUR_API_KEY'
+            });
+
+            const boost = await trophy.admin.points.boosts.get('system-uuid', 'boost-uuid');
+        - lang: python
+          source: |
+            from trophy import TrophyApi
+
+            client = TrophyApi(api_key='YOUR_API_KEY')
+
+            boost = client.admin.points.boosts.get(
+              system_id='system-uuid',
+              boost_id='boost-uuid'
+            )
+      parameters:
+        - name: systemId
+          in: path
+          description: The UUID of the points system.
+          required: true
+          schema:
+            type: string
+            format: uuid
+          example: '550e8400-e29b-41d4-a716-446655440000'
+        - name: id
+          in: path
+          description: The UUID of the points boost.
+          required: true
+          schema:
+            type: string
+            format: uuid
+          example: '660f9500-f30c-42e5-b827-557766550001'
+      responses:
+        '200':
+          description: The points boost.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AdminPointsBoost'
+              examples:
+                A single boost:
+                  value:
+                    id: '550e8400-e29b-41d4-a716-446655440000'
+                    name: Double XP Weekend
+                    status: active
+                    start: '2024-01-01'
+                    end: '2024-01-03'
+                    multiplier: 2
+                    rounding: down
+                    userId: user-123
+        '401':
+          description: 'Unauthorized'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorBody'
+        '404':
+          description: 'Not Found'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorBody'
+        '422':
+          description: 'Unprocessible Entity'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorBody'
+      summary: Get a points boost by ID
+      security:
+        - ApiKeyAuth: []
+  /points/{systemId}/levels:
+    servers:
+      - url: https://admin.trophy.so/v1
+        description: Admin API
+    get:
+      description: List points levels for a system.
+      operationId: admin_points_levels_list
+      x-fern-server-name: admin
+      x-fern-sdk-group-name:
+        - admin
+        - points
+        - levels
+      x-fern-sdk-method-name: list
+      tags:
+        - Admin
+      x-codeSamples:
+        - lang: javascript
+          source: |
+            import { TrophyApiClient } from '@trophyso/node';
+
+            const trophy = new TrophyApiClient({
+              apiKey: 'YOUR_API_KEY'
+            });
+
+            const levels = await trophy.admin.points.levels.list('system-uuid', {
+              limit: 10,
+              skip: 0
+            });
+        - lang: python
+          source: |
+            from trophy import TrophyApi
+
+            client = TrophyApi(api_key='YOUR_API_KEY')
+
+            levels = client.admin.points.levels.list(
+              system_id='system-uuid',
+              limit=10,
+              skip=0
+            )
+      parameters:
+        - name: systemId
+          in: path
+          description: The UUID of the points system.
+          required: true
+          schema:
+            type: string
+            format: uuid
+          example: '550e8400-e29b-41d4-a716-446655440000'
+        - name: limit
+          in: query
+          description: Number of records to return.
+          required: false
+          schema:
+            type: integer
+            minimum: 1
+            maximum: 100
+            default: 10
+          example: 10
+        - name: skip
+          in: query
+          description: Number of records to skip from the start of the list.
+          required: false
+          schema:
+            type: integer
+            minimum: 0
+            default: 0
+          example: 0
+      responses:
+        '200':
+          description: A paginated list of points levels.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ListPointsLevelsResponse'
+              examples:
+                Two levels:
+                  value:
+                    - id: '550e8400-e29b-41d4-a716-446655440000'
+                      name: Bronze
+                      key: bronze
+                      points: 100
+                      description: Starting level
+                      badge: null
+                    - id: '660f9500-f30c-42e5-b827-557766550001'
+                      name: Silver
+                      key: silver
+                      points: 500
+                      description: Intermediate level
+                      badge:
+                        url: 'https://example.com/silver.png'
+        '401':
+          description: 'Unauthorized'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorBody'
+        '404':
+          description: 'Not Found (points system not found)'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorBody'
+        '422':
+          description: 'Unprocessible Entity'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorBody'
+      summary: List points levels
+      security:
+        - ApiKeyAuth: []
+    post:
+      description: Create points levels. Maximum 100 levels per request.
+      operationId: admin_points_levels_create
+      x-fern-server-name: admin
+      x-fern-sdk-group-name:
+        - admin
+        - points
+        - levels
+      x-fern-sdk-method-name: create
+      tags:
+        - Admin
+      x-codeSamples:
+        - lang: javascript
+          source: |
+            import { TrophyApiClient } from '@trophyso/node';
+
+            const trophy = new TrophyApiClient({
+              apiKey: 'YOUR_API_KEY'
+            });
+
+            const result = await trophy.admin.points.levels.create('system-uuid', [
+              {
+                name: 'Bronze',
+                key: 'bronze',
+                points: 100,
+                description: 'Starting level',
+                badge: { url: 'https://example.com/bronze.png' }
+              }
+            ]);
+        - lang: python
+          source: |
+            from trophy import TrophyApi
+
+            client = TrophyApi(api_key='YOUR_API_KEY')
+
+            result = client.admin.points.levels.create(
+              system_id='system-uuid',
+              request=[{
+                "name": "Bronze",
+                "key": "bronze",
+                "points": 100,
+                "description": "Starting level",
+                "badge": {"url": "https://example.com/bronze.png"}
+              }]
+            )
+      parameters:
+        - name: systemId
+          in: path
+          description: The UUID of the points system.
+          required: true
+          schema:
+            type: string
+            format: uuid
+          example: '550e8400-e29b-41d4-a716-446655440000'
+      requestBody:
+        description: Array of levels to create. Maximum 100 levels per request.
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreatePointsLevelsRequest'
+      responses:
+        '200':
+          description: Successful operation (no levels created)
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CreatePointsLevelsResponse'
+              examples:
+                No levels created:
+                  value:
+                    created: []
+                    issues:
+                      - index: 0
+                        severity: error
+                        message: Key already in use by another level
+        '201':
+          description: Created (at least one level created)
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CreatePointsLevelsResponse'
+              examples:
+                Created successfully:
+                  value:
+                    created:
+                      - id: '550e8400-e29b-41d4-a716-446655440000'
+                        name: Bronze
+                        key: bronze
+                        points: 100
+                        description: Starting level
+                        badge:
+                          url: 'https://example.com/bronze.png'
+                    issues: []
+        '401':
+          description: 'Unauthorized'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorBody'
+        '404':
+          description: 'Not Found (points system not found)'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorBody'
+        '422':
+          description: 'Unprocessible Entity'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorBody'
+      summary: Create points levels
+      security:
+        - ApiKeyAuth: []
+    patch:
+      description: Update multiple points levels. Each item must include an ID. `key` cannot be changed.
+      operationId: admin_points_levels_update
+      x-fern-server-name: admin
+      x-fern-sdk-group-name:
+        - admin
+        - points
+        - levels
+      x-fern-sdk-method-name: update
+      tags:
+        - Admin
+      x-codeSamples:
+        - lang: javascript
+          source: |
+            import { TrophyApiClient } from '@trophyso/node';
+
+            const trophy = new TrophyApiClient({
+              apiKey: 'YOUR_API_KEY'
+            });
+
+            const result = await trophy.admin.points.levels.update('system-uuid', [
+              {
+                id: '550e8400-e29b-41d4-a716-446655440000',
+                name: 'Bronze Tier',
+                points: 150
+              }
+            ]);
+        - lang: python
+          source: |
+            from trophy import TrophyApi
+
+            client = TrophyApi(api_key='YOUR_API_KEY')
+
+            result = client.admin.points.levels.update(
+              system_id='system-uuid',
+              request=[{
+                "id": "550e8400-e29b-41d4-a716-446655440000",
+                "name": "Bronze Tier",
+                "points": 150
+              }]
+            )
+      parameters:
+        - name: systemId
+          in: path
+          description: The UUID of the points system.
+          required: true
+          schema:
+            type: string
+            format: uuid
+          example: '550e8400-e29b-41d4-a716-446655440000'
+      requestBody:
+        description: Array of level patches. Each item must include an ID.
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PatchPointsLevelsRequest'
+      responses:
+        '200':
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PatchPointsLevelsResponse'
+              examples:
+                Updated successfully:
+                  value:
+                    updated:
+                      - id: '550e8400-e29b-41d4-a716-446655440000'
+                        name: Bronze Tier
+                        key: bronze
+                        points: 150
+                        description: Starting level
+                        badge: null
+                    issues: []
+        '401':
+          description: 'Unauthorized'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorBody'
+        '404':
+          description: 'Not Found (points system not found)'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorBody'
+        '422':
+          description: 'Unprocessible Entity'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorBody'
+      summary: Update multiple points levels
+      security:
+        - ApiKeyAuth: []
+    delete:
+      description: Delete multiple points levels by ID.
+      operationId: admin_points_levels_delete
+      x-fern-server-name: admin
+      x-fern-sdk-group-name:
+        - admin
+        - points
+        - levels
+      x-fern-sdk-method-name: delete
+      tags:
+        - Admin
+      x-codeSamples:
+        - lang: javascript
+          source: |
+            import { TrophyApiClient } from '@trophyso/node';
+
+            const trophy = new TrophyApiClient({
+              apiKey: 'YOUR_API_KEY'
+            });
+
+            const result = await trophy.admin.points.levels.delete('system-uuid', {
+              ids: ['550e8400-e29b-41d4-a716-446655440000']
+            });
+        - lang: python
+          source: |
+            from trophy import TrophyApi
+
+            client = TrophyApi(api_key='YOUR_API_KEY')
+
+            result = client.admin.points.levels.delete(
+              system_id='system-uuid',
+              ids=['550e8400-e29b-41d4-a716-446655440000']
+            )
+      parameters:
+        - name: systemId
+          in: path
+          description: The UUID of the points system.
+          required: true
+          schema:
+            type: string
+            format: uuid
+          example: '550e8400-e29b-41d4-a716-446655440000'
+        - name: ids
+          in: query
+          description: Comma-separated list of level UUIDs to delete.
+          required: true
+          schema:
+            type: array
+            items:
+              type: string
+              format: uuid
+          style: form
+          explode: true
+          example: 'a0eebc99-9c0b-4ef8-bb6d-6bb9bd380a11,b1ffcd00-0d1c-4ef9-cc7e-7cc0ce491b22'
+      responses:
+        '200':
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DeletePointsLevelsResponse'
+              examples:
+                Deleted successfully:
+                  value:
+                    deleted:
+                      - id: a0eebc99-9c0b-4ef8-bb6d-6bb9bd380a11
+                    issues: []
+                Partial success:
+                  value:
+                    deleted:
+                      - id: a0eebc99-9c0b-4ef8-bb6d-6bb9bd380a11
+                    issues:
+                      - id: b1ffcd00-0d1c-4ef9-cc7e-7cc0ce491b22
+                        severity: error
+                        message: Level not found by ID
+        '401':
+          description: 'Unauthorized'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorBody'
+        '404':
+          description: 'Not Found (points system not found)'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorBody'
+        '422':
+          description: 'Unprocessible Entity (no IDs provided or too many IDs)'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorBody'
+      summary: Delete multiple points levels
+      security:
+        - ApiKeyAuth: []
+  /points/{systemId}/levels/{id}:
+    servers:
+      - url: https://admin.trophy.so/v1
+        description: Admin API
+    get:
+      description: Get a single points level by ID.
+      operationId: admin_points_levels_get
+      x-fern-server-name: admin
+      x-fern-sdk-group-name:
+        - admin
+        - points
+        - levels
+      x-fern-sdk-method-name: get
+      tags:
+        - Admin
+      x-codeSamples:
+        - lang: javascript
+          source: |
+            import { TrophyApiClient } from '@trophyso/node';
+
+            const trophy = new TrophyApiClient({
+              apiKey: 'YOUR_API_KEY'
+            });
+
+            const level = await trophy.admin.points.levels.get('system-uuid', 'level-uuid');
+        - lang: python
+          source: |
+            from trophy import TrophyApi
+
+            client = TrophyApi(api_key='YOUR_API_KEY')
+
+            level = client.admin.points.levels.get(
+              system_id='system-uuid',
+              level_id='level-uuid'
+            )
+      parameters:
+        - name: systemId
+          in: path
+          description: The UUID of the points system.
+          required: true
+          schema:
+            type: string
+            format: uuid
+          example: '550e8400-e29b-41d4-a716-446655440000'
+        - name: id
+          in: path
+          description: The UUID of the points level.
+          required: true
+          schema:
+            type: string
+            format: uuid
+          example: '660f9500-f30c-42e5-b827-557766550001'
+      responses:
+        '200':
+          description: The points level.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AdminPointsLevel'
+              examples:
+                A single level:
+                  value:
+                    id: '550e8400-e29b-41d4-a716-446655440000'
+                    name: Bronze
+                    key: bronze
+                    points: 100
+                    description: Starting level
+                    badge:
+                      url: 'https://example.com/bronze.png'
+        '401':
+          description: 'Unauthorized'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorBody'
+        '404':
+          description: 'Not Found'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorBody'
+        '422':
+          description: 'Unprocessible Entity'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorBody'
+      summary: Get a points level by ID
       security:
         - ApiKeyAuth: []
   /leaderboards:
@@ -2527,74 +3377,85 @@ components:
         $ref: '#/components/schemas/CreatedMetric'
     CreatePointsBoostsRequest:
       title: CreatePointsBoostsRequest
+      type: array
+      description: Array of points boosts to create. Maximum 100 boosts per request. Each boost may optionally target a specific user via `userId` or filter by user attributes via `userAttributes`. These two fields are mutually exclusive — providing `userAttributes` when `userId` is set will result in an error. Omitting both creates a global boost.
+      items:
+        type: object
+        properties:
+          userId:
+            type:
+              - string
+              - 'null'
+            description: The ID of the user to create a boost for. Mutually exclusive with `userAttributes` — providing `userAttributes` when `userId` is set will result in an error. Omit for a global boost.
+            example: user-123
+          name:
+            type: string
+            description: The name of the boost.
+            maxLength: 255
+            example: Double XP Weekend
+          start:
+            type: string
+            format: date
+            description: The start date of the boost (YYYY-MM-DD).
+            example: '2024-01-01'
+          end:
+            type:
+              - string
+              - 'null'
+            format: date
+            description: The end date of the boost (YYYY-MM-DD). If null, the boost has no end date.
+            example: '2024-01-03'
+          multiplier:
+            type: number
+            description: The points multiplier. Must be greater than 0, not equal to 1, and less than 100.
+            example: 2
+            exclusiveMinimum: 0
+            exclusiveMaximum: 100
+          rounding:
+            type: string
+            enum:
+              - down
+              - up
+              - nearest
+            default: down
+            description: How to round the boosted points. Defaults to 'down'.
+            example: down
+          userAttributes:
+            type:
+              - array
+              - 'null'
+            description: User attribute filters for the boost. Cannot be provided when `userId` is set.
+            items:
+              type: object
+              properties:
+                attributeId:
+                  type: string
+                  format: uuid
+                  description: The UUID of the user attribute.
+                attributeValue:
+                  type: string
+                  description: The value to match.
+              required:
+                - attributeId
+                - attributeValue
+            example:
+              - attributeId: '550e8400-e29b-41d4-a716-446655440000'
+                attributeValue: premium
+        required:
+          - name
+          - start
+          - multiplier
+      maxItems: 100
+      minItems: 1
+    AdminPointsBoost:
+      title: AdminPointsBoost
       type: object
-      description: Request body for creating points boosts.
-      properties:
-        systemKey:
-          type: string
-          description: The key of the points system to create boosts for.
-          example: xp
-        boosts:
-          type: array
-          items:
-            type: object
-            properties:
-              userId:
-                type: string
-                description: The ID of the user to create a boost for.
-                example: user-123
-              name:
-                type: string
-                description: The name of the boost.
-                maxLength: 255
-                example: Double XP Weekend
-              start:
-                type: string
-                format: date
-                description: The start date of the boost (YYYY-MM-DD).
-                example: '2024-01-01'
-              end:
-                type:
-                  - string
-                  - 'null'
-                format: date
-                description: The end date of the boost (YYYY-MM-DD). If null, the boost has no end date.
-                example: '2024-01-03'
-              multiplier:
-                type: number
-                description: The points multiplier. Must be greater than 0, not equal to 1, and less than 100.
-                example: 2
-                exclusiveMinimum: 0
-                exclusiveMaximum: 100
-              rounding:
-                type: string
-                enum:
-                  - down
-                  - up
-                  - nearest
-                default: down
-                description: How to round the boosted points. Defaults to 'down'.
-                example: down
-            required:
-              - userId
-              - name
-              - start
-              - multiplier
-          description: Array of boosts to create. Maximum 100 boosts per request.
-          maxItems: 100
-          minItems: 1
-      required:
-        - systemKey
-        - boosts
-    CreatedPointsBoost:
-      title: CreatedPointsBoost
-      type: object
-      description: A successfully created points boost returned from the create endpoint.
+      description: A points boost as returned from admin endpoints.
       properties:
         id:
           type: string
           format: uuid
-          description: The UUID of the created boost.
+          description: The UUID of the boost.
         name:
           type: string
           description: The name of the boost.
@@ -2623,8 +3484,26 @@ components:
             - nearest
           description: How boosted points are rounded.
         userId:
-          type: string
-          description: The customer ID of the user the boost was created for.
+          type:
+            - string
+            - 'null'
+          description: The customer ID of the user the boost was created for, or null for global/attribute-filtered boosts.
+        userAttributes:
+          type: array
+          description: User attribute filters applied to the boost. Only present for non-user-specific boosts (i.e. when `userId` is null). Empty array if no filters are set.
+          items:
+            type: object
+            properties:
+              attributeId:
+                type: string
+                format: uuid
+                description: The UUID of the user attribute.
+              attributeValue:
+                type: string
+                description: The matched attribute value.
+            required:
+              - attributeId
+              - attributeValue
       required:
         - id
         - name
@@ -2634,6 +3513,12 @@ components:
         - multiplier
         - rounding
         - userId
+    ListPointsBoostsResponse:
+      title: ListPointsBoostsResponse
+      type: array
+      description: A paginated list of points boosts.
+      items:
+        $ref: '#/components/schemas/AdminPointsBoost'
     CreatePointsBoostsResponse:
       title: CreatePointsBoostsResponse
       type: object
@@ -2642,7 +3527,7 @@ components:
         created:
           type: array
           items:
-            $ref: '#/components/schemas/CreatedPointsBoost'
+            $ref: '#/components/schemas/AdminPointsBoost'
           description: Array of successfully created boosts.
         issues:
           type: array
@@ -2651,6 +3536,83 @@ components:
           description: Array of issues encountered during boost creation.
       required:
         - created
+        - issues
+    PatchPointsBoostsRequest:
+      title: PatchPointsBoostsRequest
+      type: array
+      description: Array of points boost patches. Maximum 100 per request.
+      items:
+        type: object
+        properties:
+          id:
+            type: string
+            format: uuid
+            description: The UUID of the boost to update.
+          name:
+            type: string
+            description: Updated name for the boost.
+            maxLength: 255
+          start:
+            type: string
+            format: date
+            description: Updated start date (YYYY-MM-DD).
+          end:
+            type:
+              - string
+              - 'null'
+            format: date
+            description: Updated end date (YYYY-MM-DD) or null to remove end date.
+          multiplier:
+            type: number
+            description: Updated points multiplier.
+            exclusiveMinimum: 0
+            exclusiveMaximum: 100
+          rounding:
+            type: string
+            enum:
+              - down
+              - up
+              - nearest
+            description: Updated rounding strategy.
+          userAttributes:
+            type:
+              - array
+              - 'null'
+            description: Updated user attribute filters. Cannot be set on user-specific boosts. Set to null to clear.
+            items:
+              type: object
+              properties:
+                attributeId:
+                  type: string
+                  format: uuid
+                  description: The UUID of the user attribute.
+                attributeValue:
+                  type: string
+                  description: The value to match.
+              required:
+                - attributeId
+                - attributeValue
+        required:
+          - id
+      maxItems: 100
+      minItems: 1
+    PatchPointsBoostsResponse:
+      title: PatchPointsBoostsResponse
+      type: object
+      description: Response containing updated boosts and any issues encountered.
+      properties:
+        updated:
+          type: array
+          items:
+            $ref: '#/components/schemas/AdminPointsBoost'
+          description: Array of successfully updated boosts.
+        issues:
+          type: array
+          items:
+            $ref: '#/components/schemas/AdminIssue'
+          description: Array of issues encountered during boost updates.
+      required:
+        - updated
         - issues
     DeletePointsBoostsResponse:
       title: DeletePointsBoostsResponse
@@ -2667,6 +3629,183 @@ components:
           items:
             $ref: '#/components/schemas/AdminIssue'
           description: Array of issues encountered during boost deletion.
+      required:
+        - deleted
+        - issues
+    CreatePointsLevelsRequest:
+      title: CreatePointsLevelsRequest
+      type: array
+      description: Array of points levels to create. Maximum 100 levels per request.
+      items:
+        type: object
+        properties:
+          name:
+            type: string
+            description: The name of the level.
+            example: Bronze
+          key:
+            type: string
+            description: A unique key for the level. Only alphanumeric characters, hyphens, and underscores are permitted.
+            pattern: '^[a-zA-Z\d-_]+$'
+            example: bronze
+          points:
+            type: integer
+            minimum: 0
+            description: The threshold points value for the level.
+            example: 100
+          description:
+            type: string
+            description: An optional description of the level.
+            example: Starting level
+          badge:
+            type: object
+            description: An optional badge for the level.
+            properties:
+              url:
+                type: string
+                description: The URL of the badge image.
+                example: 'https://example.com/bronze.png'
+            required:
+              - url
+        required:
+          - name
+          - key
+          - points
+      maxItems: 100
+      minItems: 1
+    AdminPointsLevel:
+      title: AdminPointsLevel
+      type: object
+      description: A points level as returned from admin endpoints.
+      properties:
+        id:
+          type: string
+          format: uuid
+          description: The UUID of the level.
+        name:
+          type: string
+          description: The name of the level.
+        key:
+          type: string
+          description: The level key.
+        points:
+          type: integer
+          description: The threshold points value for the level.
+        description:
+          type: string
+          description: The level description.
+        badge:
+          oneOf:
+            - type: object
+              properties:
+                url:
+                  type: string
+                  description: The URL of the badge image.
+              required:
+                - url
+            - type: 'null'
+          description: The badge for the level, or null if no badge is set.
+      required:
+        - id
+        - name
+        - key
+        - points
+        - description
+        - badge
+    CreatePointsLevelsResponse:
+      title: CreatePointsLevelsResponse
+      type: object
+      description: Response containing created levels and any per-item issues.
+      properties:
+        created:
+          type: array
+          items:
+            $ref: '#/components/schemas/AdminPointsLevel'
+          description: Array of successfully created levels.
+        issues:
+          type: array
+          items:
+            $ref: '#/components/schemas/AdminIssue'
+          description: Array of issues encountered during level creation.
+      required:
+        - created
+        - issues
+    ListPointsLevelsResponse:
+      title: ListPointsLevelsResponse
+      type: array
+      description: A paginated list of points levels.
+      items:
+        $ref: '#/components/schemas/AdminPointsLevel'
+    PatchPointsLevelsRequest:
+      title: PatchPointsLevelsRequest
+      type: array
+      description: Array of points level patches. Maximum 100 per request.
+      items:
+        type: object
+        properties:
+          id:
+            type: string
+            format: uuid
+            description: The UUID of the level to update.
+            example: '550e8400-e29b-41d4-a716-446655440000'
+          name:
+            type: string
+            description: The updated level name.
+          points:
+            type: integer
+            minimum: 0
+            description: The updated threshold points value.
+          description:
+            type: string
+            description: The updated level description.
+          badge:
+            oneOf:
+              - type: object
+                properties:
+                  url:
+                    type: string
+                    description: The URL of the badge image.
+                required:
+                  - url
+              - type: 'null'
+            description: The updated badge, or `null` to clear it.
+        required:
+          - id
+      maxItems: 100
+      minItems: 1
+    PatchPointsLevelsResponse:
+      title: PatchPointsLevelsResponse
+      type: object
+      description: Response containing updated levels and any issues encountered.
+      properties:
+        updated:
+          type: array
+          items:
+            $ref: '#/components/schemas/AdminPointsLevel'
+          description: Array of successfully updated levels.
+        issues:
+          type: array
+          items:
+            $ref: '#/components/schemas/AdminIssue'
+          description: Array of issues encountered during level updates.
+      required:
+        - updated
+        - issues
+    DeletePointsLevelsResponse:
+      title: DeletePointsLevelsResponse
+      type: object
+      description: Response containing the points levels that were deleted and any per-item issues.
+      properties:
+        deleted:
+          type: array
+          items:
+            $ref: '#/components/schemas/DeletedResource'
+          description: Array of deleted points levels represented by ID.
+        issues:
+          type: array
+          items:
+            $ref: '#/components/schemas/AdminIssue'
+          description: Array of issues encountered during level deletion.
       required:
         - deleted
         - issues

@@ -150,6 +150,7 @@ function runLingoPurge(target, scopedFiles) {
 const targetArg = getArg("--target");
 const pathFilter = getArg("--paths");
 const forceRetranslate = hasFlag("--force");
+const skipAnchorSync = hasFlag("--skip-anchor-sync");
 const filters = pathFilter
   ? pathFilter
       .split(",")
@@ -249,7 +250,14 @@ try {
     execSync(`node scripts/localize-mdx-paths.mjs --target ${target}`, { stdio: "inherit" });
     console.log(`Translation generation completed for target locale: ${target}`);
   }
-  execSync("node scripts/sync-heading-anchors.mjs", { stdio: "inherit" });
+  if (!skipAnchorSync) {
+    const anchorArgs = [];
+    if (targets.length > 0) anchorArgs.push(`--target ${targets.join(",")}`);
+    if (filters.length > 0) anchorArgs.push(`--paths "${filters.join(",")}"`);
+    execSync(`node scripts/sync-heading-anchors.mjs ${anchorArgs.join(" ")}`.trim(), { stdio: "inherit" });
+  } else {
+    console.log("Skipping heading anchor sync (--skip-anchor-sync).");
+  }
 } finally {
   fs.rmSync(path.join(process.cwd(), stagingRoot), { recursive: true, force: true });
   if (fs.existsSync(backupPath)) {
