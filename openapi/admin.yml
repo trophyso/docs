@@ -94,7 +94,7 @@ paths:
       security:
         - ApiKeyAuth: []
     post:
-      description: Create attributes in bulk.
+      description: Create attributes.
       operationId: admin_attributes_create
       x-fern-server-name: admin
       x-fern-sdk-group-name:
@@ -207,11 +207,11 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/ErrorBody'
-      summary: Create attributes in bulk
+      summary: Create attributes
       security:
         - ApiKeyAuth: []
     patch:
-      description: Update attributes in bulk by ID.
+      description: Update attributes by ID.
       operationId: admin_attributes_update
       x-fern-server-name: admin
       x-fern-sdk-group-name:
@@ -298,11 +298,11 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/ErrorBody'
-      summary: Update attributes in bulk
+      summary: Update attributes
       security:
         - ApiKeyAuth: []
     delete:
-      description: Delete attributes in bulk by ID.
+      description: Delete attributes by ID.
       operationId: admin_attributes_delete
       x-fern-server-name: admin
       x-fern-sdk-group-name:
@@ -393,7 +393,7 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/ErrorBody'
-      summary: Delete attributes in bulk
+      summary: Delete attributes
       security:
         - ApiKeyAuth: []
 
@@ -576,7 +576,7 @@ paths:
       security:
         - ApiKeyAuth: []
     post:
-      description: Create metrics in bulk.
+      description: Create metrics.
       operationId: admin_metrics_create
       x-fern-server-name: admin
       x-fern-sdk-group-name:
@@ -703,11 +703,11 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/ErrorBody'
-      summary: Create metrics in bulk
+      summary: Create metrics
       security:
         - ApiKeyAuth: []
     patch:
-      description: Update metrics in bulk by ID.
+      description: Update metrics by ID.
       operationId: admin_metrics_update
       x-fern-server-name: admin
       x-fern-sdk-group-name:
@@ -812,11 +812,11 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/ErrorBody'
-      summary: Update metrics in bulk
+      summary: Update metrics
       security:
         - ApiKeyAuth: []
     delete:
-      description: Delete metrics in bulk by ID.
+      description: Delete metrics by ID.
       operationId: admin_metrics_delete
       x-fern-server-name: admin
       x-fern-sdk-group-name:
@@ -907,7 +907,7 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/ErrorBody'
-      summary: Delete metrics in bulk
+      summary: Delete metrics
       security:
         - ApiKeyAuth: []
 
@@ -1366,7 +1366,7 @@ paths:
       servers:
         - url: https://admin.trophy.so/v1
           description: Admin API
-      description: Create leaderboards in bulk. Maximum 100 leaderboards per request.
+      description: Create leaderboards. Maximum 100 leaderboards per request.
       operationId: admin_leaderboards_create
       x-fern-server-name: admin
       x-fern-sdk-group-name:
@@ -1426,14 +1426,14 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/ErrorBody'
-      summary: Create leaderboards in bulk
+      summary: Create leaderboards
       security:
         - ApiKeyAuth: []
     patch:
       servers:
         - url: https://admin.trophy.so/v1
           description: Admin API
-      description: Update leaderboards in bulk by ID. Updating `status` behaves the same as activating, scheduling, deactivating, or finishing a leaderboard in the dashboard.
+      description: Update leaderboards by ID. Updating `status` behaves the same as activating, scheduling, deactivating, or finishing a leaderboard in the dashboard.
       operationId: admin_leaderboards_update
       x-fern-server-name: admin
       x-fern-sdk-group-name:
@@ -1477,14 +1477,14 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/ErrorBody'
-      summary: Update leaderboards in bulk
+      summary: Update leaderboards
       security:
         - ApiKeyAuth: []
     delete:
       servers:
         - url: https://admin.trophy.so/v1
           description: Admin API
-      description: Delete leaderboards in bulk by ID.
+      description: Delete leaderboards by ID.
       operationId: admin_leaderboards_delete
       x-fern-server-name: admin
       x-fern-sdk-group-name:
@@ -1526,7 +1526,7 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/ErrorBody'
-      summary: Delete leaderboards in bulk
+      summary: Delete leaderboards
       security:
         - ApiKeyAuth: []
 
