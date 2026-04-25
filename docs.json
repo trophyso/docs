@@ -528,6 +528,16 @@
                   "es/admin-api/endpoints/points/create-boosts",
                   "es/admin-api/endpoints/points/archive-boosts-batch"
                 ]
+              },
+              {
+                "group": "Clasificaciones",
+                "pages": [
+                  "es/admin-api/endpoints/leaderboards/list-leaderboards",
+                  "es/admin-api/endpoints/leaderboards/get-a-leaderboard",
+                  "es/admin-api/endpoints/leaderboards/update-leaderboards-in-bulk",
+                  "es/admin-api/endpoints/leaderboards/create-leaderboards-in-bulk",
+                  "es/admin-api/endpoints/leaderboards/delete-leaderboards-in-bulk"
+                ]
               }
             ]
           },
