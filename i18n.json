@@ -16,6 +16,7 @@
         "admin-api/endpoints/streaks/*.mdx",
         "admin-api/endpoints/metrics/*.mdx",
         "admin-api/endpoints/attributes/*.mdx",
+        "admin-api/endpoints/leaderboards/*.mdx",
         "api-reference/*.mdx",
         "api-reference/endpoints/achievements/*.mdx",
         "api-reference/endpoints/leaderboards/*.mdx",
