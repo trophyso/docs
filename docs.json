@@ -235,6 +235,16 @@
               {
                 "group": "Points",
                 "pages": [
+                  "admin-api/endpoints/points/list-points-systems",
+                  "admin-api/endpoints/points/get-a-points-system",
+                  "admin-api/endpoints/points/update-points-systems",
+                  "admin-api/endpoints/points/create-points-systems",
+                  "admin-api/endpoints/points/delete-points-systems",
+                  "admin-api/endpoints/points/list-points-triggers",
+                  "admin-api/endpoints/points/get-a-points-trigger",
+                  "admin-api/endpoints/points/update-points-triggers",
+                  "admin-api/endpoints/points/create-points-triggers",
+                  "admin-api/endpoints/points/delete-points-triggers",
                   "admin-api/endpoints/points/list-levels",
                   "admin-api/endpoints/points/get-a-level",
                   "admin-api/endpoints/points/update-levels",
@@ -500,7 +510,10 @@
               {
                 "group": "Resumen",
                 "pages": [
-                  "es/admin-api/introduction"
+                  "es/admin-api/introduction",
+                  "es/admin-api/authentication",
+                  "es/admin-api/rate-limiting",
+                  "es/admin-api/client-libraries"
                 ]
               },
               {
@@ -533,6 +546,24 @@
               {
                 "group": "Puntos",
                 "pages": [
+                  "es/admin-api/endpoints/points/list-points-systems",
+                  "es/admin-api/endpoints/points/get-a-points-system",
+                  "es/admin-api/endpoints/points/update-points-systems",
+                  "es/admin-api/endpoints/points/create-points-systems",
+                  "es/admin-api/endpoints/points/delete-points-systems",
+                  "es/admin-api/endpoints/points/list-points-triggers",
+                  "es/admin-api/endpoints/points/get-a-points-trigger",
+                  "es/admin-api/endpoints/points/update-points-triggers",
+                  "es/admin-api/endpoints/points/create-points-triggers",
+                  "es/admin-api/endpoints/points/delete-points-triggers",
+                  "es/admin-api/endpoints/points/list-levels",
+                  "es/admin-api/endpoints/points/get-a-level",
+                  "es/admin-api/endpoints/points/update-levels",
+                  "es/admin-api/endpoints/points/create-levels",
+                  "es/admin-api/endpoints/points/delete-levels",
+                  "es/admin-api/endpoints/points/list-boosts",
+                  "es/admin-api/endpoints/points/get-a-boost",
+                  "es/admin-api/endpoints/points/update-boosts",
                   "es/admin-api/endpoints/points/create-boosts",
                   "es/admin-api/endpoints/points/delete-boosts"
                 ]
