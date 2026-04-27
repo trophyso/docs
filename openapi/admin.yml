@@ -1014,6 +1014,29 @@ paths:
       x-fern-sdk-method-name: list
       tags:
         - Admin
+      x-codeSamples:
+        - lang: javascript
+          source: |
+            import { TrophyApiClient } from '@trophyso/node';
+
+            const trophy = new TrophyApiClient({
+              apiKey: 'YOUR_API_KEY'
+            });
+
+            const systems = await trophy.admin.points.systems.list({
+              limit: 10,
+              skip: 0
+            });
+        - lang: python
+          source: |
+            from trophy import TrophyApi
+
+            client = TrophyApi(api_key='YOUR_API_KEY')
+
+            systems = client.admin.points.systems.list(
+              limit=10,
+              skip=0
+            )
       parameters:
         - name: limit
           in: query
@@ -1077,6 +1100,43 @@ paths:
       x-fern-sdk-method-name: create
       tags:
         - Admin
+      x-codeSamples:
+        - lang: javascript
+          source: |
+            import { TrophyApiClient } from '@trophyso/node';
+
+            const trophy = new TrophyApiClient({
+              apiKey: 'YOUR_API_KEY'
+            });
+
+            const result = await trophy.admin.points.systems.create([
+              {
+                name: 'XP',
+                key: 'xp',
+                description: 'Experience points',
+                levels: [
+                  { name: 'Bronze', key: 'bronze', points: 100 },
+                  { name: 'Silver', key: 'silver', points: 500 }
+                ]
+              }
+            ]);
+        - lang: python
+          source: |
+            from trophy import TrophyApi
+
+            client = TrophyApi(api_key='YOUR_API_KEY')
+
+            result = client.admin.points.systems.create(
+              request=[{
+                "name": "XP",
+                "key": "xp",
+                "description": "Experience points",
+                "levels": [
+                  {"name": "Bronze", "key": "bronze", "points": 100},
+                  {"name": "Silver", "key": "silver", "points": 500}
+                ]
+              }]
+            )
       requestBody:
         description: Array of points systems to create. Maximum 100 systems per request.
         required: true
@@ -1163,6 +1223,35 @@ paths:
       x-fern-sdk-method-name: update
       tags:
         - Admin
+      x-codeSamples:
+        - lang: javascript
+          source: |
+            import { TrophyApiClient } from '@trophyso/node';
+
+            const trophy = new TrophyApiClient({
+              apiKey: 'YOUR_API_KEY'
+            });
+
+            const result = await trophy.admin.points.systems.update([
+              {
+                id: 'system-uuid',
+                name: 'New Name',
+                description: 'Updated description'
+              }
+            ]);
+        - lang: python
+          source: |
+            from trophy import TrophyApi
+
+            client = TrophyApi(api_key='YOUR_API_KEY')
+
+            result = client.admin.points.systems.update(
+              request=[{
+                "id": "system-uuid",
+                "name": "New Name",
+                "description": "Updated description"
+              }]
+            )
       requestBody:
         description: Array of points system updates. Maximum 100 systems per request.
         required: true
@@ -1220,6 +1309,27 @@ paths:
       x-fern-sdk-method-name: delete
       tags:
         - Admin
+      x-codeSamples:
+        - lang: javascript
+          source: |
+            import { TrophyApiClient } from '@trophyso/node';
+
+            const trophy = new TrophyApiClient({
+              apiKey: 'YOUR_API_KEY'
+            });
+
+            const result = await trophy.admin.points.systems.delete({
+              ids: ['system-uuid-1', 'system-uuid-2']
+            });
+        - lang: python
+          source: |
+            from trophy import TrophyApi
+
+            client = TrophyApi(api_key='YOUR_API_KEY')
+
+            result = client.admin.points.systems.delete(
+              ids=['system-uuid-1', 'system-uuid-2']
+            )
       parameters:
         - name: ids
           in: query
@@ -1276,6 +1386,23 @@ paths:
       x-fern-sdk-method-name: get
       tags:
         - Admin
+      x-codeSamples:
+        - lang: javascript
+          source: |
+            import { TrophyApiClient } from '@trophyso/node';
+
+            const trophy = new TrophyApiClient({
+              apiKey: 'YOUR_API_KEY'
+            });
+
+            const system = await trophy.admin.points.systems.get('system-uuid');
+        - lang: python
+          source: |
+            from trophy import TrophyApi
+
+            client = TrophyApi(api_key='YOUR_API_KEY')
+
+            system = client.admin.points.systems.get(id='system-uuid')
       parameters:
         - name: id
           in: path
@@ -2516,10 +2643,6 @@ paths:
                       metricId: '660f9500-f30c-42e5-b827-557766550001'
                       metricThreshold: 5
                       eventAttributes: []
-                      achievementId: null
-                      streakLength: null
-                      timeUnit: null
-                      timeInterval: null
                       blockIfOutOfPoints: false
         '401':
           description: 'Unauthorized'
@@ -2625,10 +2748,6 @@ paths:
                         metricId: '660f9500-f30c-42e5-b827-557766550001'
                         metricThreshold: 5
                         eventAttributes: []
-                        achievementId: null
-                        streakLength: null
-                        timeUnit: null
-                        timeInterval: null
                         blockIfOutOfPoints: false
                     issues: []
         '401':
@@ -2719,10 +2838,6 @@ paths:
                         metricId: '660f9500-f30c-42e5-b827-557766550001'
                         metricThreshold: 5
                         eventAttributes: []
-                        achievementId: null
-                        streakLength: null
-                        timeUnit: null
-                        timeInterval: null
                         blockIfOutOfPoints: false
                     issues: []
         '401':
@@ -2905,10 +3020,6 @@ paths:
                     metricId: '660f9500-f30c-42e5-b827-557766550001'
                     metricThreshold: 5
                     eventAttributes: []
-                    achievementId: null
-                    streakLength: null
-                    timeUnit: null
-                    timeInterval: null
                     blockIfOutOfPoints: false
         '401':
           description: 'Unauthorized'
@@ -4198,76 +4309,80 @@ components:
       description: A paginated list of metrics.
       items:
         $ref: '#/components/schemas/CreatedMetric'
+    CreatePointsBoostRequestItem:
+      title: CreatePointsBoostRequestItem
+      type: object
+      description: A points boost to create. May optionally target a specific user via `userId` or filter by user attributes via `userAttributes`. These two fields are mutually exclusive.
+      properties:
+        userId:
+          type:
+            - string
+            - 'null'
+          description: The ID of the user to create a boost for. Mutually exclusive with `userAttributes` — providing `userAttributes` when `userId` is set will result in an error. Omit for a global boost.
+          example: user-123
+        name:
+          type: string
+          description: The name of the boost.
+          maxLength: 255
+          example: Double XP Weekend
+        start:
+          type: string
+          format: date
+          description: The start date of the boost (YYYY-MM-DD).
+          example: '2024-01-01'
+        end:
+          type:
+            - string
+            - 'null'
+          format: date
+          description: The end date of the boost (YYYY-MM-DD). If null, the boost has no end date.
+          example: '2024-01-03'
+        multiplier:
+          type: number
+          description: The points multiplier. Must be greater than 0, not equal to 1, and less than 100.
+          example: 2
+          exclusiveMinimum: 0
+          exclusiveMaximum: 100
+        rounding:
+          type: string
+          enum:
+            - down
+            - up
+            - nearest
+          default: down
+          description: How to round the boosted points. Defaults to 'down'.
+          example: down
+        userAttributes:
+          type:
+            - array
+            - 'null'
+          description: User attribute filters for the boost. Cannot be provided when `userId` is set.
+          items:
+            type: object
+            properties:
+              attributeId:
+                type: string
+                format: uuid
+                description: The UUID of the user attribute.
+              attributeValue:
+                type: string
+                description: The value to match.
+            required:
+              - attributeId
+              - attributeValue
+          example:
+            - attributeId: '550e8400-e29b-41d4-a716-446655440000'
+              attributeValue: premium
+      required:
+        - name
+        - start
+        - multiplier
     CreatePointsBoostsRequest:
       title: CreatePointsBoostsRequest
       type: array
       description: Array of points boosts to create. Maximum 100 boosts per request. Each boost may optionally target a specific user via `userId` or filter by user attributes via `userAttributes`. These two fields are mutually exclusive — providing `userAttributes` when `userId` is set will result in an error. Omitting both creates a global boost.
       items:
-        type: object
-        properties:
-          userId:
-            type:
-              - string
-              - 'null'
-            description: The ID of the user to create a boost for. Mutually exclusive with `userAttributes` — providing `userAttributes` when `userId` is set will result in an error. Omit for a global boost.
-            example: user-123
-          name:
-            type: string
-            description: The name of the boost.
-            maxLength: 255
-            example: Double XP Weekend
-          start:
-            type: string
-            format: date
-            description: The start date of the boost (YYYY-MM-DD).
-            example: '2024-01-01'
-          end:
-            type:
-              - string
-              - 'null'
-            format: date
-            description: The end date of the boost (YYYY-MM-DD). If null, the boost has no end date.
-            example: '2024-01-03'
-          multiplier:
-            type: number
-            description: The points multiplier. Must be greater than 0, not equal to 1, and less than 100.
-            example: 2
-            exclusiveMinimum: 0
-            exclusiveMaximum: 100
-          rounding:
-            type: string
-            enum:
-              - down
-              - up
-              - nearest
-            default: down
-            description: How to round the boosted points. Defaults to 'down'.
-            example: down
-          userAttributes:
-            type:
-              - array
-              - 'null'
-            description: User attribute filters for the boost. Cannot be provided when `userId` is set.
-            items:
-              type: object
-              properties:
-                attributeId:
-                  type: string
-                  format: uuid
-                  description: The UUID of the user attribute.
-                attributeValue:
-                  type: string
-                  description: The value to match.
-              required:
-                - attributeId
-                - attributeValue
-            example:
-              - attributeId: '550e8400-e29b-41d4-a716-446655440000'
-                attributeValue: premium
-        required:
-          - name
-          - start
-          - multiplier
+        $ref: '#/components/schemas/CreatePointsBoostRequestItem'
       maxItems: 100
       minItems: 1
     AdminPointsBoost:
@@ -4455,45 +4570,49 @@ components:
       required:
         - deleted
         - issues
+    CreatePointsLevelRequestItem:
+      title: CreatePointsLevelRequestItem
+      type: object
+      description: A points level to create.
+      properties:
+        name:
+          type: string
+          description: The name of the level.
+          example: Bronze
+        key:
+          type: string
+          description: A unique key for the level. Only alphanumeric characters, hyphens, and underscores are permitted.
+          pattern: '^[a-zA-Z\d-_]+$'
+          example: bronze
+        points:
+          type: integer
+          minimum: 0
+          description: The threshold points value for the level.
+          example: 100
+        description:
+          type: string
+          description: An optional description of the level.
+          example: Starting level
+        badge:
+          type: object
+          description: An optional badge for the level.
+          properties:
+            url:
+              type: string
+              description: The URL of the badge image.
+              example: 'https://example.com/bronze.png'
+          required:
+            - url
+      required:
+        - name
+        - key
+        - points
     CreatePointsLevelsRequest:
       title: CreatePointsLevelsRequest
       type: array
       description: Array of points levels to create. Maximum 100 levels per request.
       items:
-        type: object
-        properties:
-          name:
-            type: string
-            description: The name of the level.
-            example: Bronze
-          key:
-            type: string
-            description: A unique key for the level. Only alphanumeric characters, hyphens, and underscores are permitted.
-            pattern: '^[a-zA-Z\d-_]+$'
-            example: bronze
-          points:
-            type: integer
-            minimum: 0
-            description: The threshold points value for the level.
-            example: 100
-          description:
-            type: string
-            description: An optional description of the level.
-            example: Starting level
-          badge:
-            type: object
-            description: An optional badge for the level.
-            properties:
-              url:
-                type: string
-                description: The URL of the badge image.
-                example: 'https://example.com/bronze.png'
-            required:
-              - url
-        required:
-          - name
-          - key
-          - points
+        $ref: '#/components/schemas/CreatePointsLevelRequestItem'
       maxItems: 100
       minItems: 1
     AdminPointsLevel:
@@ -4632,104 +4751,108 @@ components:
       required:
         - deleted
         - issues
+    CreatePointsTriggerRequestItem:
+      title: CreatePointsTriggerRequestItem
+      type: object
+      description: A points trigger to create.
+      properties:
+        type:
+          type: string
+          enum:
+            - metric
+            - achievement
+            - streak
+            - time
+            - user_creation
+          description: The type of trigger.
+          example: metric
+        points:
+          type: integer
+          description: The number of points to award or deduct when the trigger fires. Cannot be zero.
+          example: 10
+        status:
+          type: string
+          enum:
+            - active
+            - inactive
+          default: inactive
+          description: The status of the trigger. Defaults to 'inactive'.
+          example: inactive
+        userAttributes:
+          type:
+            - array
+            - 'null'
+          description: Optional user attribute filters for the trigger.
+          items:
+            type: object
+            properties:
+              attributeId:
+                type: string
+                format: uuid
+                description: The UUID of the user attribute.
+              attributeValue:
+                type: string
+                description: The value to match.
+            required:
+              - attributeId
+              - attributeValue
+        metricId:
+          type: string
+          format: uuid
+          description: Required if type is `metric`. The UUID of the metric.
+        metricThreshold:
+          type: integer
+          minimum: 1
+          description: Required if type is `metric`. The metric increment that triggers the points.
+        eventAttributes:
+          type:
+            - array
+            - 'null'
+          description: Optional event attribute filters. Only permitted if type is `metric`.
+          items:
+            type: object
+            properties:
+              attributeId:
+                type: string
+                format: uuid
+                description: The UUID of the event attribute.
+              attributeValue:
+                type: string
+                description: The value to match.
+            required:
+              - attributeId
+              - attributeValue
+        achievementId:
+          type: string
+          format: uuid
+          description: Required if type is `achievement`. The UUID of the achievement.
+        streakLength:
+          type: integer
+          minimum: 1
+          description: Required if type is `streak`. The number of streak periods that triggers the points.
+        timeUnit:
+          type: string
+          enum:
+            - hours
+            - days
+          description: Required if type is `time`. The unit for the time interval.
+        timeInterval:
+          type: integer
+          minimum: 1
+          description: Required if type is `time`. The number of time units between recurring awards.
+        blockIfOutOfPoints:
+          type: boolean
+          default: false
+          description: Whether to block metric events that would reduce the user's points below zero. Defaults to false.
+      required:
+        - type
+        - points
     CreatePointsTriggersRequest:
       title: CreatePointsTriggersRequest
       type: array
       description: Array of points triggers to create. Maximum 100 triggers per request.
       items:
-        type: object
-        properties:
-          type:
-            type: string
-            enum:
-              - metric
-              - achievement
-              - streak
-              - time
-              - user_creation
-            description: The type of trigger.
-            example: metric
-          points:
-            type: integer
-            description: The number of points to award or deduct when the trigger fires. Cannot be zero.
-            example: 10
-          status:
-            type: string
-            enum:
-              - active
-              - inactive
-            default: inactive
-            description: The status of the trigger. Defaults to 'inactive'.
-            example: inactive
-          userAttributes:
-            type:
-              - array
-              - 'null'
-            description: Optional user attribute filters for the trigger.
-            items:
-              type: object
-              properties:
-                attributeId:
-                  type: string
-                  format: uuid
-                  description: The UUID of the user attribute.
-                attributeValue:
-                  type: string
-                  description: The value to match.
-              required:
-                - attributeId
-                - attributeValue
-          metricId:
-            type: string
-            format: uuid
-            description: Required if type is `metric`. The UUID of the metric.
-          metricThreshold:
-            type: integer
-            minimum: 1
-            description: Required if type is `metric`. The metric increment that triggers the points.
-          eventAttributes:
-            type:
-              - array
-              - 'null'
-            description: Optional event attribute filters. Only permitted if type is `metric`.
-            items:
-              type: object
-              properties:
-                attributeId:
-                  type: string
-                  format: uuid
-                  description: The UUID of the event attribute.
-                attributeValue:
-                  type: string
-                  description: The value to match.
-              required:
-                - attributeId
-                - attributeValue
-          achievementId:
-            type: string
-            format: uuid
-            description: Required if type is `achievement`. The UUID of the achievement.
-          streakLength:
-            type: integer
-            minimum: 1
-            description: Required if type is `streak`. The number of streak periods that triggers the points.
-          timeUnit:
-            type: string
-            enum:
-              - hours
-              - days
-            description: Required if type is `time`. The unit for the time interval.
-          timeInterval:
-            type: integer
-            minimum: 1
-            description: Required if type is `time`. The number of time units between recurring awards.
-          blockIfOutOfPoints:
-            type: boolean
-            default: false
-            description: Whether to block metric events that would reduce the user's points below zero. Defaults to false.
-        required:
-          - type
-          - points
+        $ref: '#/components/schemas/CreatePointsTriggerRequestItem'
       maxItems: 100
       minItems: 1
     AdminPointsTrigger:
@@ -4774,19 +4897,15 @@ components:
               - attributeId
               - attributeValue
         metricId:
-          type:
-            - string
-            - 'null'
+          type: string
           format: uuid
-          description: The UUID of the metric, or null if not a metric trigger.
+          description: The UUID of the metric. Only present for metric triggers.
         metricThreshold:
-          type:
-            - integer
-            - 'null'
-          description: The metric threshold, or null if not a metric trigger.
+          type: integer
+          description: The metric threshold. Only present for metric triggers.
         eventAttributes:
           type: array
-          description: Event attribute filters applied to the trigger.
+          description: Event attribute filters applied to the trigger. Only present for metric triggers.
           items:
             type: object
             properties:
@@ -4799,30 +4918,21 @@ components:
               - attributeId
               - attributeValue
         achievementId:
-          type:
-            - string
-            - 'null'
+          type: string
           format: uuid
-          description: The UUID of the achievement, or null if not an achievement trigger.
+          description: The UUID of the achievement. Only present for achievement triggers.
         streakLength:
-          type:
-            - integer
-            - 'null'
-          description: The streak length, or null if not a streak trigger.
+          type: integer
+          description: The streak length. Only present for streak triggers.
         timeUnit:
-          type:
-            - string
-            - 'null'
+          type: string
           enum:
             - hours
             - days
-            - null
-          description: The time unit, or null if not a time trigger.
+          description: The time unit. Only present for time triggers.
         timeInterval:
-          type:
-            - integer
-            - 'null'
-          description: The time interval, or null if not a time trigger.
+          type: integer
+          description: The time interval. Only present for time triggers.
         blockIfOutOfPoints:
           type: boolean
           description: Whether metric events that would reduce the user's points below zero are blocked.
@@ -4832,13 +4942,6 @@ components:
         - points
         - status
         - userAttributes
-        - metricId
-        - metricThreshold
-        - eventAttributes
-        - achievementId
-        - streakLength
-        - timeUnit
-        - timeInterval
         - blockIfOutOfPoints
     ListPointsTriggersResponse:
       title: ListPointsTriggersResponse
@@ -5108,20 +5211,22 @@ components:
           description: A short description of the points system.
           example: Experience points
         badge:
-          type: object
-          properties:
-            url:
-              type: string
-              description: Badge image URL.
-          required:
-            - url
-          nullable: true
+          oneOf:
+            - type: object
+              properties:
+                url:
+                  type: string
+                  description: Badge image URL.
+              required:
+                - url
+            - type: 'null'
           description: An optional badge for the points system.
         maxPoints:
-          type: integer
+          type:
+            - integer
+            - 'null'
           minimum: 1
           description: Optional maximum points a user can earn.
-          nullable: true
         levels:
           type: array
           description: Optional array of levels to create alongside the system.
@@ -5165,33 +5270,20 @@ components:
             - archived
           description: The points system status.
         badge:
-          type: object
-          properties:
-            url:
-              type: string
-          required:
-            - url
-          nullable: true
+          oneOf:
+            - type: object
+              properties:
+                url:
+                  type: string
+              required:
+                - url
+            - type: 'null'
           description: The badge for the points system.
         maxPoints:
-          type: integer
-          nullable: true
+          type:
+            - integer
+            - 'null'
           description: The maximum points a user can earn.
-        levels:
-          type: array
-          items:
-            $ref: '#/components/schemas/AdminPointsLevel'
-          description: Levels created alongside the system (only present in creation response when levels were provided).
-        boosts:
-          type: array
-          items:
-            $ref: '#/components/schemas/AdminPointsBoost'
-          description: Boosts created alongside the system (only present in creation response when boosts were provided).
-        triggers:
-          type: array
-          items:
-            $ref: '#/components/schemas/AdminPointsTrigger'
-          description: Triggers created alongside the system (only present in creation response when triggers were provided).
       required:
         - id
         - name
@@ -5200,6 +5292,28 @@ components:
         - status
         - badge
         - maxPoints
+    CreatedAdminPointsSystem:
+      title: CreatedAdminPointsSystem
+      description: A points system returned from the creation endpoint. Extends AdminPointsSystem with optional sub-entity arrays that are present when those sub-entities were included in the creation request.
+      allOf:
+        - $ref: '#/components/schemas/AdminPointsSystem'
+        - type: object
+          properties:
+            levels:
+              type: array
+              items:
+                $ref: '#/components/schemas/AdminPointsLevel'
+              description: Levels created alongside the system. Present when levels were provided in the request.
+            boosts:
+              type: array
+              items:
+                $ref: '#/components/schemas/AdminPointsBoost'
+              description: Boosts created alongside the system. Present when boosts were provided in the request.
+            triggers:
+              type: array
+              items:
+                $ref: '#/components/schemas/AdminPointsTrigger'
+              description: Triggers created alongside the system. Present when triggers were provided in the request.
     ListPointsSystemsResponse:
       title: ListPointsSystemsResponse
       type: array
@@ -5214,7 +5328,7 @@ components:
         created:
           type: array
           items:
-            $ref: '#/components/schemas/AdminPointsSystem'
+            $ref: '#/components/schemas/CreatedAdminPointsSystem'
           description: Array of successfully created points systems.
         issues:
           type: array
@@ -5249,18 +5363,20 @@ components:
           type: string
           description: Updated description.
         badge:
-          type: object
-          properties:
-            url:
-              type: string
-          required:
-            - url
-          nullable: true
+          oneOf:
+            - type: object
+              properties:
+                url:
+                  type: string
+              required:
+                - url
+            - type: 'null'
           description: Updated badge. Set to null to remove.
         maxPoints:
-          type: integer
+          type:
+            - integer
+            - 'null'
           minimum: 1
-          nullable: true
           description: Updated max points. Set to null to remove.
       required:
         - id
