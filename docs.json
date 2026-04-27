@@ -209,10 +209,10 @@
                 "group": "Metrics",
                 "pages": [
                   "admin-api/endpoints/metrics/list-metrics",
-                  "admin-api/endpoints/metrics/get-a-metric-by-id",
-                  "admin-api/endpoints/metrics/update-metrics-in-bulk",
-                  "admin-api/endpoints/metrics/create-metrics-in-bulk",
-                  "admin-api/endpoints/metrics/delete-metrics-in-bulk"
+                  "admin-api/endpoints/metrics/get-a-metric",
+                  "admin-api/endpoints/metrics/update-metrics",
+                  "admin-api/endpoints/metrics/create-metrics",
+                  "admin-api/endpoints/metrics/delete-metrics"
                 ]
               },
               {
@@ -220,9 +220,9 @@
                 "pages": [
                   "admin-api/endpoints/attributes/list-attributes",
                   "admin-api/endpoints/attributes/get-an-attribute",
-                  "admin-api/endpoints/attributes/update-attributes-in-bulk",
-                  "admin-api/endpoints/attributes/create-attributes-in-bulk",
-                  "admin-api/endpoints/attributes/delete-attributes-in-bulk"
+                  "admin-api/endpoints/attributes/update-attributes",
+                  "admin-api/endpoints/attributes/create-attributes",
+                  "admin-api/endpoints/attributes/delete-attributes"
                 ]
               },
               {
@@ -235,8 +235,26 @@
               {
                 "group": "Points",
                 "pages": [
+                  "admin-api/endpoints/points/list-points-systems",
+                  "admin-api/endpoints/points/get-a-points-system",
+                  "admin-api/endpoints/points/update-points-systems",
+                  "admin-api/endpoints/points/create-points-systems",
+                  "admin-api/endpoints/points/delete-points-systems",
+                  "admin-api/endpoints/points/list-points-triggers",
+                  "admin-api/endpoints/points/get-a-points-trigger",
+                  "admin-api/endpoints/points/update-points-triggers",
+                  "admin-api/endpoints/points/create-points-triggers",
+                  "admin-api/endpoints/points/delete-points-triggers",
+                  "admin-api/endpoints/points/list-levels",
+                  "admin-api/endpoints/points/get-a-level",
+                  "admin-api/endpoints/points/update-levels",
+                  "admin-api/endpoints/points/create-levels",
+                  "admin-api/endpoints/points/delete-levels",
+                  "admin-api/endpoints/points/list-boosts",
+                  "admin-api/endpoints/points/get-a-boost",
+                  "admin-api/endpoints/points/update-boosts",
                   "admin-api/endpoints/points/create-boosts",
-                  "admin-api/endpoints/points/archive-boosts-batch"
+                  "admin-api/endpoints/points/delete-boosts"
                 ]
               },
               {
@@ -244,9 +262,9 @@
                 "pages": [
                   "admin-api/endpoints/leaderboards/list-leaderboards",
                   "admin-api/endpoints/leaderboards/get-a-leaderboard",
-                  "admin-api/endpoints/leaderboards/update-leaderboards-in-bulk",
-                  "admin-api/endpoints/leaderboards/create-leaderboards-in-bulk",
-                  "admin-api/endpoints/leaderboards/delete-leaderboards-in-bulk"
+                  "admin-api/endpoints/leaderboards/update-leaderboards",
+                  "admin-api/endpoints/leaderboards/create-leaderboards",
+                  "admin-api/endpoints/leaderboards/delete-leaderboards"
                 ]
               }
             ]
@@ -492,17 +510,20 @@
               {
                 "group": "Resumen",
                 "pages": [
-                  "es/admin-api/introduction"
+                  "es/admin-api/introduction",
+                  "es/admin-api/authentication",
+                  "es/admin-api/rate-limiting",
+                  "es/admin-api/client-libraries"
                 ]
               },
               {
                 "group": "Métricas",
                 "pages": [
                   "es/admin-api/endpoints/metrics/list-metrics",
-                  "es/admin-api/endpoints/metrics/get-a-metric-by-id",
-                  "es/admin-api/endpoints/metrics/update-metrics-in-bulk",
-                  "es/admin-api/endpoints/metrics/create-metrics-in-bulk",
-                  "es/admin-api/endpoints/metrics/delete-metrics-in-bulk"
+                  "es/admin-api/endpoints/metrics/get-a-metric",
+                  "es/admin-api/endpoints/metrics/update-metrics",
+                  "es/admin-api/endpoints/metrics/create-metrics",
+                  "es/admin-api/endpoints/metrics/delete-metrics"
                 ]
               },
               {
@@ -510,9 +531,9 @@
                 "pages": [
                   "es/admin-api/endpoints/attributes/list-attributes",
                   "es/admin-api/endpoints/attributes/get-an-attribute",
-                  "es/admin-api/endpoints/attributes/update-attributes-in-bulk",
-                  "es/admin-api/endpoints/attributes/create-attributes-in-bulk",
-                  "es/admin-api/endpoints/attributes/delete-attributes-in-bulk"
+                  "es/admin-api/endpoints/attributes/update-attributes",
+                  "es/admin-api/endpoints/attributes/create-attributes",
+                  "es/admin-api/endpoints/attributes/delete-attributes"
                 ]
               },
               {
@@ -525,8 +546,26 @@
               {
                 "group": "Puntos",
                 "pages": [
+                  "es/admin-api/endpoints/points/list-points-systems",
+                  "es/admin-api/endpoints/points/get-a-points-system",
+                  "es/admin-api/endpoints/points/update-points-systems",
+                  "es/admin-api/endpoints/points/create-points-systems",
+                  "es/admin-api/endpoints/points/delete-points-systems",
+                  "es/admin-api/endpoints/points/list-points-triggers",
+                  "es/admin-api/endpoints/points/get-a-points-trigger",
+                  "es/admin-api/endpoints/points/update-points-triggers",
+                  "es/admin-api/endpoints/points/create-points-triggers",
+                  "es/admin-api/endpoints/points/delete-points-triggers",
+                  "es/admin-api/endpoints/points/list-levels",
+                  "es/admin-api/endpoints/points/get-a-level",
+                  "es/admin-api/endpoints/points/update-levels",
+                  "es/admin-api/endpoints/points/create-levels",
+                  "es/admin-api/endpoints/points/delete-levels",
+                  "es/admin-api/endpoints/points/list-boosts",
+                  "es/admin-api/endpoints/points/get-a-boost",
+                  "es/admin-api/endpoints/points/update-boosts",
                   "es/admin-api/endpoints/points/create-boosts",
-                  "es/admin-api/endpoints/points/archive-boosts-batch"
+                  "es/admin-api/endpoints/points/delete-boosts"
                 ]
               },
               {
@@ -534,9 +573,9 @@
                 "pages": [
                   "es/admin-api/endpoints/leaderboards/list-leaderboards",
                   "es/admin-api/endpoints/leaderboards/get-a-leaderboard",
-                  "es/admin-api/endpoints/leaderboards/update-leaderboards-in-bulk",
-                  "es/admin-api/endpoints/leaderboards/create-leaderboards-in-bulk",
-                  "es/admin-api/endpoints/leaderboards/delete-leaderboards-in-bulk"
+                  "es/admin-api/endpoints/leaderboards/update-leaderboards",
+                  "es/admin-api/endpoints/leaderboards/create-leaderboards",
+                  "es/admin-api/endpoints/leaderboards/delete-leaderboards"
                 ]
               }
             ]

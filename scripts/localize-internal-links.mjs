@@ -129,6 +129,39 @@ function rewriteContent(content, locale) {
   return next;
 }
 
+function collectNonLocalizedLinks(content, locale) {
+  const findings = [];
+
+  // Markdown links: [label](/path)
+  const markdownRegex = /\]\(\/([^)]+)\)/g;
+  for (const match of content.matchAll(markdownRegex)) {
+    const originalPath = match[1];
+    const out = transformCapturedPath(originalPath, locale);
+    if (out === null) continue;
+    findings.push({
+      kind: "markdown",
+      before: `](/${originalPath})`,
+      after: `](/${out})`
+    });
+  }
+
+  // JSX/HTML attrs: href="/path"
+  const hrefRegex = /\bhref=(["'])\/([^"']+)\1/g;
+  for (const match of content.matchAll(hrefRegex)) {
+    const quote = match[1];
+    const originalPath = match[2];
+    const out = transformCapturedPath(originalPath, locale);
+    if (out === null) continue;
+    findings.push({
+      kind: "href",
+      before: `href=${quote}/${originalPath}${quote}`,
+      after: `href=${quote}/${out}${quote}`
+    });
+  }
+
+  return findings;
+}
+
 function walkMdx(dir) {
   if (!fs.existsSync(dir)) return [];
   const out = [];
@@ -165,6 +198,7 @@ function walkRootMdx(root, excludedTopDirs) {
 }
 
 let changedFiles = 0;
+const checkFindings = [];
 
 for (const locale of locales) {
   const files = locale === sourceLocale
@@ -175,6 +209,10 @@ for (const locale of locales) {
     const next = rewriteContent(raw, locale);
     if (next !== raw) {
       changedFiles += 1;
+      if (checkOnly) {
+        const findings = collectNonLocalizedLinks(raw, locale);
+        checkFindings.push({ file, findings });
+      }
       if (!checkOnly) fs.writeFileSync(file, next);
     }
   }
@@ -183,6 +221,12 @@ for (const locale of locales) {
 if (checkOnly) {
   if (changedFiles > 0) {
     console.error(`Found ${changedFiles} file(s) with non-localized internal links.`);
+    for (const item of checkFindings) {
+      console.error(`- ${item.file}`);
+      for (const finding of item.findings) {
+        console.error(`  ${finding.before} -> ${finding.after}`);
+      }
+    }
     process.exit(1);
   }
   console.log("Internal links are locale-localized.");

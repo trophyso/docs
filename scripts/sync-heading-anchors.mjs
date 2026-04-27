@@ -27,6 +27,13 @@ function hasFlag(name) {
 
 const checkOnly = hasFlag("--check");
 const targetArg = getArg("--target");
+const pathFilter = getArg("--paths");
+const filters = pathFilter
+  ? pathFilter
+      .split(",")
+      .map((s) => s.trim())
+      .filter(Boolean)
+  : [];
 
 const ROOT = process.cwd();
 const config = JSON.parse(fs.readFileSync(path.join(ROOT, "i18n.json"), "utf8"));
@@ -213,7 +220,17 @@ const excludedSourceDirs = new Set([
   "styles",
   ".cursor",
 ]);
-const sourceFiles = walkRootMdx(ROOT, { excludeDirs: excludedSourceDirs });
+let sourceFiles = walkRootMdx(ROOT, { excludeDirs: excludedSourceDirs });
+if (filters.length > 0) {
+  sourceFiles = sourceFiles.filter((abs) => {
+    const rel = path.relative(ROOT, abs).replace(/\\/g, "/");
+    return filters.some((f) => rel.includes(f));
+  });
+  if (sourceFiles.length === 0) {
+    console.error("No files matched --paths filters.");
+    process.exit(1);
+  }
+}
 
 for (const abs of sourceFiles) {
   try {
