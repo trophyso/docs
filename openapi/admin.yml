@@ -3159,6 +3159,57 @@ paths:
       x-fern-sdk-method-name: create
       tags:
         - Admin
+      x-codeSamples:
+        - lang: javascript
+          source: |
+            import { TrophyApiClient } from '@trophyso/node';
+
+            const trophy = new TrophyApiClient({
+              apiKey: 'YOUR_API_KEY'
+            });
+
+            const response = await trophy.admin.leaderboards.create([
+              {
+                name: 'Revenue Champions',
+                key: 'revenue-champions',
+                status: 'inactive',
+                rankBy: 'metric',
+                metricId: '550e8400-e29b-41d4-a716-446655440000',
+                maxParticipants: 100,
+                start: '2026-04-20'
+              },
+              {
+                name: 'Streak Legends',
+                key: 'streak-legends',
+                status: 'scheduled',
+                rankBy: 'streak',
+                start: '2026-04-27'
+              }
+            ]);
+        - lang: python
+          source: |
+            from trophy import TrophyApi
+
+            client = TrophyApi(api_key='YOUR_API_KEY')
+
+            response = client.admin.leaderboards.create([
+              {
+                "name": "Revenue Champions",
+                "key": "revenue-champions",
+                "status": "inactive",
+                "rankBy": "metric",
+                "metricId": "550e8400-e29b-41d4-a716-446655440000",
+                "maxParticipants": 100,
+                "start": "2026-04-20"
+              },
+              {
+                "name": "Streak Legends",
+                "key": "streak-legends",
+                "status": "scheduled",
+                "rankBy": "streak",
+                "start": "2026-04-27"
+              }
+            ])
       requestBody:
         description: Array of leaderboards to create.
         required: true
@@ -3226,6 +3277,45 @@ paths:
       x-fern-sdk-method-name: update
       tags:
         - Admin
+      x-codeSamples:
+        - lang: javascript
+          source: |
+            import { TrophyApiClient } from '@trophyso/node';
+
+            const trophy = new TrophyApiClient({
+              apiKey: 'YOUR_API_KEY'
+            });
+
+            const response = await trophy.admin.leaderboards.update([
+              {
+                id: '550e8400-e29b-41d4-a716-446655440100',
+                name: 'Monthly Revenue Champions',
+                description: 'Ranked by monthly revenue',
+                status: 'active'
+              },
+              {
+                id: '550e8400-e29b-41d4-a716-446655440101',
+                status: 'finished'
+              }
+            ]);
+        - lang: python
+          source: |
+            from trophy import TrophyApi
+
+            client = TrophyApi(api_key='YOUR_API_KEY')
+
+            response = client.admin.leaderboards.update([
+              {
+                "id": "550e8400-e29b-41d4-a716-446655440100",
+                "name": "Monthly Revenue Champions",
+                "description": "Ranked by monthly revenue",
+                "status": "active"
+              },
+              {
+                "id": "550e8400-e29b-41d4-a716-446655440101",
+                "status": "finished"
+              }
+            ])
       requestBody:
         description: Array of leaderboards to update. Each item must include an ID.
         required: true
@@ -3277,6 +3367,33 @@ paths:
       x-fern-sdk-method-name: delete
       tags:
         - Admin
+      x-codeSamples:
+        - lang: javascript
+          source: |
+            import { TrophyApiClient } from '@trophyso/node';
+
+            const trophy = new TrophyApiClient({
+              apiKey: 'YOUR_API_KEY'
+            });
+
+            const response = await trophy.admin.leaderboards.delete({
+              ids: [
+                '550e8400-e29b-41d4-a716-446655440100',
+                '550e8400-e29b-41d4-a716-446655440101'
+              ]
+            });
+        - lang: python
+          source: |
+            from trophy import TrophyApi
+
+            client = TrophyApi(api_key='YOUR_API_KEY')
+
+            response = client.admin.leaderboards.delete(
+              ids=[
+                '550e8400-e29b-41d4-a716-446655440100',
+                '550e8400-e29b-41d4-a716-446655440101'
+              ]
+            )
       parameters:
         - name: ids
           in: query
