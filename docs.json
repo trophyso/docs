@@ -76,6 +76,13 @@
                 ]
               },
               {
+                "group": "Features",
+                "pages": [
+                  "features/environments",
+                  "features/multi-tenancy"
+                ]
+              },
+              {
                 "group": "Experimentation",
                 "pages": [
                   "experimentation/overview",

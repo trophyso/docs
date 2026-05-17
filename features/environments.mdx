@@ -1,0 +1,41 @@
+---
+title: Environments
+description: Learn how to use environments to help you test and review changes before releasing to production.
+og:description: Learn how to use environments to help you test and review changes before releasing to production.
+icon: layers
+---
+
+## What are Environments? {#what-are-environments}
+
+Environments are core structures in Trophy that let you isolate data according to your teams development workflows and copy changes between them.
+
+Trophy supports three types of environments:
+
+- <Badge color="green" stroke>Production</Badge> - Each Trophy account has **exactly one** production environment. This is the default environment and is the one that should be used to store live data from your application.
+- <Badge color="blue" stroke>Staging</Badge> - Each Trophy account can have **multiple** staging environments. Staging environments can be used to map to different stages of your development workflow, like QA, UAT, or Pre-Production.
+- <Badge color="gray" stroke>Development</Badge> - Each Trophy account can have **multiple** development environments. Development environments can be used to test new features or changes to your Trophy account without affecting other environments.
+
+## Creating Environments {#creating-environments}
+
+## Managing Environments {#managing-environments}
+
+## Change Tracking and Propagation {#change-tracking-and-propagation}
+
+## Copying Changes Across Environments {#copying-changes-across-environments}
+
+Changes made in one environment can be copied to other environments in Trophy. Here's a few reasons you might want to do this:
+
+- You have been testing a new feature in a <Badge color="gray" stroke size="sm">Development</Badge> environment and are ready to copy it to a <Badge color="blue" stroke size="sm">Staging</Badge> environment.
+- You have been testing a set of changes in a <Badge color="blue" stroke size="sm">Staging</Badge> environment and are ready to copy them to a <Badge color="green" stroke size="sm">Production</Badge> environment.
+
+## Frequently Asked Questions {#frequently-asked-questions}
+
+<AccordionGroup>
+  <Accordion title="How many environments can I create?">
+    Each Trophy account can have **multiple** production, staging and development environments.
+  </Accordion>
+</AccordionGroup>
+
+## Get Support {#get-support}
+
+Want to get in touch with the Trophy team? Reach out to us via [email](mailto:support@trophy.so). We're here to help!
