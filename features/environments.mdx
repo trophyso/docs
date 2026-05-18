@@ -76,6 +76,8 @@ New environments can be created in the Trophy dashboard through the environment 
 
 Here we outline Trophy's model for change tracking and propagation across environments and how you can use this to model your team's development workflow.
 
+<Note>When using [multi-tenancy](#multi-tenancy), changes are **not** automatically propagated between environments. Instead, environments are treated as totally isolated from each other in order to allow for maximum flexibility in how you can use Trophy.</Note>
+
 ### Environment Priority {#environment-priority}
 
 Environment priority is fundamental to how change tracking and propagation works across environments in Trophy.
@@ -84,9 +86,9 @@ Each [type of environment](#types-of-environments) in Trophy follows a natural p
 
 As <Badge color="green" stroke size="sm">Production</Badge> environments represent live data, these have the highest priority. Similarly, <Badge color="blue" stroke size="sm">Staging</Badge> environments are used to test and review changes before releasing to production, so they have a higher priority than <Badge color="gray" stroke size="sm">Development</Badge> environments.
 
-- <Badge color="green" stroke size="sm">Production</Badge> (highest priority)
-- <Badge color="blue" stroke size="sm">Staging</Badge>
-- <Badge color="gray" stroke size="sm">Development</Badge> (lowest priority)
+1. <Badge color="green" stroke size="sm">Production</Badge> (highest priority)
+2. <Badge color="blue" stroke size="sm">Staging</Badge>
+3. <Badge color="gray" stroke size="sm">Development</Badge> (lowest priority)
 
 When created, new environments are automatically added as the lowest priority environment of their type. However, you can change the order of <Badge color="blue" stroke size="sm">Staging</Badge> environments to control the natural direction in which changes are propagated between them.
 
