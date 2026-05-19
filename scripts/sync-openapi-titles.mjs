@@ -1,14 +1,14 @@
 #!/usr/bin/env node
 
 /**
- * Set Mintlify MDX `title:` from root `openapi.yml` operation / webhook `summary`
+ * Set Mintlify MDX `title:` from `openapi/*.yml` operation / webhook `summary`
  * (matches what Mintlify infers when title is omitted).
  *
  * - Source locale (repo root): always rewrite title to match the spec.
  * - Target locales: only add `title` when missing or blank (keeps Lingo translations).
  *
- * Expects frontmatter: `openapi: openapi.yml <method> <path>` or
- * `openapi: openapi.yml webhook <eventKey>`.
+ * Expects frontmatter: `openapi: openapi/<spec>.yml <method> <path>` or
+ * `openapi: openapi/<spec>.yml webhook <eventKey>`.
  */
 
 import fs from "node:fs";
@@ -23,8 +23,9 @@ function hasFlag(name) {
 
 const checkOnly = hasFlag("--check");
 const ROOT = process.cwd();
-const SPEC_PATH = path.join(ROOT, "openapi.yml");
+const OPENAPI_DIR = path.join(ROOT, "openapi");
 const CONFIG_PATH = path.join(ROOT, "i18n.json");
+const specCache = new Map();
 
 const OPENAPI_FM_RE =
   /^openapi:\s+(\S+)\s+(?:webhook\s+(\S+)|(get|post|put|patch|delete)\s+(\S.*))$/m;
@@ -75,10 +76,21 @@ function splitFrontmatter(content) {
 function parseOpenapiRef(fmRaw) {
   const m = fmRaw.match(OPENAPI_FM_RE);
   if (!m) return null;
-  const specFile = m[1];
-  if (specFile !== "openapi.yml") return null;
-  if (m[2]) return { kind: "webhook", name: m[2] };
-  return { kind: "http", method: m[3].toLowerCase(), path: m[4].trim() };
+  const specFile = m[1].replace(/\\/g, "/");
+  if (!specFile.startsWith("openapi/") || !/\.ya?ml$/i.test(specFile)) return null;
+  if (m[2]) return { kind: "webhook", name: m[2], specFile };
+  return { kind: "http", method: m[3].toLowerCase(), path: m[4].trim(), specFile };
+}
+
+function loadSpec(specRelPath) {
+  const key = specRelPath.replace(/\\/g, "/");
+  if (specCache.has(key)) return specCache.get(key);
+  const absPath = path.join(ROOT, key);
+  if (!fs.existsSync(absPath)) return null;
+  const spec = parseYaml(fs.readFileSync(absPath, "utf8"));
+  if (!spec || typeof spec !== "object") return null;
+  specCache.set(key, spec);
+  return spec;
 }
 
 function getFmValue(fmRaw, key) {
@@ -159,14 +171,8 @@ function expectedTitle(spec, ref) {
   return resolveHttpTitle(spec, ref.path, ref.method);
 }
 
-if (!fs.existsSync(SPEC_PATH)) {
-  console.error("Missing openapi.yml at repository root.");
-  process.exit(1);
-}
-
-const spec = parseYaml(fs.readFileSync(SPEC_PATH, "utf8"));
-if (!spec || typeof spec !== "object") {
-  console.error("Could not parse openapi.yml");
+if (!fs.existsSync(OPENAPI_DIR)) {
+  console.error("Missing openapi/ directory at repository root.");
   process.exit(1);
 }
 
@@ -203,10 +209,18 @@ for (const abs of sourceFiles) {
   const sp = splitFrontmatter(raw);
   if (!sp) continue;
   const ref = parseOpenapiRef(sp.fmRaw);
+  const spec = loadSpec(ref.specFile);
+  if (!spec) {
+    console.error(
+      `Missing or invalid OpenAPI spec ${ref.specFile} for ${path.relative(ROOT, abs)}`
+    );
+    errors++;
+    continue;
+  }
   const want = expectedTitle(spec, ref);
   if (!want) {
     console.error(
-      `No summary (or fallback) in openapi.yml for ${path.relative(ROOT, abs)} (${JSON.stringify(ref)})`
+      `No summary (or fallback) in ${ref.specFile} for ${path.relative(ROOT, abs)} (${JSON.stringify(ref)})`
     );
     errors++;
     continue;

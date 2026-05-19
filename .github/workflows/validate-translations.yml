@@ -6,7 +6,7 @@ on:
     paths:
       - "docs.json"
       - "i18n.json"
-      - "openapi.yml"
+      - "openapi/**"
       - "package.json"
       - "account/**"
       - "admin-api/**"

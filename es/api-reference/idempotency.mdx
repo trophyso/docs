@@ -42,7 +42,7 @@ Cuando Trophy detecta que se ha enviado una clave de idempotencia con un evento,
 - Si en cambio Trophy detecta que el usuario no ha utilizado la clave de idempotencia anteriormente, procesará el evento de forma habitual y devolverá una respuesta `201 Created`. Finalmente, Trophy almacenará la clave de idempotencia para su búsqueda durante solicitudes posteriores.
 
 <Note>
-  Todas las [métricas](/es/platform/metrics) de Trophy gestionan la idempotencia de forma aislada.
+  Todas las [métricas](/es/features/metrics) de Trophy gestionan la idempotencia de forma aislada.
   Trophy aceptará que un usuario utilice la misma clave de idempotencia para eventos contra
   diferentes métricas como solicitudes aisladas independientes.
 </Note>

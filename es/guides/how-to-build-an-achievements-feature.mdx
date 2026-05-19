@@ -27,7 +27,7 @@ A modo ilustrativo, usaremos el ejemplo de una plataforma de estudio que utiliza
 
 ## Configuración de Trophy {#trophy-setup}
 
-En Trophy, las [Métricas](/es/platform/metrics) son los componentes fundamentales de la gamificación y modelan las diferentes interacciones que los usuarios realizan con tu producto.
+En Trophy, las [Métricas](/es/features/metrics) son los componentes fundamentales de la gamificación y modelan las diferentes interacciones que los usuarios realizan con tu producto.
 
 En esta guía, la interacción que nos interesa es `flashcards-viewed`, pero puedes crear una métrica que mejor represente la interacción en torno a la cual quieres construir logros.
 
@@ -44,7 +44,7 @@ En el panel de Trophy, dirígete a la [página de métricas](https://app.trophy.
   ></video>
 </Frame>
 
-Una vez que hayas creado tu métrica, dirígete a la [página de logros](https://app.trophy.so/achievements) y crea los logros que desees. Puedes encontrar todos los detalles sobre los tipos de logros y los diferentes casos de uso en la [documentación de logros](/es/platform/achievements).
+Una vez que hayas creado tu métrica, dirígete a la [página de logros](https://app.trophy.so/achievements) y crea los logros que desees. Puedes encontrar todos los detalles sobre los tipos de logros y los diferentes casos de uso en la [documentación de logros](/es/features/achievements).
 
 Para los propósitos de esta guía, hemos configurado un par de logros basados en un número creciente de tarjetas volteadas:
 
@@ -54,14 +54,14 @@ Para los propósitos de esta guía, hemos configurado un par de logros basados e
 - 250 tarjetas de estudio
 - 1,000 tarjetas de estudio
 
-También hemos configurado algunos logros relacionados con [Rachas](/es/platform/streaks), pero no entraremos en detalle sobre estos en esta guía.
+También hemos configurado algunos logros relacionados con [Rachas](/es/features/streaks), pero no entraremos en detalle sobre estos en esta guía.
 
 <Tip>
   Para una guía completa sobre cómo agregar una función de rachas a tu aplicación web o móvil, consulta
   nuestra [guía completa](/es/guides/how-to-build-a-streaks-feature).
 </Tip>
 
-En Trophy rastrear las interacciones de usuarios enviando [Events](/es/platform/events) desde tu código a las API de Trophy contra una métrica específica.
+En Trophy rastrear las interacciones de usuarios enviando [Events](/es/features/events) desde tu código a las API de Trophy contra una métrica específica.
 
 Cuando se registran eventos para un usuario específico, cualquier logro vinculado a la métrica especificada se **completará automáticamente** si se cumplen los requisitos.
 

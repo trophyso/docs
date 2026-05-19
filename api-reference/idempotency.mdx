@@ -42,7 +42,7 @@ When Trophy detects an idempotency key has been sent with an event, it will firs
 - If instead Trophy detects the user hasn't used the idempotency key before, it will process the event as usual, returning a `201 Created` response. Finally Trophy will store the idempotency key for lookup during any subsequent requests.
 
 <Note>
-  All Trophy [metrics](/platform/metrics) manage idempotency in isolation.
+  All Trophy [metrics](/features/metrics) manage idempotency in isolation.
   Trophy will accept a user using the same idempotency key for events against
   different metrics as separate isolated requests.
 </Note>

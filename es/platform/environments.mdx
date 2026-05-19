@@ -1,0 +1,204 @@
+---
+title: Entornos
+description: Aprende a usar entornos para probar y revisar cambios antes de
+  lanzar a producción.
+og:description: Aprende a usar entornos para probar y revisar cambios antes de
+  lanzar a producción.
+icon: layers
+---
+
+## ¿Qué son los Entornos? {#what-are-environments}
+
+Los entornos son estructuras fundamentales en Trophy que te ayudan a aislar datos según los flujos de trabajo de desarrollo de tu equipo y copiar cambios entre ellos.
+
+### Tipos de Entornos {#types-of-environments}
+
+Trophy admite tres tipos de entornos, cada uno con un caso de uso diferente en tu flujo de trabajo de desarrollo:
+
+- <Badge color="green" stroke>Producción</Badge> - Cada cuenta de Trophy tiene **exactamente un** entorno de producción. Este es el entorno predeterminado y debe usarse para almacenar datos en vivo de tu aplicación.
+- <Badge color="blue" stroke>Staging</Badge> - Cada cuenta de Trophy puede tener **múltiples** entornos de staging. Los entornos de staging pueden usarse para mapear diferentes etapas de tu flujo de trabajo de desarrollo, como QA, UAT o Pre-Producción.
+- <Badge color="gray" stroke>Desarrollo</Badge> - Cada cuenta de Trophy puede tener **múltiples** entornos de desarrollo. Los entornos de desarrollo pueden usarse para probar nuevas funcionalidades o cambios en tu cuenta de Trophy sin afectar otros entornos.
+
+## Cambiar Entre Entornos {#switching-between-environments}
+
+Puedes cambiar entre entornos haciendo clic en el selector de entornos en la esquina superior izquierda de la pantalla o en la [página de entornos](https://app.trophy.so/environments) dedicada.
+
+<Frame>
+  <video
+    autoPlay
+    muted
+    loop
+    playsInline
+    className="w-full aspect-15/4"
+    src="../../assets/platform/environments/switching_environments.mp4"
+  ></video>
+</Frame>
+
+Cuando estés en un entorno que no sea de producción, verás un banner en la parte superior de la pantalla recordándote que no estás en producción.
+
+Esto es para recordarte que cualquier cambio que hagas en entornos que no sean de producción no se propaga automáticamente a producción, y que debes seguir el [flujo de trabajo](#change-tracking-and-propagation) correcto para copiar cambios entre entornos.
+
+## Creación de Entornos {#creating-environments}
+
+Los nuevos entornos se pueden crear en el panel de Trophy a través del selector de entornos en la parte superior izquierda de la pantalla o en la [página de entornos](https://app.trophy.so/environments) dedicada. En cualquier caso, el proceso es el mismo.
+
+<Frame>
+  <video
+    autoPlay
+    muted
+    loop
+    playsInline
+    className="w-full aspect-15/4"
+    src="../../assets/platform/environments/create_environment.mp4"
+  ></video>
+</Frame>
+
+<Steps>
+  <Step title="Elige un nombre">
+    Elige un nombre para el entorno que te ayude a identificarlo.
+  </Step>
+  <Step title="Elige una clave única">
+    Elige una clave única para el entorno. Esta no puede modificarse después de la creación.
+  </Step>
+  <Step title="Elige un tipo de entorno">
+    - Usa <Badge color="blue" stroke size="sm">Staging</Badge> para entornos que deseas utilizar para modelar los entornos de prueba oficiales de tu equipo, como QA, UAT o Pre-Producción.
+    - Usa <Badge color="gray" stroke size="sm">Development</Badge> para entornos que deseas utilizar para probar nuevas funcionalidades o cambios en tu cuenta de Trophy sin afectar otros entornos.
+  </Step>
+  <Step title="(Opcional) Elige un entorno desde el cual clonar">
+    Elegir clonar un entorno existente creará el nuevo entorno como una copia exacta del entorno de origen, incluyendo todos los datos y configuraciones actuales.
+
+    <Tip>Recomendamos clonar nuevos entornos desde <Badge color="green" stroke size="sm">Production</Badge> para asegurar que tengas un punto de partida limpio y evitar la laboriosa configuración inicial de datos.</Tip>
+  </Step>
+  <Step title="Guarda">
+    Guarda el nuevo entorno.
+  </Step>
+</Steps>
+
+## Seguimiento y Propagación de Cambios {#change-tracking-and-propagation}
+
+Aquí describimos el modelo de Trophy para el seguimiento y propagación de cambios entre entornos y cómo puedes utilizarlo para modelar el flujo de trabajo de desarrollo de tu equipo.
+
+<Note>Al usar [multi-tenancy](/es/platform/multi-tenancy), los cambios **no** se propagan automáticamente entre entornos. En su lugar, los entornos se tratan como totalmente aislados entre sí para permitir la máxima flexibilidad en cómo puedes usar Trophy.</Note>
+
+### Prioridad de Entornos {#environment-priority}
+
+La prioridad de entornos es fundamental para el funcionamiento del seguimiento y propagación de cambios entre entornos en Trophy.
+
+Cada [tipo de entorno](#types-of-environments) en Trophy sigue un orden de prioridad natural basado en su caso de uso dentro de tu flujo de trabajo de desarrollo.
+
+Como los entornos de <Badge color="green" stroke size="sm">Producción</Badge> representan datos en vivo, estos tienen la máxima prioridad. De manera similar, los entornos de <Badge color="blue" stroke size="sm">Staging</Badge> se utilizan para probar y revisar cambios antes de publicarlos en producción, por lo que tienen una prioridad mayor que los entornos de <Badge color="gray" stroke size="sm">Desarrollo</Badge>.
+
+1. <Badge color="green" stroke size="sm">Producción</Badge> (máxima prioridad)
+2. <Badge color="blue" stroke size="sm">Staging</Badge>
+3. <Badge color="gray" stroke size="sm">Desarrollo</Badge> (mínima prioridad)
+
+Al crearse, los nuevos entornos se agregan automáticamente como el entorno de menor prioridad de su tipo. Sin embargo, puedes cambiar el orden de los entornos de <Badge color="blue" stroke size="sm">Staging</Badge> para controlar la dirección natural en la que se propagan los cambios entre ellos.
+
+<Note>No puedes cambiar el orden de los entornos de <Badge color="gray" stroke size="sm">Desarrollo</Badge>. Todos los entornos de <Badge color="gray" stroke size="sm">Desarrollo</Badge> en Trophy tienen la misma prioridad.</Note>
+
+### Seguimiento de Cambios {#change-tracking}
+
+Trophy realiza automáticamente el seguimiento de los cambios realizados en cada uno de tus entornos y detecta las diferencias entre ellos.
+
+Esto te permite trabajar en cambios de forma aislada y copiarlos al siguiente entorno en tu flujo de trabajo solo cuando estés listo, con la confianza de que Trophy hará el seguimiento de tu trabajo.
+
+Los cambios entre entornos se detectan y rastrean desde la [prioridad de entorno](#environment-priority) más alta hasta la más baja.
+
+<Tip>Si alguna vez has trabajado con [git](https://git-scm.com/), te resultará muy familiar cómo funcionan los entornos en Trophy.</Tip>
+
+### Visualización de Cambios {#viewing-changes}
+
+Cuando se realizan cambios en entornos que no son de producción, estos no se propagan automáticamente a <Badge color="green" stroke size="sm">Production</Badge>. En su lugar, permanecen aislados dentro del entorno donde se realizaron hasta que los copies a otro entorno.
+
+Puedes ver los cambios realizados en cada entorno en relación con otro entorno de destino haciendo clic en el selector de entorno en la parte superior izquierda de la pantalla y seleccionando 'View Changes'.
+
+<Frame>
+  <video
+    autoPlay
+    muted
+    loop
+    playsInline
+    className="w-full aspect-15/4"
+    src="../../assets/platform/environments/viewing_changes.mp4"
+  ></video>
+</Frame>
+
+Aquí Trophy destaca todos los cambios detectados entre tu entorno actual y tu entorno de destino. Al cambiar tu entorno de destino, puedes ver cambios entre tu entorno actual y otros entornos de tu cuenta.
+
+### Copiar Cambios {#copying-changes}
+
+En la pantalla de visualización de cambios puedes copiar cambios a tu entorno de destino seleccionado haciendo clic en el botón 'Copy All Changes'. Esto aplicará los cambios listados a tu entorno de destino. Una vez completado el proceso, tu entorno de destino estará actualizado con tu entorno actual y podrás continuar realizando nuevos cambios.
+
+<Frame>
+  <video
+    autoPlay
+    muted
+    loop
+    playsInline
+    className="w-full aspect-15/4"
+    src="../../assets/platform/environments/copying_changes.mp4"
+  ></video>
+</Frame>
+
+### Revertir Cambios {#reverting-changes}
+
+En la pantalla de visualización de cambios puedes revertir cambios específicos haciendo clic en el ícono 'Revert' junto a cada cambio que desees revertir.
+
+<Frame>
+  <video
+    autoPlay
+    muted
+    loop
+    playsInline
+    className="w-full aspect-15/4"
+    src="../../assets/platform/environments/reverting_changes.mp4"
+  ></video>
+</Frame>
+
+<Warning>
+  Revertir cambios los eliminará de tu entorno actual y no se puede deshacer.
+</Warning>
+
+### Propagación de Cambios {#change-propagation}
+
+Cuando se realiza un cambio en un entorno, se propaga automáticamente a todos los entornos con una [prioridad de entorno](#environment-priority) menor. Esto mantiene todos los entornos sincronizados con su dirección natural de propagación y ahorra tiempo en copiar cambios manualmente.
+
+Esto significa que cuando realices cambios en un entorno <Badge color="green" stroke size="sm">Producción</Badge>, se propagarán automáticamente a todos los entornos <Badge color="blue" stroke size="sm">Staging</Badge> y a todos los entornos <Badge color="gray" stroke size="sm">Desarrollo</Badge>.
+
+De manera similar, cuando se realizan cambios en un entorno <Badge color="blue" stroke size="sm">Staging</Badge>, se propagarán automáticamente a todos los demás entornos <Badge color="blue" stroke size="sm">Staging</Badge> con menor prioridad y a todos los entornos <Badge color="gray" stroke size="sm">Desarrollo</Badge>.
+
+Finalmente, cuando se realizan cambios en un entorno <Badge color="gray" stroke size="sm">Desarrollo</Badge>, no se propagarán a ningún otro entorno.
+
+## Preguntas Frecuentes {#frequently-asked-questions}
+
+<AccordionGroup>
+  <Accordion title="¿Cuántos entornos puedo crear?">
+    Aquí está la cantidad de entornos que puedes tener según el tipo:
+    - <Badge color="green" stroke size="sm">Producción</Badge> - 1
+    - <Badge color="blue" stroke size="sm">Staging</Badge> - 4
+    - <Badge color="gray" stroke size="sm">Desarrollo</Badge> - 10
+
+    <Note>Si consideras que necesitas más entornos, por favor [ponte en contacto](#get-support) y estaremos encantados de discutir tus necesidades.</Note>
+  </Accordion>
+  <Accordion title="¿Cómo copio cambios entre entornos?">
+    Puedes copiar cambios entre entornos haciendo clic en el botón 'Copiar Todos los Cambios' en la pantalla de visualización de cambios.
+  </Accordion>
+  <Accordion title="¿Puedo eliminar un entorno?">
+    Sí, puedes eliminar un entorno haciendo clic en el botón 'Eliminar' en la página de entornos.
+  </Accordion>
+  <Accordion title="¿Puedo renombrar un entorno?">
+    Sí, puedes renombrar un entorno haciendo clic en el botón 'Renombrar' en la página de entornos.
+  </Accordion>
+  <Accordion title="¿Puedo clonar un entorno?">
+    Sí, puedes clonar un entorno haciendo clic en el botón 'Clonar' en la página de entornos.
+  </Accordion>
+  <Accordion title="¿Puedo cambiar el orden natural de los entornos?">
+    Sí, puedes cambiar el orden de los entornos <Badge color="blue" stroke size="sm">Staging</Badge> haciendo clic en el menú de acciones del entorno que deseas mover y seleccionando 'Mover arriba' o 'Mover abajo'.
+
+    <Note>No puedes cambiar el orden de los entornos <Badge color="gray" stroke size="sm">Development</Badge>. Todos los entornos <Badge color="gray" stroke size="sm">Development</Badge> en Trophy tienen la misma prioridad.</Note>
+  </Accordion>
+</AccordionGroup>
+
+## Obtener soporte {#get-support}
+
+¿Quieres ponerte en contacto con el equipo de Trophy? Contáctanos por [correo electrónico](mailto:support@trophy.so). ¡Estamos aquí para ayudarte!

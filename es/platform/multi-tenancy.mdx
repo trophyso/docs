@@ -1,0 +1,92 @@
+---
+title: Multi-Tenencia
+description: Aprende a usar la multi-tenencia para configurar y personalizar
+  características de gamificación para cada uno de tus clientes.
+og:description: Aprende a usar la multi-tenencia para configurar y personalizar
+  características de gamificación para cada uno de tus clientes.
+icon: building
+---
+
+import MultiTenantClientInit from "../../snippets/multi-tenant-client-init.mdx";
+import MultiTenantCurlRequest from "../../snippets/multi-tenant-curl-request.mdx";
+
+<Note>
+La multi-tenencia en Trophy solo está disponible bajo solicitud. Por favor [contáctanos](mailto:hello@trophy.so) para discutir tus necesidades.
+</Note>
+
+## ¿Qué es la Multi-Tenencia? {#what-is-multi-tenancy}
+
+La multi-tenencia en Trophy te permite impulsar características de gamificación en nombre de múltiples clientes propios, y permitirles personalizar las características de gamificación que utilizan en sus propias aplicaciones y cómo funcionan.
+
+La multi-tenencia está diseñada específicamente para plataformas SaaS B2B que desean ofrecer características de gamificación como servicio a sus clientes, pero no disponen del tiempo o los recursos internos necesarios para construir y mantener la infraestructura de gamificación por sí mismas.
+
+## ¿Cómo Funciona la Multi-Tenencia? {#how-does-multi-tenancy-work}
+
+La multi-tenencia funciona creando registros de 'cliente' en Trophy para cada uno de tus clientes, y configurando las características de gamificación dentro del contexto de cada cliente.
+
+Los clientes que utilizan multi-tenencia hacen uso de la [Admin API](/es/admin-api) para construir paneles de control internos que permiten a sus clientes gestionar sus propias características de gamificación dentro de los límites que tú estableces para ellos.
+
+De manera similar, los clientes que utilizan multi-tenencia hacen uso de la [Application API](/es/api-reference) para impulsar la interfaz de usuario que permite a los usuarios finales de sus clientes ver e interactuar con las características de gamificación que les han expuesto.
+
+De esta forma, puedes impulsar características complejas de gamificación para tus propios clientes, sin construir ni mantener ninguna infraestructura de gamificación tú mismo, y de manera crítica manteniendo tu propia marca.
+
+## ¿Qué es un Cliente? {#what-is-a-tenant}
+
+Un cliente es una agrupación lógica de usuarios y datos que representa las funcionalidades de gamificación que utiliza un único cliente de tu plataforma dentro de una cuenta Trophy multi-cliente.
+
+### ID de Cliente {#tenant-id}
+
+La propiedad `tenant.id` es un identificador único para cada cliente que se utiliza para delimitar las llamadas a la API a un solo cliente de tu plataforma.
+
+Puedes usar tu ID interno existente para cada cliente. No necesitas crear un nuevo ID para cada cliente, siempre y cuando sea único dentro de tu propio sistema.
+
+## Implementación de Gamificación Multi-Cliente {#delivering-multi-tenant-gamification}
+
+Existen dos componentes principales para implementar gamificación multi-cliente: [paneles de control para clientes](#building-customer-control-panels) y [UI para usuarios finales](#powering-end-user-ui). Aquí explicamos cómo Trophy puede ayudarte a ofrecer ambos con un esfuerzo mínimo.
+
+### Creación de Paneles de Control para Clientes {#building-customer-control-panels}
+
+Para que los clientes puedan gestionar sus propias funcionalidades de gamificación, necesitas proporcionarles un panel de control dentro de tu propia aplicación que les permita hacerlo.
+
+Esto significa proporcionar pantallas y funcionalidad para elegir qué características usar, además de todos los controles y opciones necesarios para personalizar cómo funciona cada característica.
+
+La [Admin API](/es/admin-api) de Trophy te permite gestionar completamente cualquier funcionalidad de gamificación disponible para configuración dentro del panel de Trophy mediante API headless.
+
+Esto te permite ofrecer paneles de control a tus clientes que les permitan gestionar sus propias funcionalidades de gamificación dentro de los límites que decidas establecer para ellos.
+
+El único paso adicional requerido es comprender cómo delimitar las llamadas a la API desde tu panel de control al cliente específico al que pertenece el usuario del panel. Lee más sobre cómo hacerlo en la sección dedicada sobre [establecer el ámbito del cliente](#setting-tenant-scope).
+
+### Alimentando la Interfaz de Usuario del Usuario Final {#powering-end-user-ui}
+
+La otra parte crítica de ofrecer gamificación multi-cliente es alimentar la interfaz de usuario que permite a los usuarios finales de tus clientes ver e interactuar con las funciones de gamificación que tus clientes les han expuesto.
+
+La [API de Aplicación](/es/api-reference) ya está diseñada específicamente para alimentar funciones de gamificación dentro de cualquier aplicación, y el proceso para alimentar funciones para los usuarios finales de sus clientes no es diferente.
+
+El único paso adicional requerido es comprender cómo delimitar las llamadas a la API al cliente específico al que pertenece el usuario final. Lee más sobre cómo hacerlo en la sección dedicada sobre [establecer el ámbito del cliente](#setting-tenant-scope).
+
+## Establecer el Ámbito del Cliente {#setting-tenant-scope}
+
+Tanto la [API de Administración](/es/admin-api) como la [API de Aplicación](/es/api-reference) funcionan de la misma manera para cuentas de un solo cliente y multi-cliente. Utiliza las mismas [bibliotecas cliente](/es/api-reference/client-libraries) para alimentar la gamificación en ambos casos.
+
+La única diferencia es que al usar la API de administración o de aplicación dentro de una cuenta multi-cliente, debes pasar el encabezado `Tenant-ID` a cualquier llamada a la API que quieras delimitar a un cliente específico:
+
+<MultiTenantCurlRequest />
+
+Las bibliotecas cliente de Trophy admiten delimitar llamadas a la API a un cliente específico mediante el uso del parámetro `tenantId` en todos los métodos:
+
+<MultiTenantClientInit />
+
+## Preguntas Frecuentes {#frequently-asked-questions}
+
+<AccordionGroup>
+  <Accordion title="¿Cuántos clientes puedo crear?">
+    Cada cuenta de Trophy puede tener un número ilimitado de clientes.
+  </Accordion>
+  <Accordion title="¿Cómo establezco el ámbito del cliente para una llamada a la API?">
+    Puedes establecer el ámbito del cliente para una llamada a la API pasando el encabezado `Tenant-ID` a cualquier llamada a la API.
+  </Accordion>
+</AccordionGroup>
+
+## Obtener Soporte {#get-support}
+
+¿Quieres ponerte en contacto con el equipo de Trophy? Contáctanos por [correo electrónico](mailto:support@trophy.so). ¡Estamos aquí para ayudarte!

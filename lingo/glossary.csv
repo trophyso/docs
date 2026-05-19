@@ -42,4 +42,8 @@ en,es,Quickstart,Inicio rápido,custom_translation,Docs navigation term
 en,es,Reactivation,Reactivación,custom_translation,Lifecycle/product term
 en,es,Sender Verification,Verificación del remitente,custom_translation,Email product domain term
 en,es,Wrapped,Resumen anual,custom_translation,Feature naming term
+en,es,tenant,cliente,custom_translation,Multi-tenancy product domain term
+en,es,tenants,clientes,custom_translation,Multi-tenancy product domain term plural
+en,es,Tenant,Cliente,custom_translation,Multi-tenancy product domain term capitalized
+en,es,Tenants,Clientes,custom_translation,Multi-tenancy product domain term plural capitalized
 en,*,XP,XP,non_translatable,Gamification abbreviation

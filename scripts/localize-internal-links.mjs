@@ -67,7 +67,7 @@ function splitHash(pathPart) {
 }
 
 /**
- * Path without leading slash (e.g. `en/platform/metrics` or `platform/metrics`).
+ * Path without leading slash (e.g. `en/features/metrics` or `platform/metrics`).
  * Returns new path (no leading slash) or null if unchanged / skip.
  */
 function rewriteInternalPath(base, locale) {
@@ -96,7 +96,7 @@ function rewriteInternalPath(base, locale) {
     return restAfterLocale === "" ? locale : `${locale}/${restAfterLocale}`;
   }
 
-  // Bare internal path: platform/foo -> {locale}/platform/foo.
+  // Bare internal path: platform/foo -> {locale}/features/foo.
   return `${locale}/${b}`;
 }
 

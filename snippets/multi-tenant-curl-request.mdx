@@ -1,0 +1,8 @@
+{/* vale off */}
+
+```bash Sending a multi-tenant API call {4}
+curl --request GET \
+  --url https://api.trophy.so/v1/users/{id} \
+  --header 'X-API-KEY: <api-key>' \
+  --header 'Tenant-ID: <tenant-id>'
+```

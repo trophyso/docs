@@ -1,0 +1,202 @@
+---
+title: Environments
+description: Learn how to use environments to help you test and review changes before releasing to production.
+og:description: Learn how to use environments to help you test and review changes before releasing to production.
+icon: layers
+---
+
+## What are Environments? {#what-are-environments}
+
+Environments are core structures in Trophy that help you isolate data according to your teams development workflows and copy changes between them.
+
+### Types of Environments {#types-of-environments}
+
+Trophy supports three types of environments, each with a different use case in your development workflow:
+
+- <Badge color="green" stroke>Production</Badge> - Each Trophy account has **exactly one** production environment. This is the default environment and is the one that should be used to store live data from your application.
+- <Badge color="blue" stroke>Staging</Badge> - Each Trophy account can have **multiple** staging environments. Staging environments can be used to map to different stages of your development workflow, like QA, UAT, or Pre-Production.
+- <Badge color="gray" stroke>Development</Badge> - Each Trophy account can have **multiple** development environments. Development environments can be used to test new features or changes to your Trophy account without affecting other environments.
+
+## Switching Between Environments {#switching-between-environments}
+
+You can switch between environments by clicking the environment selector in the top left of the screen or the dedicated [environments page](https://app.trophy.so/environments).
+
+<Frame>
+  <video
+    autoPlay
+    muted
+    loop
+    playsInline
+    className="w-full aspect-15/4"
+    src="../assets/platform/environments/switching_environments.mp4"
+  ></video>
+</Frame>
+
+When you're in a non-production environment, you'll see a banner across the top of the screen reminding you that you're not in production.
+
+This is to remind you that any changes you make in non-production environments are not automatically propagated to production, and to follow the correct [workflow](#change-tracking-and-propagation) for copying changes between environments.
+
+## Creating Environments {#creating-environments}
+
+New environments can be created in the Trophy dashboard through the environment selector in the top left of the screen or the dedicated [environments page](https://app.trophy.so/environments). Either way the process is the same.
+
+<Frame>
+  <video
+    autoPlay
+    muted
+    loop
+    playsInline
+    className="w-full aspect-15/4"
+    src="../assets/platform/environments/create_environment.mp4"
+  ></video>
+</Frame>
+
+<Steps>
+  <Step title="Choose a name">
+    Choose a name for the environment that will help you identify it.
+  </Step>
+  <Step title="Choose a unique key">
+    Choose a unique key for the environment. This cannot be changed after creation.
+  </Step>
+  <Step title="Choose an environment type">
+    - Use <Badge color="blue" stroke size="sm">Staging</Badge> for environments you want to use to model your team's official test environments like QA, UAT, or Pre-Production.
+    - Use <Badge color="gray" stroke size="sm">Development</Badge> for environments you want to use to test new features or changes to your Trophy account without affecting other environments.
+  </Step>
+  <Step title="(Optional) Choose an environment to clone from">
+    Choosing to clone an existing environment will create the new environment as an exact copy of the source environment, including all current data and settings.
+
+    <Tip>We reccomend cloning new environments from <Badge color="green" stroke size="sm">Production</Badge> to ensure you have a clean starting point and avoid laborious inital data setup.</Tip>
+  </Step>
+  <Step title="Hit save">
+    Save the new environment.
+  </Step>
+</Steps>
+
+## Change Tracking and Propagation {#change-tracking-and-propagation}
+
+Here we outline Trophy's model for change tracking and propagation across environments and how you can use this to model your team's development workflow.
+
+<Note>When using [multi-tenancy](/platform/multi-tenancy), changes are **not** automatically propagated between environments. Instead, environments are treated as totally isolated from each other in order to allow for maximum flexibility in how you can use Trophy.</Note>
+
+### Environment Priority {#environment-priority}
+
+Environment priority is fundamental to how change tracking and propagation works across environments in Trophy.
+
+Each [type of environment](#types-of-environments) in Trophy follows a natural priority order based on its use case in your development workflow.
+
+As <Badge color="green" stroke size="sm">Production</Badge> environments represent live data, these have the highest priority. Similarly, <Badge color="blue" stroke size="sm">Staging</Badge> environments are used to test and review changes before releasing to production, so they have a higher priority than <Badge color="gray" stroke size="sm">Development</Badge> environments.
+
+1. <Badge color="green" stroke size="sm">Production</Badge> (highest priority)
+2. <Badge color="blue" stroke size="sm">Staging</Badge>
+3. <Badge color="gray" stroke size="sm">Development</Badge> (lowest priority)
+
+When created, new environments are automatically added as the lowest priority environment of their type. However, you can change the order of <Badge color="blue" stroke size="sm">Staging</Badge> environments to control the natural direction in which changes are propagated between them.
+
+<Note>You cannot change the order of <Badge color="gray" stroke size="sm">Development</Badge> environments. All <Badge color="gray" stroke size="sm">Development</Badge> environments in Trophy have the same priority.</Note>
+
+### Change Tracking {#change-tracking}
+
+Trophy automatically keeps track of changes made in each of your environments and detects differences between them.
+
+This allows you to work on changes in isolation and only copy them to the next environment in your workflow when you're ready with the confidence that Trophy will keep track of your work.
+
+Changes between environments are detected and tracked from the highest [environment priority](#environment-priority) to the lowest.
+
+<Tip>If you've ever worked with [git](https://git-scm.com/) before, you'll be very familiar with how environments work in Trophy.</Tip>
+
+### Viewing Changes {#viewing-changes}
+
+When changes are made in non-production environments, they are not automatically propagated to <Badge color="green" stroke size="sm">Production</Badge>. Instead, they are isolated within the environment they were made in until you copy them to another environment.
+
+You can view the changes made in each environment relative to another target environment by clicking the environment selector in the top left of the screen and selecting 'View Changes'.
+
+<Frame>
+  <video
+    autoPlay
+    muted
+    loop
+    playsInline
+    className="w-full aspect-15/4"
+    src="../assets/platform/environments/viewing_changes.mp4"
+  ></video>
+</Frame>
+
+Here Trophy highlights all the changes detected between your current environment and your target environment. By changing your target environment, you can see changes between your current environment and other environments in your account.
+
+### Copying Changes {#copying-changes}
+
+On the view changes screen you can copy changes to your chosen target environment by clicking the 'Copy All Changes' button. This will apply the changes listed to your target environment. Once the process is complete, your target environment will be up to date with your current environment and you can continue to make new changes.
+
+<Frame>
+  <video
+    autoPlay
+    muted
+    loop
+    playsInline
+    className="w-full aspect-15/4"
+    src="../assets/platform/environments/copying_changes.mp4"
+  ></video>
+</Frame>
+
+### Reverting Changes {#reverting-changes}
+
+On the view changes screen you can revert specific changes by clicking the 'Revert' icon next to each change you want to revert.
+
+<Frame>
+  <video
+    autoPlay
+    muted
+    loop
+    playsInline
+    className="w-full aspect-15/4"
+    src="../assets/platform/environments/reverting_changes.mp4"
+  ></video>
+</Frame>
+
+<Warning>
+  Reverting changes will remove them from your current environment and cannot be undone.
+</Warning>
+
+### Change Propagation {#change-propagation}
+
+When a change is made in an environment, it is propagated to all environments with a lower [environment priority](#environment-priority) automatically. This keeps all environments in sync with their natural direction of propagation and saves time in copying changes manually.
+
+This means when you make changes in a <Badge color="green" stroke size="sm">Production</Badge> environment, they will be automatically propagated to all <Badge color="blue" stroke size="sm">Staging</Badge> environments and all <Badge color="gray" stroke size="sm">Development</Badge> environments.
+
+Similarly, when changes are made in a <Badge color="blue" stroke size="sm">Staging</Badge> environment, they will be automatically propagated to all other <Badge color="blue" stroke size="sm">Staging</Badge> environments with a lower priority and all <Badge color="gray" stroke size="sm">Development</Badge> environments.
+
+Finally, when changes are made in a <Badge color="gray" stroke size="sm">Development</Badge> environment, they will not be propagated to any other environments.
+
+## Frequently Asked Questions {#frequently-asked-questions}
+
+<AccordionGroup>
+  <Accordion title="How many environments can I create?">
+    Here's how many environments you can have based on type:
+    - <Badge color="green" stroke size="sm">Production</Badge> - 1
+    - <Badge color="blue" stroke size="sm">Staging</Badge> - 4
+    - <Badge color="gray" stroke size="sm">Development</Badge> - 10
+
+    <Note>If you feel you need more environments, please [get in touch](#get-support) and we'll be happy to discuss your needs.</Note>
+  </Accordion>
+  <Accordion title="How do I copy changes between environments?">
+    You can copy changes between environments by clicking the 'Copy All Changes' button on the view changes screen.
+  </Accordion>
+  <Accordion title="Can I delete an environment?">
+    Yes, you can delete an environment by clicking the 'Delete' button on the environments page.
+  </Accordion>
+  <Accordion title="Can I rename an environment?">
+    Yes, you can rename an environment by clicking the 'Rename' button on the environments page.
+  </Accordion>
+  <Accordion title="Can I clone an environment?">
+    Yes, you can clone an environment by clicking the 'Clone' button on the environments page.
+  </Accordion>
+  <Accordion title="Can I change the natural order of environments?">
+    Yes, you can change the order of <Badge color="blue" stroke size="sm">Staging</Badge> environments by clicking the action menu on the environment you want to move and selecting 'Move up' or 'Move down'.
+
+    <Note>You cannot change the order of <Badge color="gray" stroke size="sm">Development</Badge> environments. All <Badge color="gray" stroke size="sm">Development</Badge> environments in Trophy have the same priority.</Note>
+  </Accordion>
+</AccordionGroup>
+
+## Get Support {#get-support}
+
+Want to get in touch with the Trophy team? Reach out to us via [email](mailto:support@trophy.so). We're here to help!

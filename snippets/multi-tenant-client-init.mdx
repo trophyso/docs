@@ -1,0 +1,65 @@
+{/* vale off */}
+
+<CodeGroup>
+```typescript Node {5}
+import { TrophyApiClient } from "@trophyso/node";
+
+const trophyTenant = new TrophyApiClient({
+  apiKey: 'YOUR_API_KEY',
+  tenantId: 'customer_123',
+});
+```
+
+```ruby Ruby {3}
+client = TrophyApiClient::Client.new(
+  :api_key => 'YOUR_API_KEY',
+  :tenant_id => 'customer_123',
+)
+```
+
+```python Python {5}
+from trophy import Trophy
+
+client = Trophy(
+    api_key='YOUR_API_KEY',
+    tenant_id='customer_123',
+)
+```
+
+```php PHP {5}
+use Trophy\TrophyClient;
+
+$trophyTenant = new TrophyClient([
+    'apiKey' => 'YOUR_API_KEY',
+    'tenantId' => 'customer_123',
+]);
+```
+
+```java Java (Gradle) {3}
+TrophyApiClient client = TrophyApiClient.builder()
+    .apiKey("YOUR_API_KEY")
+    .tenantId("customer_123")
+    .build();
+```
+
+```java Java (Maven) {3}
+TrophyApiClient client = TrophyApiClient.builder()
+    .apiKey("YOUR_API_KEY")
+    .tenantId("customer_123")
+    .build();
+```
+
+```go Go {3}
+client, err := trophy.NewClient(
+    option.WithAPIKey("YOUR_API_KEY"),
+    option.WithTenantID("customer_123"),
+)
+```
+
+```csharp .NET (C#) {3}
+var trophyTenant = new TrophyClient(
+    "YOUR_API_KEY",
+    tenantId: "customer_123"
+);
+```
+</CodeGroup>

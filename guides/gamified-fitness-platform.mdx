@@ -88,7 +88,7 @@ To enable local leaderboards, we'll tag every user with a `city` attribute.
 
 ## How Trophy Works {#how-trophy-works}
 
-Before diving into the code, let's understand how Trophy powers our gamification layer. In Trophy, [Metrics](/platform/metrics) represent different interactions users can make and drive features like [Achievements](/platform/achievements), [Streaks](/platform/streaks), and [Emails](/platform/emails).
+Before diving into the code, let's understand how Trophy powers our gamification layer. In Trophy, [Metrics](/features/metrics) represent different interactions users can make and drive features like [Achievements](/features/achievements), [Streaks](/features/streaks), and [Emails](/features/emails).
 
 ```mermaid
 flowchart TD
@@ -250,7 +250,7 @@ Here's how we'll configure Trophy for our fitness app:
     />
   </Frame>
 
-  Then configure **[Points Levels](/platform/points#points-levels)** on the same `xp` system so Trophy can track each user's tier. Use the keys and thresholds below so the code in this guide lines up with your dashboard:
+  Then configure **[Points Levels](/features/points#points-levels)** on the same `xp` system so Trophy can track each user's tier. Use the keys and thresholds below so the code in this guide lines up with your dashboard:
 
   | Name    | Key       | Points threshold |
   | ------- | --------- | ---------------- |
@@ -461,7 +461,7 @@ export async function getUserIdFromCookies() {
 
 ## The Leveling System {#the-leveling-system}
 
-Trophy stores each user's tier on the `xp` points system when you configure [Points Levels](/platform/points#points-levels). The [user points](/api-reference/endpoints/users/get-a-users-points) payload includes a `level` object. The [list levels API](/api-reference/endpoints/points/get-points-levels) returns every tier and threshold so you can show progress toward the next one.
+Trophy stores each user's tier on the `xp` points system when you configure [Points Levels](/features/points#points-levels). The [user points](/api-reference/endpoints/users/get-a-users-points) payload includes a `level` object. The [list levels API](/api-reference/endpoints/points/get-points-levels) returns every tier and threshold so you can show progress toward the next one.
 
 Add a small helper next to your app constants in `src/lib/constants.ts`:
 

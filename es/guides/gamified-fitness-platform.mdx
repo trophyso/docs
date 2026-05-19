@@ -88,7 +88,7 @@ Para habilitar clasificaciones locales, etiquetaremos a cada usuario con un atri
 
 ## Cómo Funciona Trophy {#how-trophy-works}
 
-Antes de profundizar en el código, entendamos cómo Trophy impulsa nuestra capa de gamificación. En Trophy, las [Métricas](/es/platform/metrics) representan diferentes interacciones que los usuarios pueden realizar e impulsan funciones como [Logros](/es/platform/achievements), [Rachas](/es/platform/streaks) y [Correos Electrónicos](/es/platform/emails).
+Antes de profundizar en el código, entendamos cómo Trophy impulsa nuestra capa de gamificación. En Trophy, las [Métricas](/es/features/metrics) representan diferentes interacciones que los usuarios pueden realizar e impulsan funciones como [Logros](/es/features/achievements), [Rachas](/es/features/streaks) y [Correos Electrónicos](/es/features/emails).
 
 ```mermaid
 flowchart TD
@@ -250,7 +250,7 @@ Así es como configuraremos Trophy para nuestra aplicación de fitness:
       />
     </Frame>
 
-    Luego configura **[Niveles de puntos](/es/platform/points#points-levels)** en el mismo sistema `xp` para que Trophy pueda rastrear el nivel de cada usuario. Usa las claves y umbrales a continuación para que el código de esta guía coincida con tu panel:
+    Luego configura **[Niveles de puntos](/es/features/points#points-levels)** en el mismo sistema `xp` para que Trophy pueda rastrear el nivel de cada usuario. Usa las claves y umbrales a continuación para que el código de esta guía coincida con tu panel:
 
     | Nombre    | Clave       | Umbral de puntos |
     | ------- | --------- | ---------------- |
@@ -461,7 +461,7 @@ export async function getUserIdFromCookies() {
 
 ## El Sistema de Niveles {#the-leveling-system}
 
-Trophy almacena el nivel de cada usuario en el sistema de puntos `xp` cuando configuras [Niveles de Puntos](/es/platform/points#points-levels). La carga útil de [puntos de usuario](/es/api-reference/endpoints/users/get-a-users-points) incluye un objeto `level`. La [API de lista de niveles](/es/api-reference/endpoints/points/get-points-levels) devuelve cada nivel y umbral para que puedas mostrar el progreso hacia el siguiente.
+Trophy almacena el nivel de cada usuario en el sistema de puntos `xp` cuando configuras [Niveles de Puntos](/es/features/points#points-levels). La carga útil de [puntos de usuario](/es/api-reference/endpoints/users/get-a-users-points) incluye un objeto `level`. La [API de lista de niveles](/es/api-reference/endpoints/points/get-points-levels) devuelve cada nivel y umbral para que puedas mostrar el progreso hacia el siguiente.
 
 Añade un pequeño ayudante junto a las constantes de tu aplicación en `src/lib/constants.ts`:
 

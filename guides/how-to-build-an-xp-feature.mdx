@@ -30,7 +30,7 @@ For illustration purposes we'll use the example of a study platform that uses XP
 
 ## Trophy Setup {#trophy-setup}
 
-In Trophy, [Metrics](/platform/metrics) are the building blocks of gamification and model the different interactions users make with your product.
+In Trophy, [Metrics](/features/metrics) are the building blocks of gamification and model the different interactions users make with your product.
 
 In this guide the interaction we're interested in is `flashcards-viewed`, but you can create any number of metrics that best represents the interactions you want to reward XP from.
 
@@ -73,7 +73,7 @@ Once created, you'll be taken to the configure page for the XP system where you 
   ></video>
 </Frame>
 
-In Trophy you track user interactions by sending [Events](/platform/events) from your code to Trophy APIs against a specific metric.
+In Trophy you track user interactions by sending [Events](/features/events) from your code to Trophy APIs against a specific metric.
 
 When events are recorded for a specific user, Trophy will automatically check if the event is against a metric that is configured as part of any XP triggers.
 
@@ -83,7 +83,7 @@ This is what makes building gamified experiences with Trophy so easy, it does al
 
 <Tip>
   XP can also be awarded to users based on achievements, streaks and other
-  triggers. See the dedicated [points docs](/platform/points#points-triggers)
+  triggers. See the dedicated [points docs](/features/points#points-triggers)
   for more information.
 </Tip>
 
@@ -114,7 +114,7 @@ To track an event (user interaction) against your metric, use the [metric change
 The response to this API call is the complete set of changes to any features you've built with Trophy, including any XP that was awarded to the user as a result of the event, and from what triggers it was awarded.
 
 <Note>
-  If you use [Points Levels](/platform/points#points-levels), the `xp` object can include a **`level`** field **only when** the user's tier changed on this request; it may be omitted when their level stayed the same. See the [metric change API reference](/api-reference/endpoints/metrics/send-a-metric-change-event) for the full response schema.
+  If you use [Points Levels](/features/points#points-levels), the `xp` object can include a **`level`** field **only when** the user's tier changed on this request; it may be omitted when their level stayed the same. See the [metric change API reference](/api-reference/endpoints/metrics/send-a-metric-change-event) for the full response schema.
 </Note>
 
 {/* vale off */}
