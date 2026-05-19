@@ -603,7 +603,7 @@
                 ]
               },
               {
-                "group": "Inquilinos",
+                "group": "Clientes",
                 "pages": [
                   "es/admin-api/endpoints/tenants/list-tenants",
                   "es/admin-api/endpoints/tenants/get-a-tenant",
