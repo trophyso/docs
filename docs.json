@@ -400,6 +400,7 @@
               {
                 "group": "Plataforma",
                 "pages": [
+                  "es/platform/overview",
                   "es/platform/environments",
                   "es/platform/multi-tenancy",
                   "es/platform/experimentation"
