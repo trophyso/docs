@@ -34,7 +34,7 @@ You can switch between environments by clicking the environment selector in the 
 
 When you're in a non-production environment, you'll see a banner across the top of the screen reminding you that you're not in production.
 
-This is to remind you that any changes you make in non-production environments are not automatically propagated to production, and to follow the correct [workflow](#copying-changes-across-environments) for copying changes between environments.
+This is to remind you that any changes you make in non-production environments are not automatically propagated to production, and to follow the correct [workflow](#change-tracking-and-propagation) for copying changes between environments.
 
 ## Creating Environments {#creating-environments}
 
@@ -76,7 +76,7 @@ New environments can be created in the Trophy dashboard through the environment 
 
 Here we outline Trophy's model for change tracking and propagation across environments and how you can use this to model your team's development workflow.
 
-<Note>When using [multi-tenancy](#multi-tenancy), changes are **not** automatically propagated between environments. Instead, environments are treated as totally isolated from each other in order to allow for maximum flexibility in how you can use Trophy.</Note>
+<Note>When using [multi-tenancy](/platform/multi-tenancy), changes are **not** automatically propagated between environments. Instead, environments are treated as totally isolated from each other in order to allow for maximum flexibility in how you can use Trophy.</Note>
 
 ### Environment Priority {#environment-priority}
 

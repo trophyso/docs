@@ -36,7 +36,7 @@ Puedes cambiar entre entornos haciendo clic en el selector de entornos en la esq
 
 Cuando estés en un entorno que no sea de producción, verás un banner en la parte superior de la pantalla recordándote que no estás en producción.
 
-Esto es para recordarte que cualquier cambio que hagas en entornos que no sean de producción no se propaga automáticamente a producción, y que debes seguir el [flujo de trabajo](#copying-changes-across-environments) correcto para copiar cambios entre entornos.
+Esto es para recordarte que cualquier cambio que hagas en entornos que no sean de producción no se propaga automáticamente a producción, y que debes seguir el [flujo de trabajo](#change-tracking-and-propagation) correcto para copiar cambios entre entornos.
 
 ## Creación de Entornos {#creating-environments}
 
@@ -78,7 +78,7 @@ Los nuevos entornos se pueden crear en el panel de Trophy a través del selector
 
 Aquí describimos el modelo de Trophy para el seguimiento y propagación de cambios entre entornos y cómo puedes utilizarlo para modelar el flujo de trabajo de desarrollo de tu equipo.
 
-<Note>Al usar [multi-tenancy](#multi-tenancy), los cambios **no** se propagan automáticamente entre entornos. En su lugar, los entornos se tratan como totalmente aislados entre sí para permitir la máxima flexibilidad en cómo puedes usar Trophy.</Note>
+<Note>Al usar [multi-tenancy](/es/platform/multi-tenancy), los cambios **no** se propagan automáticamente entre entornos. En su lugar, los entornos se tratan como totalmente aislados entre sí para permitir la máxima flexibilidad en cómo puedes usar Trophy.</Note>
 
 ### Prioridad de Entornos {#environment-priority}
 
