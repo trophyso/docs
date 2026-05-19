@@ -3798,8 +3798,6 @@ paths:
     servers:
       - url: https://admin.trophy.so/v1
         description: Admin API
-    parameters:
-      - $ref: '#/components/parameters/TenantId'
     get:
       description: List tenants in the current environment.
       operationId: admin_tenants_list
@@ -4158,8 +4156,6 @@ paths:
     servers:
       - url: https://admin.trophy.so/v1
         description: Admin API
-    parameters:
-      - $ref: '#/components/parameters/TenantId'
     get:
       description: Get a tenant by ID.
       operationId: admin_tenants_get
