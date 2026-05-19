@@ -25,7 +25,6 @@
         "api-reference/endpoints/points/*.mdx",
         "api-reference/endpoints/streaks/*.mdx",
         "api-reference/endpoints/users/*.mdx",
-        "experimentation/*.mdx",
         "getting-started/*.mdx",
         "guides/*.mdx",
         "platform/*.mdx",

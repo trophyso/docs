@@ -400,15 +400,8 @@
                 "group": "Plataforma",
                 "pages": [
                   "es/platform/environments",
-                  "es/platform/multi-tenancy"
-                ]
-              },
-              {
-                "group": "Experimentación",
-                "pages": [
-                  "es/experimentation/overview",
-                  "es/experimentation/retention",
-                  "es/experimentation/engagement"
+                  "es/platform/multi-tenancy",
+                  "es/platform/experimentation"
                 ]
               },
               {
