@@ -11,21 +11,23 @@ Multi-tenancy in Trophy is only available on request. Please [get in touch](mail
 
 ## What is Multi-Tenancy? {#what-is-multi-tenancy}
 
-Multi-tenancy in Trophy allows you to power gamification feaetures on behalf of multiple of your own customers, and allow them to customize the gamification features they use in their own applications and how they work.
+Multi-tenancy in Trophy allows you to power gamification features on behalf of multiple of your own customers, and allow them to customize the gamification features they use in their own applications and how they work.
 
-This is specifically designed for B2B SaaS platforms who want to offer gamification features as a service to their customers, but don't have the time or resources available internally to build and maintain the gamification infrastructure themselves.
+Multi-tenancy is specifically designed for B2B SaaS platforms who want to offer gamification features as a service to their customers, but don't have the time or resources available internally to build and maintain the gamification infrastructure themselves.
 
 ## How Does Multi-Tenancy Work? {#how-does-multi-tenancy-work}
 
-Multi-tenancy in Trophy works by creating 'tenant' records in Trophy for each of your customers, and configuring gamification features within the context of each tenant.
+Multi-tenancy works by creating 'tenant' records in Trophy for each of your customers, and configuring gamification features within the context of each tenant.
 
 Customers who use multi-tenancy then make use of the [Admin API](/platform/admin-api) to build internal control panels that allow their customers to manage their own gamification features within the constraints you set for them.
+
+Similarly, customers who use multi-tenancy then make use of the [Application API](/api-reference/endpoints/applications/get-a-single-application) to power the UI that allows their customers' end-users to see and interact with the gamfication features they have exposed to them.
 
 In this way, you can power complex gamification features for your own customers, without building or maintaining any gamfification infrastructure yourself, and critically whilst upholding your own brand.
 
 ## What Is A Tenant? {#what-is-a-tenant}
 
-A tenant is a logical grouping of users and data that represent the gamification features that a single customer uses within Trophy.
+A tenant is a logical grouping of users and data that represent the gamification features that a single customer uses within a multi-tenant Trophy account.
 
 ### Tenant ID {#tenant-id}
 
@@ -47,21 +49,23 @@ Trophy's [Admin API](/platform/admin-api) allows you to completely manage any ga
 
 This allows you to serve control panels to your customers that allow them to manage their own gamification features within the constraints that you decide to set for them.
 
-The only additional step required is to understand how to scope API calls from your control panel to the specific tenant that the customer belongs to. Read more about how to do this in the dedicated section on [setting tenant scope](#setting-tenant-scope)
+The only additional step required is to understand how to scope API calls from your control panel to the specific tenant that the customer belongs to. Read more about how to do this in the dedicated section on [setting tenant scope](#setting-tenant-scope).
 
 ### Powering End-User UI {#powering-end-user-ui}
 
-The other critical part of delivering multi-tenant gamification is to power the end-user UI that allows your customers' end-users to see and interact with the gamfication features you customers have exposed to them.
+The other critical part of delivering multi-tenant gamification is to power the UI that allows your customers' end-users to see and interact with the gamfication features your customers have exposed to them.
 
-The [Application API](/api-reference/endpoints/applications/get-a-single-application) is already urpose built for powering gamification features within any application, ad the process for powering features for your customers' end users is no different.
+The [Application API](/api-reference/endpoints/applications/get-a-single-application) is already purpose built for powering gamification features within any application, and the process for powering features for your customers' end users is no different.
 
-The only extra step required is to understand how to scope API calls to the specific tenant that the end-user belongs to. Read more about how to do this in the dedicated section on [setting tenant scope](#setting-tenant-scope)
+The only extra step required is to understand how to scope API calls to the specific tenant that the end-user belongs to. Read more about how to do this in the dedicated section on [setting tenant scope](#setting-tenant-scope).
 
 ## Setting Tenant Scope {#setting-tenant-scope}
 
-Both the [Admin API](/api-reference/endpoints/admin/create-a-new-tenant) and the [Application API](/api-reference/endpoints/applications/get-a-single-application) support scoping API calls to a specific tenant.
+Both the [Admin API](/api-reference/endpoints/admin/create-a-new-tenant) and the [Application API](/api-reference/endpoints/applications/get-a-single-application) work the same way for single and multi-tenant accounts. You use the same [client libraries](/api-reference/client-libraries) to power gamification in both cases.
 
-Both APIs accept an optional `TenantID` header which when set, returns or mutates data only for the chosen tenant.
+The only difference is that when using either the admin or application API within a multi-tenant account, you need to pass the `TenantID` header to any API call that you want to scope to a specific tenant.
+
+Trophy's client libraries support scoping API calls to a specific tenant by making use of the `tenantId` parameter in all methods:
 
 Snippet...
 
@@ -69,10 +73,10 @@ Snippet...
 
 <AccordionGroup>
   <Accordion title="How many tenants can I create?">
-    Each Trophy account can have **multiple** tenants.
+    Each Trophy account can have an unlimited number of tenants.
   </Accordion>
   <Accordion title="How do I set the tenant scope for an API call?">
-    You can set the tenant scope for an API call by passing the `TenantID` header.
+    You can set the tenant scope for an API call by passing the `TenantID` header to any API call.
   </Accordion>
 </AccordionGroup>
 
