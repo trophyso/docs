@@ -45,7 +45,7 @@ Además, puedes informar a Trophy sobre cualquiera de los siguientes atributos c
 
 <ParamField path="email" type="string">
   La dirección de correo electrónico del usuario. Esta dirección se utilizará en cualquier
-  [correo electrónico](/es/platform/emails) que configures como parte de tu experiencia
+  [correo electrónico](/es/features/emails) que configures como parte de tu experiencia
   de gamificación con Trophy.
 </ParamField>
 
@@ -65,14 +65,14 @@ const timezone = Intl.DateTimeFormat().resolvedOptions().timeZone;
 </ParamField>
 
 <ParamField path="subscribeToEmails" type="boolean" default="true">
-  Si has configurado algún [correo electrónico](/es/platform/emails) de Trophy, solo se
+  Si has configurado algún [correo electrónico](/es/features/emails) de Trophy, solo se
   enviarán a un usuario cuando este campo sea verdadero. Nota: Si no proporcionas un
   `email`, intentar establecer este campo como verdadero resultará en un error.
 </ParamField>
 
 <ParamField path="deviceTokens" type="array<string>">
   La lista de tokens de dispositivo a asociar con el usuario. Si has configurado alguna
-  [Notificación push](/es/platform/push-notifications) de Trophy, solo se
+  [Notificación push](/es/features/push-notifications) de Trophy, solo se
   enviarán a un usuario cuando se proporcione este campo.
 </ParamField>
 
@@ -86,7 +86,7 @@ const timezone = Intl.DateTimeFormat().resolvedOptions().timeZone;
   <img
     height="200"
     noZoom
-    src="../../assets/platform/users/custom_user_attributes.png"
+    src="../../assets/features/users/custom_user_attributes.png"
   />
 </Frame>
 
@@ -109,7 +109,7 @@ Asigna un nombre y una clave única al atributo. La clave es lo que utilizarás 
     loop
     playsInline
     className="w-full aspect-15/4"
-    src="../../assets/platform/users/create_custom_user_attribute.mp4"
+    src="../../assets/features/users/create_custom_user_attribute.mp4"
   ></video>
 </Frame>
 
@@ -161,28 +161,28 @@ Los atributos de usuario personalizados pueden utilizarse para personalizar logr
   <Card
     title="Personalizar Logros"
     icon="trophy"
-    href="/es/platform/achievements#creating-achievements"
+    href="/es/features/achievements#creating-achievements"
   >
     Configura logros que solo pueden ser desbloqueados por usuarios específicos.
   </Card>
   <Card
     title="Personalizar Puntos"
     icon="sparkle"
-    href="/es/platform/points#points-triggers"
+    href="/es/features/points#points-triggers"
   >
     Personaliza cómo diferentes usuarios ganan puntos.
   </Card>
   <Card
     title="Segmentación de Email"
     icon="split"
-    href="/es/platform/emails#limiting-emails-to-specific-types-of-users"
+    href="/es/features/emails#limiting-emails-to-specific-types-of-users"
   >
     Controla qué usuarios reciben emails gamificados.
   </Card>
   <Card
     title="Personalización de Email"
     icon="trophy"
-    href="/es/platform/emails#email-variables"
+    href="/es/features/emails#email-variables"
   >
     Personaliza el contenido y las líneas de asunto del email con atributos de usuario personalizados.
   </Card>
@@ -211,7 +211,7 @@ Esto es útil para comprender qué cohortes están aprovechando al máximo tus f
     loop
     playsInline
     className="w-full aspect-15/4"
-    src="../../assets/platform/users/segmenting_analytics.mp4"
+    src="../../assets/features/users/segmenting_analytics.mp4"
   ></video>
 </Frame>
 
@@ -314,7 +314,7 @@ Esta sección describe todas las preferencias que puedes exponer a tus usuarios 
 
 ### Preferencias de notificaciones {#notification-preferences}
 
-Puedes usar Trophy para enviar [correos electrónicos](/es/platform/emails) y [Notificaciones push](/es/platform/push-notifications) gamificados a tus usuarios.
+Puedes usar Trophy para enviar [correos electrónicos](/es/features/emails) y [Notificaciones push](/es/features/push-notifications) gamificados a tus usuarios.
 
 La [API de actualización de preferencias](/es/api-reference/endpoints/users/update-user-preferences) de Trophy te permite crear un centro de preferencias dentro de tu aplicación con el que tus usuarios pueden interactuar para controlar qué notificaciones reciben y a través de qué canales.
 
@@ -322,7 +322,7 @@ La [API de actualización de preferencias](/es/api-reference/endpoints/users/upd
   <img
     height="200"
     noZoom
-    src="../../assets/platform/users/notification_preferences.png"
+    src="../../assets/features/users/notification_preferences.png"
   />
 </Frame>
 
@@ -396,7 +396,7 @@ Por defecto, Trophy incluye analíticas de usuario de alto nivel en la [página 
 - El número de usuarios que están activos mensualmente
 
 <Frame>
-  <img height="200" noZoom src="../../assets/platform/users/user_analytics.png" />
+  <img height="200" noZoom src="../../assets/features/users/user_analytics.png" />
 </Frame>
 
 En esta página también puedes buscar entre todos los usuarios que Trophy ha registrado, lo cual puede ser útil para depuración.
@@ -421,7 +421,7 @@ Además, en el [Dashboard](https://app.trophy.so), Trophy muestra una lista de _
       <img
         height="200"
         noZoom
-        src="../../assets/platform/users/usage_block.png"
+        src="../../assets/features/users/usage_block.png"
       />
     </Frame>
 

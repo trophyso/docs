@@ -696,7 +696,7 @@ So, let's get started...
 
 First off, we need a new [Trophy account](https://app.trophy.so/sign-up). Then we can start to piece together the various parts of our gamification experience.
 
-In Trophy, [Metrics](/platform/metrics) represent different interactions users can make and can drive features like [Achievements](/platform/achievements), [Streaks](/platform/streaks) and [Emails](/platform/emails).
+In Trophy, [Metrics](/features/metrics) represent different interactions users can make and can drive features like [Achievements](/features/achievements), [Streaks](/features/streaks) and [Emails](/features/emails).
 
 ```mermaid
 flowchart TD
@@ -713,7 +713,7 @@ flowchart TD
     B-->F
 ```
 
-In Trophy we track user interactions by sending [Events](/platform/events) from our code to Trophy against a specific metric.
+In Trophy we track user interactions by sending [Events](/features/events) from our code to Trophy against a specific metric.
 
 When events are recorded for a specific user, any achievements linked to the specified metric will be unlocked if the requirements are met, daily streaks will be automatically calculated and kept up to date, points are awarded, and leaderboards are updated.
 
@@ -821,7 +821,7 @@ Trophy also gives us a preview of the emails which is nice. Plus, feel free to c
 
 <Note>
   Before you can start sending emails, you'll need to [configure your sending
-  address](/platform/emails#sending-emails) with Trophy. But this can be done
+  address](/features/emails#sending-emails) with Trophy. But this can be done
   later on if preferred.
 </Note>
 

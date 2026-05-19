@@ -32,7 +32,7 @@ Con fines ilustrativos, usaremos el ejemplo de una plataforma de estudio que uti
 
 ## Configuración de Trophy {#trophy-setup}
 
-En Trophy, las [Métricas](/es/platform/metrics) son los bloques de construcción de la gamificación y modelan las diferentes interacciones que los usuarios tienen con tu producto.
+En Trophy, las [Métricas](/es/features/metrics) son los bloques de construcción de la gamificación y modelan las diferentes interacciones que los usuarios tienen con tu producto.
 
 En esta guía, la interacción que nos interesa es `flashcards-viewed`, pero puedes crear cualquier número de métricas que mejor representen las interacciones por las que deseas recompensar XP.
 
@@ -75,7 +75,7 @@ Una vez creado, serás redirigido a la página de configuración del sistema de 
   ></video>
 </Frame>
 
-En Trophy rastrear las interacciones de los usuarios se hace enviando [Eventos](/es/platform/events) desde tu código a las APIs de Trophy contra una métrica específica.
+En Trophy rastrear las interacciones de los usuarios se hace enviando [Eventos](/es/features/events) desde tu código a las APIs de Trophy contra una métrica específica.
 
 Cuando se registran eventos para un usuario específico, Trophy verificará automáticamente si el evento está asociado a una métrica configurada como parte de algún disparador de XP.
 
@@ -85,7 +85,7 @@ Esto es lo que hace que construir experiencias gamificadas con Trophy sea tan f�
 
 <Tip>
   El XP también puede otorgarse a los usuarios en base a logros, rachas y otros
-  disparadores. Consulta la [documentación de puntos](/es/platform/points#points-triggers) dedicada
+  disparadores. Consulta la [documentación de puntos](/es/features/points#points-triggers) dedicada
   para más información.
 </Tip>
 
@@ -116,7 +116,7 @@ Para rastrear un evento (interacción de usuario) contra tu métrica, utiliza la
 La respuesta a esta llamada API es el conjunto completo de cambios en cualquier característica que hayas construido con Trophy, incluyendo cualquier XP que se haya otorgado al usuario como resultado del evento, y desde qué disparadores se otorgó.
 
 <Note>
-  Si utilizas [Niveles de Puntos](/es/platform/points#points-levels), el objeto `xp` puede incluir un campo **`level`** **solo cuando** el nivel del usuario cambió en esta solicitud; puede omitirse cuando su nivel permaneció igual. Consulta la [referencia de la API de cambio de métrica](/es/api-reference/endpoints/metrics/send-a-metric-change-event) para el esquema completo de respuesta.
+  Si utilizas [Niveles de Puntos](/es/features/points#points-levels), el objeto `xp` puede incluir un campo **`level`** **solo cuando** el nivel del usuario cambió en esta solicitud; puede omitirse cuando su nivel permaneció igual. Consulta la [referencia de la API de cambio de métrica](/es/api-reference/endpoints/metrics/send-a-metric-change-event) para el esquema completo de respuesta.
 </Note>
 
 {/* vale off */}

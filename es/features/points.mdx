@@ -18,7 +18,7 @@ import WebhookPointsLevelChangedPayload from "../../snippets/webhook-points-leve
 
 ## ¿Qué es un Sistema de Puntos? {#what-is-a-points-system}
 
-Los sistemas de puntos se utilizan para crear contadores que rastrean las interacciones de los usuarios con [Métricas](/es/platform/metrics), [Logros](/es/platform/achievements) y [Rachas](/es/platform/streaks). Luego puedes construir funcionalidades como 'XP' y 'Energía' alrededor de estos contadores dentro de tu producto.
+Los sistemas de puntos se utilizan para crear contadores que rastrean las interacciones de los usuarios con [Métricas](/es/features/metrics), [Logros](/es/features/achievements) y [Rachas](/es/features/streaks). Luego puedes construir funcionalidades como 'XP' y 'Energía' alrededor de estos contadores dentro de tu producto.
 
 ## Casos de Uso {#use-cases}
 
@@ -45,7 +45,7 @@ Trophy te permite configurar múltiples sistemas de puntos para diferentes casos
     loop
     playsInline
     className="w-full aspect-video"
-    src="../../assets/platform/points/create_system.mp4"
+    src="../../assets/features/points/create_system.mp4"
   ></video>
 </Frame>
 
@@ -87,15 +87,15 @@ Existen múltiples tipos de activadores en Trophy que pueden usarse para otorgar
 
 #### Activadores de Métricas {#metric-triggers}
 
-Los puntos pueden otorgarse o deducirse de forma continua a medida que los usuarios incrementan las [Métricas](/es/platform/metrics). Puedes elegir otorgar o deducir cualquier número arbitrario de puntos en cualquier umbral de métrica arbitrario, por ejemplo "otorgar 10 puntos por cada 3 tareas completadas".
+Los puntos pueden otorgarse o deducirse de forma continua a medida que los usuarios incrementan las [Métricas](/es/features/metrics). Puedes elegir otorgar o deducir cualquier número arbitrario de puntos en cualquier umbral de métrica arbitrario, por ejemplo "otorgar 10 puntos por cada 3 tareas completadas".
 
 #### Activadores de Racha {#streak-triggers}
 
-Los Puntos se pueden otorgar o deducir al alcanzar cualquier duración arbitraria de una [Racha](/es/platform/streaks), por ejemplo "otorgar 50 puntos por cada racha de 7 días".
+Los Puntos se pueden otorgar o deducir al alcanzar cualquier duración arbitraria de una [Racha](/es/features/streaks), por ejemplo "otorgar 50 puntos por cada racha de 7 días".
 
 #### Activadores de Logro {#achievement-triggers}
 
-Los Puntos se pueden otorgar o deducir cuando los usuarios desbloquean [Logros](/es/platform/achievements) específicos, por ejemplo "otorgar 100 puntos cuando los usuarios completen el logro `profile-completed`".
+Los Puntos se pueden otorgar o deducir cuando los usuarios desbloquean [Logros](/es/features/achievements) específicos, por ejemplo "otorgar 100 puntos cuando los usuarios completen el logro `profile-completed`".
 
 #### Activadores basados en tiempo {#time-based-triggers}
 
@@ -121,7 +121,7 @@ Para crear un nuevo activador de puntos, dirígete al sistema de puntos para el 
     loop
     playsInline
     className="w-full aspect-video"
-    src="../../assets/platform/points/create_trigger.mp4"
+    src="../../assets/features/points/create_trigger.mp4"
   ></video>
 </Frame>
 
@@ -153,9 +153,9 @@ Para crear un nuevo activador de puntos, dirígete al sistema de puntos para el 
 <Step title="Agrega filtros de atributos (Opcional)">
   Puedes asignar filtros de atributos a un activador de puntos para restringir aún más cuándo se aplican.
 
-- Para limitar un **activador de métrica** a que solo se aplique a eventos con [atributos de evento personalizados](/es/platform/events#custom-event-attributes) específicos, agrega uno o más filtros en la sección **Atributos de Evento**.
+- Para limitar un **activador de métrica** a que solo se aplique a eventos con [atributos de evento personalizados](/es/features/events#custom-event-attributes) específicos, agrega uno o más filtros en la sección **Atributos de Evento**.
 
-- Para limitar cualquier tipo de activador a que solo se aplique a un usuario con uno o más [atributos de usuario personalizados](/es/platform/users#custom-user-attributes) específicos, agrega atributos y los valores deseados en la sección **Atributos de Usuario**.
+- Para limitar cualquier tipo de activador a que solo se aplique a un usuario con uno o más [atributos de usuario personalizados](/es/features/users#custom-user-attributes) específicos, agrega atributos y los valores deseados en la sección **Atributos de Usuario**.
 
 <Note>
   Cuando estableces múltiples filtros de atributos de evento, todos deben coincidir para que
@@ -185,7 +185,7 @@ La herramienta de vista previa de Trophy puede modelar diferentes escenarios par
     loop
     playsInline
     className="w-full aspect-video"
-    src="../../assets/platform/points/points_preview.mp4"
+    src="../../assets/features/points/points_preview.mp4"
   ></video>
 </Frame>
 
@@ -199,7 +199,7 @@ Esta sección explica cómo funcionan los impulsos y cómo se pueden utilizar pa
 
 Hay varias formas en las que puedes usar impulsos en Trophy.
 
-- **Impulsos globales** multiplican los puntos ganados por todos los usuarios durante la ventana del impulso, o pueden limitarse a una cohorte de usuarios específica utilizando [atributos de usuario personalizados](/es/platform/users#custom-user-attributes).
+- **Impulsos globales** multiplican los puntos ganados por todos los usuarios durante la ventana del impulso, o pueden limitarse a una cohorte de usuarios específica utilizando [atributos de usuario personalizados](/es/features/users#custom-user-attributes).
 - **Impulsos específicos por usuario** solo multiplican los puntos ganados por un único usuario dentro de la ventana del impulso.
 
 Típicamente, los impulsos globales se utilizan para aumentar el engagement en toda la plataforma durante eventos clave del calendario como Black Friday/Cyber Monday en comercio electrónico, Año Nuevo en fitness y temporada de exámenes en plataformas educativas.
@@ -221,7 +221,7 @@ Para crear un impulso de puntos global en el panel de Trophy, sigue los pasos a 
     loop
     playsInline
     className="w-full aspect-15/4"
-    src="../../assets/platform/points/create_points_boost.mp4"
+    src="../../assets/features/points/create_points_boost.mp4"
   ></video>
 </Frame>
 
@@ -241,7 +241,7 @@ Para crear un impulso de puntos global en el panel de Trophy, sigue los pasos a 
   <Step title="Agrega filtros de atributos (opcional)">
 
     <Note>
-      Esta función requiere [atributos de usuario personalizados](/es/platform/users#custom-user-attributes) que están disponibles en el plan [Pro](/es/account/billing#pro-plan).
+      Esta función requiere [atributos de usuario personalizados](/es/features/users#custom-user-attributes) que están disponibles en el plan [Pro](/es/account/billing#pro-plan).
     </Note>
 
     Si deseas que tu impulso afecte solo a una cohorte específica de usuarios, establece condiciones de atributos de usuario que coincidan con las de tu cohorte objetivo. Trophy se encargará de aplicar el impulso únicamente a los Puntos ganados por usuarios con valores de atributos de usuario coincidentes.
@@ -251,7 +251,7 @@ Para crear un impulso de puntos global en el panel de Trophy, sigue los pasos a 
         height="200"
         width="100%"
         noZoom
-        src="../../assets/platform/points/points_boost_attributes.png"
+        src="../../assets/features/points/points_boost_attributes.png"
       />
     </Frame>
   </Step>
@@ -278,7 +278,7 @@ Overall Multiplier (3 boosts) = 2X * 1.5X * 3X = 9X
 
 ### Redondeo de impulsos {#boost-rounding}
 
-Trophy admite [valores de eventos de métricas de punto flotante](/es/platform/events#event-value), pero se encarga de redondear los Puntos a enteros automáticamente.
+Trophy admite [valores de eventos de métricas de punto flotante](/es/features/events#event-value), pero se encarga de redondear los Puntos a enteros automáticamente.
 
 Sin embargo, al usar [multiplicadores de impulsos](#boost-multipliers) decimales, puede haber algunos escenarios donde este redondeo predeterminado no sea suficiente para producir siempre valores de Puntos enteros.
 
@@ -292,7 +292,7 @@ Por lo tanto, Trophy ofrece tres modos de redondeo para proporcionar control adi
 En escenarios donde los Puntos se utilizan para imitar mecánicas de crédito de plataforma, se recomienda usar el comportamiento de redondeo hacia abajo por defecto para proteger contra deslizamientos.
 </Tip>
 
-Simplemente elige tu modo de redondeo preferido al [crear impulsos](/es/platform/points#creating-boosts) a través del panel de Trophy.
+Simplemente elige tu modo de redondeo preferido al [crear impulsos](/es/features/points#creating-boosts) a través del panel de Trophy.
 
 ## Niveles de Puntos {#points-levels}
 
@@ -313,7 +313,7 @@ Para configurar niveles para un sistema de Puntos, ábrelo desde la [página de 
     loop
     playsInline
     className="w-full aspect-video"
-    src="../../assets/platform/points/create_points_level.mp4"
+    src="../../assets/features/points/create_points_level.mp4"
   ></video>
 </Frame>
 
@@ -402,7 +402,7 @@ Existen varias formas de usar Trophy para obtener y mostrar puntos en tu aplicac
     loop
     playsInline
     className="w-full aspect-video"
-    src="../../assets/platform/points/displaying_points.mp4"
+    src="../../assets/features/points/displaying_points.mp4"
   ></video>
 </Frame>
 
@@ -434,7 +434,7 @@ Puedes usar esta API para mostrar el total de puntos del usuario en cualquier lu
 <UserPointsResponse />
 
 <Frame>
-  <img height="200" noZoom src="../../assets/platform/points/points_awards.png" />
+  <img height="200" noZoom src="../../assets/features/points/points_awards.png" />
 </Frame>
 
 Luego, puedes usar la [API de resumen de puntos de usuario](/es/api-reference/endpoints/users/get-a-users-points-summary) para obtener datos históricos de puntos de un usuario en particular.
@@ -449,7 +449,7 @@ Ejemplo de respuesta `GET /users/{id}/points/{key}/event-summary` **200** (espec
   <img
     height="200"
     noZoom
-    src="../../assets/platform/points/user_points_summary.png"
+    src="../../assets/features/points/user_points_summary.png"
   />
 </Frame>
 
@@ -471,11 +471,11 @@ Finalmente, la [API del sistema de puntos](/es/api-reference/endpoints/points/ge
 
 <Tip>
   La API de resumen de puntos también se puede filtrar para devolver solo datos de usuarios con
-  [atributos de usuario personalizados](/es/platform/users#custom-user-attributes) específicos.
+  [atributos de usuario personalizados](/es/features/users#custom-user-attributes) específicos.
 </Tip>
 
 <Frame>
-  <img height="200" noZoom src="../../assets/platform/points/points_summary.png" />
+  <img height="200" noZoom src="../../assets/features/points/points_summary.png" />
 </Frame>
 
 Usa la respuesta de la [API del sistema de puntos](/es/api-reference/endpoints/points/get-points) para mostrar a los usuarios cómo pueden ganar puntos en tu plataforma. Cualquier activador nuevo que agregues se devolverá automáticamente desde esta API, reduciendo cambios de código en tu plataforma y trasladando las operaciones a Trophy.
@@ -484,7 +484,7 @@ Usa la respuesta de la [API del sistema de puntos](/es/api-reference/endpoints/p
   <img
     height="200"
     noZoom
-    src="../../assets/platform/points/points_triggers.png"
+    src="../../assets/features/points/points_triggers.png"
   />
 </Frame>
 
@@ -501,7 +501,7 @@ Trophy cuenta con análisis integrado para rastrear la asignación de puntos de 
   <img
     height="200"
     noZoom
-    src="../../assets/platform/points/points_analytics.png"
+    src="../../assets/features/points/points_analytics.png"
   />
 </Frame>
 

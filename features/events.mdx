@@ -14,7 +14,7 @@ import ParallelEventsValueExample from "../snippets/parallel-events-value-exampl
 
 ## What are Events? {#what-are-events}
 
-Events represent individual user interactions against [Metrics](/platform/metrics) in Trophy. One event corresponds to a single interaction made by a single user.
+Events represent individual user interactions against [Metrics](/features/metrics) in Trophy. One event corresponds to a single interaction made by a single user.
 
 When you [integrate metrics](#tracking-metric-events) into your platform, you're setting up your platform to continuously stream events to your Trophy metrics for each user interaction. These interactions then drive all the gamification features you set up around these metrics.
 
@@ -38,7 +38,7 @@ The value of an event can be positive or negative, and can be a whole number or 
   <img
     height="200"
     noZoom
-    src="../assets/platform/events/custom_event_attributes.png"
+    src="../assets/features/events/custom_event_attributes.png"
   />
 </Frame>
 
@@ -63,7 +63,7 @@ Give the attribute a name and a unique key, you'll use the key when referencing 
     loop
     playsInline
     className="w-full aspect-15/4"
-    src="../assets/platform/events/create_custom_event_attribute.mp4"
+    src="../assets/features/events/create_custom_event_attribute.mp4"
   ></video>
 </Frame>
 
@@ -114,7 +114,7 @@ Custom event attributes can be used to set up achievements or points triggers th
   <Card
     title="Achievement Triggers"
     icon="trophy"
-    href="/platform/achievements#creating-achievements"
+    href="/features/achievements#creating-achievements"
   >
     Configure achievements that can only be unlocked by events with certain
     attribute values.
@@ -122,7 +122,7 @@ Custom event attributes can be used to set up achievements or points triggers th
   <Card
     title="Points Triggers"
     icon="sparkle"
-    href="/platform/points#points-triggers"
+    href="/features/points#points-triggers"
   >
     Set up points triggers to only award points from events with specific
     attribute values.
@@ -131,7 +131,7 @@ Custom event attributes can be used to set up achievements or points triggers th
 
 #### Email Customization {#email-customization}
 
-If you use any Trophy [Emails](/platform/emails), event attributes can be used to customize the data shown in certain email blocks.
+If you use any Trophy [Emails](/features/emails), event attributes can be used to customize the data shown in certain email blocks.
 
 Firstly, when using metric-based variables in email copy you can use event attributes to further control what data the variable references.
 
@@ -144,7 +144,7 @@ For example here's a case where we use an email variable to tell users what thei
     loop
     playsInline
     className="w-full aspect-15/4"
-    src="../assets/platform/events/using_attributes_in_emails.mp4"
+    src="../assets/features/events/using_attributes_in_emails.mp4"
   ></video>
 </Frame>
 
@@ -157,7 +157,7 @@ Secondly, here's an example where we add a chart to an email that shows users ho
     loop
     playsInline
     className="w-full aspect-15/4"
-    src="../assets/platform/events/using_attributes_in_email_charts.mp4"
+    src="../assets/features/events/using_attributes_in_email_charts.mp4"
   ></video>
 </Frame>
 
@@ -173,7 +173,7 @@ Here's an example where a fictional study platform is using a metric to track th
 
 <MetricChangeRequestBlock />
 
-Any [Achievements](/platform/achievements), [Streaks](/platform/streaks), [Points](/platform/points) or [Leaderboards](/platform/leaderboards) that have been set up against this metric will be automatically processed, and the response will contain any updates to the user's progress that are a direct result of the event occurring:
+Any [Achievements](/features/achievements), [Streaks](/features/streaks), [Points](/features/points) or [Leaderboards](/features/leaderboards) that have been set up against this metric will be automatically processed, and the response will contain any updates to the user's progress that are a direct result of the event occurring:
 
 <MetricChangeResponseBlock />
 

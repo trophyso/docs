@@ -17,7 +17,7 @@ Los logros son recompensas que los usuarios pueden desbloquear mientras usan tu 
 Los logros funcionan mejor cuando están diseñados para incentivar a los usuarios a realizar acciones que probablemente aumenten la retención.
 
 <Tip>
-  Usa las [analíticas de métricas](/es/platform/metrics#metric-analytics) de Trophy para comparar
+  Usa las [analíticas de métricas](/es/features/metrics#metric-analytics) de Trophy para comparar
   la retención de cada interacción del usuario, y luego configura logros en torno
   a estas interacciones para maximizar el impacto en la retención.
 </Tip>
@@ -44,7 +44,7 @@ Trophy ofrece cuatro tipos de logros: [Métricas](#metric-achievements), [API](#
 
 ### Logros de Métricas {#metric-achievements}
 
-Los logros de métricas están vinculados a [Métricas](/es/platform/metrics) y se utilizan mejor cuando quieres incentivar a los usuarios a realizar la misma acción una y otra vez.
+Los logros de métricas están vinculados a [Métricas](/es/features/metrics) y se utilizan mejor cuando quieres incentivar a los usuarios a realizar la misma acción una y otra vez.
 
 Tomemos el ejemplo de una plataforma de estudio que usa Trophy para animar a los usuarios a ver más tarjetas de memoria con logros de métricas de la siguiente manera:
 
@@ -57,9 +57,9 @@ Tomemos el ejemplo de una plataforma de estudio que usa Trophy para animar a los
 
 En este caso, crearías una métrica llamada _Tarjetas Volteadas_ y crearías logros asociados a la métrica para cada hito.
 
-Dado que estos logros están directamente vinculados a la métrica _Tarjetas Volteadas_, Trophy rastreará automáticamente cuándo los usuarios desbloquean estos logros a medida que [incrementan la métrica](/es/platform/events#tracking-metric-events).
+Dado que estos logros están directamente vinculados a la métrica _Tarjetas Volteadas_, Trophy rastreará automáticamente cuándo los usuarios desbloquean estos logros a medida que [incrementan la métrica](/es/features/events#tracking-metric-events).
 
-Cuando se desbloquean logros, Trophy incluye información sobre los logros desbloqueados en la respuesta del [API de Eventos](/es/api-reference/endpoints/metrics/send-a-metric-change-event) y activa automáticamente los [Correos de Logros](/es/platform/emails#achievement-emails) si están configurados.
+Cuando se desbloquean logros, Trophy incluye información sobre los logros desbloqueados en la respuesta del [API de Eventos](/es/api-reference/endpoints/metrics/send-a-metric-change-event) y activa automáticamente los [Correos de Logros](/es/features/emails#achievement-emails) si están configurados.
 
 <MetricChangeResponseBlock />
 
@@ -75,11 +75,11 @@ Ejemplos comunes incluyen:
 
 Los logros de API sirven como una forma fácil de recompensar a los usuarios por completar cualquier acción que consideres importante para la retención.
 
-Al igual que los logros de métricas, los logros de API también pueden activar [Correos de Logros](/es/platform/emails#achievement-emails) automatizados si están configurados.
+Al igual que los logros de métricas, los logros de API también pueden activar [Correos de Logros](/es/features/emails#achievement-emails) automatizados si están configurados.
 
 ### Logros de Racha {#streak-achievements}
 
-Los logros de racha están directamente vinculados a la [Racha](/es/platform/streaks) de un usuario y se desbloquean automáticamente cuando los usuarios alcanzan una longitud de racha determinada.
+Los logros de racha están directamente vinculados a la [Racha](/es/features/streaks) de un usuario y se desbloquean automáticamente cuando los usuarios alcanzan una longitud de racha determinada.
 
 Puedes crear tantos logros de racha como desees para longitudes de racha crecientes, por ejemplo 7 días, 30 días y 365 días para motivar a los usuarios a usar tu aplicación cada vez más.
 
@@ -94,7 +94,7 @@ Por ejemplo, podrías crear un Logro compuesto "Maestro del Estudio" que se desb
 - Racha de 7 días
 - Completar la incorporación
 
-Los Logros compuestos son útiles para crear rutas de progresión y fomentar que los usuarios interactúen en diferentes áreas de tu aplicación. Al igual que otros tipos de Logros, pueden activar [Correos de Logros](/es/platform/emails#achievement-emails) cuando se desbloquean.
+Los Logros compuestos son útiles para crear rutas de progresión y fomentar que los usuarios interactúen en diferentes áreas de tu aplicación. Al igual que otros tipos de Logros, pueden activar [Correos de Logros](/es/features/emails#achievement-emails) cuando se desbloquean.
 
 ## Crear Logros {#creating-achievements}
 
@@ -107,7 +107,7 @@ Para crear nuevos Logros, dirígete a la [página de Logros](https://app.trophy.
     loop
     playsInline
     className="w-full aspect-video"
-    src="../../assets/platform/achievements/create_new_achievement.mp4"
+    src="../../assets/features/achievements/create_new_achievement.mp4"
   ></video>
 </Frame>
 
@@ -157,9 +157,9 @@ Para crear nuevos Logros, dirígete a la [página de Logros](https://app.trophy.
 <Step title="Agregar filtros de atributos (Opcional)">
 Puedes asignar filtros de atributos a un logro para restringir aún más quién puede desbloquearlos y cuándo.
 
-- Para limitar un logro de **Métrica** a que solo se aplique a eventos con [atributos de evento personalizados](/es/platform/events#custom-event-attributes) específicos, agrega uno o más filtros en la sección **Atributos de Evento**.
+- Para limitar un logro de **Métrica** a que solo se aplique a eventos con [atributos de evento personalizados](/es/features/events#custom-event-attributes) específicos, agrega uno o más filtros en la sección **Atributos de Evento**.
 
-- Para limitar cualquier tipo de logro a que solo se aplique a un usuario con uno o más [atributos de usuario personalizados](/es/platform/users#custom-user-attributes) específicos, agrega atributos y los valores deseados en la sección **Atributos de Usuario**.
+- Para limitar cualquier tipo de logro a que solo se aplique a un usuario con uno o más [atributos de usuario personalizados](/es/features/users#custom-user-attributes) específicos, agrega atributos y los valores deseados en la sección **Atributos de Usuario**.
 
 <Note>
   Cuando configuras múltiples filtros de atributos de evento, todos deben coincidir para que
@@ -240,7 +240,7 @@ flowchart LR
 
 ## Completar Logros {#completing-achievements}
 
-Si utilizas logros de métricas, no es necesario _completar_ logros explícitamente. Una vez que hayas configurado el [seguimiento de métricas](/es/platform/events#tracking-metric-events) en tu código, todos los logros vinculados a la métrica se rastrearán automáticamente.
+Si utilizas logros de métricas, no es necesario _completar_ logros explícitamente. Una vez que hayas configurado el [seguimiento de métricas](/es/features/events#tracking-metric-events) en tu código, todos los logros vinculados a la métrica se rastrearán automáticamente.
 
 De manera similar, si estás utilizando logros de racha, todos los logros relacionados con la racha del usuario se desbloquearán automáticamente cuando un usuario alcance la longitud de racha respectiva.
 
@@ -287,7 +287,7 @@ Puedes verificar cuántos usuarios han completado logros en cualquier momento en
   <img
     height="200"
     noZoom
-    src="../../assets/platform/achievements/check_user_completions.png"
+    src="../../assets/features/achievements/check_user_completions.png"
   />
 </Frame>
 
@@ -300,7 +300,7 @@ Puedes verificar cuántos usuarios han completado logros en cualquier momento en
     loop
     playsInline
     className="w-full aspect-video"
-    src="../../assets/platform/achievements/upload_badge.mp4"
+    src="../../assets/features/achievements/upload_badge.mp4"
   ></video>
 </Frame>
 
@@ -340,7 +340,7 @@ Para mostrar una vista general de todos los logros que los usuarios pueden compl
     loop
     playsInline
     className="w-full aspect-video"
-    src="../../assets/platform/achievements/displaying_trophy_cabinet.mp4"
+    src="../../assets/features/achievements/displaying_trophy_cabinet.mp4"
   ></video>
 </Frame>
 
@@ -360,19 +360,19 @@ Si en cambio estás construyendo elementos de interfaz específicos del usuario,
   <img
     height="200"
     noZoom
-    src="../../assets/platform/achievements/user_achievements.png"
+    src="../../assets/features/achievements/user_achievements.png"
   />
 </Frame>
 
 ## Analítica de Logros {#achievement-analytics}
 
-Si tienes logros configurados para cualquiera de tus [Métricas](/es/platform/metrics), la página de analítica de métricas muestra un gráfico con el progreso actual de todos los usuarios de la siguiente manera:
+Si tienes logros configurados para cualquiera de tus [Métricas](/es/features/metrics), la página de analítica de métricas muestra un gráfico con el progreso actual de todos los usuarios de la siguiente manera:
 
 <Frame>
   <img
     width="75%"
     noZoom
-    src="../../assets/platform/metrics/achievement_completions.png"
+    src="../../assets/features/metrics/achievement_completions.png"
   />
 </Frame>
 
@@ -393,7 +393,7 @@ Si tienes logros configurados para cualquiera de tus [Métricas](/es/platform/me
     <Accordion title="¿Qué logros debería crear?">
     Los logros, al igual que toda la gamificación, generan mejor retención cuando están totalmente alineados con la razón principal por la que el usuario utiliza tu plataforma.
 
-    Usa la [analítica de métricas](/es/platform/metrics#metric-analytics) de Trophy para comparar la retención de cada interacción de usuario y luego configura logros en torno a esas interacciones para maximizar el impacto en la retención.
+    Usa la [analítica de métricas](/es/features/metrics#metric-analytics) de Trophy para comparar la retención de cada interacción de usuario y luego configura logros en torno a esas interacciones para maximizar el impacto en la retención.
 
   </Accordion>
 </AccordionGroup>

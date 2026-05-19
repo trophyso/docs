@@ -17,7 +17,7 @@ import WebhookPointsLevelChangedPayload from "../snippets/webhook-points-level-c
 
 ## What is a Points System? {#what-is-a-points-system}
 
-Points systems are used to create counters that track users' interactions with [Metrics](/platform/metrics), [Achievements](/platform/achievements) and [Streaks](/platform/streaks). You can then build features like 'XP' and 'Energy' around these counters within your product.
+Points systems are used to create counters that track users' interactions with [Metrics](/features/metrics), [Achievements](/features/achievements) and [Streaks](/features/streaks). You can then build features like 'XP' and 'Energy' around these counters within your product.
 
 ## Use Cases {#use-cases}
 
@@ -44,7 +44,7 @@ Trophy let's you set up multiple points systems for different use cases within y
     loop
     playsInline
     className="w-full aspect-video"
-    src="../assets/platform/points/create_system.mp4"
+    src="../assets/features/points/create_system.mp4"
   ></video>
 </Frame>
 
@@ -86,15 +86,15 @@ There are multiple types of triggers in Trophy that can be used to award or dedu
 
 #### Metric Triggers {#metric-triggers}
 
-Points can be awarded or deducted continually as users increment [Metrics](/platform/metrics). You can choose to award or deduct any arbitrary number of points at any arbitrary metric threshold, for example "award 10 points for every 3 tasks completed".
+Points can be awarded or deducted continually as users increment [Metrics](/features/metrics). You can choose to award or deduct any arbitrary number of points at any arbitrary metric threshold, for example "award 10 points for every 3 tasks completed".
 
 #### Streak Triggers {#streak-triggers}
 
-Points can be awarded or deducted for reaching any arbitrary length of a [Streak](/platform/streaks), for example "award 50 points for every 7 days streak".
+Points can be awarded or deducted for reaching any arbitrary length of a [Streak](/features/streaks), for example "award 50 points for every 7 days streak".
 
 #### Achievement Triggers {#achievement-triggers}
 
-Points can be awarded or deducted when users unlock specific [Achievements](/platform/achievements), for example "award 100 points when users completed the `profile-completed` achievement".
+Points can be awarded or deducted when users unlock specific [Achievements](/features/achievements), for example "award 100 points when users completed the `profile-completed` achievement".
 
 #### Time-based Triggers {#time-based-triggers}
 
@@ -120,7 +120,7 @@ To create a new points trigger, head to the points system that you want to creat
     loop
     playsInline
     className="w-full aspect-video"
-    src="../assets/platform/points/create_trigger.mp4"
+    src="../assets/features/points/create_trigger.mp4"
   ></video>
 </Frame>
 
@@ -152,9 +152,9 @@ To create a new points trigger, head to the points system that you want to creat
 <Step title="Add attribute filters (Optional)">
   You can assign attribute filters to a points trigger to further restrict when they apply.
 
-- To limit a **Metric trigger** to only apply to events with specific [custom event attributes](/platform/events#custom-event-attributes), add one or more filters in the **Event Attributes** section.
+- To limit a **Metric trigger** to only apply to events with specific [custom event attributes](/features/events#custom-event-attributes), add one or more filters in the **Event Attributes** section.
 
-- To limit any type of trigger to only apply to a user with one or more specific [custom user attributes](/platform/users#custom-user-attributes), add attributes and the desired values in the **User Attributes** section.
+- To limit any type of trigger to only apply to a user with one or more specific [custom user attributes](/features/users#custom-user-attributes), add attributes and the desired values in the **User Attributes** section.
 
 <Note>
   When you set multiple event attribute filters, all of them must match for the
@@ -184,7 +184,7 @@ Trophy's preview tool can model different scenarios to help you determine how fr
     loop
     playsInline
     className="w-full aspect-video"
-    src="../assets/platform/points/points_preview.mp4"
+    src="../assets/features/points/points_preview.mp4"
   ></video>
 </Frame>
 
@@ -198,7 +198,7 @@ This section explains how boosts work and how they can be used to increase your 
 
 There are a few different ways you can use boosts in Trophy.
 
-- **Global boosts** multiply points earned by all users during the boost window, or can be scoped to a specific user cohort by using [custom user attributes](/platform/users#custom-user-attributes).
+- **Global boosts** multiply points earned by all users during the boost window, or can be scoped to a specific user cohort by using [custom user attributes](/features/users#custom-user-attributes).
 - **User-specific boosts** only multiply points earned by a single user within the boost window.
 
 Typically, global boosts are used to increase platform-wide engagement during key calendar events like Black Friday/Cyber Monday in e-commerce, New Year in fitness and exam season in ed-tech platforms.
@@ -220,7 +220,7 @@ To create a global points boost in the Trophy dashboard, follow the steps below.
     loop
     playsInline
     className="w-full aspect-15/4"
-    src="../assets/platform/points/create_points_boost.mp4"
+    src="../assets/features/points/create_points_boost.mp4"
   ></video>
 </Frame>
 
@@ -240,7 +240,7 @@ To create a global points boost in the Trophy dashboard, follow the steps below.
   <Step title="Add attribute filters (optional)">
 
     <Note>
-      This feature requires [custom user attributes](/platform/users#custom-user-attributes) which are available on the [Pro](/account/billing#pro-plan) plan.
+      This feature requires [custom user attributes](/features/users#custom-user-attributes) which are available on the [Pro](/account/billing#pro-plan) plan.
     </Note>
 
     If you want your boost to only affect a specific user cohort, set user attribute conditions that match those of your target cohort. Trophy will take care of only applying the boost to points earned by users with matching user attribute values.
@@ -250,7 +250,7 @@ To create a global points boost in the Trophy dashboard, follow the steps below.
         height="200"
         width="100%"
         noZoom
-        src="../assets/platform/points/points_boost_attributes.png"
+        src="../assets/features/points/points_boost_attributes.png"
       />
     </Frame>
   </Step>
@@ -277,7 +277,7 @@ Overall Multiplier (3 boosts) = 2X * 1.5X * 3X = 9X
 
 ### Boost Rounding {#boost-rounding}
 
-Trophy supports [floating point metric event values](/platform/events#event-value), but takes care of rounding points to integers automatically.
+Trophy supports [floating point metric event values](/features/events#event-value), but takes care of rounding points to integers automatically.
 
 However, when using decimal [boost multipliers](#boost-multipliers), there may be some scenarios where this default rounding is not enough to always produce integer points values.
 
@@ -291,7 +291,7 @@ Therefore Trophy offers three rounding modes to provide additional control on ro
 In scenarios where points are used to mimic platform credit mechanics, it's recommended to use the default rounding down behavior to protect against slippage.
 </Tip>
 
-Simply choose your preferred rounding mode when [creating boosts](/platform/points#creating-boosts) through the Trophy dashboard.
+Simply choose your preferred rounding mode when [creating boosts](/features/points#creating-boosts) through the Trophy dashboard.
 
 ## Points Levels {#points-levels}
 
@@ -312,7 +312,7 @@ To set up levels for a points system, open it from the [points page](https://app
     loop
     playsInline
     className="w-full aspect-video"
-    src="../assets/platform/points/create_points_level.mp4"
+    src="../assets/features/points/create_points_level.mp4"
   ></video>
 </Frame>
 
@@ -401,7 +401,7 @@ There are a few ways to use Trophy to fetch and display points in your app.
     loop
     playsInline
     className="w-full aspect-video"
-    src="../assets/platform/points/displaying_points.mp4"
+    src="../assets/features/points/displaying_points.mp4"
   ></video>
 </Frame>
 
@@ -433,7 +433,7 @@ You can use this API to display the user's total points anywhere in your platfor
 <UserPointsResponse />
 
 <Frame>
-  <img height="200" noZoom src="../assets/platform/points/points_awards.png" />
+  <img height="200" noZoom src="../assets/features/points/points_awards.png" />
 </Frame>
 
 Then, the [user points summary API](/api-reference/endpoints/users/get-a-users-points-summary) can be used to fetch historical points data for a particular user.
@@ -448,7 +448,7 @@ Example `GET /users/{id}/points/{key}/event-summary` **200** response (Trophy AP
   <img
     height="200"
     noZoom
-    src="../assets/platform/points/user_points_summary.png"
+    src="../assets/features/points/user_points_summary.png"
   />
 </Frame>
 
@@ -470,11 +470,11 @@ Finally, the [points system API](/api-reference/endpoints/points/get-points) ret
 
 <Tip>
   The points summary API can also be filtered to only return data for users with specific
-  [custom user attributes](/platform/users#custom-user-attributes).
+  [custom user attributes](/features/users#custom-user-attributes).
 </Tip>
 
 <Frame>
-  <img height="200" noZoom src="../assets/platform/points/points_summary.png" />
+  <img height="200" noZoom src="../assets/features/points/points_summary.png" />
 </Frame>
 
 Use the [points system API](/api-reference/endpoints/points/get-points) response to show users how they can earn points on your platform. Any new triggers you add will automatically be returned from this API, reducing code changes in your platform and shifting operations to Trophy.
@@ -483,7 +483,7 @@ Use the [points system API](/api-reference/endpoints/points/get-points) response
   <img
     height="200"
     noZoom
-    src="../assets/platform/points/points_triggers.png"
+    src="../assets/features/points/points_triggers.png"
   />
 </Frame>
 
@@ -500,7 +500,7 @@ Trophy has built-in analytics to track points awards for each points system you 
   <img
     height="200"
     noZoom
-    src="../assets/platform/points/points_analytics.png"
+    src="../assets/features/points/points_analytics.png"
   />
 </Frame>
 

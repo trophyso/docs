@@ -28,7 +28,7 @@ Con fines ilustrativos, utilizaremos el ejemplo de una plataforma de estudio que
 
 ## Configuración de Trophy {#trophy-setup}
 
-En Trophy, las [Métricas](/es/platform/metrics) son los componentes fundamentales de la gamificación y modelan las diferentes interacciones que los usuarios realizan con tu producto.
+En Trophy, las [Métricas](/es/features/metrics) son los componentes fundamentales de la gamificación y modelan las diferentes interacciones que los usuarios realizan con tu producto.
 
 En esta guía, la interacción que nos interesa es `flashcards-viewed`, pero puedes crear cualquier número de métricas que mejor representen las interacciones desde las cuales deseas otorgar y consumir energía.
 
@@ -58,7 +58,7 @@ Una vez que hayas creado tu métrica, dirígete a la [página de puntos](https:/
   ></video>
 </Frame>
 
-Una vez creado, serás dirigido a la página de configuración del sistema de energía donde podrás crear [activadores de puntos](/es/platform/points#types-of-triggers) para cada una de las formas en que deseas otorgar o consumir energía.
+Una vez creado, serás dirigido a la página de configuración del sistema de energía donde podrás crear [activadores de puntos](/es/features/points#types-of-triggers) para cada una de las formas en que deseas otorgar o consumir energía.
 
 <Frame>
   <video
@@ -71,9 +71,9 @@ Una vez creado, serás dirigido a la página de configuración del sistema de en
   ></video>
 </Frame>
 
-Utiliza activadores de tipo 'time' para otorgar nueva energía a los usuarios cada hora o día, y usa [otros tipos](/es/platform/points#types-of-triggers) de activadores con valores negativos para consumir energía según las diferentes interacciones de usuario que desees.
+Utiliza activadores de tipo 'time' para otorgar nueva energía a los usuarios cada hora o día, y usa [otros tipos](/es/features/points#types-of-triggers) de activadores con valores negativos para consumir energía según las diferentes interacciones de usuario que desees.
 
-En Trophy rastreas las interacciones de usuario enviando [Eventos](/es/platform/events) desde tu código a las APIs de Trophy contra una métrica específica.
+En Trophy rastreas las interacciones de usuario enviando [Eventos](/es/features/events) desde tu código a las APIs de Trophy contra una métrica específica.
 
 Cuando se registran eventos para un usuario específico, Trophy verificará automáticamente si alguno de los activadores configurados para tu sistema de energía debe ejecutarse, y los procesará en consecuencia.
 
