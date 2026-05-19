@@ -79,15 +79,8 @@
                 "group": "Platform",
                 "pages": [
                   "platform/environments",
-                  "platform/multi-tenancy"
-                ]
-              },
-              {
-                "group": "Experimentation",
-                "pages": [
-                  "experimentation/overview",
-                  "experimentation/retention",
-                  "experimentation/engagement"
+                  "platform/multi-tenancy",
+                  "platform/experimentation"
                 ]
               },
               {
@@ -735,6 +728,22 @@
       "destination": "/platform/multi-tenancy"
     },
     {
+      "source": "/experimentation/overview",
+      "destination": "/platform/experimentation"
+    },
+    {
+      "source": "/experimentation/retention",
+      "destination": "/platform/experimentation#what-is-retention"
+    },
+    {
+      "source": "/experimentation/engagement",
+      "destination": "/platform/experimentation#what-is-engagement"
+    },
+    {
+      "source": "/experimentation/:slug*",
+      "destination": "/platform/experimentation"
+    },
+    {
       "source": "/es/platform/:slug*",
       "destination": "/es/features/:slug*"
     },
@@ -745,6 +754,22 @@
     {
       "source": "/es/features/multi-tenancy",
       "destination": "/es/platform/multi-tenancy"
+    },
+    {
+      "source": "/es/experimentation/overview",
+      "destination": "/es/platform/experimentation"
+    },
+    {
+      "source": "/es/experimentation/retention",
+      "destination": "/es/platform/experimentation#what-is-retention"
+    },
+    {
+      "source": "/es/experimentation/engagement",
+      "destination": "/es/platform/experimentation#what-is-engagement"
+    },
+    {
+      "source": "/es/experimentation/:slug*",
+      "destination": "/es/platform/experimentation"
     }
   ]
 }
