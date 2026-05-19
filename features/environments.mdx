@@ -5,11 +5,11 @@ og:description: Learn how to use environments to help you test and review change
 icon: layers
 ---
 
-## What are Environments? {#what-are-environments}
+## What are Environments? {#what-are-environments}
 
 Environments are core structures in Trophy that help you isolate data according to your teams development workflows and copy changes between them.
 
-### Types of Environments {#types-of-environments}
+### Types of Environments {#types-of-environments}
 
 Trophy supports three types of environments, each with a different use case in your development workflow:
 
@@ -78,7 +78,7 @@ Here we outline Trophy's model for change tracking and propagation across enviro
 
 <Note>When using [multi-tenancy](#multi-tenancy), changes are **not** automatically propagated between environments. Instead, environments are treated as totally isolated from each other in order to allow for maximum flexibility in how you can use Trophy.</Note>
 
-### Environment Priority {#environment-priority}
+### Environment Priority {#environment-priority}
 
 Environment priority is fundamental to how change tracking and propagation works across environments in Trophy.
 
@@ -94,7 +94,7 @@ When created, new environments are automatically added as the lowest priority en
 
 <Note>You cannot change the order of <Badge color="gray" stroke size="sm">Development</Badge> environments. All <Badge color="gray" stroke size="sm">Development</Badge> environments in Trophy have the same priority.</Note>
 
-### Change Tracking {#change-tracking}
+### Change Tracking {#change-tracking}
 
 Trophy automatically keeps track of changes made in each of your environments and detects differences between them.
 
@@ -157,7 +157,7 @@ On the view changes screen you can revert specific changes by clicking the 'Reve
   Reverting changes will remove them from your current environment and cannot be undone.
 </Warning>
 
-### Change Propagation {#change-propagation}
+### Change Propagation {#change-propagation}
 
 When a change is made in an environment, it is propagated to all environments with a lower [environment priority](#environment-priority) automatically. This keeps all environments in sync with their natural direction of propagation and saves time in copying changes manually.
 

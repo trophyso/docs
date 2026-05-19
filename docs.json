@@ -273,6 +273,16 @@
                   "admin-api/endpoints/leaderboards/create-leaderboards",
                   "admin-api/endpoints/leaderboards/delete-leaderboards"
                 ]
+              },
+              {
+                "group": "Tenants",
+                "pages": [
+                  "admin-api/endpoints/tenants/list-tenants",
+                  "admin-api/endpoints/tenants/get-a-tenant",
+                  "admin-api/endpoints/tenants/update-tenants",
+                  "admin-api/endpoints/tenants/create-tenants",
+                  "admin-api/endpoints/tenants/delete-tenants"
+                ]
               }
             ]
           },
@@ -391,6 +401,13 @@
                   "es/platform/leaderboards",
                   "es/platform/emails",
                   "es/platform/push-notifications"
+                ]
+              },
+              {
+                "group": "Funciones",
+                "pages": [
+                  "es/features/environments",
+                  "es/features/multi-tenancy"
                 ]
               },
               {
@@ -583,6 +600,16 @@
                   "es/admin-api/endpoints/leaderboards/update-leaderboards",
                   "es/admin-api/endpoints/leaderboards/create-leaderboards",
                   "es/admin-api/endpoints/leaderboards/delete-leaderboards"
+                ]
+              },
+              {
+                "group": "Inquilinos",
+                "pages": [
+                  "es/admin-api/endpoints/tenants/list-tenants",
+                  "es/admin-api/endpoints/tenants/get-a-tenant",
+                  "es/admin-api/endpoints/tenants/update-tenants",
+                  "es/admin-api/endpoints/tenants/create-tenants",
+                  "es/admin-api/endpoints/tenants/delete-tenants"
                 ]
               }
             ]

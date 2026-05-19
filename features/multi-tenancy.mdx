@@ -5,17 +5,20 @@ og:description: Learn how to use multi-tenancy to help you set up and customize 
 icon: building
 ---
 
+import MultiTenantClientInit from "../snippets/multi-tenant-client-init.mdx";
+import MultiTenantCurlRequest from "../snippets/multi-tenant-curl-request.mdx";
+
 <Note>
 Multi-tenancy in Trophy is only available on request. Please [get in touch](mailto:hello@trophy.so) to discuss your needs.
 </Note>
 
-## What is Multi-Tenancy? {#what-is-multi-tenancy}
+## What is Multi-Tenancy? {#what-is-multi-tenancy}
 
 Multi-tenancy in Trophy allows you to power gamification features on behalf of multiple of your own customers, and allow them to customize the gamification features they use in their own applications and how they work.
 
 Multi-tenancy is specifically designed for B2B SaaS platforms who want to offer gamification features as a service to their customers, but don't have the time or resources available internally to build and maintain the gamification infrastructure themselves.
 
-## How Does Multi-Tenancy Work? {#how-does-multi-tenancy-work}
+## How Does Multi-Tenancy Work? {#how-does-multi-tenancy-work}
 
 Multi-tenancy works by creating 'tenant' records in Trophy for each of your customers, and configuring gamification features within the context of each tenant.
 
@@ -51,7 +54,7 @@ This allows you to serve control panels to your customers that allow them to man
 
 The only additional step required is to understand how to scope API calls from your control panel to the specific tenant that the customer belongs to. Read more about how to do this in the dedicated section on [setting tenant scope](#setting-tenant-scope).
 
-### Powering End-User UI {#powering-end-user-ui}
+### Powering End-User UI {#powering-end-user-ui}
 
 The other critical part of delivering multi-tenant gamification is to power the UI that allows your customers' end-users to see and interact with the gamfication features your customers have exposed to them.
 
@@ -63,11 +66,13 @@ The only extra step required is to understand how to scope API calls to the spec
 
 Both the [Admin API](/api-reference/endpoints/admin/create-a-new-tenant) and the [Application API](/api-reference/endpoints/applications/get-a-single-application) work the same way for single and multi-tenant accounts. You use the same [client libraries](/api-reference/client-libraries) to power gamification in both cases.
 
-The only difference is that when using either the admin or application API within a multi-tenant account, you need to pass the `TenantID` header to any API call that you want to scope to a specific tenant.
+The only difference is that when using either the admin or application API within a multi-tenant account, you need to pass the `Tenant-ID` header to any API call that you want to scope to a specific tenant:
+
+<MultiTenantCurlRequest />
 
 Trophy's client libraries support scoping API calls to a specific tenant by making use of the `tenantId` parameter in all methods:
 
-Snippet...
+<MultiTenantClientInit />
 
 ## Frequently Asked Questions {#frequently-asked-questions}
 
@@ -76,7 +81,7 @@ Snippet...
     Each Trophy account can have an unlimited number of tenants.
   </Accordion>
   <Accordion title="How do I set the tenant scope for an API call?">
-    You can set the tenant scope for an API call by passing the `TenantID` header to any API call.
+    You can set the tenant scope for an API call by passing the `Tenant-ID` header to any API call.
   </Accordion>
 </AccordionGroup>
 

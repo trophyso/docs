@@ -7,6 +7,8 @@ paths:
     servers:
       - url: https://admin.trophy.so/v1
         description: Admin API
+    parameters:
+      - $ref: '#/components/parameters/TenantId'
     get:
       description: List attributes.
       operationId: admin_attributes_list
@@ -401,6 +403,8 @@ paths:
     servers:
       - url: https://admin.trophy.so/v1
         description: Admin API
+    parameters:
+      - $ref: '#/components/parameters/TenantId'
     get:
       description: Get an attribute by ID.
       operationId: admin_attributes_get
@@ -487,6 +491,8 @@ paths:
     servers:
       - url: https://admin.trophy.so/v1
         description: Admin API
+    parameters:
+      - $ref: '#/components/parameters/TenantId'
     get:
       description: List metrics.
       operationId: admin_metrics_list
@@ -915,6 +921,8 @@ paths:
     servers:
       - url: https://admin.trophy.so/v1
         description: Admin API
+    parameters:
+      - $ref: '#/components/parameters/TenantId'
     get:
       description: Get a metric by ID.
       operationId: admin_metrics_get
@@ -1003,6 +1011,8 @@ paths:
     servers:
       - url: https://admin.trophy.so/v1
         description: Admin API
+    parameters:
+      - $ref: '#/components/parameters/TenantId'
     get:
       description: List points systems.
       operationId: admin_points_systems_list
@@ -1375,6 +1385,8 @@ paths:
     servers:
       - url: https://admin.trophy.so/v1
         description: Admin API
+    parameters:
+      - $ref: '#/components/parameters/TenantId'
     get:
       description: Get a points system by ID.
       operationId: admin_points_systems_get
@@ -1455,6 +1467,8 @@ paths:
     servers:
       - url: https://admin.trophy.so/v1
         description: Admin API
+    parameters:
+      - $ref: '#/components/parameters/TenantId'
     get:
       description: List points boosts for a system.
       operationId: admin_points_boosts_list
@@ -1965,6 +1979,8 @@ paths:
     servers:
       - url: https://admin.trophy.so/v1
         description: Admin API
+    parameters:
+      - $ref: '#/components/parameters/TenantId'
     get:
       description: Get a single points boost by ID.
       operationId: admin_points_boosts_get
@@ -2056,6 +2072,8 @@ paths:
     servers:
       - url: https://admin.trophy.so/v1
         description: Admin API
+    parameters:
+      - $ref: '#/components/parameters/TenantId'
     get:
       description: List points levels for a system.
       operationId: admin_points_levels_list
@@ -2474,6 +2492,8 @@ paths:
     servers:
       - url: https://admin.trophy.so/v1
         description: Admin API
+    parameters:
+      - $ref: '#/components/parameters/TenantId'
     get:
       description: Get a single points level by ID.
       operationId: admin_points_levels_get
@@ -2564,6 +2584,8 @@ paths:
     servers:
       - url: https://admin.trophy.so/v1
         description: Admin API
+    parameters:
+      - $ref: '#/components/parameters/TenantId'
     get:
       description: List points triggers for a system.
       operationId: admin_points_triggers_list
@@ -2954,6 +2976,8 @@ paths:
     servers:
       - url: https://admin.trophy.so/v1
         description: Admin API
+    parameters:
+      - $ref: '#/components/parameters/TenantId'
     get:
       description: Get a single points trigger by ID.
       operationId: admin_points_triggers_get
@@ -3046,6 +3070,8 @@ paths:
     servers:
       - url: https://admin.trophy.so/v1
         description: Admin API
+    parameters:
+      - $ref: '#/components/parameters/TenantId'
     get:
       description: List leaderboards.
       operationId: admin_leaderboards_list
@@ -3435,6 +3461,8 @@ paths:
     servers:
       - url: https://admin.trophy.so/v1
         description: Admin API
+    parameters:
+      - $ref: '#/components/parameters/TenantId'
     get:
       description: Get a leaderboard by ID.
       operationId: admin_leaderboards_get
@@ -3534,6 +3562,8 @@ paths:
     servers:
       - url: https://admin.trophy.so/v1
         description: Admin API
+    parameters:
+      - $ref: '#/components/parameters/TenantId'
     post:
       description: Create streak freezes for multiple users.
       operationId: admin_streaks_freezes_create
@@ -3651,6 +3681,8 @@ paths:
     servers:
       - url: https://admin.trophy.so/v1
         description: Admin API
+    parameters:
+      - $ref: '#/components/parameters/TenantId'
     post:
       description: 'Restore streaks for multiple users to the maximum previously achieved streak length found within the current restore window: the last 90 days for daily streaks, weekly periods starting with the week containing the start of the current calendar year for weekly streaks, and monthly periods starting at the beginning of the previous calendar year for monthly streaks.'
       operationId: admin_streaks_restore
@@ -3762,6 +3794,450 @@ paths:
       summary: Restore streaks for multiple users
       security:
         - ApiKeyAuth: []
+  /tenants:
+    servers:
+      - url: https://admin.trophy.so/v1
+        description: Admin API
+    parameters:
+      - $ref: '#/components/parameters/TenantId'
+    get:
+      description: List tenants in the current environment.
+      operationId: admin_tenants_list
+      x-fern-server-name: admin
+      x-fern-sdk-group-name:
+        - admin
+        - tenants
+      x-fern-sdk-method-name: list
+      tags:
+        - Admin
+      x-codeSamples:
+        - lang: javascript
+          source: |
+            import { TrophyApiClient } from '@trophyso/node';
+
+            const trophy = new TrophyApiClient({
+              apiKey: 'YOUR_API_KEY'
+            });
+
+            const tenants = await trophy.admin.tenants.list({
+              limit: 10,
+              skip: 0
+            });
+        - lang: python
+          source: |
+            from trophy import TrophyApi
+
+            client = TrophyApi(api_key='YOUR_API_KEY')
+
+            tenants = client.admin.tenants.list(
+              limit=10,
+              skip=0
+            )
+      parameters:
+        - name: limit
+          in: query
+          description: Number of records to return.
+          required: false
+          schema:
+            type: integer
+            minimum: 1
+            maximum: 100
+            default: 10
+          example: 10
+        - name: skip
+          in: query
+          description: Number of records to skip from the start of the list.
+          required: false
+          schema:
+            type: integer
+            minimum: 0
+            default: 0
+          example: 0
+      responses:
+        '200':
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ListTenantsResponse'
+              examples:
+                Tenants list:
+                  value:
+                    - id: '550e8400-e29b-41d4-a716-446655440000'
+                      customerId: customer_12345
+                      name: Acme Corp
+                      status: active
+                      created: '2026-01-15T09:30:00.000Z'
+                      updated: '2026-01-15T09:30:00.000Z'
+                    - id: '550e8400-e29b-41d4-a716-446655440001'
+                      customerId: customer_67890
+                      name: Globex Inc
+                      status: active
+                      created: '2026-02-20T14:00:00.000Z'
+                      updated: '2026-02-20T14:00:00.000Z'
+        '401':
+          description: 'Unauthorized'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorBody'
+        '422':
+          description: 'Unprocessible Entity'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorBody'
+      summary: List tenants
+      security:
+        - ApiKeyAuth: []
+    post:
+      description: Create tenants.
+      operationId: admin_tenants_create
+      x-fern-server-name: admin
+      x-fern-sdk-group-name:
+        - admin
+        - tenants
+      x-fern-sdk-method-name: create
+      tags:
+        - Admin
+      x-codeSamples:
+        - lang: javascript
+          source: |
+            import { TrophyApiClient } from '@trophyso/node';
+
+            const trophy = new TrophyApiClient({
+              apiKey: 'YOUR_API_KEY'
+            });
+
+            const response = await trophy.admin.tenants.create([
+              {
+                customerId: 'customer_12345',
+                name: 'Acme Corp'
+              }
+            ]);
+        - lang: python
+          source: |
+            from trophy import TrophyApi
+
+            client = TrophyApi(api_key='YOUR_API_KEY')
+
+            response = client.admin.tenants.create([
+              {
+                "customerId": "customer_12345",
+                "name": "Acme Corp"
+              }
+            ])
+      requestBody:
+        description: Array of tenants to create. Maximum 100 tenants per request.
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreateTenantsRequest'
+            examples:
+              Create tenants:
+                value:
+                  - customerId: customer_12345
+                    name: Acme Corp
+                  - customerId: customer_67890
+                    name: Globex Inc
+      responses:
+        '200':
+          description: Successful operation (no tenants created)
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CreateTenantsResponse'
+              examples:
+                All requests had errors:
+                  value:
+                    created: []
+                    issues:
+                      - index: 0
+                        severity: error
+                        message: Customer ID "customer_12345" already exists in this environment
+        '201':
+          description: Created (at least one tenant created)
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CreateTenantsResponse'
+              examples:
+                Success with no issues:
+                  value:
+                    created:
+                      - id: '550e8400-e29b-41d4-a716-446655440000'
+                        customerId: customer_12345
+                        name: Acme Corp
+                        status: active
+                        created: '2026-01-15T09:30:00.000Z'
+                        updated: '2026-01-15T09:30:00.000Z'
+                    issues: []
+        '401':
+          description: 'Unauthorized'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorBody'
+        '422':
+          description: 'Unprocessible Entity'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorBody'
+      summary: Create tenants
+      security:
+        - ApiKeyAuth: []
+    patch:
+      description: Update tenants by ID.
+      operationId: admin_tenants_update
+      x-fern-server-name: admin
+      x-fern-sdk-group-name:
+        - admin
+        - tenants
+      x-fern-sdk-method-name: update
+      tags:
+        - Admin
+      x-codeSamples:
+        - lang: javascript
+          source: |
+            import { TrophyApiClient } from '@trophyso/node';
+
+            const trophy = new TrophyApiClient({
+              apiKey: 'YOUR_API_KEY'
+            });
+
+            const response = await trophy.admin.tenants.update([
+              {
+                id: '550e8400-e29b-41d4-a716-446655440000',
+                name: 'Acme Corporation'
+              }
+            ]);
+        - lang: python
+          source: |
+            from trophy import TrophyApi
+
+            client = TrophyApi(api_key='YOUR_API_KEY')
+
+            response = client.admin.tenants.update([
+              {
+                "id": "550e8400-e29b-41d4-a716-446655440000",
+                "name": "Acme Corporation"
+              }
+            ])
+      requestBody:
+        description: Array of tenants to update. Each item must include an ID and at least one of customerId or name.
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UpdateTenantsRequest'
+            examples:
+              Update tenant name:
+                value:
+                  - id: 550e8400-e29b-41d4-a716-446655440000
+                    name: Acme Corporation
+      responses:
+        '200':
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UpdateTenantsResponse'
+              examples:
+                Success with no issues:
+                  value:
+                    updated:
+                      - id: '550e8400-e29b-41d4-a716-446655440000'
+                        customerId: customer_12345
+                        name: Acme Corporation
+                        status: active
+                        created: '2026-01-15T09:30:00.000Z'
+                        updated: '2026-05-16T10:00:00.000Z'
+                    issues: []
+        '401':
+          description: 'Unauthorized'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorBody'
+        '422':
+          description: 'Unprocessible Entity'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorBody'
+      summary: Update tenants
+      security:
+        - ApiKeyAuth: []
+    delete:
+      description: Delete tenants by ID.
+      operationId: admin_tenants_delete
+      x-fern-server-name: admin
+      x-fern-sdk-group-name:
+        - admin
+        - tenants
+      x-fern-sdk-method-name: delete
+      tags:
+        - Admin
+      x-codeSamples:
+        - lang: javascript
+          source: |
+            import { TrophyApiClient } from '@trophyso/node';
+
+            const trophy = new TrophyApiClient({
+              apiKey: 'YOUR_API_KEY'
+            });
+
+            const response = await trophy.admin.tenants.delete({
+              ids: [
+                '550e8400-e29b-41d4-a716-446655440000',
+                '550e8400-e29b-41d4-a716-446655440001'
+              ]
+            });
+        - lang: python
+          source: |
+            from trophy import TrophyApi
+
+            client = TrophyApi(api_key='YOUR_API_KEY')
+
+            response = client.admin.tenants.delete(
+              ids=[
+                '550e8400-e29b-41d4-a716-446655440000',
+                '550e8400-e29b-41d4-a716-446655440001'
+              ]
+            )
+      parameters:
+        - name: ids
+          in: query
+          description: Tenant IDs to delete. Repeat the query param or provide a comma-separated list.
+          required: true
+          schema:
+            type: array
+            items:
+              type: string
+              format: uuid
+            minItems: 1
+            maxItems: 100
+          style: form
+          explode: true
+          examples:
+            Multiple query params:
+              value:
+                - 550e8400-e29b-41d4-a716-446655440000
+                - 550e8400-e29b-41d4-a716-446655440001
+      responses:
+        '200':
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DeleteTenantsResponse'
+              examples:
+                Success with no issues:
+                  value:
+                    deleted:
+                      - id: '550e8400-e29b-41d4-a716-446655440000'
+                    issues: []
+        '401':
+          description: 'Unauthorized'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorBody'
+        '422':
+          description: 'Unprocessible Entity'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorBody'
+      summary: Delete tenants
+      security:
+        - ApiKeyAuth: []
+  /tenants/{id}:
+    servers:
+      - url: https://admin.trophy.so/v1
+        description: Admin API
+    parameters:
+      - $ref: '#/components/parameters/TenantId'
+    get:
+      description: Get a tenant by ID.
+      operationId: admin_tenants_get
+      x-fern-server-name: admin
+      x-fern-sdk-group-name:
+        - admin
+        - tenants
+      x-fern-sdk-method-name: get
+      tags:
+        - Admin
+      x-codeSamples:
+        - lang: javascript
+          source: |
+            import { TrophyApiClient } from '@trophyso/node';
+
+            const trophy = new TrophyApiClient({
+              apiKey: 'YOUR_API_KEY'
+            });
+
+            const tenant = await trophy.admin.tenants.get(
+              '550e8400-e29b-41d4-a716-446655440000'
+            );
+        - lang: python
+          source: |
+            from trophy import TrophyApi
+
+            client = TrophyApi(api_key='YOUR_API_KEY')
+
+            tenant = client.admin.tenants.get(
+              "550e8400-e29b-41d4-a716-446655440000"
+            )
+      parameters:
+        - name: id
+          in: path
+          description: The UUID of the tenant to retrieve.
+          required: true
+          schema:
+            type: string
+            format: uuid
+          example: 550e8400-e29b-41d4-a716-446655440000
+      responses:
+        '200':
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AdminTenant'
+              examples:
+                Tenant:
+                  value:
+                    id: '550e8400-e29b-41d4-a716-446655440000'
+                    customerId: customer_12345
+                    name: Acme Corp
+                    status: active
+                    created: '2026-01-15T09:30:00.000Z'
+                    updated: '2026-01-15T09:30:00.000Z'
+        '401':
+          description: 'Unauthorized'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorBody'
+        '404':
+          description: 'Tenant Not Found'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorBody'
+        '422':
+          description: 'Unprocessible Entity'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorBody'
+      summary: Get a tenant
+      security:
+        - ApiKeyAuth: []
+
 components:
   schemas:
     ErrorBody:
@@ -4542,7 +5018,7 @@ components:
           type:
             - string
             - 'null'
-          description: The customer ID of the user the boost was created for, or null for global/attribute-filtered boosts.
+          description: The ID of the user the boost was created for, or null for global/attribute-filtered boosts.
         userAttributes:
           type: array
           description: User attribute filters applied to the boost. Only present for non-user-specific boosts (i.e. when `userId` is null). Empty array if no filters are set.
@@ -5533,6 +6009,174 @@ components:
       required:
         - deleted
         - issues
+    AdminTenant:
+      title: AdminTenant
+      type: object
+      description: A tenant in a multi-tenant environment.
+      properties:
+        id:
+          type: string
+          format: uuid
+          description: The tenant UUID.
+          example: '550e8400-e29b-41d4-a716-446655440000'
+        customerId:
+          type: string
+          description: The external customer ID for this tenant.
+          example: customer_12345
+        name:
+          type: string
+          description: Human-readable name for the tenant.
+          example: Acme Corp
+        status:
+          type: string
+          enum:
+            - active
+            - archived
+          description: The lifecycle status of the tenant.
+          example: active
+        created:
+          type: string
+          format: date-time
+          description: When the tenant was created.
+        updated:
+          type: string
+          format: date-time
+          description: When the tenant was last updated.
+      required:
+        - id
+        - customerId
+        - name
+        - status
+        - created
+        - updated
+    ListTenantsResponse:
+      title: ListTenantsResponse
+      type: array
+      description: Array of tenants.
+      items:
+        $ref: '#/components/schemas/AdminTenant'
+    CreateTenantsRequest:
+      title: CreateTenantsRequest
+      type: array
+      description: Request body for creating tenants.
+      items:
+        $ref: '#/components/schemas/CreateTenantRequestItem'
+      minItems: 1
+      maxItems: 100
+    CreateTenantRequestItem:
+      title: CreateTenantRequestItem
+      type: object
+      description: A tenant to create.
+      properties:
+        customerId:
+          type: string
+          description: The external customer ID. Must be unique within the environment.
+          example: customer_12345
+          maxLength: 255
+        name:
+          type: string
+          description: Human-readable name for the tenant.
+          example: Acme Corp
+          maxLength: 255
+      required:
+        - customerId
+        - name
+    CreateTenantsResponse:
+      title: CreateTenantsResponse
+      type: object
+      description: Response containing created tenants and any issues.
+      properties:
+        created:
+          type: array
+          items:
+            $ref: '#/components/schemas/AdminTenant'
+          description: Array of successfully created tenants.
+        issues:
+          type: array
+          items:
+            $ref: '#/components/schemas/AdminIssue'
+          description: Array of issues encountered during creation.
+      required:
+        - created
+        - issues
+    UpdateTenantsRequest:
+      title: UpdateTenantsRequest
+      type: array
+      description: Request body for updating tenants.
+      items:
+        $ref: '#/components/schemas/UpdateTenantRequestItem'
+      minItems: 1
+      maxItems: 100
+    UpdateTenantRequestItem:
+      title: UpdateTenantRequestItem
+      type: object
+      description: A tenant to update.
+      properties:
+        id:
+          type: string
+          format: uuid
+          description: The UUID of the tenant to update.
+          example: '550e8400-e29b-41d4-a716-446655440000'
+        customerId:
+          type: string
+          description: New external customer ID.
+          example: customer_12345
+          maxLength: 255
+        name:
+          type: string
+          description: New display name for the tenant.
+          example: Acme Corporation
+          maxLength: 255
+      required:
+        - id
+    UpdateTenantsResponse:
+      title: UpdateTenantsResponse
+      type: object
+      description: Response containing updated tenants and any issues.
+      properties:
+        updated:
+          type: array
+          items:
+            $ref: '#/components/schemas/AdminTenant'
+          description: Array of successfully updated tenants.
+        issues:
+          type: array
+          items:
+            $ref: '#/components/schemas/AdminIssue'
+          description: Array of issues encountered during update.
+      required:
+        - updated
+        - issues
+    DeleteTenantsResponse:
+      title: DeleteTenantsResponse
+      type: object
+      description: Response containing deleted tenant IDs and any issues.
+      properties:
+        deleted:
+          type: array
+          items:
+            $ref: '#/components/schemas/DeletedResource'
+          description: Array of deleted tenant IDs.
+        issues:
+          type: array
+          items:
+            $ref: '#/components/schemas/AdminIssue'
+          description: Array of issues encountered during deletion.
+      required:
+        - deleted
+        - issues
+  parameters:
+    TenantId:
+      name: Tenant-ID
+      in: header
+      description: >-
+        The tenant identifier for multi-tenant organisations. Required when the
+        organisation has multi-tenancy enabled. Pass your own internal customer
+        ID for the tenant. Ignored for single-tenant organisations.
+      required: false
+      schema:
+        type: string
+      example: customer_12345
   securitySchemes:
     ApiKeyAuth:
       type: apiKey
