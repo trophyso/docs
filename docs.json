@@ -710,8 +710,40 @@
       "destination": "/:slug*"
     },
     {
-      "source": "/platform/:slug*",
-      "destination": "/features/:slug*"
+      "source": "/platform/metrics",
+      "destination": "/features/metrics"
+    },
+    {
+      "source": "/platform/events",
+      "destination": "/features/events"
+    },
+    {
+      "source": "/platform/users",
+      "destination": "/features/users"
+    },
+    {
+      "source": "/platform/achievements",
+      "destination": "/features/achievements"
+    },
+    {
+      "source": "/platform/streaks",
+      "destination": "/features/streaks"
+    },
+    {
+      "source": "/platform/points",
+      "destination": "/features/points"
+    },
+    {
+      "source": "/platform/leaderboards",
+      "destination": "/features/leaderboards"
+    },
+    {
+      "source": "/platform/emails",
+      "destination": "/features/emails"
+    },
+    {
+      "source": "/platform/push-notifications",
+      "destination": "/features/push-notifications"
     },
     {
       "source": "/features/environments",
@@ -734,12 +766,40 @@
       "destination": "/platform/experimentation#what-is-engagement"
     },
     {
-      "source": "/experimentation/:slug*",
-      "destination": "/platform/experimentation"
+      "source": "/es/platform/metrics",
+      "destination": "/es/features/metrics"
     },
     {
-      "source": "/es/platform/:slug*",
-      "destination": "/es/features/:slug*"
+      "source": "/es/platform/events",
+      "destination": "/es/features/events"
+    },
+    {
+      "source": "/es/platform/users",
+      "destination": "/es/features/users"
+    },
+    {
+      "source": "/es/platform/achievements",
+      "destination": "/es/features/achievements"
+    },
+    {
+      "source": "/es/platform/streaks",
+      "destination": "/es/features/streaks"
+    },
+    {
+      "source": "/es/platform/points",
+      "destination": "/es/features/points"
+    },
+    {
+      "source": "/es/platform/leaderboards",
+      "destination": "/es/features/leaderboards"
+    },
+    {
+      "source": "/es/platform/emails",
+      "destination": "/es/features/emails"
+    },
+    {
+      "source": "/es/platform/push-notifications",
+      "destination": "/es/features/push-notifications"
     },
     {
       "source": "/es/features/environments",
@@ -760,10 +820,6 @@
     {
       "source": "/es/experimentation/engagement",
       "destination": "/es/platform/experimentation#what-is-engagement"
-    },
-    {
-      "source": "/es/experimentation/:slug*",
-      "destination": "/es/platform/experimentation"
     }
   ]
 }
