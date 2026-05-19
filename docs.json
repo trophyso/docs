@@ -78,6 +78,7 @@
               {
                 "group": "Platform",
                 "pages": [
+                  "platform/overview",
                   "platform/environments",
                   "platform/multi-tenancy",
                   "platform/experimentation"
