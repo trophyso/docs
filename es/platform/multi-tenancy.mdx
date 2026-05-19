@@ -26,7 +26,7 @@ La multi-tenencia funciona creando registros de 'cliente' en Trophy para cada un
 
 Los clientes que utilizan multi-tenencia hacen uso de la [Admin API](/es/admin-api) para construir paneles de control internos que permiten a sus clientes gestionar sus propias características de gamificación dentro de los límites que tú estableces para ellos.
 
-De manera similar, los clientes que utilizan multi-tenencia hacen uso de la [Application API](/es/api-reference/endpoints/applications/get-a-single-application) para impulsar la interfaz de usuario que permite a los usuarios finales de sus clientes ver e interactuar con las características de gamificación que les han expuesto.
+De manera similar, los clientes que utilizan multi-tenencia hacen uso de la [Application API](/es/api-reference) para impulsar la interfaz de usuario que permite a los usuarios finales de sus clientes ver e interactuar con las características de gamificación que les han expuesto.
 
 De esta forma, puedes impulsar características complejas de gamificación para tus propios clientes, sin construir ni mantener ninguna infraestructura de gamificación tú mismo, y de manera crítica manteniendo tu propia marca.
 
@@ -60,13 +60,13 @@ El único paso adicional requerido es comprender cómo delimitar las llamadas a 
 
 La otra parte crítica de ofrecer gamificación multi-cliente es alimentar la interfaz de usuario que permite a los usuarios finales de tus clientes ver e interactuar con las funciones de gamificación que tus clientes les han expuesto.
 
-La [API de Aplicación](/es/api-reference/endpoints/applications/get-a-single-application) ya está diseñada específicamente para alimentar funciones de gamificación dentro de cualquier aplicación, y el proceso para alimentar funciones para los usuarios finales de sus clientes no es diferente.
+La [API de Aplicación](/es/api-reference) ya está diseñada específicamente para alimentar funciones de gamificación dentro de cualquier aplicación, y el proceso para alimentar funciones para los usuarios finales de sus clientes no es diferente.
 
 El único paso adicional requerido es comprender cómo delimitar las llamadas a la API al cliente específico al que pertenece el usuario final. Lee más sobre cómo hacerlo en la sección dedicada sobre [establecer el ámbito del cliente](#setting-tenant-scope).
 
 ## Establecer el Ámbito del Cliente {#setting-tenant-scope}
 
-Tanto la [API de Administración](/es/api-reference/endpoints/admin/create-a-new-tenant) como la [API de Aplicación](/es/api-reference/endpoints/applications/get-a-single-application) funcionan de la misma manera para cuentas de un solo cliente y multi-cliente. Utiliza las mismas [bibliotecas cliente](/es/api-reference/client-libraries) para alimentar la gamificación en ambos casos.
+Tanto la [API de Administración](/es/admin-api) como la [API de Aplicación](/es/api-reference) funcionan de la misma manera para cuentas de un solo cliente y multi-cliente. Utiliza las mismas [bibliotecas cliente](/es/api-reference/client-libraries) para alimentar la gamificación en ambos casos.
 
 La única diferencia es que al usar la API de administración o de aplicación dentro de una cuenta multi-cliente, debes pasar el encabezado `Tenant-ID` a cualquier llamada a la API que quieras delimitar a un cliente específico:
 

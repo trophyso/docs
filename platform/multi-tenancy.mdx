@@ -24,7 +24,7 @@ Multi-tenancy works by creating 'tenant' records in Trophy for each of your cust
 
 Customers who use multi-tenancy then make use of the [Admin API](/admin-api) to build internal control panels that allow their customers to manage their own gamification features within the constraints you set for them.
 
-Similarly, customers who use multi-tenancy then make use of the [Application API](/api-reference/endpoints/applications/get-a-single-application) to power the UI that allows their customers' end-users to see and interact with the gamfication features they have exposed to them.
+Similarly, customers who use multi-tenancy then make use of the [Application API](/api-reference) to power the UI that allows their customers' end-users to see and interact with the gamfication features they have exposed to them.
 
 In this way, you can power complex gamification features for your own customers, without building or maintaining any gamfification infrastructure yourself, and critically whilst upholding your own brand.
 
@@ -58,13 +58,13 @@ The only additional step required is to understand how to scope API calls from y
 
 The other critical part of delivering multi-tenant gamification is to power the UI that allows your customers' end-users to see and interact with the gamfication features your customers have exposed to them.
 
-The [Application API](/api-reference/endpoints/applications/get-a-single-application) is already purpose built for powering gamification features within any application, and the process for powering features for your customers' end users is no different.
+The [Application API](/api-reference) is already purpose built for powering gamification features within any application, and the process for powering features for your customers' end users is no different.
 
 The only extra step required is to understand how to scope API calls to the specific tenant that the end-user belongs to. Read more about how to do this in the dedicated section on [setting tenant scope](#setting-tenant-scope).
 
 ## Setting Tenant Scope {#setting-tenant-scope}
 
-Both the [Admin API](/api-reference/endpoints/admin/create-a-new-tenant) and the [Application API](/api-reference/endpoints/applications/get-a-single-application) work the same way for single and multi-tenant accounts. You use the same [client libraries](/api-reference/client-libraries) to power gamification in both cases.
+Both the [Admin API](/admin-api) and the [Application API](/api-reference) work the same way for single and multi-tenant accounts. You use the same [client libraries](/api-reference/client-libraries) to power gamification in both cases.
 
 The only difference is that when using either the admin or application API within a multi-tenant account, you need to pass the `Tenant-ID` header to any API call that you want to scope to a specific tenant:
 
