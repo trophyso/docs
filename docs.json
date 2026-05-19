@@ -61,7 +61,7 @@
                 ]
               },
               {
-                "group": "Platform",
+                "group": "Features",
                 "pages": [
                   "features/overview",
                   "features/metrics",
@@ -76,7 +76,7 @@
                 ]
               },
               {
-                "group": "Features",
+                "group": "Platform",
                 "pages": [
                   "platform/environments",
                   "platform/multi-tenancy"
@@ -389,7 +389,7 @@
                 ]
               },
               {
-                "group": "Plataforma",
+                "group": "Funciones",
                 "pages": [
                   "es/features/overview",
                   "es/features/metrics",
@@ -404,7 +404,7 @@
                 ]
               },
               {
-                "group": "Funciones",
+                "group": "Plataforma",
                 "pages": [
                   "es/platform/environments",
                   "es/platform/multi-tenancy"
@@ -723,44 +723,8 @@
       "destination": "/:slug*"
     },
     {
-      "source": "/platform/overview",
-      "destination": "/features/overview"
-    },
-    {
-      "source": "/platform/metrics",
-      "destination": "/features/metrics"
-    },
-    {
-      "source": "/platform/events",
-      "destination": "/features/events"
-    },
-    {
-      "source": "/platform/users",
-      "destination": "/features/users"
-    },
-    {
-      "source": "/platform/achievements",
-      "destination": "/features/achievements"
-    },
-    {
-      "source": "/platform/streaks",
-      "destination": "/features/streaks"
-    },
-    {
-      "source": "/platform/points",
-      "destination": "/features/points"
-    },
-    {
-      "source": "/platform/leaderboards",
-      "destination": "/features/leaderboards"
-    },
-    {
-      "source": "/platform/emails",
-      "destination": "/features/emails"
-    },
-    {
-      "source": "/platform/push-notifications",
-      "destination": "/features/push-notifications"
+      "source": "/platform/:slug*",
+      "destination": "/features/:slug*"
     },
     {
       "source": "/features/environments",
@@ -771,44 +735,8 @@
       "destination": "/platform/multi-tenancy"
     },
     {
-      "source": "/es/platform/overview",
-      "destination": "/es/features/overview"
-    },
-    {
-      "source": "/es/platform/metrics",
-      "destination": "/es/features/metrics"
-    },
-    {
-      "source": "/es/platform/events",
-      "destination": "/es/features/events"
-    },
-    {
-      "source": "/es/platform/users",
-      "destination": "/es/features/users"
-    },
-    {
-      "source": "/es/platform/achievements",
-      "destination": "/es/features/achievements"
-    },
-    {
-      "source": "/es/platform/streaks",
-      "destination": "/es/features/streaks"
-    },
-    {
-      "source": "/es/platform/points",
-      "destination": "/es/features/points"
-    },
-    {
-      "source": "/es/platform/leaderboards",
-      "destination": "/es/features/leaderboards"
-    },
-    {
-      "source": "/es/platform/emails",
-      "destination": "/es/features/emails"
-    },
-    {
-      "source": "/es/platform/push-notifications",
-      "destination": "/es/features/push-notifications"
+      "source": "/es/platform/:slug*",
+      "destination": "/es/features/:slug*"
     },
     {
       "source": "/es/features/environments",
