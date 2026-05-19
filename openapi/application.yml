@@ -7,6 +7,8 @@ paths:
     servers:
       - url: https://api.trophy.so/v1
         description: Application API
+    parameters:
+      - $ref: '#/components/parameters/TenantId'
     get:
       description: Get all achievements and their completion stats.
       operationId: achievements_all
@@ -111,6 +113,8 @@ paths:
     servers:
       - url: https://api.trophy.so/v1
         description: Application API
+    parameters:
+      - $ref: '#/components/parameters/TenantId'
     post:
       description: Mark an achievement as completed for a user.
       operationId: achievements_complete
@@ -230,6 +234,8 @@ paths:
     servers:
       - url: https://api.trophy.so/v1
         description: Application API
+    parameters:
+      - $ref: '#/components/parameters/TenantId'
     post:
       description: Increment or decrement the value of a metric for a user.
       operationId: metrics_event
@@ -445,6 +451,8 @@ paths:
     servers:
       - url: https://api.trophy.so/v1
         description: Application API
+    parameters:
+      - $ref: '#/components/parameters/TenantId'
     post:
       description: Create a new user.
       operationId: users_create
@@ -536,6 +544,8 @@ paths:
     servers:
       - url: https://api.trophy.so/v1
         description: Application API
+    parameters:
+      - $ref: '#/components/parameters/TenantId'
     get:
       description: Get a single user.
       operationId: users_get
@@ -794,6 +804,8 @@ paths:
     servers:
       - url: https://api.trophy.so/v1
         description: Application API
+    parameters:
+      - $ref: '#/components/parameters/TenantId'
     get:
       description: Get a user's notification preferences.
       operationId: users_get_preferences
@@ -976,6 +988,8 @@ paths:
     servers:
       - url: https://api.trophy.so/v1
         description: Application API
+    parameters:
+      - $ref: '#/components/parameters/TenantId'
     get:
       description: Get a single user's progress against all active metrics.
       operationId: users_all_metrics
@@ -1073,6 +1087,8 @@ paths:
     servers:
       - url: https://api.trophy.so/v1
         description: Application API
+    parameters:
+      - $ref: '#/components/parameters/TenantId'
     get:
       description: Get a user's progress against a single active metric.
       operationId: users_single_metric
@@ -1170,6 +1186,8 @@ paths:
     servers:
       - url: https://api.trophy.so/v1
         description: Application API
+    parameters:
+      - $ref: '#/components/parameters/TenantId'
     get:
       description: Get a summary of metric events over time for a user.
       operationId: users_metric_event_summary
@@ -1311,6 +1329,8 @@ paths:
     servers:
       - url: https://api.trophy.so/v1
         description: Application API
+    parameters:
+      - $ref: '#/components/parameters/TenantId'
     get:
       description: Get a user's achievements.
       operationId: users_achievements
@@ -1437,6 +1457,8 @@ paths:
     servers:
       - url: https://api.trophy.so/v1
         description: Application API
+    parameters:
+      - $ref: '#/components/parameters/TenantId'
     get:
       description: Get a user's streak data.
       operationId: users_streak
@@ -1542,6 +1564,8 @@ paths:
     servers:
       - url: https://api.trophy.so/v1
         description: Application API
+    parameters:
+      - $ref: '#/components/parameters/TenantId'
     get:
       description: Get the streak lengths of a list of users, ranked by streak length from longest to shortest.
       operationId: streaks_list
@@ -1611,6 +1635,8 @@ paths:
     servers:
       - url: https://api.trophy.so/v1
         description: Application API
+    parameters:
+      - $ref: '#/components/parameters/TenantId'
     get:
       description: Get the top users by streak length (active or longest).
       operationId: streaks_rankings
@@ -1697,6 +1723,8 @@ paths:
     servers:
       - url: https://api.trophy.so/v1
         description: Application API
+    parameters:
+      - $ref: '#/components/parameters/TenantId'
     get:
       description: Get a user's points for a specific points system.
       operationId: users_points
@@ -1803,6 +1831,8 @@ paths:
     servers:
       - url: https://api.trophy.so/v1
         description: Application API
+    parameters:
+      - $ref: '#/components/parameters/TenantId'
     get:
       description: Get active points boosts for a user in a specific points system. Returns both global boosts the user is eligible for and user-specific boosts.
       operationId: users_points_boosts
@@ -1892,6 +1922,8 @@ paths:
     servers:
       - url: https://api.trophy.so/v1
         description: Application API
+    parameters:
+      - $ref: '#/components/parameters/TenantId'
     get:
       description: Get a summary of points awards over time for a user for a specific points system.
       operationId: users_points_event_summary
@@ -2033,6 +2065,8 @@ paths:
     servers:
       - url: https://api.trophy.so/v1
         description: Application API
+    parameters:
+      - $ref: '#/components/parameters/TenantId'
     get:
       description: Get a user's rank, value, and history for a specific leaderboard.
       operationId: users_leaderboard
@@ -2161,6 +2195,8 @@ paths:
     servers:
       - url: https://api.trophy.so/v1
         description: Application API
+    parameters:
+      - $ref: '#/components/parameters/TenantId'
     get:
       description: Get a user's year-in-review wrapped data.
       operationId: users_wrapped
@@ -2380,6 +2416,8 @@ paths:
     servers:
       - url: https://api.trophy.so/v1
         description: Application API
+    parameters:
+      - $ref: '#/components/parameters/TenantId'
     get:
       description: Get a breakdown of the number of users with points in each range.
       operationId: points_summary
@@ -2491,6 +2529,8 @@ paths:
     servers:
       - url: https://api.trophy.so/v1
         description: Application API
+    parameters:
+      - $ref: '#/components/parameters/TenantId'
     get:
       description: Get a points system with its triggers.
       operationId: points_system
@@ -2597,6 +2637,8 @@ paths:
     servers:
       - url: https://api.trophy.so/v1
         description: Application API
+    parameters:
+      - $ref: '#/components/parameters/TenantId'
     get:
       description: Get all global boosts for a points system. Finished boosts are excluded by default.
       operationId: points_boosts
@@ -2680,6 +2722,8 @@ paths:
     servers:
       - url: https://api.trophy.so/v1
         description: Application API
+    parameters:
+      - $ref: '#/components/parameters/TenantId'
     get:
       description: Get all levels for a points system.
       operationId: points_levels
@@ -2760,6 +2804,8 @@ paths:
     servers:
       - url: https://api.trophy.so/v1
         description: Application API
+    parameters:
+      - $ref: '#/components/parameters/TenantId'
     get:
       description: Get a breakdown of the number of users at each level in a points system.
       operationId: points_level_summary
@@ -2850,6 +2896,8 @@ paths:
     servers:
       - url: https://api.trophy.so/v1
         description: Application API
+    parameters:
+      - $ref: '#/components/parameters/TenantId'
     get:
       description: Get all leaderboards for your organization. Finished leaderboards are excluded by default.
       operationId: leaderboards_all
@@ -2954,6 +3002,8 @@ paths:
     servers:
       - url: https://api.trophy.so/v1
         description: Application API
+    parameters:
+      - $ref: '#/components/parameters/TenantId'
     get:
       description: Get a specific leaderboard by its key.
       operationId: leaderboards_get
@@ -3887,6 +3937,18 @@ webhooks:
         '200':
           description: Return a 200 status to indicate the webhook was received and processed.
 components:
+  parameters:
+    TenantId:
+      name: Tenant-ID
+      in: header
+      description: >-
+        The tenant identifier for multi-tenant organisations. Required when the
+        organisation has multi-tenancy enabled. The value should be your internal
+        ID for the tenant. Ignored for single-tenant organisations.
+      required: false
+      schema:
+        type: string
+      example: customer_12345
   schemas:
     StreakFrequency:
       title: StreakFrequency
