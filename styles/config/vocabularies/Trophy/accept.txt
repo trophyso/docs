@@ -19,6 +19,7 @@ APNs
 Strava
 grayscale
 localStorage
+shadcn
 
 # Markdown rich text
 _[\w\s]+_
