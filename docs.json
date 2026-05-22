@@ -685,6 +685,13 @@
                 ]
               }
             ]
+          },
+          {
+            "tab": "Kit de UI",
+            "icon": "shapes",
+            "pages": [
+              "es/uikit/overview"
+            ]
           }
         ],
         "navbar": {
