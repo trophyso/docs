@@ -48,6 +48,30 @@
       {
         "language": "en",
         "default": true,
+        "global": {
+          "anchors": [
+            {
+              "anchor": "GitHub",
+              "href": "https://github.com/trophyso",
+              "icon": "github"
+            },
+            {
+              "anchor": "Status",
+              "href": "https://status.trophy.so",
+              "icon": "radio-tower"
+            },
+            {
+              "anchor": "llms.txt",
+              "href": "https://docs.trophy.so/llms-full.txt",
+              "icon": "bot"
+            },
+            {
+              "anchor": "Help",
+              "href": "mailto:support@trophy.so",
+              "icon": "life-buoy"
+            }
+          ]
+        },
         "tabs": [
           {
             "tab": "Home",
@@ -330,28 +354,13 @@
                 ]
               }
             ]
-          }
-        ],
-        "anchors": [
-          {
-            "anchor": "GitHub",
-            "href": "https://github.com/trophyso",
-            "icon": "github"
           },
           {
-            "anchor": "Status",
-            "href": "https://status.trophy.so",
-            "icon": "radio-tower"
-          },
-          {
-            "anchor": "llms.txt",
-            "href": "https://docs.trophy.so/llms-full.txt",
-            "icon": "bot"
-          },
-          {
-            "anchor": "Help",
-            "href": "mailto:support@trophy.so",
-            "icon": "life-buoy"
+            "tab": "UI Kit",
+            "icon": "shapes",
+            "pages": [
+              "uikit/overview"
+            ]
           }
         ],
         "navbar": {
@@ -370,6 +379,30 @@
       },
       {
         "language": "es",
+        "global": {
+          "anchors": [
+            {
+              "anchor": "GitHub",
+              "href": "https://github.com/trophyso",
+              "icon": "github"
+            },
+            {
+              "anchor": "Estado",
+              "href": "https://status.trophy.so",
+              "icon": "radio-tower"
+            },
+            {
+              "anchor": "llms.txt",
+              "href": "https://docs.trophy.so/llms-full.txt",
+              "icon": "bot"
+            },
+            {
+              "anchor": "Ayuda",
+              "href": "mailto:support@trophy.so",
+              "icon": "life-buoy"
+            }
+          ]
+        },
         "tabs": [
           {
             "tab": "Inicio",
@@ -652,28 +685,13 @@
                 ]
               }
             ]
-          }
-        ],
-        "anchors": [
-          {
-            "anchor": "GitHub",
-            "href": "https://github.com/trophyso",
-            "icon": "github"
           },
           {
-            "anchor": "Estado",
-            "href": "https://status.trophy.so",
-            "icon": "radio-tower"
-          },
-          {
-            "anchor": "llms.txt",
-            "href": "https://docs.trophy.so/llms-full.txt",
-            "icon": "bot"
-          },
-          {
-            "anchor": "Ayuda",
-            "href": "mailto:support@trophy.so",
-            "icon": "life-buoy"
+            "tab": "Kit de UI",
+            "icon": "shapes",
+            "pages": [
+              "es/uikit/overview"
+            ]
           }
         ],
         "navbar": {

@@ -33,7 +33,8 @@
         "webhooks/events/achievements/*.mdx",
         "webhooks/events/leaderboards/*.mdx",
         "webhooks/events/points/*.mdx",
-        "webhooks/events/streaks/*.mdx"
+        "webhooks/events/streaks/*.mdx",
+        "uikit/*.mdx"
       ],
       "exclude": [
         "snippets/*.mdx",

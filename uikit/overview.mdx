@@ -1,0 +1,60 @@
+---
+title: Gamification UI Kit
+---
+
+<Frame>
+    <img
+        height="200"
+        width="100%"
+        noZoom
+        src="../assets/uikit/hero.png"
+    />
+</Frame>
+
+Trophy's Gamification UI Kit is a component library built on top of [shadcn/ui](https://ui.shadcn.com) that helps you build gamification experiences faster. It provides pre-built components for streaks, achievements, leaderboards, points, and more.
+
+The UI Kit is designed to work with any gamification platform, but all props and data shapes are designed intentionally to work seamlessly with Trophy.
+
+## Prerequisites {#prerequisites}
+
+- **React 18+** — Components are client-side React.
+- **Tailwind v4+** — Styling is Tailwind utility classes. Configure Tailwind so those classes compile, and add the [semantic theme tokens](https://ui.trophy.so/docs/styles) Trophy expects (or map them to your design system).
+- **shadcn/ui structure** — Maintain a project that already follows the [shadcn/ui](https://ui.shadcn.com/docs/installation) setup (`components.json`, aliases, and optional `src/` layout).
+
+## Getting Started {#getting-started}
+
+Components are available via the shadcn CLI:
+
+```bash
+npx shadcn@latest add https://ui.trophy.so/<component>
+```
+
+For example, to install the Streak Badge component:
+
+```bash
+npx shadcn@latest add https://ui.trophy.so/streak-badge
+```
+
+Once a component is installed, you can import and use it like any other React component. Files are added into your project (the same [open-code](https://ui.shadcn.com/docs) model as shadcn/ui), so you can adjust markup and align styles with your design system.
+
+For example, after installing the [Streak Badge](https://ui.trophy.so/streak-badge) component, you can compose it on a page like the following:
+
+```tsx
+"use client"
+
+import { StreakBadge } from "@/components/ui/streak-badge"
+
+export default function Page() {
+  const streak = 7
+
+  return (
+    <div className="flex items-center justify-center p-8">
+      <StreakBadge length={streak} />
+    </div>
+  )
+}
+```
+
+The default import path is `@/components/ui/<component>`. If your `components.json` uses another directory or alias, update the import to match.
+
+For props, variants, and data shapes, use each component’s API section on its doc page—see [All components](https://ui.trophy.so/docs/components) for the full list.
