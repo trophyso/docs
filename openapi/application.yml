@@ -32,6 +32,21 @@ paths:
             client = TrophyApi(api_key='YOUR_API_KEY')
 
             response = client.achievements.all()
+        - lang: go
+          source: |
+            import (
+              "context"
+        
+              api "github.com/trophyso/trophy-go"
+              trophyclient "github.com/trophyso/trophy-go/client"
+              "github.com/trophyso/trophy-go/option"
+            )
+        
+            client := trophyclient.NewClient(
+              option.WithApiKey("YOUR_API_KEY"),
+            )
+        
+            response, err := client.Achievements.All(context.TODO(), &api.AchievementsAllRequest{})
       parameters:
         - name: userAttributes
           in: query
@@ -144,6 +159,27 @@ paths:
             user = UpsertedUser(id="123")
 
             response = client.achievements.complete("achievement-key", user=user)
+        - lang: go
+          source: |
+            import (
+              "context"
+        
+              api "github.com/trophyso/trophy-go"
+              trophyclient "github.com/trophyso/trophy-go/client"
+              "github.com/trophyso/trophy-go/option"
+            )
+        
+            client := trophyclient.NewClient(
+              option.WithApiKey("YOUR_API_KEY"),
+            )
+        
+            response, err := client.Achievements.Complete(
+              context.TODO(),
+              "achievement-key",
+              &api.AchievementsCompleteRequest{
+                User: &api.UpsertedUser{Id: "user-id"},
+              },
+            )
       parameters:
         - name: key
           in: path
@@ -296,6 +332,32 @@ paths:
                 "category": "writing",
                 "source": "mobile-app"
             })
+        - lang: go
+          source: |
+            import (
+              "context"
+        
+              api "github.com/trophyso/trophy-go"
+              trophyclient "github.com/trophyso/trophy-go/client"
+              "github.com/trophyso/trophy-go/option"
+            )
+        
+            client := trophyclient.NewClient(
+              option.WithApiKey("YOUR_API_KEY"),
+            )
+        
+            response, err := client.Metrics.Event(
+              context.TODO(),
+              "words-written",
+              &api.MetricsEventRequest{
+                User: &api.UpsertedUser{Id: "user-id"},
+                Value: 750,
+                Attributes: map[string]string{
+                  "category": "writing",
+                  "source": "mobile-app",
+                },
+              },
+            )
       parameters:
         - name: key
           in: path
@@ -494,6 +556,24 @@ paths:
                 "role": "developer"
               }
             )
+        - lang: go
+          source: |
+            import (
+              "context"
+        
+              api "github.com/trophyso/trophy-go"
+              trophyclient "github.com/trophyso/trophy-go/client"
+              "github.com/trophyso/trophy-go/option"
+            )
+        
+            client := trophyclient.NewClient(
+              option.WithApiKey("YOUR_API_KEY"),
+            )
+        
+            response, err := client.Users.Create(
+              context.TODO(),
+              &api.UpsertedUser{Id: "user-id"},
+            )
       summary: Create a new user
       security:
         - ApiKeyAuth: []
@@ -569,6 +649,20 @@ paths:
             client = TrophyApi(api_key='YOUR_API_KEY')
 
             response = client.users.get("user-id")
+        - lang: go
+          source: |
+            import (
+              "context"
+        
+              trophyclient "github.com/trophyso/trophy-go/client"
+              "github.com/trophyso/trophy-go/option"
+            )
+        
+            client := trophyclient.NewClient(
+              option.WithApiKey("YOUR_API_KEY"),
+            )
+        
+            response, err := client.Users.Get(context.TODO(), "user-id")
       summary: Get a single user
       parameters:
         - name: id
@@ -655,6 +749,25 @@ paths:
                 "department": "engineering",
                 "role": "developer"
               }
+            )
+        - lang: go
+          source: |
+            import (
+              "context"
+        
+              api "github.com/trophyso/trophy-go"
+              trophyclient "github.com/trophyso/trophy-go/client"
+              "github.com/trophyso/trophy-go/option"
+            )
+        
+            client := trophyclient.NewClient(
+              option.WithApiKey("YOUR_API_KEY"),
+            )
+        
+            response, err := client.Users.Identify(
+              context.TODO(),
+              "user-id",
+              &api.UpdatedUser{},
             )
       summary: Identify a user
       security:
@@ -744,6 +857,25 @@ paths:
                 "role": "developer"
               }
             )
+        - lang: go
+          source: |
+            import (
+              "context"
+        
+              api "github.com/trophyso/trophy-go"
+              trophyclient "github.com/trophyso/trophy-go/client"
+              "github.com/trophyso/trophy-go/option"
+            )
+        
+            client := trophyclient.NewClient(
+              option.WithApiKey("YOUR_API_KEY"),
+            )
+        
+            response, err := client.Users.Update(
+              context.TODO(),
+              "user-id",
+              &api.UpdatedUser{},
+            )
       summary: Update a user
       security:
         - ApiKeyAuth: []
@@ -829,6 +961,20 @@ paths:
             client = TrophyApi(api_key='YOUR_API_KEY')
 
             response = client.users.get_preferences(id="user-123")
+        - lang: go
+          source: |
+            import (
+              "context"
+        
+              trophyclient "github.com/trophyso/trophy-go/client"
+              "github.com/trophyso/trophy-go/option"
+            )
+        
+            client := trophyclient.NewClient(
+              option.WithApiKey("YOUR_API_KEY"),
+            )
+        
+            response, err := client.Users.GetPreferences(context.TODO(), "user-123")
       parameters:
         - name: id
           in: path
@@ -912,6 +1058,25 @@ paths:
                 "recap": ["email"],
                 "streak_reminder": []
               }
+            )
+        - lang: go
+          source: |
+            import (
+              "context"
+        
+              api "github.com/trophyso/trophy-go"
+              trophyclient "github.com/trophyso/trophy-go/client"
+              "github.com/trophyso/trophy-go/option"
+            )
+        
+            client := trophyclient.NewClient(
+              option.WithApiKey("YOUR_API_KEY"),
+            )
+        
+            response, err := client.Users.UpdatePreferences(
+              context.TODO(),
+              "user-123",
+              &api.UpdateUserPreferencesRequest{},
             )
       parameters:
         - name: id
@@ -1013,6 +1178,20 @@ paths:
             client = TrophyApi(api_key='YOUR_API_KEY')
 
             response = client.users.all_metrics("user-id")
+        - lang: go
+          source: |
+            import (
+              "context"
+        
+              trophyclient "github.com/trophyso/trophy-go/client"
+              "github.com/trophyso/trophy-go/option"
+            )
+        
+            client := trophyclient.NewClient(
+              option.WithApiKey("YOUR_API_KEY"),
+            )
+        
+            response, err := client.Users.AllMetrics(context.TODO(), "user-id")
       parameters:
         - name: id
           in: path
@@ -1112,6 +1291,20 @@ paths:
             client = TrophyApi(api_key='YOUR_API_KEY')
 
             response = client.users.single_metric(id="user-id", key="words-written")
+        - lang: go
+          source: |
+            import (
+              "context"
+        
+              trophyclient "github.com/trophyso/trophy-go/client"
+              "github.com/trophyso/trophy-go/option"
+            )
+        
+            client := trophyclient.NewClient(
+              option.WithApiKey("YOUR_API_KEY"),
+            )
+        
+            response, err := client.Users.SingleMetric(context.TODO(), "user-id", "words-written")
       parameters:
         - name: id
           in: path
@@ -1220,6 +1413,30 @@ paths:
               aggregation="daily",
               start_date="2024-01-01",
               end_date="2024-01-31"
+            )
+        - lang: go
+          source: |
+            import (
+              "context"
+        
+              api "github.com/trophyso/trophy-go"
+              trophyclient "github.com/trophyso/trophy-go/client"
+              "github.com/trophyso/trophy-go/option"
+            )
+        
+            client := trophyclient.NewClient(
+              option.WithApiKey("YOUR_API_KEY"),
+            )
+        
+            response, err := client.Users.MetricEventSummary(
+              context.TODO(),
+              "user-id",
+              "words-written",
+              &api.UsersMetricEventSummaryRequest{
+                Aggregation: api.UsersMetricEventSummaryRequestAggregationDaily,
+                StartDate: "2024-01-01",
+                EndDate: "2024-01-31",
+              },
             )
       parameters:
         - name: id
@@ -1376,6 +1593,25 @@ paths:
             client = TrophyApi(api_key='YOUR_API_KEY')
 
             response = client.users.achievements(id="user-id", include_incomplete="true")
+        - lang: go
+          source: |
+            import (
+              "context"
+        
+              api "github.com/trophyso/trophy-go"
+              trophyclient "github.com/trophyso/trophy-go/client"
+              "github.com/trophyso/trophy-go/option"
+            )
+        
+            client := trophyclient.NewClient(
+              option.WithApiKey("YOUR_API_KEY"),
+            )
+        
+            response, err := client.Users.Achievements(
+              context.TODO(),
+              "user-id",
+              &api.UsersAchievementsRequest{},
+            )
       parameters:
         - name: id
           in: path
@@ -1484,6 +1720,25 @@ paths:
             client = TrophyApi(api_key='YOUR_API_KEY')
 
             response = client.users.streak(id="user-id", history_periods=14)
+        - lang: go
+          source: |
+            import (
+              "context"
+        
+              api "github.com/trophyso/trophy-go"
+              trophyclient "github.com/trophyso/trophy-go/client"
+              "github.com/trophyso/trophy-go/option"
+            )
+        
+            client := trophyclient.NewClient(
+              option.WithApiKey("YOUR_API_KEY"),
+            )
+        
+            response, err := client.Users.Streak(
+              context.TODO(),
+              "user-id",
+              &api.UsersStreakRequest{},
+            )
       parameters:
         - name: id
           in: path
@@ -1587,6 +1842,26 @@ paths:
             client = TrophyApi(api_key='YOUR_API_KEY')
 
             response = client.streaks.list(user_ids=["user-123", "user-456", "user-789"])
+        - lang: go
+          source: |
+            import (
+              "context"
+        
+              api "github.com/trophyso/trophy-go"
+              trophyclient "github.com/trophyso/trophy-go/client"
+              "github.com/trophyso/trophy-go/option"
+            )
+        
+            client := trophyclient.NewClient(
+              option.WithApiKey("YOUR_API_KEY"),
+            )
+        
+            response, err := client.Streaks.List(
+              context.TODO(),
+              &api.StreaksListRequest{
+                UserIds: []*string{api.String("user-123"), api.String("user-456"), api.String("user-789")},
+              },
+            )
       parameters:
         - name: userIds
           in: query
@@ -1663,6 +1938,27 @@ paths:
             client = TrophyApi(api_key='YOUR_API_KEY')
 
             response = client.streaks.rankings(limit=20, type="active")
+        - lang: go
+          source: |
+            import (
+              "context"
+        
+              api "github.com/trophyso/trophy-go"
+              trophyclient "github.com/trophyso/trophy-go/client"
+              "github.com/trophyso/trophy-go/option"
+            )
+        
+            client := trophyclient.NewClient(
+              option.WithApiKey("YOUR_API_KEY"),
+            )
+        
+            response, err := client.Streaks.Rankings(
+              context.TODO(),
+              &api.StreaksRankingsRequest{
+                Limit: api.Int(20),
+                Type: api.StreaksRankingsRequestTypeActive.Ptr(),
+              },
+            )
       parameters:
         - name: limit
           in: query
@@ -1748,6 +2044,26 @@ paths:
             client = TrophyApi(api_key='YOUR_API_KEY')
 
             response = client.users.points(id="user-id", key="points-system-key")
+        - lang: go
+          source: |
+            import (
+              "context"
+        
+              api "github.com/trophyso/trophy-go"
+              trophyclient "github.com/trophyso/trophy-go/client"
+              "github.com/trophyso/trophy-go/option"
+            )
+        
+            client := trophyclient.NewClient(
+              option.WithApiKey("YOUR_API_KEY"),
+            )
+        
+            response, err := client.Users.Points(
+              context.TODO(),
+              "user-id",
+              "points-system-key",
+              &api.UsersPointsRequest{},
+            )
       parameters:
         - name: id
           in: path
@@ -1856,6 +2172,20 @@ paths:
             client = TrophyApi(api_key='YOUR_API_KEY')
 
             response = client.users.points_boosts(id="user-id", key="points-system-key")
+        - lang: go
+          source: |
+            import (
+              "context"
+        
+              trophyclient "github.com/trophyso/trophy-go/client"
+              "github.com/trophyso/trophy-go/option"
+            )
+        
+            client := trophyclient.NewClient(
+              option.WithApiKey("YOUR_API_KEY"),
+            )
+        
+            response, err := client.Users.PointsBoosts(context.TODO(), "user-id", "points-system-key")
       parameters:
         - name: id
           in: path
@@ -1956,6 +2286,30 @@ paths:
               aggregation="daily",
               start_date="2024-01-01",
               end_date="2024-01-31"
+            )
+        - lang: go
+          source: |
+            import (
+              "context"
+        
+              api "github.com/trophyso/trophy-go"
+              trophyclient "github.com/trophyso/trophy-go/client"
+              "github.com/trophyso/trophy-go/option"
+            )
+        
+            client := trophyclient.NewClient(
+              option.WithApiKey("YOUR_API_KEY"),
+            )
+        
+            response, err := client.Users.PointsEventSummary(
+              context.TODO(),
+              "user-id",
+              "points-system-key",
+              &api.UsersPointsEventSummaryRequest{
+                Aggregation: api.UsersPointsEventSummaryRequestAggregationDaily,
+                StartDate: "2024-01-01",
+                EndDate: "2024-01-31",
+              },
             )
       parameters:
         - name: id
@@ -2096,6 +2450,26 @@ paths:
               key="weekly-words",
               run="2025-01-15"
             )
+        - lang: go
+          source: |
+            import (
+              "context"
+        
+              api "github.com/trophyso/trophy-go"
+              trophyclient "github.com/trophyso/trophy-go/client"
+              "github.com/trophyso/trophy-go/option"
+            )
+        
+            client := trophyclient.NewClient(
+              option.WithApiKey("YOUR_API_KEY"),
+            )
+        
+            response, err := client.Users.Leaderboard(
+              context.TODO(),
+              "user-id",
+              "leaderboard-key",
+              &api.UsersLeaderboardRequest{},
+            )
       parameters:
         - name: id
           in: path
@@ -2222,6 +2596,25 @@ paths:
             client = TrophyApi(api_key='YOUR_API_KEY')
 
             response = client.users.wrapped(id="user-123", year=2024)
+        - lang: go
+          source: |
+            import (
+              "context"
+        
+              api "github.com/trophyso/trophy-go"
+              trophyclient "github.com/trophyso/trophy-go/client"
+              "github.com/trophyso/trophy-go/option"
+            )
+        
+            client := trophyclient.NewClient(
+              option.WithApiKey("YOUR_API_KEY"),
+            )
+        
+            response, err := client.Users.Wrapped(
+              context.TODO(),
+              "user-123",
+              &api.UsersWrappedRequest{Year: api.Int(2024)},
+            )
       parameters:
         - name: id
           in: path
@@ -2446,6 +2839,25 @@ paths:
               key="points-system-key",
               user_attributes="plan-type:premium,region:us-east"
             )
+        - lang: go
+          source: |
+            import (
+              "context"
+        
+              api "github.com/trophyso/trophy-go"
+              trophyclient "github.com/trophyso/trophy-go/client"
+              "github.com/trophyso/trophy-go/option"
+            )
+        
+            client := trophyclient.NewClient(
+              option.WithApiKey("YOUR_API_KEY"),
+            )
+        
+            response, err := client.Points.Summary(
+              context.TODO(),
+              "points-system-key",
+              &api.PointsSummaryRequest{UserAttributes: api.String("plan-type:premium,region:us-east")},
+            )
       parameters:
         - name: key
           in: path
@@ -2554,6 +2966,20 @@ paths:
             client = TrophyApi(api_key='YOUR_API_KEY')
 
             response = client.points.system(key="points-system-key")
+        - lang: go
+          source: |
+            import (
+              "context"
+        
+              trophyclient "github.com/trophyso/trophy-go/client"
+              "github.com/trophyso/trophy-go/option"
+            )
+        
+            client := trophyclient.NewClient(
+              option.WithApiKey("YOUR_API_KEY"),
+            )
+        
+            response, err := client.Points.System(context.TODO(), "points-system-key")
       parameters:
         - name: key
           in: path
@@ -2662,6 +3088,25 @@ paths:
             client = TrophyApi(api_key='YOUR_API_KEY')
 
             response = client.points.boosts(key="points-system-key")
+        - lang: go
+          source: |
+            import (
+              "context"
+        
+              api "github.com/trophyso/trophy-go"
+              trophyclient "github.com/trophyso/trophy-go/client"
+              "github.com/trophyso/trophy-go/option"
+            )
+        
+            client := trophyclient.NewClient(
+              option.WithApiKey("YOUR_API_KEY"),
+            )
+        
+            response, err := client.Points.Boosts(
+              context.TODO(),
+              "points-system-key",
+              &api.PointsBoostsRequest{},
+            )
       parameters:
         - name: key
           in: path
@@ -2747,6 +3192,20 @@ paths:
             client = TrophyApi(api_key='YOUR_API_KEY')
 
             response = client.points.levels(key="points-system-key")
+        - lang: go
+          source: |
+            import (
+              "context"
+        
+              trophyclient "github.com/trophyso/trophy-go/client"
+              "github.com/trophyso/trophy-go/option"
+            )
+        
+            client := trophyclient.NewClient(
+              option.WithApiKey("YOUR_API_KEY"),
+            )
+        
+            response, err := client.Points.Levels(context.TODO(), "points-system-key")
       parameters:
         - name: key
           in: path
@@ -2829,6 +3288,20 @@ paths:
             client = TrophyApi(api_key='YOUR_API_KEY')
 
             response = client.points.level_summary(key="points-system-key")
+        - lang: go
+          source: |
+            import (
+              "context"
+        
+              trophyclient "github.com/trophyso/trophy-go/client"
+              "github.com/trophyso/trophy-go/option"
+            )
+        
+            client := trophyclient.NewClient(
+              option.WithApiKey("YOUR_API_KEY"),
+            )
+        
+            response, err := client.Points.LevelSummary(context.TODO(), "points-system-key")
       parameters:
         - name: key
           in: path
@@ -2929,6 +3402,24 @@ paths:
             client = TrophyApi(api_key='YOUR_API_KEY')
 
             response = client.leaderboards.all()
+        - lang: go
+          source: |
+            import (
+              "context"
+        
+              api "github.com/trophyso/trophy-go"
+              trophyclient "github.com/trophyso/trophy-go/client"
+              "github.com/trophyso/trophy-go/option"
+            )
+        
+            client := trophyclient.NewClient(
+              option.WithApiKey("YOUR_API_KEY"),
+            )
+        
+            response, err := client.Leaderboards.All(
+              context.TODO(),
+              &api.LeaderboardsAllRequest{},
+            )
       responses:
         '200':
           description: Successful operation
@@ -3066,6 +3557,25 @@ paths:
               limit=10,
               run="2025-01-15",
               user_attributes="city:london"
+            )
+        - lang: go
+          source: |
+            import (
+              "context"
+        
+              api "github.com/trophyso/trophy-go"
+              trophyclient "github.com/trophyso/trophy-go/client"
+              "github.com/trophyso/trophy-go/option"
+            )
+        
+            client := trophyclient.NewClient(
+              option.WithApiKey("YOUR_API_KEY"),
+            )
+        
+            response, err := client.Leaderboards.Get(
+              context.TODO(),
+              "leaderboard-key",
+              &api.LeaderboardsGetRequest{},
             )
       parameters:
         - name: key
