@@ -1,7 +1,7 @@
 openapi: 3.1.0
 info:
   title: Trophy
-  version: '1.10.0'
+  version: '1.11.0'
 paths:
   /attributes:
     servers:
@@ -46,16 +46,16 @@ paths:
           source: |
             import (
               "context"
-        
+
               api "github.com/trophyso/trophy-go"
               trophyclient "github.com/trophyso/trophy-go/client"
               "github.com/trophyso/trophy-go/option"
             )
-        
+
             client := trophyclient.NewClient(
               option.WithApiKey("YOUR_API_KEY"),
             )
-        
+
             response, err := client.Admin.Attributes.List(context.TODO(), nil)
       parameters:
         - name: limit
@@ -163,16 +163,16 @@ paths:
           source: |
             import (
               "context"
-        
+
               api "github.com/trophyso/trophy-go"
               trophyclient "github.com/trophyso/trophy-go/client"
               "github.com/trophyso/trophy-go/option"
             )
-        
+
             client := trophyclient.NewClient(
               option.WithApiKey("YOUR_API_KEY"),
             )
-        
+
             response, err := client.Admin.Attributes.Create(context.TODO(), api.CreateAttributesRequest{})
       requestBody:
         description: Array of attributes to create. Maximum 100 attributes per request.
@@ -283,16 +283,16 @@ paths:
           source: |
             import (
               "context"
-        
+
               api "github.com/trophyso/trophy-go"
               trophyclient "github.com/trophyso/trophy-go/client"
               "github.com/trophyso/trophy-go/option"
             )
-        
+
             client := trophyclient.NewClient(
               option.WithApiKey("YOUR_API_KEY"),
             )
-        
+
             response, err := client.Admin.Attributes.Update(context.TODO(), api.UpdateAttributesRequest{})
       requestBody:
         description: Array of attributes to update. Each item must include an ID and may include `name`. `key` and `type` cannot be changed.
@@ -389,16 +389,16 @@ paths:
           source: |
             import (
               "context"
-        
+
               api "github.com/trophyso/trophy-go"
               trophyclient "github.com/trophyso/trophy-go/client"
               "github.com/trophyso/trophy-go/option"
             )
-        
+
             client := trophyclient.NewClient(
               option.WithApiKey("YOUR_API_KEY"),
             )
-        
+
             response, err := client.Admin.Attributes.Delete(context.TODO(), nil)
       parameters:
         - name: ids
@@ -500,16 +500,16 @@ paths:
           source: |
             import (
               "context"
-        
+
               api "github.com/trophyso/trophy-go"
               trophyclient "github.com/trophyso/trophy-go/client"
               "github.com/trophyso/trophy-go/option"
             )
-        
+
             client := trophyclient.NewClient(
               option.WithApiKey("YOUR_API_KEY"),
             )
-        
+
             response, err := client.Admin.Attributes.Get(context.TODO(), "550e8400-e29b-41d4-a716-446655440000")
       parameters:
         - name: id
@@ -605,16 +605,16 @@ paths:
           source: |
             import (
               "context"
-        
+
               api "github.com/trophyso/trophy-go"
               trophyclient "github.com/trophyso/trophy-go/client"
               "github.com/trophyso/trophy-go/option"
             )
-        
+
             client := trophyclient.NewClient(
               option.WithApiKey("YOUR_API_KEY"),
             )
-        
+
             response, err := client.Admin.Metrics.List(context.TODO(), nil)
       parameters:
         - name: limit
@@ -724,16 +724,16 @@ paths:
           source: |
             import (
               "context"
-        
+
               api "github.com/trophyso/trophy-go"
               trophyclient "github.com/trophyso/trophy-go/client"
               "github.com/trophyso/trophy-go/option"
             )
-        
+
             client := trophyclient.NewClient(
               option.WithApiKey("YOUR_API_KEY"),
             )
-        
+
             response, err := client.Admin.Metrics.Create(context.TODO(), api.CreateMetricsRequest{})
       requestBody:
         description: Array of metrics to create. Maximum 100 metrics per request.
@@ -870,16 +870,16 @@ paths:
           source: |
             import (
               "context"
-        
+
               api "github.com/trophyso/trophy-go"
               trophyclient "github.com/trophyso/trophy-go/client"
               "github.com/trophyso/trophy-go/option"
             )
-        
+
             client := trophyclient.NewClient(
               option.WithApiKey("YOUR_API_KEY"),
             )
-        
+
             response, err := client.Admin.Metrics.Update(context.TODO(), api.UpdateMetricsRequest{})
       requestBody:
         description: Array of metrics to update. Each item must include an ID and may include any subset of mutable metric fields except `key`.
@@ -982,16 +982,16 @@ paths:
           source: |
             import (
               "context"
-        
+
               api "github.com/trophyso/trophy-go"
               trophyclient "github.com/trophyso/trophy-go/client"
               "github.com/trophyso/trophy-go/option"
             )
-        
+
             client := trophyclient.NewClient(
               option.WithApiKey("YOUR_API_KEY"),
             )
-        
+
             response, err := client.Admin.Metrics.Delete(context.TODO(), nil)
       parameters:
         - name: ids
@@ -1093,16 +1093,16 @@ paths:
           source: |
             import (
               "context"
-        
+
               api "github.com/trophyso/trophy-go"
               trophyclient "github.com/trophyso/trophy-go/client"
               "github.com/trophyso/trophy-go/option"
             )
-        
+
             client := trophyclient.NewClient(
               option.WithApiKey("YOUR_API_KEY"),
             )
-        
+
             response, err := client.Admin.Metrics.Get(context.TODO(), "550e8400-e29b-41d4-a716-446655440000")
       parameters:
         - name: id
@@ -1201,16 +1201,16 @@ paths:
           source: |
             import (
               "context"
-        
+
               api "github.com/trophyso/trophy-go"
               trophyclient "github.com/trophyso/trophy-go/client"
               "github.com/trophyso/trophy-go/option"
             )
-        
+
             client := trophyclient.NewClient(
               option.WithApiKey("YOUR_API_KEY"),
             )
-        
+
             response, err := client.Admin.Points.Systems.List(context.TODO(), nil)
       parameters:
         - name: limit
@@ -1316,16 +1316,16 @@ paths:
           source: |
             import (
               "context"
-        
+
               api "github.com/trophyso/trophy-go"
               trophyclient "github.com/trophyso/trophy-go/client"
               "github.com/trophyso/trophy-go/option"
             )
-        
+
             client := trophyclient.NewClient(
               option.WithApiKey("YOUR_API_KEY"),
             )
-        
+
             response, err := client.Admin.Points.Systems.Create(context.TODO(), api.CreatePointsSystemsRequest{})
       requestBody:
         description: Array of points systems to create. Maximum 100 systems per request.
@@ -1446,16 +1446,16 @@ paths:
           source: |
             import (
               "context"
-        
+
               api "github.com/trophyso/trophy-go"
               trophyclient "github.com/trophyso/trophy-go/client"
               "github.com/trophyso/trophy-go/option"
             )
-        
+
             client := trophyclient.NewClient(
               option.WithApiKey("YOUR_API_KEY"),
             )
-        
+
             response, err := client.Admin.Points.Systems.Update(context.TODO(), api.UpdatePointsSystemsRequest{})
       requestBody:
         description: Array of points system updates. Maximum 100 systems per request.
@@ -1539,16 +1539,16 @@ paths:
           source: |
             import (
               "context"
-        
+
               api "github.com/trophyso/trophy-go"
               trophyclient "github.com/trophyso/trophy-go/client"
               "github.com/trophyso/trophy-go/option"
             )
-        
+
             client := trophyclient.NewClient(
               option.WithApiKey("YOUR_API_KEY"),
             )
-        
+
             response, err := client.Admin.Points.Systems.Delete(context.TODO(), nil)
       parameters:
         - name: ids
@@ -1629,16 +1629,16 @@ paths:
           source: |
             import (
               "context"
-        
+
               api "github.com/trophyso/trophy-go"
               trophyclient "github.com/trophyso/trophy-go/client"
               "github.com/trophyso/trophy-go/option"
             )
-        
+
             client := trophyclient.NewClient(
               option.WithApiKey("YOUR_API_KEY"),
             )
-        
+
             response, err := client.Admin.Points.Systems.Get(context.TODO(), "550e8400-e29b-41d4-a716-446655440000")
       parameters:
         - name: id
@@ -1733,16 +1733,16 @@ paths:
           source: |
             import (
               "context"
-        
+
               api "github.com/trophyso/trophy-go"
               trophyclient "github.com/trophyso/trophy-go/client"
               "github.com/trophyso/trophy-go/option"
             )
-        
+
             client := trophyclient.NewClient(
               option.WithApiKey("YOUR_API_KEY"),
             )
-        
+
             response, err := client.Admin.Points.Boosts.List(context.TODO(), "system-uuid", nil)
       parameters:
         - name: systemId
@@ -1888,16 +1888,16 @@ paths:
           source: |
             import (
               "context"
-        
+
               api "github.com/trophyso/trophy-go"
               trophyclient "github.com/trophyso/trophy-go/client"
               "github.com/trophyso/trophy-go/option"
             )
-        
+
             client := trophyclient.NewClient(
               option.WithApiKey("YOUR_API_KEY"),
             )
-        
+
             response, err := client.Admin.Points.Boosts.Create(context.TODO(), "system-uuid", api.CreatePointsBoostsRequest{})
       parameters:
         - name: systemId
@@ -2070,16 +2070,16 @@ paths:
           source: |
             import (
               "context"
-        
+
               api "github.com/trophyso/trophy-go"
               trophyclient "github.com/trophyso/trophy-go/client"
               "github.com/trophyso/trophy-go/option"
             )
-        
+
             client := trophyclient.NewClient(
               option.WithApiKey("YOUR_API_KEY"),
             )
-        
+
             response, err := client.Admin.Points.Boosts.Update(context.TODO(), "system-uuid", api.PatchPointsBoostsRequest{})
       parameters:
         - name: systemId
@@ -2185,16 +2185,16 @@ paths:
           source: |
             import (
               "context"
-        
+
               api "github.com/trophyso/trophy-go"
               trophyclient "github.com/trophyso/trophy-go/client"
               "github.com/trophyso/trophy-go/option"
             )
-        
+
             client := trophyclient.NewClient(
               option.WithApiKey("YOUR_API_KEY"),
             )
-        
+
             response, err := client.Admin.Points.Boosts.Delete(context.TODO(), "system-uuid", nil)
       parameters:
         - name: systemId
@@ -2301,16 +2301,16 @@ paths:
           source: |
             import (
               "context"
-        
+
               api "github.com/trophyso/trophy-go"
               trophyclient "github.com/trophyso/trophy-go/client"
               "github.com/trophyso/trophy-go/option"
             )
-        
+
             client := trophyclient.NewClient(
               option.WithApiKey("YOUR_API_KEY"),
             )
-        
+
             response, err := client.Admin.Points.Boosts.Get(context.TODO(), "system-uuid", "boost-uuid")
       parameters:
         - name: systemId
@@ -2413,16 +2413,16 @@ paths:
           source: |
             import (
               "context"
-        
+
               api "github.com/trophyso/trophy-go"
               trophyclient "github.com/trophyso/trophy-go/client"
               "github.com/trophyso/trophy-go/option"
             )
-        
+
             client := trophyclient.NewClient(
               option.WithApiKey("YOUR_API_KEY"),
             )
-        
+
             response, err := client.Admin.Points.Levels.List(context.TODO(), "system-uuid", nil)
       parameters:
         - name: systemId
@@ -2545,16 +2545,16 @@ paths:
           source: |
             import (
               "context"
-        
+
               api "github.com/trophyso/trophy-go"
               trophyclient "github.com/trophyso/trophy-go/client"
               "github.com/trophyso/trophy-go/option"
             )
-        
+
             client := trophyclient.NewClient(
               option.WithApiKey("YOUR_API_KEY"),
             )
-        
+
             response, err := client.Admin.Points.Levels.Create(context.TODO(), "system-uuid", api.CreatePointsLevelsRequest{})
       parameters:
         - name: systemId
@@ -2671,16 +2671,16 @@ paths:
           source: |
             import (
               "context"
-        
+
               api "github.com/trophyso/trophy-go"
               trophyclient "github.com/trophyso/trophy-go/client"
               "github.com/trophyso/trophy-go/option"
             )
-        
+
             client := trophyclient.NewClient(
               option.WithApiKey("YOUR_API_KEY"),
             )
-        
+
             response, err := client.Admin.Points.Levels.Update(context.TODO(), "system-uuid", api.PatchPointsLevelsRequest{})
       parameters:
         - name: systemId
@@ -2774,16 +2774,16 @@ paths:
           source: |
             import (
               "context"
-        
+
               api "github.com/trophyso/trophy-go"
               trophyclient "github.com/trophyso/trophy-go/client"
               "github.com/trophyso/trophy-go/option"
             )
-        
+
             client := trophyclient.NewClient(
               option.WithApiKey("YOUR_API_KEY"),
             )
-        
+
             response, err := client.Admin.Points.Levels.Delete(context.TODO(), "system-uuid", nil)
       parameters:
         - name: systemId
@@ -2889,16 +2889,16 @@ paths:
           source: |
             import (
               "context"
-        
+
               api "github.com/trophyso/trophy-go"
               trophyclient "github.com/trophyso/trophy-go/client"
               "github.com/trophyso/trophy-go/option"
             )
-        
+
             client := trophyclient.NewClient(
               option.WithApiKey("YOUR_API_KEY"),
             )
-        
+
             response, err := client.Admin.Points.Levels.Get(context.TODO(), "system-uuid", "level-uuid")
       parameters:
         - name: systemId
@@ -3000,16 +3000,16 @@ paths:
           source: |
             import (
               "context"
-        
+
               api "github.com/trophyso/trophy-go"
               trophyclient "github.com/trophyso/trophy-go/client"
               "github.com/trophyso/trophy-go/option"
             )
-        
+
             client := trophyclient.NewClient(
               option.WithApiKey("YOUR_API_KEY"),
             )
-        
+
             response, err := client.Admin.Points.Triggers.List(context.TODO(), "system-uuid", nil)
       parameters:
         - name: systemId
@@ -3124,16 +3124,16 @@ paths:
           source: |
             import (
               "context"
-        
+
               api "github.com/trophyso/trophy-go"
               trophyclient "github.com/trophyso/trophy-go/client"
               "github.com/trophyso/trophy-go/option"
             )
-        
+
             client := trophyclient.NewClient(
               option.WithApiKey("YOUR_API_KEY"),
             )
-        
+
             response, err := client.Admin.Points.Triggers.Create(context.TODO(), "system-uuid", api.CreatePointsTriggersRequest{})
       parameters:
         - name: systemId
@@ -3235,16 +3235,16 @@ paths:
           source: |
             import (
               "context"
-        
+
               api "github.com/trophyso/trophy-go"
               trophyclient "github.com/trophyso/trophy-go/client"
               "github.com/trophyso/trophy-go/option"
             )
-        
+
             client := trophyclient.NewClient(
               option.WithApiKey("YOUR_API_KEY"),
             )
-        
+
             response, err := client.Admin.Points.Triggers.Update(context.TODO(), "system-uuid", api.PatchPointsTriggersRequest{})
       parameters:
         - name: systemId
@@ -3340,16 +3340,16 @@ paths:
           source: |
             import (
               "context"
-        
+
               api "github.com/trophyso/trophy-go"
               trophyclient "github.com/trophyso/trophy-go/client"
               "github.com/trophyso/trophy-go/option"
             )
-        
+
             client := trophyclient.NewClient(
               option.WithApiKey("YOUR_API_KEY"),
             )
-        
+
             response, err := client.Admin.Points.Triggers.Delete(context.TODO(), "system-uuid", nil)
       parameters:
         - name: systemId
@@ -3448,16 +3448,16 @@ paths:
           source: |
             import (
               "context"
-        
+
               api "github.com/trophyso/trophy-go"
               trophyclient "github.com/trophyso/trophy-go/client"
               "github.com/trophyso/trophy-go/option"
             )
-        
+
             client := trophyclient.NewClient(
               option.WithApiKey("YOUR_API_KEY"),
             )
-        
+
             response, err := client.Admin.Points.Triggers.Get(context.TODO(), "system-uuid", "trigger-uuid")
       parameters:
         - name: systemId
@@ -3559,16 +3559,16 @@ paths:
           source: |
             import (
               "context"
-        
+
               api "github.com/trophyso/trophy-go"
               trophyclient "github.com/trophyso/trophy-go/client"
               "github.com/trophyso/trophy-go/option"
             )
-        
+
             client := trophyclient.NewClient(
               option.WithApiKey("YOUR_API_KEY"),
             )
-        
+
             response, err := client.Admin.Leaderboards.List(context.TODO(), nil)
       parameters:
         - name: limit
@@ -3705,16 +3705,16 @@ paths:
           source: |
             import (
               "context"
-        
+
               api "github.com/trophyso/trophy-go"
               trophyclient "github.com/trophyso/trophy-go/client"
               "github.com/trophyso/trophy-go/option"
             )
-        
+
             client := trophyclient.NewClient(
               option.WithApiKey("YOUR_API_KEY"),
             )
-        
+
             response, err := client.Admin.Leaderboards.Create(context.TODO(), api.CreateLeaderboardsRequest{})
       requestBody:
         description: Array of leaderboards to create.
@@ -3826,16 +3826,16 @@ paths:
           source: |
             import (
               "context"
-        
+
               api "github.com/trophyso/trophy-go"
               trophyclient "github.com/trophyso/trophy-go/client"
               "github.com/trophyso/trophy-go/option"
             )
-        
+
             client := trophyclient.NewClient(
               option.WithApiKey("YOUR_API_KEY"),
             )
-        
+
             response, err := client.Admin.Leaderboards.Update(context.TODO(), api.UpdateLeaderboardsRequest{})
       requestBody:
         description: Array of leaderboards to update. Each item must include an ID.
@@ -3919,16 +3919,16 @@ paths:
           source: |
             import (
               "context"
-        
+
               api "github.com/trophyso/trophy-go"
               trophyclient "github.com/trophyso/trophy-go/client"
               "github.com/trophyso/trophy-go/option"
             )
-        
+
             client := trophyclient.NewClient(
               option.WithApiKey("YOUR_API_KEY"),
             )
-        
+
             response, err := client.Admin.Leaderboards.Delete(context.TODO(), nil)
       parameters:
         - name: ids
@@ -4008,16 +4008,16 @@ paths:
           source: |
             import (
               "context"
-        
+
               api "github.com/trophyso/trophy-go"
               trophyclient "github.com/trophyso/trophy-go/client"
               "github.com/trophyso/trophy-go/option"
             )
-        
+
             client := trophyclient.NewClient(
               option.WithApiKey("YOUR_API_KEY"),
             )
-        
+
             response, err := client.Admin.Leaderboards.Get(context.TODO(), "550e8400-e29b-41d4-a716-446655440000")
       parameters:
         - name: id
@@ -4131,16 +4131,16 @@ paths:
           source: |
             import (
               "context"
-        
+
               api "github.com/trophyso/trophy-go"
               trophyclient "github.com/trophyso/trophy-go/client"
               "github.com/trophyso/trophy-go/option"
             )
-        
+
             client := trophyclient.NewClient(
               option.WithApiKey("YOUR_API_KEY"),
             )
-        
+
             response, err := client.Admin.Streaks.Freezes.Create(context.TODO(), nil)
       requestBody:
         description: Array of freezes to create
@@ -4258,16 +4258,16 @@ paths:
           source: |
             import (
               "context"
-        
+
               api "github.com/trophyso/trophy-go"
               trophyclient "github.com/trophyso/trophy-go/client"
               "github.com/trophyso/trophy-go/option"
             )
-        
+
             client := trophyclient.NewClient(
               option.WithApiKey("YOUR_API_KEY"),
             )
-        
+
             response, err := client.Admin.Streaks.Restore(context.TODO(), nil)
       requestBody:
         description: Array of users to restore streaks for
@@ -4390,16 +4390,16 @@ paths:
           source: |
             import (
               "context"
-        
+
               api "github.com/trophyso/trophy-go"
               trophyclient "github.com/trophyso/trophy-go/client"
               "github.com/trophyso/trophy-go/option"
             )
-        
+
             client := trophyclient.NewClient(
               option.WithApiKey("YOUR_API_KEY"),
             )
-        
+
             response, err := client.Admin.Tenants.List(context.TODO(), nil)
       parameters:
         - name: limit
@@ -4499,16 +4499,16 @@ paths:
           source: |
             import (
               "context"
-        
+
               api "github.com/trophyso/trophy-go"
               trophyclient "github.com/trophyso/trophy-go/client"
               "github.com/trophyso/trophy-go/option"
             )
-        
+
             client := trophyclient.NewClient(
               option.WithApiKey("YOUR_API_KEY"),
             )
-        
+
             response, err := client.Admin.Tenants.Create(context.TODO(), api.CreateTenantsRequest{})
       requestBody:
         description: Array of tenants to create. Maximum 100 tenants per request.
@@ -4612,16 +4612,16 @@ paths:
           source: |
             import (
               "context"
-        
+
               api "github.com/trophyso/trophy-go"
               trophyclient "github.com/trophyso/trophy-go/client"
               "github.com/trophyso/trophy-go/option"
             )
-        
+
             client := trophyclient.NewClient(
               option.WithApiKey("YOUR_API_KEY"),
             )
-        
+
             response, err := client.Admin.Tenants.Update(context.TODO(), api.UpdateTenantsRequest{})
       requestBody:
         description: Array of tenants to update. Each item must include an ID and at least one of customerId or name.
@@ -4709,16 +4709,16 @@ paths:
           source: |
             import (
               "context"
-        
+
               api "github.com/trophyso/trophy-go"
               trophyclient "github.com/trophyso/trophy-go/client"
               "github.com/trophyso/trophy-go/option"
             )
-        
+
             client := trophyclient.NewClient(
               option.WithApiKey("YOUR_API_KEY"),
             )
-        
+
             response, err := client.Admin.Tenants.Delete(context.TODO(), nil)
       parameters:
         - name: ids
@@ -4806,16 +4806,16 @@ paths:
           source: |
             import (
               "context"
-        
+
               api "github.com/trophyso/trophy-go"
               trophyclient "github.com/trophyso/trophy-go/client"
               "github.com/trophyso/trophy-go/option"
             )
-        
+
             client := trophyclient.NewClient(
               option.WithApiKey("YOUR_API_KEY"),
             )
-        
+
             response, err := client.Admin.Tenants.Get(context.TODO(), "550e8400-e29b-41d4-a716-446655440000")
       parameters:
         - name: id
