@@ -44,7 +44,7 @@ The value of an event can be positive or negative, and can be a whole number or 
 
 You can specify a number of custom event attributes to help you track additional information relevant to your use case against events you send to Trophy.
 
-For example, a language learning app might have a 'Questions Completed' metric and use a custom event attribute to store wether the answer to each question was correct.
+For example, a language learning app might have a 'Questions Completed' metric and use a custom event attribute to store whether the answer to each question was correct.
 
 Similarly a fitness app might use an 'Exercises Completed' metric and use a custom event attribute to store the weight that was used in each exercise and another custom event attribute to store how long the exercise lasted.
 
@@ -169,7 +169,7 @@ Each metric has a unique `key` which you can use to reference and track events a
 
 To start tracking user interactions as events against your Trophy metrics, use the [Metrics API](/api-reference/endpoints/metrics/send-a-metric-change-event) or one of our type-safe [Client SDKs](/api-reference/client-libraries) supported in most major programming languages.
 
-Here's an example where a fictional study platform is using a metric to track the number of flashcards flipped by each student. Each time an student interacts, the platform sends an event to Trophy telling it how many flashcards they viewed:
+Here's an example where a fictional study platform is using a metric to track the number of flashcards flipped by each student. Each time a student interacts, the platform sends an event to Trophy telling it how many flashcards they viewed:
 
 <MetricChangeRequestBlock />
 

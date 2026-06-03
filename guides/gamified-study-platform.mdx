@@ -966,7 +966,7 @@ Next, we'll add some UI to show off our gamification features in practice.
 
 ### Adding Gamification UX {#adding-gamification-ux}
 
-The response to the API call that we make to track events in Trophy helpfully gives us back any changes to the users progress as a result of that event:
+The response to the API call that we make to track events in Trophy helpfully gives us back any changes to the user's progress as a result of that event:
 
 <MetricChangeResponseBlock />
 
@@ -975,7 +975,7 @@ This includes:
 - The `achievements` array which is a list of newly unlocked achievements as a result of the event.
 - The `currentStreak` object which is the users most up to date streak data after the event has taken place.
 
-This makes it really easy for us to react to changes in the users progress and do whatever we want. In this example, each time Trophy tells us a user has unlocked a new achievement, or extended their streak we'll:
+This makes it really easy for us to react to changes in the user's progress and do whatever we want. In this example, each time Trophy tells us a user has unlocked a new achievement, or extended their streak we'll:
 
 - Show a pop-up toast
 - Play a sound effect
@@ -1416,7 +1416,7 @@ export default function Flashcards({ flashcards }: Props) {
 
 The last piece of UI we'll add will be a dialog to display the user's study progress, including their streak and any achievements they've unlocked so far.
 
-First, we'll add a couple of new server actions to fetch the users streak and achievements from Trophy. As we're using a daily streak here, we'll fetch the last 14 days of streak data from Trophy to give us enough to work with in our UI:
+First, we'll add a couple of new server actions to fetch the user's streak and achievements from Trophy. As we're using a daily streak here, we'll fetch the last 14 days of streak data from Trophy to give us enough to work with in our UI:
 
 ```tsx src/app/actions.ts [expandable] {6-7,10-11,24,33,45-58,60-73}
 "use server";
