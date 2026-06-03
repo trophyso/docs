@@ -167,8 +167,7 @@
               {
                 "group": "Streaks",
                 "pages": [
-                  "api-reference/endpoints/streaks/get-streaks",
-                  "api-reference/endpoints/streaks/get-streak-rankings"
+                  "api-reference/endpoints/streaks/get-streaks"
                 ]
               },
               {
@@ -498,8 +497,7 @@
               {
                 "group": "Rachas",
                 "pages": [
-                  "es/api-reference/endpoints/streaks/get-streaks",
-                  "es/api-reference/endpoints/streaks/get-streak-rankings"
+                  "es/api-reference/endpoints/streaks/get-streaks"
                 ]
               },
               {
