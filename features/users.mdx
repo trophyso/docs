@@ -10,6 +10,7 @@ import MetricChangeRequestBlock from "../snippets/metric-change-request-block.md
 import IdentifyUserRequestBlock from "../snippets/identify-user-request-block.mdx";
 import UpdateUserNotificationPreferencesBlock from "../snippets/update-user-notification-preferences-block.mdx";
 import GetUserNotificationPreferencesBlock from "../snippets/get-user-notification-preferences-block.mdx";
+import UserStreakPreferencesResponseBlock from "../snippets/user-streak-preferences-response-block.mdx";
 
 ## What are Users? {#what-are-users}
 
@@ -365,6 +366,24 @@ You can use this response to:
 - **Handle missing preferences**: If a notification type is not present in the response, it means the user hasn't set preferences for it yet, and you can default to your application's default settings
 
 Once you've fetched and displayed the preferences, users can make changes in your UI, and you can use the [update preferences API](/api-reference/endpoints/users/update-user-preferences) to save their selections back to Trophy.
+
+### Streak Preferences {#streak-preferences}
+
+Trophy supports user preferences for streaks, allowing users to customize the conditions they must meet to extend their streak.
+
+<Note>
+In order to use streak preferences, you must have [streak personalization](/features/streaks#streak-personalization) enabled.
+</Note>
+
+Once streak personalization is enabled, the [update preferences API](/api-reference/endpoints/users/update-user-preferences) will allow you to override default streak settings for a specific user.
+
+The following streak settings can be overridden by user preferences:
+- `evaluationMode`: Determines how metrics combine to extend the streak. Can be `ALL` or `OR`.
+- `metrics`: An array of metrics with custom thresholds required to extend the streak.
+
+<UserStreakPreferencesResponseBlock />
+
+Once streak preferences are set, the [get preferences API](/api-reference/endpoints/users/get-user-preferences) will return the user's personalized streak settings.
 
 ## Retrieving User Information {#retrieving-user-information}
 

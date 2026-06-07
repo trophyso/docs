@@ -704,7 +704,8 @@
             "label": "Comenzar gratis",
             "href": "https://app.trophy.so/sign-up?utm_source=docs&utm_medium=navbar-links"
           }
-        }
+        },
+        "anchors": []
       }
     ]
   },
