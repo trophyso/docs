@@ -1,7 +1,7 @@
 openapi: 3.1.0
 info:
   title: Trophy
-  version: '1.12.0'
+  version: '1.13.0'
 paths:
   /achievements:
     servers:
@@ -1026,7 +1026,10 @@ paths:
       security:
         - ApiKeyAuth: []
     patch:
-      description: Update a user's notification preferences.
+      description: >-
+        Update a user's notification and streak preferences. Streak preferences
+        require streak customization to be enabled in your Trophy dashboard
+        settings.
       operationId: users_update_preferences
       x-fern-server-name: api
       tags:
@@ -1106,8 +1109,20 @@ paths:
                         - email
                         - push
                       streak_reminder: []
+                    streak:
+                      evaluationMode: OR
+                      metrics:
+                        - key: words-written
+                          threshold: 500
         '401':
           description: 'Unauthorized'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorBody'
+        '403':
+          description: >-
+            Streak customization is not enabled for this organisation
           content:
             application/json:
               schema:
@@ -1149,6 +1164,13 @@ paths:
                     achievement_completed:
                       - email
                       - push
+              Personalize streak settings:
+                value:
+                  streak:
+                    evaluationMode: OR
+                    metrics:
+                      - key: words-written
+                        threshold: 500
   /users/{id}/metrics:
     servers:
       - url: https://api.trophy.so/v1
@@ -5390,6 +5412,46 @@ components:
           items:
             $ref: '#/components/schemas/NotificationChannel'
           description: Channels to receive streak reminder notifications on.
+    StreakEvaluationModePreference:
+      title: StreakEvaluationModePreference
+      type: string
+      enum:
+        - OR
+        - AND
+      description: >-
+        Whether meeting any single metric threshold (`OR`) or all configured
+        metric thresholds (`AND`) extends the user's streak. Matches the
+        evaluation mode configured in dashboard streak settings.
+    StreakMetricPreference:
+      title: StreakMetricPreference
+      type: object
+      description: Per-metric streak threshold override for a user.
+      properties:
+        key:
+          type: string
+          description: The metric key.
+          example: words-written
+        threshold:
+          type: number
+          description: Minimum metric change in a streak period to count toward the streak.
+          example: 500
+      required:
+        - key
+        - threshold
+    StreakPreferences:
+      title: StreakPreferences
+      type: object
+      description: >-
+        Per-user streak configuration. Requires streak customization to be
+        enabled in dashboard settings.
+      properties:
+        evaluationMode:
+          $ref: '#/components/schemas/StreakEvaluationModePreference'
+        metrics:
+          type: array
+          items:
+            $ref: '#/components/schemas/StreakMetricPreference'
+          description: Metrics and thresholds that count toward this user's streak.
     UserPreferencesResponse:
       title: UserPreferencesResponse
       type: object
@@ -5397,6 +5459,8 @@ components:
       properties:
         notifications:
           $ref: '#/components/schemas/NotificationPreferences'
+        streak:
+          $ref: '#/components/schemas/StreakPreferences'
       required:
         - notifications
     UpdateUserPreferencesRequest:
@@ -5406,6 +5470,8 @@ components:
       properties:
         notifications:
           $ref: '#/components/schemas/NotificationPreferences'
+        streak:
+          $ref: '#/components/schemas/StreakPreferences'
     ErrorBody:
       title: ErrorBody
       type: object
