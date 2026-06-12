@@ -1,7 +1,7 @@
 openapi: 3.1.0
 info:
   title: Trophy
-  version: '1.13.0'
+  version: '1.14.0'
 paths:
   /achievements:
     servers:
@@ -5442,9 +5442,16 @@ components:
       title: StreakPreferences
       type: object
       description: >-
-        Per-user streak configuration. Requires streak customization to be
-        enabled in dashboard settings.
+        Per-user streak configuration. Metric and evaluation mode overrides
+        require streak customization to be enabled in dashboard settings.
       properties:
+        enabled:
+          type: boolean
+          description: >-
+            Whether streaks are calculated for this user. When false, the
+            user's streak is always 0 and streak webhooks and notifications
+            are not sent.
+          default: true
         evaluationMode:
           $ref: '#/components/schemas/StreakEvaluationModePreference'
         metrics:
