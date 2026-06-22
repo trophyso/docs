@@ -1,0 +1,49 @@
+---
+title: Sincronización de datos
+description: Aprende a sincronizar datos de Trophy con tu almacén de datos o
+  base de datos para análisis y reportes.
+og:description: Aprende a sincronizar datos de Trophy con tu almacén de datos o
+  base de datos para análisis y reportes.
+icon: database
+---
+
+<Note>
+La sincronización de datos solo está disponible bajo solicitud. Por favor [contáctanos](mailto:support@trophy.so) para discutir tus necesidades.
+</Note>
+
+## ¿Qué es la sincronización de datos? {#what-is-data-sync}
+
+La sincronización de datos te permite conectar Trophy a tu almacén de datos o base de datos y configurar una sincronización continua de datos de Trophy para fines de análisis y reportes. Esto permite a los equipos construir consultas personalizadas combinando datos internos con datos de Trophy.
+
+## Destinos compatibles {#supported-destinations}
+
+Actualmente Trophy soporta la sincronización de datos en bases de datos Postgres.
+
+<Tip>
+  Estamos trabajando en añadir soporte para más destinos en el futuro. Por favor [contáctanos](mailto:support@trophy.so) para discutir tus necesidades.
+</Tip>
+
+## Conectar tu destino {#connecting-your-destination}
+
+Por favor [contacta al equipo de soporte](mailto:support@trophy.so) para conectar tu destino. Comprenderemos los detalles de tu configuración, te ayudaremos a crear las tablas necesarias y estableceremos una conexión segura.
+
+Una vez conectado, Trophy recuperará los datos históricos y luego continuará sincronizando datos una vez por hora.
+
+## Tablas compatibles {#supported-tables}
+
+Trophy soporta la sincronización de datos en las siguientes tablas:
+
+| Nombre                      | Nombre de tabla de destino           | Descripción                                                      |
+| --------------------------- | ------------------------------------ | ---------------------------------------------------------------- |
+| Totales de métricas         | `trophy_metric_totals`           | Valor total de todos los eventos de métricas por día para cada usuario. |
+| Totales de puntos           | `trophy_points_totals`           | Valor total de todos los Puntos otorgados por día para cada usuario.   |
+| Periodos de rachas          | `trophy_streak_periods`          | Historial de Rachas para cada usuario.                           |
+| Congelaciones de rachas     | `trophy_streak_freezes`          | Congelaciones de Rachas para cada usuario.                       |
+| Posiciones en clasificación | `trophy_leaderboard_rankings`    | Posiciones en la Clasificación por ejecución.                    |
+| Logros completados          | `trophy_achievement_completions` | Logros completados para todos los usuarios.                     |
+
+Los datos nuevos y actualizados se sincronizan con las tablas correspondientes una vez por hora.
+
+## Obtener Soporte {#get-support}
+
+¿Quieres ponerte en contacto con el equipo de Trophy? Contáctanos por [correo electrónico](mailto:support@trophy.so). ¡Estamos aquí para ayudarte!
