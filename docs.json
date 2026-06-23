@@ -105,7 +105,8 @@
                   "platform/overview",
                   "platform/environments",
                   "platform/multi-tenancy",
-                  "platform/experimentation"
+                  "platform/experimentation",
+                  "platform/data-sync"
                 ]
               },
               {
@@ -435,7 +436,8 @@
                   "es/platform/overview",
                   "es/platform/environments",
                   "es/platform/multi-tenancy",
-                  "es/platform/experimentation"
+                  "es/platform/experimentation",
+                  "es/platform/data-sync"
                 ]
               },
               {
