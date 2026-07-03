@@ -1,7 +1,11 @@
 openapi: 3.1.0
 info:
   title: Trophy
-  version: '1.14.0'
+  version: '1.15.0'
+x-fern-global-headers:
+  - header: X-SDK-VERSION
+    name: sdkVersion
+    x-fern-default: '1.15.0'
 paths:
   /achievements:
     servers:
@@ -4384,7 +4388,7 @@ components:
         - weekly
         - monthly
     BaseStreakResponse:
-      title: Streak Response
+      title: Base Streak Response
       type: object
       properties:
         length:
