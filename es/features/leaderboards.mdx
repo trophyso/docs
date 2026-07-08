@@ -2,9 +2,9 @@
 title: Clasificaciones
 description: Aprende a usar Clasificaciones en una experiencia de producto
   gamificada con Trophy.
-og:description: Crea competiciones diarias, semanales o mensuales que clasifican
-  a los usuarios según métricas, puntos o rachas y aumenta el engagement de
-  usuarios.
+og:description: Crea competencias diarias, semanales o mensuales que clasifican
+  a los usuarios según métricas, puntos o rachas y aumenta la participación de
+  los usuarios.
 icon: /icons/leaderboard.svg
 ---
 
@@ -13,7 +13,7 @@ import LeaderboardMultiAttributeRequest from "../../snippets/leaderboard-ranking
 
 ## ¿Qué son las Clasificaciones? {#what-are-leaderboards}
 
-Las Clasificaciones son competiciones sociales entre usuarios de tu aplicación. Usa clasificaciones para aumentar el engagement y fomentar la interacción social.
+Las Clasificaciones son competencias sociales entre usuarios de tu aplicación. Usa clasificaciones para aumentar la participación y fomentar la interacción social.
 
 <Frame>
   <img
@@ -26,87 +26,87 @@ Las Clasificaciones son competiciones sociales entre usuarios de tu aplicación.
 
 ## Tipos de Clasificaciones {#types-of-leaderboards}
 
-En esta sección describimos los diferentes tipos de clasificaciones compatibles en Trophy y cuándo usar cada una.
+En esta sección describimos los diferentes tipos de clasificaciones compatibles con Trophy y cuándo usar cada una.
 
 ### Clasificaciones Perpetuas {#perpetual-leaderboards}
 
-Las clasificaciones perpetuas nunca se reinician. Una vez iniciadas, rastrean y clasifican continuamente el progreso de los usuarios a lo largo del tiempo para siempre, o hasta la [fecha de finalización](#end-dates) configurada.
+Las clasificaciones perpetuas nunca se reinician. Una vez iniciadas, rastrean y clasifican continuamente el progreso de los usuarios a lo largo del tiempo de forma permanente, o hasta la [fecha de finalización](#end-dates) configurada.
 
-Usa clasificaciones perpetuas cuando quieras crear rankings históricos de toda la actividad de los usuarios.
+Usa clasificaciones perpetuas cuando quieras crear clasificaciones históricas de la actividad de los usuarios.
 
-### Clasificaciones Repetitivas {#repeating-leaderboards}
+### Clasificaciones Recurrentes {#repeating-leaderboards}
 
-Las clasificaciones repetitivas se pueden configurar para reiniciarse después de cualquier número arbitrario de días, meses o años.
+Las clasificaciones recurrentes se pueden configurar para reiniciarse después de cualquier número arbitrario de días, meses o años.
 
-En Trophy, cada instancia de una clasificación repetitiva se denomina **'run'**. Por ejemplo, una clasificación mensual tendría 12 runs en un año, pero una clasificación diaria tendría `n` runs en un mes donde `n` es el número de días en un mes determinado.
+En Trophy, cada instancia de una clasificación recurrente se llama **'ejecución'**. Por ejemplo, una clasificación mensual tendría 12 ejecuciones en un año, pero una clasificación diaria tendría `n` ejecuciones en un mes donde `n` es el número de días en un mes determinado.
 
-Trophy rastrea los rankings en cada run de una clasificación repetitiva individualmente y proporciona [APIs](/es/api-reference/endpoints/leaderboards/get-leaderboard) para obtener datos de ranking de runs históricos.
+Trophy rastrea las clasificaciones en cada ejecución de una clasificación recurrente de forma individual y proporciona [APIs](/es/api-reference/endpoints/leaderboards/get-leaderboard) para obtener datos de clasificación de ejecuciones históricas.
 
 <Tip>
-  Recomendamos usar clasificaciones repetitivas en lugar de perpetuas cuando sea posible, ya que las clasificaciones repetitivas dan a los nuevos usuarios las mismas oportunidades de competir con los usuarios existentes, ayudando a evitar que las clasificaciones se vuelvan obsoletas.
+  Recomendamos usar clasificaciones recurrentes en lugar de perpetuas siempre que sea posible, ya que las clasificaciones recurrentes dan a los nuevos usuarios la misma oportunidad de competir con los usuarios existentes, lo que ayuda a evitar que las clasificaciones se vuelvan obsoletas.
 </Tip>
 
-#### Manejo de Zonas Horarias {#handling-time-zones}
+#### Manejo de zonas horarias {#handling-time-zones}
 
-Si has registrado las [zonas horarias](/es/features/users#param-tz) de los usuarios con Trophy, estas se utilizarán para garantizar que cada usuario tenga las mismas oportunidades de ganar sin importar en qué parte del mundo se encuentre.
+Si has rastreado las [zonas horarias](/es/features/users#param-tz) de tus usuarios con Trophy, estas se utilizarán para garantizar que cada usuario tenga las mismas oportunidades de ganar sin importar dónde se encuentre en el mundo.
 
-En la práctica, esto significa que las clasificaciones se finalizan y los ganadores se eligen aproximadamente 12 horas después de que naturalmente terminan en UTC, lo que permite a los usuarios de todas las zonas horarias hacer su último esfuerzo.
+En la práctica, esto significa que las clasificaciones se finalizan y los ganadores se eligen aproximadamente 12 horas después de que terminen naturalmente en UTC para permitir que los usuarios de todas las zonas horarias hagan su último esfuerzo.
 
-#### Consejos para Clasificaciones Semanales {#tips-for-weekly-leaderboards}
+#### Consejos para clasificaciones semanales {#tips-for-weekly-leaderboards}
 
-Para crear una clasificación semanal, configura una [clasificación recurrente](#repeating-leaderboards) con un programa de 7 días y establece la fecha de inicio en el próximo primer día de la semana.
+Para crear una clasificación semanal, configura una [clasificación recurrente](#repeating-leaderboards) con un cronograma de 7 días y establece la fecha de inicio en el próximo primer día de la semana.
 
 Mientras esperas a que llegue la fecha de inicio, la clasificación estará en estado `scheduled` y se activará automáticamente en la fecha de inicio.
 
-## Lógica de Clasificación {#ranking-logic}
+## Lógica de clasificación {#ranking-logic}
 
-Las clasificaciones en Trophy son configurables para clasificar a los participantes de varias formas diferentes y así soportar casos de uso comunes.
+Las clasificaciones en Trophy son configurables para ordenar a los participantes de diferentes maneras y así admitir casos de uso comunes.
 
-### Métodos de Clasificación {#ranking-methods}
+### Métodos de clasificación {#ranking-methods}
 
 El método de clasificación de una clasificación determina en qué dimensión se ordenarán los participantes.
 
 <Frame>
   <img
     height="200"
-    width="50%"
+    width="75%"
     noZoom
     src="../../assets/features/leaderboards/ranking_methods.png"
   />
 </Frame>
 
-#### Clasificaciones por Métricas {#metric-rankings}
+#### Clasificaciones por métrica {#metric-rankings}
 
-Las clasificaciones de métricas están vinculadas a una [Métrica](/es/features/metrics) existente de Trophy y clasifican a los usuarios según su valor métrico total.
+Las clasificaciones por métrica están vinculadas a una [Métrica](/es/features/metrics) existente de Trophy y ordenan a los usuarios según su valor métrico total.
 
-Usa clasificaciones de métricas si solo deseas clasificar a los usuarios según una única interacción.
+Utiliza clasificaciones por métrica si solo deseas ordenar a los usuarios según una única interacción.
 
-#### Clasificaciones por Puntos {#points-rankings}
+#### Clasificaciones por puntos {#points-rankings}
 
-Las clasificaciones de puntos están vinculadas a un [Sistema de Puntos](/es/features/points) existente de Trophy y clasifican automáticamente a los usuarios según sus puntos totales.
+Las clasificaciones por puntos están vinculadas a un [Sistema de Puntos](/es/features/points) existente de Trophy y ordenan automáticamente a los usuarios según sus puntos totales.
 
-Usa una clasificación de puntos si deseas clasificar a los usuarios según una combinación de métricas, logros u otras funciones de Trophy.
+Utiliza una clasificación por puntos si deseas ordenar a los usuarios según una combinación de métricas, logros u otras funciones de Trophy.
 
-#### Clasificación de Rachas {#streak-rankings}
+#### Clasificaciones de Racha {#streak-rankings}
 
-Las clasificaciones de rachas ordenan a los usuarios según la longitud de su racha actual.
+Las clasificaciones de racha ordenan a los usuarios según la duración de su racha actual.
 
 <Note>
-  Las clasificaciones de rachas solo pueden ser [perpetuas](#perpetual-leaderboards).
+  Las clasificaciones de racha solo pueden ser [perpetuas](#perpetual-leaderboards).
 </Note>
 
-### Desglose de Clasificaciones {#ranking-breakdowns}
+### Desgloses de Clasificación {#ranking-breakdowns}
 
-Si tienes una base de usuarios grande, es una buena práctica dividir a los participantes de la clasificación en grupos más pequeños y socialmente conectados. Esto suele generar mayor engagement que cuando se usan clasificaciones globales.
+Si tienes una base de usuarios grande, es una buena práctica dividir a los participantes de la clasificación en grupos más pequeños y socialmente conectados. Esto a menudo genera mayor participación que cuando se usan clasificaciones globales.
 
-Las clasificaciones en Trophy pueden configurarse para agrupar usuarios en grupos más pequeños según uno o más [atributos personalizados de usuario](/es/features/users#custom-user-attributes).
+Las clasificaciones en Trophy se pueden configurar para agrupar usuarios en grupos más pequeños según uno o más [atributos de usuario personalizados](/es/features/users#custom-user-attributes).
 
 <Tip>
-  Al usar desgloses de clasificación, los [límites de participantes](#participant-limits)
-  se aplican a nivel de grupo, no en general.
+  Cuando se usan desgloses de clasificación, los [límites de participantes](#participant-limits)
+  se aplican a nivel de grupo, no globalmente.
 </Tip>
 
-Para configurar un desglose de clasificación, ve a la página de configuración de la clasificación y crea o selecciona uno o más atributos de usuario en el campo 'Atributos de Desglose'.
+Para configurar un desglose de clasificación, dirígete a la página de configuración de la clasificación y crea o selecciona uno o más atributos de usuario en el campo 'Atributos de Desglose'.
 
 Trophy comenzará automáticamente a agrupar usuarios en clasificaciones más pequeñas según los valores de los atributos elegidos para cada usuario.
 
@@ -121,11 +121,11 @@ Trophy comenzará automáticamente a agrupar usuarios en clasificaciones más pe
   ></video>
 </Frame>
 
-Para obtener las clasificaciones de un grupo específico de usuarios con un valor de atributo determinado, usa la [API de clasificaciones](/es/api-reference/endpoints/leaderboards/get-leaderboard), especificando un filtro de atributo en el parámetro `userAttributes` de la siguiente manera:
+Para obtener las clasificaciones de un grupo particular de usuarios con un valor de atributo específico, usa la [API de clasificaciones](/es/api-reference/endpoints/leaderboards/get-leaderboard), especificando un filtro de atributo en el parámetro `userAttributes` de la siguiente manera:
 
 <LeaderboardSingleAttributeRequest />
 
-Para obtener las clasificaciones de un grupo específico de usuarios con una combinación particular de atributos de usuario, pasa múltiples filtros `key:value` delimitados por comas en `userAttributes` de la siguiente manera:
+Para obtener las clasificaciones de un grupo particular de usuarios con una combinación específica de atributos de usuario, pasa múltiples filtros `key:value` delimitados por comas en `userAttributes` de la siguiente manera:
 
 <LeaderboardMultiAttributeRequest />
 
@@ -136,12 +136,12 @@ Para obtener las clasificaciones de un grupo específico de usuarios con una com
 
 ## Fechas de Inicio y Fin {#start-end-dates}
 
-Usa fechas de inicio y fin para controlar la ventana durante la cual las clasificaciones están clasificando activamente a los usuarios.
+Usa fechas de inicio y fin para controlar la ventana dentro de la cual las clasificaciones están clasificando activamente a los usuarios.
 
 <Frame>
   <img
     height="200"
-    width="50%"
+    width="75%"
     noZoom
     src="../../assets/features/leaderboards/start_end_dates.png"
   />
@@ -149,26 +149,59 @@ Usa fechas de inicio y fin para controlar la ventana durante la cual las clasifi
 
 ### Fechas de inicio {#start-dates}
 
-Las clasificaciones en Trophy se pueden configurar para que comiencen en una fecha futura de tu elección. Esto suele ser útil para permitir tiempo para cambios o ajustes de último momento antes de que las clasificaciones empiecen a rankear usuarios.
+Las clasificaciones en Trophy se pueden configurar para que inicien en una fecha futura de su elección. Esto suele ser útil para permitir tiempo para cambios o ajustes de último momento antes de que las clasificaciones empiecen a clasificar a los usuarios.
 
-Las clasificaciones con una fecha de inicio en el futuro están programadas y se activan automáticamente en la fecha de inicio que elijas.
+Las clasificaciones con una fecha de inicio en el futuro se programan y se activan automáticamente en la fecha de inicio que usted elija.
 
 ### Fechas de finalización {#end-dates}
 
-Las clasificaciones en Trophy pueden tener fechas de finalización. Si estableces una fecha de finalización en una clasificación, después de esa fecha entrará en estado `finished` y los rankings se finalizarán y se elegirán los ganadores.
+Las clasificaciones en Trophy pueden tener fechas de finalización. Si establece una fecha de finalización en una clasificación, después de esa fecha entrará en estado `finished` y las clasificaciones se finalizarán y se elegirán los ganadores.
 
 <Note>
   Debido a las diferencias en [zonas horarias](#handling-time-zones), las clasificaciones pueden finalizarse hasta 12 horas después de la fecha de finalización en UTC para permitir que todos los usuarios alcancen la fecha de finalización según su reloj local.
 </Note>
 
-## Límites de participantes {#participant-limits}
+## Restricciones de tiempo {#time-restrictions}
 
-Las clasificaciones en Trophy tienen un número máximo de participantes de **1.000**. Sin embargo, una clasificación se puede configurar para tener cualquier número arbitrario de participantes para soportar casos de uso como _Top 100_ o similares.
+Además de las [fechas de inicio y finalización](#start-end-dates), las clasificaciones se pueden configurar para tener restricciones de tiempo.
+
+Cuando las restricciones de tiempo están habilitadas, las clasificaciones solo se actualizarán durante el período de tiempo configurado.
+
+Las restricciones de tiempo son útiles al crear clasificaciones para eventos o promociones de tiempo limitado que se ejecutan durante un período de tiempo específico.
+
+Las restricciones de tiempo funcionan en todas las clasificaciones, incluidas las [clasificaciones recurrentes](#repeating-leaderboards). Cuando una clasificación recurrente tiene una restricción de tiempo, la restricción de tiempo se aplicará a cada ejecución de la clasificación.
+
+### Configurar restricciones de tiempo {#setting-time-restrictions}
+
+Para establecer restricciones de tiempo en una clasificación, diríjase a la página de configuración de la clasificación y active el interruptor etiquetado 'Restringir a ventana de tiempo'. Esto le dará dos campos, una hora de inicio y una hora de finalización.
+
+- Configurar solo una hora de inicio significa que las clasificaciones de la tabla de clasificación solo comenzarán a actualizarse después de la hora de inicio en cada día en que la clasificación esté activa.
+- De manera similar, configurar solo una hora de finalización significa que las clasificaciones de la tabla de clasificación dejarán de actualizarse después de la hora de finalización en cada día en que la clasificación esté activa.
+- Configurar tanto una hora de inicio como de finalización significa que las clasificaciones de la tabla de clasificación solo se actualizarán durante el período de tiempo configurado.
 
 <Frame>
   <img
     height="200"
-    width="50%"
+    width="100%"
+    noZoom
+    src="../../assets/features/leaderboards/time_restrictions.png"
+  />
+</Frame>
+
+### Consideraciones de Zona Horaria {#time-zone-considerations}
+
+Las restricciones de tiempo en las clasificaciones se aplican en **hora local** para cada participante según su [zona horaria](/es/features/users#param-tz) configurada.
+
+Esto significa que cada usuario puede participar en la clasificación en cualquier momento durante la restricción de tiempo configurada según su reloj local.
+
+## Límites de Participantes {#participant-limits}
+
+Las clasificaciones en Trophy tienen un número máximo predeterminado de participantes de **1,000**. Sin embargo, una clasificación puede configurarse para tener cualquier número arbitrario de participantes para admitir casos de uso como _Top 100_ o similares.
+
+<Frame>
+  <img
+    height="200"
+    width="100%"
     noZoom
     src="../../assets/features/leaderboards/max_participants.png"
   />
@@ -176,18 +209,13 @@ Las clasificaciones en Trophy tienen un número máximo de participantes de **1.
 
 Si una clasificación ya tiene un número de participantes que coincide con su máximo configurado, los nuevos usuarios tendrán que superar la puntuación del rango más bajo para unirse a la clasificación.
 
+La única excepción a esto es cuando se utilizan [atributos de desglose](#ranking-breakdowns) para agrupar a los participantes en cohortes más pequeñas. Al usar atributos de desglose, el límite de participantes se aplica a cada grupo, no de manera general.
+
 <Tip>
-Elegimos limitar el tamaño de las clasificaciones para ayudar a guiar a los clientes sobre las mejores prácticas.
-
-Tradicionalmente, las clasificaciones con muchos participantes no logran involucrar a los usuarios más allá del 1% superior, y tienen un impacto **negativo** en los usuarios de la mitad inferior, particularmente en los usuarios nuevos. Para evitar esto, mantén tus clasificaciones pequeñas dividiéndolas en clasificaciones más pequeñas usando [atributos de desglose](#ranking-breakdowns).
-
-Para obtener más información sobre los efectos negativos en las clasificaciones globales, lee esta [publicación del blog](https://www.trophy.so/blog/leaderboard-only-motivating-top-one-percent).
-
+Si necesitas un límite de participantes mayor, considera usar [atributos de desglose](#ranking-breakdowns) para agrupar a los participantes en cohortes más pequeñas. O contáctanos en [support@trophy.so](mailto:support@trophy.so) y estaremos encantados de aumentar tus valores predeterminados.
 </Tip>
 
-La única excepción a esto es cuando se utilizan [atributos de desglose](#ranking-breakdowns) para agrupar a los participantes en cohortes más pequeñas. Al usar atributos de desglose, el límite de participantes se aplica a cada grupo, no de forma general.
-
-## Crear Clasificaciones {#creating-leaderboards}
+## Creación de Clasificaciones {#creating-leaderboards}
 
 Para crear una clasificación, dirígete a la [página de clasificaciones](https://app.trophy.so/leaderboards) en el panel de Trophy y haz clic en el botón _Nueva Clasificación_.
 
@@ -208,50 +236,50 @@ Para crear una clasificación, dirígete a la [página de clasificaciones](https
   </Step>
   
   <Step title="Ingresa una clave única">
-    Ingresa una clave de referencia única para la clasificación. Esto es lo que usarás para hacer referencia a la clasificación en el código de tu aplicación.
+    Ingresa una clave de referencia única para la clasificación. Esto es lo que usarás para referenciar la clasificación en el código de tu aplicación.
   </Step>
 
    <Step title="Elige un método de clasificación">
-    Elige uno de los [métodos](#ranking-methods) por el cual la clasificación clasificará a los usuarios:
+    Elige uno de los [métodos](#ranking-methods) por el cual la clasificación ordenará a los usuarios:
 
-    - **Métrica**: Clasifica a los usuarios por el valor total de una métrica elegida
-    - **Puntos**: Clasifica a los usuarios por los puntos totales en un sistema de puntos elegido
-    - **Racha**: Clasifica a los usuarios por la longitud de la racha actual
+    - **Métrica**: Ordena a los usuarios por el valor total de una métrica elegida
+    - **Puntos**: Ordena a los usuarios por los puntos totales en un sistema de puntos elegido
+    - **Racha**: Ordena a los usuarios por la longitud de la racha actual
 
   </Step>
 
-    <Step title="Establece participantes máximos">
-    Elige el número máximo de participantes que la clasificación debe admitir. El
-    límite superior actual admitido por Trophy es 1,000. Lee [esta
-    sección](#participant-limits) para obtener más información sobre cómo elegimos este límite.
+    <Step title="Establece el máximo de participantes">
+    Elige el número máximo de participantes que la clasificación debe soportar. El
+    límite superior actual soportado por Trophy es de 1,000. Lee [esta
+    sección](#participant-limits) para saber más sobre cómo elegimos este límite.
     </Step>
 
-    <Step title="Haz clic en guardar">
-    Haz clic en guardar y dirígete a la página de configuración para establecer [fechas de inicio y finalización](#start-end-dates), [cronogramas de clasificaciones recurrentes](#repeating-leaderboards) y más.
+    <Step title="Guarda los cambios">
+    Guarda los cambios y dirígete a la página de configuración para establecer [fechas de inicio y fin](#start-end-dates), [programaciones de clasificaciones recurrentes](#repeating-leaderboards) y más.
     </Step>
 
 </Steps>
 
-## Administrar Clasificaciones {#managing-leaderboards}
+## Gestión de Clasificaciones {#managing-leaderboards}
 
-Las Clasificaciones en Trophy tienen varios estados para ayudarte a controlar cuándo y cómo los usuarios pueden unirse a ellas.
+Las clasificaciones en Trophy tienen varios estados que te ayudan a controlar cuándo y cómo los usuarios pueden unirse a ellas.
 
 ### Estados de Clasificación {#leaderboard-statuses}
 
-Las Clasificaciones pueden tener uno de los siguientes estados:
+Las clasificaciones pueden tener uno de los siguientes estados:
 
 - `Inactive`
 - `Scheduled`
 - `Active`
 - `Finished`
 
-Todas las clasificaciones nuevas se crean como `Inactive`. Mientras están inactivas, se puede cambiar cualquier propiedad o configuración de la clasificación, no serán visibles para los usuarios y los usuarios no podrán unirse a ellas.
+Todas las nuevas clasificaciones se crean como `Inactive`. Mientras están inactivas, cualquier propiedad o configuración de la clasificación puede modificarse, no serán visibles para los usuarios y los usuarios no podrán unirse a ellas.
 
-Una vez que estés listo para que los usuarios empiecen a participar, puedes hacerla `Active`. Esto significa que Trophy comenzará a rastrear la actividad de los usuarios e ingresarlos en las clasificaciones.
+Una vez que estés listo para que los usuarios comiencen a participar, puedes hacerlo `Active`. Esto significa que Trophy empezará a rastrear la actividad de los usuarios e ingresarlos en las clasificaciones.
 
-Las clasificaciones que se han configurado con una [fecha de inicio](#start-dates) en el futuro no pueden activarse, solo pueden estar `Scheduled`. Una vez que la fecha de inicio haya pasado, Trophy las hará `Active` automáticamente y comenzará a aceptar participantes.
+Las clasificaciones que se hayan configurado con una [fecha de inicio](#start-dates) en el futuro no pueden activarse, solo pueden estar `Scheduled`. Una vez que la fecha de inicio haya pasado, Trophy las hará `Active` automáticamente y comenzará a aceptar participantes.
 
-Si una clasificación tiene una [fecha de finalización](#end-dates), una vez que haya pasado, Trophy la moverá automáticamente al estado `Finished` y dejará de monitorear la actividad del usuario. Una vez que una clasificación haya finalizado, no será visible para los usuarios, pero aún puedes consultar las APIs para obtener las posiciones de ejecuciones históricas.
+Si una clasificación tiene una [fecha de finalización](#end-dates), una vez que haya pasado Trophy la moverá automáticamente al estado `Finished` y dejará de monitorear la actividad de los usuarios. Una vez que una clasificación haya finalizado, no será visible para los usuarios, pero aún podrás consultar las APIs para obtener las posiciones de ejecuciones históricas.
 
 ## Mostrar Clasificaciones {#displaying-leaderboards}
 
@@ -260,14 +288,14 @@ Si una clasificación tiene una [fecha de finalización](#end-dates), una vez qu
   cómo agregar clasificaciones a tu aplicación para más detalles.
 </Tip>
 
-## Análisis de Clasificaciones {#leaderboard-analytics}
+## Analíticas de Clasificaciones {#leaderboard-analytics}
 
-Trophy tiene análisis integrados para ayudarte a entender cómo los usuarios interactúan con tus clasificaciones.
+Trophy tiene analíticas integradas para ayudarte a entender cómo los usuarios interactúan con tus clasificaciones.
 
 <Frame>
   <img
     height="200"
-    width="50%"
+    width="75%"
     noZoom
     src="../../assets/features/leaderboards/analytics.png"
   />
@@ -275,7 +303,7 @@ Trophy tiene análisis integrados para ayudarte a entender cómo los usuarios in
 
 ### Total de Participantes Únicos {#total-unique-participants}
 
-Este gráfico muestra cuántos usuarios únicos han participado en cualquier ejecución de una clasificación a lo largo del tiempo. Esto es útil para entender cuántos de tus usuarios realmente participan en clasificaciones y cómo los [límites de participantes](#participant-limits) están afectando esto.
+Este gráfico muestra cuántos usuarios únicos han participado en cualquier ejecución de una clasificación a lo largo del tiempo. Esto es útil para comprender cuántos de tus usuarios realmente participan en las clasificaciones y cómo los [límites de participantes](#participant-limits) están afectando esto.
 
 <Frame>
   <img
@@ -286,9 +314,9 @@ Este gráfico muestra cuántos usuarios únicos han participado en cualquier eje
   />
 </Frame>
 
-### Usuarios activos {#active-users}
+### Usuarios Activos {#active-users}
 
-Este gráfico muestra el número de usuarios que han cambiado de rango al menos una vez en una clasificación determinada. Esto es útil para tener una idea de cuán competitivo es el usuario promedio en una clasificación en particular.
+Este gráfico muestra la cantidad de usuarios que han cambiado de posición al menos una vez en una clasificación determinada. Esto es útil para tener una idea de qué tan competitivo es el usuario promedio en una clasificación particular.
 
 <Frame>
   <img
@@ -299,9 +327,9 @@ Este gráfico muestra el número de usuarios que han cambiado de rango al menos 
   />
 </Frame>
 
-### Cambios de Rango {#rank-changes}
+### Cambios de rango {#rank-changes}
 
-Este gráfico muestra el número total de cambios de rango en una clasificación particular a lo largo del tiempo. Esto es útil para entender cuán competitivos son los usuarios en general.
+Este gráfico muestra el número total de cambios de rango en una clasificación particular a lo largo del tiempo. Esto es útil para entender qué tan competitivos son los usuarios en general.
 
 <Frame>
   <img
@@ -312,20 +340,20 @@ Este gráfico muestra el número total de cambios de rango en una clasificación
   />
 </Frame>
 
-### Distribución de Puntuaciones {#score-distribution}
+### Distribución de puntuaciones {#score-distribution}
 
 Este gráfico es un histograma de las puntuaciones de los usuarios en una clasificación particular. Esto es útil para tener una idea de qué tan agrupados o dispersos están los usuarios, y qué secciones de las clasificaciones son las más competitivas.
 
 <Frame>
   <img
     height="200"
-    width="50%"
+    width="75%"
     noZoom
     src="../../assets/features/leaderboards/score_distribution.png"
   />
 </Frame>
 
-## Preguntas Frecuentes {#frequently-asked-questions}
+## Preguntas frecuentes {#frequently-asked-questions}
 
 <AccordionGroup>
   <Accordion id="leaderboard-participant-limit-faq" title="¿Cuántos participantes pueden estar en una clasificación al mismo tiempo?">
@@ -338,8 +366,8 @@ Este gráfico es un histograma de las puntuaciones de los usuarios en una clasif
 {" "}
 
 <Accordion id="leaderboard-weekly-faq" title="No veo una opción de clasificación semanal, ¿cómo puedo configurar una?">
-  Trophy admite la ejecución de clasificaciones repetidas en cualquier número arbitrario de
-  días. Así que una clasificación semanal sería simplemente una clasificación que se repite cada 7
+  Trophy admite la ejecución de clasificaciones repetitivas en cualquier número
+  arbitrario de días. Así que una clasificación semanal sería simplemente una clasificación que se repite cada 7
   días. Lee [esta sección](#tips-for-weekly-leaderboards) para más consejos sobre
   la creación de clasificaciones semanales.
 </Accordion>
