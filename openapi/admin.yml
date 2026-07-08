@@ -1,11 +1,11 @@
 openapi: 3.1.0
 info:
   title: Trophy
-  version: '1.15.0'
+  version: '1.16.0'
 x-fern-global-headers:
   - header: X-SDK-VERSION
     name: sdkVersion
-    x-fern-default: '1.15.0'
+    x-fern-default: '1.16.0'
 paths:
   /attributes:
     servers:
@@ -5125,6 +5125,16 @@ components:
           format: date
           description: The optional leaderboard end date in YYYY-MM-DD format.
           example: '2026-05-20'
+        startTime:
+          type: string
+          pattern: '^([01][0-9]|2[0-3]):[0-5][0-9](:[0-5][0-9])?$'
+          description: When set, ranking only counts activity at or after this time of day in the user's timezone (HH:mm format).
+          example: '09:00'
+        endTime:
+          type: string
+          pattern: '^([01][0-9]|2[0-3]):[0-5][0-9](:[0-5][0-9])?$'
+          description: When set, ranking only counts activity before this time of day in the user's timezone (HH:mm format).
+          example: '17:00'
         breakdownAttributes:
           type: array
           description: The UUIDs of the active user attributes to break rankings down by.
@@ -5202,6 +5212,16 @@ components:
           type: string
           format: date
           description: The optional leaderboard end date in YYYY-MM-DD format.
+        startTime:
+          type: string
+          pattern: '^([01][0-9]|2[0-3]):[0-5][0-9](:[0-5][0-9])?$'
+          description: When set, ranking only counts activity at or after this time of day in the user's timezone (HH:mm format).
+          example: '09:00'
+        endTime:
+          type: string
+          pattern: '^([01][0-9]|2[0-3]):[0-5][0-9](:[0-5][0-9])?$'
+          description: When set, ranking only counts activity before this time of day in the user's timezone (HH:mm format).
+          example: '17:00'
         breakdownAttributes:
           type: array
           description: The UUIDs of the user attributes used for ranking breakdowns.
@@ -5313,6 +5333,20 @@ components:
               format: date
             - type: 'null'
           description: The updated end date in YYYY-MM-DD format, or `null` to clear it.
+        startTime:
+          oneOf:
+            - type: string
+              pattern: '^([01][0-9]|2[0-3]):[0-5][0-9](:[0-5][0-9])?$'
+            - type: 'null'
+          description: The updated start of the daily ranking time window in HH:mm format, or `null` to clear it.
+          example: '09:00'
+        endTime:
+          oneOf:
+            - type: string
+              pattern: '^([01][0-9]|2[0-3]):[0-5][0-9](:[0-5][0-9])?$'
+            - type: 'null'
+          description: The updated end of the daily ranking time window in HH:mm format, or `null` to clear it.
+          example: '17:00'
         breakdownAttributes:
           type: array
           description: The updated breakdown attribute UUIDs.

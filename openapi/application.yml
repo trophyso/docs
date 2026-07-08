@@ -1,11 +1,11 @@
 openapi: 3.1.0
 info:
   title: Trophy
-  version: '1.15.0'
+  version: '1.16.0'
 x-fern-global-headers:
   - header: X-SDK-VERSION
     name: sdkVersion
-    x-fern-default: '1.15.0'
+    x-fern-default: '1.16.0'
 paths:
   /achievements:
     servers:
@@ -4926,6 +4926,20 @@ components:
           format: date
           description: The end date of the leaderboard in YYYY-MM-DD format, or null if it runs forever.
           example: '2025-12-31'
+        startTime:
+          type:
+            - string
+            - 'null'
+          pattern: '^([01][0-9]|2[0-3]):[0-5][0-9](:[0-5][0-9])?$'
+          description: When set, ranking only counts activity at or after this time of day in the user's timezone (HH:mm format).
+          example: '09:00'
+        endTime:
+          type:
+            - string
+            - 'null'
+          pattern: '^([01][0-9]|2[0-3]):[0-5][0-9](:[0-5][0-9])?$'
+          description: When set, ranking only counts activity before this time of day in the user's timezone (HH:mm format).
+          example: '17:00'
         maxParticipants:
           type:
             - integer
@@ -4956,6 +4970,8 @@ components:
         - breakdownAttributes
         - start
         - end
+        - startTime
+        - endTime
         - maxParticipants
         - runUnit
         - runInterval
