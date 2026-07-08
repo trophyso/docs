@@ -69,7 +69,7 @@ The ranking method of a leaderboard determines on what dimension participants wi
 <Frame>
   <img
     height="200"
-    width="50%"
+    width="75%"
     noZoom
     src="../assets/features/leaderboards/ranking_methods.png"
   />
@@ -141,7 +141,7 @@ Use start and end dates to control the window within which leaderboards are acti
 <Frame>
   <img
     height="200"
-    width="50%"
+    width="75%"
     noZoom
     src="../assets/features/leaderboards/start_end_dates.png"
   />
@@ -163,14 +163,47 @@ Leaderboards in Trophy can have end dates. If you set an end date on a leaderboa
   the end date according to their local clock.
 </Note>
 
-## Participant Limits {#participant-limits}
+## Time Restrictions {#time-restrictions}
 
-Leaderboards in Trophy have a maximum number of participants of **1,000**. However a leaderboard can be configured to have any arbitrary number of participants to support use cases like _Top 100_ or similar.
+In addition to [start & end dates](#start-end-dates), leaderboards can be configured to have time restrictions.
+
+When time restrictions are enabled, leaderboard rankings will only update during the configured time period.
+
+Time restrictions are useful when building leaderboards for limited-time events or promotions that run for a specific period of time.
+
+Time restrictions work on all leaderboards, including [repeating leaderboards](#repeating-leaderboards). Where a repeating leaderboard has a time restriction, the time restriction will be applied to each run of the leaderboard.
+
+### Setting Time Restrictions {#setting-time-restrictions}
+
+To set time restrictions on a leaderboard, head to the leaderboard configuration page and turn on the switch labelled 'Restrict to time window'. This will give you two fields, a start and end time.
+
+- Setting only a start time will mean leaderboard rankings only start to update after the start time on each day that the leaderboard is active.
+- Similarly, setting only an end time will mean leaderboard rankings will stop updating after the end time on each day that the leaderboard is active.
+- Setting both a start and end time will mean leaderboard rankings will only update during the configured time period.
 
 <Frame>
   <img
     height="200"
-    width="50%"
+    width="100%"
+    noZoom
+    src="../assets/features/leaderboards/time_restrictions.png"
+  />
+</Frame>
+
+### Time Zone Considerations {#time-zone-considerations}
+
+Time restrictions on leaderboards are applied in **local time** for each participant based on their configured [time zone](/features/users#param-tz).
+
+This means that each user can participate in the leaderboard at any time during the configured time restriction according to their local clock.
+
+## Participant Limits {#participant-limits}
+
+Leaderboards in Trophy have a default maximum number of participants of **1,000**. However a leaderboard can be configured to have any arbitrary number of participants to support use cases like _Top 100_ or similar.
+
+<Frame>
+  <img
+    height="200"
+    width="100%"
     noZoom
     src="../assets/features/leaderboards/max_participants.png"
   />
@@ -178,16 +211,11 @@ Leaderboards in Trophy have a maximum number of participants of **1,000**. Howev
 
 If a leaderboard already has a number of participants that matches its configured maximum, new users will have to surpass the score of the lowest rank to join the leaderboard.
 
-<Tip>
-We chose to limit leaderboard size to help guide customers on best practice.
-
-Traditionally, leaderboards with lots of participants fail to engage users beyond the top 1%, and have a **negative** impact on users in the bottom half, particularly new users. To avoid this, keep your leaderboards small by breaking them down into smaller leaderboards using [breakdown attributes](#ranking-breakdowns).
-
-For more background on the negative effects on global leaderboards, read this [blog post](https://www.trophy.so/blog/leaderboard-only-motivating-top-one-percent).
-
-</Tip>
-
 The only exception to this is when using [breakdown attributes](#ranking-breakdowns) to group participants into smaller cohorts. When using breakdown attributes the participant limit applies to each group, not overall.
+
+<Tip>
+If you require a larger participant limit, considering using [breakdown attributes](#ranking-breakdowns) to group participants into smaller cohorts. Or please contact us at [support@trophy.so](mailto:support@trophy.so) and we'll be happy to increase your defaults.
+</Tip>
 
 ## Creating Leaderboards {#creating-leaderboards}
 
@@ -269,7 +297,7 @@ Trophy has built-in analytics to help you understand how users are engaging with
 <Frame>
   <img
     height="200"
-    width="50%"
+    width="75%"
     noZoom
     src="../assets/features/leaderboards/analytics.png"
   />
@@ -321,7 +349,7 @@ This chart is a histogram of users' scores in a particular leaderboard. This is 
 <Frame>
   <img
     height="200"
-    width="50%"
+    width="75%"
     noZoom
     src="../assets/features/leaderboards/score_distribution.png"
   />
