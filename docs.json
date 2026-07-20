@@ -352,6 +352,15 @@
                   "webhooks/events/leaderboards/leaderboard-rank-changed",
                   "webhooks/events/leaderboards/leaderboard-finished"
                 ]
+              },
+              {
+                "group": "Emails",
+                "pages": [
+                  "webhooks/events/emails/recap-due",
+                  "webhooks/events/emails/reactivation-due",
+                  "webhooks/events/emails/streak-reminder-due",
+                  "webhooks/events/emails/achievement-due"
+                ]
               }
             ]
           },
@@ -682,6 +691,15 @@
                   "es/webhooks/events/leaderboards/leaderboard-changed",
                   "es/webhooks/events/leaderboards/leaderboard-rank-changed",
                   "es/webhooks/events/leaderboards/leaderboard-finished"
+                ]
+              },
+              {
+                "group": "Correos",
+                "pages": [
+                  "es/webhooks/events/emails/recap-due",
+                  "es/webhooks/events/emails/reactivation-due",
+                  "es/webhooks/events/emails/streak-reminder-due",
+                  "es/webhooks/events/emails/achievement-due"
                 ]
               }
             ]

@@ -302,6 +302,25 @@ For each attribute you'd like to restrict the email to, click the plus icon next
 
 If you specify a timezone for each user through [User Identification](/features/users#param-tz), Trophy will use that local time zone to schedule emails according to the logic specified above. If you do not provide time zones for the users you identify, Trophy will default to Eastern Time.
 
+### Sending Emails Via Webhooks {#sending-emails-via-webhooks}
+
+Instead of having Trophy send emails for you, you can subscribe to email webhook events and send messages yourself through your own email provider or pipeline.
+
+When an email would normally be due, Trophy fires the corresponding webhook so you can handle delivery:
+
+- [`emails.recap_due`](/webhooks/events/emails/recap-due)
+- [`emails.reactivation_due`](/webhooks/events/emails/reactivation-due)
+- [`emails.streak_reminder_due`](/webhooks/events/emails/streak-reminder-due)
+- [`emails.achievement_due`](/webhooks/events/emails/achievement-due)
+
+These webhooks fire based on the email triggers themselves, regardless of whether any email templates are enabled or disabled, and regardless of any [user attribute filters](#limiting-emails-to-specific-types-of-users) configured on those templates. If you need equivalent filtering, apply it in your webhook handler.
+
+Email webhooks respect [notification preferences](/features/users#notification-preferences) and the [control attribute](/platform/experimentation#control-ratio) used for experimentation. Trophy will not fire email webhooks for users who have opted out of that email type, or for users in the control group.
+
+<Warning>
+  If you are sending emails yourself from these webhooks, make sure the corresponding email templates are turned off in Trophy. Email webhooks still fire when triggers are due even if templates are disabled, but if templates remain enabled Trophy will also send its own emails resulting in duplicate delivery.
+</Warning>
+
 ## Designing Emails {#designing-emails}
 
 Trophy has a fully-featured block-based email builder that allows you to design templates, controlling all email copy and subject lines. On the [emails](https://app.trophy.so/emails/configure) page, add templates under each [email type](#email-triggers) section you want to use.

@@ -31,6 +31,7 @@
         "features/*.mdx",
         "webhooks/*.mdx",
         "webhooks/events/achievements/*.mdx",
+        "webhooks/events/emails/*.mdx",
         "webhooks/events/leaderboards/*.mdx",
         "webhooks/events/points/*.mdx",
         "webhooks/events/streaks/*.mdx",

@@ -299,6 +299,25 @@ Para cada atributo al que desees restringir el correo, haz clic en el icono de m
 
 Si especificas una zona horaria para cada usuario mediante [Identificación de Usuarios](/es/features/users#param-tz), Trophy utilizará esa zona horaria local para programar correos según la lógica especificada anteriormente. Si no proporcionas zonas horarias para los usuarios que identificas, Trophy utilizará por defecto la hora del Este.
 
+### Enviar Correos Mediante Webhooks {#sending-emails-via-webhooks}
+
+En lugar de que Trophy envíe los correos por ti, puedes suscribirte a los eventos de webhook de correos y enviar los mensajes tú mismo a través de tu propio proveedor o pipeline de correo electrónico.
+
+Cuando un correo debería enviarse normalmente, Trophy dispara el webhook correspondiente para que puedas encargarte de la entrega:
+
+- [`emails.recap_due`](/es/webhooks/events/emails/recap-due)
+- [`emails.reactivation_due`](/es/webhooks/events/emails/reactivation-due)
+- [`emails.streak_reminder_due`](/es/webhooks/events/emails/streak-reminder-due)
+- [`emails.achievement_due`](/es/webhooks/events/emails/achievement-due)
+
+Estos webhooks se disparan según los propios triggers de correo, independientemente de si alguna plantilla de correo está habilitada o deshabilitada, y de cualquier [filtro de atributo de usuario](#limiting-emails-to-specific-types-of-users) configurado en esas plantillas. Si necesitas un filtrado equivalente, aplícalo en tu manejador de webhook.
+
+Los webhooks de correo respetan las [preferencias de notificación](/es/features/users#notification-preferences) y el [atributo `control`](/es/platform/experimentation#control-ratio) usado para experimentación. Trophy no disparará webhooks de correo para usuarios que se hayan dado de baja de ese tipo de correo, ni para usuarios en el grupo de control.
+
+<Warning>
+  Si envías los correos tú mismo a partir de estos webhooks, asegúrate de que las plantillas de correo correspondientes estén desactivadas en Trophy. Los webhooks de correo siguen disparándose cuando los triggers corresponden incluso si las plantillas están deshabilitadas, pero si las plantillas siguen habilitadas Trophy también enviará sus propios correos, lo que resultará en entregas duplicadas.
+</Warning>
+
 ## Diseño de Correos {#designing-emails}
 
 Trophy cuenta con un editor de correos basado en bloques completamente funcional que te permite diseñar plantillas, controlando todo el texto del correo y las líneas de asunto. En la página de [correos](https://app.trophy.so/emails/configure), agrega plantillas en cada sección de [tipo de correo](#email-triggers) que desees usar.
