@@ -1,11 +1,11 @@
 openapi: 3.1.0
 info:
   title: Trophy
-  version: '1.16.0'
+  version: '1.17.0'
 x-fern-global-headers:
   - header: X-SDK-VERSION
     name: sdkVersion
-    x-fern-default: '1.16.0'
+    x-fern-default: '1.17.0'
 paths:
   /attributes:
     servers:

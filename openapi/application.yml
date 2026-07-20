@@ -1,11 +1,11 @@
 openapi: 3.1.0
 info:
   title: Trophy
-  version: '1.16.0'
+  version: '1.17.0'
 x-fern-global-headers:
   - header: X-SDK-VERSION
     name: sdkVersion
-    x-fern-default: '1.16.0'
+    x-fern-default: '1.17.0'
 paths:
   /achievements:
     servers:
@@ -4303,6 +4303,160 @@ webhooks:
                         userName: Charlie Brown
                         rank: 3
                         value: 4
+      responses:
+        '200':
+          description: Return a 200 status to indicate the webhook was received and processed.
+  emails.recap_due:
+    post:
+      summary: Recap due
+      operationId: webhooks_emails_recap_due
+      description: Triggered when a recap message is due to be sent to a user.
+      requestBody:
+        description: The webhook event.
+        content:
+          application/json:
+            schema:
+              properties:
+                type:
+                  type: string
+                  enum: ['emails.recap_due']
+                  description: The webhook event type.
+                timestamp:
+                  type: string
+                  format: date-time
+                  description: The time the webhook was sent.
+                user:
+                  $ref: '#/components/schemas/User'
+                  description: The user the recap is due for.
+                recap:
+                  type: object
+                  description: Details about the recap period.
+                  properties:
+                    periodStart:
+                      type: string
+                      format: date
+                      description: The start of the recap period.
+                    periodEnd:
+                      type: string
+                      format: date
+                      description: The end of the recap period.
+                  required:
+                    - periodStart
+                    - periodEnd
+              required:
+                - type
+                - timestamp
+                - user
+                - recap
+      responses:
+        '200':
+          description: Return a 200 status to indicate the webhook was received and processed.
+  emails.reactivation_due:
+    post:
+      summary: Reactivation due
+      operationId: webhooks_emails_reactivation_due
+      description: Triggered when a reactivation message is due to be sent to a user.
+      requestBody:
+        description: The webhook event.
+        content:
+          application/json:
+            schema:
+              properties:
+                type:
+                  type: string
+                  enum: ['emails.reactivation_due']
+                  description: The webhook event type.
+                timestamp:
+                  type: string
+                  format: date-time
+                  description: The time the webhook was sent.
+                user:
+                  $ref: '#/components/schemas/User'
+                  description: The user the reactivation message is due for.
+                reactivation:
+                  type: object
+                  description: Details about the reactivation message.
+                  properties:
+                    messageNumber:
+                      type: integer
+                      description: The reactivation message number in the sequence.
+                    daysSinceLastActive:
+                      type: integer
+                      description: The number of days since the user was last active.
+                  required:
+                    - messageNumber
+                    - daysSinceLastActive
+              required:
+                - type
+                - timestamp
+                - user
+                - reactivation
+      responses:
+        '200':
+          description: Return a 200 status to indicate the webhook was received and processed.
+  emails.streak_reminder_due:
+    post:
+      summary: Streak reminder due
+      operationId: webhooks_emails_streak_reminder_due
+      description: Triggered when a streak reminder message is due to be sent to a user.
+      requestBody:
+        description: The webhook event.
+        content:
+          application/json:
+            schema:
+              properties:
+                type:
+                  type: string
+                  enum: ['emails.streak_reminder_due']
+                  description: The webhook event type.
+                timestamp:
+                  type: string
+                  format: date-time
+                  description: The time the webhook was sent.
+                user:
+                  $ref: '#/components/schemas/User'
+                  description: The user the streak reminder is due for.
+                streak:
+                  $ref: '#/components/schemas/StreakResponse'
+                  description: The user's current streak data.
+              required:
+                - type
+                - timestamp
+                - user
+                - streak
+      responses:
+        '200':
+          description: Return a 200 status to indicate the webhook was received and processed.
+  emails.achievement_due:
+    post:
+      summary: Achievement due
+      operationId: webhooks_emails_achievement_due
+      description: Triggered when an achievement message is due to be sent to a user.
+      requestBody:
+        description: The webhook event.
+        content:
+          application/json:
+            schema:
+              properties:
+                type:
+                  type: string
+                  enum: ['emails.achievement_due']
+                  description: The webhook event type.
+                timestamp:
+                  type: string
+                  format: date-time
+                  description: The time the webhook was sent.
+                user:
+                  $ref: '#/components/schemas/User'
+                  description: The user the achievement message is due for.
+                achievement:
+                  $ref: '#/components/schemas/UserAchievementResponse'
+                  description: The achievement that was completed.
+              required:
+                - type
+                - timestamp
+                - user
+                - achievement
       responses:
         '200':
           description: Return a 200 status to indicate the webhook was received and processed.
