@@ -17,7 +17,7 @@
     }
   },
   "fonts": {
-    "family": "Montserrat"
+    "family": "Plus Jakarta Sans"
   },
   "favicon": {
     "light": "/assets/logomark_light.svg",
@@ -26,7 +26,7 @@
   "seo": {
     "metatags": {
       "og:description": "Trophy is a developer-friendly platform for building gamified product experiences that retain users in any mobile or web app. Add features like achievements, streaks, points systems and leaderboards plus deliver personalized progress report and reactivation emails with no code.",
-      "og:image": "/assets/og.png"
+      "og:image": "https://trophy.so/opengraph-image"
     }
   },
   "integrations": {
@@ -375,13 +375,17 @@
         "navbar": {
           "links": [
             {
+              "label": "Book a call",
+              "href": "https://trophy.so/contact-sales?utm_source=docs&utm_medium=navbar-links"
+            },
+            {
               "label": "Dashboard",
               "href": "https://app.trophy.so"
             }
           ],
           "primary": {
             "type": "button",
-            "label": "Start for free",
+            "label": "Get started",
             "href": "https://app.trophy.so/sign-up?utm_source=docs&utm_medium=navbar-links"
           }
         }
