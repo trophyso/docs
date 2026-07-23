@@ -13,9 +13,9 @@ export const RateLimitBadge = ({ tier, noTooltip = false }) => {
   const getLimit = (tier) => {
     switch (tier) {
       case 1:
-        return 10;
+        return 5;
       case 2:
-        return 100;
+        return 50;
     }
   };
 
