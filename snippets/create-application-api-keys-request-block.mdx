@@ -1,0 +1,73 @@
+<CodeGroup>
+```bash cURL
+curl -X POST https://admin.trophy.so/v1/application-api-keys \
+     -H "X-API-KEY: <api-key>" \
+     -H "Content-Type: application/json" \
+     -d '[
+       { "userId": "user_123" },
+       { "userId": "user_456" }
+     ]'
+```
+
+```typescript Node
+await trophy.admin.applicationApiKeys.create([
+  { userId: "user_123" },
+  { userId: "user_456" },
+]);
+```
+
+```python Python
+client.admin.application_api_keys.create(
+    request=[
+        CreateApplicationKeyRequestItem(
+            user_id="user_123",
+        ),
+        CreateApplicationKeyRequestItem(
+            user_id="user_456",
+        ),
+    ],
+)
+```
+
+```php PHP
+$trophy->admin->applicationApiKeys->create([
+    ['userId' => 'user_123'],
+    ['userId' => 'user_456'],
+]);
+```
+
+```java Java
+CreateApplicationKeysResponse response = client.admin().applicationApiKeys().create(
+  List.of(
+    CreateApplicationKeyRequestItem.builder().userId("user_123").build(),
+    CreateApplicationKeyRequestItem.builder().userId("user_456").build()
+  )
+);
+```
+
+```go Go
+response, err := client.Admin.ApplicationApiKeys.Create(
+    context.TODO(),
+    []*api.CreateApplicationKeyRequestItem{
+        {UserId: "user_123"},
+        {UserId: "user_456"},
+    },
+)
+```
+
+```csharp C#
+await trophy.Admin.ApplicationApiKeys.CreateAsync(new[]
+{
+    new CreateApplicationKeyRequestItem { UserId = "user_123" },
+    new CreateApplicationKeyRequestItem { UserId = "user_456" },
+});
+```
+
+```ruby Ruby
+result = client.admin.application_api_keys.create([
+  { user_id: 'user_123' },
+  { user_id: 'user_456' }
+])
+```
+
+</CodeGroup>

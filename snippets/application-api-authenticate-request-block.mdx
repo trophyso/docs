@@ -1,0 +1,58 @@
+<CodeGroup>
+```bash cURL
+curl https://api.trophy.so/v1/users/user_123/metrics/<key> \
+     -H "X-API-KEY: YOUR_API_KEY"
+```
+
+```typescript Node
+import { TrophyApiClient } from "@trophyso/node";
+
+const trophy = new TrophyApiClient({
+  apiKey: "YOUR_API_KEY",
+});
+```
+
+```python Python
+from trophy import TrophyApi
+
+client = TrophyApi(
+    api_key="YOUR_API_KEY",
+)
+```
+
+```php PHP
+use Trophy\TrophyClient;
+
+$trophy = new TrophyClient("YOUR_API_KEY");
+```
+
+```java Java
+TrophyApiClient client = TrophyApiClient.builder()
+    .apiKey("YOUR_API_KEY")
+    .build();
+```
+
+```go Go
+import (
+  trophyclient "github.com/trophyso/trophy-go/client"
+  "github.com/trophyso/trophy-go/option"
+)
+
+client := trophyclient.NewClient(
+  option.WithApiKey("YOUR_API_KEY"),
+)
+```
+
+```csharp C#
+var trophy = new TrophyApiClient(
+    apiKey: "YOUR_API_KEY"
+);
+```
+
+```ruby Ruby
+client = Trophy::Client.new(
+  api_key: "YOUR_API_KEY"
+)
+```
+
+</CodeGroup>

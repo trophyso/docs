@@ -301,6 +301,13 @@
                   "admin-api/endpoints/tenants/create-tenants",
                   "admin-api/endpoints/tenants/delete-tenants"
                 ]
+              },
+              {
+                "group": "Application API Keys",
+                "pages": [
+                  "admin-api/endpoints/application-api-keys/create-application-api-keys",
+                  "admin-api/endpoints/application-api-keys/delete-application-api-keys"
+                ]
               }
             ]
           },

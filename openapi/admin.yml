@@ -6661,7 +6661,7 @@ components:
         message:
           type: string
           description: A human-readable description of the issue.
-          example: Would exceed maximum freeze limit
+          example: Description of the issue.
       required:
         - severity
         - message
