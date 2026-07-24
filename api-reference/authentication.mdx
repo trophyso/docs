@@ -1,82 +1,86 @@
 ---
 title: Authentication
-description: Integrate securely with the API using account-level API keys
-  transmitted in the `X-API-KEY` header.
-og:description: Integrate securely with the Trophy API using account-level API
-  keys transmitted in the `X-API-KEY` header.
+description: Authenticate with the Application API using user-scoped application
+  API keys transmitted in the `X-API-KEY` header.
+og:description: Authenticate with the Trophy Application API using user-scoped
+  application API keys transmitted in the `X-API-KEY` header.
 icon: key
 ---
 
-## API Keys {#api-keys}
+import CreateApplicationApiKeysRequestBlock from "../snippets/create-application-api-keys-request-block.mdx";
+import DeleteApplicationApiKeysRequestBlock from "../snippets/delete-application-api-keys-request-block.mdx";
+import ApplicationApiAuthenticateRequestBlock from "../snippets/application-api-authenticate-request-block.mdx";
 
-Every account can create a maximum of 3 API keys from the [Integration Page](https://app.trophy.so/integration). If you've already signed up, you'll have created one during onboarding.
+## API key types {#api-key-types}
 
-Trophy keeps track of and displays when each API key in your account was created and when it was last used so you can easily keep track of usage.
+The Application API accepts two types of API keys:
 
-<Frame>
-  <img height="200" noZoom src="../assets/api/authentication/api_keys.png" />
-</Frame>
+| Key type | Scope | Where to use | Safe client-side? |
+| --- | --- | --- | --- |
+| [Application API keys](#application-api-keys) | Single user | Application API only | Yes |
+| [Admin API keys](/admin-api/authentication) | Entire account | Application API and Admin API | No |
 
-### Anatomy of an API key {#anatomy-of-an-api-key}
+Use application API keys when you want end users or client apps to call the Application API with permissions limited to one user. Use [admin API keys](/admin-api/authentication) for trusted server-side integrations that need broad access.
 
-Each API key is made up of 2 parts separated by a period:
+## Application API keys {#application-api-keys}
 
-```bash
-{prefix}•{body}
+Application API keys are scoped to a specific user. Each key can only perform Application API operations on behalf of the user it was created for, which makes them safe to expose in client-side environments.
+
+Application API keys cannot be used with the Admin API.
+
+### Creating application API keys {#creating-application-api-keys}
+
+Create application API keys with the [Admin API](/admin-api/endpoints/application-api-keys/create-application-api-keys). You authenticate that request with an [admin API key](/admin-api/authentication).
+
+You can create keys for up to 100 users per request. The full key value is returned once at creation time and cannot be retrieved again—store it securely or deliver it to the client immediately.
+
+<CreateApplicationApiKeysRequestBlock />
+
+A successful response includes the key ID (used later to delete the key), the user ID, the full key, and a readable prefix:
+
+```json
+{
+  "created": [
+    {
+      "id": "550e8400-e29b-41d4-a716-446655440000",
+      "userId": "user_123",
+      "key": "app_XXXXX.YOUR_API_KEY",
+      "prefix": "app_XXXXX"
+    }
+  ],
+  "issues": []
+}
 ```
 
-- The _prefix_ is the first 8 characters. It's readable and will always stay the same so it's easily recognisable.
-- The _body_ is the secret part, and is only shown to you once when you create the key.
+### Anatomy of an application API key {#anatomy-of-an-application-api-key}
+
+Each application API key is made up of 2 parts separated by a period:
+
+```bash
+{prefix}.{body}
+```
+
+- The _prefix_ identifies the key (for example `app_XXXXX`) and is safe to log or display.
+- The _body_ is the secret part, and is only shown once when you create the key.
 
 <Note>
-  When using the API, both parts of your API key must be sent in the `X-API-KEY`
-  header.
+  When using the API, both parts of your application API key must be sent in the
+  `X-API-KEY` header.
 </Note>
 
-### Authenticating Requests {#authenticating-requests}
+### Authenticating requests {#authenticating-requests}
 
-When making requests to the API, make sure to include **both** parts of your API key in the `X-API-KEY` header as in this example:
+Include the full application API key in the `X-API-KEY` header on Application API requests, or pass it when initializing an SDK client. The key only authorizes operations for the user it is scoped to—requests for other users return an error.
 
-```bash
-curl https://app.trophy.so/api/users/<userId>/metrics/<key> \
-     -H "X-API-KEY: ********.***********************"
-```
+<ApplicationApiAuthenticateRequestBlock />
 
 If you do not pass an API key, or your API key is invalid, you'll receive a `401` response code.
 
-## Managing API keys {#managing-api-keys}
+### Deleting application API keys {#deleting-application-api-keys}
 
-There are a few different operations you can perform on API keys from within your Trophy dashboard to manage your integration.
+Delete application API keys by ID with the [Admin API](/admin-api/endpoints/application-api-keys/delete-application-api-keys). Use the UUID returned when the key was created.
 
-<Frame>
-  <img
-    height="200"
-    noZoom
-    src="../assets/api/authentication/api_key_options.png"
-  />
-</Frame>
-
-### Rotating keys {#rotating-keys}
-
-API keys can be rotated if you want to change them for any reason. At the point of rotation, the original API key will no longer function and any requests still using it will begin receiving `401` responses immediately.
-
-<Note>
-  Note that when rotating keys, both the prefix and the body will change.
-</Note>
-
-### Revoking keys {#revoking-keys}
-
-API keys can also be revoked entirely at which point they become _Inactive_. At the point of revocation, the API key will no longer function and any requests still using it will begin receiving `401` responses immediately.
-
-Once revoked you can re-activate the API key at any time.
-
-<Note>
-  Neither the prefix or the body of the key change when revoked or re-activated.
-</Note>
-
-### Deleting API keys {#deleting-api-keys}
-
-If you're 100% sure you no longer need an API key, they can be deleted.
+<DeleteApplicationApiKeysRequestBlock />
 
 <Error>Once API keys are deleted, they cannot be recovered.</Error>
 

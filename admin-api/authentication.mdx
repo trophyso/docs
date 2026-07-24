@@ -1,15 +1,102 @@
 ---
 title: Authentication
-description: Integrate securely with the API using account-level API keys
-  transmitted in the `X-API-KEY` header.
-og:description: Integrate securely with the Trophy API using account-level API
+description: Integrate securely with the Admin API using account-level admin API
   keys transmitted in the `X-API-KEY` header.
+og:description: Integrate securely with the Trophy Admin API using account-level
+  admin API keys transmitted in the `X-API-KEY` header.
 icon: key
 ---
 
-The Trophy Admin API is authenticated using the same API keys as the [Application API](/api-reference/authentication).
+import AdminApiAuthenticateRequestBlock from "../snippets/admin-api-authenticate-request-block.mdx";
+import ApplicationApiAuthenticateRequestBlock from "../snippets/application-api-authenticate-request-block.mdx";
+
+<Tip>
+  For client-side or end-user access to the Application API, create
+  [application API keys](/api-reference/authentication) scoped to a single user
+  instead.
+</Tip>
+
+## Admin API keys {#admin-api-keys}
+
+Admin API keys are account-level credentials with broad permissions. Use them to authenticate requests to the Admin API, and optionally to the [Application API](/api-reference/authentication) from trusted server-side environments.
+
+Every account can create a maximum of 3 admin API keys from the [integration page](https://app.trophy.so/integration) of the Trophy dashboard.
+
+Trophy keeps track of and displays when each admin API key in your account was created and when it was last used so you can easily keep track of usage.
+
+<Frame>
+  <img height="200" noZoom src="../assets/api/authentication/api_keys.png" />
+</Frame>
+
+<Warning>
+  Admin API keys can access any user and any admin operation in your account.
+  Never expose them in client-side code, mobile apps, or public repositories.
+</Warning>
+
+### Anatomy of an admin API key {#anatomy-of-an-admin-api-key}
+
+Each admin API key is made up of 2 parts separated by a period:
+
+```bash
+{prefix}.{body}
+```
+
+- The _prefix_ is the first 8 characters. It's readable and will always stay the same so it's easily recognisable.
+- The _body_ is the secret part, and is only shown to you once when you create the key.
+
+<Note>
+  When using the API, both parts of your admin API key must be sent in the
+  `X-API-KEY` header.
+</Note>
+
+### Authenticating requests {#authenticating-requests}
+
+When making requests to the Admin API, include both parts of your admin API key in the `X-API-KEY` header, or pass it when initializing an SDK client:
+
+<AdminApiAuthenticateRequestBlock />
+
+The same key authenticates Application API requests when you use an admin API key from a server-side environment:
+
+<ApplicationApiAuthenticateRequestBlock />
+
+If you do not pass an API key, or your API key is invalid, you'll receive a `401` response code.
+
+## Managing admin API keys {#managing-admin-api-keys}
+
+There are a few different operations you can perform on admin API keys from within your Trophy dashboard to manage your integration.
+
+<Frame>
+  <img
+    height="200"
+    noZoom
+    src="../assets/api/authentication/api_key_options.png"
+  />
+</Frame>
+
+### Rotating keys {#rotating-keys}
+
+Admin API keys can be rotated if you want to change them for any reason. At the point of rotation, the original API key will no longer function and any requests still using it will begin receiving `401` responses immediately.
+
+<Note>
+  Note that when rotating keys, both the prefix and the body will change.
+</Note>
+
+### Revoking keys {#revoking-keys}
+
+Admin API keys can also be revoked entirely at which point they become _Inactive_. At the point of revocation, the API key will no longer function and any requests still using it will begin receiving `401` responses immediately.
+
+Once revoked you can re-activate the API key at any time.
+
+<Note>
+  Neither the prefix or the body of the key change when revoked or re-activated.
+</Note>
+
+### Deleting API keys {#deleting-api-keys}
+
+If you're 100% sure you no longer need an admin API key, they can be deleted.
+
+<Error>Once API keys are deleted, they cannot be recovered.</Error>
 
 ## Get Support {#get-support}
 
 Want to get in touch with the Trophy team? Reach out to us via [email](mailto:support@trophy.so). We're here to help!
-

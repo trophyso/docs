@@ -1,11 +1,11 @@
 openapi: 3.1.0
 info:
   title: Trophy
-  version: '1.17.0'
+  version: '1.18.0'
 x-fern-global-headers:
   - header: X-SDK-VERSION
     name: sdkVersion
-    x-fern-default: '1.17.0'
+    x-fern-default: '1.18.0'
 paths:
   /attributes:
     servers:
@@ -4353,6 +4353,231 @@ paths:
       summary: Restore streaks for multiple users
       security:
         - ApiKeyAuth: []
+  /application-api-keys:
+    servers:
+      - url: https://admin.trophy.so/v1
+        description: Admin API
+    post:
+      description: >-
+        Create application API keys scoped to specific users. Each key can only
+        perform operations on behalf of the user it was created for.
+      operationId: admin_application_api_keys_create
+      x-fern-server-name: admin
+      x-fern-sdk-group-name:
+        - admin
+        - applicationApiKeys
+      x-fern-sdk-method-name: create
+      tags:
+        - Admin
+      x-codeSamples:
+        - lang: javascript
+          source: |
+            import { TrophyApiClient } from '@trophyso/node';
+
+            const trophy = new TrophyApiClient({
+              apiKey: 'YOUR_API_KEY'
+            });
+
+            const response = await trophy.admin.applicationApiKeys.create([
+              { userId: 'user_123' }
+            ]);
+        - lang: python
+          source: |
+            from trophy import TrophyApi
+
+            client = TrophyApi(api_key='YOUR_API_KEY')
+
+            response = client.admin.applicationApiKeys.create([
+              { "userId": "user_123" }
+            ])
+        - lang: go
+          source: |
+            import (
+              "context"
+
+              api "github.com/trophyso/trophy-go"
+              trophyclient "github.com/trophyso/trophy-go/client"
+              "github.com/trophyso/trophy-go/option"
+            )
+
+            client := trophyclient.NewClient(
+              option.WithApiKey("YOUR_API_KEY"),
+            )
+
+            response, err := client.Admin.ApplicationApiKeys.Create(context.TODO(), api.CreateApplicationKeysRequest{})
+      requestBody:
+        description: Array of users to create application API keys for. Maximum 100 users per request.
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreateApplicationKeysRequest'
+            examples:
+              Create application keys:
+                value:
+                  - userId: user_123
+                  - userId: user_456
+      responses:
+        '200':
+          description: Successful operation (no keys created)
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CreateApplicationKeysResponse'
+        '201':
+          description: Created (at least one application API key created)
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CreateApplicationKeysResponse'
+              examples:
+                Success:
+                  value:
+                    created:
+                      - id: 550e8400-e29b-41d4-a716-446655440000
+                        userId: user_123
+                        key: app_XXXXX.YOUR_API_KEY
+                        prefix: app_XXXXX
+                    issues: []
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AdminErrorBody'
+        '403':
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AdminErrorBody'
+        '422':
+          description: Unprocessible Entity
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AdminErrorBody'
+      summary: Create application API keys for users
+      security:
+        - ApiKeyAuth: []
+    delete:
+      description: >-
+        Delete application API keys by ID.
+      operationId: admin_application_api_keys_delete
+      x-fern-server-name: admin
+      x-fern-sdk-group-name:
+        - admin
+        - applicationApiKeys
+      x-fern-sdk-method-name: delete
+      tags:
+        - Admin
+      x-codeSamples:
+        - lang: javascript
+          source: |
+            import { TrophyApiClient } from '@trophyso/node';
+
+            const trophy = new TrophyApiClient({
+              apiKey: 'YOUR_API_KEY'
+            });
+
+            const response = await trophy.admin.applicationApiKeys.delete({
+              ids: [
+                '550e8400-e29b-41d4-a716-446655440000',
+                '550e8400-e29b-41d4-a716-446655440001'
+              ]
+            });
+        - lang: python
+          source: |
+            from trophy import TrophyApi
+
+            client = TrophyApi(api_key='YOUR_API_KEY')
+
+            response = client.admin.applicationApiKeys.delete(
+              ids=[
+                '550e8400-e29b-41d4-a716-446655440000',
+                '550e8400-e29b-41d4-a716-446655440001'
+              ]
+            )
+        - lang: go
+          source: |
+            import (
+              "context"
+
+              trophyclient "github.com/trophyso/trophy-go/client"
+              "github.com/trophyso/trophy-go/option"
+            )
+
+            client := trophyclient.NewClient(
+              option.WithApiKey("YOUR_API_KEY"),
+            )
+
+            response, err := client.Admin.ApplicationApiKeys.Delete(context.TODO(), nil)
+      parameters:
+        - name: ids
+          in: query
+          description: >-
+            Application API key IDs (UUIDs returned at creation time). Repeat the
+            query param or provide a comma-separated list. Maximum 100 IDs per
+            request.
+          required: true
+          schema:
+            type: array
+            items:
+              type: string
+              format: uuid
+            maxItems: 100
+          style: form
+          explode: true
+          examples:
+            Single ID:
+              value:
+                - 550e8400-e29b-41d4-a716-446655440000
+            Multiple IDs:
+              value:
+                - 550e8400-e29b-41d4-a716-446655440000
+                - 550e8400-e29b-41d4-a716-446655440001
+      responses:
+        '200':
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DeleteApplicationKeysResponse'
+              examples:
+                Success:
+                  value:
+                    deleted:
+                      - id: 550e8400-e29b-41d4-a716-446655440000
+                    issues: []
+                Partial success:
+                  value:
+                    deleted:
+                      - id: 550e8400-e29b-41d4-a716-446655440000
+                    issues:
+                      - id: 550e8400-e29b-41d4-a716-446655440999
+                        severity: error
+                        message: Application API key not found by ID
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AdminErrorBody'
+        '403':
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AdminErrorBody'
+        '422':
+          description: Unprocessible Entity
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AdminErrorBody'
+      summary: Delete application API keys
+      security:
+        - ApiKeyAuth: []
   /tenants:
     servers:
       - url: https://admin.trophy.so/v1
@@ -6410,6 +6635,10 @@ components:
       type: object
       description: An issue encountered while processing an item in an admin API request.
       properties:
+        id:
+          type: string
+          description: The ID of the resource the issue relates to, when applicable.
+          example: 550e8400-e29b-41d4-a716-446655440000
         userId:
           type: string
           description: The ID of the user the issue relates to, when applicable.
@@ -6432,7 +6661,7 @@ components:
         message:
           type: string
           description: A human-readable description of the issue.
-          example: Would exceed maximum freeze limit
+          example: Description of the issue.
       required:
         - severity
         - message
@@ -6751,6 +6980,91 @@ components:
       required:
         - customerId
         - name
+    CreateApplicationKeysRequest:
+      title: CreateApplicationKeysRequest
+      type: array
+      description: Request body for creating application API keys.
+      items:
+        $ref: '#/components/schemas/CreateApplicationKeyRequestItem'
+      minItems: 1
+      maxItems: 100
+    CreateApplicationKeyRequestItem:
+      title: CreateApplicationKeyRequestItem
+      type: object
+      description: A user to create an application API key for.
+      properties:
+        userId:
+          type: string
+          description: The user ID to scope the application API key to.
+          example: user_123
+          maxLength: 255
+      required:
+        - userId
+    CreatedApplicationKey:
+      title: CreatedApplicationKey
+      type: object
+      description: A newly created application API key.
+      properties:
+        id:
+          type: string
+          format: uuid
+          description: The unique identifier of the API key. Use this ID to delete the key.
+          example: 550e8400-e29b-41d4-a716-446655440000
+        userId:
+          type: string
+          description: The user ID the key is scoped to.
+          example: user_123
+        key:
+          type: string
+          description: >-
+            The full API key value. This is only returned once at creation time
+            and cannot be retrieved again.
+          example: app_XXXXX.YOUR_API_KEY
+        prefix:
+          type: string
+          description: The key prefix used for cache lookup.
+          example: app_XXXXX
+      required:
+        - id
+        - userId
+        - key
+        - prefix
+    CreateApplicationKeysResponse:
+      title: CreateApplicationKeysResponse
+      type: object
+      description: Response containing created application API keys and any issues.
+      properties:
+        created:
+          type: array
+          items:
+            $ref: '#/components/schemas/CreatedApplicationKey'
+          description: Array of successfully created application API keys.
+        issues:
+          type: array
+          items:
+            $ref: '#/components/schemas/AdminIssue'
+          description: Array of issues encountered during creation.
+      required:
+        - created
+        - issues
+    DeleteApplicationKeysResponse:
+      title: DeleteApplicationKeysResponse
+      type: object
+      description: Response containing deleted application API key IDs and any issues.
+      properties:
+        deleted:
+          type: array
+          items:
+            $ref: '#/components/schemas/DeletedResource'
+          description: Array of deleted application API key IDs.
+        issues:
+          type: array
+          items:
+            $ref: '#/components/schemas/AdminIssue'
+          description: Array of issues encountered during deletion.
+      required:
+        - deleted
+        - issues
     CreateTenantsResponse:
       title: CreateTenantsResponse
       type: object

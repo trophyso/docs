@@ -1,0 +1,57 @@
+<CodeGroup>
+```bash cURL
+curl -X DELETE "https://admin.trophy.so/v1/application-api-keys?ids=550e8400-e29b-41d4-a716-446655440000" \
+     -H "X-API-KEY: <api-key>"
+```
+
+```typescript Node
+await trophy.admin.applicationApiKeys.delete({
+  ids: ["550e8400-e29b-41d4-a716-446655440000"],
+});
+```
+
+```python Python
+client.admin.application_api_keys.delete(
+    ids=["550e8400-e29b-41d4-a716-446655440000"],
+)
+```
+
+```php PHP
+$trophy->admin->applicationApiKeys->delete([
+    'ids' => ['550e8400-e29b-41d4-a716-446655440000'],
+]);
+```
+
+```java Java
+DeleteApplicationKeysResponse response = client.admin().applicationApiKeys().delete(
+  ApplicationApiKeysDeleteRequest.builder()
+    .ids(List.of("550e8400-e29b-41d4-a716-446655440000"))
+    .build()
+);
+```
+
+```go Go
+response, err := client.Admin.ApplicationApiKeys.Delete(
+    context.TODO(),
+    &admin.ApplicationApiKeysDeleteRequest{
+        Ids: []*string{
+            api.String("550e8400-e29b-41d4-a716-446655440000"),
+        },
+    },
+)
+```
+
+```csharp C#
+await trophy.Admin.ApplicationApiKeys.DeleteAsync(new ApplicationApiKeysDeleteRequest
+{
+    Ids = new[] { "550e8400-e29b-41d4-a716-446655440000" },
+});
+```
+
+```ruby Ruby
+result = client.admin.application_api_keys.delete(
+  ids: ['550e8400-e29b-41d4-a716-446655440000']
+)
+```
+
+</CodeGroup>
