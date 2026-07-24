@@ -1,86 +1,91 @@
 ---
 title: Autenticación
-description: Integre de forma segura con la API utilizando claves API a nivel de
-  cuenta transmitidas en el encabezado
+description: Autentícate con la API de la aplicación usando claves de API de
+  aplicación con ámbito de usuario transmitidas en el encabezado
   `X-API-KEY`.
-og:description: Integre de forma segura con la API de Trophy utilizando claves
-  API a nivel de cuenta transmitidas en el encabezado
+og:description: Autentícate con la API de la aplicación Trophy usando claves de
+  API de aplicación con ámbito de usuario transmitidas en el encabezado
   `X-API-KEY`.
 icon: key
 ---
 
-## Claves API {#api-keys}
+import CreateApplicationApiKeysRequestBlock from "../../snippets/create-application-api-keys-request-block.mdx";
+import DeleteApplicationApiKeysRequestBlock from "../../snippets/delete-application-api-keys-request-block.mdx";
+import ApplicationApiAuthenticateRequestBlock from "../../snippets/application-api-authenticate-request-block.mdx";
 
-Cada cuenta puede crear un máximo de 3 claves API desde la [Página de Integración](https://app.trophy.so/integration). Si ya te has registrado, habrás creado una durante la incorporación.
+## Tipos de clave de API {#api-key-types}
 
-Trophy realiza un seguimiento y muestra cuándo se creó cada clave API en tu cuenta y cuándo se usó por última vez para que puedas rastrear fácilmente el uso.
+La API de la aplicación acepta dos tipos de claves de API:
 
-<Frame>
-  <img height="200" noZoom src="../../assets/api/authentication/api_keys.png" />
-</Frame>
+| Tipo de clave | Ámbito | Dónde usar | ¿Segura del lado del cliente? |
+| --- | --- | --- | --- |
+| [Claves de API de aplicación](#application-api-keys) | Usuario individual | Solo API de la aplicación | Sí |
+| [Claves de API de administrador](/es/admin-api/authentication) | Cuenta completa | API de la aplicación y API de administrador | No |
 
-### Anatomía de una clave API {#anatomy-of-an-api-key}
+Usa claves de API de aplicación cuando desees que los usuarios finales o las aplicaciones cliente llamen a la API de la aplicación con permisos limitados a un solo usuario. Usa [claves de API de administrador](/es/admin-api/authentication) para integraciones de servidor confiables que requieran acceso amplio.
 
-Cada clave API está compuesta por 2 partes separadas por un punto:
+## Claves de API de aplicación {#application-api-keys}
 
-```bash
-{prefix}•{body}
+Las claves de API de aplicación tienen ámbito de un usuario específico. Cada clave solo puede realizar operaciones de la API de la aplicación en nombre del usuario para el que fue creada, lo que las hace seguras para exponerlas en entornos del lado del cliente.
+
+Las claves de API de aplicación no se pueden usar con la API de administrador.
+
+### Crear claves de API de aplicación {#creating-application-api-keys}
+
+Crea claves de API de aplicación con la [API de administrador](/es/admin-api/endpoints/application-api-keys/create-application-api-keys). Autentícate en esa solicitud con una [clave de API de administrador](/es/admin-api/authentication).
+
+Puedes crear claves para hasta 100 usuarios por solicitud. El valor completo de la clave se devuelve una sola vez en el momento de la creación y no se puede recuperar nuevamente—guárdala de forma segura o entrégala al cliente de inmediato.
+
+<CreateApplicationApiKeysRequestBlock />
+
+Una respuesta exitosa incluye el ID de la clave (utilizado posteriormente para eliminar la clave), el ID de usuario, la clave completa y un prefijo legible:
+
+```json
+{
+  "created": [
+    {
+      "id": "550e8400-e29b-41d4-a716-446655440000",
+      "userId": "user_123",
+      "key": "app_XXXXX.YOUR_API_KEY",
+      "prefix": "app_XXXXX"
+    }
+  ],
+  "issues": []
+}
 ```
 
-- El _prefijo_ son los primeros 8 caracteres. Es legible y siempre permanecerá igual para que sea fácilmente reconocible.
-- El _cuerpo_ es la parte secreta y solo se te muestra una vez cuando creas la clave.
+### Anatomía de una clave de API de aplicación {#anatomy-of-an-application-api-key}
 
-<Note>
-  Al utilizar la API, ambas partes de tu clave API deben enviarse en el encabezado `X-API-KEY`.
-</Note>
-
-### Autenticación de Solicitudes {#authenticating-requests}
-
-Al realizar solicitudes a la API, asegúrate de incluir **ambas** partes de tu clave API en el encabezado `X-API-KEY` como en este ejemplo:
+Cada clave de API de aplicación se compone de 2 partes separadas por un punto:
 
 ```bash
-curl https://app.trophy.so/api/users/<userId>/metrics/<key> \
-     -H "X-API-KEY: ********.***********************"
+{prefix}.{body}
 ```
 
-Si no pasas una clave API o tu clave API no es válida, recibirás un código de respuesta `401`.
-
-## Gestión de claves API {#managing-api-keys}
-
-Existen varias operaciones diferentes que puedes realizar con las claves API desde tu panel de Trophy para gestionar tu integración.
-
-<Frame>
-  <img
-    height="200"
-    noZoom
-    src="../../assets/api/authentication/api_key_options.png"
-  />
-</Frame>
-
-### Rotación de claves {#rotating-keys}
-
-Las claves de API se pueden rotar si deseas cambiarlas por cualquier motivo. En el momento de la rotación, la clave de API original dejará de funcionar inmediatamente y cualquier solicitud que aún la utilice comenzará a recibir respuestas `401`.
+- El _prefijo_ identifica la clave (por ejemplo `app_XXXXX`) y es seguro para registrar o mostrar.
+- El _cuerpo_ es la parte secreta, y solo se muestra una vez cuando creas la clave.
 
 <Note>
-  Ten en cuenta que al rotar las claves, tanto el prefijo como el cuerpo cambiarán.
+  Al usar el API, ambas partes de tu clave de API de aplicación deben enviarse en el encabezado
+  `X-API-KEY`.
 </Note>
 
-### Revocación de claves {#revoking-keys}
+### Autenticación de solicitudes {#authenticating-requests}
 
-Las claves de API también se pueden revocar por completo, momento en el cual pasan a estar _Inactivas_. En el momento de la revocación, la clave de API dejará de funcionar inmediatamente y cualquier solicitud que aún la utilice comenzará a recibir respuestas `401`.
+Incluye la clave de API de aplicación completa en el encabezado `X-API-KEY` en las solicitudes del Application API, o pásala al inicializar un cliente SDK. La clave solo autoriza operaciones para el usuario al que está vinculada; las solicitudes para otros usuarios devuelven un error.
 
-Una vez revocada, puedes reactivar la clave de API en cualquier momento.
+<ApplicationApiAuthenticateRequestBlock />
 
-<Note>
-  Ni el prefijo ni el cuerpo de la clave cambian cuando se revoca o se reactiva.
-</Note>
+Si no proporcionas una clave de API, o tu clave de API no es válida, recibirás un código de respuesta `401`.
 
-### Eliminación de claves de API {#deleting-api-keys}
+### Eliminación de claves de API de aplicación {#deleting-application-api-keys}
 
-Si estás 100% seguro de que ya no necesitas una clave de API, se pueden eliminar.
+Elimina las claves de API de aplicación por ID con el [Admin API](/es/admin-api/endpoints/application-api-keys/delete-application-api-keys). Usa el UUID devuelto cuando se creó la clave.
+
+<DeleteApplicationApiKeysRequestBlock />
 
 <Error>Una vez que las claves de API se eliminan, no se pueden recuperar.</Error>
 
 ## Obtener soporte {#get-support}
 
-¿Quieres ponerte en contacto con el equipo de Trophy? Contáctanos por [correo electrónico](mailto:support@trophy.so). ¡Estamos aquí para ayudarte!
+¿Quieres ponerte en contacto con el equipo de Trophy? Comunícate con nosotros por [correo electrónico](mailto:support@trophy.so). ¡Estamos aquí para ayudarte!
