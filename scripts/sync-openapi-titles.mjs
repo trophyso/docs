@@ -28,8 +28,8 @@ const ROOT = process.cwd();
 const CONFIG_PATH = path.join(ROOT, "i18n.json");
 const specCache = new Map();
 
-const OPENAPI_FM_RE =
-  /^openapi:\s+(\S+)\s+(?:webhook\s+(\S+)|(get|post|put|patch|delete)\s+(\S.*))$/m;
+const OPENAPI_LINE_RE = /^openapi:\s*(.+)$/m;
+const HTTP_METHODS = new Set(["get", "post", "put", "patch", "delete"]);
 
 function walkMdx(dir) {
   if (!fs.existsSync(dir)) return [];
@@ -75,15 +75,43 @@ function splitFrontmatter(content) {
 }
 
 function parseOpenapiRef(fmRaw) {
-  const m = fmRaw.match(OPENAPI_FM_RE);
+  const m = fmRaw.match(OPENAPI_LINE_RE);
   if (!m) return null;
-  const source = m[1].trim();
+
+  let value = m[1].trim();
+  if (
+    (value.startsWith('"') && value.endsWith('"')) ||
+    (value.startsWith("'") && value.endsWith("'"))
+  ) {
+    value = value.slice(1, -1).trim();
+  }
+  if (!value) return null;
+
+  const firstSpace = value.indexOf(" ");
+  if (firstSpace === -1) return null;
+
+  const source = value.slice(0, firstSpace).trim();
+  const remainder = value.slice(firstSpace + 1).trim();
+  if (!source || !remainder) return null;
+
   const normalizedSource = source.replace(/\\/g, "/");
-  if (m[2]) return { kind: "webhook", name: m[2], source, normalizedSource };
+
+  if (remainder.toLowerCase().startsWith("webhook ")) {
+    const name = remainder.slice("webhook ".length).trim();
+    if (!name) return null;
+    return { kind: "webhook", name, source, normalizedSource };
+  }
+
+  const remSpace = remainder.indexOf(" ");
+  if (remSpace === -1) return null;
+  const method = remainder.slice(0, remSpace).toLowerCase();
+  const apiPath = remainder.slice(remSpace + 1).trim();
+  if (!HTTP_METHODS.has(method) || !apiPath) return null;
+
   return {
     kind: "http",
-    method: m[3].toLowerCase(),
-    path: m[4].trim(),
+    method,
+    path: apiPath,
     source,
     normalizedSource,
   };
