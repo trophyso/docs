@@ -1,14 +1,16 @@
 #!/usr/bin/env node
 
 /**
- * Set Mintlify MDX `title:` from `openapi/*.yml` operation / webhook `summary`
+ * Set Mintlify MDX `title:` from OpenAPI operation / webhook `summary`
  * (matches what Mintlify infers when title is omitted).
  *
  * - Source locale (repo root): always rewrite title to match the spec.
  * - Target locales: only add `title` when missing or blank (keeps Lingo translations).
  *
- * Expects frontmatter: `openapi: openapi/<spec>.yml <method> <path>` or
- * `openapi: openapi/<spec>.yml webhook <eventKey>`.
+ * Expects frontmatter:
+ * - `openapi: "https://api.trophy.so/v1/openapi <method> <path>"`
+ * - `openapi: "https://admin.trophy.so/v1/openapi <method> <path>"`
+ * - `openapi: "https://api.trophy.so/v1/openapi webhook <eventKey>"`
  */
 
 import fs from "node:fs";
@@ -23,7 +25,6 @@ function hasFlag(name) {
 
 const checkOnly = hasFlag("--check");
 const ROOT = process.cwd();
-const OPENAPI_DIR = path.join(ROOT, "openapi");
 const CONFIG_PATH = path.join(ROOT, "i18n.json");
 const specCache = new Map();
 
@@ -76,19 +77,65 @@ function splitFrontmatter(content) {
 function parseOpenapiRef(fmRaw) {
   const m = fmRaw.match(OPENAPI_FM_RE);
   if (!m) return null;
-  const specFile = m[1].replace(/\\/g, "/");
-  if (!specFile.startsWith("openapi/") || !/\.ya?ml$/i.test(specFile)) return null;
-  if (m[2]) return { kind: "webhook", name: m[2], specFile };
-  return { kind: "http", method: m[3].toLowerCase(), path: m[4].trim(), specFile };
+  const source = m[1].trim();
+  const normalizedSource = source.replace(/\\/g, "/");
+  if (m[2]) return { kind: "webhook", name: m[2], source, normalizedSource };
+  return {
+    kind: "http",
+    method: m[3].toLowerCase(),
+    path: m[4].trim(),
+    source,
+    normalizedSource,
+  };
 }
 
-function loadSpec(specRelPath) {
-  const key = specRelPath.replace(/\\/g, "/");
+function normalizeLoadKey(source) {
+  const candidate = source.trim();
+  try {
+    const u = new URL(candidate);
+    return { key: u.toString(), isRemote: true };
+  } catch {
+    return { key: candidate.replace(/\\/g, "/"), isRemote: false };
+  }
+}
+
+async function loadSpec(source) {
+  const { key, isRemote } = normalizeLoadKey(source);
   if (specCache.has(key)) return specCache.get(key);
-  const absPath = path.join(ROOT, key);
-  if (!fs.existsSync(absPath)) return null;
-  const spec = parseYaml(fs.readFileSync(absPath, "utf8"));
-  if (!spec || typeof spec !== "object") return null;
+  if (!isRemote) {
+    const absPath = path.join(ROOT, key);
+    if (!fs.existsSync(absPath)) {
+      throw new Error(`Missing local OpenAPI spec: ${key}`);
+    }
+    const spec = parseYaml(fs.readFileSync(absPath, "utf8"));
+    if (!spec || typeof spec !== "object") {
+      throw new Error(`Invalid YAML OpenAPI spec: ${key}`);
+    }
+    specCache.set(key, spec);
+    return spec;
+  }
+
+  let res;
+  try {
+    res = await fetch(key, {
+      headers: { Accept: "application/json, application/yaml, text/yaml, */*" },
+    });
+  } catch (err) {
+    throw new Error(`Failed to fetch remote OpenAPI spec ${key}: ${err.message}`);
+  }
+  if (!res.ok) {
+    throw new Error(`Failed to fetch remote OpenAPI spec ${key}: HTTP ${res.status}`);
+  }
+  const body = await res.text();
+  let spec;
+  try {
+    spec = parseYaml(body);
+  } catch (err) {
+    throw new Error(`Failed to parse remote OpenAPI spec ${key}: ${err.message}`);
+  }
+  if (!spec || typeof spec !== "object") {
+    throw new Error(`Invalid remote OpenAPI document: ${key}`);
+  }
   specCache.set(key, spec);
   return spec;
 }
@@ -171,11 +218,6 @@ function expectedTitle(spec, ref) {
   return resolveHttpTitle(spec, ref.path, ref.method);
 }
 
-if (!fs.existsSync(OPENAPI_DIR)) {
-  console.error("Missing openapi/ directory at repository root.");
-  process.exit(1);
-}
-
 const config = JSON.parse(fs.readFileSync(CONFIG_PATH, "utf8"));
 const sourceLocale = config.locale?.source || "en";
 const targets = Array.isArray(config.locale?.targets) ? config.locale.targets : [];
@@ -209,18 +251,18 @@ for (const abs of sourceFiles) {
   const sp = splitFrontmatter(raw);
   if (!sp) continue;
   const ref = parseOpenapiRef(sp.fmRaw);
-  const spec = loadSpec(ref.specFile);
-  if (!spec) {
-    console.error(
-      `Missing or invalid OpenAPI spec ${ref.specFile} for ${path.relative(ROOT, abs)}`
-    );
+  let spec;
+  try {
+    spec = await loadSpec(ref.normalizedSource);
+  } catch (err) {
+    console.error(`OpenAPI load error for ${path.relative(ROOT, abs)}: ${err.message}`);
     errors++;
     continue;
   }
   const want = expectedTitle(spec, ref);
   if (!want) {
     console.error(
-      `No summary (or fallback) in ${ref.specFile} for ${path.relative(ROOT, abs)} (${JSON.stringify(ref)})`
+      `No summary (or fallback) in ${ref.normalizedSource} for ${path.relative(ROOT, abs)} (${JSON.stringify(ref)})`
     );
     errors++;
     continue;
