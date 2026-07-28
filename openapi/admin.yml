@@ -1,11 +1,11 @@
 openapi: 3.1.0
 info:
   title: Trophy
-  version: '1.18.0'
+  version: '1.19.0'
 x-fern-global-headers:
   - header: X-SDK-VERSION
     name: sdkVersion
-    x-fern-default: '1.18.0'
+    x-fern-default: '1.19.0'
 paths:
   /attributes:
     servers:
@@ -1160,6 +1160,162 @@ paths:
       summary: Get a metric by ID
       security:
         - ApiKeyAuth: []
+
+  /metrics/events:
+    servers:
+      - url: https://admin.trophy.so/v1
+        description: Admin API
+    parameters:
+      - $ref: '#/components/parameters/TenantId'
+    post:
+      description: >
+        Submit up to 1,000 metric events for asynchronous processing.
+      operationId: admin_metrics_batch_events
+      x-fern-server-name: admin
+      x-fern-sdk-group-name:
+        - admin
+        - metrics
+      x-fern-sdk-method-name: batchEvents
+      tags:
+        - Admin
+      x-codeSamples:
+        - lang: javascript
+          source: |
+            import { TrophyApiClient } from '@trophyso/node';
+
+            const trophy = new TrophyApiClient({
+              apiKey: 'YOUR_API_KEY'
+            });
+
+            const response = await trophy.admin.metrics.batchEvents([
+              {
+                key: 'words-written',
+                user: {
+                  id: 'user-id',
+                  email: 'user@example.com',
+                  tz: 'Europe/London'
+                },
+                value: 750,
+                idempotencyKey: 'e4296e4b-8493-4bd1-9c30-5a1a9ac4d78f',
+                attributes: {
+                  category: 'writing'
+                }
+              }
+            ]);
+        - lang: python
+          source: |
+            from trophy import TrophyApi
+
+            client = TrophyApi(api_key='YOUR_API_KEY')
+
+            response = client.admin.metrics.batch_events(
+              [
+                {
+                  "key": "words-written",
+                  "user": {
+                    "id": "user-id",
+                    "email": "user@example.com",
+                    "tz": "Europe/London"
+                  },
+                  "value": 750,
+                  "idempotencyKey": "e4296e4b-8493-4bd1-9c30-5a1a9ac4d78f",
+                  "attributes": {
+                    "category": "writing"
+                  }
+                }
+              ]
+            )
+        - lang: go
+          source: |
+            import (
+              "context"
+
+              api "github.com/trophyso/trophy-go"
+              trophyclient "github.com/trophyso/trophy-go/client"
+              "github.com/trophyso/trophy-go/option"
+            )
+
+            client := trophyclient.NewClient(
+              option.WithApiKey("YOUR_API_KEY"),
+            )
+
+            response, err := client.Admin.Metrics.BatchEvents(
+              context.TODO(),
+              []*api.BatchMetricEvent{
+                {
+                  Key: "words-written",
+                  User: &api.BatchMetricEventUser{Id: "user-id"},
+                  Value: 750,
+                  Attributes: map[string]string{
+                    "category": "writing",
+                  },
+                },
+              },
+            )
+      responses:
+        '202':
+          description: Events accepted into the processing queue
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BatchEventsResponse'
+              examples:
+                Successful operation:
+                  value:
+                    accepted: 1
+        '400':
+          description: 'Bad Request'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AdminErrorBody'
+        '401':
+          description: 'Unauthorized'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AdminErrorBody'
+        '404':
+          description: 'Metric not found'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AdminErrorBody'
+        '422':
+          description: 'Unprocessible Entity'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AdminErrorBody'
+      summary: Submit a batch of metric events
+      security:
+        - ApiKeyAuth: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: array
+              minItems: 1
+              maxItems: 1000
+              items:
+                $ref: '#/components/schemas/BatchMetricEvent'
+            examples:
+              Successful operation:
+                value:
+                  - key: words-written
+                    user:
+                      email: user@example.com
+                      tz: Europe/London
+                      id: '18'
+                      attributes:
+                        department: engineering
+                        role: developer
+                    value: 750
+                    idempotencyKey: e4296e4b-8493-4bd1-9c30-5a1a9ac4d78f
+                    attributes:
+                      category: writing
+                      source: mobile-app
 
   /points:
     servers:
@@ -5103,6 +5259,103 @@ components:
           type: string
       required:
         - error
+    BatchMetricEventUser:
+      title: BatchMetricEventUser
+      type: object
+      description: The user that triggered a batch metric event.
+      properties:
+        id:
+          type: string
+          description: The ID of the user in your database. Must be a string.
+          example: user-id
+        email:
+          type: string
+          description: The user's email address. Required if subscribeToEmails is true.
+          example: user@example.com
+        name:
+          type: string
+          description: The name to refer to the user by in emails.
+          example: User
+        tz:
+          type:
+            - string
+            - 'null'
+          description: The user's timezone (used for email scheduling).
+          example: Europe/London
+        deviceTokens:
+          type:
+            - array
+            - 'null'
+          description: The user's device tokens, used for push notifications.
+          items:
+            type: string
+            description: The device token.
+          example: ['token1', 'token2']
+        subscribeToEmails:
+          type: boolean
+          default: true
+          description: Whether the user should receive Trophy-powered emails. If false, Trophy will not store the user's email address.
+          example: true
+        attributes:
+          type: object
+          additionalProperties:
+            type: string
+          description: User attributes as key-value pairs. Keys must match existing user attributes set up in the Trophy dashboard.
+          example:
+            department: engineering
+            role: developer
+      required:
+        - id
+    BatchMetricEvent:
+      title: BatchMetricEvent
+      type: object
+      description: >
+        A metric event submitted as part of a batch. Same shape as a single
+        metric event, with the metric key included in the body.
+      properties:
+        key:
+          type: string
+          description: Unique reference of the metric as set when created.
+          example: words-written
+        user:
+          $ref: '#/components/schemas/BatchMetricEventUser'
+          description: The user that triggered the event.
+        value:
+          type: number
+          format: double
+          description: >-
+            The value to add to the user's current total for the given metric.
+          example: 750
+        attributes:
+          type: object
+          additionalProperties:
+            type: string
+          description: Event attributes as key-value pairs. Keys must match existing event attributes set up in the Trophy dashboard.
+          example:
+            category: writing
+            source: mobile-app
+        idempotencyKey:
+          type: string
+          description: >
+            Optional idempotency key for this event. When provided, the event is
+            ignored if another event with the same idempotency key has already 
+            been processed.
+          example: e4296e4b-8493-4bd1-9c30-5a1a9ac4d78f
+      required:
+        - key
+        - user
+        - value
+    BatchEventsResponse:
+      title: BatchEventsResponse
+      type: object
+      description: Response returned when a batch of metric events is accepted.
+      properties:
+        accepted:
+          type: integer
+          description: The number of events accepted into the processing queue.
+          example: 1
+      required:
+        - accepted
     CreateStreakFreezesRequest:
       title: CreateStreakFreezesRequest
       type: object
@@ -6661,7 +6914,7 @@ components:
         message:
           type: string
           description: A human-readable description of the issue.
-          example: Description of the issue.
+          example: Would exceed maximum freeze limit
       required:
         - severity
         - message
