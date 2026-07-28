@@ -656,6 +656,13 @@
                   "es/admin-api/endpoints/tenants/create-tenants",
                   "es/admin-api/endpoints/tenants/delete-tenants"
                 ]
+              },
+              {
+                "group": "Claves de API de aplicación",
+                "pages": [
+                  "es/admin-api/endpoints/application-api-keys/create-application-api-keys",
+                  "es/admin-api/endpoints/application-api-keys/delete-application-api-keys"
+                ]
               }
             ],
             "openapi": "https://admin.trophy.so/v1/openapi"
