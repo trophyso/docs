@@ -237,6 +237,7 @@
                   "admin-api/endpoints/metrics/get-a-metric",
                   "admin-api/endpoints/metrics/update-metrics",
                   "admin-api/endpoints/metrics/create-metrics",
+                  "admin-api/endpoints/metrics/submit-a-batch-of-metric-events",
                   "admin-api/endpoints/metrics/delete-metrics"
                 ]
               },
@@ -588,6 +589,7 @@
                   "es/admin-api/endpoints/metrics/get-a-metric",
                   "es/admin-api/endpoints/metrics/update-metrics",
                   "es/admin-api/endpoints/metrics/create-metrics",
+                  "es/admin-api/endpoints/metrics/submit-a-batch-of-metric-events",
                   "es/admin-api/endpoints/metrics/delete-metrics"
                 ]
               },

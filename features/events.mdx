@@ -169,6 +169,8 @@ Each metric has a unique `key` which you can use to reference and track events a
 
 To start tracking user interactions as events against your Trophy metrics, use the [Metrics API](/api-reference/endpoints/metrics/send-a-metric-change-event) or one of our type-safe [Client SDKs](/api-reference/client-libraries) supported in most major programming languages.
 
+If you're sending events in bulk from your backend (for example queue flushes, migrations, or batch imports), use the Admin API endpoint [Submit a batch of metric events](/admin-api/endpoints/metrics/submit-a-batch-of-metric-events) to send up to 1,000 metric events in one request.
+
 Here's an example where a fictional study platform is using a metric to track the number of flashcards flipped by each student. Each time an student interacts, the platform sends an event to Trophy telling it how many flashcards they viewed:
 
 <MetricChangeRequestBlock />
