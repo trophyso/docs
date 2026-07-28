@@ -356,7 +356,7 @@ Combina `total` con la lista de niveles ordenada del paso anterior para dibujar 
 
 #### Notificaciones de cambio de nivel {#level-change-notifications}
 
-Cuando envías un [evento de cambio de métrica](/es/api-reference/endpoints/metrics/send-a-metric-change-event), la respuesta incluirá un mapa `points` indexado por las claves de tu sistema de puntos para cada sistema que cambió como resultado del evento.
+Cuando envías un [evento de cambio de métrica](/es/api-reference/endpoints/events/submit-a-metric-event), la respuesta incluirá un mapa `points` indexado por las claves de tu sistema de puntos para cada sistema que cambió como resultado del evento.
 
 Los datos contienen una clave `level` solo cuando el nivel del usuario cambió debido a este evento. Si su nivel permaneció igual, esa clave se omite, por lo que puedes tratar de forma segura un `level` presente como una señal de cambio de nivel sin necesidad de seguimiento adicional.
 
@@ -408,7 +408,7 @@ Existen varias formas de usar Trophy para obtener y mostrar puntos en tu aplicac
 
 ### Activación de UI transaccional {#triggering-transactional-ui}
 
-En primer lugar, cualquier punto otorgado o deducido de los usuarios como resultado de un evento de cambio de métrica se devuelve en la respuesta al usar la [API de evento de cambio de métrica](/es/api-reference/endpoints/metrics/send-a-metric-change-event).
+En primer lugar, cualquier punto otorgado o deducido de los usuarios como resultado de un evento de cambio de métrica se devuelve en la respuesta al usar la [API de evento de cambio de métrica](/es/api-reference/endpoints/events/submit-a-metric-event).
 
 La respuesta incluye el nuevo total de puntos del usuario, cuántos puntos se otorgaron o dedujeron como resultado del evento, y los detalles de los activadores de puntos específicos que se dispararon. Cuando los [Niveles de Puntos](#points-levels) están habilitados, cada objeto de puntos en esa respuesta también puede incluir **`level`**: Trophy incluye el **nuevo** nivel del usuario **solo cuando cambió** como resultado de ese evento. El mismo comportamiento opcional de `level` se aplica cuando los puntos cambian debido a la [finalización de un logro](/es/api-reference/endpoints/achievements/mark-an-achievement-as-completed).
 

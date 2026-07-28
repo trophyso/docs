@@ -355,7 +355,7 @@ Pair `total` with the ordered level list from the previous step to draw a progre
 
 #### Level Change Notifications {#level-change-notifications}
 
-When you send a [metric change event](/api-reference/endpoints/metrics/send-a-metric-change-event), the response will include a `points` map keyed by your points system keys for each system that changed as a result of the event.
+When you send a [metric change event](/api-reference/endpoints/events/submit-a-metric-event), the response will include a `points` map keyed by your points system keys for each system that changed as a result of the event.
 
 The data contains a `level` key only when the user’s level changed because of this event. If their level stayed the same, that key is omitted, so you can safely treat a present `level` as a level change signal without extra bookkeeping.
 
@@ -407,7 +407,7 @@ There are a few ways to use Trophy to fetch and display points in your app.
 
 ### Triggering Transactional UI {#triggering-transactional-ui}
 
-Firstly, any points awarded to or deducted from users as a result of a metric change event are returned in the response when using the [metric change event API](/api-reference/endpoints/metrics/send-a-metric-change-event).
+Firstly, any points awarded to or deducted from users as a result of a metric change event are returned in the response when using the [metric change event API](/api-reference/endpoints/events/submit-a-metric-event).
 
 The response includes the user's new total points, how many points were awarded or deducted as a result of the event, and the details of the specific points triggers that fired. When [Points Levels](#points-levels) are enabled, each points object in that response may also include **`level`**: Trophy includes the user's **new** level **only when it changed** as a result of that event. The same optional `level` behavior applies when points change from an [achievement completion](/api-reference/endpoints/achievements/mark-an-achievement-as-completed).
 

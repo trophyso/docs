@@ -14,13 +14,13 @@ import IdempotentEventTracking from "../snippets/idempotent-event-tracking.mdx";
 
 When describing APIs, [idempotence](https://en.wikipedia.org/wiki/Idempotence) is a property of a particular operation whereby subsequent invocations after the first have no additional effect on the state of the system.
 
-Trophy's [event tracking API](/api-reference/endpoints/metrics/send-a-metric-change-event) can be used to enforce idempotency preventing client retries from having unintended side effects such as overcounting user interactions, or awarding points to users multiple times for the same action.
+Trophy's [event tracking API](/api-reference/endpoints/events/submit-a-metric-event) can be used to enforce idempotency preventing client retries from having unintended side effects such as overcounting user interactions, or awarding points to users multiple times for the same action.
 
 This is particularly important where rewards are tied to user actions to prevent users from 'gaming the system'.
 
 ## Sending Idempotent Requests {#sending-idempotent-requests}
 
-To ensure idempotency is respected when sending events to Trophy, include an `Idempotency-Key` header when using the [event tracking API](/api-reference/endpoints/metrics/send-a-metric-change-event). Additionally, all [client SDKs](/api-reference/client-libraries) support idempotency with built-in type safety.
+To ensure idempotency is respected when sending events to Trophy, include an `Idempotency-Key` header when using the [event tracking API](/api-reference/endpoints/events/submit-a-metric-event). Additionally, all [client SDKs](/api-reference/client-libraries) support idempotency with built-in type safety.
 
 You can choose what to use as your idempotency key, but it should reflect the level of 'uniqueness' that you want Trophy to respect.
 
