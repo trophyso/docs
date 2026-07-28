@@ -167,9 +167,9 @@ Hay un gran número de posibilidades aquí, ¡así que sé creativo!
 
 Cada métrica tiene un `key` único que puedes usar para referenciar y rastrear eventos en tu código. Puedes encontrar el `key` en la página de configuración de la métrica.
 
-Para comenzar a rastrear las interacciones de usuarios como eventos en tus Métricas de Trophy, usa la [API de Métricas](/es/api-reference/endpoints/metrics/send-a-metric-change-event) o una de nuestras [Bibliotecas cliente](/es/api-reference/client-libraries) con tipos seguros, compatibles con la mayoría de los principales lenguajes de programación.
+Para comenzar a rastrear las interacciones de usuarios como eventos en tus Métricas de Trophy, usa la [API de Métricas](/es/api-reference/endpoints/events/submit-a-metric-event) o una de nuestras [Bibliotecas cliente](/es/api-reference/client-libraries) con tipos seguros, compatibles con la mayoría de los principales lenguajes de programación.
 
-Si estás enviando eventos en lote desde tu backend (por ejemplo, vaciados de cola, migraciones o importaciones por lotes), utiliza el endpoint de la Admin API [Enviar un lote de eventos de métrica](/es/admin-api/endpoints/metrics/submit-a-batch-of-metric-events) para enviar hasta 1,000 eventos de métrica en una sola solicitud.
+Si estás enviando eventos en lote desde tu backend (por ejemplo, vaciados de cola, migraciones o importaciones por lotes), utiliza el endpoint de la Admin API [Enviar un lote de eventos de métrica](/es/admin-api/endpoints/events/submit-a-batch-of-metric-events) para enviar hasta 1,000 eventos de métrica en una sola solicitud.
 
 Aquí hay un ejemplo donde una plataforma de estudio ficticia está usando una métrica para rastrear el número de tarjetas didácticas volteadas por cada estudiante. Cada vez que un estudiante interactúa, la plataforma envía un evento a Trophy indicándole cuántas tarjetas vieron:
 
@@ -217,7 +217,7 @@ Por ejemplo, una aplicación de aprendizaje de idiomas podría especificar que l
 
 Esto ayuda a mantener tu código libre de lógica que verifique si los usuarios han completado acciones previamente, y en su lugar puedes confiar en que Trophy mantendrá las restricciones que necesitas.
 
-Para usar eventos idempotentes, utiliza el encabezado `Idempotency-Key` en la [API de eventos de métricas](/es/api-reference/endpoints/metrics/send-a-metric-change-event).
+Para usar eventos idempotentes, utiliza el encabezado `Idempotency-Key` en la [API de eventos de métricas](/es/api-reference/endpoints/events/submit-a-metric-event).
 
 [Más información sobre idempotencia](/es/api-reference/idempotency).
 

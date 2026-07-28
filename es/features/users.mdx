@@ -114,7 +114,7 @@ Asigna un nombre y una clave única al atributo. La clave es lo que utilizarás 
 
 ### Configuración de atributos {#setting-attributes}
 
-Los atributos pueden recibir valores para usuarios específicos utilizando su clave única, ya sea de forma integrada, cuando los usuarios incrementan métricas a través de la [API de incremento de métricas](/es/api-reference/endpoints/metrics/send-a-metric-change-event), o explícitamente mediante las APIs de [identificación de usuario](/es/api-reference/endpoints/users/identify-a-user), [creación de usuario](/es/api-reference/endpoints/users/create-a-user) o [actualización de usuario](/es/api-reference/endpoints/users/update-a-user).
+Los atributos pueden recibir valores para usuarios específicos utilizando su clave única, ya sea de forma integrada, cuando los usuarios incrementan métricas a través de la [API de incremento de métricas](/es/api-reference/endpoints/events/submit-a-metric-event), o explícitamente mediante las APIs de [identificación de usuario](/es/api-reference/endpoints/users/identify-a-user), [creación de usuario](/es/api-reference/endpoints/users/create-a-user) o [actualización de usuario](/es/api-reference/endpoints/users/update-a-user).
 
 <Warning>
   Trophy solo establecerá valores de atributos que hayan sido creados previamente
@@ -227,7 +227,7 @@ Cuando le informas a Trophy sobre un usuario en tu plataforma, llamamos a esto *
 
 La identificación en línea es la forma más sencilla de informar a Trophy sobre tus usuarios, ya que no requiere ningún código específico de identificación de usuarios. Simplemente le informas a Trophy sobre los usuarios a medida que utilizan normalmente tu plataforma.
 
-En la práctica, esto significa que cada vez que utilizas la [API de Eventos de Métricas](/es/api-reference/endpoints/metrics/send-a-metric-change-event), proporcionas los detalles completos del usuario que desencadenó el evento.
+En la práctica, esto significa que cada vez que utilizas la [API de Eventos de Métricas](/es/api-reference/endpoints/events/submit-a-metric-event), proporcionas los detalles completos del usuario que desencadenó el evento.
 
 Aquí hay un ejemplo donde se realiza una llamada a la API de eventos de métricas, y los detalles del usuario que realizó la interacción se incluyen en el cuerpo de la solicitud:
 

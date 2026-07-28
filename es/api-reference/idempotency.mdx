@@ -14,13 +14,13 @@ import IdempotentEventTracking from "../../snippets/idempotent-event-tracking.md
 
 Al describir APIs, la [idempotencia](https://en.wikipedia.org/wiki/Idempotence) es una propiedad de una operación particular en la que las invocaciones subsecuentes después de la primera no tienen ningún efecto adicional sobre el estado del sistema.
 
-La [API de seguimiento de eventos](/es/api-reference/endpoints/metrics/send-a-metric-change-event) de Trophy puede utilizarse para garantizar la idempotencia, evitando que los reintentos del cliente tengan efectos secundarios no deseados como el conteo excesivo de interacciones del usuario o la asignación múltiple de puntos a los usuarios por la misma acción.
+La [API de seguimiento de eventos](/es/api-reference/endpoints/events/submit-a-metric-event) de Trophy puede utilizarse para garantizar la idempotencia, evitando que los reintentos del cliente tengan efectos secundarios no deseados como el conteo excesivo de interacciones del usuario o la asignación múltiple de puntos a los usuarios por la misma acción.
 
 Esto es particularmente importante cuando las recompensas están vinculadas a acciones del usuario para evitar que los usuarios "manipulen el sistema".
 
 ## Envío de Solicitudes Idempotentes {#sending-idempotent-requests}
 
-Para garantizar que se respete la idempotencia al enviar eventos a Trophy, incluye un encabezado `Idempotency-Key` al usar la [API de seguimiento de eventos](/es/api-reference/endpoints/metrics/send-a-metric-change-event). Además, todos los [SDKs de cliente](/es/api-reference/client-libraries) admiten idempotencia con seguridad de tipos integrada.
+Para garantizar que se respete la idempotencia al enviar eventos a Trophy, incluye un encabezado `Idempotency-Key` al usar la [API de seguimiento de eventos](/es/api-reference/endpoints/events/submit-a-metric-event). Además, todos los [SDKs de cliente](/es/api-reference/client-libraries) admiten idempotencia con seguridad de tipos integrada.
 
 Puedes elegir qué utilizar como clave de idempotencia, pero debe reflejar el nivel de 'unicidad' que deseas que Trophy respete.
 

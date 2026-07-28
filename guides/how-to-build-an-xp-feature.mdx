@@ -107,14 +107,14 @@ TROPHY_API_KEY='*******'
 
 ## Tracking User Interactions {#tracking-user-interactions}
 
-To track an event (user interaction) against your metric, use the [metric change API](/api-reference/endpoints/metrics/send-a-metric-change-event).
+To track an event (user interaction) against your metric, use the [metric change API](/api-reference/endpoints/events/submit-a-metric-event).
 
 <MetricChangeRequestBlock />
 
 The response to this API call is the complete set of changes to any features you've built with Trophy, including any XP that was awarded to the user as a result of the event, and from what triggers it was awarded.
 
 <Note>
-  If you use [Points Levels](/features/points#points-levels), the `xp` object can include a **`level`** field **only when** the user's tier changed on this request; it may be omitted when their level stayed the same. See the [metric change API reference](/api-reference/endpoints/metrics/send-a-metric-change-event) for the full response schema.
+  If you use [Points Levels](/features/points#points-levels), the `xp` object can include a **`level`** field **only when** the user's tier changed on this request; it may be omitted when their level stayed the same. See the [metric change API reference](/api-reference/endpoints/events/submit-a-metric-event) for the full response schema.
 </Note>
 
 {/* vale off */}
@@ -166,7 +166,7 @@ You have a number of options for displaying XP in your application. Here we'll l
 
 ### Pop-up Notifications {#pop-up-notifications}
 
-We can use the response of the [metric change API](/api-reference/endpoints/metrics/send-a-metric-change-event) to show users pop-up notifications when users are awarded new XP.
+We can use the response of the [metric change API](/api-reference/endpoints/events/submit-a-metric-event) to show users pop-up notifications when users are awarded new XP.
 
 Here's an example of this in action:
 

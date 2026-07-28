@@ -172,9 +172,9 @@
                 ]
               },
               {
-                "group": "Metrics",
+                "group": "Events",
                 "pages": [
-                  "api-reference/endpoints/metrics/send-a-metric-change-event"
+                  "api-reference/endpoints/events/submit-a-metric-event"
                 ]
               },
               {
@@ -238,8 +238,13 @@
                   "admin-api/endpoints/metrics/get-a-metric",
                   "admin-api/endpoints/metrics/update-metrics",
                   "admin-api/endpoints/metrics/create-metrics",
-                  "admin-api/endpoints/metrics/submit-a-batch-of-metric-events",
                   "admin-api/endpoints/metrics/delete-metrics"
+                ]
+              },
+              {
+                "group": "Events",
+                "pages": [
+                  "admin-api/endpoints/events/submit-a-batch-of-metric-events"
                 ]
               },
               {
@@ -527,9 +532,9 @@
                 ]
               },
               {
-                "group": "Métricas",
+                "group": "Eventos",
                 "pages": [
-                  "es/api-reference/endpoints/metrics/send-a-metric-change-event"
+                  "es/api-reference/endpoints/events/submit-a-metric-event"
                 ]
               },
               {
@@ -593,8 +598,13 @@
                   "es/admin-api/endpoints/metrics/get-a-metric",
                   "es/admin-api/endpoints/metrics/update-metrics",
                   "es/admin-api/endpoints/metrics/create-metrics",
-                  "es/admin-api/endpoints/metrics/submit-a-batch-of-metric-events",
                   "es/admin-api/endpoints/metrics/delete-metrics"
+                ]
+              },
+              {
+                "group": "Eventos",
+                "pages": [
+                  "es/admin-api/endpoints/events/submit-a-batch-of-metric-events"
                 ]
               },
               {
@@ -771,6 +781,10 @@
       "destination": "/features/metrics"
     },
     {
+      "source": "/api-reference/endpoints/metrics/send-a-metric-change-event",
+      "destination": "/api-reference/endpoints/events/submit-a-metric-event"
+    },
+    {
       "source": "/platform/events",
       "destination": "/features/events"
     },
@@ -825,6 +839,10 @@
     {
       "source": "/es/platform/metrics",
       "destination": "/es/features/metrics"
+    },
+    {
+      "source": "/es/api-reference/endpoints/metrics/send-a-metric-change-event",
+      "destination": "/es/api-reference/endpoints/events/submit-a-metric-event"
     },
     {
       "source": "/es/platform/events",
