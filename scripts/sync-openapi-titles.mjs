@@ -8,9 +8,9 @@
  * - Target locales: only add `title` when missing or blank (keeps Lingo translations).
  *
  * Expects frontmatter:
- * - `openapi: "https://api.trophy.so/v1/openapi <method> <path>"`
- * - `openapi: "https://admin.trophy.so/v1/openapi <method> <path>"`
- * - `openapi: "https://api.trophy.so/v1/openapi webhook <eventKey>"`
+ * - `openapi: "GET /path"` (default source from docs.json navigation)
+ * - `openapi: "webhook <eventKey>"` (default source from docs.json navigation)
+ * - `openapi: "<spec-source> GET /path"` (explicit source still supported)
  */
 
 import fs from "node:fs";
@@ -27,6 +27,8 @@ const checkOnly = hasFlag("--check");
 const ROOT = process.cwd();
 const CONFIG_PATH = path.join(ROOT, "i18n.json");
 const specCache = new Map();
+const APP_SPEC_URL = "https://api.trophy.so/v1/openapi";
+const ADMIN_SPEC_URL = "https://admin.trophy.so/v1/openapi";
 
 const OPENAPI_LINE_RE = /^openapi:\s*(.+)$/m;
 const HTTP_METHODS = new Set(["get", "post", "put", "patch", "delete"]);
@@ -90,11 +92,16 @@ function parseOpenapiRef(fmRaw) {
   const firstSpace = value.indexOf(" ");
   if (firstSpace === -1) return null;
 
-  const source = value.slice(0, firstSpace).trim();
-  const remainder = value.slice(firstSpace + 1).trim();
-  if (!source || !remainder) return null;
+  let source = null;
+  let remainder = value;
+  const firstToken = value.slice(0, firstSpace).trim();
+  if (/^https?:\/\//i.test(firstToken) || firstToken.startsWith("openapi/")) {
+    source = firstToken;
+    remainder = value.slice(firstSpace + 1).trim();
+    if (!remainder) return null;
+  }
 
-  const normalizedSource = source.replace(/\\/g, "/");
+  const normalizedSource = source ? source.replace(/\\/g, "/") : null;
 
   if (remainder.toLowerCase().startsWith("webhook ")) {
     const name = remainder.slice("webhook ".length).trim();
@@ -115,6 +122,14 @@ function parseOpenapiRef(fmRaw) {
     source,
     normalizedSource,
   };
+}
+
+function inferSourceFromPath(fileAbsPath) {
+  const rel = path.relative(ROOT, fileAbsPath).replace(/\\/g, "/");
+  if (rel.startsWith("api-reference/endpoints/")) return APP_SPEC_URL;
+  if (rel.startsWith("admin-api/endpoints/")) return ADMIN_SPEC_URL;
+  if (rel.startsWith("webhooks/events/")) return APP_SPEC_URL;
+  return null;
 }
 
 function normalizeLoadKey(source) {
@@ -279,9 +294,15 @@ for (const abs of sourceFiles) {
   const sp = splitFrontmatter(raw);
   if (!sp) continue;
   const ref = parseOpenapiRef(sp.fmRaw);
+  const source = ref.normalizedSource ?? inferSourceFromPath(abs);
+  if (!source) {
+    console.error(`Cannot infer OpenAPI source for ${path.relative(ROOT, abs)}`);
+    errors++;
+    continue;
+  }
   let spec;
   try {
-    spec = await loadSpec(ref.normalizedSource);
+    spec = await loadSpec(source);
   } catch (err) {
     console.error(`OpenAPI load error for ${path.relative(ROOT, abs)}: ${err.message}`);
     errors++;
@@ -290,7 +311,7 @@ for (const abs of sourceFiles) {
   const want = expectedTitle(spec, ref);
   if (!want) {
     console.error(
-      `No summary (or fallback) in ${ref.normalizedSource} for ${path.relative(ROOT, abs)} (${JSON.stringify(ref)})`
+      `No summary (or fallback) in ${source} for ${path.relative(ROOT, abs)} (${JSON.stringify(ref)})`
     );
     errors++;
     continue;

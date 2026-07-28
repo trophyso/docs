@@ -215,7 +215,8 @@
                   "api-reference/endpoints/users/update-user-preferences"
                 ]
               }
-            ]
+            ],
+            "openapi": "https://api.trophy.so/v1/openapi"
           },
           {
             "tab": "Admin API",
@@ -310,7 +311,8 @@
                   "admin-api/endpoints/application-api-keys/delete-application-api-keys"
                 ]
               }
-            ]
+            ],
+            "openapi": "https://admin.trophy.so/v1/openapi"
           },
           {
             "tab": "Webhooks",
@@ -370,7 +372,8 @@
                   "webhooks/events/emails/achievement-due"
                 ]
               }
-            ]
+            ],
+            "openapi": "https://api.trophy.so/v1/openapi"
           },
           {
             "tab": "UI Kit",
@@ -567,7 +570,8 @@
                   "es/api-reference/endpoints/users/update-user-preferences"
                 ]
               }
-            ]
+            ],
+            "openapi": "https://api.trophy.so/v1/openapi"
           },
           {
             "tab": "API de Administración",
@@ -655,7 +659,8 @@
                   "es/admin-api/endpoints/tenants/delete-tenants"
                 ]
               }
-            ]
+            ],
+            "openapi": "https://admin.trophy.so/v1/openapi"
           },
           {
             "tab": "Webhooks",
@@ -715,7 +720,8 @@
                   "es/webhooks/events/emails/achievement-due"
                 ]
               }
-            ]
+            ],
+            "openapi": "https://api.trophy.so/v1/openapi"
           },
           {
             "tab": "Kit de UI",
