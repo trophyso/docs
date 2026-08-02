@@ -897,5 +897,11 @@
       "source": "/es/experimentation/engagement",
       "destination": "/es/platform/experimentation#what-is-engagement"
     }
-  ]
+  ],
+  "api": {
+    "openapi": [
+      "openapi/application.json",
+      "openapi/admin.json"
+    ]
+  }
 }

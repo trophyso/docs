@@ -7,10 +7,11 @@
  * - Source locale (repo root): always rewrite title to match the spec.
  * - Target locales: only add `title` when missing or blank (keeps Lingo translations).
  *
- * Expects frontmatter:
- * - `openapi: "GET /path"` (default source from docs.json navigation)
- * - `openapi: "webhook <eventKey>"` (default source from docs.json navigation)
- * - `openapi: "<spec-source> GET /path"` (explicit source still supported)
+ * Expects frontmatter with an explicit local OpenAPI source:
+ * - `openapi: "/openapi/application.json GET /path"`
+ * - `openapi: "/openapi/application.json webhook <eventKey>"`
+ * - `openapi: "/openapi/admin.json METHOD /path"`
+ * Short forms still resolve via path heuristics against known specs.
  */
 
 import fs from "node:fs";
@@ -27,6 +28,9 @@ const checkOnly = hasFlag("--check");
 const ROOT = process.cwd();
 const CONFIG_PATH = path.join(ROOT, "i18n.json");
 const specCache = new Map();
+const APP_SPEC = "openapi/application.json";
+const ADMIN_SPEC = "openapi/admin.json";
+/** @deprecated remote URLs — prefer local APP_SPEC / ADMIN_SPEC */
 const APP_SPEC_URL = "https://api.trophy.so/v1/openapi";
 const ADMIN_SPEC_URL = "https://admin.trophy.so/v1/openapi";
 
@@ -95,13 +99,21 @@ function parseOpenapiRef(fmRaw) {
   let source = null;
   let remainder = value;
   const firstToken = value.slice(0, firstSpace).trim();
-  if (/^https?:\/\//i.test(firstToken) || firstToken.startsWith("openapi/")) {
+  if (
+    /^https?:\/\//i.test(firstToken) ||
+    firstToken.startsWith("openapi/") ||
+    firstToken.startsWith("/openapi/")
+  ) {
     source = firstToken;
     remainder = value.slice(firstSpace + 1).trim();
     if (!remainder) return null;
   }
 
-  const normalizedSource = source ? source.replace(/\\/g, "/") : null;
+  let normalizedSource = source ? source.replace(/\\/g, "/") : null;
+  // Mintlify frontmatter uses a leading slash; load from repo-relative path.
+  if (normalizedSource && normalizedSource.startsWith("/openapi/")) {
+    normalizedSource = normalizedSource.slice(1);
+  }
 
   if (remainder.toLowerCase().startsWith("webhook ")) {
     const name = remainder.slice("webhook ".length).trim();
@@ -126,19 +138,22 @@ function parseOpenapiRef(fmRaw) {
 
 function inferSourceFromPath(fileAbsPath) {
   const rel = path.relative(ROOT, fileAbsPath).replace(/\\/g, "/");
-  if (rel.startsWith("api-reference/endpoints/")) return APP_SPEC_URL;
-  if (rel.startsWith("admin-api/endpoints/")) return ADMIN_SPEC_URL;
-  if (rel.startsWith("webhooks/events/")) return APP_SPEC_URL;
+  // Strip locale prefix (es/, fr/, …) for target locale pages.
+  const unprefixed = rel.replace(/^[a-z]{2}(?:-[A-Za-z]+)?\//, "");
+  if (unprefixed.startsWith("api-reference/endpoints/")) return APP_SPEC;
+  if (unprefixed.startsWith("admin-api/endpoints/")) return ADMIN_SPEC;
+  if (unprefixed.startsWith("webhooks/events/")) return APP_SPEC;
   return null;
 }
 
 function normalizeLoadKey(source) {
-  const candidate = source.trim();
+  let candidate = source.trim().replace(/\\/g, "/");
+  if (candidate.startsWith("/openapi/")) candidate = candidate.slice(1);
   try {
     const u = new URL(candidate);
     return { key: u.toString(), isRemote: true };
   } catch {
-    return { key: candidate.replace(/\\/g, "/"), isRemote: false };
+    return { key: candidate, isRemote: false };
   }
 }
 
