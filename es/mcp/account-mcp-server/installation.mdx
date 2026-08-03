@@ -1,0 +1,165 @@
+---
+title: Instalación
+description: Instala el servidor MCP de cuenta en Claude Code, Cursor, VS Code y
+  otros clientes MCP.
+subtitle: Conecta el servidor MCP de cuenta remoto a tu agente de codificación.
+icon: download
+---
+
+<Note>
+  Necesitas una [cuenta de Trophy](https://app.trophy.so/sign-up) para usar el servidor MCP de cuenta de Trophy.
+</Note>
+
+El servidor MCP de cuenta de Trophy es un servidor MCP HTTP remoto. Diriges tu cliente a la URL indicada a continuación usando tu [clave API de administrador](/es/admin-api/authentication) y tu agente podrá comenzar a usar las herramientas.
+
+```bash Server URL
+https://mcp.trophy.so
+```
+
+## Instalar en tu cliente {#install-in-your-client}
+
+Nombra este servidor de forma clara (por ejemplo `Trophy Account`) para que no colisione con el [servidor MCP de documentación](/es/mcp/docs-mcp-server/installation).
+
+<Note>
+  Reemplaza `YOUR_ADMIN_API_KEY` con una clave API de la [página de integraciones](https://app.trophy.so/integration) del panel de Trophy.
+</Note>
+
+<Tabs>
+  <Tab title="Claude Code">
+    Agrega el servidor remoto con una entrada `headers` para la clave API:
+
+    ```bash
+    claude mcp add-json "Trophy Account" '{
+      "type": "http",
+      "url": "https://mcp.trophy.so",
+      "headers": {
+        "x-trophy-api-key": "YOUR_ADMIN_API_KEY"
+      }
+    }'
+    ```
+
+    Para obtener la clave desde el entorno en lugar de incluirla directamente:
+
+    ```bash
+    claude mcp add-json "Trophy Account" "{
+      \"type\": \"http\",
+      \"url\": \"https://mcp.trophy.so\",
+      \"headers\": {
+        \"x-trophy-api-key\": \"${TROPHY_API_KEY}\"
+      }
+    }"
+    ```
+
+    Verifica que aparezca en tu lista:
+
+    ```bash
+    claude mcp list
+    ```
+
+  </Tab>
+  <Tab title="Cursor">
+    Abre la configuración de MCP y agrega esto a tu `mcp.json`:
+
+    ```json
+    {
+      "mcpServers": {
+        "Trophy Account": {
+          "url": "https://mcp.trophy.so",
+          "headers": {
+            "x-trophy-api-key": "YOUR_ADMIN_API_KEY"
+          }
+        }
+      }
+    }
+    ```
+
+    Si prefieres no almacenar la clave en el archivo, usa la sustitución de entorno de Cursor donde esté disponible:
+
+    ```json
+    {
+      "mcpServers": {
+        "Trophy Account": {
+          "url": "https://mcp.trophy.so",
+          "headers": {
+            "x-trophy-api-key": "${env:TROPHY_API_KEY}"
+          }
+        }
+      }
+    }
+    ```
+
+    Reinicia Cursor si es necesario para que el servidor y los encabezados se carguen.
+  </Tab>
+  <Tab title="VS Code">
+    Crea o actualiza `.vscode/mcp.json` en tu espacio de trabajo:
+
+    ```json
+    {
+      "servers": {
+        "Trophy Account": {
+          "type": "http",
+          "url": "https://mcp.trophy.so",
+          "headers": {
+            "x-trophy-api-key": "YOUR_ADMIN_API_KEY"
+          }
+        }
+      }
+    }
+    ```
+
+    Recarga VS Code y habilita el servidor.
+  </Tab>
+  <Tab title="Otros clientes">
+    Cualquier cliente MCP que admita servidores HTTP remotos y una configuración `headers` puede conectarse.
+
+    Usa:
+
+    - **Transporte:** HTTP (HTTP con streaming)
+    - **URL:** `https://mcp.trophy.so`
+    - **Nombre:** `Trophy Account` (o cualquier etiqueta que prefieras)
+    - **headers:**
+
+    ```json
+    {
+      "headers": {
+        "x-trophy-api-key": "YOUR_ADMIN_API_KEY"
+      }
+    }
+    ```
+
+  </Tab>
+</Tabs>
+
+## Verificar la conexión {#verify-the-connection}
+
+Pregunta a tu agente algo que requiera una llamada a la cuenta activa, por ejemplo:
+
+```text
+List the metrics in my Trophy account.
+```
+
+Si la autenticación fue exitosa, deberías obtener métricas de tu organización. Si recibes un error de autenticación o no autorizado, confirma que la clave sea válida y que la configuración de tu cliente incluya:
+
+```json
+"headers": {
+  "x-trophy-api-key": "YOUR_ADMIN_API_KEY"
+}
+```
+
+## Próximos pasos {#next-steps}
+
+<CardGroup>
+  <Card title="Capacidades" icon="wrench" href="/es/mcp/account-mcp-server/capabilities">
+    Explora qué herramientas expone el servidor MCP de cuenta.
+  </Card>
+  <Card title="Instalación del MCP de documentación" icon="download" href="/es/mcp/docs-mcp-server/installation">
+    Agrega contexto de documentación bajo demanda para tu agente.
+  </Card>
+  <Card title="Mejores prácticas" icon="circle-check" href="/es/mcp/best-practice">
+    Formas recomendadas de trabajar con agentes y MCP.
+  </Card>
+</CardGroup>
+
+## Obtener soporte {#get-support}
+
+¿Quieres ponerte en contacto con el equipo de Trophy? Contáctanos por [correo electrónico](mailto:support@trophy.so). ¡Estamos aquí para ayudarte!

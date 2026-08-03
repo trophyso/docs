@@ -378,6 +378,35 @@
             ]
           },
           {
+            "tab": "MCP",
+            "icon": "/icons/mcp.svg",
+            "groups": [
+              {
+                "group": "Getting Started",
+                "pages": [
+                  "mcp/overview",
+                  "mcp/best-practice"
+                ]
+              },
+              {
+                "group": "Docs MCP Server",
+                "pages": [
+                  "mcp/docs-mcp-server/introduction",
+                  "mcp/docs-mcp-server/installation",
+                  "mcp/docs-mcp-server/capabilities"
+                ]
+              },
+              {
+                "group": "Account MCP Server",
+                "pages": [
+                  "mcp/account-mcp-server/introduction",
+                  "mcp/account-mcp-server/installation",
+                  "mcp/account-mcp-server/capabilities"
+                ]
+              }
+            ]
+          },
+          {
             "tab": "UI Kit",
             "icon": "shapes",
             "pages": [
@@ -730,6 +759,35 @@
                   "es/webhooks/events/emails/reactivation-due",
                   "es/webhooks/events/emails/streak-reminder-due",
                   "es/webhooks/events/emails/achievement-due"
+                ]
+              }
+            ]
+          },
+          {
+            "tab": "MCP",
+            "icon": "/icons/mcp.svg",
+            "groups": [
+              {
+                "group": "Primeros pasos",
+                "pages": [
+                  "es/mcp/overview",
+                  "es/mcp/best-practice"
+                ]
+              },
+              {
+                "group": "Servidor MCP de docs",
+                "pages": [
+                  "es/mcp/docs-mcp-server/introduction",
+                  "es/mcp/docs-mcp-server/installation",
+                  "es/mcp/docs-mcp-server/capabilities"
+                ]
+              },
+              {
+                "group": "Servidor MCP de cuenta",
+                "pages": [
+                  "es/mcp/account-mcp-server/introduction",
+                  "es/mcp/account-mcp-server/installation",
+                  "es/mcp/account-mcp-server/capabilities"
                 ]
               }
             ]

@@ -1,0 +1,111 @@
+---
+title: Instalación
+description: Instala el servidor MCP de Trophy Docs en Claude, Claude Code,
+  Cursor, VS Code y otros clientes MCP.
+subtitle: Conecta la documentación de Trophy en vivo a tu agente de programación.
+icon: download
+---
+
+El servidor MCP de Docs es un servidor MCP HTTP remoto. Apunta tu cliente a la URL a continuación y tu agente podrá buscar y leer la documentación de Trophy bajo demanda.
+
+```bash Server URL
+https://docs.trophy.so/mcp
+```
+
+No se requiere una cuenta de Trophy para el servidor MCP de Docs, expone documentación pública en vivo.
+
+## Instalar en tu cliente {#install-in-your-client}
+
+Nombra este servidor de forma clara (por ejemplo `Trophy Docs`) para que no entre en conflicto con el [servidor MCP de cuenta](/es/mcp/account-mcp-server/installation) utilizado para acciones de cuenta.
+
+<Tabs>
+  <Tab title="Claude">
+    1. Abre [Claude Connectors](https://claude.ai/new#settings/customize-connectors).
+    2. Selecciona **Agregar > Agregar conector personalizado**.
+    3. Añade:
+       - Nombre: `Trophy Docs`
+       - URL: `https://docs.trophy.so/mcp`
+    4. En el chat, utiliza el botón más para habilitar el conector de Trophy Docs.
+  </Tab>
+  <Tab title="Claude Code">
+    Añade el servidor de docs:
+
+    ```bash
+    claude mcp add --transport http "Trophy Docs" https://docs.trophy.so/mcp
+    ```
+
+    Verifica:
+
+    ```bash
+    claude mcp list
+    ```
+
+  </Tab>
+  <Tab title="Cursor">
+    Abre la configuración de MCP y añade esto a tu `mcp.json`:
+
+    ```json
+    {
+      "mcpServers": {
+        "Trophy Docs": {
+          "url": "https://docs.trophy.so/mcp"
+        }
+      }
+    }
+    ```
+
+    Es posible que necesites reiniciar Cursor si el servidor no aparece en tu lista de MCP.
+  </Tab>
+  <Tab title="VS Code">
+    Crea o actualiza `.vscode/mcp.json` en tu espacio de trabajo:
+
+    ```json
+    {
+      "servers": {
+        "Trophy Docs": {
+          "type": "http",
+          "url": "https://docs.trophy.so/mcp"
+        }
+      }
+    }
+    ```
+
+    Recarga VS Code y habilita el servidor.
+  </Tab>
+  <Tab title="Otros clientes">
+    Cualquier cliente MCP que admita servidores HTTP remotos puede conectarse.
+
+    Utiliza:
+
+    - **Transporte:** HTTP (HTTP con streaming)
+    - **URL:** `https://docs.trophy.so/mcp`
+    - **Nombre:** `Trophy Docs` (recomendado)
+
+    Después de añadir el servidor, habilítalo en la interfaz del cliente si es necesario.
+  </Tab>
+</Tabs>
+
+## Verificar la conexión {#verify-the-connection}
+
+Pregunta a tu agente una cuestión exclusiva de documentación, por ejemplo:
+
+```text
+Using the Trophy Docs MCP, explain how to authenticate Application API requests.
+```
+
+Deberías obtener una respuesta fundamentada en la búsqueda de documentación o en una página de documentación específica, con enlaces de vuelta a docs.trophy.so.
+
+## Próximos Pasos {#next-steps}
+
+<CardGroup>
+  <Card title="Capacidades" icon="book-open" href="/es/mcp/docs-mcp-server/capabilities">
+    Descubre qué pueden hacer las herramientas del Docs MCP.
+  </Card>
+  <Card title="Mejores prácticas" icon="circle-check" href="/es/mcp/best-practice">
+    Formas recomendadas de trabajar con agentes y MCP.
+  </Card>
+</CardGroup>
+
+## Obtener Soporte {#get-support}
+
+¿Quieres ponerte en contacto con el equipo de Trophy? Comunícate con nosotros por [correo electrónico](mailto:support@trophy.so). ¡Estamos aquí para ayudarte!

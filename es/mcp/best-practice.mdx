@@ -1,0 +1,65 @@
+---
+title: Mejores Prácticas
+description: Cómo usar los servidores MCP de Docs y Account de Trophy juntos.
+og:description: Cómo usar los servidores MCP de Docs y Account de Trophy juntos.
+---
+
+El servidor MCP de Docs de Trophy y el servidor MCP de Account están diseñados para usarse juntos. Esta página cubre las formas recomendadas de utilizarlos.
+
+## Usar Ambos Servidores Juntos {#using-both-servers-together}
+
+Instala ambos servidores en tu cliente MCP usando nombres distintos para que las herramientas sean fáciles de identificar:
+
+| Nombre recomendado | URL |
+| --- | --- |
+| `Trophy Docs` | `https://docs.trophy.so/mcp` |
+| `Trophy Account` | `https://mcp.trophy.so/mcp` |
+
+Guías de instalación: [MCP de Docs](/es/mcp/docs-mcp-server/installation), [MCP de Account](/es/mcp/account-mcp-server/installation).
+
+## MCP de Docs: Documentación en Vivo {#docs-mcp-live-documentation}
+
+Usa el MCP de Docs como contexto en vivo sobre cómo funciona Trophy. Úsalo cuando necesites:
+
+- Entender el comportamiento de las funcionalidades de Trophy en detalle
+- Generar ideas sobre cómo resolver tu caso de uso específico de gamificación
+- Encontrar el API correcto para llamar
+
+El servidor MCP de Docs de Trophy es **de solo lectura** y siempre lee documentación pública en vivo, úsalo en lugar de copias locales para asegurarte de tener la información más actualizada.
+
+Consulta las [capacidades del MCP de Docs](/es/mcp/docs-mcp-server/capabilities) para más detalles.
+
+## MCP de Account: Configuración y Operaciones de Cuenta {#account-mcp-account-configuration-and-operations}
+
+Usa el MCP de Account cuando necesites realizar acciones en tu cuenta de Trophy. Úsalo cuando necesites:
+
+- Leer la configuración de tu cuenta de Trophy, por ejemplo, métricas, clasificaciones, etc.
+- Configurar recursos nuevos o actualizar los existentes en tu cuenta de Trophy mediante chat.
+- Completar tareas operativas como conceder congelaciones o restaurar rachas.
+
+El acceso está limitado a un [entorno](/es/platform/environments) específico de Trophy mediante [claves de API de administrador](/es/admin-api/authentication).
+
+Consulta las [capacidades del servidor MCP de cuenta](/es/mcp/account-mcp-server/capabilities) para obtener más detalles.
+
+## Flujo de trabajo recomendado {#recommended-workflow}
+
+Para la mayoría del trabajo agéntico con Trophy, usa ambos servidores en conjunto:
+
+1. **MCP de documentación** — carga el comportamiento de la función o API que necesita la tarea
+2. **MCP de cuenta (lectura)** — lista los recursos relacionados para que el trabajo se base en lo que ya existe
+3. **MCP de cuenta (escritura)** — crea o actualiza solo lo que requiere la tarea
+4. **Tu aplicación** — implementa llamadas a la API de aplicación en código usando las estructuras respaldadas por la documentación y tus claves API
+5. **Verificar** — vuelve a leer el estado de la cuenta o la documentación si algo falla
+
+### Ejemplo de prompt {#example-prompt}
+
+```text
+Using Trophy Docs MCP, review how metrics and event tracking works.
+Using Trophy Account MCP, list my existing metrics.
+Create a new 'workouts completed' metric if one does not already exist.
+Then integrate event tracking to this metric in my code based on the docs.
+```
+
+## Obtener soporte {#get-support}
+
+¿Quieres contactar al equipo de Trophy? Comunícate con nosotros por [correo electrónico](mailto:support@trophy.so). ¡Estamos aquí para ayudarte!

@@ -1,0 +1,54 @@
+---
+title: Introducción
+description: Aprende sobre el servidor MCP de documentación de Trophy y por qué
+  los agentes deben usarlo para obtener contexto de documentación en tiempo
+  real.
+subtitle: Documentación de Trophy bajo demanda para cualquier agente de
+  codificación de IA.
+---
+
+El servidor MCP de documentación de Trophy es un servidor remoto del [Protocolo de Contexto de Modelo](https://modelcontextprotocol.io) que proporciona a los agentes de IA acceso en tiempo real a la documentación de Trophy: guías, páginas de funciones, referencias de API y especificaciones OpenAPI.
+
+Piensa en él como una **habilidad bajo demanda**: en lugar de depender de los datos de entrenamiento del modelo, tu agente puede buscar y abrir la misma documentación que lees en docs.trophy.so cuando necesite detalles precisos y actualizados.
+
+```bash Server URL
+https://docs.trophy.so/mcp
+```
+
+## ¿Por qué un MCP de documentación? {#why-a-docs-mcp}
+
+Trophy cambia: se lanzan nuevos endpoints, los parámetros evolucionan y las guías se actualizan. Los agentes que solo utilizan conocimiento integrado corren el riesgo de inventar APIs, omitir restricciones o enviar integraciones basadas en patrones obsoletos.
+
+El MCP de documentación mantiene ese contexto actualizado. Antes de integrar una función o explicar una carga útil, el agente puede extraer el fragmento de documentación más reciente o la página completa y trabajar desde la fuente de verdad.
+
+Usos típicos:
+
+- Responder "¿cómo funciona X?" desde la documentación publicada antes de escribir código
+- Consultar formas de solicitud/respuesta y patrones de autenticación desde las páginas de referencia de API
+- Seguir guías de funciones (Rachas, Puntos, Clasificaciones) mientras se implementan eventos de backend
+- Explorar especificaciones OpenAPI cuando el agente necesita detalles exactos de ruta o esquema
+
+## Cómo funciona {#how-it-works}
+
+Trophy aloja un endpoint MCP remoto respaldado por el sitio de documentación público. Lo instalas en tu cliente MCP; el agente obtiene herramientas para **buscar** en la base de conocimiento y **leer** páginas completas desde un sistema de archivos de documentación aislado.
+
+El servidor es de **solo lectura**. No accede a tu cuenta de Trophy, no muta la configuración ni llama a las APIs de Trophy. Para acciones de cuenta, utiliza el [servidor MCP de cuenta](/es/mcp/account-mcp-server/introduction).
+
+<Note>
+  Los mejores resultados se obtienen al instalar **ambos** servidores: documentos para contexto, Account MCP para acción. Consulta [Mejores prácticas](/es/mcp/best-practice).
+</Note>
+
+## Primeros Pasos {#get-started}
+
+<CardGroup>
+  <Card title="Instalación" icon="download" href="/es/mcp/docs-mcp-server/installation">
+    Conecta el Docs MCP Server en clientes comunes.
+  </Card>
+  <Card title="Capacidades" icon="book-open" href="/es/mcp/docs-mcp-server/capabilities">
+    Descubre cómo funcionan las herramientas de búsqueda y lectura de páginas.
+  </Card>
+</CardGroup>
+
+## Obtener Soporte {#get-support}
+
+¿Quieres ponerte en contacto con el equipo de Trophy? Contáctanos por [correo electrónico](mailto:support@trophy.so). ¡Estamos aquí para ayudarte!

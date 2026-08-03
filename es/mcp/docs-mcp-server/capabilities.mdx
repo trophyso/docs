@@ -1,0 +1,91 @@
+---
+title: Capacidades
+description: Aprende qué puede hacer el servidor MCP de Trophy Docs.
+og:description: Aprende qué puede hacer el servidor MCP de Trophy Docs.
+icon: wrench
+---
+
+El servidor MCP de Trophy Docs expone un pequeño conjunto de herramientas de **solo lectura** limitadas a la documentación pública de Trophy. Los agentes deben preferir estas herramientas sobre la memoria previa para preguntas específicas de Trophy.
+
+## Búsqueda {#search}
+
+| Herramienta | Qué hace |
+| --- | --- |
+| `search_trophy_docs` | Búsqueda semántica en la base de conocimientos de la documentación; devuelve fragmentos relevantes, títulos y rutas de página |
+
+Usa la búsqueda para preguntas conceptuales o de "cómo hago…" — autenticación, Límites de velocidad, comportamiento de funciones, patrones de integración.
+
+Ejemplos de prompts:
+
+```text
+Search Trophy docs for how points boosts work.
+```
+
+```text
+Find the Application API endpoint for submitting a metric event.
+```
+
+## Leer páginas de documentación {#read-documentation-pages}
+
+| Herramienta | Qué hace |
+| --- | --- |
+| `query_docs_filesystem_trophy_docs` | Ejecuta consultas de solo lectura estilo shell contra un sistema de archivos virtual de páginas de documentación y especificaciones OpenAPI |
+
+Así es como el agente lee páginas completas una vez que la búsqueda devuelve una ruta. No existe una herramienta separada de "obtener página" — el agente usa comandos como `head`, `cat`, `rg`, `tree`, o `ls` contra rutas como `/features/streaks.mdx` o `/api-reference/introduction.mdx`.
+
+Patrones comunes:
+
+- `tree / -L 2` — explorar la estructura de la documentación
+- `rg -il "rate limit" /` — coincidencias exactas de palabras clave o regex
+- `head -80 /getting-started/quickstart.mdx` — leer la parte superior de una página
+- `cat /openapi/application.json | jq '...'` — inspeccionar OpenAPI cuando importa el detalle del esquema
+
+La salida se trunca por llamada, por lo que los buenos agentes usan lecturas específicas en lugar de volcar archivos grandes completos.
+
+Ejemplos de prompts:
+
+```text
+Open the streaks feature page and summarize freeze behavior.
+```
+
+```text
+From the Application API OpenAPI, list the user endpoints.
+```
+
+## Comentarios {#feedback}
+
+| Herramienta | Qué hace |
+| --- | --- |
+| `submit_feedback` | Reportar documentación incorrecta, desactualizada, incompleta o confusa al equipo de documentación de Trophy |
+
+Esto es para problemas de **contenido de documentación** (ejemplo incorrecto, paso faltante, explicación incorrecta), no para soporte del producto o ayuda con la cuenta.
+
+Ejemplo de prompt:
+
+```text
+The rate limiting page example looks wrong — file docs feedback on /api-reference/rate-limiting.
+```
+
+## Lo Que No Hace {#what-it-does-not-do}
+
+El Servidor MCP de Docs no puede:
+
+- Acceder o modificar recursos en tu organización de Trophy
+- Llamar APIs de Trophy
+
+Para operaciones de cuenta, instala el [Servidor MCP de Cuenta](/es/mcp/account-mcp-server/capabilities).
+
+## Próximos Pasos {#next-steps}
+
+<CardGroup>
+  <Card title="Instalar MCP de Cuenta" icon="download" href="/es/mcp/account-mcp-server/installation">
+    Instala el Servidor MCP de Cuenta en tu cliente MCP.
+  </Card>
+  <Card title="Capacidades del MCP de Cuenta" icon="wrench" href="/es/mcp/account-mcp-server/capabilities">
+    Conoce lo que puede hacer el MCP de Cuenta de Trophy.
+  </Card>
+</CardGroup>
+
+## Obtener Soporte {#get-support}
+
+¿Quieres comunicarte con el equipo de Trophy? Contáctanos por [correo electrónico](mailto:support@trophy.so). ¡Estamos aquí para ayudarte!

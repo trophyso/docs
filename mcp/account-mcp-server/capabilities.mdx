@@ -1,0 +1,107 @@
+---
+title: Capabilities
+description: Learn about what the Trophy Account MCP Server can do.
+og:description: Learn about what the Trophy Account MCP Server can do.
+icon: wrench
+---
+
+Once connected, the Account MCP Server exposes tools your agent can call to inspect and manage your account.
+
+Most resources offer paired **read** and **write** tools:
+
+- **Read** tools list and fetch resources
+- **Write** tools create or update resources in batch to speed up operations
+
+## Metrics Tools {#metrics-tools}
+
+Create and manage the [Metrics](/features/metrics) that drive streaks, achievements, points, and leaderboards.
+
+| Tool | What it does |
+| --- | --- |
+| `read_metrics` | List metrics, or get a single metric by ID |
+| `write_metrics` | Create or update metrics |
+
+## Attributes Tools {#attributes-tools}
+
+Manage [custom user attributes](/features/users#custom-user-attributes) and [custom event attributes](/features/events#custom-event-attributes) used for feature targeting and personalization.
+
+| Tool | What it does |
+| --- | --- |
+| `read_attributes` | List attributes, or get a single attribute by ID |
+| `write_attributes` | Create or update attributes |
+
+## Leaderboards Tools {#leaderboards-tools}
+
+Configure [Leaderboards](/features/leaderboards) within your Trophy account.
+
+| Tool | What it does |
+| --- | --- |
+| `read_leaderboards` | List leaderboards, or get a single leaderboard by ID |
+| `write_leaderboards` | Create or update leaderboards |
+
+## Points Tools {#points-tools}
+
+Configure full [Points](/features/points) systems, including [Triggers](/features/points#points-triggers), [Levels](/features/points#points-levels), and [Boosts](/features/points#points-boosts).
+
+| Tool | What it does |
+| --- | --- |
+| `read_points_systems` | List points systems, or get one by ID |
+| `write_points_systems` | Create or update points systems (optionally with nested triggers, levels, and boosts) |
+| `read_points_triggers` | List or get triggers for a points system |
+| `write_points_triggers` | Create or update triggers for a points system |
+| `read_points_levels` | List or get levels for a points system |
+| `write_points_levels` | Create or update levels for a points system |
+| `read_points_boosts` | List or get boosts for a points system |
+| `write_points_boosts` | Create or update boosts for a points system |
+
+## Tenants Tools {#tenants-tools}
+
+Manage [multi-tenant](/platform/multi-tenancy) organization records when multi-tenancy is enabled on your account.
+
+| Tool | What it does |
+| --- | --- |
+| `read_tenants` | List tenants, or get a single tenant by ID |
+| `write_tenants` | Create or update tenants |
+
+<Note>
+If multi-tenancy is not enabled on your account, these tools will not function.
+</Note>
+
+## Streaks Tools {#streaks-tools}
+
+Run operational [streak](/features/streaks) actions for users, such as granting [streak freezes](/features/streaks#streak-freezes) or [restoring streaks](/features/streaks#restoring-a-users-streak).
+
+| Tool | What it does |
+| --- | --- |
+| `grant_streak_freezes` | Grant streak freezes to one or more users |
+| `restore_streaks` | Restore a broken streak to it's previous length |
+
+## Example Prompts {#example-prompts}
+
+Use natural language — your agent picks the right tool and parameters:
+
+```text
+Create an XP system called 'Kudos' that grants 10 points for each workout completed.
+```
+
+```text
+Schedule 2X XP boosts for the 'Kudos' system across the next 3 weekends (only for paying users - 'plan' attribute is 'pro').
+```
+
+```text
+Grant two streak freezes to user user_123.
+```
+
+```text
+user_123 wants their streak back, restore it to it's previous length.
+```
+
+## Scope and Safety {#scope-and-safety}
+
+- Tools will only act on the Trophy [environment](/platform/environments) tied to the API key you pass in `x-trophy-api-key`.
+- Write tools can change live configuration. Prefer a staging or sandbox [environment](/platform/environments) when iterating.
+- Tools cannot delete resources.
+
+## Get Support {#get-support}
+
+Want to get in touch with the Trophy team? Reach out to us via [email](mailto:support@trophy.so). We're here to help!

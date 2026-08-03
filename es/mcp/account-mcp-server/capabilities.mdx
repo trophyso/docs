@@ -1,0 +1,107 @@
+---
+title: Capacidades
+description: Aprende qué puede hacer el servidor MCP de Trophy Account.
+og:description: Aprende qué puede hacer el servidor MCP de Trophy Account.
+icon: wrench
+---
+
+Una vez conectado, el servidor MCP de Account expone herramientas que tu agente puede llamar para inspeccionar y gestionar tu cuenta.
+
+La mayoría de los recursos ofrecen herramientas de **lectura** y **escritura** emparejadas:
+
+- Las herramientas de **lectura** listan y obtienen recursos
+- Las herramientas de **escritura** crean o actualizan recursos por lotes para acelerar las operaciones
+
+## Herramientas de Métricas {#metrics-tools}
+
+Crea y gestiona las [Métricas](/es/features/metrics) que impulsan rachas, logros, puntos y clasificaciones.
+
+| Herramienta | Qué hace |
+| --- | --- |
+| `read_metrics` | Lista métricas u obtiene una sola métrica por ID |
+| `write_metrics` | Crea o actualiza métricas |
+
+## Herramientas de Atributos {#attributes-tools}
+
+Gestiona [atributos de usuario personalizados](/es/features/users#custom-user-attributes) y [atributos de evento personalizados](/es/features/events#custom-event-attributes) utilizados para la segmentación de funciones y personalización.
+
+| Herramienta | Qué hace |
+| --- | --- |
+| `read_attributes` | Lista atributos u obtiene un solo atributo por ID |
+| `write_attributes` | Crea o actualiza atributos |
+
+## Herramientas de Clasificaciones {#leaderboards-tools}
+
+Configura [Clasificaciones](/es/features/leaderboards) dentro de tu cuenta de Trophy.
+
+| Herramienta | Qué hace |
+| --- | --- |
+| `read_leaderboards` | Lista clasificaciones u obtiene una sola clasificación por ID |
+| `write_leaderboards` | Crea o actualiza clasificaciones |
+
+## Herramientas de Puntos {#points-tools}
+
+Configura sistemas completos de [Puntos](/es/features/points), incluyendo [Desencadenadores](/es/features/points#points-triggers), [Niveles](/es/features/points#points-levels) y [Impulsos](/es/features/points#points-boosts).
+
+| Herramienta | Qué hace |
+| --- | --- |
+| `read_points_systems` | Lista sistemas de puntos u obtiene uno por ID |
+| `write_points_systems` | Crea o actualiza sistemas de puntos (opcionalmente con desencadenadores, niveles e impulsos anidados) |
+| `read_points_triggers` | Lista u obtiene desencadenadores para un sistema de puntos |
+| `write_points_triggers` | Crea o actualiza desencadenadores para un sistema de puntos |
+| `read_points_levels` | Lista u obtiene niveles para un sistema de puntos |
+| `write_points_levels` | Crea o actualiza niveles para un sistema de puntos |
+| `read_points_boosts` | Lista u obtiene impulsos para un sistema de puntos |
+| `write_points_boosts` | Crea o actualiza impulsos para un sistema de puntos |
+
+## Herramientas de Clientes {#tenants-tools}
+
+Administra registros de organizaciones [multicliente](/es/platform/multi-tenancy) cuando la funcionalidad multicliente esté habilitada en tu cuenta.
+
+| Herramienta | Qué hace |
+| --- | --- |
+| `read_tenants` | Lista clientes u obtiene un cliente específico por ID |
+| `write_tenants` | Crea o actualiza clientes |
+
+<Note>
+Si la funcionalidad multicliente no está habilitada en tu cuenta, estas herramientas no funcionarán.
+</Note>
+
+## Herramientas de Rachas {#streaks-tools}
+
+Ejecuta acciones operativas de [rachas](/es/features/streaks) para usuarios, como otorgar [congelaciones de racha](/es/features/streaks#streak-freezes) o [restaurar rachas](/es/features/streaks#restoring-a-users-streak).
+
+| Herramienta | Qué hace |
+| --- | --- |
+| `grant_streak_freezes` | Otorga congelaciones de racha a uno o más usuarios |
+| `restore_streaks` | Restaura una racha interrumpida a su longitud anterior |
+
+## Ejemplos de Prompts {#example-prompts}
+
+Usa lenguaje natural — tu agente selecciona la herramienta y los parámetros adecuados:
+
+```text
+Create an XP system called 'Kudos' that grants 10 points for each workout completed.
+```
+
+```text
+Schedule 2X XP boosts for the 'Kudos' system across the next 3 weekends (only for paying users - 'plan' attribute is 'pro').
+```
+
+```text
+Grant two streak freezes to user user_123.
+```
+
+```text
+user_123 wants their streak back, restore it to it's previous length.
+```
+
+## Alcance y Seguridad {#scope-and-safety}
+
+- Las herramientas solo actuarán en el [entorno](/es/platform/environments) de Trophy vinculado a la clave API que proporciones en `x-trophy-api-key`.
+- Las herramientas de escritura pueden modificar la configuración en vivo. Prefiere un [entorno](/es/platform/environments) de staging o sandbox al iterar.
+- Las herramientas no pueden eliminar recursos.
+
+## Obtén Soporte {#get-support}
+
+¿Quieres ponerte en contacto con el equipo de Trophy? Comunícate con nosotros por [correo electrónico](mailto:support@trophy.so). ¡Estamos aquí para ayudarte!
