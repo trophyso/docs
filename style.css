@@ -1,0 +1,16 @@
+/* Mintlify renders custom path icons as <img>, so they ignore parent tab color.
+   Recolor the MCP tab icon via mask + currentColor, matching Lucide nav icons. */
+a.nav-tabs-item:has(img[src*="/icons/mcp.svg"])::before {
+  content: "";
+  display: block;
+  width: 1rem;
+  height: 1rem;
+  flex-shrink: 0;
+  background-color: currentColor;
+  -webkit-mask: url("/icons/mcp.svg") center / contain no-repeat;
+  mask: url("/icons/mcp.svg") center / contain no-repeat;
+}
+
+a.nav-tabs-item img[src*="/icons/mcp.svg"] {
+  display: none;
+}

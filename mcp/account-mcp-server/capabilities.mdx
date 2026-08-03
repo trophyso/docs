@@ -1,0 +1,138 @@
+---
+title: Capabilities
+description: Learn about what the Trophy Account MCP Server can do.
+og:description: Learn about what the Trophy Account MCP Server can do.
+icon: wrench
+---
+
+Once connected, the Account MCP Server exposes tools your agent can call to inspect and manage your account.
+
+Most configuration resources offer paired **read** and **write** tools:
+
+- **Read** tools list and fetch resources
+- **Write** tools create or update resources in batch to speed up operations
+
+## Tool Reference {#tool-reference}
+
+The full list of tools available in the Trophy Account MCP Server.
+
+### Metrics Tools {#metrics-tools}
+
+Create and manage the [Metrics](/features/metrics) that drive streaks, achievements, points, and leaderboards.
+
+| Tool | What it does |
+| --- | --- |
+| `read_metrics` | List metrics, or get a single metric by ID |
+| `write_metrics` | Create or update metrics |
+
+### Attributes Tools {#attributes-tools}
+
+Manage [Custom User Attributes](/features/users#custom-user-attributes) and [Custom Event Attributes](/features/events#custom-event-attributes) used for feature targeting and personalization.
+
+| Tool | What it does |
+| --- | --- |
+| `read_attributes` | List attributes, or get a single attribute by ID |
+| `write_attributes` | Create or update attributes |
+
+### Achievements Tools {#achievements-tools}
+
+Read [Achievements](/features/achievements) and completion analytics for your account.
+
+| Tool | What it does |
+| --- | --- |
+| `read_achievements` | List achievements with completion counts and rarity; optionally filter by `user_attributes` |
+
+### Leaderboards Tools {#leaderboards-tools}
+
+Configure [Leaderboards](/features/leaderboards) and read live rankings.
+
+| Tool | What it does |
+| --- | --- |
+| `read_leaderboards` | List leaderboards, or get a single leaderboard by ID |
+| `write_leaderboards` | Create or update leaderboards |
+| `read_leaderboard_rankings` | Get a leaderboard with live rankings by key (optional pagination, run date, user centering, and attribute filters) |
+
+### Points Tools {#points-tools}
+
+Configure full [Points](/features/points) systems, including [Triggers](/features/points#points-triggers), [Levels](/features/points#points-levels), and [Boosts](/features/points#points-boosts), and read distribution analytics.
+
+| Tool | What it does |
+| --- | --- |
+| `read_points_systems` | List points systems, or get one by ID |
+| `write_points_systems` | Create or update points systems (optionally with nested triggers, levels, and boosts) |
+| `read_points_triggers` | List or get triggers for a points system |
+| `write_points_triggers` | Create or update triggers for a points system |
+| `read_points_levels` | List or get levels for a points system |
+| `write_points_levels` | Create or update levels for a points system |
+| `read_points_boosts` | List or get boosts for a points system |
+| `write_points_boosts` | Create or update boosts for a points system |
+| `read_points_analytics` | Points distribution and level breakdowns for a system (`summary` or `level_summary`; optional `user_attributes` on summary) |
+
+### Tenants Tools {#tenants-tools}
+
+Manage [Multi-Tenant](/platform/multi-tenancy) organization records when multi-tenancy is enabled on your account.
+
+| Tool | What it does |
+| --- | --- |
+| `read_tenants` | List tenants, or get a single tenant by ID |
+| `write_tenants` | Create or update tenants |
+
+<Note>
+If multi-tenancy is not enabled on your account, these tools will not function.
+</Note>
+
+### Streaks Tools {#streaks-tools}
+
+Look up and run operational [Streaks](/features/streaks) actions for users, including granting [Streak Freezes](/features/streaks#streak-freezes) or [restoring streaks](/features/streaks#restoring-a-users-streak).
+
+| Tool | What it does |
+| --- | --- |
+| `list_user_streaks` | Get streak length (and last extension timestamp) for up to 100 users, ranked longest first |
+| `grant_streak_freezes` | Grant streak freezes to one or more users |
+| `restore_streaks` | Restore a broken streak to its previous length |
+
+## Example Prompts {#example-prompts}
+
+Use natural language — your agent picks the right tool and parameters:
+
+```text
+Create an XP system called 'Kudos' that grants 10 points for each workout completed.
+```
+
+```text
+Schedule 2X XP boosts for the 'Kudos' system across the next 3 weekends (only for paying users - 'plan' attribute is 'pro').
+```
+
+```text
+List all achievements, completion rates and rarity in my Trophy account.
+```
+
+```text
+Get the top 20 rankings for leaderboard weekly-workouts this week.
+```
+
+```text
+Summarize the Kudos points distribution for pro users.
+```
+
+```text
+What are the current streak lengths for users user_123 and user_456?
+```
+
+```text
+Grant two streak freezes to user user_123.
+```
+
+```text
+user_123 wants their streak back, restore it to its previous length.
+```
+
+## Scope and Safety {#scope-and-safety}
+
+- Tools will only act on the Trophy [environment](/platform/environments) tied to the API key you pass in `x-trophy-api-key`.
+- Write tools can change live configuration. Prefer a staging or sandbox [environment](/platform/environments) when iterating.
+- Tools cannot delete resources.
+
+## Get Support {#get-support}
+
+Want to get in touch with the Trophy team? Reach out to us via [email](mailto:support@trophy.so). We're here to help!

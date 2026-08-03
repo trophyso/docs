@@ -1,0 +1,65 @@
+---
+title: Best Practice
+description: How to use Trophy’s Docs MCP and Account MCP servers together.
+og:description: How to use Trophy’s Docs MCP and Account MCP servers together.
+---
+
+The Trophy Docs MCP Server and Account MCP Server are designed to be used together. This page covers the recommended ways to use them.
+
+## Using Both Servers Together {#using-both-servers-together}
+
+Install both servers in your MCP client using distinct names so tools stay easy to target:
+
+| Recommended name | URL |
+| --- | --- |
+| `Trophy Docs` | `https://docs.trophy.so/mcp` |
+| `Trophy Account` | `https://mcp.trophy.so/mcp` |
+
+Installation guides: [Docs MCP](/mcp/docs-mcp-server/installation), [Account MCP](/mcp/account-mcp-server/installation).
+
+## Docs MCP: Live Documentation {#docs-mcp-live-documentation}
+
+Use the Docs MCP as live context for how Trophy works. Use it when you need to:
+
+- Understand the behavior of Trophy features in detail
+- Brainstorm how to solve your specific gamification use case
+- Find the right API to call
+
+The Trophy Docs MCP Server is **read-only** and always reads live public documentation, use it over local copies to ensure you have the most up-to-date information.
+
+See [Docs MCP capabilities](/mcp/docs-mcp-server/capabilities) for more details.
+
+## Account MCP: Account Configuration and Operations {#account-mcp-account-configuration-and-operations}
+
+Use the Account MCP when you need to take actions in your Trophy account. Use it when you need to:
+
+- Read configuration from your Trophy account e.g. metrics, leaderboards etc.
+- Configure new or update existing resources in your Trophy account via chat.
+- Complete operational tasks such as granting freezes or restoring streaks.
+
+Access is scoped to a specific Trophy [environment](/platform/environments) via [Admin API keys](/admin-api/authentication).
+
+See [Account MCP capabilities](/mcp/account-mcp-server/capabilities) for more details.
+
+## Recommended Workflow {#recommended-workflow}
+
+For most agentic Trophy work, use both servers together:
+
+1. **Docs MCP** — load the feature or API behavior the task needs
+2. **Account MCP (read)** — list related resources so work builds on what already exists
+3. **Account MCP (write)** — create or update only what the task requires
+4. **Your app** — implement Application API calls in code using docs-backed shapes and your API keys
+5. **Verify** — re-read account state or docs if something fails
+
+### Example Prompt {#example-prompt}
+
+```text
+Using Trophy Docs MCP, review how metrics and event tracking works.
+Using Trophy Account MCP, list my existing metrics.
+Create a new 'workouts completed' metric if one does not already exist.
+Then integrate event tracking to this metric in my code based on the docs.
+```
+
+## Get Support {#get-support}
+
+Want to get in touch with the Trophy team? Reach out to us via [email](mailto:support@trophy.so). We're here to help!

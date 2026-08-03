@@ -37,7 +37,10 @@
         "webhooks/events/leaderboards/*.mdx",
         "webhooks/events/points/*.mdx",
         "webhooks/events/streaks/*.mdx",
-        "uikit/*.mdx"
+        "uikit/*.mdx",
+        "mcp/*.mdx",
+        "mcp/account-mcp-server/*.mdx",
+        "mcp/docs-mcp-server/*.mdx"
       ],
       "exclude": [
         "snippets/*.mdx",

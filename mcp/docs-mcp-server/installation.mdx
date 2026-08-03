@@ -1,0 +1,109 @@
+---
+title: Installation
+description: Install the Trophy Docs MCP Server in Claude, Claude Code, Cursor, VS Code, and other MCP clients.
+subtitle: Connect live Trophy documentation to your coding agent.
+icon: download
+---
+
+The Docs MCP Server is a remote HTTP MCP server. Point your client at the URL below and your agent can search and read Trophy docs on demand.
+
+```bash Server URL
+https://docs.trophy.so/mcp
+```
+
+No Trophy account is required for the Docs MCP Server, it exposes live public documentation.
+
+## Install in Your Client {#install-in-your-client}
+
+Name this server clearly (for example `Trophy Docs`) so it does not collide with the [Account MCP Server](/mcp/account-mcp-server/installation) used for account actions.
+
+<Tabs>
+  <Tab title="Claude">
+    1. Open [Claude Connectors](https://claude.ai/new#settings/customize-connectors).
+    2. Select **Add > Add custom connector**.
+    3. Add:
+       - Name: `Trophy Docs`
+       - URL: `https://docs.trophy.so/mcp`
+    4. In chat, use the plus button to enable the Trophy Docs connector.
+  </Tab>
+  <Tab title="Claude Code">
+    Add the docs server:
+
+    ```bash
+    claude mcp add --transport http "Trophy Docs" https://docs.trophy.so/mcp
+    ```
+
+    Verify:
+
+    ```bash
+    claude mcp list
+    ```
+  </Tab>
+  <Tab title="Cursor">
+    Open MCP settings and add this to your `mcp.json`:
+
+    ```json
+    {
+      "mcpServers": {
+        "Trophy Docs": {
+          "url": "https://docs.trophy.so/mcp"
+        }
+      }
+    }
+    ```
+
+    You may need to restart Cursor if the server does not appear in your MCP list.
+  </Tab>
+  <Tab title="VS Code">
+    Create or update `.vscode/mcp.json` in your workspace:
+
+    ```json
+    {
+      "servers": {
+        "Trophy Docs": {
+          "type": "http",
+          "url": "https://docs.trophy.so/mcp"
+        }
+      }
+    }
+    ```
+
+    Reload VS Code and enable the server.
+  </Tab>
+  <Tab title="Other clients">
+    Any MCP client that supports remote HTTP servers can connect.
+
+    Use:
+
+    - **Transport:** HTTP (streamable HTTP)
+    - **URL:** `https://docs.trophy.so/mcp`
+    - **Name:** `Trophy Docs` (recommended)
+
+    After adding the server, enable it in the client UI if required.
+  </Tab>
+</Tabs>
+
+## Verify the Connection {#verify-the-connection}
+
+Ask your agent a docs-only question, for example:
+
+```text
+Using the Trophy Docs MCP, explain how to authenticate Application API requests.
+```
+
+You should get an answer grounded in docs search or a specific docs page, with links back to docs.trophy.so.
+
+## Next Steps {#next-steps}
+
+<CardGroup>
+  <Card title="Capabilities" icon="book-open" href="/mcp/docs-mcp-server/capabilities">
+    Learn what the Docs MCP tools can do.
+  </Card>
+  <Card title="Best practice" icon="circle-check" href="/mcp/best-practice">
+    Recommended ways to work with agents and MCP.
+  </Card>
+</CardGroup>
+
+## Get Support {#get-support}
+
+Want to get in touch with the Trophy team? Reach out to us via [email](mailto:support@trophy.so). We're here to help!

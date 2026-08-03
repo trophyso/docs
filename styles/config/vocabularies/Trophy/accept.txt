@@ -20,6 +20,8 @@ Strava
 grayscale
 localStorage
 shadcn
+agentic
+sandboxed
 
 # Markdown rich text
 _[\w\s]+_

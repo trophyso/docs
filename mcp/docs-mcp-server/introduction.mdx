@@ -1,0 +1,51 @@
+---
+title: Introduction
+description: Learn about the Trophy Docs MCP Server and why agents should use it for live documentation context.
+subtitle: On-demand Trophy docs for any AI coding agent.
+---
+
+The Trophy Docs MCP Server is a remote [Model Context Protocol](https://modelcontextprotocol.io) server that gives AI agents live access to Trophy documentation — guides, feature pages, API references, and OpenAPI specs.
+
+Think of it as an **on-demand skill**: instead of relying on the model's training data, your agent can search and open the same docs you read on docs.trophy.so whenever it needs accurate, up-to-date detail.
+
+```bash Server URL
+https://docs.trophy.so/mcp
+```
+
+## Why a Docs MCP? {#why-a-docs-mcp}
+
+Trophy changes: new endpoints ship, parameters evolve, and guides get updated. Agents that only use built-in knowledge risk inventing APIs, missing constraints, or shipping integrations against outdated patterns.
+
+The docs MCP keeps that context current. Before integrating a feature or explaining a payload, the agent can pull the latest docs snippet or full page and work from source of truth.
+
+Typical uses:
+
+- Answer “how does X work?” from published docs before writing code
+- Look up request/response shapes and auth patterns from API reference pages
+- Follow feature guides (streaks, points, leaderboards) while implementing backend events
+- Explore OpenAPI specs when the agent needs exact path or schema detail
+
+## How It Works {#how-it-works}
+
+Trophy hosts a remote MCP endpoint backed by the public docs site. You install it in your MCP client; the agent gets tools to **search** the knowledge base and **read** full pages from a sandboxed docs filesystem.
+
+The server is **read-only**. It does not access your Trophy account, mutate configuration, or call Trophy APIs. For account actions, use the [Account MCP Server](/mcp/account-mcp-server/introduction).
+
+<Note>
+  Best results come from installing **both** servers: docs for context, Account MCP for action. See [Best practice](/mcp/best-practice).
+</Note>
+
+## Get Started {#get-started}
+
+<CardGroup>
+  <Card title="Installation" icon="download" href="/mcp/docs-mcp-server/installation">
+    Connect the Docs MCP Server in common clients.
+  </Card>
+  <Card title="Capabilities" icon="book-open" href="/mcp/docs-mcp-server/capabilities">
+    See how search and page-read tools work.
+  </Card>
+</CardGroup>
+
+## Get Support {#get-support}
+
+Want to get in touch with the Trophy team? Reach out to us via [email](mailto:support@trophy.so). We're here to help!

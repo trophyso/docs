@@ -1,0 +1,138 @@
+---
+title: Capacidades
+description: Aprende qué puede hacer el servidor MCP de Trophy Account.
+og:description: Aprende qué puede hacer el servidor MCP de Trophy Account.
+icon: wrench
+---
+
+Una vez conectado, el servidor MCP de Account expone herramientas que tu agente puede llamar para inspeccionar y gestionar tu cuenta.
+
+La mayoría de los recursos de configuración ofrecen herramientas de **lectura** y **escritura** emparejadas:
+
+- Las herramientas de **lectura** listan y obtienen recursos
+- Las herramientas de **escritura** crean o actualizan recursos por lotes para acelerar las operaciones
+
+## Referencia de herramientas {#tool-reference}
+
+La lista completa de herramientas disponibles en el servidor MCP de Trophy Account.
+
+### Herramientas de Métricas {#metrics-tools}
+
+Crea y gestiona las [Métricas](/es/features/metrics) que impulsan rachas, logros, puntos y clasificaciones.
+
+| Herramienta | Qué hace |
+| --- | --- |
+| `read_metrics` | Lista métricas u obtiene una métrica específica por ID |
+| `write_metrics` | Crea o actualiza métricas |
+
+### Herramientas de atributos {#attributes-tools}
+
+Gestiona [atributos de usuario personalizados](/es/features/users#custom-user-attributes) y [atributos de eventos personalizados](/es/features/events#custom-event-attributes) utilizados para segmentación de funcionalidades y personalización.
+
+| Herramienta | Qué hace |
+| --- | --- |
+| `read_attributes` | Lista atributos u obtiene un atributo específico por ID |
+| `write_attributes` | Crea o actualiza atributos |
+
+### Herramientas de Logros {#achievements-tools}
+
+Lee [Logros](/es/features/achievements) y analíticas de finalización de tu cuenta.
+
+| Herramienta | Qué hace |
+| --- | --- |
+| `read_achievements` | Lista logros con conteos de finalización y rareza; opcionalmente filtra por `user_attributes` |
+
+### Herramientas de Clasificaciones {#leaderboards-tools}
+
+Configura [Clasificaciones](/es/features/leaderboards) y lee rankings en vivo.
+
+| Herramienta | Qué hace |
+| --- | --- |
+| `read_leaderboards` | Lista clasificaciones u obtiene una clasificación específica por ID |
+| `write_leaderboards` | Crea o actualiza clasificaciones |
+| `read_leaderboard_rankings` | Obtiene una clasificación con rankings en vivo por clave (paginación opcional, fecha de ejecución, centrado en usuario y filtros de atributos) |
+
+### Herramientas de Puntos {#points-tools}
+
+Configura sistemas completos de [Puntos](/es/features/points), incluyendo [Activadores](/es/features/points#points-triggers), [Niveles](/es/features/points#points-levels) y [Potenciadores](/es/features/points#points-boosts), y consulta análisis de distribución.
+
+| Herramienta | Qué hace |
+| --- | --- |
+| `read_points_systems` | Lista sistemas de puntos u obtén uno por ID |
+| `write_points_systems` | Crea o actualiza sistemas de puntos (opcionalmente con activadores, niveles y potenciadores anidados) |
+| `read_points_triggers` | Lista u obtén activadores para un sistema de puntos |
+| `write_points_triggers` | Crea o actualiza activadores para un sistema de puntos |
+| `read_points_levels` | Lista u obtén niveles para un sistema de puntos |
+| `write_points_levels` | Crea o actualiza niveles para un sistema de puntos |
+| `read_points_boosts` | Lista u obtén potenciadores para un sistema de puntos |
+| `write_points_boosts` | Crea o actualiza potenciadores para un sistema de puntos |
+| `read_points_analytics` | Distribución de puntos y desglose de niveles para un sistema (`summary` o `level_summary`; `user_attributes` opcional en el resumen) |
+
+### Herramientas de Clientes {#tenants-tools}
+
+Administra registros de organizaciones [Multi-Cliente](/es/platform/multi-tenancy) cuando la multi-tenencia esté habilitada en tu cuenta.
+
+| Herramienta | Qué hace |
+| --- | --- |
+| `read_tenants` | Lista clientes u obtén un cliente individual por ID |
+| `write_tenants` | Crea o actualiza clientes |
+
+<Note>
+Si la multi-tenencia no está habilitada en tu cuenta, estas herramientas no funcionarán.
+</Note>
+
+### Herramientas de Rachas {#streaks-tools}
+
+Consulta y ejecuta acciones operativas de [Rachas](/es/features/streaks) para usuarios, incluyendo la concesión de [Congelaciones de Racha](/es/features/streaks#streak-freezes) o la [restauración de rachas](/es/features/streaks#restoring-a-users-streak).
+
+| Herramienta | Qué hace |
+| --- | --- |
+| `list_user_streaks` | Obtén la longitud de racha (y la marca de tiempo de la última extensión) para hasta 100 usuarios, clasificados de mayor a menor |
+| `grant_streak_freezes` | Concede congelaciones de racha a uno o más usuarios |
+| `restore_streaks` | Restaura una racha interrumpida a su longitud anterior |
+
+## Ejemplos de prompts {#example-prompts}
+
+Usa lenguaje natural: tu agente selecciona la herramienta y los parámetros adecuados:
+
+```text
+Create an XP system called 'Kudos' that grants 10 points for each workout completed.
+```
+
+```text
+Schedule 2X XP boosts for the 'Kudos' system across the next 3 weekends (only for paying users - 'plan' attribute is 'pro').
+```
+
+```text
+List all achievements, completion rates and rarity in my Trophy account.
+```
+
+```text
+Get the top 20 rankings for leaderboard weekly-workouts this week.
+```
+
+```text
+Summarize the Kudos points distribution for pro users.
+```
+
+```text
+What are the current streak lengths for users user_123 and user_456?
+```
+
+```text
+Grant two streak freezes to user user_123.
+```
+
+```text
+user_123 wants their streak back, restore it to its previous length.
+```
+
+## Alcance y seguridad {#scope-and-safety}
+
+- Las herramientas solo actuarán sobre el [entorno](/es/platform/environments) de Trophy asociado a la clave de API que proporciones en `x-trophy-api-key`.
+- Las herramientas de escritura pueden modificar la configuración activa. Usa un [entorno](/es/platform/environments) de pruebas o sandbox al iterar.
+- Las herramientas no pueden eliminar recursos.
+
+## Obtener soporte {#get-support}
+
+¿Quieres ponerte en contacto con el equipo de Trophy? Escríbenos por [correo electrónico](mailto:support@trophy.so). ¡Estamos aquí para ayudarte!

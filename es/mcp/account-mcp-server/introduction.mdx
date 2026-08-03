@@ -1,0 +1,56 @@
+---
+title: Introducción
+description: Aprende sobre el servidor MCP de cuenta y por qué existe para agentes de IA.
+subtitle: Proporciona a los agentes de IA acceso seguro y estructurado a tu
+  cuenta de Trophy.
+---
+
+El servidor MCP de cuenta es un servidor remoto de [Model Context Protocol](https://modelcontextprotocol.io) que permite a los agentes de IA leer y gestionar la configuración de gamificación en tu cuenta de Trophy.
+
+En lugar de copiar y pegar clics del panel de control en el chat, puedes pedirle a tu agente que inspeccione Métricas, cree sistemas de Puntos, actualice Clasificaciones, restaure Rachas y más.
+
+```bash Server URL
+https://mcp.trophy.so
+```
+
+## ¿Por qué el MCP de cuenta? {#why-the-account-mcp}
+
+Los agentes de programación con IA ya son donde los equipos diseñan y envían trabajo de producto, y Trophy ha simplificado esto al proporcionar infraestructura preconstruida para crear funciones comunes de gamificación. Sin embargo, esto implica en gran medida mirar pantallas y hacer clic en botones.
+
+El servidor MCP de cuenta es la **capa de acción**: después de que el agente comprende *qué* construir (a menudo a través del [servidor MCP de documentación](/es/mcp/docs-mcp-server/introduction)), puede descubrir la configuración de cuenta en vivo, realizar cambios específicos y validar resultados sin que un humano toque el panel de control.
+
+Esto abre un nuevo flujo de trabajo para los equipos donde los agentes pueden razonar sobre qué funciones de gamificación construir, entender cómo mapear eso a las funciones de Trophy y configurar una cuenta de Trophy que logre todo esto dentro del chat.
+
+Los flujos de trabajo típicos incluyen:
+
+- Estructurar Métricas, atributos y sistemas de Puntos mientras se integra Trophy en una nueva aplicación
+- Inspeccionar Clasificaciones existentes o configuración de Puntos antes de cambiar código de producción
+- Ejecutar tareas operativas como otorgar congelaciones o restaurar Rachas desde el chat
+
+## Cómo funciona {#how-it-works}
+
+Trophy aloja un endpoint MCP remoto. Lo instalas una vez en tu cliente MCP, te autenticas con una clave API de administrador desde la [página de integraciones](https://app.trophy.so/integration) bajo una configuración `headers` (`x-trophy-api-key`), y el cliente expone herramientas que tu agente puede llamar.
+
+Estas herramientas corresponden a operaciones de cuenta: list/get para descubrimiento, create/update para configuración, y acciones dedicadas para congelaciones de Racha, restauraciones y lectura de analíticas.
+
+<Note>
+  El servidor MCP de cuenta está diseñado para flujos de trabajo basados en chat y agentes. Para scripts, trabajos backend o integraciones de producción, utiliza la [API de administración](/es/admin-api/introduction).
+</Note>
+
+## Primeros pasos {#get-started}
+
+<CardGroup>
+  <Card title="Instalación" icon="download" href="/es/mcp/account-mcp-server/installation">
+    Conecta el servidor MCP en Claude, Cursor, VS Code y otros clientes.
+  </Card>
+  <Card title="Capacidades" icon="wrench" href="/es/mcp/account-mcp-server/capabilities">
+    Consulta las herramientas que tu agente puede usar una vez conectado.
+  </Card>
+  <Card title="Mejores prácticas" icon="circle-check" href="/es/mcp/best-practice">
+    Formas recomendadas de trabajar con agentes y MCP.
+  </Card>
+</CardGroup>
+
+## Obtener soporte {#get-support}
+
+¿Quieres ponerte en contacto con el equipo de Trophy? Contáctanos por [correo electrónico](mailto:support@trophy.so). ¡Estamos aquí para ayudarte!

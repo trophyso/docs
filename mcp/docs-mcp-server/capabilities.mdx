@@ -1,0 +1,91 @@
+---
+title: Capabilities
+description: Learn about what the Trophy Docs MCP Server can do.
+og:description: Learn about what the Trophy Docs MCP Server can do.
+icon: wrench
+---
+
+The Trophy Docs MCP Server exposes a small set of **read-only** tools scoped to public Trophy documentation. Agents should prefer these over prior memory for Trophy-specific questions.
+
+## Search {#search}
+
+| Tool | What it does |
+| --- | --- |
+| `search_trophy_docs` | Semantic-style search across the docs knowledge base; returns relevant snippets, titles, and page paths |
+
+Use search for conceptual or “how do I…” questions — authentication, rate limits, feature behavior, integration patterns.
+
+Example prompts:
+
+```text
+Search Trophy docs for how points boosts work.
+```
+
+```text
+Find the Application API endpoint for submitting a metric event.
+```
+
+## Read Documentation Pages {#read-documentation-pages}
+
+| Tool | What it does |
+| --- | --- |
+| `query_docs_filesystem_trophy_docs` | Run read-only shell-style queries against a virtual filesystem of docs pages and OpenAPI specs |
+
+This is how the agent reads full pages once search returns a path. There is no separate “get page” tool — the agent uses commands like `head`, `cat`, `rg`, `tree`, or `ls` against paths such as `/features/streaks.mdx` or `/api-reference/introduction.mdx`.
+
+Common patterns:
+
+- `tree / -L 2` — explore docs structure
+- `rg -il "rate limit" /` — exact keyword or regex matches
+- `head -80 /getting-started/quickstart.mdx` — read the top of a page
+- `cat /openapi/application.json | jq '...'` — inspect OpenAPI when schema detail matters
+
+Output is truncated per call, so good agents use targeted reads rather than dumping entire large files.
+
+Example prompts:
+
+```text
+Open the streaks feature page and summarize freeze behavior.
+```
+
+```text
+From the Application API OpenAPI, list the user endpoints.
+```
+
+## Feedback {#feedback}
+
+| Tool | What it does |
+| --- | --- |
+| `submit_feedback` | Report incorrect, outdated, incomplete, or confusing documentation to the Trophy docs team |
+
+This is for **docs content** issues (wrong example, missing step, broken explanation) — not product support or account help.
+
+Example prompt:
+
+```text
+The rate limiting page example looks wrong — file docs feedback on /api-reference/rate-limiting.
+```
+
+## What It Does Not Do {#what-it-does-not-do}
+
+The Docs MCP Server cannot:
+
+- Access or modify resources in your Trophy organization
+- Call Trophy APIs
+
+For account operations, install the [Account MCP Server](/mcp/account-mcp-server/capabilities).
+
+## Next Steps {#next-steps}
+
+<CardGroup>
+  <Card title="Install Account MCP" icon="download" href="/mcp/account-mcp-server/installation">
+    Install the Account MCP Server to your MCP client.
+  </Card>
+  <Card title="Account MCP capabilities" icon="wrench" href="/mcp/account-mcp-server/capabilities">
+    Learn what the Trophy Account MCP can do.
+  </Card>
+</CardGroup>
+
+## Get Support {#get-support}
+
+Want to get in touch with the Trophy team? Reach out to us via [email](mailto:support@trophy.so). We're here to help!
