@@ -7,12 +7,16 @@ icon: wrench
 
 Once connected, the Account MCP Server exposes tools your agent can call to inspect and manage your account.
 
-Most resources offer paired **read** and **write** tools:
+Most configuration resources offer paired **read** and **write** tools:
 
 - **Read** tools list and fetch resources
 - **Write** tools create or update resources in batch to speed up operations
 
-## Metrics Tools {#metrics-tools}
+## Tool Reference {#tool-reference}
+
+The full list of tools available in the Trophy Account MCP Server.
+
+### Metrics Tools {#metrics-tools}
 
 Create and manage the [Metrics](/features/metrics) that drive streaks, achievements, points, and leaderboards.
 
@@ -21,27 +25,36 @@ Create and manage the [Metrics](/features/metrics) that drive streaks, achieveme
 | `read_metrics` | List metrics, or get a single metric by ID |
 | `write_metrics` | Create or update metrics |
 
-## Attributes Tools {#attributes-tools}
+### Attributes Tools {#attributes-tools}
 
-Manage [custom user attributes](/features/users#custom-user-attributes) and [custom event attributes](/features/events#custom-event-attributes) used for feature targeting and personalization.
+Manage [Custom User Attributes](/features/users#custom-user-attributes) and [Custom Event Attributes](/features/events#custom-event-attributes) used for feature targeting and personalization.
 
 | Tool | What it does |
 | --- | --- |
 | `read_attributes` | List attributes, or get a single attribute by ID |
 | `write_attributes` | Create or update attributes |
 
-## Leaderboards Tools {#leaderboards-tools}
+### Achievements Tools {#achievements-tools}
 
-Configure [Leaderboards](/features/leaderboards) within your Trophy account.
+Read [Achievements](/features/achievements) and completion analytics for your account.
+
+| Tool | What it does |
+| --- | --- |
+| `read_achievements` | List achievements with completion counts and rarity; optionally filter by `user_attributes` |
+
+### Leaderboards Tools {#leaderboards-tools}
+
+Configure [Leaderboards](/features/leaderboards) and read live rankings.
 
 | Tool | What it does |
 | --- | --- |
 | `read_leaderboards` | List leaderboards, or get a single leaderboard by ID |
 | `write_leaderboards` | Create or update leaderboards |
+| `read_leaderboard_rankings` | Get a leaderboard with live rankings by key (optional pagination, run date, user centering, and attribute filters) |
 
-## Points Tools {#points-tools}
+### Points Tools {#points-tools}
 
-Configure full [Points](/features/points) systems, including [Triggers](/features/points#points-triggers), [Levels](/features/points#points-levels), and [Boosts](/features/points#points-boosts).
+Configure full [Points](/features/points) systems, including [Triggers](/features/points#points-triggers), [Levels](/features/points#points-levels), and [Boosts](/features/points#points-boosts), and read distribution analytics.
 
 | Tool | What it does |
 | --- | --- |
@@ -53,10 +66,11 @@ Configure full [Points](/features/points) systems, including [Triggers](/feature
 | `write_points_levels` | Create or update levels for a points system |
 | `read_points_boosts` | List or get boosts for a points system |
 | `write_points_boosts` | Create or update boosts for a points system |
+| `read_points_analytics` | Points distribution and level breakdowns for a system (`summary` or `level_summary`; optional `user_attributes` on summary) |
 
-## Tenants Tools {#tenants-tools}
+### Tenants Tools {#tenants-tools}
 
-Manage [multi-tenant](/platform/multi-tenancy) organization records when multi-tenancy is enabled on your account.
+Manage [Multi-Tenant](/platform/multi-tenancy) organization records when multi-tenancy is enabled on your account.
 
 | Tool | What it does |
 | --- | --- |
@@ -67,14 +81,15 @@ Manage [multi-tenant](/platform/multi-tenancy) organization records when multi-t
 If multi-tenancy is not enabled on your account, these tools will not function.
 </Note>
 
-## Streaks Tools {#streaks-tools}
+### Streaks Tools {#streaks-tools}
 
-Run operational [streak](/features/streaks) actions for users, such as granting [streak freezes](/features/streaks#streak-freezes) or [restoring streaks](/features/streaks#restoring-a-users-streak).
+Look up and run operational [Streaks](/features/streaks) actions for users, including granting [Streak Freezes](/features/streaks#streak-freezes) or [restoring streaks](/features/streaks#restoring-a-users-streak).
 
 | Tool | What it does |
 | --- | --- |
+| `list_user_streaks` | Get streak length (and last extension timestamp) for up to 100 users, ranked longest first |
 | `grant_streak_freezes` | Grant streak freezes to one or more users |
-| `restore_streaks` | Restore a broken streak to it's previous length |
+| `restore_streaks` | Restore a broken streak to its previous length |
 
 ## Example Prompts {#example-prompts}
 
@@ -89,11 +104,27 @@ Schedule 2X XP boosts for the 'Kudos' system across the next 3 weekends (only fo
 ```
 
 ```text
+List all achievements, completion rates and rarity in my Trophy account.
+```
+
+```text
+Get the top 20 rankings for leaderboard weekly-workouts this week.
+```
+
+```text
+Summarize the Kudos points distribution for pro users.
+```
+
+```text
+What are the current streak lengths for users user_123 and user_456?
+```
+
+```text
 Grant two streak freezes to user user_123.
 ```
 
 ```text
-user_123 wants their streak back, restore it to it's previous length.
+user_123 wants their streak back, restore it to its previous length.
 ```
 
 ## Scope and Safety {#scope-and-safety}
