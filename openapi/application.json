@@ -2,13 +2,13 @@
   "openapi": "3.1.0",
   "info": {
     "title": "Trophy",
-    "version": "1.20.1"
+    "version": "1.21.0"
   },
   "x-fern-global-headers": [
     {
       "header": "X-SDK-VERSION",
       "name": "sdkVersion",
-      "x-fern-default": "1.20.1"
+      "x-fern-default": "1.21.0"
     }
   ],
   "paths": {
@@ -2010,41 +2010,49 @@
                       "periodEnd": "2025-04-05",
                       "expires": "2025-04-12",
                       "extended": "2025-04-03T14:30:00Z",
+                      "pauses": [],
                       "streakHistory": [
                         {
                           "periodStart": "2025-03-30",
                           "periodEnd": "2025-04-05",
-                          "length": 1
+                          "length": 1,
+                          "usedPause": false
                         },
                         {
                           "periodStart": "2025-04-06",
                           "periodEnd": "2025-04-12",
-                          "length": 2
+                          "length": 2,
+                          "usedPause": false
                         },
                         {
                           "periodStart": "2025-04-13",
                           "periodEnd": "2025-04-19",
-                          "length": 3
+                          "length": 3,
+                          "usedPause": false
                         },
                         {
                           "periodStart": "2025-04-20",
                           "periodEnd": "2025-04-26",
-                          "length": 0
+                          "length": 0,
+                          "usedPause": false
                         },
                         {
                           "periodStart": "2025-04-27",
                           "periodEnd": "2025-05-03",
-                          "length": 1
+                          "length": 1,
+                          "usedPause": false
                         },
                         {
                           "periodStart": "2025-05-04",
                           "periodEnd": "2025-05-10",
-                          "length": 2
+                          "length": 2,
+                          "usedPause": false
                         },
                         {
                           "periodStart": "2025-05-11",
                           "periodEnd": "2025-05-17",
-                          "length": 3
+                          "length": 3,
+                          "usedPause": false
                         }
                       ]
                     }
@@ -4620,7 +4628,7 @@
       "post": {
         "summary": "Points changed",
         "operationId": "webhooks_points_changed",
-        "description": "Triggered when a user is awarded or loses points. This event is fired a maximum of once per user per points system per minute.",
+        "description": "Triggered when a user is awarded or loses points. This event is fired a maximum of once per user per points system every fifteen minutes.",
         "requestBody": {
           "description": "The webhook event.",
           "content": {
@@ -5035,7 +5043,7 @@
       "post": {
         "summary": "Leaderboard changed",
         "operationId": "webhooks_leaderboard_changed",
-        "description": "Triggered when leaderboard rankings change.",
+        "description": "Triggered when leaderboard rankings change. This event is fired a maximum of once per leaderboard every fifteen minutes.",
         "requestBody": {
           "description": "The webhook event.",
           "content": {
@@ -5427,7 +5435,7 @@
       "post": {
         "summary": "Leaderboard rank changed",
         "operationId": "webhooks_leaderboard_rank_changed",
-        "description": "Triggered when a user's leaderboard rank changes.",
+        "description": "Triggered when a user's leaderboard rank changes. This event is fired a maximum of once per user per leaderboard every fifteen minutes.",
         "requestBody": {
           "description": "The webhook event.",
           "content": {
@@ -5695,19 +5703,58 @@
                       "type": "boolean",
                       "description": "Whether the user used a streak freeze during this period. Only present if the organization has enabled streak freezes.",
                       "example": false
+                    },
+                    "usedPause": {
+                      "type": "boolean",
+                      "description": "Whether the user's streak was paused during this period.",
+                      "example": false
                     }
                   },
                   "required": [
                     "periodStart",
                     "periodEnd",
-                    "length"
+                    "length",
+                    "usedPause"
+                  ]
+                }
+              },
+              "pauses": {
+                "type": "array",
+                "description": "Upcoming and currently active streak pauses for the user. Past and archived pauses are omitted.",
+                "items": {
+                  "type": "object",
+                  "description": "An object representing a streak pause.",
+                  "properties": {
+                    "id": {
+                      "type": "string",
+                      "format": "uuid",
+                      "description": "The unique ID of the streak pause."
+                    },
+                    "start": {
+                      "type": "string",
+                      "format": "date",
+                      "description": "The first date the pause covers.",
+                      "example": "2026-08-20"
+                    },
+                    "end": {
+                      "type": "string",
+                      "format": "date",
+                      "description": "The last date the pause covers.",
+                      "example": "2026-08-27"
+                    }
+                  },
+                  "required": [
+                    "id",
+                    "start",
+                    "end"
                   ]
                 }
               }
             },
             "required": [
               "extended",
-              "streakHistory"
+              "streakHistory",
+              "pauses"
             ]
           }
         ]

@@ -76,6 +76,38 @@ Si has [configurado zonas horarias](/es/features/users#param-tz) para tus usuari
 
 En Trophy también configuras el número máximo de congelaciones que cada usuario puede tener, hasta un límite de 100. La [acumulación de congelaciones](#freeze-accumulation) solo otorgará congelaciones hasta este límite.
 
+## Pausas de Racha {#streak-pauses}
+
+Las pausas de racha protegen la racha de un usuario durante un rango de fechas conocido, como unas vacaciones u otra pausa planificada. Mientras una pausa cubre un período, Trophy mantiene la duración de la racha del usuario en lugar de terminarla si no cumple sus [condiciones de racha](#streak-conditions).
+
+A diferencia de las [congelaciones de rachas](#streak-freezes), las pausas no se consumen un período a la vez. Cada pausa tiene una fecha de inicio y una fecha de fin, y se aplica durante todo ese rango.
+
+<Tip>
+Usa congelaciones para períodos ocasionales que se pierden. Usa pausas cuando ya sabes que un usuario estará ausente durante un período de tiempo específico.
+</Tip>
+
+### Crear Pausas {#creating-pauses}
+
+Crea pausas con la [API de administración para crear pausas de racha](/es/admin-api/endpoints/streaks/create-pauses). Puedes crear pausas para hasta 100 usuarios en una sola solicitud.
+
+Cada pausa requiere:
+
+- `userId`: el usuario para el que crear una pausa
+- `start`: la primera fecha que cubre la pausa, en formato `YYYY-MM-DD`. No debe ser anterior a hoy en la zona horaria del usuario.
+- `end`: la última fecha que cubre la pausa, en formato `YYYY-MM-DD`. Debe ser igual o posterior a `start`.
+
+Las fechas de inicio en el pasado se rechazan. Si has [configurado zonas horarias](/es/features/users#param-tz) para tus usuarios, Trophy evalúa `start` contra el día de hoy en la zona horaria local de cada usuario.
+
+### Archivar Pausas {#archiving-pauses}
+
+Para dejar de aplicar una pausa, archívala con la [API de administración para archivar pausas de racha](/es/admin-api/endpoints/streaks/archive-pauses). Los registros de pausas no se eliminan. Archivar establece su estado en `archived` para que ya no afecten la lógica de rachas.
+
+### Leer Pausas {#reading-pauses}
+
+La [API de rachas de usuario](/es/api-reference/endpoints/users/get-a-users-streak) devuelve las pausas próximas y actualmente activas en el campo `pauses`. Se omiten las pausas pasadas y archivadas.
+
+Cada período en `streakHistory` incluye `usedPause`, que es `true` cuando la racha del usuario estuvo en pausa durante ese período.
+
 ## Seguimiento de Rachas {#tracking-streaks}
 
 Trophy calcula automáticamente las rachas para todos los usuarios en función de los [eventos de métrica](/es/features/events#tracking-metric-events) que reportes a Trophy.
@@ -115,6 +147,10 @@ Para obtener más información sobre cómo establecer preferencias de usuario pa
 ## Administración de Rachas {#managing-streaks}
 
 Esta sección describe algunas de las operaciones que puedes realizar para administrar las rachas de los usuarios en tu aplicación.
+
+### Pausar la Racha de un Usuario {#pausing-a-users-streak}
+
+Para pausar la racha de un usuario durante un rango de fechas específico, usa la [API de administración para crear pausas de racha](/es/admin-api/endpoints/streaks/create-pauses). Consulta [pausas de racha](#streak-pauses) para saber cómo funcionan las pausas, incluyendo cómo archivarlas.
 
 ### Restaurar la Racha de un Usuario {#restoring-a-users-streak}
 
@@ -156,7 +192,7 @@ Esto puede usarse para activar transaccionalmente elementos de UI/UX incluyendo:
 
 ### API de Rachas de Usuario {#user-streaks-api}
 
-La [API de rachas de usuario](/es/api-reference/endpoints/users/get-a-users-streak) devuelve la racha actual de un usuario individual, junto con su historial reciente de rachas. Usa el parámetro de consulta `historyPeriods` para controlar cuántos períodos devolver.
+La [API de rachas de usuario](/es/api-reference/endpoints/users/get-a-users-streak) devuelve la racha actual de un usuario individual, junto con su historial reciente de rachas y cualquier [pausa de racha](#streak-pauses) próxima o activa. Usa el parámetro de consulta `historyPeriods` para controlar cuántos períodos devolver.
 
 {/* vale off */}
 
@@ -169,41 +205,55 @@ La [API de rachas de usuario](/es/api-reference/endpoints/users/get-a-users-stre
   "periodEnd": "2025-04-05",
   "expires": "2025-04-12",
   "rank": 5,
+  "pauses": [
+    {
+      "id": "550e8400-e29b-41d4-a716-446655440000",
+      "start": "2026-08-20",
+      "end": "2026-08-27"
+    }
+  ],
   "streakHistory": [
     {
       "periodStart": "2025-03-02",
       "periodEnd": "2025-03-08",
-      "length": 9
+      "length": 9,
+      "usedPause": false
     },
     {
       "periodStart": "2025-03-09",
       "periodEnd": "2025-03-15",
-      "length": 0
+      "length": 0,
+      "usedPause": false
     },
     {
       "periodStart": "2025-03-16",
       "periodEnd": "2025-03-22",
-      "length": 0
+      "length": 0,
+      "usedPause": false
     },
     {
       "periodStart": "2025-03-23",
       "periodEnd": "2025-03-29",
-      "length": 1
+      "length": 1,
+      "usedPause": false
     },
     {
       "periodStart": "2025-03-30",
       "periodEnd": "2025-04-05",
-      "length": 2
+      "length": 2,
+      "usedPause": false
     },
     {
       "periodStart": "2025-04-06",
       "periodEnd": "2025-04-12",
-      "length": 3
+      "length": 3,
+      "usedPause": false
     },
     {
       "periodStart": "2025-04-13",
       "periodEnd": "2025-04-19",
-      "length": 4
+      "length": 4,
+      "usedPause": false
     }
   ]
 }

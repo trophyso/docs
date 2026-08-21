@@ -160,7 +160,7 @@ Para obtener datos sobre la racha de un usuario, usa la [API de racha de usuario
 
 <StreakRequestBlock />
 
-Esta API no solo devuelve datos sobre la racha actual del usuario como `length` y `expires`, sino que también puede devolver datos históricos de rachas que se pueden usar para mostrar cualquier tipo de interfaz de racha que desees a través del parámetro `historyPeriods`.
+Esta API no solo devuelve datos sobre la racha actual del usuario como `length` y `expires`, sino que también puede devolver datos históricos de rachas que se pueden usar para mostrar cualquier tipo de interfaz de racha que desees a través del parámetro `historyPeriods`. La respuesta también incluye [pausas de racha](/es/features/streaks#streak-pauses) próximas y activas en `pauses`, y cada período del historial incluye `usedPause`.
 
 <StreakResponseBlock />
 
@@ -197,6 +197,12 @@ La [página de rachas](https://app.trophy.so/streaks) en Trophy muestra datos so
 Trophy también admite congelación de rachas, lo que puede ayudar a evitar que los usuarios pierdan su racha si accidentalmente se pierden un periodo.
 
 Obtén más información sobre la congelación de rachas en la [documentación dedicada de congelación de rachas](/es/features/streaks#streak-freezes).
+
+## Pausas de Racha {#streak-pauses}
+
+Trophy también admite pausas de racha, que protegen la racha de un usuario durante un rango de fechas conocido en lugar de terminarla.
+
+Obtén más información sobre las pausas de racha en la [documentación dedicada de pausas de racha](/es/features/streaks#streak-pauses).
 
 ## Obtener Soporte {#get-support}
 
