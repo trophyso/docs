@@ -2,13 +2,13 @@
   "openapi": "3.1.0",
   "info": {
     "title": "Trophy",
-    "version": "1.21.0"
+    "version": "1.21.1"
   },
   "x-fern-global-headers": [
     {
       "header": "X-SDK-VERSION",
       "name": "sdkVersion",
-      "x-fern-default": "1.21.0"
+      "x-fern-default": "1.21.1"
     }
   ],
   "paths": {
@@ -5720,7 +5720,7 @@
               },
               "pauses": {
                 "type": "array",
-                "description": "Upcoming and currently active streak pauses for the user. Past and archived pauses are omitted.",
+                "description": "Upcoming and currently active streak pauses for the user.",
                 "items": {
                   "type": "object",
                   "description": "An object representing a streak pause.",
