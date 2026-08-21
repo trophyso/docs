@@ -80,12 +80,6 @@ En Trophy también configuras el número máximo de congelaciones que cada usuar
 
 Las pausas de racha protegen la racha de un usuario durante un rango de fechas conocido, como unas vacaciones u otra pausa planificada. Mientras una pausa cubre un período, Trophy mantiene la duración de la racha del usuario en lugar de terminarla si no cumple sus [condiciones de racha](#streak-conditions).
 
-A diferencia de las [congelaciones de rachas](#streak-freezes), las pausas no se consumen un período a la vez. Cada pausa tiene una fecha de inicio y una fecha de fin, y se aplica durante todo ese rango.
-
-<Tip>
-Usa congelaciones para períodos ocasionales que se pierden. Usa pausas cuando ya sabes que un usuario estará ausente durante un período de tiempo específico.
-</Tip>
-
 ### Crear Pausas {#creating-pauses}
 
 Crea pausas con la [API de administración para crear pausas de racha](/es/admin-api/endpoints/streaks/create-pauses). Puedes crear pausas para hasta 100 usuarios en una sola solicitud.
@@ -93,18 +87,18 @@ Crea pausas con la [API de administración para crear pausas de racha](/es/admin
 Cada pausa requiere:
 
 - `userId`: el usuario para el que crear una pausa
-- `start`: la primera fecha que cubre la pausa, en formato `YYYY-MM-DD`. No debe ser anterior a hoy en la zona horaria del usuario.
-- `end`: la última fecha que cubre la pausa, en formato `YYYY-MM-DD`. Debe ser igual o posterior a `start`.
+- `start`: la primera fecha que cubre la pausa
+- `end`: la última fecha que cubre la pausa
 
 Las fechas de inicio en el pasado se rechazan. Si has [configurado zonas horarias](/es/features/users#param-tz) para tus usuarios, Trophy evalúa `start` contra el día de hoy en la zona horaria local de cada usuario.
 
-### Archivar Pausas {#archiving-pauses}
+### Eliminar Pausas {#deleting-pauses}
 
-Para dejar de aplicar una pausa, archívala con la [API de administración para archivar pausas de racha](/es/admin-api/endpoints/streaks/archive-pauses). Los registros de pausas no se eliminan. Archivar establece su estado en `archived` para que ya no afecten la lógica de rachas.
+Para dejar de aplicar una pausa, elimínala con la [API de administración para eliminar pausas de racha](/es/admin-api/endpoints/streaks/delete-pauses).
 
 ### Leer Pausas {#reading-pauses}
 
-La [API de rachas de usuario](/es/api-reference/endpoints/users/get-a-users-streak) devuelve las pausas próximas y actualmente activas en el campo `pauses`. Se omiten las pausas pasadas y archivadas.
+La [API de rachas de usuario](/es/api-reference/endpoints/users/get-a-users-streak) devuelve las pausas próximas y actualmente activas en el campo `pauses`. Se omiten las pausas pasadas y eliminadas.
 
 Cada período en `streakHistory` incluye `usedPause`, que es `true` cuando la racha del usuario estuvo en pausa durante ese período.
 
@@ -150,7 +144,7 @@ Esta sección describe algunas de las operaciones que puedes realizar para admin
 
 ### Pausar la Racha de un Usuario {#pausing-a-users-streak}
 
-Para pausar la racha de un usuario durante un rango de fechas específico, usa la [API de administración para crear pausas de racha](/es/admin-api/endpoints/streaks/create-pauses). Consulta [pausas de racha](#streak-pauses) para saber cómo funcionan las pausas, incluyendo cómo archivarlas.
+Para pausar la racha de un usuario durante un rango de fechas específico, usa la [API de administración para crear pausas de racha](/es/admin-api/endpoints/streaks/create-pauses). Consulta [pausas de racha](#streak-pauses) para saber cómo funcionan las pausas, incluyendo cómo eliminarlas.
 
 ### Restaurar la Racha de un Usuario {#restoring-a-users-streak}
 

@@ -261,7 +261,7 @@
                 "pages": [
                   "admin-api/endpoints/streaks/grant-freezes",
                   "admin-api/endpoints/streaks/create-pauses",
-                  "admin-api/endpoints/streaks/archive-pauses",
+                  "admin-api/endpoints/streaks/delete-pauses",
                   "admin-api/endpoints/streaks/restore-streaks"
                 ]
               },
@@ -649,7 +649,7 @@
                 "pages": [
                   "es/admin-api/endpoints/streaks/grant-freezes",
                   "es/admin-api/endpoints/streaks/create-pauses",
-                  "es/admin-api/endpoints/streaks/archive-pauses",
+                  "es/admin-api/endpoints/streaks/delete-pauses",
                   "es/admin-api/endpoints/streaks/restore-streaks"
                 ]
               },
