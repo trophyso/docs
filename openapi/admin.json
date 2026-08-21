@@ -2,13 +2,13 @@
   "openapi": "3.1.0",
   "info": {
     "title": "Trophy",
-    "version": "1.20.1"
+    "version": "1.21.1"
   },
   "x-fern-global-headers": [
     {
       "header": "X-SDK-VERSION",
       "name": "sdkVersion",
-      "x-fern-default": "1.20.1"
+      "x-fern-default": "1.21.1"
     }
   ],
   "paths": {
@@ -1826,7 +1826,7 @@
         ]
       },
       "delete": {
-        "description": "Delete (archive) points systems by ID.",
+        "description": "Delete points systems by ID.",
         "operationId": "admin_points_systems_delete",
         "x-fern-server-name": "admin",
         "x-fern-sdk-group-name": [
@@ -3862,7 +3862,7 @@
         ]
       },
       "delete": {
-        "description": "Delete (archive) points triggers by ID. Maximum 100 trigger IDs per request.",
+        "description": "Delete points triggers by ID. Maximum 100 trigger IDs per request.",
         "operationId": "admin_points_triggers_delete",
         "x-fern-server-name": "admin",
         "x-fern-sdk-group-name": [
@@ -4855,6 +4855,300 @@
           }
         },
         "summary": "Create streak freezes for multiple users",
+        "security": [
+          {
+            "ApiKeyAuth": []
+          }
+        ]
+      }
+    },
+    "/streaks/pauses": {
+      "servers": [
+        {
+          "url": "https://admin.trophy.so/v1",
+          "description": "Admin API"
+        }
+      ],
+      "parameters": [
+        {
+          "$ref": "#/components/parameters/TenantId"
+        }
+      ],
+      "post": {
+        "description": "Create streak pauses for multiple users. A pause covers a specific date range and maintains the user's streak length during that range instead of ending the streak. Start dates in the past are rejected.",
+        "operationId": "admin_streaks_pauses_create",
+        "x-fern-server-name": "admin",
+        "x-fern-sdk-group-name": [
+          "admin",
+          "streaks",
+          "pauses"
+        ],
+        "x-fern-sdk-method-name": "create",
+        "tags": [
+          "Admin"
+        ],
+        "x-codeSamples": [
+          {
+            "lang": "javascript",
+            "source": "import { TrophyApiClient } from '@trophyso/node';\n\nconst trophy = new TrophyApiClient({\n  apiKey: 'YOUR_API_KEY'\n});\n\nconst response = await trophy.admin.streaks.pauses.create({\n  pauses: [\n    { userId: 'user-123', start: '2026-08-20', end: '2026-08-27' },\n    { userId: 'user-456', start: '2026-09-01', end: '2026-09-07' },\n  ]\n});\n"
+          },
+          {
+            "lang": "python",
+            "source": "from trophy import TrophyApi\n\nclient = TrophyApi(api_key='YOUR_API_KEY')\n\nresponse = client.admin.streaks.pauses.create({\n  \"pauses\": [\n    {\"userId\": \"user-123\", \"start\": \"2026-08-20\", \"end\": \"2026-08-27\"},\n    {\"userId\": \"user-456\", \"start\": \"2026-09-01\", \"end\": \"2026-09-07\"}\n  ]\n})\n"
+          },
+          {
+            "lang": "go",
+            "source": "import (\n  \"context\"\n\n  api \"github.com/trophyso/trophy-go\"\n  trophyclient \"github.com/trophyso/trophy-go/client\"\n  \"github.com/trophyso/trophy-go/option\"\n)\n\nclient := trophyclient.NewClient(\n  option.WithApiKey(\"YOUR_API_KEY\"),\n)\n\nresponse, err := client.Admin.Streaks.Pauses.Create(context.TODO(), nil)\n"
+          }
+        ],
+        "requestBody": {
+          "description": "Array of pauses to create",
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CreateStreakPausesRequest"
+              },
+              "examples": {
+                "Create pauses for multiple users": {
+                  "value": {
+                    "pauses": [
+                      {
+                        "userId": "user-123",
+                        "start": "2026-08-20",
+                        "end": "2026-08-27"
+                      },
+                      {
+                        "userId": "user-456",
+                        "start": "2026-09-01",
+                        "end": "2026-09-07"
+                      }
+                    ]
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successful operation (no pauses created)",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/CreateStreakPausesResponse"
+                },
+                "examples": {
+                  "Mixed success and errors": {
+                    "value": {
+                      "created": [],
+                      "issues": [
+                        {
+                          "userId": "non-existent-user",
+                          "severity": "error",
+                          "message": "User does not exist"
+                        }
+                      ]
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "201": {
+            "description": "Created (at least one pause created)",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/CreateStreakPausesResponse"
+                },
+                "examples": {
+                  "Success with no issues": {
+                    "value": {
+                      "created": [
+                        {
+                          "id": "550e8400-e29b-41d4-a716-446655440000",
+                          "userId": "user-123",
+                          "start": "2026-08-20",
+                          "end": "2026-08-27",
+                          "status": "active"
+                        }
+                      ],
+                      "issues": []
+                    }
+                  },
+                  "Mixed success and errors": {
+                    "value": {
+                      "created": [
+                        {
+                          "id": "550e8400-e29b-41d4-a716-446655440000",
+                          "userId": "user-123",
+                          "start": "2026-08-20",
+                          "end": "2026-08-27",
+                          "status": "active"
+                        }
+                      ],
+                      "issues": [
+                        {
+                          "userId": "non-existent-user",
+                          "severity": "error",
+                          "message": "User does not exist"
+                        }
+                      ]
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AdminErrorBody"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Unprocessible Entity",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AdminErrorBody"
+                }
+              }
+            }
+          }
+        },
+        "summary": "Create streak pauses for multiple users",
+        "security": [
+          {
+            "ApiKeyAuth": []
+          }
+        ]
+      },
+      "delete": {
+        "description": "Delete streak pauses by ID.",
+        "operationId": "admin_streaks_pauses_delete",
+        "x-fern-server-name": "admin",
+        "x-fern-sdk-group-name": [
+          "admin",
+          "streaks",
+          "pauses"
+        ],
+        "x-fern-sdk-method-name": "delete",
+        "tags": [
+          "Admin"
+        ],
+        "x-codeSamples": [
+          {
+            "lang": "javascript",
+            "source": "import { TrophyApiClient } from '@trophyso/node';\n\nconst trophy = new TrophyApiClient({\n  apiKey: 'YOUR_API_KEY'\n});\n\nconst response = await trophy.admin.streaks.pauses.delete({\n  ids: [\n    '550e8400-e29b-41d4-a716-446655440000',\n    '550e8400-e29b-41d4-a716-446655440001'\n  ]\n});\n"
+          },
+          {
+            "lang": "python",
+            "source": "from trophy import TrophyApi\n\nclient = TrophyApi(api_key='YOUR_API_KEY')\n\nresponse = client.admin.streaks.pauses.delete(\n  ids=[\n    '550e8400-e29b-41d4-a716-446655440000',\n    '550e8400-e29b-41d4-a716-446655440001'\n  ]\n)\n"
+          },
+          {
+            "lang": "go",
+            "source": "import (\n  \"context\"\n\n  api \"github.com/trophyso/trophy-go\"\n  trophyclient \"github.com/trophyso/trophy-go/client\"\n  \"github.com/trophyso/trophy-go/option\"\n)\n\nclient := trophyclient.NewClient(\n  option.WithApiKey(\"YOUR_API_KEY\"),\n)\n\nresponse, err := client.Admin.Streaks.Pauses.Delete(context.TODO(), nil)\n"
+          }
+        ],
+        "parameters": [
+          {
+            "name": "ids",
+            "in": "query",
+            "description": "Streak pause IDs to delete. Repeat the query param or provide a comma-separated list.",
+            "required": true,
+            "schema": {
+              "type": "array",
+              "items": {
+                "type": "string",
+                "format": "uuid"
+              },
+              "minItems": 1,
+              "maxItems": 100
+            },
+            "style": "form",
+            "explode": true,
+            "examples": {
+              "Multiple query params": {
+                "value": [
+                  "550e8400-e29b-41d4-a716-446655440000",
+                  "550e8400-e29b-41d4-a716-446655440001"
+                ]
+              }
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful operation",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/DeleteStreakPausesResponse"
+                },
+                "examples": {
+                  "Success with no issues": {
+                    "value": {
+                      "deleted": [
+                        {
+                          "id": "550e8400-e29b-41d4-a716-446655440000"
+                        }
+                      ],
+                      "issues": []
+                    }
+                  },
+                  "Mixed success and errors": {
+                    "value": {
+                      "deleted": [
+                        {
+                          "id": "550e8400-e29b-41d4-a716-446655440000"
+                        }
+                      ],
+                      "issues": [
+                        {
+                          "id": "not-a-uuid",
+                          "severity": "error",
+                          "message": "id must be a valid UUID"
+                        },
+                        {
+                          "id": "550e8400-e29b-41d4-a716-446655440999",
+                          "severity": "error",
+                          "message": "Streak pause not found by ID"
+                        }
+                      ]
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AdminErrorBody"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Unprocessible Entity",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AdminErrorBody"
+                }
+              }
+            }
+          }
+        },
+        "summary": "Delete streak pauses",
         "security": [
           {
             "ApiKeyAuth": []
@@ -6055,6 +6349,143 @@
           }
         },
         "required": [
+          "issues"
+        ]
+      },
+      "CreateStreakPausesRequest": {
+        "title": "CreateStreakPausesRequest",
+        "type": "object",
+        "description": "Request body for creating streak pauses.",
+        "properties": {
+          "pauses": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "userId": {
+                  "type": "string",
+                  "description": "The ID of the user to create a pause for.",
+                  "example": "user-123"
+                },
+                "start": {
+                  "type": "string",
+                  "format": "date",
+                  "description": "The first date the pause covers, in YYYY-MM-DD format. Must not be before today in the user's timezone.",
+                  "example": "2026-08-20"
+                },
+                "end": {
+                  "type": "string",
+                  "format": "date",
+                  "description": "The last date the pause covers, in YYYY-MM-DD format. Must be on or after start.",
+                  "example": "2026-08-27"
+                }
+              },
+              "required": [
+                "userId",
+                "start",
+                "end"
+              ]
+            },
+            "description": "Array of pauses to create. Maximum 100 pauses per request.",
+            "maxItems": 100,
+            "minItems": 1
+          }
+        },
+        "required": [
+          "pauses"
+        ]
+      },
+      "AdminStreakPause": {
+        "title": "AdminStreakPause",
+        "type": "object",
+        "description": "A streak pause returned from the admin pauses endpoints.",
+        "properties": {
+          "id": {
+            "type": "string",
+            "format": "uuid",
+            "description": "The unique ID of the streak pause."
+          },
+          "userId": {
+            "type": "string",
+            "description": "The ID of the user the pause belongs to.",
+            "example": "user-123"
+          },
+          "start": {
+            "type": "string",
+            "format": "date",
+            "description": "The first date the pause covers.",
+            "example": "2026-08-20"
+          },
+          "end": {
+            "type": "string",
+            "format": "date",
+            "description": "The last date the pause covers.",
+            "example": "2026-08-27"
+          },
+          "status": {
+            "type": "string",
+            "enum": [
+              "active",
+              "archived"
+            ],
+            "description": "The status of the pause."
+          }
+        },
+        "required": [
+          "id",
+          "userId",
+          "start",
+          "end",
+          "status"
+        ]
+      },
+      "CreateStreakPausesResponse": {
+        "title": "CreateStreakPausesResponse",
+        "type": "object",
+        "description": "Response containing created streak pauses and any issues encountered.",
+        "properties": {
+          "created": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/AdminStreakPause"
+            },
+            "description": "Array of streak pauses that were created."
+          },
+          "issues": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/AdminIssue"
+            },
+            "description": "Array of issues encountered during pause creation."
+          }
+        },
+        "required": [
+          "created",
+          "issues"
+        ]
+      },
+      "DeleteStreakPausesResponse": {
+        "title": "DeleteStreakPausesResponse",
+        "type": "object",
+        "description": "Response containing deleted streak pauses and any issues encountered.",
+        "properties": {
+          "deleted": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/DeletedResource"
+            },
+            "description": "Array of deleted streak pause IDs."
+          },
+          "issues": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/AdminIssue"
+            },
+            "description": "Array of issues encountered during pause deletion."
+          }
+        },
+        "required": [
+          "deleted",
           "issues"
         ]
       },

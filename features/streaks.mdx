@@ -76,6 +76,32 @@ If you've [configured time zones](/features/users#param-tz) for your users, Trop
 
 In Trophy you also configure the maximum number of freezes that each user can have, up to a limit of 100. [Freeze accumulation](#freeze-accumulation) will only ever grant freezes up to this limit.
 
+## Streak Pauses {#streak-pauses}
+
+Streak pauses protect a user's streak over a known date range, such as a vacation or other planned break. While a pause covers a period, Trophy maintains the user's streak length instead of ending the streak if they miss their [streak conditions](#streak-conditions).
+
+### Creating Pauses {#creating-pauses}
+
+Create pauses with the [create streak pauses admin API](/admin-api/endpoints/streaks/create-pauses). You can create pauses for up to 100 users in a single request.
+
+Each pause requires:
+
+- `userId`: the user to create a pause for
+- `start`: the first date the pause covers
+- `end`: the last date the pause covers
+
+Start dates in the past are rejected. If you've [configured time zones](/features/users#param-tz) for your users, Trophy evaluates `start` against today in each user's local timezone.
+
+### Deleting Pauses {#deleting-pauses}
+
+To stop a pause from applying, delete it with the [delete streak pauses admin API](/admin-api/endpoints/streaks/delete-pauses).
+
+### Reading Pauses {#reading-pauses}
+
+The [user streaks API](/api-reference/endpoints/users/get-a-users-streak) returns upcoming and currently active pauses in the `pauses` field. Past and deleted pauses are omitted.
+
+Each period in `streakHistory` includes `usedPause`, which is `true` when the user's streak was paused during that period.
+
 ## Tracking Streaks {#tracking-streaks}
 
 Trophy automatically calculates streaks for all users based on the [metric events](/features/events#tracking-metric-events) you report to Trophy.
@@ -116,7 +142,11 @@ To learn more about how to set user preferences for a specific user, read the de
 
 This section outlines some of the operations you can perform to manage user's streaks in your application.
 
-### Restoring A Users Streak {#restoring-a-users-streak}
+### Pausing A User's Streak {#pausing-a-users-streak}
+
+To pause a user's streak for a specific date range, use the [create streak pauses admin API](/admin-api/endpoints/streaks/create-pauses). See [streak pauses](#streak-pauses) for how pauses work, including how to delete them.
+
+### Restoring A User's Streak {#restoring-a-users-streak}
 
 To restore a user's streak, head to the user details page and use the 'Restore Streak' action. Restoring a user's streak sets it to the length it was when they last lost it.
 
@@ -158,7 +188,7 @@ This can be used to transactionally trigger UI/UX elements including:
 
 ### User Streaks API {#user-streaks-api}
 
-The [user streaks API](/api-reference/endpoints/users/get-a-users-streak) returns the current streak for a single user, along with their recent streak history. Use the `historyPeriods` query parameter to control how many periods to return.
+The [user streaks API](/api-reference/endpoints/users/get-a-users-streak) returns the current streak for a single user, along with their recent streak history and any upcoming or active [streak pauses](#streak-pauses). Use the `historyPeriods` query parameter to control how many periods to return.
 
 {/* vale off */}
 
@@ -171,41 +201,55 @@ The [user streaks API](/api-reference/endpoints/users/get-a-users-streak) return
   "periodEnd": "2025-04-05",
   "expires": "2025-04-12",
   "rank": 5,
+  "pauses": [
+    {
+      "id": "550e8400-e29b-41d4-a716-446655440000",
+      "start": "2026-08-20",
+      "end": "2026-08-27"
+    }
+  ],
   "streakHistory": [
     {
       "periodStart": "2025-03-02",
       "periodEnd": "2025-03-08",
-      "length": 9
+      "length": 9,
+      "usedPause": false
     },
     {
       "periodStart": "2025-03-09",
       "periodEnd": "2025-03-15",
-      "length": 0
+      "length": 0,
+      "usedPause": false
     },
     {
       "periodStart": "2025-03-16",
       "periodEnd": "2025-03-22",
-      "length": 0
+      "length": 0,
+      "usedPause": false
     },
     {
       "periodStart": "2025-03-23",
       "periodEnd": "2025-03-29",
-      "length": 1
+      "length": 1,
+      "usedPause": false
     },
     {
       "periodStart": "2025-03-30",
       "periodEnd": "2025-04-05",
-      "length": 2
+      "length": 2,
+      "usedPause": false
     },
     {
       "periodStart": "2025-04-06",
       "periodEnd": "2025-04-12",
-      "length": 3
+      "length": 3,
+      "usedPause": false
     },
     {
       "periodStart": "2025-04-13",
       "periodEnd": "2025-04-19",
-      "length": 4
+      "length": 4,
+      "usedPause": false
     }
   ]
 }
