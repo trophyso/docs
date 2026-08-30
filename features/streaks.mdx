@@ -45,40 +45,59 @@ In this way you can design your streak logic to match your application use case.
 
 ## Streak Freezes {#streak-freezes}
 
-Streak freezes help users keep their streaks for longer by allowing them to miss periods without it resetting to zero. This helps keep streaks motivating even if users don't maintain a perfect usage habit.
+Streak freezes help users keep their streaks for longer by allowing them to miss a set number ofperiods without it resetting to zero. This helps keep streaks motivating even if users don't maintain a perfect usage habit.
+
+Streak freezes are optional and can be configured on the [streaks page](https://app.trophy.so/streaks) of the Trophy dashboard.
+
+When enabled, you decide how many freezes a user can have, and how many are granted to them over time. When a user misses a period, one freeze is consumed. Freezes are consumed until users have no freezes left, at which point the user's streak is reset to zero.
+
+<Note>
+Streak freezes are different from [streak pauses](#streak-pauses) in that freezes allow users to miss a set number of days (or periods) without breaking their streak, regardless of the reason, while streak pauses specifically protect a streak over a known and pre-defined date range, such as a scheduled vacation or break. Freezes are consumed automatically when the user misses a required activity, whereas pauses are manually created in advance to cover planned absences.
+</Note>
+
+### Granting Freezes {#granting-freezes}
+
+You can configure any number of arbitrary freezes to grant to new users when you first identify them with Trophy. To set this up, enable freeze grants and set the starting freeze count on the [streaks page](https://app.trophy.so/streaks) of the Trophy dashboard.
 
 <Frame>
-  <img
-    height="200"
-    width="100%"
-    noZoom
-    src="../assets/features/streaks/freezes_config.png"
-  />
+  <video
+    autoPlay
+    muted
+    loop
+    playsInline
+    className="w-full aspect-15/4"
+    src="../assets/features/streaks/freeze_grants.mp4"
+  ></video>
 </Frame>
-
-Streak freezes are optional in Trophy but can be configured on the [streaks page](https://app.trophy.so/streaks) of the Trophy dashboard.
-
-### Granting Initial Freezes {#granting-initial-freezes}
-
-You can configure any number of arbitrary freezes to grant to new users when you first identify them with Trophy.
-
-<Tip>
-Giving users too many freezes may decrease their perceived value, but granting too few freezes might result it a higher number of lost streaks. A good starting point is one freeze per user, but the trick is to experiment!
-</Tip>
 
 ### Freeze Accumulation {#freeze-accumulation}
 
-As users use up streak freezes, they'll need a continuous supply of new ones to keep them going. To facilitate this, Trophy can automatically grant streak freezes to users over time. You can choose an arbitrary number of days over which to grant an arbitrary number of freezes to each user.
+Trophy can automatically grant streak freezes to users over time. You can choose an arbitrary number of days over which to grant an arbitrary number of freezes to each user.
 
+To set this up, set the number of days over which to grant freezes and the number of freezes to grant on the [streaks page](https://app.trophy.so/streaks) of the Trophy dashboard. Here you can also set the maximum number of freezes that each user can have, up to a limit of 100.
+
+<Frame>
+  <video
+    autoPlay
+    muted
+    loop
+    playsInline
+    className="w-full aspect-15/4"
+    src="../assets/features/streaks/freeze_accumulation.mp4"
+  ></video>
+</Frame>
+
+<Tip>
 If you've [configured time zones](/features/users#param-tz) for your users, Trophy will automatically consume freezes at midnight in the user's time zone when necessary to extend their streak, and if any new freezes are due to be granted to a user, they will be granted up to ten minutes later.
-
-### Maximum Freeze Count {#maximum-freeze-count}
-
-In Trophy you also configure the maximum number of freezes that each user can have, up to a limit of 100. [Freeze accumulation](#freeze-accumulation) will only ever grant freezes up to this limit.
+</Tip>
 
 ## Streak Pauses {#streak-pauses}
 
 Streak pauses protect a user's streak over a known date range, such as a vacation or other planned break. While a pause covers a period, Trophy maintains the user's streak length instead of ending the streak if they miss their [streak conditions](#streak-conditions).
+
+<Note>
+Streak pauses are different from [streak freezes](#streak-freezes) in that pauses specifically protect a user's streak over a known and pre-defined date range, such as a scheduled vacation or break, while freezes allow users to miss a set number of days (or periods) without breaking their streak, regardless of the reason. Pauses are manually created in advance to cover planned absences, whereas freezes are consumed automatically when the user misses a required activity.
+</Note>
 
 ### Creating Pauses {#creating-pauses}
 
@@ -114,9 +133,13 @@ For a full walk through on how to set up a streak feature using Trophy, check ou
 
 ## Streak Personalization {#streak-personalization}
 
-Trophy can support users personalizing how their streak works within guardrails you set for them.
+Trophy can support users personalizing how their streak works within guardrails you set for them. To do this, turn on streak personalization in the [streaks page](https://app.trophy.so/streaks) of the Trophy dashboard.
 
-To do this, turn on streak personalization in the [streaks page](https://app.trophy.so/streaks) of the Trophy dashboard.
+Once enabled, users will be able to customize the [streak conditions](#streak-conditions) that they must meet to extend their streak, including streak evaluation mode and the threshold for each metric, as well as personalize what days of the week that their streak will track their activity, through user preferences.
+
+<Tip>
+To learn more about how to set user preferences for a specific user, read the dedicated documentation on [user preferences](/features/users#streak-preferences).
+</Tip>
 
 <Frame>
   <video
@@ -132,19 +155,9 @@ To do this, turn on streak personalization in the [streaks page](https://app.tro
   />
 </Frame>
 
-Once enabled, users will be able to customize the [streak conditions](#streak-conditions) that they must meet to extend their streak, including streak evaluation mode and the threshold for each metric, through user preferences.
-
-<Tip>
-To learn more about how to set user preferences for a specific user, read the dedicated documentation on [user preferences](/features/users#streak-preferences).
-</Tip>
-
 ## Managing Streaks {#managing-streaks}
 
 This section outlines some of the operations you can perform to manage user's streaks in your application.
-
-### Pausing A User's Streak {#pausing-a-users-streak}
-
-To pause a user's streak for a specific date range, use the [create streak pauses admin API](/admin-api/endpoints/streaks/create-pauses). See [streak pauses](#streak-pauses) for how pauses work, including how to delete them.
 
 ### Restoring A User's Streak {#restoring-a-users-streak}
 
