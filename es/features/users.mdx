@@ -114,7 +114,7 @@ Asigna un nombre y una clave única al atributo. La clave es lo que utilizarás 
 
 ### Configuración de atributos {#setting-attributes}
 
-Los atributos pueden asignarse valores para usuarios específicos utilizando su clave única, ya sea de forma inline, cuando los usuarios incrementan métricas a través de la [API de incremento de métricas](/es/api-reference/endpoints/events/submit-a-metric-event), o explícitamente mediante las APIs de [identificación de usuario](/es/api-reference/endpoints/users/identify-a-user), [crear usuario](/es/api-reference/endpoints/users/create-a-user) o [actualizar usuario](/es/api-reference/endpoints/users/update-a-user).
+Los atributos pueden asignarse valores para usuarios específicos utilizando su clave única, ya sea en línea, a medida que los usuarios incrementan métricas a través del [API de incremento de métricas](/es/api-reference/endpoints/events/submit-a-metric-event), o explícitamente mediante las APIs de [identificación de usuario](/es/api-reference/endpoints/users/identify-a-user), [crear usuario](/es/api-reference/endpoints/users/create-a-user) o [actualizar usuario](/es/api-reference/endpoints/users/update-a-user).
 
 <Warning>
   Trophy solo establecerá valores de atributos que hayan sido creados previamente
@@ -227,7 +227,7 @@ Cuando le informas a Trophy sobre un usuario en tu plataforma, llamamos a esto *
 
 La identificación en línea es la forma más sencilla de informar a Trophy sobre tus usuarios, ya que no requiere ningún código específico de identificación de usuarios. Simplemente le informas a Trophy sobre los usuarios a medida que utilizan normalmente tu plataforma.
 
-En la práctica, esto significa que cada vez que utilizas la [API de Eventos de Métricas](/es/api-reference/endpoints/events/submit-a-metric-event), pasas los detalles completos del usuario que activó el evento.
+En la práctica, esto significa que cada vez que utilices el [API de Eventos de Métrica](/es/api-reference/endpoints/events/submit-a-metric-event), debes pasar los detalles completos del usuario que desencadenó el evento.
 
 Aquí hay un ejemplo donde se realiza una llamada a la API de eventos de métricas, y los detalles del usuario que realizó la interacción se incluyen en el cuerpo de la solicitud:
 
@@ -367,7 +367,7 @@ Una vez que hayas obtenido y mostrado las preferencias, los usuarios pueden real
 
 ### Preferencias de Racha {#streak-preferences}
 
-Trophy admite preferencias de usuario para rachas, permitiendo a los usuarios personalizar las condiciones que deben cumplir para extender su racha, así como personalizar qué días de la semana su racha rastreará su actividad.
+Trophy admite preferencias de usuario para rachas, permitiendo a los usuarios personalizar las condiciones que deben cumplir para extender su racha, incluyendo qué días de la semana cuentan para ella.
 
 <Note>
 Para usar las preferencias de racha, debes tener la [personalización de rachas](/es/features/streaks#streak-personalization) habilitada.
@@ -378,7 +378,7 @@ Una vez habilitada la personalización de rachas, la [API de actualización de p
 Las siguientes configuraciones de racha pueden ser anuladas por las preferencias de usuario:
 - `metrics`: Un array de [métricas](/es/features/metrics) con umbrales personalizados requeridos para extender la racha.
 - `evaluationMode`: Determina cómo se combinan las métricas para extender la racha. Puede ser `ALL` o `OR`.
-- `daysOff`: Un array de números de días ISO 8601 en los que el usuario no perderá su racha si está inactivo.
+- `daysOff`: Un array de números de días de la semana (`0` = domingo hasta `6` = sábado) que anulan los [días libres](/es/features/streaks#days-off) de la organización. El usuario no perderá su racha si está inactivo en estos días.
 
 <UserStreakPreferencesResponseBlock />
 

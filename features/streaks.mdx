@@ -43,6 +43,25 @@ When combining metrics in this way, you can choose between two evaluation modes:
 
 In this way you can design your streak logic to match your application use case.
 
+### Days Off {#days-off}
+
+For daily streaks, you can mark specific days of the week as days off on the [streaks page](https://app.trophy.so/streaks) of the Trophy dashboard. Those days do not count toward the streak: users can still extend their streak if they are active, but missing a day off will not break it.
+
+<Frame>
+  <img
+    height="200"
+    width="100%"
+    noZoom
+    src="../assets/features/streaks/days_off.png"
+  />
+</Frame>
+
+You must leave at least one day that counts toward the streak. Weekly and monthly streaks ignore days off.
+
+Unlike [streak freezes](#streak-freezes), days off are not consumed. They apply every week until you change them.
+
+If you've enabled [streak personalization](#streak-personalization), users can override the default days off through [user preferences](/features/users#streak-preferences).
+
 ## Streak Freezes {#streak-freezes}
 
 Streak freezes help users keep their streaks for longer by allowing them to miss a set number ofperiods without it resetting to zero. This helps keep streaks motivating even if users don't maintain a perfect usage habit.
@@ -135,7 +154,7 @@ For a full walk through on how to set up a streak feature using Trophy, check ou
 
 Trophy can support users personalizing how their streak works within guardrails you set for them. To do this, turn on streak personalization in the [streaks page](https://app.trophy.so/streaks) of the Trophy dashboard.
 
-Once enabled, users will be able to customize the [streak conditions](#streak-conditions) that they must meet to extend their streak, including streak evaluation mode and the threshold for each metric, as well as personalize what days of the week that their streak will track their activity, through user preferences.
+Once enabled, users will be able to customize the [streak conditions](#streak-conditions) that they must meet to extend their streak, including streak evaluation mode, the threshold for each metric, and [days off](#days-off), through user preferences.
 
 <Tip>
 To learn more about how to set user preferences for a specific user, read the dedicated documentation on [user preferences](/features/users#streak-preferences).

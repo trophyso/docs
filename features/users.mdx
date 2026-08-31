@@ -369,7 +369,7 @@ Once you've fetched and displayed the preferences, users can make changes in you
 
 ### Streak Preferences {#streak-preferences}
 
-Trophy supports user preferences for streaks, allowing users to customize the conditions they must meet to extend their streak, as well as personalize what days of the week that their streak will track their activity.
+Trophy supports user preferences for streaks, allowing users to customize the conditions they must meet to extend their streak, including which days of the week count toward it.
 
 <Note>
 In order to use streak preferences, you must have [streak personalization](/features/streaks#streak-personalization) enabled.
@@ -380,7 +380,7 @@ Once streak personalization is enabled, the [update preferences API](/api-refere
 The following streak settings can be overridden by user preferences:
 - `metrics`: An array of [metrics](/features/metrics) with custom thresholds required to extend the streak.
 - `evaluationMode`: Determines how metrics combine to extend the streak. Can be `ALL` or `OR`.
-- `daysOff`: An array of ISO 8601 days numbers that the user will not lose their streak on if inactive.
+- `daysOff`: An array of weekday numbers (`0` = Sunday through `6` = Saturday) that override the organization [days off](/features/streaks#days-off). The user will not lose their streak if they are inactive on these days.
 
 <UserStreakPreferencesResponseBlock />
 
