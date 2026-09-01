@@ -15,28 +15,28 @@ Aquí integrarás tu aplicación con Trophy y comenzarás a construir tu primera
 
 <Tabs>
   <Tab title="Usando IA" icon="bot">
-    Estas instrucciones son para quienes prefieren desarrollar usando agentes de codificación como Cursor y Claude Code.
+    Estas instrucciones son para quienes prefieren desarrollar usando agentes de código como Cursor y Claude Code.
 
     <Steps>
       <Step title="Crea tu cuenta de Trophy">
-        Primero, [crea una cuenta nueva](https://app.trophy.so/sign-up?utm_source=docs&utm_medium=quickstart) si aún no tienes una y dirígete al [panel de Trophy](https://app.trophy.so).
+        Primero, [crea una nueva cuenta](https://app.trophy.so/sign-up?utm_source=docs&utm_medium=quickstart) si aún no tienes una y dirígete al [panel de Trophy](https://app.trophy.so).
 
         Completa el proceso de incorporación para configurar tu cuenta.
       </Step>
 
       <Step title="Configura los servidores MCP">
-        Para la mejor experiencia de configuración con IA, conecta Trophy a través de MCP:
+        Para obtener la mejor experiencia de configuración con IA, conecta Trophy a través de MCP:
 
         - URL del servidor MCP de documentación: `https://docs.trophy.so/mcp` (contexto de documentación en vivo)
         - URL del servidor MCP de cuenta: `https://mcp.trophy.so` (acciones de cuenta — consulta [MCP](/es/mcp/overview); requiere `x-trophy-api-key`)
 
         <Tip>
-          Usa el [MCP de Documentación](/es/mcp/docs-mcp-server/introduction) como contexto de documentación bajo demanda y el [MCP de Cuenta](/es/mcp/account-mcp-server/introduction) para cambios en la cuenta. Usa ambos para [mejores prácticas](/es/mcp/best-practice).
+          Usa el [MCP de documentación](/es/mcp/docs-mcp-server/introduction) como contexto de documentación bajo demanda y el [MCP de cuenta](/es/mcp/account-mcp-server/introduction) para cambios en la cuenta. Usa ambos para seguir las [mejores prácticas](/es/mcp/best-practice).
         </Tip>
 
       </Step>
       <Step title="Indica a tu agente que realice la configuración inicial">
-        Aquí tienes un prompt que puedes usar con tu agente de codificación para realizar la configuración inicial de Trophy:
+        Aquí tienes un prompt que puedes usar con tu agente de código para realizar la configuración inicial de Trophy:
 
         <Prompt
           description="Realizar la configuración inicial de Trophy"
@@ -44,80 +44,80 @@ Aquí integrarás tu aplicación con Trophy y comenzarás a construir tu primera
           iconType="solid"
           actions={["copy", "cursor"]}
         >
-          Estoy añadiendo gamificación a mi aplicación usando Trophy.
+          Estoy agregando gamificación a mi aplicación usando Trophy.
 
-          Antes de realizar cambios, verifica que los servidores MCP de Trophy conectados estén disponibles. Usa el servidor MCP de Documentación como la fuente principal de información para los detalles de integración de Trophy, y el servidor MCP de Cuenta para configurar mi cuenta.
+          Antes de realizar cambios, verifica que los servidores MCP de Trophy conectados estén disponibles. Usa el servidor MCP de documentación como la fuente principal de información para los detalles de integración de Trophy, y el servidor MCP de cuenta para configurar mi cuenta.
 
           Por favor, realiza la configuración inicial completa de principio a fin:
-          1. Detecta el lenguaje/framework del backend en este repositorio e instala el SDK oficial de Trophy correspondiente (o usa llamadas HTTP si no hay SDK disponible).
-          2. Añade `TROPHY_API_KEY` a la configuración de entorno de forma segura (sin secretos comprometidos en git), e intégralo en la inicialización del cliente de Trophy.
-          3. Añade código para rastrear un evento de cambio de métrica para la métrica `<metric>` usando el cliente de la API de Trophy, conectando todos los atributos de usuario requeridos como ID, y usando placeholders para todos los atributos opcionales como nombre, email y zona horaria.
-          4. Añade manejo básico de errores y registro de eventos alrededor de las llamadas a la API de Trophy.
-          5. Añade o actualiza una sección breve en el README explicando cómo funciona la integración y cómo extenderla.
+          1. Detecta el lenguaje/framework del backend en este repositorio e instala el SDK oficial de Trophy correspondiente (o usa llamadas HTTP si no hay un SDK disponible).
+          2. Agrega `TROPHY_API_KEY` a la configuración de entorno de forma segura (sin secretos confirmados en git), e intégralo en la inicialización del cliente de Trophy.
+          3. Agrega código para rastrear un evento de cambio de métrica para la métrica `<metric>` usando el cliente de la API de Trophy, conectando todos los atributos de usuario requeridos como el ID, y usando marcadores de posición para todos los atributos opcionales como nombre, correo electrónico, zona horaria y fecha de registro.
+          4. Agrega manejo de errores básico y registro en torno a las llamadas a la API de Trophy.
+          5. Agrega o actualiza una sección breve en el README que explique cómo funciona la integración y cómo extenderla.
 
           Restricciones:
-          - Usa los resultados de la herramienta Docs MCP para todas las decisiones de implementación específicas de Trophy.
-          - No te bases en memoria previa para el comportamiento de la API de Trophy cuando MCP proporcione una respuesta.
+          - Utiliza los resultados de la herramienta Docs MCP para todas las decisiones de implementación específicas de Trophy.
+          - No te bases en la memoria previa para el comportamiento de la API de Trophy cuando MCP proporciona una respuesta.
           - Mantén los secretos fuera del control de código fuente.
-          - Usa los patrones y convenciones de nomenclatura existentes del proyecto.
+          - Usa los patrones y convenciones de nomenclatura del proyecto existentes.
           - Muéstrame un resumen conciso de los archivos modificados y cómo probar la configuración.
-          - Sugiere los siguientes pasos según las funciones de gamificación que Trophy admite.
+          - Sugiere los siguientes pasos basándote en las funcionalidades de gamificación que Trophy admite.
         </Prompt>
 
         <Note>
           Asegúrate de reemplazar `<metric>` con la métrica que configuraste durante la incorporación.
         </Note>
 
-        Esto:
+        Esto hará lo siguiente:
 
         1. Agregará el [SDK de Trophy](/es/api-reference/client-libraries) relevante a tu aplicación según tu stack tecnológico
         2. Agregará una nueva variable `TROPHY_API_KEY` a tu configuración de entorno
-        3. Agregará código para enviar eventos a Trophy según la métrica que configuraste durante la incorporación.
+        3. Agregará código para enviar eventos a Trophy basándose en la métrica que configuraste durante la incorporación.
       </Step>
       <Step title="Obtén tu clave de API">
         Una vez completada la configuración, [crea una clave de API](https://app.trophy.so/integration) desde la página de integración del panel de Trophy y agrégala a tu entorno.
       </Step>
-      <Step title="Crea tu primera función de gamificación">
-        Una vez completada la configuración inicial, usa este mensaje de seguimiento para preparar tu agente para el siguiente paso y hacer que te pregunte qué construir a continuación:
+      <Step title="Construye tu primera funcionalidad de gamificación">
+        Una vez completada la configuración inicial, usa este prompt de seguimiento para preparar tu agente para el siguiente paso y haz que te pregunte qué construir a continuación:
 
         <Prompt
-          description="Crea tu primera función de gamificación"
+          description="Construye tu primera funcionalidad de gamificación"
           icon="paperclip"
           iconType="solid"
           actions={["copy", "cursor"]}
         >
           Prepárate para continuar mi integración de Trophy desde la configuración existente.
 
-          Primero, verifica que el servidor Docs MCP de Trophy conectado esté disponible y úsalo como fuente de verdad para los detalles de integración específicos de funciones.
+          Primero, verifica que el servidor Docs MCP de Trophy conectado esté disponible y úsalo como fuente confiable para los detalles de integración específicos de cada funcionalidad.
 
-          Antes de implementar cualquier cosa, pregúntame qué función de gamificación quiero construir, proporcionando opciones según lo que Docs MCP indique que Trophy admite.
+          Antes de implementar cualquier cosa, pregúntame qué funcionalidad de gamificación quiero construir, proporcionando opciones basadas en lo que el Docs MCP indica que Trophy admite.
 
-          Después de elegir una opción:
-          1. Configurar la funcionalidad seleccionada de la manera que describo usando el servidor MCP de cuenta.
-          1. Implementar únicamente esa funcionalidad seleccionada usando las API relevantes de Trophy y los patrones de proyecto existentes.
-          2. Agregar las llamadas/endpoints/acciones del lado del servidor necesarios que usen las API de Trophy y una superficie de respuesta de API o interfaz de usuario mínima.
+          Después de que elija una opción:
+          1. Configurar la funcionalidad seleccionada de la manera que describo usando el servidor MCP de Account.
+          1. Implementar únicamente esa funcionalidad seleccionada usando las API de Trophy relevantes y los patrones existentes del proyecto.
+          2. Agregar las llamadas/endpoints/acciones del lado del servidor necesarias que usan las API de Trophy y una interfaz de usuario mínima o superficie de respuesta de API.
           3. Documentar cualquier nueva variable de entorno, ruta y pasos de uso.
 
-          Si solicito una funcionalidad que Trophy no admite, no implementar una solución alternativa.
-          En su lugar, indicarme que actualmente no está disponible y pedirme que contacte al soporte de Trophy en support@trophy.so para enviar una solicitud de funcionalidad.
+          Si solicito una funcionalidad que Trophy no admite, no implementes una solución alternativa.
+          En su lugar, indícame que actualmente no está disponible y pídeme que me comunique con el soporte de Trophy en support@trophy.so para enviar una solicitud de funcionalidad.
 
-          Mantener los cambios orientados a producción:
-          - Seguir la arquitectura y las convenciones de nomenclatura existentes.
-          - Manejar los fallos de la API con elegancia.
-          - Devolver una lista clara de archivos modificados y pasos de verificación manual.
+          Mantén los cambios orientados a producción:
+          - Sigue la arquitectura y las convenciones de nomenclatura existentes.
+          - Maneja los fallos de API de forma elegante.
+          - Devuelve una lista clara de archivos modificados y pasos de verificación manual.
         </Prompt>
 
-        Para obtener ideas sobre qué construir a continuación, explorar:
+        Para obtener ideas sobre qué construir a continuación, explora:
 
         <CardGroup>
           <Card title="Logros" icon="trophy" href="/es/features/achievements">
-            Recompensa a los usuarios por el progreso continuo o por realizar acciones específicas.
+            Recompensa a los usuarios por su progreso continuo o por realizar acciones específicas.
           </Card>
           <Card title="Rachas" icon="flame" href="/es/features/streaks">
-            Motiva a los usuarios a construir hábitos de uso regulares.
+            Motiva a los usuarios a desarrollar hábitos de uso regular.
           </Card>
           <Card title="Puntos" icon="sparkle" href="/es/features/points">
-            Construye sistemas de puntos sofisticados para recompensar y retener usuarios.
+            Construye sistemas sofisticados de puntos para recompensar y retener usuarios.
           </Card>
           <Card
             title="Tablas de clasificación"
@@ -140,7 +140,7 @@ Aquí integrarás tu aplicación con Trophy y comenzarás a construir tu primera
             Crea competencias amistosas para aumentar la participación de los usuarios.
           </Card>
           <Card title="Correos electrónicos" icon="mail" href="/es/features/emails">
-            Entrega correos electrónicos personalizados de ciclo de vida a los usuarios en el momento perfecto.
+            Envía correos electrónicos personalizados del ciclo de vida a los usuarios en el momento perfecto.
           </Card>
           <Card title="Notificaciones push" icon="bell" href="/es/features/push-notifications">
             Impulsa flujos de notificaciones automatizados usando datos de gamificación personalizados.
@@ -152,17 +152,17 @@ Aquí integrarás tu aplicación con Trophy y comenzarás a construir tu primera
     </Steps>
   </Tab>
   <Tab title="Manual" icon="user">
-    Estas instrucciones son para quienes desean implementar Trophy manualmente. Si prefieres usar agentes de codificación, cambia de pestaña arriba.
+    Estas instrucciones son para quienes desean implementar Trophy manualmente. Si en su lugar prefieres usar agentes de codificación, cambia de pestaña arriba.
     
     <Steps>
       <Step title="Crea tu cuenta de Trophy">
-        Primero, [crea una cuenta nueva](https://app.trophy.so/sign-up?utm_source=docs&utm_medium=quickstart) si aún no tienes una y accede al [panel de Trophy](https://app.trophy.so).
+        Primero, [crea una nueva cuenta](https://app.trophy.so/sign-up?utm_source=docs&utm_medium=quickstart) si aún no tienes una y dirígete al [panel de Trophy](https://app.trophy.so).
 
-        Completa la configuración inicial para preparar tu cuenta.
+        Completa el proceso de incorporación para configurar tu cuenta.
 
       </Step>
-      <Step title="Añade el SDK de Trophy a tu backend">
-        Tenemos bibliotecas SDK disponibles en la mayoría de los lenguajes de programación principales, pero si no ves el tuyo en la lista, ¡avísanos y crearemos uno!
+      <Step title="Agrega el SDK de Trophy a tu backend">
+        Tenemos bibliotecas de SDK disponibles en la mayoría de los lenguajes de programación principales, pero si no ves el tuyo en la lista, ¡háznoslo saber y crearemos uno!
 
         <SdkInstallCommand />
 
@@ -172,7 +172,7 @@ Aquí integrarás tu aplicación con Trophy y comenzarás a construir tu primera
       <Step title="Configura el entorno">
         Dirígete a la [página de integración](https://app.trophy.so/integration) del panel de Trophy y crea una nueva clave de API.
         
-        Añade tu clave de API como una variable de entorno en tu aplicación backend:
+        Agrega tu clave de API como una variable de entorno en tu aplicación de backend:
 
         <AddEnvVarBlock />
 
@@ -180,12 +180,12 @@ Aquí integrarás tu aplicación con Trophy y comenzarás a construir tu primera
 
         <TrophyClientInitBlock />
 
-        Asegúrate de que todas las llamadas al SDK de Trophy utilicen este cliente para la autenticación.
+        Asegúrate de que todas las llamadas al SDK de Trophy usen este cliente para la autenticación.
       </Step>
       <Step title="Crea tu primera métrica">
-        Todas las funciones de gamificación se basan en interacciones de usuarios. En Trophy, usas [Métricas](/es/features/metrics) para definir y modelar esas interacciones y [Eventos](/es/features/events) para rastrearlas.
+        Todas las funciones de gamificación están impulsadas por interacciones de usuario. En Trophy, usas [Métricas](/es/features/metrics) para definir y modelar esas interacciones y [Eventos](/es/features/events) para rastrearlas.
         
-        Aquí crearás tu primera métrica para comenzar. En el panel de Trophy, ve a la [página de métricas](https://app.trophy.so/metrics) y haz clic en el botón _Nueva Métrica_:
+        Aquí crearás tu primera métrica para comenzar. En el panel de Trophy, dirígete a la [página de métricas](https://app.trophy.so/metrics) y haz clic en el botón _Nueva Métrica_:
 
         <Frame>
           <video
@@ -198,11 +198,11 @@ Aquí integrarás tu aplicación con Trophy y comenzarás a construir tu primera
           ></video>
         </Frame>
 
-        Asigna un nombre a la métrica y haz clic en _Guardar_.
+        Dale un nombre a la métrica y haz clic en _Guardar_.
 
       </Step>
       <Step title="Integra la métrica en tu backend">
-        Una vez que hayas creado tu métrica, dirígete a la pestaña de configuración y copia su clave de referencia única de API.
+        Una vez que hayas creado tu métrica, dirígete a la pestaña de configuración y copia su clave de referencia única de la API.
 
         <Frame>
           <video
@@ -215,27 +215,27 @@ Aquí integrarás tu aplicación con Trophy y comenzarás a construir tu primera
           ></video>
         </Frame>
 
-        Para registrar un evento contra esta métrica cuando un usuario interactúa con tu producto, llama a la [API de eventos de cambio de métrica](/es/api-reference/endpoints/events/submit-a-metric-event), pasando los detalles del usuario que realizó la interacción. En este ejemplo, la clave de métrica sería `flashcards-flipped`:
+        Para rastrear un evento contra esta métrica cuando un usuario interactúa con tu producto, llama a la [API de eventos de cambio de métrica](/es/api-reference/endpoints/events/submit-a-metric-event), pasando los detalles del usuario que realizó la interacción. En este ejemplo, la clave de la métrica sería `flashcards-flipped`:
 
         <MetricChangeRequestBlock />
 
-        Al hacer esta llamada, le estás indicando a Trophy que un usuario específico realizó una interacción con tu producto. Como resultado, Trophy procesará automáticamente cualquier característica de gamificación como Logros o Rachas que hayas configurado contra la métrica.
+        Al realizar esta llamada, le estás indicando a Trophy que un usuario específico realizó una interacción con tu producto. Como resultado, Trophy procesará automáticamente cualquier funcionalidad de gamificación como Logros o Rachas que hayas configurado contra la métrica.
 
       </Step>
       <Step title="Continúa construyendo tu experiencia de gamificación">
-        Con una métrica integrada en tu backend, estás listo para comenzar a agregar características de gamificación a tu producto.
+        Con una métrica integrada en tu backend, estás listo para comenzar a agregar funcionalidades de gamificación a tu producto.
         
-        Sigue los enlaces a continuación para aprender más sobre cada característica que puedes construir con Trophy:
+        Sigue los enlaces a continuación para aprender más sobre cada funcionalidad que puedes construir con Trophy:
 
         <CardGroup>
           <Card title="Logros" icon="trophy" href="/es/features/achievements">
-            Recompensa a los usuarios por su progreso continuo o por realizar acciones específicas.
+            Recompensa a los usuarios por su progreso continuo o por tomar acciones específicas.
           </Card>
           <Card title="Rachas" icon="flame" href="/es/features/streaks">
             Motiva a los usuarios a desarrollar hábitos de uso regular.
           </Card>
           <Card title="Puntos" icon="sparkle" href="/es/features/points">
-            Construye sistemas de puntos sofisticados para recompensar y retener usuarios.
+            Construye sistemas sofisticados de puntos para recompensar y retener usuarios.
           </Card>
           <Card
             title="Tablas de clasificación"
@@ -255,13 +255,13 @@ Aquí integrarás tu aplicación con Trophy y comenzarás a construir tu primera
               </svg>
             }
             href="/es/features/leaderboards">
-            Crea competencias amistosas para aumentar la interacción de los usuarios.
+            Crea competencias amistosas para aumentar la participación de los usuarios.
           </Card>
           <Card title="Correos electrónicos" icon="mail" href="/es/features/emails">
-            Envía correos electrónicos personalizados del ciclo de vida a los usuarios en el momento perfecto.
+            Entrega correos electrónicos personalizados del ciclo de vida a los usuarios en el momento perfecto.
           </Card>
           <Card title="Notificaciones push" icon="bell" href="/es/features/push-notifications">
-            Impulsa flujos de notificación automatizados utilizando datos de gamificación personalizados.
+            Impulsa flujos de notificación automatizados utilizando datos personalizados de gamificación.
           </Card>
         </CardGroup>
 
