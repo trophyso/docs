@@ -69,10 +69,17 @@ const timezone = Intl.DateTimeFormat().resolvedOptions().timeZone;
   `email`, intentar establecer este campo en true resultará en un error.
 </ParamField>
 
+<ParamField path="signUpDate" type="string">
+  La fecha en que el usuario se registró en tu plataforma, como `YYYY-MM-DD`. Se aceptan y almacenan fechas ISO 8601
+  como su día calendario UTC. No debe ser
+  posterior a hoy en la zona horaria del usuario. Este campo es independiente de
+  `created`, que es la fecha en que Trophy conoció al usuario por primera vez.
+</ParamField>
+
 <ParamField path="deviceTokens" type="array<string>">
   La lista de tokens de dispositivo para asociar con el usuario. Si has configurado alguna
-  [Notificación push](/es/features/push-notifications) de Trophy, solo se
-  enviará a un usuario cuando este campo se proporcione.
+  [Notificaciones push](/es/features/push-notifications) de Trophy, solo se
+  enviarán a un usuario cuando se proporcione este campo.
 </ParamField>
 
 ## Atributos de Usuario Personalizados {#custom-user-attributes}
@@ -93,13 +100,13 @@ Los atributos de usuario personalizados son gestionados por ti y pueden ser cual
 
 Por ejemplo, una aplicación de aprendizaje de idiomas podría usar un atributo de usuario personalizado para el idioma que está aprendiendo un usuario, o una plataforma de estudio podría usar uno para la materia favorita del usuario.
 
-Los atributos de usuario personalizados te permiten informar a Trophy sobre esta información contextual y utilizarla para personalizar las funciones de gamificación.
+Los atributos de usuario personalizados te permiten informar a Trophy sobre esta información contextual y usarla para personalizar las funciones de gamificación.
 
 ### Crear Atributos {#creating-attributes}
 
 Para crear un nuevo atributo de usuario personalizado, dirígete a la [pestaña de atributos](https://app.trophy.so/users/attributes) de la página de usuarios en el panel de Trophy y haz clic en el botón _Agregar Atributo de Usuario_.
 
-Asigna un nombre y una clave única al atributo. La clave es lo que utilizarás para referenciar el atributo en las llamadas a la API.
+Dale al atributo un nombre y una clave única. La clave es lo que usarás para hacer referencia al atributo en las llamadas a la API.
 
 <Frame>
   <video
@@ -112,16 +119,16 @@ Asigna un nombre y una clave única al atributo. La clave es lo que utilizarás 
   ></video>
 </Frame>
 
-### Configuración de atributos {#setting-attributes}
+### Establecer Atributos {#setting-attributes}
 
-Los atributos pueden asignarse valores para usuarios específicos utilizando su clave única, ya sea en línea, a medida que los usuarios incrementan métricas a través del [API de incremento de métricas](/es/api-reference/endpoints/events/submit-a-metric-event), o explícitamente mediante las APIs de [identificación de usuario](/es/api-reference/endpoints/users/identify-a-user), [crear usuario](/es/api-reference/endpoints/users/create-a-user) o [actualizar usuario](/es/api-reference/endpoints/users/update-a-user).
+Los atributos pueden asignarse valores para usuarios específicos usando su clave única, ya sea en línea, cuando los usuarios incrementan métricas a través de la [API de incremento de métricas](/es/api-reference/endpoints/events/submit-a-metric-event), o explícitamente a través de las APIs de [identificación de usuario](/es/api-reference/endpoints/users/identify-a-user), [crear usuario](/es/api-reference/endpoints/users/create-a-user) o [actualizar usuario](/es/api-reference/endpoints/users/update-a-user).
 
 <Warning>
-  Trophy solo establecerá valores de atributos que hayan sido creados previamente
+  Trophy solo establecerá valores de atributos que se hayan creado primero
   en el panel de control. Hacemos esto para ayudarte a mantener un conjunto limpio de atributos y
   prevenir sobrescrituras accidentales.
 
-Si recibes un error similar al siguiente, es posible que hayas escrito incorrectamente la clave del atributo en la solicitud, o que necesites crear primero el atributo en el panel de control de Trophy:
+Si recibes un error similar al siguiente, es posible que hayas escrito mal la clave del atributo en la solicitud, o que necesites crear el atributo primero en el panel de control de Trophy:
 
 {/* vale off */}
 
@@ -135,7 +142,7 @@ Si recibes un error similar al siguiente, es posible que hayas escrito incorrect
 
 </Warning>
 
-En todas las APIs, el esquema para establecer valores de atributos es consistente. Este es un ejemplo de una carga útil de solicitud que establece el valor de dos atributos de usuario personalizados `subject` y `plan`:
+En todas las APIs, el esquema para establecer valores de atributos es consistente. A continuación, se muestra un ejemplo de un payload de solicitud que establece el valor de dos atributos de usuario personalizados `subject` y `plan`:
 
 ```json {4-7}
 {
@@ -148,52 +155,52 @@ En todas las APIs, el esquema para establecer valores de atributos es consistent
 }
 ```
 
-### Uso de atributos {#using-attributes}
+### Uso de Atributos {#using-attributes}
 
-Utiliza atributos de usuario personalizados en Trophy para personalizar funciones de gamificación, agregar y filtrar datos devueltos por las APIs, y para segmentar y comparar cohortes de usuarios en análisis.
+Usa atributos de usuario personalizados en Trophy para personalizar funciones de gamificación, agregar y filtrar datos devueltos por las APIs, y segmentar y comparar cohortes de usuarios en análisis.
 
-#### Personalización de funciones {#feature-personalization}
+#### Personalización de Funciones {#feature-personalization}
 
-Los atributos de usuario personalizados se pueden utilizar para personalizar logros, personalizar la forma en que diferentes usuarios ganan puntos y más. Sigue los enlaces a las páginas relevantes a continuación para obtener más información.
+Los atributos de usuario personalizados se pueden usar para personalizar logros, personalizar la forma en que diferentes usuarios ganan puntos y más. Sigue los enlaces a las páginas relevantes a continuación para obtener más información.
 
 <CardGroup>
   <Card
-    title="Personalización de logros"
+    title="Personalización de Logros"
     icon="trophy"
     href="/es/features/achievements#creating-achievements"
   >
-    Configura logros que solo puedan ser desbloqueados por usuarios específicos.
+    Configura logros que solo pueden ser desbloqueados por usuarios específicos.
   </Card>
   <Card
-    title="Personalización de puntos"
+    title="Personalización de Puntos"
     icon="sparkle"
     href="/es/features/points#points-triggers"
   >
     Personaliza cómo diferentes usuarios ganan puntos.
   </Card>
   <Card
-    title="Segmentación de correos"
+    title="Segmentación de Correos Electrónicos"
     icon="split"
     href="/es/features/emails#limiting-emails-to-specific-types-of-users"
   >
-    Controla qué usuarios reciben correos gamificados.
+    Controla qué usuarios reciben correos electrónicos gamificados.
   </Card>
   <Card
-    title="Personalización de correos"
+    title="Personalización de Correos Electrónicos"
     icon="trophy"
     href="/es/features/emails#email-variables"
   >
-    Personaliza el texto y las líneas de asunto de los correos con atributos de usuario personalizados.
+    Personaliza el contenido y las líneas de asunto de correos electrónicos con atributos de usuario personalizados.
   </Card>
 </CardGroup>
 
 #### Agregación y Filtrado de Datos {#data-aggregation-and-filtering}
 
-Puedes utilizar atributos de usuario personalizados para agregar y filtrar datos devueltos por algunas APIs, lo que permite una amplia variedad de casos de uso de gamificación. En todos los casos, los atributos se incluyen en el parámetro de consulta `userAttributes` utilizando un esquema consistente:
+Puedes usar atributos de usuario personalizados para agregar y filtrar datos devueltos por algunas APIs para soportar una amplia gama de casos de uso de gamificación. En todos los casos, los atributos se incluyen en el parámetro de consulta `userAttributes` usando un esquema consistente:
 
 `?userAttributes=city:london,subscription-plan:pro`
 
-Aquí está la lista de todas las APIs que admiten el parámetro de consulta `userAttributes`:
+Aquí está una lista de todas las API que admiten el parámetro de consulta `userAttributes`:
 
 - [Resumen de Puntos](/es/api-reference/endpoints/points/get-points-summary)
 
@@ -201,7 +208,7 @@ Aquí está la lista de todas las APIs que admiten el parámetro de consulta `us
 
 Los atributos de usuario personalizados se pueden utilizar para segmentar y comparar gráficos de retención y participación entre grupos de usuarios.
 
-Esto es útil para entender qué cohortes están aprovechando al máximo tus funciones de gamificación y cuáles tienen dificultades para participar y, por lo tanto, requieren atención.
+Esto es útil para entender qué cohortes están aprovechando completamente tus funciones de gamificación, y cuáles tienen dificultades para participar y por lo tanto requieren atención.
 
 <Frame>
   <video
@@ -216,7 +223,7 @@ Esto es útil para entender qué cohortes están aprovechando al máximo tus fun
 
 ## Identificación de Usuarios {#identifying-users}
 
-Cuando le informas a Trophy sobre un usuario en tu plataforma, llamamos a esto **identificación**. Hay dos formas de identificar usuarios con Trophy: identificación [en línea](#inline-identification) e identificación [explícita](#explicit-identification).
+Cuando le informas a Trophy sobre un usuario en tu plataforma, llamamos a esto **identificación**. Hay dos formas en las que puedes identificar usuarios con Trophy: identificación [en línea](#inline-identification) e identificación [explícita](#explicit-identification).
 
 <Tip>
   Recomendamos comenzar con la identificación en línea si eres nuevo en
@@ -225,19 +232,19 @@ Cuando le informas a Trophy sobre un usuario en tu plataforma, llamamos a esto *
 
 ### Identificación en Línea {#inline-identification}
 
-La identificación en línea es la forma más sencilla de informar a Trophy sobre tus usuarios, ya que no requiere ningún código específico de identificación de usuarios. Simplemente le informas a Trophy sobre los usuarios a medida que utilizan normalmente tu plataforma.
+La identificación en línea es la forma más sencilla de informar a Trophy sobre tus usuarios, ya que no requiere ningún código específico de identificación de usuario. Simplemente le informas a Trophy sobre los usuarios mientras usan normalmente tu plataforma.
 
-En la práctica, esto significa que cada vez que utilices el [API de Eventos de Métrica](/es/api-reference/endpoints/events/submit-a-metric-event), debes pasar los detalles completos del usuario que desencadenó el evento.
+En la práctica, esto significa que cada vez que uses la [API de Eventos de Métricas](/es/api-reference/endpoints/events/submit-a-metric-event), transmites los detalles completos del usuario que activó el evento.
 
-Aquí hay un ejemplo donde se realiza una llamada a la API de eventos de métricas, y los detalles del usuario que realizó la interacción se incluyen en el cuerpo de la solicitud:
+Aquí hay un ejemplo donde se realiza una llamada a la API de eventos de métricas, y los detalles del usuario que realizó la interacción se transmiten en el cuerpo de la solicitud:
 
 <MetricChangeRequestBlock />
 
-En este caso, si esta es la primera interacción del usuario (es decir, es un usuario nuevo), se creará automáticamente un nuevo registro para él en Trophy.
+En este caso, si esta es la primera interacción del usuario (es decir, es un usuario nuevo), entonces se creará automáticamente un nuevo registro para él en Trophy.
 
 Sin embargo, si Trophy encuentra un registro existente con el mismo `id`, entonces Trophy actualizará cualquier detalle del usuario que se pase.
 
-En otras palabras, la identificación en línea se realiza mediante una operación `UPSERT`.
+En otras palabras, la identificación inline se realiza mediante una operación `UPSERT`.
 
 <br />
 
@@ -261,61 +268,61 @@ flowchart LR
 
 Identificar usuarios de esta manera tiene dos beneficios clave:
 
-- Todos los usuarios nuevos que se registren en tu plataforma e incrementen una métrica se rastrean automáticamente en Trophy sin necesidad de escribir código de identificación explícito
-- Cualquier cambio en las propiedades de usuarios existentes, como nombre o dirección de correo electrónico, se sincroniza automáticamente con Trophy la próxima vez que el usuario incremente una métrica
+- Todos los nuevos usuarios que se registran en tu plataforma e incrementan una métrica se rastrean automáticamente en Trophy sin necesidad de código de identificación explícito escrito por ti
+- Cualquier cambio en las propiedades de usuarios existentes como nombre o dirección de correo electrónico se sincroniza automáticamente con Trophy la próxima vez que el usuario incrementa una métrica
 
-De esta manera, la identificación en línea te permite mantener toda tu base de usuarios en sincronización constante con Trophy con la menor cantidad de código requerido de tu parte.
+De esta manera, la identificación inline te permite mantener toda tu base de usuarios en constante sincronización con Trophy con la menor cantidad de código requerido por tu parte.
 
-Por esta razón, recomendamos comenzar primero con la identificación en línea y luego explorar la identificación explícita si descubres que necesitas más control.
+Por eso recomendamos comenzar primero con la identificación inline y luego explorar la identificación explícita si descubres que necesitas más control.
 
 ### Identificación Explícita {#explicit-identification}
 
-La identificación explícita es cuando escribes código en tu aplicación que le indica explícitamente a Trophy sobre los usuarios de forma separada a cualquier interacción de métricas. Esto es útil si deseas tener control completo sobre cómo y cuándo Trophy se entera de tus usuarios.
+La identificación explícita es cuando escribes código en tu aplicación que le indica explícitamente a Trophy sobre los usuarios de manera separada a cualquier interacción de métricas. Esto es útil si deseas tener control completo sobre cómo y cuándo Trophy se entera de tus usuarios.
 
-Los escenarios en los que podrías querer usar identificación explícita incluyen:
+Los escenarios en los que podrías querer usar la identificación explícita incluyen:
 
-- Quieres informar a Trophy sobre usuarios nuevos inmediatamente al registrarse, antes de que incrementen una métrica
-- Rastrear muchas métricas en Trophy y no quieres repetir código de identificación en línea
-- Quieres informar a Trophy solo sobre una cohorte específica de usuarios, sobre la cual controlas las condiciones
+- Quieres informarle a Trophy sobre nuevos usuarios inmediatamente al registrarse, antes de que incrementen una métrica
+- Rastreas muchas métricas en Trophy y no quieres repetir el código de identificación inline
+- Quieres informarle a Trophy solo sobre un grupo específico de usuarios, del cual tú controlas las condiciones
 
-En este caso, puedes informar a Trophy sobre nuevos usuarios utilizando la [API de Identificación de Usuarios](/es/api-reference/endpoints/users/identify-a-user).
+En este caso, puedes informar a Trophy sobre nuevos usuarios usando la [API de Identificación de Usuarios](/es/api-reference/endpoints/users/identify-a-user).
 
 <IdentifyUserRequestBlock />
 
 <Tip>
-  Al igual que en la identificación inline, la identificación explícita también funciona mediante
+  Al igual que en la identificación en línea, la identificación explícita también funciona mediante
   una operación `UPSERT`, lo que significa que todos los atributos de usuario se mantienen sincronizados
   con Trophy automáticamente.
 </Tip>
 
-## Crear Usuarios {#creating-users}
+## Creación de Usuarios {#creating-users}
 
-Para crear explícitamente un nuevo usuario en Trophy, utiliza la [API de Crear Usuario](/es/api-reference/endpoints/users/create-a-user).
+Para crear explícitamente un nuevo usuario en Trophy, utiliza la [API de Creación de Usuarios](/es/api-reference/endpoints/users/create-a-user).
 
-## Mantener Usuarios Actualizados {#keeping-users-up-to-date}
+## Mantener los Usuarios Actualizados {#keeping-users-up-to-date}
 
-Para informar a Trophy sobre una actualización de un usuario en tu plataforma, puedes utilizar la [API de Actualizar Usuario](/es/api-reference/endpoints/users/update-a-user).
+Para informar a Trophy sobre una actualización de un usuario en tu plataforma, puedes usar la [API de Actualización de Usuarios](/es/api-reference/endpoints/users/update-a-user).
 
 Todas las propiedades que pases a Trophy se actualizarán a los nuevos valores que especifiques.
 
 <Tip>
   Como la [identificación de usuarios](#identifying-users) mantiene los registros de usuario actualizados por
   defecto, normalmente no es necesario actualizar explícitamente los usuarios en Trophy cada
-  vez que una de sus propiedades cambia en tu aplicación. Sin embargo, la API de
-  actualización de usuarios está disponible si realmente la necesitas.
+  vez que una de sus propiedades cambia en tu aplicación. Sin embargo, la API de actualización de usuarios
+  está disponible si realmente la necesitas.
 </Tip>
 
-## Configurar Preferencias de Usuario {#setting-user-preferences}
+## Configuración de Preferencias de Usuario {#setting-user-preferences}
 
-Trophy tiene APIs para ayudarte a crear un centro de preferencias que tus usuarios puedan usar para controlar y personalizar cómo interactúan con tus funciones de gamificación.
+Trophy cuenta con APIs para ayudarte a crear un centro de preferencias que tus usuarios puedan usar para controlar y personalizar cómo interactúan con tus funciones de gamificación.
 
-Esta sección explica todas las preferencias que puedes exponer a tus usuarios y su función.
+Esta sección recorre todas las preferencias que puedes exponer a tus usuarios y su función.
 
-### Preferencias de Notificación {#notification-preferences}
+### Preferencias de Notificaciones {#notification-preferences}
 
-Puedes usar Trophy para enviar [Emails](/es/features/emails) y [Notificaciones push](/es/features/push-notifications) gamificados a tus usuarios.
+Puedes usar Trophy para enviar [Correos electrónicos](/es/features/emails) y [Notificaciones push](/es/features/push-notifications) gamificados a tus usuarios.
 
-La [API de actualizar preferencias](/es/api-reference/endpoints/users/update-user-preferences) de Trophy te permite construir un centro de preferencias dentro de tu aplicación con el que tus usuarios puedan interactuar para controlar qué notificaciones reciben y a través de qué canales.
+La [API de actualización de preferencias](/es/api-reference/endpoints/users/update-user-preferences) de Trophy te permite crear un centro de preferencias dentro de tu aplicación con el que tus usuarios puedan interactuar para controlar qué notificaciones reciben y a través de qué canales.
 
 <Frame>
   <img
@@ -325,22 +332,22 @@ La [API de actualizar preferencias](/es/api-reference/endpoints/users/update-use
   />
 </Frame>
 
-La API te permite actualizar las preferencias de notificación de un usuario para diferentes tipos de notificación:
+La API te permite actualizar las preferencias de notificación de un usuario para diferentes tipos de notificaciones:
 
 - **achievement_completed**: Notificaciones enviadas cuando un usuario completa un logro
-- **recap**: Notificaciones de resumen periódicas sobre el progreso del usuario
+- **recap**: Notificaciones periódicas de resumen sobre el progreso del usuario
 - **reactivation**: Notificaciones enviadas para reactivar usuarios inactivos
 - **streak_reminder**: Recordatorios para ayudar a los usuarios a mantener sus rachas
 
-Para cada tipo de notificación, puedes especificar en qué canales debe recibir notificaciones el usuario: `email`, `push`, o ambos. Para desactivar completamente un tipo de notificación, pasa un array vacío.
+Para cada tipo de notificación, puedes especificar en qué canales debe recibir notificaciones el usuario: `email`, `push`, o ambos. Para desactivar un tipo de notificación por completo, pasa un array vacío.
 
 Por ejemplo, el siguiente fragmento de código actualiza las preferencias de notificación de un usuario en Trophy:
 
 <UpdateUserNotificationPreferencesBlock />
 
-Para crear una interfaz de centro de preferencias en tu aplicación, primero necesitarás obtener las preferencias actuales del usuario usando la [API de obtención de preferencias](/es/api-reference/endpoints/users/get-user-preferences).
+Para construir una interfaz de centro de preferencias en tu aplicación, primero necesitarás obtener las preferencias actuales del usuario utilizando la [API de obtener preferencias](/es/api-reference/endpoints/users/get-user-preferences).
 
-Esto devolverá la configuración de notificaciones actual del usuario, que luego podrás mostrar en tu interfaz y permitir que los usuarios modifiquen.
+Esto devolverá la configuración de notificaciones actual del usuario, que luego podrás mostrar en tu interfaz y permitir que los usuarios la modifiquen.
 
 <GetUserNotificationPreferencesBlock />
 
@@ -361,19 +368,19 @@ Puedes usar esta respuesta para:
 
 - **Rellenar controles de formulario**: Preseleccionar casillas de verificación o interruptores en tu interfaz de centro de preferencias según los valores actuales
 - **Mostrar el estado actual**: Mostrar qué notificaciones están habilitadas y a través de qué canales
-- **Manejar preferencias faltantes**: Si un tipo de notificación no está presente en la respuesta, significa que el usuario aún no ha establecido preferencias para él, y puedes usar la configuración predeterminada de tu aplicación
+- **Gestionar preferencias faltantes**: Si un tipo de notificación no está presente en la respuesta, significa que el usuario aún no ha establecido preferencias para ella, y puedes usar la configuración predeterminada de tu aplicación
 
-Una vez que hayas obtenido y mostrado las preferencias, los usuarios pueden realizar cambios en tu interfaz, y puedes usar la [API de actualización de preferencias](/es/api-reference/endpoints/users/update-user-preferences) para guardar sus selecciones de vuelta en Trophy.
+Una vez que hayas obtenido y mostrado las preferencias, los usuarios pueden realizar cambios en tu interfaz, y puedes usar la [API de actualizar preferencias](/es/api-reference/endpoints/users/update-user-preferences) para guardar sus selecciones de vuelta en Trophy.
 
 ### Preferencias de Racha {#streak-preferences}
 
 Trophy admite preferencias de usuario para rachas, permitiendo a los usuarios personalizar las condiciones que deben cumplir para extender su racha, incluyendo qué días de la semana cuentan para ella.
 
 <Note>
-Para usar las preferencias de racha, debes tener la [personalización de rachas](/es/features/streaks#streak-personalization) habilitada.
+Para usar las preferencias de racha, debes tener la [personalización de racha](/es/features/streaks#streak-personalization) habilitada.
 </Note>
 
-Una vez habilitada la personalización de rachas, la [API de actualización de preferencias](/es/api-reference/endpoints/users/update-user-preferences) te permitirá sobrescribir la configuración predeterminada de rachas para un usuario específico.
+Una vez habilitada la personalización de racha, la [API de actualización de preferencias](/es/api-reference/endpoints/users/update-user-preferences) te permitirá anular la configuración de racha predeterminada para un usuario específico.
 
 Las siguientes configuraciones de racha pueden ser anuladas por las preferencias de usuario:
 - `metrics`: Un array de [métricas](/es/features/metrics) con umbrales personalizados requeridos para extender la racha.
@@ -382,13 +389,13 @@ Las siguientes configuraciones de racha pueden ser anuladas por las preferencias
 
 <UserStreakPreferencesResponseBlock />
 
-Una vez configuradas las preferencias de racha, la [API de obtención de preferencias](/es/api-reference/endpoints/users/get-user-preferences) devolverá la configuración personalizada de rachas del usuario.
+Una vez configuradas las preferencias de racha, la [API de obtención de preferencias](/es/api-reference/endpoints/users/get-user-preferences) devolverá la configuración de racha personalizada del usuario.
 
-## Recuperar Información del Usuario {#retrieving-user-information}
+## Obtener Información del Usuario {#retrieving-user-information}
 
-Para obtener los detalles de un usuario que ya has identificado con Trophy, utiliza la [API Get User](/es/api-reference/endpoints/users/get-a-single-user).
+Para obtener los detalles de un usuario que ya has identificado con Trophy, usa la [API de Obtener Usuario](/es/api-reference/endpoints/users/get-a-single-user).
 
-Esto devolverá los detalles completos del usuario junto con el atributo `control` que puedes usar para inscribir condicionalmente a los usuarios en cualquier funcionalidad de gamificación. Obtén más información sobre [Experimentación](/es/platform/experimentation).
+Esto devolverá los detalles completos del usuario junto con el atributo `control` que puedes usar para inscribir condicionalmente a los usuarios en cualquier característica de gamificación. Obtén más información sobre [Experimentación](/es/platform/experimentation).
 
 ```json Response {3}
 {
@@ -397,6 +404,7 @@ Esto devolverá los detalles completos del usuario junto con el atributo `contro
   "created": "2021-01-01T00:00:00Z",
   "email": "user@example.com",
   "name": "User",
+  "signUpDate": "2020-08-20",
   "subscribeToEmails": true,
   "tz": "Europe/London",
   "updated": "2021-01-01T00:00:00Z"
@@ -407,9 +415,9 @@ Esto devolverá los detalles completos del usuario junto con el atributo `contro
 
 ### Analíticas Básicas {#basic-analytics}
 
-Por defecto, Trophy incluye analíticas de usuario de alto nivel en la [página de Usuarios](https://app.trophy.so/users) que incluyen:
+Por defecto, Trophy incluye analíticas de usuario de alto nivel en la [página de Usuarios](https://app.trophy.so/users), incluyendo:
 
-- El número total de usuarios de los que le has informado a Trophy
+- El número total de usuarios sobre los que has informado a Trophy
 - El número de usuarios que están activos diariamente
 - El número de usuarios que están activos mensualmente
 
@@ -421,7 +429,7 @@ En esta página también puedes buscar entre todos los usuarios que Trophy ha re
 
 ### Usuarios Principales {#top-users}
 
-Además, en el [Panel de Control](https://app.trophy.so), Trophy muestra una lista de _Usuarios Principales_ con el conjunto de usuarios que han logrado el mayor progreso con respecto a las métricas de tu plataforma.
+Además, en el [Panel de Control](https://app.trophy.so), Trophy muestra una lista de _Usuarios Principales_ con el conjunto de usuarios que han logrado mayor progreso respecto a las métricas de tu plataforma.
 
 ¡Estos son tus usuarios más comprometidos, por lo que es útil saber quiénes son!
 
@@ -429,9 +437,9 @@ Además, en el [Panel de Control](https://app.trophy.so), Trophy muestra una lis
 
 <AccordionGroup>
   <Accordion title="¿Cuántos usuarios puedo informar a Trophy?">
-    ¡Todos los que quieras! Trophy solo cobra cada mes por los usuarios _activos_, que son aquellos que interactúan con tu producto al menos una vez en un mes determinado.
+    ¡Tantos como quieras! Trophy solo cobra cada mes por usuarios _activos_, que son los usuarios que interactúan con tu producto al menos una vez en un mes determinado.
 
-    Esto es excelente porque significa que si un usuario abandona, no pagarás por ellos en los meses siguientes.
+    Esto es excelente porque significa que si un usuario abandona, no pagarás por él en los meses siguientes.
 
     Puedes ver el número total de usuarios por los que se te cobrará cada mes dentro de Trophy en la barra lateral:
 
@@ -451,4 +459,4 @@ Además, en el [Panel de Control](https://app.trophy.so), Trophy muestra una lis
 
 ## Obtener Soporte {#get-support}
 
-¿Quieres ponerte en contacto con el equipo de Trophy? Contáctanos por [correo electrónico](mailto:support@trophy.so). ¡Estamos aquí para ayudarte!
+¿Quieres ponerte en contacto con el equipo de Trophy? Comunícate con nosotros por [correo electrónico](mailto:support@trophy.so). ¡Estamos aquí para ayudarte!
