@@ -71,6 +71,13 @@ const timezone = Intl.DateTimeFormat().resolvedOptions().timeZone;
   `email`, attempting to set this field to true will result in an error.
 </ParamField>
 
+<ParamField path="signUpDate" type="string">
+  The date the user signed up on your platform, as `YYYY-MM-DD`. ISO 8601
+  date-times are accepted and stored as their UTC calendar day. Must not be
+  after today in the user's timezone. This field is separate from
+  `created`, which is the date Trophy first learned about the user.
+</ParamField>
+
 <ParamField path="deviceTokens" type="array<string>">
   The list of device tokens to associate with the user. If you've configured any
   Trophy [Push Notifications](/features/push-notifications), then they'll only
@@ -399,6 +406,7 @@ This will return the full details of the user along with the `control` attribute
   "created": "2021-01-01T00:00:00Z",
   "email": "user@example.com",
   "name": "User",
+  "signUpDate": "2020-08-20",
   "subscribeToEmails": true,
   "tz": "Europe/London",
   "updated": "2021-01-01T00:00:00Z"

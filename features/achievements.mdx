@@ -1,9 +1,9 @@
 ---
 title: Achievements
 description: Learn how to use Achievements in a gamified product experience with Trophy.
-og:description: Use metric, API, streak and composite achievements to reward
-  users for continued progress and to encourage them to discover new parts of
-  your app.
+og:description: Use metric, API, streak, anniversary and composite achievements
+  to reward users for continued progress and to encourage them to discover new
+  parts of your app.
 icon: trophy
 ---
 
@@ -41,7 +41,7 @@ Watch Charlie run walk through using achievements in a NextJS application:
 
 ## Achievement Types {#achievement-types}
 
-Trophy offers four types of achievements, [Metric](#metric-achievements), [API](#api-achievements), [Streak](#streak-achievements) and [Composite achievements](#composite-achievements), detailed below.
+Trophy offers five types of achievements, [Metric](#metric-achievements), [API](#api-achievements), [Streak](#streak-achievements), [Anniversary](#anniversary-achievements) and [Composite achievements](#composite-achievements), detailed below.
 
 ### Metric Achievements {#metric-achievements}
 
@@ -85,6 +85,18 @@ Streak achievements are directly tied to a user's [Streak](/features/streaks) an
 You can create as many streak achievements as you like for increasing lengths of streak, for example 7 days, 30 days and 365 days to motivate users to use your app more and more.
 
 Just like metric and API achievements, you can add a custom name and assign a badge to streak achievements.
+
+### Anniversary Achievements {#anniversary-achievements}
+
+Anniversary achievements unlock automatically when a user reaches a specific anniversary of their sign-up date.
+
+Create one achievement for each year you want to celebrate, for example 1 year, 2 years and 5 years. Trophy unlocks each achievement when the user's [`signUpDate`](/features/users#optional-attributes) plus that number of years is reached.
+
+Users without a `signUpDate` are not eligible. Set `signUpDate` when you [identify](/features/users#identifying-users) or [update](/features/users#keeping-users-up-to-date) users so Trophy can detect anniversaries.
+
+Trophy evaluates the anniversary on the calendar day in the user's [`tz`](/features/users#optional-attributes). Set `tz` so the achievement unlocks on the correct local day.
+
+Just like other achievement types, anniversary achievements can trigger [Achievement Emails](/features/emails#achievement-emails) when unlocked.
 
 ### Composite Achievements {#composite-achievements}
 
@@ -136,6 +148,8 @@ To create new achievements, head to the [achievements page](https://app.trophy.s
 
 - Choosing **Streak** will mean the achievement will be automatically unlocked when the user's streak length reaches the achievement trigger value.
 
+- Choosing **Anniversary** will mean the achievement will be automatically unlocked when the user reaches the specified anniversary of their [`signUpDate`](/features/users#optional-attributes).
+
 - Choosing **API Call** will mean the achievement will only be unlocked when explicitly marked as completed by your code through a request to the [complete achievement API](/api-reference/endpoints/achievements/mark-an-achievement-as-completed).
 
 - Choosing **Composite** will mean the achievement will be automatically unlocked when the user has completed all of the prerequisite achievements you select.
@@ -148,6 +162,8 @@ To create new achievements, head to the [achievements page](https://app.trophy.s
 - If you chose the **Metric** trigger, you'll need to choose the metric and the user's total value that should unlock the achievement when reached.
 
 - If you chose the **Streak** trigger, you'll need to set the streak length that should unlock the achievement.
+
+- If you chose the **Anniversary** trigger, you'll need to set the number of years after sign-up that should unlock the achievement.
 
 - If you chose the **API Call** trigger, you'll need to choose a unique reference `key` you'll use to complete the achievement via the [API](/api-reference/endpoints/achievements/mark-an-achievement-as-completed).
 
@@ -220,6 +236,8 @@ If you're using metric achievements, there's no need to explicitly _complete_ ac
 
 Similarly, if you're using streak achievements, all achievements related to the user's streak will automatically be unlocked when a user reaches the respective streak length.
 
+Anniversary achievements are also completed automatically. They unlock when a user reaches the configured anniversary of their [`signUpDate`](/features/users#optional-attributes). Users without a `signUpDate` cannot unlock them.
+
 Composite achievements are also completed automatically. They unlock as soon as a user has completed all of their prerequisite achievements. No additional API calls are needed.
 
 However if you're using any API achievements, you will have to mark them as completed for each user as appropriate. To do this, you can use the [Complete Achievement API](/api-reference/endpoints/achievements/mark-an-achievement-as-completed) using the `key` of the achievement you want to complete.
@@ -250,6 +268,8 @@ This will return back a response that contains details of the achievement that w
 By default, whenever you move an achievement to 'Active' [status](#managing-achievements), Trophy will check if any existing users meet the requirements of the achievement and complete it for them behind the scenes.
 
 This means when you release new achievements into production, or edit an existing live achievement, backdating will happen automatically.
+
+The same applies when you set or change a user's [`signUpDate`](/features/users#optional-attributes). If the user already qualifies for any active anniversary achievements, Trophy completes them silently.
 
 <Note>
   When achievements are completed in this way, users don't receive any
@@ -361,6 +381,8 @@ If you have achievements set up for any of your [Metrics](/features/metrics), th
     Use metric achievements for rewarding users for taking the same action over and over again, and to incentivise them to do it more.
 
     Use streak achievements for rewarding users for keeping their streak.
+
+    Use anniversary achievements for rewarding users for remaining on your platform over time.
 
     Use API achievements when you want to reward users for taking specific actions that they only need to take once.
 
