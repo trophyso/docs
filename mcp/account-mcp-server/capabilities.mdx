@@ -36,11 +36,13 @@ Manage [Custom User Attributes](/features/users#custom-user-attributes) and [Cus
 
 ### Achievements Tools {#achievements-tools}
 
-Read [Achievements](/features/achievements) and completion analytics for your account.
+Configure [Achievements](/features/achievements) and read completion analytics for your account.
 
 | Tool | What it does |
 | --- | --- |
-| `read_achievements` | List achievements with completion counts and rarity; optionally filter by `user_attributes` |
+| `read_achievements` | List achievements, or get a single achievement by ID |
+| `write_achievements` | Create or update achievements |
+| `read_achievements_analytics` | List achievements with completion counts and rarity; optionally filter by `user_attributes` |
 
 ### Leaderboards Tools {#leaderboards-tools}
 
@@ -83,13 +85,26 @@ If multi-tenancy is not enabled on your account, these tools will not function.
 
 ### Streaks Tools {#streaks-tools}
 
-Look up and run operational [Streaks](/features/streaks) actions for users, including granting [Streak Freezes](/features/streaks#streak-freezes) or [restoring streaks](/features/streaks#restoring-a-users-streak).
+Look up and run operational [Streaks](/features/streaks) actions for users, including granting [Streak Freezes](/features/streaks#streak-freezes), creating [Streak Pauses](/features/streaks#streak-pauses), [restoring streaks](/features/streaks#restoring-a-users-streak), and reading or updating organization streak settings.
 
 | Tool | What it does |
 | --- | --- |
 | `list_user_streaks` | Get streak length (and last extension timestamp) for up to 100 users, ranked longest first |
 | `grant_streak_freezes` | Grant streak freezes to one or more users |
 | `restore_streaks` | Restore a broken streak to its previous length |
+| `create_streak_pauses` | Create streak pauses for users over a date range (up to 100 per request) |
+| `delete_streak_pauses` | Delete streak pauses by ID (up to 100 per request) |
+| `get_streak_settings` | Get organization streak configuration (frequency, evaluation mode, metrics, days off, freezes) |
+| `update_streak_settings` | Update organization streak configuration |
+
+### Settings Tools {#settings-tools}
+
+Read and update organization settings, including [Branding](/account/branding), [Experimentation](/platform/experimentation), and aggregation period.
+
+| Tool | What it does |
+| --- | --- |
+| `get_settings` | Get branding, experimentation, and aggregation period settings |
+| `update_settings` | Update branding, experimentation, and aggregation period settings |
 
 ## Example Prompts {#example-prompts}
 
@@ -127,11 +142,27 @@ Grant two streak freezes to user user_123.
 user_123 wants their streak back, restore it to its previous length.
 ```
 
+```text
+Create a streak pause for user_123 from 2026-09-15 to 2026-09-22 while they're on holiday.
+```
+
+```text
+What is our current streak configuration, and set freezes to start with 1 and max out at 3?
+```
+
+```text
+Create an achievement called 'First Workout' that unlocks when users complete 1 workout.
+```
+
+```text
+Update our brand color to #0F766E and set the aggregation period to weekly.
+```
+
 ## Scope and Safety {#scope-and-safety}
 
 - Tools will only act on the Trophy [environment](/platform/environments) tied to the API key you pass in `x-trophy-api-key`.
 - Write tools can change live configuration. Prefer a staging or sandbox [environment](/platform/environments) when iterating.
-- Tools cannot delete resources.
+- Most tools cannot delete resources. The exception is `delete_streak_pauses`, which removes streak pauses by ID.
 
 ## Get Support {#get-support}
 
