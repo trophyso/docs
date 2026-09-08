@@ -257,8 +257,20 @@
                 ]
               },
               {
+                "group": "Achievements",
+                "pages": [
+                  "admin-api/endpoints/achievements/list-achievements",
+                  "admin-api/endpoints/achievements/get-an-achievement",
+                  "admin-api/endpoints/achievements/update-achievements",
+                  "admin-api/endpoints/achievements/create-achievements",
+                  "admin-api/endpoints/achievements/delete-achievements"
+                ]
+              },
+              {
                 "group": "Streaks",
                 "pages": [
+                  "admin-api/endpoints/streaks/get-streak-settings",
+                  "admin-api/endpoints/streaks/update-streak-settings",
                   "admin-api/endpoints/streaks/grant-freezes",
                   "admin-api/endpoints/streaks/create-pauses",
                   "admin-api/endpoints/streaks/delete-pauses",
@@ -315,6 +327,13 @@
                 "pages": [
                   "admin-api/endpoints/application-api-keys/create-application-api-keys",
                   "admin-api/endpoints/application-api-keys/delete-application-api-keys"
+                ]
+              },
+              {
+                "group": "Settings",
+                "pages": [
+                  "admin-api/endpoints/settings/get-organization-settings",
+                  "admin-api/endpoints/settings/update-organization-settings"
                 ]
               }
             ]
@@ -645,8 +664,20 @@
                 ]
               },
               {
+                "group": "Logros",
+                "pages": [
+                  "es/admin-api/endpoints/achievements/list-achievements",
+                  "es/admin-api/endpoints/achievements/get-an-achievement",
+                  "es/admin-api/endpoints/achievements/update-achievements",
+                  "es/admin-api/endpoints/achievements/create-achievements",
+                  "es/admin-api/endpoints/achievements/delete-achievements"
+                ]
+              },
+              {
                 "group": "Rachas",
                 "pages": [
+                  "es/admin-api/endpoints/streaks/get-streak-settings",
+                  "es/admin-api/endpoints/streaks/update-streak-settings",
                   "es/admin-api/endpoints/streaks/grant-freezes",
                   "es/admin-api/endpoints/streaks/create-pauses",
                   "es/admin-api/endpoints/streaks/delete-pauses",
@@ -703,6 +734,13 @@
                 "pages": [
                   "es/admin-api/endpoints/application-api-keys/create-application-api-keys",
                   "es/admin-api/endpoints/application-api-keys/delete-application-api-keys"
+                ]
+              },
+              {
+                "group": "Ajustes",
+                "pages": [
+                  "es/admin-api/endpoints/settings/get-organization-settings",
+                  "es/admin-api/endpoints/settings/update-organization-settings"
                 ]
               }
             ]

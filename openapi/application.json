@@ -2,13 +2,13 @@
   "openapi": "3.1.0",
   "info": {
     "title": "Trophy",
-    "version": "1.21.1"
+    "version": "1.24.0"
   },
   "x-fern-global-headers": [
     {
       "header": "X-SDK-VERSION",
       "name": "sdkVersion",
-      "x-fern-default": "1.21.1"
+      "x-fern-default": "1.24.0"
     }
   ],
   "paths": {
@@ -132,6 +132,16 @@
                             "value": "premium"
                           }
                         ]
+                      },
+                      {
+                        "id": "5100fe51-6bce-6j44-b0hs-bddc4e123685",
+                        "trigger": "anniversary",
+                        "name": "1 year anniversary",
+                        "description": "Celebrate one year on the platform.",
+                        "badgeUrl": "https://example.com/badge.png",
+                        "anniversaryYears": 1,
+                        "completions": 4,
+                        "rarity": 40
                       }
                     ]
                   }
@@ -847,6 +857,7 @@
               "example": {
                 "email": "user@example.com",
                 "tz": "Europe/London",
+                "signUpDate": "2020-08-20",
                 "attributes": {
                   "department": "engineering",
                   "role": "developer"
@@ -1128,7 +1139,7 @@
         ]
       },
       "patch": {
-        "description": "Update a user's notification and streak preferences. Streak preferences require streak customization to be enabled in your Trophy dashboard settings.",
+        "description": "Update a user's notification and streak preferences. Streak preferences other than `streak.enabled` require streak customization to be enabled in your Trophy dashboard settings.",
         "operationId": "users_update_preferences",
         "x-fern-server-name": "api",
         "tags": [
@@ -1192,6 +1203,10 @@
                             "key": "words-written",
                             "threshold": 500
                           }
+                        ],
+                        "daysOff": [
+                          0,
+                          6
                         ]
                       }
                     }
@@ -1290,6 +1305,10 @@
                           "key": "words-written",
                           "threshold": 500
                         }
+                      ],
+                      "daysOff": [
+                        0,
+                        6
                       ]
                     }
                   }
@@ -1892,6 +1911,16 @@
                         "badgeUrl": "https://example.com/badge2.png",
                         "completions": 100,
                         "rarity": 50
+                      },
+                      {
+                        "id": "d01dcbcb-d51e-4c12-b054-dc811dcdc626",
+                        "trigger": "anniversary",
+                        "name": "1-Year Anniversary",
+                        "anniversaryYears": 1,
+                        "achievedAt": "2021-04-01T00:00:00Z",
+                        "badgeUrl": "https://example.com/badge3.png",
+                        "completions": 40,
+                        "rarity": 20
                       }
                     ]
                   }
@@ -2932,6 +2961,7 @@
                         "email": "user@example.com",
                         "name": "John Doe",
                         "tz": "America/New_York",
+                        "signUpDate": "2020-08-20",
                         "subscribeToEmails": true,
                         "created": "2024-01-15T10:30:00Z",
                         "updated": "2024-06-20T14:45:00Z",
@@ -6580,7 +6610,8 @@
               "metric",
               "streak",
               "api",
-              "achievement"
+              "achievement",
+              "anniversary"
             ],
             "description": "The trigger of the achievement."
           },
@@ -6605,6 +6636,10 @@
           "streakLength": {
             "type": "integer",
             "description": "The length of the streak required to complete the achievement (only applicable if trigger = 'streak')"
+          },
+          "anniversaryYears": {
+            "type": "integer",
+            "description": "The number of years after sign-up required to complete the achievement (only applicable if trigger = 'anniversary')"
           },
           "achievementIds": {
             "type": "array",
@@ -6844,6 +6879,15 @@
             "description": "The user's timezone (used for email scheduling).",
             "example": "Europe/London"
           },
+          "signUpDate": {
+            "type": [
+              "string",
+              "null"
+            ],
+            "format": "date",
+            "description": "The date the user signed up on your platform, as YYYY-MM-DD. ISO 8601 date-times are accepted and stored as their UTC calendar day. Must not be after today in the user's timezone. Required for anniversary achievements. Users without a signUpDate are not eligible.",
+            "example": "2020-08-20"
+          },
           "deviceTokens": {
             "type": [
               "array",
@@ -6935,6 +6979,15 @@
             "description": "The user's timezone.",
             "example": "Europe/London"
           },
+          "signUpDate": {
+            "type": [
+              "string",
+              "null"
+            ],
+            "format": "date",
+            "description": "The date the user signed up on your platform, as YYYY-MM-DD. Required for anniversary achievements. Null if not set, in which case the user is not eligible for anniversary achievements.",
+            "example": "2020-08-20"
+          },
           "deviceTokens": {
             "type": [
               "array",
@@ -6989,6 +7042,7 @@
           "email",
           "name",
           "tz",
+          "signUpDate",
           "subscribeToEmails",
           "attributes",
           "control",
@@ -7073,7 +7127,7 @@
       "StreakPreferences": {
         "title": "StreakPreferences",
         "type": "object",
-        "description": "Per-user streak configuration. Metric and evaluation mode overrides require streak customization to be enabled in dashboard settings.",
+        "description": "Per-user streak configuration. Metric, evaluation mode, and days off overrides require streak customization to be enabled in dashboard settings.",
         "properties": {
           "enabled": {
             "type": "boolean",
@@ -7089,6 +7143,21 @@
               "$ref": "#/components/schemas/StreakMetricPreference"
             },
             "description": "Metrics and thresholds that count toward this user's streak."
+          },
+          "daysOff": {
+            "type": "array",
+            "items": {
+              "type": "integer",
+              "minimum": 0,
+              "maximum": 6
+            },
+            "uniqueItems": true,
+            "maxItems": 6,
+            "description": "Days of the week that do not count toward the user's daily streak. Represented as zero-based integers matching JavaScript `Date.getDay()` (0 = Sunday, 6 = Saturday). For example, `[0, 6]` means Sunday and Saturday are days off. Only applied when streak frequency is daily. Users can still increase their streak on these days; if they do not, the streak stays paused at its current length instead of being lost.",
+            "example": [
+              0,
+              6
+            ]
           }
         }
       },

@@ -385,6 +385,7 @@ In order to use streak preferences, you must have [streak personalization](/feat
 Once streak personalization is enabled, the [update preferences API](/api-reference/endpoints/users/update-user-preferences) will allow you to override default streak settings for a specific user.
 
 The following streak settings can be overridden by user preferences:
+- `enabled`: Whether streaks are calculated for this user. When `false`, the user's streak is always `0` and streak webhooks and notifications are not sent.
 - `metrics`: An array of [metrics](/features/metrics) with custom thresholds required to extend the streak.
 - `evaluationMode`: Determines how metrics combine to extend the streak. Can be `ALL` or `OR`.
 - `daysOff`: An array of weekday numbers (`0` = Sunday through `6` = Saturday) that override the organization [days off](/features/streaks#days-off). The user will not lose their streak if they are inactive on these days.

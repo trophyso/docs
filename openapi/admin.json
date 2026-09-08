@@ -2,13 +2,13 @@
   "openapi": "3.1.0",
   "info": {
     "title": "Trophy",
-    "version": "1.21.1"
+    "version": "1.24.0"
   },
   "x-fern-global-headers": [
     {
       "header": "X-SDK-VERSION",
       "name": "sdkVersion",
-      "x-fern-default": "1.21.1"
+      "x-fern-default": "1.24.0"
     }
   ],
   "paths": {
@@ -633,7 +633,691 @@
             }
           }
         },
-        "summary": "Get an attribute",
+        "summary": "Get an attribute by ID",
+        "security": [
+          {
+            "ApiKeyAuth": []
+          }
+        ]
+      }
+    },
+    "/achievements": {
+      "servers": [
+        {
+          "url": "https://admin.trophy.so/v1",
+          "description": "Admin API"
+        }
+      ],
+      "parameters": [
+        {
+          "$ref": "#/components/parameters/TenantId"
+        }
+      ],
+      "get": {
+        "description": "List achievements.",
+        "operationId": "admin_achievements_list",
+        "x-fern-server-name": "admin",
+        "x-fern-sdk-group-name": [
+          "admin",
+          "achievements"
+        ],
+        "x-fern-sdk-method-name": "list",
+        "tags": [
+          "Admin"
+        ],
+        "x-codeSamples": [
+          {
+            "lang": "javascript",
+            "source": "import { TrophyApiClient } from '@trophyso/node';\n\nconst trophy = new TrophyApiClient({\n  apiKey: 'YOUR_API_KEY'\n});\n\nconst achievements = await trophy.admin.achievements.list({\n  limit: 10,\n  skip: 0\n});\n"
+          },
+          {
+            "lang": "python",
+            "source": "from trophy import TrophyApi\n\nclient = TrophyApi(api_key='YOUR_API_KEY')\n\nachievements = client.admin.achievements.list(\n  limit=10,\n  skip=0\n)\n"
+          },
+          {
+            "lang": "go",
+            "source": "import (\n  \"context\"\n\n  api \"github.com/trophyso/trophy-go\"\n  trophyclient \"github.com/trophyso/trophy-go/client\"\n  \"github.com/trophyso/trophy-go/option\"\n)\n\nclient := trophyclient.NewClient(\n  option.WithApiKey(\"YOUR_API_KEY\"),\n)\n\nresponse, err := client.Admin.Achievements.List(context.TODO(), nil)\n"
+          }
+        ],
+        "parameters": [
+          {
+            "name": "limit",
+            "in": "query",
+            "description": "Number of records to return.",
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "minimum": 1,
+              "maximum": 100,
+              "default": 10
+            },
+            "example": 10
+          },
+          {
+            "name": "skip",
+            "in": "query",
+            "description": "Number of records to skip from the start of the list.",
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "minimum": 0,
+              "default": 0
+            },
+            "example": 0
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful operation",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ListAchievementsResponse"
+                },
+                "examples": {
+                  "Achievements list": {
+                    "value": [
+                      {
+                        "id": "550e8400-e29b-41d4-a716-446655440000",
+                        "name": "First Workout",
+                        "description": "Complete your first workout",
+                        "trigger": "metric",
+                        "status": "active",
+                        "badge": null,
+                        "userAttributes": [],
+                        "metricId": "660f9500-f30c-42e5-b827-557766550001",
+                        "metricValue": 1,
+                        "eventAttributes": []
+                      },
+                      {
+                        "id": "550e8400-e29b-41d4-a716-446655440001",
+                        "name": "Week Warrior",
+                        "description": "Maintain a 7-day streak",
+                        "trigger": "streak",
+                        "status": "inactive",
+                        "badge": null,
+                        "userAttributes": [],
+                        "streakLength": 7
+                      }
+                    ]
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AdminErrorBody"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Unprocessible Entity",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AdminErrorBody"
+                }
+              }
+            }
+          }
+        },
+        "summary": "List achievements",
+        "security": [
+          {
+            "ApiKeyAuth": []
+          }
+        ]
+      },
+      "post": {
+        "description": "Create achievements. Trigger-specific fields are required based on `trigger`.",
+        "operationId": "admin_achievements_create",
+        "x-fern-server-name": "admin",
+        "x-fern-sdk-group-name": [
+          "admin",
+          "achievements"
+        ],
+        "x-fern-sdk-method-name": "create",
+        "tags": [
+          "Admin"
+        ],
+        "x-codeSamples": [
+          {
+            "lang": "javascript",
+            "source": "import { TrophyApiClient } from '@trophyso/node';\n\nconst trophy = new TrophyApiClient({\n  apiKey: 'YOUR_API_KEY'\n});\n\nconst response = await trophy.admin.achievements.create([\n  {\n    name: 'First Workout',\n    trigger: 'metric',\n    metricId: '660f9500-f30c-42e5-b827-557766550001',\n    metricValue: 1\n  },\n  {\n    name: 'Custom Unlock',\n    trigger: 'api',\n    key: 'custom-unlock'\n  }\n]);\n"
+          },
+          {
+            "lang": "python",
+            "source": "from trophy import TrophyApi\n\nclient = TrophyApi(api_key='YOUR_API_KEY')\n\nresponse = client.admin.achievements.create([\n  {\n    \"name\": \"First Workout\",\n    \"trigger\": \"metric\",\n    \"metric_id\": \"660f9500-f30c-42e5-b827-557766550001\",\n    \"metric_value\": 1\n  },\n  {\n    \"name\": \"Custom Unlock\",\n    \"trigger\": \"api\",\n    \"key\": \"custom-unlock\"\n  }\n])\n"
+          },
+          {
+            "lang": "go",
+            "source": "import (\n  \"context\"\n\n  api \"github.com/trophyso/trophy-go\"\n  trophyclient \"github.com/trophyso/trophy-go/client\"\n  \"github.com/trophyso/trophy-go/option\"\n)\n\nclient := trophyclient.NewClient(\n  option.WithApiKey(\"YOUR_API_KEY\"),\n)\n\nresponse, err := client.Admin.Achievements.Create(context.TODO(), api.CreateAchievementsRequest{})\n"
+          }
+        ],
+        "requestBody": {
+          "description": "Array of achievements to create. Maximum 100 achievements per request.",
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CreateAchievementsRequest"
+              },
+              "examples": {
+                "Create metric and API achievements": {
+                  "value": [
+                    {
+                      "name": "First Workout",
+                      "trigger": "metric",
+                      "metricId": "660f9500-f30c-42e5-b827-557766550001",
+                      "metricValue": 1
+                    },
+                    {
+                      "name": "Custom Unlock",
+                      "trigger": "api",
+                      "key": "custom-unlock"
+                    }
+                  ]
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successful operation (no achievements created)",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/CreateAchievementsResponse"
+                },
+                "examples": {
+                  "All requests had errors": {
+                    "value": {
+                      "created": [],
+                      "issues": [
+                        {
+                          "index": 0,
+                          "severity": "error",
+                          "message": "Name not a string"
+                        },
+                        {
+                          "index": 1,
+                          "severity": "error",
+                          "message": "metricId is required for metric achievements"
+                        }
+                      ]
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "201": {
+            "description": "Created (at least one achievement created)",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/CreateAchievementsResponse"
+                },
+                "examples": {
+                  "Success with no issues": {
+                    "value": {
+                      "created": [
+                        {
+                          "id": "550e8400-e29b-41d4-a716-446655440000",
+                          "name": "First Workout",
+                          "description": null,
+                          "trigger": "metric",
+                          "status": "inactive",
+                          "badge": null,
+                          "userAttributes": [],
+                          "metricId": "660f9500-f30c-42e5-b827-557766550001",
+                          "metricValue": 1,
+                          "eventAttributes": []
+                        },
+                        {
+                          "id": "550e8400-e29b-41d4-a716-446655440001",
+                          "name": "Custom Unlock",
+                          "description": null,
+                          "trigger": "api",
+                          "status": "inactive",
+                          "badge": null,
+                          "userAttributes": [],
+                          "key": "custom-unlock"
+                        }
+                      ],
+                      "issues": []
+                    }
+                  },
+                  "Mixed success and errors": {
+                    "value": {
+                      "created": [
+                        {
+                          "id": "550e8400-e29b-41d4-a716-446655440002",
+                          "name": "Week Warrior",
+                          "description": null,
+                          "trigger": "streak",
+                          "status": "inactive",
+                          "badge": null,
+                          "userAttributes": [],
+                          "streakLength": 7
+                        }
+                      ],
+                      "issues": [
+                        {
+                          "index": 0,
+                          "severity": "error",
+                          "message": "Key already in use by another achievement"
+                        }
+                      ]
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AdminErrorBody"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Unprocessible Entity",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AdminErrorBody"
+                }
+              }
+            }
+          }
+        },
+        "summary": "Create achievements",
+        "security": [
+          {
+            "ApiKeyAuth": []
+          }
+        ]
+      },
+      "patch": {
+        "description": "Update achievements by ID. Maximum 100 achievements per request. Only provided fields are updated; omitted fields are preserved.",
+        "operationId": "admin_achievements_update",
+        "x-fern-server-name": "admin",
+        "x-fern-sdk-group-name": [
+          "admin",
+          "achievements"
+        ],
+        "x-fern-sdk-method-name": "update",
+        "tags": [
+          "Admin"
+        ],
+        "x-codeSamples": [
+          {
+            "lang": "javascript",
+            "source": "import { TrophyApiClient } from '@trophyso/node';\n\nconst trophy = new TrophyApiClient({\n  apiKey: 'YOUR_API_KEY'\n});\n\nconst response = await trophy.admin.achievements.update([\n  {\n    id: '550e8400-e29b-41d4-a716-446655440000',\n    name: 'First Workout Completed',\n    status: 'active'\n  }\n]);\n"
+          },
+          {
+            "lang": "python",
+            "source": "from trophy import TrophyApi\n\nclient = TrophyApi(api_key='YOUR_API_KEY')\n\nresponse = client.admin.achievements.update([\n  {\n    \"id\": \"550e8400-e29b-41d4-a716-446655440000\",\n    \"name\": \"First Workout Completed\",\n    \"status\": \"active\"\n  }\n])\n"
+          },
+          {
+            "lang": "go",
+            "source": "import (\n  \"context\"\n\n  api \"github.com/trophyso/trophy-go\"\n  trophyclient \"github.com/trophyso/trophy-go/client\"\n  \"github.com/trophyso/trophy-go/option\"\n)\n\nclient := trophyclient.NewClient(\n  option.WithApiKey(\"YOUR_API_KEY\"),\n)\n\nresponse, err := client.Admin.Achievements.Update(context.TODO(), api.UpdateAchievementsRequest{})\n"
+          }
+        ],
+        "requestBody": {
+          "description": "Array of achievements to update. Each item must include an ID and may include any subset of mutable achievement fields.",
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/UpdateAchievementsRequest"
+              },
+              "examples": {
+                "Update achievement fields": {
+                  "value": [
+                    {
+                      "id": "550e8400-e29b-41d4-a716-446655440000",
+                      "name": "First Workout Completed",
+                      "status": "active"
+                    }
+                  ]
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successful operation",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/UpdateAchievementsResponse"
+                },
+                "examples": {
+                  "Success with no issues": {
+                    "value": {
+                      "updated": [
+                        {
+                          "id": "550e8400-e29b-41d4-a716-446655440000",
+                          "name": "First Workout Completed",
+                          "description": null,
+                          "trigger": "metric",
+                          "status": "active",
+                          "badge": null,
+                          "userAttributes": [],
+                          "metricId": "660f9500-f30c-42e5-b827-557766550001",
+                          "metricValue": 1,
+                          "eventAttributes": []
+                        }
+                      ],
+                      "issues": []
+                    }
+                  },
+                  "Mixed success and errors": {
+                    "value": {
+                      "updated": [
+                        {
+                          "id": "550e8400-e29b-41d4-a716-446655440000",
+                          "name": "First Workout Completed",
+                          "description": null,
+                          "trigger": "metric",
+                          "status": "active",
+                          "badge": null,
+                          "userAttributes": [],
+                          "metricId": "660f9500-f30c-42e5-b827-557766550001",
+                          "metricValue": 1,
+                          "eventAttributes": []
+                        }
+                      ],
+                      "issues": [
+                        {
+                          "id": "550e8400-e29b-41d4-a716-446655440999",
+                          "severity": "error",
+                          "message": "Achievement not found by ID"
+                        }
+                      ]
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AdminErrorBody"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Unprocessible Entity",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AdminErrorBody"
+                }
+              }
+            }
+          }
+        },
+        "summary": "Update achievements",
+        "security": [
+          {
+            "ApiKeyAuth": []
+          }
+        ]
+      },
+      "delete": {
+        "description": "Delete achievements by ID.",
+        "operationId": "admin_achievements_delete",
+        "x-fern-server-name": "admin",
+        "x-fern-sdk-group-name": [
+          "admin",
+          "achievements"
+        ],
+        "x-fern-sdk-method-name": "delete",
+        "tags": [
+          "Admin"
+        ],
+        "x-codeSamples": [
+          {
+            "lang": "javascript",
+            "source": "import { TrophyApiClient } from '@trophyso/node';\n\nconst trophy = new TrophyApiClient({\n  apiKey: 'YOUR_API_KEY'\n});\n\nconst response = await trophy.admin.achievements.delete({\n  ids: [\n    '550e8400-e29b-41d4-a716-446655440000',\n    '550e8400-e29b-41d4-a716-446655440001'\n  ]\n});\n"
+          },
+          {
+            "lang": "python",
+            "source": "from trophy import TrophyApi\n\nclient = TrophyApi(api_key='YOUR_API_KEY')\n\nresponse = client.admin.achievements.delete(\n  ids=[\n    '550e8400-e29b-41d4-a716-446655440000',\n    '550e8400-e29b-41d4-a716-446655440001'\n  ]\n)\n"
+          },
+          {
+            "lang": "go",
+            "source": "import (\n  \"context\"\n\n  api \"github.com/trophyso/trophy-go\"\n  trophyclient \"github.com/trophyso/trophy-go/client\"\n  \"github.com/trophyso/trophy-go/option\"\n)\n\nclient := trophyclient.NewClient(\n  option.WithApiKey(\"YOUR_API_KEY\"),\n)\n\nresponse, err := client.Admin.Achievements.Delete(context.TODO(), nil)\n"
+          }
+        ],
+        "parameters": [
+          {
+            "name": "ids",
+            "in": "query",
+            "description": "Achievement IDs to delete. Repeat the query param or provide a comma-separated list.",
+            "required": true,
+            "schema": {
+              "type": "array",
+              "items": {
+                "type": "string",
+                "format": "uuid"
+              },
+              "minItems": 1,
+              "maxItems": 100
+            },
+            "style": "form",
+            "explode": true,
+            "examples": {
+              "Multiple query params": {
+                "value": [
+                  "550e8400-e29b-41d4-a716-446655440000",
+                  "550e8400-e29b-41d4-a716-446655440001"
+                ]
+              }
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful operation",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/DeleteAchievementsResponse"
+                },
+                "examples": {
+                  "Success with no issues": {
+                    "value": {
+                      "deleted": [
+                        {
+                          "id": "550e8400-e29b-41d4-a716-446655440000"
+                        }
+                      ],
+                      "issues": []
+                    }
+                  },
+                  "Mixed success and errors": {
+                    "value": {
+                      "deleted": [
+                        {
+                          "id": "550e8400-e29b-41d4-a716-446655440000"
+                        }
+                      ],
+                      "issues": [
+                        {
+                          "id": "not-a-uuid",
+                          "severity": "error",
+                          "message": "id must be a valid UUID"
+                        },
+                        {
+                          "id": "550e8400-e29b-41d4-a716-446655440999",
+                          "severity": "error",
+                          "message": "Achievement not found by ID"
+                        }
+                      ]
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AdminErrorBody"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Unprocessible Entity",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AdminErrorBody"
+                }
+              }
+            }
+          }
+        },
+        "summary": "Delete achievements",
+        "security": [
+          {
+            "ApiKeyAuth": []
+          }
+        ]
+      }
+    },
+    "/achievements/{id}": {
+      "servers": [
+        {
+          "url": "https://admin.trophy.so/v1",
+          "description": "Admin API"
+        }
+      ],
+      "parameters": [
+        {
+          "$ref": "#/components/parameters/TenantId"
+        }
+      ],
+      "get": {
+        "description": "Get an achievement by ID.",
+        "operationId": "admin_achievements_get",
+        "x-fern-server-name": "admin",
+        "x-fern-sdk-group-name": [
+          "admin",
+          "achievements"
+        ],
+        "x-fern-sdk-method-name": "get",
+        "tags": [
+          "Admin"
+        ],
+        "x-codeSamples": [
+          {
+            "lang": "javascript",
+            "source": "import { TrophyApiClient } from '@trophyso/node';\n\nconst trophy = new TrophyApiClient({\n  apiKey: 'YOUR_API_KEY'\n});\n\nconst achievement = await trophy.admin.achievements.get(\n  '550e8400-e29b-41d4-a716-446655440000'\n);\n"
+          },
+          {
+            "lang": "python",
+            "source": "from trophy import TrophyApi\n\nclient = TrophyApi(api_key='YOUR_API_KEY')\n\nachievement = client.admin.achievements.get(\n  \"550e8400-e29b-41d4-a716-446655440000\"\n)\n"
+          },
+          {
+            "lang": "go",
+            "source": "import (\n  \"context\"\n\n  api \"github.com/trophyso/trophy-go\"\n  trophyclient \"github.com/trophyso/trophy-go/client\"\n  \"github.com/trophyso/trophy-go/option\"\n)\n\nclient := trophyclient.NewClient(\n  option.WithApiKey(\"YOUR_API_KEY\"),\n)\n\nresponse, err := client.Admin.Achievements.Get(context.TODO(), \"550e8400-e29b-41d4-a716-446655440000\")\n"
+          }
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "The UUID of the achievement to retrieve.",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            },
+            "example": "550e8400-e29b-41d4-a716-446655440000"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful operation",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AdminAchievement"
+                },
+                "examples": {
+                  "Metric achievement": {
+                    "value": {
+                      "id": "550e8400-e29b-41d4-a716-446655440000",
+                      "name": "First Workout",
+                      "description": "Complete your first workout",
+                      "trigger": "metric",
+                      "status": "active",
+                      "badge": null,
+                      "userAttributes": [],
+                      "metricId": "660f9500-f30c-42e5-b827-557766550001",
+                      "metricValue": 1,
+                      "eventAttributes": []
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AdminErrorBody"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not Found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AdminErrorBody"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Unprocessible Entity",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AdminErrorBody"
+                }
+              }
+            }
+          }
+        },
+        "summary": "Get an achievement by ID",
         "security": [
           {
             "ApiKeyAuth": []
@@ -2952,7 +3636,7 @@
         ]
       },
       "post": {
-        "description": "Create points levels. Maximum 100 levels per request.",
+        "description": "Create points levels.",
         "operationId": "admin_points_levels_create",
         "x-fern-server-name": "admin",
         "x-fern-sdk-group-name": [
@@ -3614,7 +4298,7 @@
         ]
       },
       "post": {
-        "description": "Create points triggers in bulk. Maximum 100 triggers per request.",
+        "description": "Create points triggers in bulk.",
         "operationId": "admin_points_triggers_create",
         "x-fern-server-name": "admin",
         "x-fern-sdk-group-name": [
@@ -4253,7 +4937,7 @@
             "description": "Admin API"
           }
         ],
-        "description": "Create leaderboards. Maximum 100 leaderboards per request.",
+        "description": "Create leaderboards.",
         "operationId": "admin_leaderboards_create",
         "x-fern-server-name": "admin",
         "x-fern-sdk-group-name": [
@@ -4680,7 +5364,7 @@
             }
           }
         },
-        "summary": "Get a leaderboard",
+        "summary": "Get a leaderboard by ID",
         "security": [
           {
             "ApiKeyAuth": []
@@ -5328,6 +6012,479 @@
           }
         },
         "summary": "Restore streaks for multiple users",
+        "security": [
+          {
+            "ApiKeyAuth": []
+          }
+        ]
+      }
+    },
+    "/settings": {
+      "servers": [
+        {
+          "url": "https://admin.trophy.so/v1",
+          "description": "Admin API"
+        }
+      ],
+      "parameters": [
+        {
+          "$ref": "#/components/parameters/TenantId"
+        }
+      ],
+      "get": {
+        "description": "Get branding, experimentation, and aggregation settings.",
+        "operationId": "admin_settings_get",
+        "x-fern-server-name": "admin",
+        "x-fern-sdk-group-name": [
+          "admin",
+          "settings"
+        ],
+        "x-fern-sdk-method-name": "get",
+        "tags": [
+          "Admin"
+        ],
+        "x-codeSamples": [
+          {
+            "lang": "javascript",
+            "source": "import { TrophyApiClient } from '@trophyso/node';\n\nconst trophy = new TrophyApiClient({\n  apiKey: 'YOUR_API_KEY'\n});\n\nconst settings = await trophy.admin.settings.get();\n"
+          },
+          {
+            "lang": "python",
+            "source": "from trophy import TrophyApi\n\nclient = TrophyApi(api_key='YOUR_API_KEY')\n\nsettings = client.admin.settings.get()\n"
+          },
+          {
+            "lang": "go",
+            "source": "import (\n  \"context\"\n\n  api \"github.com/trophyso/trophy-go\"\n  trophyclient \"github.com/trophyso/trophy-go/client\"\n  \"github.com/trophyso/trophy-go/option\"\n)\n\nclient := trophyclient.NewClient(\n  option.WithApiKey(\"YOUR_API_KEY\"),\n)\n\nresponse, err := client.Admin.Settings.Get(context.TODO(), nil)\n"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful operation",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AdminSettings"
+                },
+                "examples": {
+                  "Default settings": {
+                    "value": {
+                      "branding": {
+                        "appName": "Trophy",
+                        "appUrl": "https://app.example.com",
+                        "brandColor": "#1a2b3c",
+                        "font": "MODERN_SANS",
+                        "logo": {
+                          "url": "https://cdn.example.com/logo.png"
+                        },
+                        "appIcon": null
+                      },
+                      "experimentation": {
+                        "controlRatio": 10,
+                        "userActivationWindow": 14
+                      },
+                      "aggregationPeriod": "weekly"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AdminErrorBody"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Unprocessible Entity",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AdminErrorBody"
+                }
+              }
+            }
+          }
+        },
+        "summary": "Get organization settings",
+        "security": [
+          {
+            "ApiKeyAuth": []
+          }
+        ]
+      },
+      "patch": {
+        "description": "Update branding, experimentation, and aggregation settings.",
+        "operationId": "admin_settings_update",
+        "x-fern-server-name": "admin",
+        "x-fern-sdk-group-name": [
+          "admin",
+          "settings"
+        ],
+        "x-fern-sdk-method-name": "update",
+        "tags": [
+          "Admin"
+        ],
+        "x-codeSamples": [
+          {
+            "lang": "javascript",
+            "source": "import { TrophyApiClient } from '@trophyso/node';\n\nconst trophy = new TrophyApiClient({\n  apiKey: 'YOUR_API_KEY'\n});\n\nconst settings = await trophy.admin.settings.update({\n  branding: {\n    appName: 'Trophy',\n    appUrl: 'https://app.example.com',\n    brandColor: '#1a2b3c'\n  },\n  experimentation: {\n    controlRatio: 10,\n    userActivationWindow: 14\n  },\n  aggregationPeriod: 'weekly'\n});\n"
+          },
+          {
+            "lang": "python",
+            "source": "from trophy import TrophyApi\n\nclient = TrophyApi(api_key='YOUR_API_KEY')\n\nsettings = client.admin.settings.update({\n  \"branding\": {\n    \"app_name\": \"Trophy\",\n    \"app_url\": \"https://app.example.com\",\n    \"brand_color\": \"#1a2b3c\"\n  },\n  \"experimentation\": {\n    \"control_ratio\": 10,\n    \"user_activation_window\": 14\n  },\n  \"aggregation_period\": \"weekly\"\n})\n"
+          },
+          {
+            "lang": "go",
+            "source": "import (\n  \"context\"\n\n  api \"github.com/trophyso/trophy-go\"\n  trophyclient \"github.com/trophyso/trophy-go/client\"\n  \"github.com/trophyso/trophy-go/option\"\n)\n\nclient := trophyclient.NewClient(\n  option.WithApiKey(\"YOUR_API_KEY\"),\n)\n\nresponse, err := client.Admin.Settings.Update(\n  context.TODO(),\n  &api.UpdateAdminSettingsRequest{},\n)\n"
+          }
+        ],
+        "requestBody": {
+          "description": "Organization settings fields to update.",
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/UpdateAdminSettingsRequest"
+              },
+              "examples": {
+                "Update branding and experimentation": {
+                  "value": {
+                    "branding": {
+                      "appName": "Trophy",
+                      "appUrl": "https://app.example.com",
+                      "brandColor": "#1a2b3c",
+                      "logo": {
+                        "url": "https://cdn.example.com/logo.png"
+                      }
+                    },
+                    "experimentation": {
+                      "controlRatio": 10,
+                      "userActivationWindow": 14
+                    },
+                    "aggregationPeriod": "weekly"
+                  }
+                },
+                "Clear logo": {
+                  "value": {
+                    "branding": {
+                      "logo": null
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successful operation",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AdminSettings"
+                },
+                "examples": {
+                  "Updated settings": {
+                    "value": {
+                      "branding": {
+                        "appName": "Trophy",
+                        "appUrl": "https://app.example.com",
+                        "brandColor": "#1a2b3c",
+                        "font": "MODERN_SANS",
+                        "logo": {
+                          "url": "https://cdn.example.com/logo.png"
+                        },
+                        "appIcon": null
+                      },
+                      "experimentation": {
+                        "controlRatio": 10,
+                        "userActivationWindow": 14
+                      },
+                      "aggregationPeriod": "weekly"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AdminErrorBody"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Unprocessible Entity",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AdminErrorBody"
+                }
+              }
+            }
+          }
+        },
+        "summary": "Update organization settings",
+        "security": [
+          {
+            "ApiKeyAuth": []
+          }
+        ]
+      }
+    },
+    "/streaks/settings": {
+      "servers": [
+        {
+          "url": "https://admin.trophy.so/v1",
+          "description": "Admin API"
+        }
+      ],
+      "parameters": [
+        {
+          "$ref": "#/components/parameters/TenantId"
+        }
+      ],
+      "get": {
+        "description": "Get the organization's streak configuration.",
+        "operationId": "admin_streaks_settings_get",
+        "x-fern-server-name": "admin",
+        "x-fern-sdk-group-name": [
+          "admin",
+          "streaks",
+          "settings"
+        ],
+        "x-fern-sdk-method-name": "get",
+        "tags": [
+          "Admin"
+        ],
+        "x-codeSamples": [
+          {
+            "lang": "javascript",
+            "source": "import { TrophyApiClient } from '@trophyso/node';\n\nconst trophy = new TrophyApiClient({\n  apiKey: 'YOUR_API_KEY'\n});\n\nconst settings = await trophy.admin.streaks.settings.get();\n"
+          },
+          {
+            "lang": "python",
+            "source": "from trophy import TrophyApi\n\nclient = TrophyApi(api_key='YOUR_API_KEY')\n\nsettings = client.admin.streaks.settings.get()\n"
+          },
+          {
+            "lang": "go",
+            "source": "import (\n  \"context\"\n\n  api \"github.com/trophyso/trophy-go\"\n  trophyclient \"github.com/trophyso/trophy-go/client\"\n  \"github.com/trophyso/trophy-go/option\"\n)\n\nclient := trophyclient.NewClient(\n  option.WithApiKey(\"YOUR_API_KEY\"),\n)\n\nresponse, err := client.Admin.Streaks.Settings.Get(context.TODO(), nil)\n"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful operation",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/StreakSettings"
+                },
+                "examples": {
+                  "Daily streaks with freezes": {
+                    "value": {
+                      "frequency": "daily",
+                      "evaluationMode": "OR",
+                      "customizationEnabled": true,
+                      "daysOff": [
+                        0,
+                        6
+                      ],
+                      "metrics": [
+                        {
+                          "key": "words-written",
+                          "threshold": 500
+                        }
+                      ],
+                      "freezes": {
+                        "startCount": 1,
+                        "maxCount": 2,
+                        "autoEarnInterval": 7,
+                        "autoEarnAmount": 1
+                      }
+                    }
+                  },
+                  "Weekly streaks without freezes": {
+                    "value": {
+                      "frequency": "weekly",
+                      "evaluationMode": "AND",
+                      "customizationEnabled": false,
+                      "daysOff": [],
+                      "metrics": [
+                        {
+                          "key": "pages-read",
+                          "threshold": 1
+                        }
+                      ],
+                      "freezes": null
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AdminErrorBody"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Unprocessible Entity",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AdminErrorBody"
+                }
+              }
+            }
+          }
+        },
+        "summary": "Get streak settings",
+        "security": [
+          {
+            "ApiKeyAuth": []
+          }
+        ]
+      },
+      "patch": {
+        "description": "Update the organization's streak configuration.",
+        "operationId": "admin_streaks_settings_update",
+        "x-fern-server-name": "admin",
+        "x-fern-sdk-group-name": [
+          "admin",
+          "streaks",
+          "settings"
+        ],
+        "x-fern-sdk-method-name": "update",
+        "tags": [
+          "Admin"
+        ],
+        "x-codeSamples": [
+          {
+            "lang": "javascript",
+            "source": "import { TrophyApiClient } from '@trophyso/node';\n\nconst trophy = new TrophyApiClient({\n  apiKey: 'YOUR_API_KEY'\n});\n\nconst settings = await trophy.admin.streaks.settings.update({\n  frequency: 'daily',\n  evaluationMode: 'OR',\n  customizationEnabled: true,\n  daysOff: [0, 6],\n  metrics: [{ key: 'words-written', threshold: 500 }],\n  freezes: {\n    startCount: 1,\n    maxCount: 2,\n    autoEarnInterval: 7,\n    autoEarnAmount: 1\n  }\n});\n"
+          },
+          {
+            "lang": "python",
+            "source": "from trophy import TrophyApi\n\nclient = TrophyApi(api_key='YOUR_API_KEY')\n\nsettings = client.admin.streaks.settings.update({\n  \"frequency\": \"daily\",\n  \"evaluation_mode\": \"OR\",\n  \"customization_enabled\": True,\n  \"days_off\": [0, 6],\n  \"metrics\": [{\"key\": \"words-written\", \"threshold\": 500}],\n  \"freezes\": {\n    \"start_count\": 1,\n    \"max_count\": 2,\n    \"auto_earn_interval\": 7,\n    \"auto_earn_amount\": 1\n  }\n})\n"
+          },
+          {
+            "lang": "go",
+            "source": "import (\n  \"context\"\n\n  api \"github.com/trophyso/trophy-go\"\n  trophyclient \"github.com/trophyso/trophy-go/client\"\n  \"github.com/trophyso/trophy-go/option\"\n)\n\nclient := trophyclient.NewClient(\n  option.WithApiKey(\"YOUR_API_KEY\"),\n)\n\nresponse, err := client.Admin.Streaks.Settings.Update(\n  context.TODO(),\n  &api.UpdateStreakSettingsRequest{},\n)\n"
+          }
+        ],
+        "requestBody": {
+          "description": "Streak settings fields to update.",
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/UpdateStreakSettingsRequest"
+              },
+              "examples": {
+                "Update daily streak settings": {
+                  "value": {
+                    "frequency": "daily",
+                    "evaluationMode": "OR",
+                    "customizationEnabled": true,
+                    "daysOff": [
+                      0,
+                      6
+                    ],
+                    "metrics": [
+                      {
+                        "key": "words-written",
+                        "threshold": 500
+                      }
+                    ],
+                    "freezes": {
+                      "startCount": 1,
+                      "maxCount": 2,
+                      "autoEarnInterval": 7,
+                      "autoEarnAmount": 1
+                    }
+                  }
+                },
+                "Disable freezes": {
+                  "value": {
+                    "freezes": null
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successful operation",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/StreakSettings"
+                },
+                "examples": {
+                  "Updated settings": {
+                    "value": {
+                      "frequency": "daily",
+                      "evaluationMode": "OR",
+                      "customizationEnabled": true,
+                      "daysOff": [
+                        0,
+                        6
+                      ],
+                      "metrics": [
+                        {
+                          "key": "words-written",
+                          "threshold": 500
+                        }
+                      ],
+                      "freezes": {
+                        "startCount": 1,
+                        "maxCount": 2,
+                        "autoEarnInterval": 7,
+                        "autoEarnAmount": 1
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AdminErrorBody"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Unprocessible Entity",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AdminErrorBody"
+                }
+              }
+            }
+          }
+        },
+        "summary": "Update streak settings",
         "security": [
           {
             "ApiKeyAuth": []
@@ -6160,7 +7317,7 @@
             }
           }
         },
-        "summary": "Get a tenant",
+        "summary": "Get a tenant by ID",
         "security": [
           {
             "ApiKeyAuth": []
@@ -6677,6 +7834,526 @@
         "description": "A paginated list of attributes.",
         "items": {
           "$ref": "#/components/schemas/AdminAttribute"
+        }
+      },
+      "CreateAchievementsRequest": {
+        "title": "CreateAchievementsRequest",
+        "type": "array",
+        "description": "Request body for creating achievements.",
+        "items": {
+          "$ref": "#/components/schemas/CreateAchievementRequestItem"
+        },
+        "minItems": 1,
+        "maxItems": 100
+      },
+      "CreateAchievementRequestItem": {
+        "title": "CreateAchievementRequestItem",
+        "type": "object",
+        "description": "An achievement to create. Trigger-specific fields are required based on `trigger`. `status` defaults to `inactive`.",
+        "properties": {
+          "name": {
+            "type": "string",
+            "description": "The achievement name.",
+            "example": "First Workout"
+          },
+          "trigger": {
+            "type": "string",
+            "enum": [
+              "metric",
+              "streak",
+              "api",
+              "achievement",
+              "anniversary"
+            ],
+            "description": "The achievement trigger type.",
+            "example": "metric"
+          },
+          "description": {
+            "type": "string",
+            "description": "A short description of the achievement.",
+            "example": "Complete your first workout"
+          },
+          "status": {
+            "type": "string",
+            "enum": [
+              "active",
+              "inactive",
+              "locked"
+            ],
+            "default": "inactive",
+            "description": "The achievement status. Defaults to `inactive`.",
+            "example": "inactive"
+          },
+          "badge": {
+            "type": "object",
+            "description": "An optional badge for the achievement.",
+            "properties": {
+              "url": {
+                "type": "string",
+                "description": "The URL of the badge image.",
+                "example": "https://assets.trophy.so/badge.png"
+              }
+            },
+            "required": [
+              "url"
+            ]
+          },
+          "userAttributes": {
+            "type": "array",
+            "description": "User attribute filters applied to the achievement. Each `attributeId` must be an active user attribute.",
+            "items": {
+              "type": "object",
+              "properties": {
+                "attributeId": {
+                  "type": "string",
+                  "format": "uuid"
+                },
+                "attributeValue": {
+                  "type": "string"
+                }
+              },
+              "required": [
+                "attributeId",
+                "attributeValue"
+              ]
+            }
+          },
+          "key": {
+            "type": "string",
+            "pattern": "^[a-zA-Z\\d-_]+$",
+            "description": "Required if trigger is `api`. Only alphanumeric characters, hyphens, and underscores are permitted.",
+            "example": "custom-unlock"
+          },
+          "metricId": {
+            "type": "string",
+            "format": "uuid",
+            "description": "Required if trigger is `metric`. The UUID of the metric."
+          },
+          "metricValue": {
+            "type": "number",
+            "description": "Required if trigger is `metric`. The metric threshold users must reach. Must be at least 1.",
+            "example": 1
+          },
+          "eventAttributes": {
+            "type": "array",
+            "description": "Event attribute filters. Only permitted for metric achievements. Each `attributeId` must be an active event attribute.",
+            "items": {
+              "type": "object",
+              "properties": {
+                "attributeId": {
+                  "type": "string",
+                  "format": "uuid"
+                },
+                "attributeValue": {
+                  "type": "string"
+                }
+              },
+              "required": [
+                "attributeId",
+                "attributeValue"
+              ]
+            }
+          },
+          "streakLength": {
+            "type": "integer",
+            "description": "Required if trigger is `streak`. The streak length users must reach. Must be at least 1.",
+            "example": 7
+          },
+          "anniversaryYears": {
+            "type": "integer",
+            "description": "Required if trigger is `anniversary`. The number of years since sign-up. Must be at least 1.",
+            "example": 1
+          },
+          "achievementIds": {
+            "type": "array",
+            "description": "Required if trigger is `achievement`. UUIDs of prerequisite achievements.",
+            "items": {
+              "type": "string",
+              "format": "uuid"
+            },
+            "minItems": 1
+          }
+        },
+        "required": [
+          "name",
+          "trigger"
+        ]
+      },
+      "AdminAchievement": {
+        "title": "AdminAchievement",
+        "type": "object",
+        "description": "An achievement as returned from admin endpoints. Trigger-specific fields are only present for the matching trigger type.",
+        "properties": {
+          "id": {
+            "type": "string",
+            "format": "uuid",
+            "description": "The UUID of the achievement."
+          },
+          "name": {
+            "type": "string",
+            "description": "The achievement name."
+          },
+          "description": {
+            "type": [
+              "string",
+              "null"
+            ],
+            "description": "A short description of the achievement."
+          },
+          "trigger": {
+            "type": "string",
+            "enum": [
+              "metric",
+              "streak",
+              "api",
+              "achievement",
+              "anniversary"
+            ],
+            "description": "The achievement trigger type."
+          },
+          "status": {
+            "type": "string",
+            "enum": [
+              "active",
+              "inactive",
+              "locked"
+            ],
+            "description": "The achievement status."
+          },
+          "badge": {
+            "oneOf": [
+              {
+                "type": "object",
+                "properties": {
+                  "url": {
+                    "type": "string",
+                    "description": "The URL of the badge image."
+                  }
+                },
+                "required": [
+                  "url"
+                ]
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "description": "The badge for the achievement, or null if no badge is set."
+          },
+          "userAttributes": {
+            "type": "array",
+            "description": "User attribute filters applied to the achievement.",
+            "items": {
+              "type": "object",
+              "properties": {
+                "attributeId": {
+                  "type": "string",
+                  "format": "uuid"
+                },
+                "attributeValue": {
+                  "type": "string"
+                }
+              },
+              "required": [
+                "attributeId",
+                "attributeValue"
+              ]
+            }
+          },
+          "key": {
+            "type": "string",
+            "description": "The achievement key. Only present for API achievements."
+          },
+          "metricId": {
+            "type": "string",
+            "format": "uuid",
+            "description": "The UUID of the metric. Only present for metric achievements."
+          },
+          "metricValue": {
+            "type": "number",
+            "description": "The metric threshold. Only present for metric achievements."
+          },
+          "eventAttributes": {
+            "type": "array",
+            "description": "Event attribute filters. Only present for metric achievements.",
+            "items": {
+              "type": "object",
+              "properties": {
+                "attributeId": {
+                  "type": "string",
+                  "format": "uuid"
+                },
+                "attributeValue": {
+                  "type": "string"
+                }
+              },
+              "required": [
+                "attributeId",
+                "attributeValue"
+              ]
+            }
+          },
+          "streakLength": {
+            "type": "integer",
+            "description": "The streak length. Only present for streak achievements."
+          },
+          "anniversaryYears": {
+            "type": "integer",
+            "description": "The anniversary years. Only present for anniversary achievements."
+          },
+          "achievementIds": {
+            "type": "array",
+            "description": "Prerequisite achievement UUIDs. Only present for achievement achievements.",
+            "items": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        },
+        "required": [
+          "id",
+          "name",
+          "description",
+          "trigger",
+          "status",
+          "badge",
+          "userAttributes"
+        ]
+      },
+      "CreateAchievementsResponse": {
+        "title": "CreateAchievementsResponse",
+        "type": "object",
+        "description": "Response containing created achievements and any per-item issues.",
+        "properties": {
+          "created": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/AdminAchievement"
+            },
+            "description": "Array of successfully created achievements."
+          },
+          "issues": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/AdminIssue"
+            },
+            "description": "Array of issues encountered during achievement creation."
+          }
+        },
+        "required": [
+          "created",
+          "issues"
+        ]
+      },
+      "UpdateAchievementsRequest": {
+        "title": "UpdateAchievementsRequest",
+        "type": "array",
+        "description": "Request body for updating achievements.",
+        "items": {
+          "$ref": "#/components/schemas/UpdateAchievementRequestItem"
+        },
+        "minItems": 1,
+        "maxItems": 100
+      },
+      "UpdateAchievementRequestItem": {
+        "title": "UpdateAchievementRequestItem",
+        "type": "object",
+        "description": "An achievement update object. `id` is required; all other fields are optional. Omitted fields are preserved. Send `null` for `description`, `badge`, or `userAttributes` to clear them.",
+        "properties": {
+          "id": {
+            "type": "string",
+            "format": "uuid",
+            "description": "The UUID of the achievement to update.",
+            "example": "550e8400-e29b-41d4-a716-446655440000"
+          },
+          "name": {
+            "type": "string",
+            "description": "The updated achievement name."
+          },
+          "trigger": {
+            "type": "string",
+            "enum": [
+              "metric",
+              "streak",
+              "api",
+              "achievement",
+              "anniversary"
+            ],
+            "description": "The updated trigger type. Changing trigger requires the new trigger's mandatory fields."
+          },
+          "description": {
+            "type": [
+              "string",
+              "null"
+            ],
+            "description": "The updated description. Send `null` to clear."
+          },
+          "status": {
+            "type": "string",
+            "enum": [
+              "active",
+              "inactive",
+              "locked"
+            ],
+            "description": "The updated status."
+          },
+          "badge": {
+            "oneOf": [
+              {
+                "type": "object",
+                "properties": {
+                  "url": {
+                    "type": "string",
+                    "description": "The URL of the badge image."
+                  }
+                },
+                "required": [
+                  "url"
+                ]
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "description": "The updated badge, or `null` to clear it."
+          },
+          "userAttributes": {
+            "type": [
+              "array",
+              "null"
+            ],
+            "description": "Updated user attribute filters. Send `null` to clear. Each `attributeId` must be an active user attribute.",
+            "items": {
+              "type": "object",
+              "properties": {
+                "attributeId": {
+                  "type": "string",
+                  "format": "uuid"
+                },
+                "attributeValue": {
+                  "type": "string"
+                }
+              },
+              "required": [
+                "attributeId",
+                "attributeValue"
+              ]
+            }
+          },
+          "key": {
+            "type": "string",
+            "pattern": "^[a-zA-Z\\d-_]+$",
+            "description": "Updated key. Only permitted for API achievements."
+          },
+          "metricId": {
+            "type": "string",
+            "format": "uuid",
+            "description": "Updated metric ID. Only permitted for metric achievements."
+          },
+          "metricValue": {
+            "type": "number",
+            "description": "Updated metric threshold. Only permitted for metric achievements."
+          },
+          "eventAttributes": {
+            "type": [
+              "array",
+              "null"
+            ],
+            "description": "Updated event attribute filters. Only permitted for metric achievements. Send `null` to clear. Each `attributeId` must be an active event attribute.",
+            "items": {
+              "type": "object",
+              "properties": {
+                "attributeId": {
+                  "type": "string",
+                  "format": "uuid"
+                },
+                "attributeValue": {
+                  "type": "string"
+                }
+              },
+              "required": [
+                "attributeId",
+                "attributeValue"
+              ]
+            }
+          },
+          "streakLength": {
+            "type": "integer",
+            "description": "Updated streak length. Only permitted for streak achievements."
+          },
+          "anniversaryYears": {
+            "type": "integer",
+            "description": "Updated anniversary years. Only permitted for anniversary achievements."
+          },
+          "achievementIds": {
+            "type": "array",
+            "description": "Updated prerequisite achievement UUIDs. Only permitted for achievement achievements.",
+            "items": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        },
+        "required": [
+          "id"
+        ]
+      },
+      "UpdateAchievementsResponse": {
+        "title": "UpdateAchievementsResponse",
+        "type": "object",
+        "description": "Response containing updated achievements and any per-item issues identified by achievement ID.",
+        "properties": {
+          "updated": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/AdminAchievement"
+            },
+            "description": "Array of successfully updated achievements."
+          },
+          "issues": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/AdminIssue"
+            },
+            "description": "Array of issues encountered during achievement update."
+          }
+        },
+        "required": [
+          "updated",
+          "issues"
+        ]
+      },
+      "DeleteAchievementsResponse": {
+        "title": "DeleteAchievementsResponse",
+        "type": "object",
+        "description": "Response containing deleted achievements represented by ID and any per-item issues, including invalid or missing achievement IDs.",
+        "properties": {
+          "deleted": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/DeletedResource"
+            },
+            "description": "Array of deleted achievements represented by ID."
+          },
+          "issues": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/AdminIssue"
+            },
+            "description": "Array of issues encountered during achievement deletion."
+          }
+        },
+        "required": [
+          "deleted",
+          "issues"
+        ]
+      },
+      "ListAchievementsResponse": {
+        "title": "ListAchievementsResponse",
+        "type": "array",
+        "description": "A paginated list of achievements.",
+        "items": {
+          "$ref": "#/components/schemas/AdminAchievement"
         }
       },
       "CreateLeaderboardsRequest": {
@@ -8467,6 +10144,505 @@
         "required": [
           "users"
         ]
+      },
+      "AdminFontFamily": {
+        "title": "AdminFontFamily",
+        "type": "string",
+        "enum": [
+          "MODERN_SANS",
+          "BOOK_SANS",
+          "ORGANIC_SANS",
+          "GEOMETRIC_SANS",
+          "HEAVY_SANS",
+          "ROUNDED_SANS",
+          "MODERN_SERIF",
+          "BOOK_SERIF",
+          "MONOSPACE"
+        ],
+        "description": "The email brand font. Configured on the email settings form in the dashboard."
+      },
+      "AdminAggregationPeriod": {
+        "title": "AdminAggregationPeriod",
+        "type": "string",
+        "enum": [
+          "weekly",
+          "monthly"
+        ],
+        "description": "How progress is displayed in email chart blocks and how often recap messages send."
+      },
+      "AdminSettingsBranding": {
+        "title": "AdminSettingsBranding",
+        "type": "object",
+        "description": "Organization branding settings.",
+        "properties": {
+          "appName": {
+            "type": "string",
+            "description": "The name of the app or platform.",
+            "example": "Trophy"
+          },
+          "appUrl": {
+            "type": "string",
+            "description": "The URL of the app or platform.",
+            "example": "https://app.example.com"
+          },
+          "brandColor": {
+            "type": "string",
+            "description": "Primary brand color as hex (`#RGB` or `#RRGGBB`), `rgb(r,g,b)`, or `rgba(r,g,b,a)`.",
+            "example": "#1a2b3c"
+          },
+          "font": {
+            "$ref": "#/components/schemas/AdminFontFamily"
+          },
+          "logo": {
+            "oneOf": [
+              {
+                "type": "object",
+                "properties": {
+                  "url": {
+                    "type": "string",
+                    "format": "uri",
+                    "description": "The URL of the logo image.",
+                    "example": "https://cdn.example.com/logo.png"
+                  }
+                },
+                "required": [
+                  "url"
+                ]
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "description": "Company logo used in emails, or `null` if none is set."
+          },
+          "appIcon": {
+            "oneOf": [
+              {
+                "type": "object",
+                "properties": {
+                  "url": {
+                    "type": "string",
+                    "format": "uri",
+                    "description": "The URL of the app icon image.",
+                    "example": "https://cdn.example.com/icon.png"
+                  }
+                },
+                "required": [
+                  "url"
+                ]
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "description": "App icon used in push notification previews, or `null` if none is set."
+          }
+        },
+        "required": [
+          "appName",
+          "appUrl",
+          "brandColor",
+          "font",
+          "logo",
+          "appIcon"
+        ]
+      },
+      "AdminSettingsExperimentation": {
+        "title": "AdminSettingsExperimentation",
+        "type": "object",
+        "description": "Experimentation settings.",
+        "properties": {
+          "controlRatio": {
+            "type": "integer",
+            "minimum": 0,
+            "maximum": 100,
+            "description": "Percentage of new users assigned to the control group.",
+            "example": 10
+          },
+          "userActivationWindow": {
+            "type": "integer",
+            "minimum": 3,
+            "maximum": 30,
+            "description": "Number of days after a user's first event used to measure retention and early engagement.",
+            "example": 14
+          }
+        },
+        "required": [
+          "controlRatio",
+          "userActivationWindow"
+        ]
+      },
+      "AdminSettings": {
+        "title": "AdminSettings",
+        "type": "object",
+        "description": "The organization's branding, experimentation, and aggregation settings.",
+        "properties": {
+          "branding": {
+            "$ref": "#/components/schemas/AdminSettingsBranding"
+          },
+          "experimentation": {
+            "$ref": "#/components/schemas/AdminSettingsExperimentation"
+          },
+          "aggregationPeriod": {
+            "$ref": "#/components/schemas/AdminAggregationPeriod"
+          }
+        },
+        "required": [
+          "branding",
+          "experimentation",
+          "aggregationPeriod"
+        ]
+      },
+      "UpdateAdminSettingsBranding": {
+        "title": "UpdateAdminSettingsBranding",
+        "type": "object",
+        "description": "Branding fields to update. Omitted fields stay as-is.",
+        "properties": {
+          "appName": {
+            "type": "string",
+            "minLength": 1,
+            "description": "The name of the app or platform.",
+            "example": "Trophy"
+          },
+          "appUrl": {
+            "type": "string",
+            "format": "uri",
+            "description": "The URL of the app or platform.",
+            "example": "https://app.example.com"
+          },
+          "brandColor": {
+            "type": "string",
+            "description": "Primary brand color as hex (`#RGB` or `#RRGGBB`), `rgb(r,g,b)`, or `rgba(r,g,b,a)`.",
+            "example": "#1a2b3c"
+          },
+          "font": {
+            "$ref": "#/components/schemas/AdminFontFamily"
+          },
+          "logo": {
+            "oneOf": [
+              {
+                "type": "object",
+                "properties": {
+                  "url": {
+                    "type": "string",
+                    "format": "uri",
+                    "description": "The URL of the logo image.",
+                    "example": "https://cdn.example.com/logo.png"
+                  }
+                },
+                "required": [
+                  "url"
+                ]
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "description": "Company logo, or `null` to clear it."
+          },
+          "appIcon": {
+            "oneOf": [
+              {
+                "type": "object",
+                "properties": {
+                  "url": {
+                    "type": "string",
+                    "format": "uri",
+                    "description": "The URL of the app icon image.",
+                    "example": "https://cdn.example.com/icon.png"
+                  }
+                },
+                "required": [
+                  "url"
+                ]
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "description": "App icon, or `null` to clear it."
+          }
+        }
+      },
+      "UpdateAdminSettingsExperimentation": {
+        "title": "UpdateAdminSettingsExperimentation",
+        "type": "object",
+        "description": "Experimentation fields to update. Omitted fields stay as-is.",
+        "properties": {
+          "controlRatio": {
+            "type": "integer",
+            "minimum": 0,
+            "maximum": 100,
+            "description": "Percentage of new users assigned to the control group.",
+            "example": 10
+          },
+          "userActivationWindow": {
+            "type": "integer",
+            "minimum": 3,
+            "maximum": 30,
+            "description": "Number of days after a user's first event used to measure retention and early engagement.",
+            "example": 14
+          }
+        }
+      },
+      "UpdateAdminSettingsRequest": {
+        "title": "UpdateAdminSettingsRequest",
+        "type": "object",
+        "description": "Fields to update. Omitted top-level fields stay as-is. `branding` and `experimentation` must be objects when present; `null` is rejected. Nested objects are merged field-by-field.",
+        "properties": {
+          "branding": {
+            "$ref": "#/components/schemas/UpdateAdminSettingsBranding"
+          },
+          "experimentation": {
+            "$ref": "#/components/schemas/UpdateAdminSettingsExperimentation"
+          },
+          "aggregationPeriod": {
+            "$ref": "#/components/schemas/AdminAggregationPeriod"
+          }
+        }
+      },
+      "AdminStreakFrequency": {
+        "title": "AdminStreakFrequency",
+        "type": "string",
+        "enum": [
+          "daily",
+          "weekly",
+          "monthly"
+        ],
+        "description": "The frequency at which streaks are calculated."
+      },
+      "AdminStreakEvaluationMode": {
+        "title": "AdminStreakEvaluationMode",
+        "type": "string",
+        "enum": [
+          "OR",
+          "AND"
+        ],
+        "description": "Whether meeting any single metric threshold (`OR`) or all configured metric thresholds (`AND`) extends the user's streak."
+      },
+      "StreakSettingsMetric": {
+        "title": "StreakSettingsMetric",
+        "type": "object",
+        "description": "A metric that counts toward the organization streak.",
+        "properties": {
+          "key": {
+            "type": "string",
+            "description": "The metric key.",
+            "example": "words-written"
+          },
+          "threshold": {
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 10000,
+            "description": "Minimum metric change in a streak period to count toward the streak.",
+            "example": 500
+          }
+        },
+        "required": [
+          "key",
+          "threshold"
+        ]
+      },
+      "StreakSettingsFreezes": {
+        "title": "StreakSettingsFreezes",
+        "type": "object",
+        "description": "Organization streak freeze configuration. `null` on the parent object means freezes are disabled.",
+        "properties": {
+          "startCount": {
+            "type": "integer",
+            "minimum": 0,
+            "maximum": 100,
+            "description": "Number of freezes new users start with.",
+            "example": 1
+          },
+          "maxCount": {
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 100,
+            "description": "Maximum number of freezes a user can have.",
+            "example": 2
+          },
+          "autoEarnInterval": {
+            "type": [
+              "integer",
+              "null"
+            ],
+            "minimum": 1,
+            "maximum": 365,
+            "description": "Days between auto-earned freezes. `null` when auto-earn is off.",
+            "example": 7
+          },
+          "autoEarnAmount": {
+            "type": [
+              "integer",
+              "null"
+            ],
+            "minimum": 1,
+            "maximum": 10,
+            "description": "Freezes earned per interval. `null` when auto-earn is off.",
+            "example": 1
+          }
+        },
+        "required": [
+          "startCount",
+          "maxCount",
+          "autoEarnInterval",
+          "autoEarnAmount"
+        ]
+      },
+      "UpdateStreakSettingsFreezes": {
+        "title": "UpdateStreakSettingsFreezes",
+        "type": "object",
+        "description": "Replacement freeze configuration. `startCount` and `maxCount` are required. Auto-earn is a pair: both `autoEarnInterval` and `autoEarnAmount` must be set to enable auto-earn, or both omitted/`null` to disable it.",
+        "properties": {
+          "startCount": {
+            "type": "integer",
+            "minimum": 0,
+            "maximum": 100,
+            "description": "Number of freezes new users start with.",
+            "example": 1
+          },
+          "maxCount": {
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 100,
+            "description": "Maximum number of freezes a user can have. Must be greater than or equal to `startCount`.",
+            "example": 2
+          },
+          "autoEarnInterval": {
+            "type": [
+              "integer",
+              "null"
+            ],
+            "minimum": 1,
+            "maximum": 365,
+            "description": "Days between auto-earned freezes.",
+            "example": 7
+          },
+          "autoEarnAmount": {
+            "type": [
+              "integer",
+              "null"
+            ],
+            "minimum": 1,
+            "maximum": 10,
+            "description": "Freezes earned per interval.",
+            "example": 1
+          }
+        },
+        "required": [
+          "startCount",
+          "maxCount"
+        ]
+      },
+      "StreakSettings": {
+        "title": "StreakSettings",
+        "type": "object",
+        "description": "The organization's streak configuration.",
+        "properties": {
+          "frequency": {
+            "$ref": "#/components/schemas/AdminStreakFrequency"
+          },
+          "evaluationMode": {
+            "$ref": "#/components/schemas/AdminStreakEvaluationMode"
+          },
+          "customizationEnabled": {
+            "type": "boolean",
+            "description": "Whether users can override streak evaluation mode, metric thresholds, and days off via preferences."
+          },
+          "daysOff": {
+            "type": "array",
+            "items": {
+              "type": "integer",
+              "minimum": 0,
+              "maximum": 6
+            },
+            "uniqueItems": true,
+            "maxItems": 6,
+            "description": "Days of the week that do not count toward the daily streak. Represented as zero-based integers matching JavaScript `Date.getDay()` (0 = Sunday, 6 = Saturday).",
+            "example": [
+              0,
+              6
+            ]
+          },
+          "metrics": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/StreakSettingsMetric"
+            },
+            "description": "Metrics with a streak threshold greater than zero."
+          },
+          "freezes": {
+            "oneOf": [
+              {
+                "$ref": "#/components/schemas/StreakSettingsFreezes"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "description": "Freeze configuration, or `null` when streak freezes are disabled."
+          }
+        },
+        "required": [
+          "frequency",
+          "evaluationMode",
+          "customizationEnabled",
+          "daysOff",
+          "metrics",
+          "freezes"
+        ]
+      },
+      "UpdateStreakSettingsRequest": {
+        "title": "UpdateStreakSettingsRequest",
+        "type": "object",
+        "description": "Fields to update. Omitted top-level fields stay as-is.",
+        "properties": {
+          "frequency": {
+            "$ref": "#/components/schemas/AdminStreakFrequency"
+          },
+          "evaluationMode": {
+            "$ref": "#/components/schemas/AdminStreakEvaluationMode"
+          },
+          "customizationEnabled": {
+            "type": "boolean",
+            "description": "Whether users can override streak evaluation mode, metric thresholds, and days off via preferences."
+          },
+          "daysOff": {
+            "type": "array",
+            "items": {
+              "type": "integer",
+              "minimum": 0,
+              "maximum": 6
+            },
+            "uniqueItems": true,
+            "maxItems": 6,
+            "description": "Days of the week that do not count toward the daily streak. A non-empty array is only allowed when the resulting frequency is `daily`. Changing frequency away from `daily` clears stored days off even when this field is omitted.",
+            "example": [
+              0,
+              6
+            ]
+          },
+          "metrics": {
+            "type": "array",
+            "minItems": 1,
+            "items": {
+              "$ref": "#/components/schemas/StreakSettingsMetric"
+            },
+            "description": "Replacement list of streak metrics. Keys must be unique and must exist on the organization."
+          },
+          "freezes": {
+            "oneOf": [
+              {
+                "$ref": "#/components/schemas/UpdateStreakSettingsFreezes"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "description": "Replacement freeze configuration, or `null` to disable freezes."
+          }
+        }
       },
       "RestoreStreaksResponse": {
         "title": "RestoreStreaksResponse",
