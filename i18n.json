@@ -20,6 +20,8 @@
         "admin-api/endpoints/leaderboards/*.mdx",
         "admin-api/endpoints/tenants/*.mdx",
         "admin-api/endpoints/application-api-keys/*.mdx",
+        "admin-api/endpoints/achievements/*.mdx",
+        "admin-api/endpoints/settings/*.mdx",
         "api-reference/*.mdx",
         "api-reference/endpoints/achievements/*.mdx",
         "api-reference/endpoints/leaderboards/*.mdx",

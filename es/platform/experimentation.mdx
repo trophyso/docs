@@ -1,9 +1,9 @@
 ---
 title: Experimentación
 description: Aprende a usar Trophy para experimentar con la experiencia de
-  gamificación y aumentar la retención y el engagement de usuarios.
+  gamificación y aumentar la retención y el engagement de los usuarios.
 og:description: Aprende a usar Trophy para experimentar con la experiencia de
-  gamificación y aumentar la retención y el engagement de usuarios.
+  gamificación y aumentar la retención y el engagement de los usuarios.
 icon: flask-conical
 ---
 
@@ -11,19 +11,22 @@ import ControlFlagBlock from "../../snippets/control-flag-block.mdx";
 
 Trophy proporciona un conjunto básico de primitivas para ayudarte a implementar experiencias de gamificación más rápido. Pero la gamificación no es algo que puedas configurar y olvidar.
 
-Una parte clave de ejecutar una plataforma gamificada es la experimentación: ajustar y optimizar la experiencia de usuario para asegurar que los usuarios sigan regresando.
+Una parte clave de gestionar una plataforma gamificada es la experimentación: ajustar y optimizar la experiencia del usuario para asegurar que los usuarios sigan regresando.
 
-Normalmente, tendrías que construir estas herramientas tú mismo, pero con Trophy obtienes un stack de experimentación simple y listo para usar.
+Normalmente, tendrías que construir estas herramientas tú mismo, pero con Trophy obtienes un stack de experimentación simple listo para usar.
 
 <Tip>
-  Tenemos planes para extender las capacidades de experimentación de Trophy en el futuro para soportar pruebas A/B más granulares de tus funcionalidades de gamificación.
+  Tenemos planes para extender las capacidades de experimentación de Trophy en el futuro para
+  soportar pruebas A/B más granulares de tus funciones de gamificación.
 </Tip>
 
 ## Ratio de Control {#control-ratio}
 
-Trophy tiene una capacidad integrada para realizar pruebas A/B automáticas de funcionalidades de gamificación usando un ratio de control.
+Trophy tiene una capacidad integrada para realizar pruebas A/B automáticas de funciones de gamificación usando un ratio de control.
 
-Ubicado en la [página de integración](https://app.trophy.so/integration/configure) del panel de Trophy, el ratio de control ajusta el porcentaje de usuarios que se asignan al grupo 'control' versus el grupo 'experimental'.
+Disponible en la [página de integración](https://app.trophy.so/integration/configure) del panel de Trophy, el ratio de control ajusta el porcentaje de usuarios que se asignan al grupo de 'control' frente al grupo 'experimental'.
+
+También puedes leer y actualizar `controlRatio` y `userActivationWindow` con la [API de administración de configuración de organización](/es/admin-api/endpoints/settings/update-organization-settings).
 
 <Frame>
   <video
@@ -36,33 +39,33 @@ Ubicado en la [página de integración](https://app.trophy.so/integration/config
   ></video>
 </Frame>
 
-Trophy devuelve el atributo `control` como `true` o `false` en la mayoría de las APIs relacionadas con datos de usuario, permitiéndote mostrar condicionalmente funcionalidades de gamificación a usuarios que están en el grupo experimental.
+Trophy devuelve el atributo `control` como `true` o `false` en la mayoría de las APIs relacionadas con datos de usuario, permitiéndote mostrar condicionalmente funciones de gamificación a usuarios que están en el grupo experimental.
 
-Si planeas medir el impacto general de las funcionalidades de gamificación, asegúrate de mostrar esas funcionalidades solo a usuarios con `control` configurado como `false`.
+Si planeas medir el impacto general de las funciones de gamificación, asegúrate de mostrar esas funciones solo a usuarios con `control` establecido en `false`.
 
 <ControlFlagBlock />
 
 <Note>
-  Trophy tampoco envía ningún [Email](/es/features/emails) o [Notificación Push](/es/features/push-notifications) a usuarios que están en el grupo de control.
+  Trophy tampoco envía ningún [Email](/es/features/emails) ni [Notificación Push](/es/features/push-notifications) a los usuarios que están en el grupo de control.
 </Note>
 
-Los paneles de análisis comparan la retención y el engagement de usuarios entre los grupos de control y experimentales, lo que te permite medir el impacto de las funcionalidades que construyes con Trophy y ajustar las mecánicas cuando sea necesario.
+Los dashboards de analíticas luego comparan la retención y el engagement de usuarios entre los usuarios en los grupos de control y experimental, permitiéndote medir el impacto de las funcionalidades que construyes con Trophy y ajustar las mecánicas cuando sea necesario.
 
 <Frame>
   <img height="200" noZoom src="../../assets/platform/experimentation/charts.png" />
 </Frame>
 
-Tanto la retención como el engagement de usuarios son métricas importantes para medir el impacto de los cambios en la experiencia del usuario. Las siguientes secciones describen qué significa cada una y cómo se relacionan con las funcionalidades que construyes con Trophy.
+Tanto la retención como el engagement de usuarios son métricas importantes a utilizar al medir el impacto de los cambios en la experiencia del usuario. Las siguientes secciones explican qué significa cada una y cómo se relacionan con las funcionalidades que construyes con Trophy.
 
 ## ¿Qué es la retención? {#what-is-retention}
 
 La retención de usuarios es el porcentaje de usuarios que siguen utilizando tu producto después de un período determinado.
 
-Los marcos temporales comunes incluyen retención de 7 días, 14 días y 30 días, donde los períodos más cortos proporcionan información sobre la experiencia inicial del usuario y los períodos más largos ofrecen información sobre el product-market fit a largo plazo.
+Los marcos de tiempo comunes incluyen retención a 7 días, 14 días y 30 días, donde los marcos de tiempo más cortos proporcionan información sobre la experiencia inicial del usuario y los marcos de tiempo más largos ofrecen información sobre el ajuste producto-mercado a largo plazo.
 
 ### Analíticas de retención {#retention-analytics}
 
-Trophy incluye un gráfico de retención para cada métrica en su panel de métricas y un gráfico agregado de retención de usuarios en el panel principal.
+Trophy incluye un gráfico de retención para cada métrica en su dashboard de métricas y un gráfico agregado de retención de usuarios en el dashboard principal.
 
 <Frame>
   <img
@@ -72,7 +75,7 @@ Trophy incluye un gráfico de retención para cada métrica en su panel de métr
   />
 </Frame>
 
-La [página de integración](https://app.trophy.so/integration/configure) te permite controlar el período de tiempo durante el cual deseas medir la retención mediante la configuración 'New User Activation Window'.
+La [página de integración](https://app.trophy.so/integration/configure) te permite controlar el marco de tiempo sobre el cual deseas medir la retención a través de la configuración 'Ventana de activación de nuevos usuarios'.
 
 <Frame>
   <img
@@ -84,19 +87,19 @@ La [página de integración](https://app.trophy.so/integration/configure) te per
 
 ## ¿Qué es el engagement? {#what-is-engagement}
 
-El engagement de usuarios en Trophy se refiere al nivel promedio de actividad que muestran tus usuarios al utilizar tu producto.
+El engagement de usuarios en Trophy se refiere al nivel promedio de actividad que tus usuarios muestran al utilizar tu producto.
 
-Como Trophy rastrea las interacciones de los usuarios a través de [Métricas](/es/features/metrics), puede ofrecerte información sobre qué tan activos están tus usuarios con cada una y en conjunto.
+Dado que Trophy rastrea las interacciones de usuarios a través de [Métricas](/es/features/metrics), puede brindarte información sobre qué tan activos están tus usuarios con respecto a cada una y en agregado.
 
-El engagement de usuarios en Trophy es el valor promedio total de eventos de métricas por usuario activo diario. La fórmula es:
+La participación de usuario en Trophy es el valor promedio total de eventos métricos por usuario activo diario. La fórmula es:
 
 ```
 sum of all metric event values in a day / number of users active that day
 ```
 
-### Análisis de Participación {#engagement-analytics}
+### Analíticas de participación {#engagement-analytics}
 
-Los paneles de Trophy para cada métrica muestran gráficos de participación para esa métrica, y el panel principal de Trophy presenta la participación de los usuarios de forma agregada.
+Los paneles de Trophy para cada métrica muestran gráficos de participación para esa métrica, y el panel principal de Trophy presenta la participación de usuario de forma agregada.
 
 <Frame>
   <img
@@ -106,7 +109,7 @@ Los paneles de Trophy para cada métrica muestran gráficos de participación pa
   />
 </Frame>
 
-Trophy también muestra gráficos que presentan la participación de los usuarios durante sus primeros días después de registrarse en tu producto.
+Trophy también muestra gráficos que presentan la participación de usuario dentro de los primeros días después de que los usuarios se registran en tu producto.
 
 <Frame>
   <img
@@ -116,7 +119,7 @@ Trophy también muestra gráficos que presentan la participación de los usuario
   />
 </Frame>
 
-Nos referimos a esto como 'participación temprana' y es la participación del usuario medida por Trophy solo para usuarios dentro del marco de tiempo establecido en la configuración 'Ventana de activación de nuevos usuarios' en la [página de integración](https://app.trophy.so/integration/configure).
+Nos referimos a esto como 'participación temprana' y es la participación de usuario medida por Trophy solo para usuarios dentro del período de tiempo establecido en la configuración 'Ventana de activación de nuevos usuarios' en la [página de integración](https://app.trophy.so/integration/configure).
 
 <Frame>
   <img
@@ -126,7 +129,7 @@ Nos referimos a esto como 'participación temprana' y es la participación del u
   />
 </Frame>
 
-Este es un gráfico útil para comprender la participación de los usuarios durante sus primeros días con tu producto y para identificar dónde pueden estar ocurriendo bloqueos en la activación inicial de usuarios.
+Este es un gráfico útil para comprender la participación de los usuarios dentro de sus primeros días con tu producto y para identificar dónde pueden estar ocurriendo obstáculos para la activación inicial del usuario.
 
 ## Obtener soporte {#get-support}
 
