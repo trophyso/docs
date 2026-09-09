@@ -1,20 +1,20 @@
 ---
 title: Capacidades
-description: Aprende sobre lo que puede hacer el servidor MCP de cuenta Trophy.
-og:description: Aprende sobre lo que puede hacer el servidor MCP de cuenta Trophy.
+description: Aprende sobre lo que puede hacer el servidor MCP de cuenta de Trophy.
+og:description: Aprende sobre lo que puede hacer el servidor MCP de cuenta de Trophy.
 icon: wrench
 ---
 
 Una vez conectado, el servidor MCP de cuenta expone herramientas que tu agente puede llamar para inspeccionar y gestionar tu cuenta.
 
-La mayoría de los recursos de configuración ofrecen herramientas de **lectura** y **escritura** emparejadas:
+La mayoría de los recursos de configuración ofrecen herramientas emparejadas de **lectura** y **escritura**:
 
 - Las herramientas de **lectura** listan y obtienen recursos
 - Las herramientas de **escritura** crean o actualizan recursos en lote para acelerar las operaciones
 
 ## Referencia de herramientas {#tool-reference}
 
-La lista completa de herramientas disponibles en el servidor MCP de cuenta Trophy.
+La lista completa de herramientas disponibles en el servidor MCP de cuenta de Trophy.
 
 ### Herramientas de métricas {#metrics-tools}
 
@@ -22,7 +22,7 @@ Crea y gestiona las [Métricas](/es/features/metrics) que impulsan rachas, logro
 
 | Herramienta | Qué hace |
 | --- | --- |
-| `read_metrics` | Lista métricas u obtiene una única métrica por ID |
+| `read_metrics` | Lista métricas, u obtiene una métrica individual por ID |
 | `write_metrics` | Crea o actualiza métricas |
 
 ### Herramientas de atributos {#attributes-tools}
@@ -31,48 +31,48 @@ Gestiona [Atributos de usuario personalizados](/es/features/users#custom-user-at
 
 | Herramienta | Qué hace |
 | --- | --- |
-| `read_attributes` | Lista atributos u obtiene un único atributo por ID |
+| `read_attributes` | Lista atributos, u obtiene un atributo individual por ID |
 | `write_attributes` | Crea o actualiza atributos |
 
 ### Herramientas de logros {#achievements-tools}
 
-Configura [Logros](/es/features/achievements) y lee analíticas de finalización para tu cuenta.
+Configura [Logros](/es/features/achievements) y consulta análisis de completitud para tu cuenta.
 
 | Herramienta | Qué hace |
 | --- | --- |
-| `read_achievements` | Lista logros u obtiene un único logro por ID |
+| `read_achievements` | Lista logros, u obtiene un logro individual por ID |
 | `write_achievements` | Crea o actualiza logros |
-| `read_achievements_analytics` | Lista logros con conteos de finalización y rareza; opcionalmente filtra por `user_attributes` |
+| `read_achievements_analytics` | Lista logros con conteos de completitud y rareza; opcionalmente filtra por `user_attributes` |
 
 ### Herramientas de clasificaciones {#leaderboards-tools}
 
-Configura [Clasificaciones](/es/features/leaderboards) y lee rankings en vivo.
+Configura [Clasificaciones](/es/features/leaderboards) y consulta rankings en vivo.
 
 | Herramienta | Qué hace |
 | --- | --- |
 | `read_leaderboards` | Listar clasificaciones o obtener una clasificación individual por ID |
 | `write_leaderboards` | Crear o actualizar clasificaciones |
-| `read_leaderboard_rankings` | Obtener una clasificación con rankings en tiempo real por clave (paginación opcional, fecha de ejecución, centrado de usuario y filtros de atributos) |
+| `read_leaderboard_rankings` | Obtener una clasificación con rankings en vivo por clave (paginación, fecha de ejecución, centrado de usuario y filtros de atributos opcionales) |
 
 ### Herramientas de Puntos {#points-tools}
 
-Configure sistemas completos de [Puntos](/es/features/points), incluyendo [Disparadores](/es/features/points#points-triggers), [Niveles](/es/features/points#points-levels) y [Impulsos](/es/features/points#points-boosts), y consulte análisis de distribución.
+Configure sistemas completos de [Puntos](/es/features/points), incluyendo [Desencadenadores](/es/features/points#points-triggers), [Niveles](/es/features/points#points-levels) y [Impulsos](/es/features/points#points-boosts), y consulte análisis de distribución.
 
 | Herramienta | Qué hace |
 | --- | --- |
 | `read_points_systems` | Listar sistemas de puntos u obtener uno por ID |
-| `write_points_systems` | Crear o actualizar sistemas de puntos (opcionalmente con disparadores, niveles e impulsos anidados) |
-| `read_points_triggers` | Listar u obtener disparadores para un sistema de puntos |
-| `write_points_triggers` | Crear o actualizar disparadores para un sistema de puntos |
-| `read_points_levels` | Listar u obtener niveles para un sistema de puntos |
-| `write_points_levels` | Crear o actualizar niveles para un sistema de puntos |
-| `read_points_boosts` | Listar u obtener impulsos para un sistema de puntos |
-| `write_points_boosts` | Crear o actualizar impulsos para un sistema de puntos |
-| `read_points_analytics` | Distribución de puntos y desgloses de niveles para un sistema (`summary` o `level_summary`; `user_attributes` opcional en el resumen) |
+| `write_points_systems` | Crear o actualizar sistemas de puntos (opcionalmente con desencadenadores, niveles e impulsos anidados) |
+| `read_points_triggers` | Listar u obtener desencadenadores de un sistema de puntos |
+| `write_points_triggers` | Crear o actualizar desencadenadores de un sistema de puntos |
+| `read_points_levels` | Listar u obtener niveles de un sistema de puntos |
+| `write_points_levels` | Crear o actualizar niveles de un sistema de puntos |
+| `read_points_boosts` | Listar u obtener impulsos de un sistema de puntos |
+| `write_points_boosts` | Crear o actualizar impulsos de un sistema de puntos |
+| `read_points_analytics` | Distribución de puntos y desglose de niveles para un sistema (`summary` o `level_summary`; `user_attributes` opcional en el resumen) |
 
 ### Herramientas de Clientes {#tenants-tools}
 
-Administre registros de organizaciones [Multi-Cliente](/es/platform/multi-tenancy) cuando la multi-tenencia esté habilitada en su cuenta.
+Gestione registros de organizaciones [Multi-Cliente](/es/platform/multi-tenancy) cuando la funcionalidad multi-cliente esté habilitada en su cuenta.
 
 | Herramienta | Qué hace |
 | --- | --- |
@@ -80,7 +80,7 @@ Administre registros de organizaciones [Multi-Cliente](/es/platform/multi-tenanc
 | `write_tenants` | Crear o actualizar clientes |
 
 <Note>
-Si la multi-tenencia no está habilitada en su cuenta, estas herramientas no funcionarán.
+Si la funcionalidad multi-cliente no está habilitada en su cuenta, estas herramientas no funcionarán.
 </Note>
 
 ### Herramientas de Entornos {#environments-tools}
@@ -89,18 +89,18 @@ Lista los [Entornos](/es/platform/environments) en tu cuenta de Trophy.
 
 | Herramienta | Qué hace |
 | --- | --- |
-| `read_environments` | Lista todos los entornos activos ordenados por prioridad (nombre, clave, prioridad; producción siempre es prioridad 1) |
+| `read_environments` | Lista todos los entornos activos ordenados por prioridad (nombre, clave, prioridad; producción siempre tiene prioridad 1) |
 
 ### Herramientas de Rachas {#streaks-tools}
 
-Consulta y ejecuta acciones operativas de [Rachas](/es/features/streaks) para usuarios, incluyendo otorgar [Congelaciones de Racha](/es/features/streaks#streak-freezes), crear [Pausas de Racha](/es/features/streaks#streak-pauses), [restaurar rachas](/es/features/streaks#restoring-a-users-streak) y leer o actualizar la configuración de rachas de la organización.
+Consulta y ejecuta acciones operativas de [Rachas](/es/features/streaks) para usuarios, incluyendo la concesión de [Congelaciones de Racha](/es/features/streaks#streak-freezes), creación de [Pausas de Racha](/es/features/streaks#streak-pauses), [restauración de rachas](/es/features/streaks#restoring-a-users-streak), y lectura o actualización de la configuración de rachas de la organización.
 
 | Herramienta | Qué hace |
 | --- | --- |
-| `list_user_streaks` | Obtiene la longitud de racha (y marca de tiempo de la última extensión) para hasta 100 usuarios, clasificados de mayor a menor |
-| `grant_streak_freezes` | Otorga congelaciones de racha a uno o más usuarios |
+| `list_user_streaks` | Obtiene la longitud de la racha (y la marca de tiempo de la última extensión) para hasta 100 usuarios, clasificados de mayor a menor |
+| `grant_streak_freezes` | Concede congelaciones de racha a uno o más usuarios |
 | `restore_streaks` | Restaura una racha rota a su longitud anterior |
-| `create_streak_pauses` | Crea pausas de racha para usuarios en un rango de fechas (hasta 100 por solicitud) |
+| `create_streak_pauses` | Crea pausas de racha para usuarios durante un rango de fechas (hasta 100 por solicitud) |
 | `delete_streak_pauses` | Elimina pausas de racha por ID (hasta 100 por solicitud) |
 | `get_streak_settings` | Obtiene la configuración de rachas de la organización (frecuencia, modo de evaluación, métricas, días libres, congelaciones) |
 | `update_streak_settings` | Actualiza la configuración de rachas de la organización |
@@ -114,62 +114,64 @@ Lee y actualiza la configuración de la organización, incluyendo [Marca](/es/ac
 | `get_settings` | Obtiene la configuración de marca, experimentación y período de agregación |
 | `update_settings` | Actualiza la configuración de marca, experimentación y período de agregación |
 
-## Ejemplos de Prompts {#example-prompts}
+## Ejemplos de Instrucciones {#example-prompts}
 
 Usa lenguaje natural — tu agente selecciona la herramienta y los parámetros correctos:
 
 ```text
-Crea un sistema de XP llamado 'Kudos' que otorga 10 puntos por cada entrenamiento completado.
+Create an XP system called 'Kudos' that grants 10 points for each workout completed.
 ```
 
 ```text
-Programa potenciadores de XP 2X para el sistema 'Kudos' durante los próximos 3 fines de semana (solo para usuarios de pago - el atributo 'plan' es 'pro').
+Schedule 2X XP boosts for the 'Kudos' system across the next 3 weekends (only for paying users - 'plan' attribute is 'pro').
 ```
 
 ```text
-Lista todos los logros, tasas de finalización y rareza en mi cuenta de Trophy.
+List all achievements, completion rates and rarity in my Trophy account.
 ```
 
 ```text
-Obtén el top 20 de rankings de la clasificación weekly-workouts de esta semana.
+Get the top 20 rankings for leaderboard weekly-workouts this week.
 ```
 
 ```text
-Resume la distribución de puntos de Kudos para usuarios pro.
+Summarize the Kudos points distribution for pro users.
 ```
 
 ```text
-¿Cuáles son las longitudes de racha actuales de los usuarios user_123 y user_456?
+What are the current streak lengths for users user_123 and user_456?
 ```
 
 ```text
-Otorga dos congelaciones de racha al usuario user_123.
+Grant two streak freezes to user user_123.
 ```
 
 ```text
-user_123 quiere recuperar su racha, restáurala a su longitud anterior.
+user_123 wants their streak back, restore it to its previous length.
 ```
 
 ```text
-Crea una pausa de racha para user_123 desde 2026-09-15 hasta 2026-09-22 mientras está de vacaciones.
+Create a streak pause for user_123 from 2026-09-15 to 2026-09-22 while they're on holiday.
 ```
 
 ```text
-¿Cuál es nuestra configuración actual de rachas, y configura las congelaciones para empezar con 1 y un máximo de 3?
+What is our current streak configuration, and set freezes to start with 1 and max out at 3?
 ```
 
 ```text
-Crea un logro llamado 'Primer Entrenamiento' que se desbloquea cuando los usuarios completan 1 entrenamiento.
+Create an achievement called 'First Workout' that unlocks when users complete 1 workout.
 ```
 
 ```text
-Actualiza nuestro color de marca a #0F766E y configura el período de agregación en semanal.
+Update our brand color to #0F766E and set the aggregation period to weekly.
 ```
 
 ## Alcance y seguridad {#scope-and-safety}
 
-- Las herramientas solo actuarán sobre el [entorno](/es/platform/environments) de Trophy vinculado a la clave de API que proporciones en `x-trophy-api-key`.
-- Las herramientas de escritura pueden modificar la configuración en producción. Preferiblemente utiliza un [entorno](/es/platform/environments) de staging o sandbox al iterar.
+- El acceso está limitado a la organización de Trophy que autorices durante OAuth.
+- Las herramientas actúan en un [entorno](/es/platform/environments) específico. Si la cuenta tiene solo uno, las llamadas de herramienta usan ese por defecto (normalmente `production`). Si hay múltiples, pasa la clave `environment` que desees, o usa `read_environments` para listarlos y elegir.
+- Cuando la [multi-tenencia](/es/platform/multi-tenancy) está habilitada, las herramientas también pueden estar limitadas a un [cliente](/es/platform/multi-tenancy). Si hay solo un cliente activo, las llamadas de herramienta pueden usar ese por defecto. Si hay múltiples, pasa el id `tenant` que desees, o usa `read_tenants` para listarlos y elegir.
+- Las herramientas de escritura pueden cambiar la configuración en producción. Prefiere un [entorno](/es/platform/environments) de staging o sandbox cuando estés iterando.
 - La mayoría de las herramientas no pueden eliminar recursos. La excepción es `delete_streak_pauses`, que elimina pausas de racha por ID.
 
 ## Obtener soporte {#get-support}

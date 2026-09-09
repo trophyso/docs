@@ -15,28 +15,28 @@ Here you'll integrate your application with Trophy and start building your first
 
 <Tabs>
   <Tab title="Using AI" icon="bot">
-    These instructions are for those who prefer to develop using coding agents like Cursor and Claude Code.
+    These instructions are for using Trophy with AI assistants that support MCP — for example Claude, ChatGPT, Cursor, or Claude Code.
 
     <Steps>
       <Step title="Create your Trophy account">
-        First, [create a new account](https://app.trophy.so/sign-up?utm_source=docs&utm_medium=quickstart) if you don't already have one and head into the [Trophy dashboard](https://app.trophy.so).
-
-        Head through onboarding to get your account set up.
+        First, [create a new account](https://app.trophy.so/sign-up?utm_source=docs&utm_medium=quickstart) if you don't have one already. Complete onboarding to get your account set up.
       </Step>
 
-      <Step title="Configure MCP servers">
-        For the best AI setup experience, connect Trophy through MCP:
+      <Step title="Connect Trophy MCP servers">
+        Connect both Trophy MCP servers in your AI client for the best experience:
 
         - Docs MCP server URL: `https://docs.trophy.so/mcp` (live documentation context)
-        - Account MCP server URL: `https://mcp.trophy.so` (account actions — see [MCP](/mcp/overview); requires `x-trophy-api-key`)
+        - Account MCP server URL: `https://mcp.trophy.so/mcp` (account actions — OAuth sign-in required)
+
+        Setup guides: [Docs MCP installation](/mcp/docs-mcp-server/installation), [Account MCP installation](/mcp/account-mcp-server/installation).
 
         <Tip>
           Use the [Docs MCP](/mcp/docs-mcp-server/introduction) as on-demand docs context and the [Account MCP](/mcp/account-mcp-server/introduction) for account changes. Use both for [best practice](/mcp/best-practice).
         </Tip>
 
       </Step>
-      <Step title="Tell your agent to perform initial setup">
-        Here's a prompt you can use with your coding agent to perform initial Trophy setup:
+      <Step title="Ask your AI to perform initial setup">
+        Here's a prompt you can use with your AI assistant to perform initial Trophy setup:
 
         <Prompt
           description="Perform initial Trophy setup"
@@ -49,65 +49,102 @@ Here you'll integrate your application with Trophy and start building your first
           Before making changes, verify the connected Trophy MCP Servers are available. Use the Docs MCP server as the primary source of truth for Trophy integration details, and the Account MCP server to configure my account.
 
           Please do the full initial setup end-to-end:
-          1. Detect the backend language/framework in this repo and install the relevant official Trophy SDK (or use HTTP calls if no SDK is available).
-          2. Add `TROPHY_API_KEY` to environment config in a secure way (no secrets committed to git), and wire it into the Trophy client initialization.
-          3. Add code to track a metric change event for the metric `<metric>` using the Trophy API client, wiring all required user attributes like ID, and using placeholders for all optional attributes like name, email, tz and signUpDate.
-          4. Add basic error handling and logging around Trophy API calls.
+          1. Detect the backend language/framework in this repo and install the relevant official Trophy SDK (or use HTTP calls if no SDK is available). Report to Trophy support if no SDK is available.
+          2. Add `TROPHY_API_KEY` to environment config in a secure way (no secrets committed to git), and wire it into the Trophy SDK client initialization.
+          3. Add code to set up metric event tracking for the chosen user activity (ask if not known yet) using the Trophy SDK client, wiring all required user attributes like ID, and using placeholders for all optional attributes like name, email, tz and signUpDate, unless already known or required by the use case.
+          4. Add basic error handling and logging around Trophy SDK calls.
           5. Add or update a short README section explaining how the integration works and how to extend it.
 
           Constraints:
-          - Use Docs MCP tool results for all Trophy-specific implementation decisions.
-          - Do not rely on prior memory for Trophy API behavior when MCP provides an answer.
+          - Use Docs MCP tool results for all Trophy-specific implementation decisions and integrations.
+          - Do not rely on prior memory for Trophy SDK behavior when MCP provides an answer.
           - Keep secrets out of source control.
           - Use existing project patterns and naming conventions.
-          - Show me a concise summary of changed files and how to test the setup.
-          - Suggest next steps based on the gamification features Trophy supports.
+          - Show a concise summary of changed files and how to test the setup.
+          - Suggest next steps based on the gamification features Trophy supports and the use case.
         </Prompt>
-
-        <Note>
-          Make sure to replace `<metric>` with the metric you set up during onboarding.
-        </Note>
 
         This will:
 
         1. Add the relevant [Trophy SDK](/api-reference/client-libraries) to your app based on your tech stack
         2. Add a new `TROPHY_API_KEY` variable to your environment settings
-        3. Add code to send events to Trophy based on the metric you set up during onboarding.
-      </Step>
-      <Step title="Grab your API key">
-        Once the set up is complete, [create an API key](https://app.trophy.so/integration) from the integration page of the Trophy dashboard and add it to your environment.
+        3. Add code to track metric events for the chosen user activity using the Trophy SDK client - required for all gamification features.
       </Step>
       <Step title="Build your first gamification feature">
-        Once initial setup is complete, use this follow-up prompt to prepare your agent for the next step and have it ask you what to build next:
+        Once initial setup is complete, pick a common use case and paste the matching prompt into your AI assistant:
 
         <Prompt
-          description="Build your first gamification feature"
+          description="Daily streak"
           icon="paperclip"
           iconType="solid"
           actions={["copy", "cursor"]}
         >
-          Prepare to continue my Trophy integration from the existing setup.
+          Build a daily streak feature with Trophy.
 
-          First, verify the connected Trophy Docs MCP server is available and use it as the source of truth for feature-specific integration details.
+          Use the Docs MCP as the source of truth for how streaks work, and the Account MCP to configure my account.
 
-          Before implementing anything, ask me which gamification feature I want to build, providing options based on what the Docs MCP says Trophy supports.
-
-          After I choose one option:
-          1. Configure the selected feature in the way I describe using the Account MCP server.
-          1. Implement only that selected feature using the relevant Trophy APIs and existing project patterns.
-          2. Add the required server-side calls/endpoints/actions that use Trophy APIs and a minimal UI or API response surface.
-          3. Document any new env vars, routes, and usage steps.
-
-          If I ask for a feature Trophy does not support, do not implement a workaround.
-          Instead, tell me it's not currently supported and ask me to contact Trophy support at support@trophy.so to submit a feature request.
-
-          Keep changes production-minded:
-          - Follow existing architecture and naming conventions.
-          - Handle API failures gracefully.
-          - Return a clear list of changed files and manual verification steps.
+          Goals:
+          1. Drive the streak from a core user activity already tracked (or that we should track) as a Trophy metric.
+          2. Ensure every user identify/upsert and metric event includes the user's `tz` attribute (IANA timezone). This is required for streaks to evaluate calendar days correctly for each user.
+          3. Configure the streak featuer in Trophy using a sensible threshold for the chosen metric.
+          4. Enable streak freezes and streak pauses if they fit this product; otherwise omit them and say why.
+          5. Wire any app-side reads or UI needed to show the user's current streak, freezes, and pause state.
+          6. Summarize what was configured, what code changed, and how to verify the streak end to end. Explicitly explain back why sending `tz` matters for a functioning streak feature.
         </Prompt>
 
-        For ideas on what to build next, explore:
+        <Prompt
+          description="Achievements library"
+          icon="paperclip"
+          iconType="solid"
+          actions={["copy", "cursor"]}
+        >
+          Build an achievements library with Trophy.
+
+          Use the Docs MCP as the source of truth for achievement types and triggers, and the Account MCP to configure my account.
+
+          Goals:
+          1. Create a set of achievements tied to core user actions tracked as Trophy metric events.
+          2. Add any one-time API-triggered achievements (and other achievement types) that fit the product.
+          3. Wire app-side handling for unlocks and a minimal way to list completed vs incomplete achievements.
+          4. Summarize what was configured, what code changed, and how to verify unlocks end to end.
+        </Prompt>
+
+        <Prompt
+          description="XP system"
+          icon="paperclip"
+          iconType="solid"
+          actions={["copy", "cursor"]}
+        >
+          Build an XP points system with Trophy.
+
+          Use the Docs MCP as the source of truth for points systems, triggers, and levels, and the Account MCP to configure my account.
+
+          Goals:
+          1. Create a points system that awards XP for a few key user actions tracked as Trophy metrics.
+          2. Configure triggers in the points system to award XP for the chosen user actions.
+          3. Configure levels and boosts if relevant for the use case.
+          4. Wire app-side reads or UI needed to show the user's XP total and level progress.
+          5. Summarize what was configured, what code changed, and how to verify points awards end to end.
+        </Prompt>
+
+        <Prompt
+          description="Weekly leaderboard"
+          icon="paperclip"
+          iconType="solid"
+          actions={["copy", "cursor"]}
+        >
+          Build a repeating weekly leaderboard with Trophy.
+
+          Use the Docs MCP as the source of truth for leaderboards, and the Account MCP to configure my account.
+
+          Goals:
+          1. Create a weekly recurring leaderboard driven by a core user action tracked as a Trophy metric.
+          2. Configure ranking logic based on the chosen metric and configure the weekly reset schedule for the leaderboard.
+          3. Wire app-side reads or UI needed to show rankings for the current week and the current user's place.
+          4. Summarize what was configured, what code changed, and how to verify rankings end to end.
+        </Prompt>
+
+        For more ideas on what to build next, explore:
 
         <CardGroup>
           <Card title="Achievements" icon="trophy" href="/features/achievements">
@@ -146,13 +183,11 @@ Here you'll integrate your application with Trophy and start building your first
             Drive automated notification flows using personalized gamification data.
           </Card>
         </CardGroup>
-
-        Or, explore our [API reference](/api-reference/introduction) to get familiar with what Trophy can do.
       </Step>
     </Steps>
   </Tab>
   <Tab title="Manual" icon="user">
-    These instructions are for those who want to implement Trophy by hand. If instead you prefer to use coding agents, switch tabs above.
+    These instructions are for those who want to implement Trophy by hand. If instead you prefer to use AI, switch tabs above.
     
     <Steps>
       <Step title="Create your Trophy account">
