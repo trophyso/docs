@@ -1,6 +1,6 @@
 ---
 title: Installation
-description: Install the Account MCP Server in Claude Code, Cursor, VS Code, and other MCP clients.
+description: Install the Account MCP Server in Claude, Claude Code, Cursor, ChatGPT, VS Code, and other MCP clients.
 subtitle: Connect the remote Account MCP Server to your coding agent.
 icon: download
 ---
@@ -9,45 +9,36 @@ icon: download
   You need a [Trophy account](https://app.trophy.so/sign-up) to use the Trophy Account MCP Server.
 </Note>
 
-The Trophy Account MCP Server is a remote HTTP MCP server. You point your client at the URL below using your [Admin API key](/admin-api/authentication) and your agent can start using the tools.
+The Trophy Account MCP Server is a remote HTTP MCP server. Point your client at the URL below, complete OAuth sign-in with your Trophy account when prompted, and your agent can start using the tools.
 
 ```bash Server URL
-https://mcp.trophy.so
+https://mcp.trophy.so/mcp
 ```
+
+No API keys are required. Authentication uses OAuth: your MCP client opens a browser so you can sign in to Trophy and authorize access for the organization you select.
 
 ## Install in Your Client {#install-in-your-client}
 
 Name this server clearly (for example `Trophy Account`) so it does not collide with the [Docs MCP Server](/mcp/docs-mcp-server/installation).
 
-<Note>
-  Replace `YOUR_ADMIN_API_KEY` with an API key from the [integrations page](https://app.trophy.so/integration) of the Trophy dashboard.
-</Note>
-
 <Tabs>
+  <Tab title="Claude">
+    1. Open [Claude Connectors](https://claude.ai/new#settings/customize-connectors).
+    2. Select **Add > Add custom connector**.
+    3. Add:
+       - Name: `Trophy Account`
+       - URL: `https://mcp.trophy.so/mcp`
+    4. Complete the OAuth login when prompted and select your Trophy organization.
+    5. In chat, use the plus button to enable the Trophy Account connecto or type 'Using the Trophy Account MCP Server...'.
+  </Tab>
   <Tab title="Claude Code">
-    Add the remote server with a `headers` entry for the API key:
+    Add the remote server:
 
     ```bash
-    claude mcp add-json "Trophy Account" '{
-      "type": "http",
-      "url": "https://mcp.trophy.so",
-      "headers": {
-        "x-trophy-api-key": "YOUR_ADMIN_API_KEY"
-      }
-    }'
+    claude mcp add --transport http "Trophy Account" https://mcp.trophy.so/mcp
     ```
 
-    To pull the key from the environment instead of inlining it:
-
-    ```bash
-    claude mcp add-json "Trophy Account" "{
-      \"type\": \"http\",
-      \"url\": \"https://mcp.trophy.so\",
-      \"headers\": {
-        \"x-trophy-api-key\": \"${TROPHY_API_KEY}\"
-      }
-    }"
-    ```
+    On first use, Claude Code opens a browser window to complete OAuth login. Sign in to Trophy, select your organization, and authorize access.
 
     Verify it appears in your list:
 
@@ -62,31 +53,25 @@ Name this server clearly (for example `Trophy Account`) so it does not collide w
     {
       "mcpServers": {
         "Trophy Account": {
-          "url": "https://mcp.trophy.so",
-          "headers": {
-            "x-trophy-api-key": "YOUR_ADMIN_API_KEY"
-          }
+          "url": "https://mcp.trophy.so/mcp"
         }
       }
     }
     ```
 
-    If you prefer not to store the key in the file, use Cursor’s env substitution where available:
+    Reload Cursor if needed, then complete the OAuth login when prompted.
+  </Tab>
+  <Tab title="ChatGPT">
+    Custom MCP apps require a paid ChatGPT plan (Plus, Pro, Business, Enterprise, or Edu) with [Developer mode](https://platform.openai.com/docs/guides/developer-mode) enabled.
 
-    ```json
-    {
-      "mcpServers": {
-        "Trophy Account": {
-          "url": "https://mcp.trophy.so",
-          "headers": {
-            "x-trophy-api-key": "${env:TROPHY_API_KEY}"
-          }
-        }
-      }
-    }
-    ```
-
-    Restart Cursor if needed so the server and headers load.
+    1. In ChatGPT, open **Settings → Security and login** and turn on **Developer mode**.
+    2. In a chat, open the plus menu and create a developer-mode app for your remote MCP server.
+    3. Add:
+       - Name: `Trophy Account`
+       - URL: `https://mcp.trophy.so/mcp`
+       - Authentication: **OAuth**
+    4. Complete the OAuth login when prompted. Sign in to Trophy and select your organization.
+    5. In chat, choose **Developer mode** from the plus menu and select the Trophy Account app so ChatGPT can call its tools.
   </Tab>
   <Tab title="VS Code">
     Create or update `.vscode/mcp.json` in your workspace:
@@ -96,34 +81,25 @@ Name this server clearly (for example `Trophy Account`) so it does not collide w
       "servers": {
         "Trophy Account": {
           "type": "http",
-          "url": "https://mcp.trophy.so",
-          "headers": {
-            "x-trophy-api-key": "YOUR_ADMIN_API_KEY"
-          }
+          "url": "https://mcp.trophy.so/mcp"
         }
       }
     }
     ```
 
-    Reload VS Code and enable the server.
+    Reload VS Code, enable the server, and complete the OAuth login when prompted.
   </Tab>
   <Tab title="Other clients">
-    Any MCP client that supports remote HTTP servers and a `headers` config can connect.
+    Any MCP client that supports remote HTTP servers and OAuth can connect.
 
     Use:
 
     - **Transport:** HTTP (streamable HTTP)
-    - **URL:** `https://mcp.trophy.so`
+    - **URL:** `https://mcp.trophy.so/mcp`
     - **Name:** `Trophy Account` (or any label you prefer)
-    - **headers:**
+    - **Auth:** OAuth (browser login to your Trophy account; no `headers` or API key)
 
-    ```json
-    {
-      "headers": {
-        "x-trophy-api-key": "YOUR_ADMIN_API_KEY"
-      }
-    }
-    ```
+    After adding the server, complete the OAuth flow and enable the server in the client UI if required.
   </Tab>
 </Tabs>
 
@@ -135,13 +111,7 @@ Ask your agent something that requires a live account call, for example:
 List the metrics in my Trophy account.
 ```
 
-If authentication succeeded, you should get metrics from your organization. If you get an auth or unauthorized error, confirm the key is valid and that your client’s config includes:
-
-```json
-"headers": {
-  "x-trophy-api-key": "YOUR_ADMIN_API_KEY"
-}
-```
+If authentication succeeded, you should get metrics from your organization. If you get an auth or unauthorized error, reconnect the server and complete the OAuth login again, making sure you select the correct Trophy organization.
 
 ## Next Steps {#next-steps}
 

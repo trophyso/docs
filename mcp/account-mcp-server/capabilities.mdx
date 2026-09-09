@@ -168,7 +168,9 @@ Update our brand color to #0F766E and set the aggregation period to weekly.
 
 ## Scope and Safety {#scope-and-safety}
 
-- Tools will only act on the Trophy [environment](/platform/environments) tied to the API key you pass in `x-trophy-api-key`.
+- Access is scoped to the Trophy organization you authorize during OAuth.
+- Tools act on a specific [environment](/platform/environments). If the account has only one, tool calls default to it (normally `production`). If there are multiple, pass the `environment` key you want—or use `read_environments` to list them and choose.
+- When [multi-tenancy](/platform/multi-tenancy) is enabled, tools can also be scoped to a [tenant](/platform/multi-tenancy). If there is only one active tenant, tool calls can default to it. If there are multiple, pass the `tenant` id you want, or use `read_tenants` to list them and choose.
 - Write tools can change live configuration. Prefer a staging or sandbox [environment](/platform/environments) when iterating.
 - Most tools cannot delete resources. The exception is `delete_streak_pauses`, which removes streak pauses by ID.
 
