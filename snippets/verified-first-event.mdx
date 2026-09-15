@@ -1,0 +1,182 @@
+{/* vale off */}
+
+<CodeGroup>
+```bash cURL
+curl -X POST https://api.trophy.so/v1/metrics/flashcards-flipped/event \
+     -H "X-API-KEY: $TROPHY_API_KEY" \
+     -H "Idempotency-Key: flashcard-view-42" \
+     -H "Content-Type: application/json" \
+     -d '{
+  "user": {
+    "id": "18",
+    "email": "user@example.com",
+    "tz": "Europe/London"
+  },
+  "value": 1
+}'
+```
+
+```typescript Node
+import { TrophyApiClient } from "@trophyso/node";
+import type { EventResponse } from "@trophyso/node/api";
+
+const trophy = new TrophyApiClient({
+  apiKey: process.env.TROPHY_API_KEY as string,
+});
+
+// user.id is required. email and tz are optional but recommended
+// (tz is required for correct streak calendar days).
+const response: EventResponse = await trophy.metrics.event(
+  "flashcards-flipped",
+  {
+    user: {
+      id: "18",
+      email: "user@example.com",
+      tz: "Europe/London",
+    },
+    value: 1,
+    // Protects against duplicate events from the same flashcard
+    idempotencyKey: "flashcard-view-42",
+  }
+);
+```
+
+```python Python
+from trophy import Trophy
+from trophy.types import EventRequestUser
+
+client = Trophy(
+    api_key=os.environ.get("TROPHY_API_KEY"),
+)
+
+# user.id is required. email and tz are optional but recommended
+# (tz is required for correct streak calendar days).
+response = client.metrics.event(
+    key="flashcards-flipped",
+    user=EventRequestUser(
+        id="18",
+        email="user@example.com",
+        tz="Europe/London",
+    ),
+    value=1.0,
+    idempotencyKey="flashcard-view-42", # Protects against duplicate events from the same flashcard
+)
+```
+
+```php PHP
+use Trophy\TrophyClient;
+use Trophy\Types\EventRequestUser;
+use Trophy\Types\MetricsEventRequest;
+
+$trophy = new TrophyClient([
+    'apiKey' => getenv('TROPHY_API_KEY')
+]);
+
+// user.id is required. email and tz are optional but recommended
+// (tz is required for correct streak calendar days).
+$user = new EventRequestUser([
+    'id' => '18',
+    'email' => 'user@example.com',
+    'tz' => 'Europe/London',
+]);
+
+$request = new MetricsEventRequest([
+    'user' => $user,
+    'value' => 1,
+    // Protects against duplicate events from the same flashcard
+    'idempotencyKey' => 'flashcard-view-42',
+]);
+
+$response = $trophy->metrics->event("flashcards-flipped", $request);
+```
+
+```java Java
+TrophyApiClient client = TrophyApiClient.builder()
+    .apiKey(System.getenv("TROPHY_API_KEY"))
+    .build();
+
+// user.id is required. email and tz are optional but recommended
+// (tz is required for correct streak calendar days).
+MetricsEventRequest request = MetricsEventRequest.builder()
+      .user(
+        EventRequestUser.builder()
+          .id("18")
+          .email("user@example.com")
+          .tz("Europe/London")
+          .build()
+      )
+      .value(1)
+      // Protects against duplicate events from the same flashcard
+      .idempotencyKey("flashcard-view-42")
+      .build();
+
+EventResponse response = client.metrics().event("flashcards-flipped", request);
+```
+
+```go Go
+client, err := trophy.NewClient(
+    option.WithAPIKey(os.Getenv("TROPHY_API_KEY")),
+)
+if err != nil {
+    log.Fatal(err)
+}
+
+// user.id is required. email and tz are optional but recommended
+// (tz is required for correct streak calendar days).
+response, err := client.Metrics.Event(
+    "flashcards-flipped",
+    &api.MetricsEventRequest{
+        User: &api.EventRequestUser{
+            Id: "18",
+            Email: "user@example.com",
+            Tz: "Europe/London",
+        },
+        Value: 1,
+        // Protects against duplicate events from the same flashcard
+        IdempotencyKey: "flashcard-view-42",
+    },
+)
+```
+
+```csharp C#
+var trophy = new TrophyClient(
+    Environment.GetEnvironmentVariable("TROPHY_API_KEY")
+);
+
+// user.id is required. email and tz are optional but recommended
+// (tz is required for correct streak calendar days).
+var user = new EventRequestUser {
+   Id = "18",
+   Email = "user@example.com",
+   Tz = "Europe/London"
+};
+
+var request = new MetricsEventRequest {
+   User = user,
+   Value = 1,
+   // Protects against duplicate events from the same flashcard
+   IdempotencyKey = "flashcard-view-42"
+};
+
+var response = await trophy.Metrics.EventAsync("flashcards-flipped", request);
+```
+
+```ruby Ruby
+client = TrophyApiClient::Client.new(
+  :api_key => ENV["TROPHY_API_KEY"]
+)
+
+# user.id is required. email and tz are optional but recommended
+# (tz is required for correct streak calendar days).
+result = client.metrics.event(
+  :key => 'flashcards-flipped',
+  :user => {
+    :id => '18',
+    :email => 'user@example.com',
+    :tz => 'Europe/London'
+  },
+  :value => 1,
+  :idempotencyKey => 'flashcard-view-42' # Protects against duplicate events from the same flashcard
+)
+```
+</CodeGroup>

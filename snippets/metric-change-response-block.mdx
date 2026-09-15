@@ -13,7 +13,9 @@
       "metricName": "Flashcards Flipped",
       "metricValue": 500,
       "name": "500 Flashcards Flipped",
-      "description": "Write 500 words in the app.",
+      "description": "Flip 500 flashcards in the app.",
+      "badgeUrl": null,
+      "userAttributes": [],
       "achievedAt": "2020-01-01T00:00:00Z"
     }
   ],
@@ -23,7 +25,8 @@
     "started": "2025-04-02",
     "periodStart": "2025-03-31",
     "periodEnd": "2025-04-05",
-    "expires": "2025-04-12"
+    "expires": "2025-04-12",
+    "extended": true
   },
   "points": {
     "xp": {
@@ -54,7 +57,11 @@
             "type": "metric",
             "metricName": "Flashcards Flipped",
             "metricThreshold": 100,
-            "points": 10
+            "points": 10,
+            "status": "active",
+            "userAttributes": [],
+            "created": "2021-01-01T00:00:00Z",
+            "updated": "2021-01-01T00:00:00Z"
           }
         }
       ]
@@ -66,18 +73,24 @@
       "key": "daily_champions",
       "name": "Daily Champions",
       "description": null,
+      "status": "active",
       "rankBy": "metric",
-      "runUnit": null,
-      "runInterval": 0,
+      "runUnit": "day",
+      "runInterval": 1,
       "maxParticipants": 100,
+      "breakdownAttributes": [],
       "metricName": "Flashcards Flipped",
       "metricKey": "flashcards-flipped",
       "threshold": 10,
       "start": "2025-01-01",
       "end": null,
+      "startTime": null,
+      "endTime": null,
       "previousRank": 50,
       "rank": 12
     }
-  }
+  },
+  "idempotencyKey": "flashcard-view-42",
+  "idempotentReplayed": false
 }
 ```

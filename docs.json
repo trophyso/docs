@@ -81,7 +81,8 @@
                 "group": "Getting Started",
                 "pages": [
                   "getting-started/introduction",
-                  "getting-started/quickstart"
+                  "getting-started/quickstart",
+                  "getting-started/production-checklist"
                 ]
               },
               {
@@ -155,6 +156,7 @@
                   "api-reference/authentication",
                   "api-reference/rate-limiting",
                   "api-reference/idempotency",
+                  "api-reference/errors",
                   "api-reference/client-libraries"
                 ]
               },
@@ -488,7 +490,8 @@
                 "group": "Primeros pasos",
                 "pages": [
                   "es/getting-started/introduction",
-                  "es/getting-started/quickstart"
+                  "es/getting-started/quickstart",
+                  "es/getting-started/production-checklist"
                 ]
               },
               {
@@ -562,6 +565,7 @@
                   "es/api-reference/authentication",
                   "es/api-reference/rate-limiting",
                   "es/api-reference/idempotency",
+                  "es/api-reference/errors",
                   "es/api-reference/client-libraries"
                 ]
               },
