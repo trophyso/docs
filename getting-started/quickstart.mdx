@@ -1,17 +1,16 @@
 ---
 title: Quick Start
-description: Get up and running with Trophy in under 10 minutes
-og:description: Follow this quick start guide to integrate Trophy into your
-  backend and add gamified features like achievements and streaks into your app.
+description: Install a Trophy SDK, authenticate, identify a user, and submit your first metric event in about five minutes.
+og:description: Install a Trophy SDK, authenticate, identify a user, and submit your first metric event in about five minutes.
 ---
 
 import SdkInstallCommand from "../snippets/sdk-install-command.mdx";
 import AddEnvVarBlock from "../snippets/add-env-var-block.mdx";
 import TrophyClientInitBlock from "../snippets/trophy-client-init-block.mdx";
-import MetricChangeRequestBlock from "../snippets/metric-change-request-block.mdx";
 import MetricChangeResponseBlock from "../snippets/metric-change-response-block.mdx";
+import VerifiedFirstEvent from "../snippets/verified-first-event.mdx";
 
-Here you'll integrate your application with Trophy and start building your first gamified feature.
+Here you'll integrate your application with Trophy and start building your first gamified feature in about five minutes.
 
 <Tabs>
   <Tab title="Using AI" icon="bot">
@@ -252,9 +251,13 @@ Here you'll integrate your application with Trophy and start building your first
 
         To track an event against this metric when a user interacts with your product, call the [metric change event API](/api-reference/endpoints/events/submit-a-metric-event), passing along details of the user that made the interaction. In this example the metric key would be `flashcards-flipped`:
 
-        <MetricChangeRequestBlock />
+        <VerifiedFirstEvent />
 
         By making this call, you're telling Trophy that a specific user made an interaction with your product. As a result, Trophy will process any gamification features like achievements or streaks that you've configured against the metric automatically.
+        
+        Use the response to react to changes in the user's gamification state and power UI elements:
+
+        <MetricChangeResponseBlock />
 
       </Step>
       <Step title="Continue building your gamification experience">

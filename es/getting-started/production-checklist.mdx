@@ -1,0 +1,74 @@
+---
+title: Lista de verificación de producción
+description: Idempotencia, reintentos, errores, límites de velocidad, webhooks y
+  configuración de entorno para integraciones de Trophy en producción.
+og:description: Idempotencia, reintentos, errores, límites de velocidad,
+  webhooks y configuración de entorno para integraciones de Trophy en
+  producción.
+---
+
+Antes de implementar tu integración de Trophy en producción, revisa los siguientes pasos recomendados:
+
+<Steps>
+  <Step title="Implementar idempotencia" titleSize="h2" id="idempotency">
+    Protege las escrituras de métricas para que los reintentos y envíos duplicados no dupliquen el conteo de progreso o premios.
+
+    <Card title="Idempotencia" icon="repeat" href="/es/api-reference/idempotency">
+      Más información sobre idempotencia y cómo usarla en tu integración.
+    </Card>
+  </Step>
+
+  <Step title="Manejar reintentos" titleSize="h2" id="retries">
+    Maneja fallos transitorios al llamar a Trophy y comprende cómo Trophy reintenta la entrega de webhooks a tus endpoints.
+
+    <CardGroup cols={2}>
+      <Card title="Guía de reintentos del cliente" icon="refresh-ccw" href="/es/api-reference/errors#retry-guidance">
+        Cuándo es seguro reintentar llamadas a la API y cuándo no.
+      </Card>
+      <Card title="Reintentos de webhooks" icon="webhook" href="/es/webhooks/retries">
+        Cómo Trophy reintenta entregas fallidas a tus endpoints de webhook.
+      </Card>
+    </CardGroup>
+  </Step>
+
+  <Step title="Manejar errores" titleSize="h2" id="errors">
+    Comprende los diferentes tipos de errores que emite Trophy y cómo manejarlos en tu integración.
+
+    <Card title="Errores" icon="circle-exclamation" href="/es/api-reference/errors">
+      Códigos de estado HTTP comunes emitidos por la API de Trophy.
+    </Card>
+  </Step>
+
+  <Step title="Comprender los límites de velocidad" titleSize="h2" id="rate-limits">
+    Trophy utiliza límites de velocidad con alcance a nivel de organización para prevenir el abuso y garantizar un uso justo. Comprende cómo mantenerte dentro de ellos y cómo manejar la limitación.
+
+    <Card title="Límite de solicitudes" icon="circle-gauge" href="/es/api-reference/rate-limiting">
+      El modelo de límite de solicitudes escalonado de Trophy y cómo funciona.
+    </Card>
+  </Step>
+
+  <Step title="Asegurar webhooks" titleSize="h2" id="webhooks">
+    Si consumes eventos de Trophy en producción mediante webhooks, asegúrate de configurar la verificación de firmas para prevenir la suplantación.
+
+    <CardGroup cols={2}>
+      <Card title="Descripción general de webhooks" icon="webhook" href="/es/webhooks/introduction">
+        Qué cubren los webhooks de Trophy y cuándo usarlos.
+      </Card>
+      <Card title="Seguridad" icon="shield" href="/es/webhooks/security">
+        Verifica las firmas de webhooks en producción.
+      </Card>
+    </CardGroup>
+  </Step>
+
+  <Step title="Usa entornos" titleSize="h2" id="environments">
+    Aísla la configuración y el tráfico de desarrollo, staging y producción para que el trabajo no productivo no afecte a los usuarios en vivo.
+
+    <Card title="Entornos" icon="layers" href="/es/platform/environments">
+      Entornos de producción, staging y desarrollo en Trophy.
+    </Card>
+  </Step>
+</Steps>
+
+## Obtén soporte {#get-support}
+
+¿Quieres contactar con el equipo de Trophy? Comunícate con nosotros por [correo electrónico](mailto:support@trophy.so). ¡Estamos aquí para ayudarte!

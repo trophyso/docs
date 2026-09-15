@@ -1,46 +1,152 @@
 ---
 title: Bienvenido a Trophy
-description: Documentación de Trophy para APIs de gamificación, guías de inicio
-  rápido y tutoriales.
+description: Trophy es la capa de gamificación para aplicaciones de consumo.
+  Crea puntos, logros, rachas y clasificaciones en minutos con las API y SDK
+  prediseñadas de Trophy.
+og:description: Trophy es la capa de gamificación para aplicaciones de consumo.
+  Crea puntos, logros, rachas y clasificaciones en minutos con las API y SDK
+  prediseñadas de Trophy.
 ---
 
-Trophy es un conjunto de herramientas fácil de usar para desarrolladores que permite crear experiencias de producto gamificadas en cualquier aplicación móvil o web.
+import SdkInstallCommand from "../../snippets/sdk-install-command.mdx";
+import VerifiedFirstEvent from "../../snippets/verified-first-event.mdx";
+import MetricChangeResponseBlock from "../../snippets/metric-change-response-block.mdx";
 
-Facilita la creación de funciones como [Logros](/es/features/achievements), [Rachas](/es/features/streaks), [Puntos](/es/features/points) y [Clasificaciones](/es/features/leaderboards) con solo unas pocas líneas de código, y puede enviar [correos electrónicos](/es/features/emails) y [Notificaciones push](/es/features/push-notifications) gamificados para aumentar tu retención y engagement.
+Trophy es la capa de gamificación para aplicaciones de consumo. Crea puntos, logros, rachas y clasificaciones en minutos con las API y SDK prediseñadas de Trophy.
 
-<CardGroup>
-  <Card title="Conceptos de Trophy" icon="book-open" href="/es/features">
-    Familiarízate con el modelo mental de gamificación en Trophy.
+## Primeros pasos {#getting-started}
+
+Instala un SDK de Trophy para rastrear la actividad de los usuarios y potenciar puntos, logros, rachas y clasificaciones en tu aplicación.
+
+<SdkInstallCommand />
+
+<CardGroup cols={3}>
+  <Card title="Inicio rápido" icon="circle-play" href="/es/getting-started/quickstart">
+    Configura una cuenta de Trophy y crea tu primera funcionalidad en cinco minutos.
+  </Card>
+  <Card title="Usa la API REST" icon="code" href="/es/api-reference/introduction">
+    Aprende a usar la API REST para integrar Trophy en tu aplicación.
   </Card>
   <Card
-    title="Inicio rápido"
-    icon="circle-play"
-    href="/es/getting-started/quickstart"
+    title="Ver un ejemplo completo"
+    icon="github"
+    href="https://github.com/trophyso/example-study-platform/tree/demo"
   >
-    Integra Trophy en tu backend en menos de 10 minutos.
-  </Card>
-  <Card title="Guías" icon="rocket" href="/es/guides">
-    Usa Trophy para crear soluciones prácticas a casos de uso comunes de gamificación.
-  </Card>
-  <Card title="Referencia del API" icon="code" href="/es/api-reference">
-    Explora el API de Trophy y descubre lo que es posible.
+    Aplicación de ejemplo completa con un stack de gamificación completo usando Trophy.
   </Card>
 </CardGroup>
 
-## Por qué Trophy {#why-trophy}
+## Uso de agentes de IA {#using-ai-agents}
 
-<Frame>
-  <img height="200" width="100%" noZoom src="https://trophy.so/opengraph-image" />
-</Frame>
+Conecta los servidores MCP de Trophy para que los agentes puedan leer documentación en tiempo real y configurar tu cuenta durante la integración.
 
-Si tu objetivo es que tus usuarios creen un hábito regular de usar tu aplicación —para aprender algo, publicar contenido o incluso hacer ejercicio— la gamificación podría ser para ti.
+<Tip>
+Se recomienda usar los servidores MCP de Trophy para una experiencia de configuración y desarrollo más rápida.
+</Tip>
 
-Ha sido comprobado por Duolingo y otros que la gamificación aumenta predeciblemente la retención e incrementa el engagement en la plataforma.
+<CardGroup cols={3}>
+  <Card title="MCP de documentación" icon="book-open" href="/es/mcp/docs-mcp-server/introduction">
+    Búsqueda de documentación en tiempo real para agentes de IA.
+  </Card>
+  <Card title="MCP de cuenta" icon="cog" href="/es/mcp/account-mcp-server/introduction">
+    Configura tu cuenta de Trophy usando agentes de IA.
+  </Card>
+  <Card title="Mejores prácticas" icon="circle-check" href="/es/mcp/best-practice">
+    Configuración recomendada para usar ambos servidores MCP juntos.
+  </Card>
+</CardGroup>
 
-Pero construir gamificación a escala puede ser complicado. Tienes una base de usuarios global, todos en diferentes zonas horarias, todos con diferentes patrones de uso que necesitan ser medidos y optimizados en tiempo real. Además, quieres ejecutar experimentos para probar diferentes enfoques y ver cómo impactan la retención, pero esto requiere cambios constantes en el código, lo que retrasa el trabajo en tu producto principal.
+## Envía tu primer evento {#send-your-first-event}
 
-Trophy elimina el trabajo pesado involucrado en crear funciones como logros, rachas, sistemas de puntos y clasificaciones, al mismo tiempo que proporciona APIs confiables y escalables para lanzar experiencias de gamificación más rápido que construyéndolas internamente. Además, ofrece una plataforma web para configurar, medir y experimentar fácilmente con la experiencia del producto sin cambios constantes en el código.
+Todas las funciones de gamificación están impulsadas por [eventos de métricas](/es/features/events). Aquí te mostramos cómo enviar tu primer evento usando un SDK de Trophy:
 
-## Obtener soporte {#get-support}
+<VerifiedFirstEvent />
 
-¿Quieres ponerte en contacto con el equipo de Trophy? Escríbenos por [correo electrónico](mailto:support@trophy.so). ¡Estamos aquí para ayudarte!
+La respuesta incluye los cambios en el estado de gamificación como resultado del evento, incluyendo:
+- El nuevo valor total de la métrica del usuario
+- Cualquier logro desbloqueado recientemente
+- Nuevos totales de Puntos y recompensas
+- Un objeto de Racha actualizado
+- Cualquier nueva posición en las Clasificaciones
+
+Usa esta respuesta para reaccionar a los cambios en el estado de gamificación del usuario e impulsar elementos de UI.
+
+<MetricChangeResponseBlock />
+
+## Construye según el caso de uso {#build-by-use-case}
+
+Para obtener más información sobre cómo construir funciones de gamificación comunes usando Trophy, consulta las siguientes guías:
+
+<CardGroup>
+  <Card title="Logros" icon="trophy" href="/es/guides/how-to-build-an-achievements-feature">
+    Desbloquea logros a partir del progreso o acciones únicas.
+  </Card>
+    <Card title="Rachas" icon="flame" href="/es/guides/how-to-build-a-streaks-feature">
+    Impulsa ciclos de hábitos diarios o semanales con detección de zona horaria integrada.
+  </Card>
+  <Card title="Puntos" icon="sparkle" href="/es/guides/how-to-build-an-xp-feature">
+    Otorga puntos desde acciones dentro de la aplicación y configura niveles e impulsos.
+  </Card>
+  <Card
+    title="Clasificaciones"
+    icon={
+      <svg
+        width="20"
+        height="18"
+        viewBox="0 0 20 18"
+        fill="none"
+        xmlns="http://www.w3.org/2000/svg"
+        className="text-primary dark:text-primary-light"
+      >
+        <path
+          d="M2 16H6V8H2V16ZM8 16H12V2H8V16ZM14 16H18V10H14V16ZM0 16V8C0 7.45 0.195833 6.97917 0.5875 6.5875C0.979167 6.19583 1.45 6 2 6H6V2C6 1.45 6.19583 0.979167 6.5875 0.5875C6.97917 0.195833 7.45 0 8 0H12C12.55 0 13.0208 0.195833 13.4125 0.5875C13.8042 0.979167 14 1.45 14 2V8H18C18.55 8 19.0208 8.19583 19.4125 8.5875C19.8042 8.97917 20 9.45 20 10V16C20 16.55 19.8042 17.0208 19.4125 17.4125C19.0208 17.8042 18.55 18 18 18H2C1.45 18 0.979167 17.8042 0.5875 17.4125C0.195833 17.0208 0 16.55 0 16Z"
+          fill="currentColor"
+        />
+      </svg>
+    }
+    href="/es/guides/how-to-build-a-leaderboards-feature"
+  >
+    Crea clasificaciones recurrentes o únicas.
+  </Card>
+  <Card title="Correos electrónicos" icon="mail" href="/es/features/emails">
+    Correos electrónicos del ciclo de vida impulsados por rachas, logros y actividad.
+  </Card>
+  <Card title="Notificaciones push" icon="bell" href="/es/features/push-notifications">
+    Flujos de notificaciones automatizadas usando datos de gamificación.
+  </Card>
+</CardGroup>
+
+## Kit de interfaz de usuario {#ui-kit}
+
+Implementa interfaces de gamificación más rápido con la biblioteca de componentes React de Trophy, construida sobre shadcn/ui y diseñada para trabajar con las estructuras de datos de Trophy.
+
+<Card title="Kit de interfaz de usuario" icon="shapes" href="https://ui.trophy.so">
+  Explora componentes de interfaz preconstruidos para rachas, logros, clasificaciones, puntos y más.
+</Card>
+
+## Lista de verificación de producción {#production-checklist}
+
+Antes de implementar tu integración en producción, revisa los pasos recomendados en la lista de verificación de producción:
+
+<Card title="Lista de verificación de producción" icon="list-check" href="/es/getting-started/production-checklist">
+  Pasos recomendados para asegurar que tu integración esté lista para producción.
+</Card>
+
+## Precios {#pricing}
+
+Trophy mide el uso por **usuarios activos mensuales (MAU)**. Un MAU es un usuario que envía al menos un [evento de métrica](/es/features/events) en un mes calendario determinado. No se te cobra por usuarios abandonados que dejan de enviar eventos.
+
+El nivel gratuito incluye **1,000 MAU**. Los planes de pago comienzan en $25/mes con cargos por excedente.
+
+<CardGroup cols={2}>
+  <Card title="Facturación" icon="gauge" href="/es/account/billing">
+    Nivel gratuito, planes de pago, asignaciones y excedentes.
+  </Card>
+  <Card title="Calculadora de precios" icon="calculator" href="https://trophy.so/pricing">
+    Obtén un estimado de costos mensuales según el uso esperado.
+  </Card>
+</CardGroup>
+
+## Obtén soporte {#get-support}
+
+¿Quieres ponerte en contacto con el equipo de Trophy? Contáctanos por [correo electrónico](mailto:support@trophy.so). ¡Estamos aquí para ayudarte!

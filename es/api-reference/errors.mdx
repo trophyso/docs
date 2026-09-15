@@ -1,0 +1,30 @@
+---
+title: Códigos de error
+description: Códigos de estado HTTP comunes de la API de Trophy.
+og:description: Códigos de estado HTTP comunes de la API de Trophy.
+icon: circle-x
+---
+
+Esta página resume los códigos de estado HTTP que verá con mayor frecuencia al integrar con la API de la aplicación Trophy. Para el comportamiento específico de cada endpoint y los esquemas de respuesta, consulte la [referencia de la API](/es/api-reference/introduction).
+
+## Errores de autenticación {#authentication-errors}
+
+| Estado | Cuándo ocurre | Qué hacer |
+| --- | --- | --- |
+| `401 Unauthorized` | Falta el encabezado `X-API-KEY` o no es válido | Cree o rote una clave de API de aplicación y verifique la configuración de [autenticación](/es/api-reference/authentication)|
+
+## Límite de solicitudes {#rate-limiting}
+
+| Estado | Cuándo ocurre | Qué hacer |
+| --- | --- | --- |
+| `429 Too Many Requests` | Su organización excedió los [Límites de velocidad](/es/api-reference/rate-limiting) del endpoint | Reduzca la frecuencia y reintente; solicite un límite más alto si es necesario |
+
+## Orientación para reintentos {#retry-guidance}
+
+- Reintente `429` y `5xx` con backoff exponencial.
+- Al reintentar, envíe la misma clave de idempotencia para la misma acción lógica para que Trophy no cuente dos veces.
+- No reintente `401` hasta que se corrija la clave de API.
+
+## Obtener soporte {#get-support}
+
+¿Quiere ponerse en contacto con el equipo de Trophy? Comuníquese con nosotros por [correo electrónico](mailto:support@trophy.so). ¡Estamos aquí para ayudar!

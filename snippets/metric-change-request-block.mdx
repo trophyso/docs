@@ -1,7 +1,8 @@
 <CodeGroup>
 ```bash cURL
-curl -X POST https://app.trophy.so/api/metrics/flashcards-flipped/event \
+curl -X POST https://api.trophy.so/v1/metrics/flashcards-flipped/event \
      -H "X-API-KEY: <apiKey>" \
+     -H "Idempotency-Key: flashcard-view-42" \
      -H "Content-Type: application/json" \
      -d '{
   "user": {
@@ -14,14 +15,20 @@ curl -X POST https://app.trophy.so/api/metrics/flashcards-flipped/event \
 ```
 
 ```typescript Node
-trophy.metrics.event("flashcards-flipped", {
-  user: {
-    id: "18",
-    email: "user@example.com",
-    tz: "Europe/London",
-  },
-  value: 750,
-});
+import type { EventResponse } from "@trophyso/node/api";
+
+const response: EventResponse = await trophy.metrics.event(
+  "flashcards-flipped",
+  {
+    user: {
+      id: "18",
+      email: "user@example.com",
+      tz: "Europe/London",
+    },
+    value: 750,
+    idempotencyKey: "flashcard-view-42",
+  }
+);
 ```
 
 ```python Python

@@ -1,44 +1,147 @@
 ---
 title: Welcome to Trophy
-description: Trophy documentation for gamification APIs, quickstart guides and tutorials.
+description: Trophy is the gamification layer for consumer apps. Build points, achievements, streaks, and leaderboards in minutes with Trophy's pre-built APIs and SDKs.
+og:description: Trophy is the gamification layer for consumer apps. Build points, achievements, streaks, and leaderboards in minutes with Trophy's pre-built APIs and SDKs.
 ---
 
-Trophy is a developer-friendly toolkit for building gamified product experiences in any mobile or web app.
+import SdkInstallCommand from "../snippets/sdk-install-command.mdx";
+import VerifiedFirstEvent from "../snippets/verified-first-event.mdx";
+import MetricChangeResponseBlock from "../snippets/metric-change-response-block.mdx";
 
-It makes building features like [Achievements](/features/achievements), [Streaks](/features/streaks), [Points](/features/points) and [Leaderboards](/features/leaderboards) simple with just a few lines of code, and can send gamified [Emails](/features/emails) and [Push Notifications](/features/push-notifications) to increase your retention and engagement.
+Trophy is the gamification layer for consumer apps. Build points, achievements, streaks, and leaderboards in minutes with Trophy’s pre-built APIs and SDKs.
 
-<CardGroup>
-  <Card title="Trophy Concepts" icon="book-open" href="/features">
-    Get familiar with the mental model of gamification in Trophy.
+## Getting started {#getting-started}
+
+Install a Trophy SDK to track user activity and power points, achievements, streaks, and leaderboards in your app.
+
+<SdkInstallCommand />
+
+<CardGroup cols={3}>
+  <Card title="Quick Start" icon="circle-play" href="/getting-started/quickstart">
+    Set up a Trophy account and build your first feature in five minutes.
+  </Card>
+  <Card title="Use the REST API" icon="code" href="/api-reference/introduction">
+    Learn how to use the REST API to integrate Trophy into your application.
   </Card>
   <Card
-    title="Quick Start"
-    icon="circle-play"
-    href="/getting-started/quickstart"
+    title="View a complete example"
+    icon="github"
+    href="https://github.com/trophyso/example-study-platform/tree/demo"
   >
-    Integrate Trophy into your backend in under 10 minutes.
-  </Card>
-  <Card title="Guides" icon="rocket" href="/guides">
-    Use Trophy to build solutions to common gamification use cases.
-  </Card>
-  <Card title="API Reference" icon="code" href="/api-reference">
-    Explore the Trophy API and see what's possible.
+    Full example application with a full gamification stack using Trophy.
   </Card>
 </CardGroup>
 
-## Why Trophy {#why-trophy}
+## Using AI agents {#using-ai-agents}
 
-<Frame>
-  <img height="200" width="100%" noZoom src="https://trophy.so/opengraph-image" />
-</Frame>
+Connect Trophy’s MCP servers so agents can read live docs and configure your account while integrating.
 
-If your goal is for your users to create a regular habit of using your app—to learn something, publish content, or even exercise—gamification could be for you.
+<Tip>
+Using Trophy's MCP servers is recommended for a faster set up and development experience.
+</Tip>
 
-It's been proven by the likes of Duolingo and others to predictably boost retention and increase platform engagement.
+<CardGroup cols={3}>
+  <Card title="Docs MCP" icon="book-open" href="/mcp/docs-mcp-server/introduction">
+    Live documentation search for AI agents.
+  </Card>
+  <Card title="Account MCP" icon="cog" href="/mcp/account-mcp-server/introduction">
+    Configure your Trophy account using AI agents.
+  </Card>
+  <Card title="Best practice" icon="circle-check" href="/mcp/best-practice">
+    Recommended setup for using both MCP servers together.
+  </Card>
+</CardGroup>
 
-But building gamification at scale can be tricky. You have a global userbase, all in different timezones, all with different usage patterns that need to be measured and optimized in realtime. Plus, you want to run experiments to test different approaches and see how they impact retention, but this requires constant code changes, which holds up work on your core product.
+## Send your first event {#send-your-first-event}
 
-Trophy takes away the legwork involved in building features like achievements, streaks, points systems and leaderboards while providing reliable, scalable APIs for shipping gamification experiences faster than building in-house. Plus, it provides a web platform to easily configure, measure and experiment with the product experience without constant code changes.
+All gamification features are powered by [metric events](/features/events). Here's how to send your first event using a Trophy SDK:
+
+<VerifiedFirstEvent />
+
+The response includes changes to gamification state as a result of the event including:
+- The user's new total value for the metric
+- Any newly unlocked achievements
+- New points totals and rewards
+- An updated streak object
+- Any new leaderboard positions
+
+Use this response to react to changes in the user's gamification state and power UI elements.
+
+<MetricChangeResponseBlock />
+
+## Build by use case {#build-by-use-case}
+
+For more information on how to build common gamification features using Trophy, see the following guides:
+
+<CardGroup>
+  <Card title="Achievements" icon="trophy" href="/guides/how-to-build-an-achievements-feature">
+    Unlock achievements from progress or one-time actions.
+  </Card>
+    <Card title="Streaks" icon="flame" href="/guides/how-to-build-a-streaks-feature">
+    Drive daily or weekly habit loops with timezone-awareness built-in.
+  </Card>
+  <Card title="Points" icon="sparkle" href="/guides/how-to-build-an-xp-feature">
+    Award points from in-app actions and set up levels and boosts.
+  </Card>
+  <Card
+    title="Leaderboards"
+    icon={
+      <svg
+        width="20"
+        height="18"
+        viewBox="0 0 20 18"
+        fill="none"
+        xmlns="http://www.w3.org/2000/svg"
+        className="text-primary dark:text-primary-light"
+      >
+        <path
+          d="M2 16H6V8H2V16ZM8 16H12V2H8V16ZM14 16H18V10H14V16ZM0 16V8C0 7.45 0.195833 6.97917 0.5875 6.5875C0.979167 6.19583 1.45 6 2 6H6V2C6 1.45 6.19583 0.979167 6.5875 0.5875C6.97917 0.195833 7.45 0 8 0H12C12.55 0 13.0208 0.195833 13.4125 0.5875C13.8042 0.979167 14 1.45 14 2V8H18C18.55 8 19.0208 8.19583 19.4125 8.5875C19.8042 8.97917 20 9.45 20 10V16C20 16.55 19.8042 17.0208 19.4125 17.4125C19.0208 17.8042 18.55 18 18 18H2C1.45 18 0.979167 17.8042 0.5875 17.4125C0.195833 17.0208 0 16.55 0 16Z"
+          fill="currentColor"
+        />
+      </svg>
+    }
+    href="/guides/how-to-build-a-leaderboards-feature"
+  >
+    Create recurring or one-off leaderboards.
+  </Card>
+  <Card title="Emails" icon="mail" href="/features/emails">
+    Lifecycle emails driven by streaks, achievements, and activity.
+  </Card>
+  <Card title="Push notifications" icon="bell" href="/features/push-notifications">
+    Automated notification flows using gamification data.
+  </Card>
+</CardGroup>
+
+## UI Kit {#ui-kit}
+
+Ship gamification UI faster with Trophy’s React component library, built on shadcn/ui and designed to work with Trophy data shapes.
+
+<Card title="UI Kit" icon="shapes" href="https://ui.trophy.so">
+  Explore pre-built UI components for streaks, achievements, leaderboards, points and more.
+</Card>
+
+## Production checklist {#production-checklist}
+
+Before you deploy your integration to production, review the recommended steps in the production checklist:
+
+<Card title="Production checklist" icon="list-check" href="/getting-started/production-checklist">
+  Recommended steps to ensure your integration is production-ready.
+</Card>
+
+## Pricing {#pricing}
+
+Trophy meters usage by **monthly active users (MAUs)**. An MAU is a user who sends at least one [metric event](/features/events) in a given calendar month. You are not charged for churned users who stop sending events.
+
+The free tier includes **1,000 MAUs**. Paid plans start at $25/month with overages.
+
+<CardGroup cols={2}>
+  <Card title="Billing" icon="gauge" href="/account/billing">
+    Free tier, paid plans, allowances, and overages.
+  </Card>
+  <Card title="Pricing estimator" icon="calculator" href="https://trophy.so/pricing">
+    Get an estimate of monthly costs based on expected usage.
+  </Card>
+</CardGroup>
 
 ## Get Support {#get-support}
 
