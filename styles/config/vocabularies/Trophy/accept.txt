@@ -23,6 +23,7 @@ localStorage
 shadcn
 agentic
 sandboxed
+misconfiguration
 
 # Markdown rich text
 _[\w\s]+_
