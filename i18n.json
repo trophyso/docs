@@ -11,6 +11,7 @@
     "mdx": {
       "include": [
         "account/*.mdx",
+        "company/*.mdx",
         "admin-api/*.mdx",
         "admin-api/endpoints/points/*.mdx",
         "admin-api/endpoints/streaks/*.mdx",

@@ -9,6 +9,7 @@ on:
       - "openapi/**"
       - "package.json"
       - "account/**"
+      - "company/**"
       - "admin-api/**"
       - "api-reference/**"
       - "components/**"

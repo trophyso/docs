@@ -1,0 +1,118 @@
+---
+title: Security
+description: How Trophy protects customer data, controls access, and approaches compliance.
+og:description: How Trophy protects customer data, controls access, and approaches compliance.
+icon: shield-check
+---
+
+## Data Residency {#data-residency}
+
+All customer data is stored and processed on cloud infrastructure hosted in London within GDPR compliance.
+
+Other data residency options are available. [Contact support](mailto:support@trophy.so) to discuss them.
+
+## Data Security {#data-security}
+
+### Encryption {#encryption}
+
+| Control area | Status | Notes |
+| --- | --- | --- |
+| Encryption in transit (TLS 1.2+) | In place | All API and web traffic uses HTTPS/TLS. |
+| Encryption at rest | In place | Application volumes are encrypted. |
+| Database encryption at rest | In place | Database volumes and cache stores are encrypted. |
+| Secrets management | In place | Environment variables are stored in secure vaults. |
+
+### Data Classification {#data-classification}
+
+Trophy processes the following categories of end-user data:
+
+- User identifiers (anonymous external IDs provided by customers)
+- Time zone identifiers (IANA)
+- Gamification event data (actions, points, leaderboard ranks, timestamps, and similar events)
+- Notification preferences (push notification and email subscription flags)
+
+By default, Trophy does not store personally identifiable information (PII) directly. It is possible to send the following PII to Trophy, but it is not required:
+
+- User name
+- Email address
+
+It is also possible to send custom attributes (customer-managed key-value pairs attached to users and events) to Trophy with PII-status determined by the customer use case.
+
+Trophy processes the following categories of customer data:
+
+- Customer account and billing information
+
+Trophy does not have access to customer passwords or credit card data.
+
+### Data Retention and Deletion {#data-retention-and-deletion}
+
+- Customer data is retained for the duration of the contract and deleted within 30 days of contract termination on written request.
+- You can request deletion of your data at any time by contacting [support@trophy.so](mailto:support@trophy.so).
+
+### Backups {#backups}
+
+- Daily automated snapshots of all databases
+- Restore procedures are tested annually
+
+## Access Controls {#access-controls}
+
+### Internal Access {#internal-access}
+
+| Control area | Status | Notes |
+| --- | --- | --- |
+| Role-based access control (RBAC) | In place | Enabled on all cloud providers |
+| Multi-factor authentication (MFA) | In place | Enabled on all cloud providers |
+| SSO / identity provider | In place | Enabled on relevant internal systems |
+| Access reviews | In place | Reviewed annually |
+
+### Principle of Least Privilege {#principle-of-least-privilege}
+
+All internal access follows least-privilege principles. Engineers are granted access only to the systems required for their role. Production database access is restricted to senior engineers and requires justification.
+
+### Customer Data Isolation {#customer-data-isolation}
+
+Each customer's data is isolated using customer-scoped API keys and row-level filtering. Customers can only access their own data.
+
+## Application Security {#application-security}
+
+### Development Practices {#development-practices}
+
+- All production code undergoes mandatory peer review before merge.
+- Branch protection policies enforce this at the repository level, preventing direct commits.
+- Dependency vulnerabilities are monitored continuously through GitHub security alerts.
+- Secrets are never committed to source control.
+
+### Vulnerability Management {#vulnerability-management}
+
+| Control area | Status | Notes |
+| --- | --- | --- |
+| Dependency vulnerability scanning | In place | Automated on builds |
+| Security patch SLA | In place | Critical patches applied within 24 hours |
+
+### API Security {#api-security}
+
+- All API access requires authenticated API keys scoped to the customer account.
+- API keys can be rotated and revoked at any time in the Trophy dashboard.
+- API keys are encrypted before they are stored in the database.
+- Rate limiting is applied to all API endpoints to prevent abuse.
+- Webhook signature verification is under customer control. Trophy recommends [verifying signatures](/webhooks/security) in webhook endpoints.
+
+### Web Application Security {#web-application-security}
+
+- Access to the Trophy dashboard is secured by an identity provider that holds an independent SOC 2 Type II certification. The identity provider manages user authentication, including credential storage, session management, and token issuance. Trophy does not store or handle raw user passwords.
+- Dashboard access follows the principle of least privilege. Admin accounts grant and revoke access for other members.
+- Multi-factor authentication (MFA) for customer accounts is available [on request](mailto:support@trophy.so).
+- Single sign-on (SSO) for customer accounts is available [on request](mailto:support@trophy.so).
+- Sessions use short-lived JWT tokens with automatic expiry.
+- Customer accounts are fully isolated at the data layer. Authenticated sessions are scoped to the issuing organisation and cannot access data belonging to other customers.
+- Application development follows the OWASP Top 10 as a baseline for identifying and mitigating common web application vulnerabilities, including injection attacks, broken authentication, and security misconfiguration.
+
+## GDPR {#gdpr}
+
+- Trophy acts as a data processor for customer data under GDPR.
+- Trophy is fully compliant with all GDPR practices and procedures for data handling.
+- We are happy to enter into a Data Processing Agreement (DPA) with customers. Request one from your account contact.
+
+<Note>
+  Contact [support@trophy.so](mailto:hello@trophy.so) for a copy of our full security and trust policies.
+</Note>

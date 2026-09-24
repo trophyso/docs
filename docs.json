@@ -118,6 +118,12 @@
                   "account/branding",
                   "account/billing"
                 ]
+              },
+              {
+                "group": "Company",
+                "pages": [
+                  "company/security"
+                ]
               }
             ]
           },
@@ -526,6 +532,12 @@
                   "es/account/members",
                   "es/account/branding",
                   "es/account/billing"
+                ]
+              },
+              {
+                "group": "Empresa",
+                "pages": [
+                  "es/company/security"
                 ]
               }
             ]
