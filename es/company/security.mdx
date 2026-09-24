@@ -1,0 +1,120 @@
+---
+title: Seguridad
+description: Cómo Trophy protege los datos de los clientes, controla el acceso y
+  aborda el cumplimiento normativo.
+og:description: Cómo Trophy protege los datos de los clientes, controla el
+  acceso y aborda el cumplimiento normativo.
+icon: shield-check
+---
+
+## Residencia de datos {#data-residency}
+
+Todos los datos de clientes se almacenan y procesan en infraestructura en la nube alojada en Londres dentro del cumplimiento de GDPR.
+
+Hay otras opciones de residencia de datos disponibles. [Contacta con soporte](mailto:support@trophy.so) para discutirlas.
+
+## Seguridad de datos {#data-security}
+
+### Cifrado {#encryption}
+
+| Área de control | Estado | Notas |
+| --- | --- | --- |
+| Cifrado en tránsito (TLS 1.2+) | Implementado | Todo el tráfico de API y web utiliza HTTPS/TLS. |
+| Cifrado en reposo | Implementado | Los volúmenes de aplicación están cifrados. |
+| Cifrado de base de datos en reposo | Implementado | Los volúmenes de base de datos y almacenes de caché están cifrados. |
+| Gestión de secretos | Implementado | Las variables de entorno se almacenan en bóvedas seguras. |
+
+### Clasificación de datos {#data-classification}
+
+Trophy procesa las siguientes categorías de datos de usuario final:
+
+- Identificadores de usuario (IDs externos anónimos proporcionados por los clientes)
+- Identificadores de zona horaria (IANA)
+- Datos de eventos de gamificación (acciones, puntos, rangos de clasificación, marcas de tiempo y eventos similares)
+- Preferencias de notificación (indicadores de suscripción a notificaciones push y correo electrónico)
+
+Por defecto, Trophy no almacena información de identificación personal (PII) directamente. Es posible enviar la siguiente PII a Trophy, pero no es obligatorio:
+
+- Nombre de usuario
+- Dirección de correo electrónico
+
+También es posible enviar atributos personalizados (pares clave-valor gestionados por el cliente adjuntos a usuarios y eventos) a Trophy con el estado de PII determinado por el caso de uso del cliente.
+
+Trophy procesa las siguientes categorías de datos de cliente:
+
+- Información de cuenta de cliente y facturación
+
+Trophy no tiene acceso a las contraseñas de clientes ni a los datos de tarjetas de crédito.
+
+### Retención y Eliminación de Datos {#data-retention-and-deletion}
+
+- Los datos de clientes se retienen durante la vigencia del contrato y se eliminan dentro de los 30 días posteriores a la terminación del contrato mediante solicitud por escrito.
+- Puede solicitar la eliminación de sus datos en cualquier momento contactando a [support@trophy.so](mailto:support@trophy.so).
+
+### Copias de Seguridad {#backups}
+
+- Instantáneas automatizadas diarias de todas las bases de datos
+- Los procedimientos de restauración se prueban anualmente
+
+## Controles de Acceso {#access-controls}
+
+### Acceso Interno {#internal-access}
+
+| Área de control | Estado | Notas |
+| --- | --- | --- |
+| Control de acceso basado en roles (RBAC) | Implementado | Habilitado en todos los proveedores de nube |
+| Autenticación multifactor (MFA) | Implementado | Habilitado en todos los proveedores de nube |
+| SSO / proveedor de identidad | Implementado | Habilitado en sistemas internos relevantes |
+| Revisiones de acceso | Implementado | Revisado anualmente |
+
+### Principio de Mínimo Privilegio {#principle-of-least-privilege}
+
+Todo el acceso interno sigue los principios de mínimo privilegio. A los ingenieros se les concede acceso únicamente a los sistemas requeridos para su rol. El acceso a la base de datos de producción está restringido a ingenieros senior y requiere justificación.
+
+### Aislamiento de Datos de Clientes {#customer-data-isolation}
+
+Los datos de cada cliente están aislados mediante claves API con alcance de cliente y filtrado a nivel de fila. Los clientes solo pueden acceder a sus propios datos.
+
+## Seguridad de la Aplicación {#application-security}
+
+### Prácticas de Desarrollo {#development-practices}
+
+- Todo el código de producción se somete a revisión obligatoria por pares antes de la fusión.
+- Las políticas de protección de ramas lo aplican a nivel de repositorio, evitando commits directos.
+- Las vulnerabilidades de dependencias se monitorean continuamente mediante alertas de seguridad de GitHub.
+- Los secretos nunca se incluyen en el control de versiones.
+
+### Gestión de vulnerabilidades {#vulnerability-management}
+
+| Área de control | Estado | Notas |
+| --- | --- | --- |
+| Escaneo de vulnerabilidades de dependencias | Implementado | Automatizado en compilaciones |
+| SLA de parches de seguridad | Implementado | Parches críticos aplicados en 24 horas |
+
+### Seguridad de API {#api-security}
+
+- Todo acceso a la API requiere claves de API autenticadas con ámbito limitado a la cuenta del cliente.
+- Las claves de API pueden rotarse y revocarse en cualquier momento desde el panel de Trophy.
+- Las claves de API se cifran antes de almacenarse en la base de datos.
+- Se aplica un límite de solicitudes a todos los endpoints de la API para prevenir abusos.
+- La verificación de firma de webhooks está bajo control del cliente. Trophy recomienda [verificar las firmas](/es/webhooks/security) en los endpoints de webhook.
+
+### Seguridad de aplicaciones web {#web-application-security}
+
+- El acceso al panel de Trophy está protegido por un proveedor de identidad que posee una certificación SOC 2 Type II independiente. El proveedor de identidad gestiona la autenticación de usuarios, incluyendo el almacenamiento de credenciales, la gestión de sesiones y la emisión de tokens. Trophy no almacena ni maneja contraseñas de usuario sin procesar.
+- El acceso al panel sigue el principio de mínimo privilegio. Las cuentas de administrador otorgan y revocan el acceso de otros miembros.
+- La autenticación multifactor (MFA) para cuentas de clientes está disponible [bajo solicitud](mailto:support@trophy.so).
+- El inicio de sesión único (SSO) para cuentas de clientes está disponible [bajo solicitud](mailto:support@trophy.so).
+- Las sesiones utilizan tokens JWT de corta duración con vencimiento automático.
+- Las cuentas de clientes están completamente aisladas en la capa de datos. Las sesiones autenticadas tienen un ámbito limitado a la organización emisora y no pueden acceder a datos pertenecientes a otros clientes.
+- El desarrollo de aplicaciones sigue el OWASP Top 10 como base para identificar y mitigar vulnerabilidades comunes de aplicaciones web, incluyendo ataques de inyección, autenticación rota y configuración de seguridad incorrecta.
+
+## GDPR {#gdpr}
+
+- Trophy actúa como procesador de datos para los datos de clientes según el GDPR.
+- Trophy cumple completamente con todas las prácticas y procedimientos del GDPR para el manejo de datos.
+- Estamos encantados de firmar un Acuerdo de Procesamiento de Datos (DPA) con los clientes. Solicite uno a su contacto de cuenta.
+
+<Note>
+  Contacte a [support@trophy.so](mailto:hello@trophy.so) para obtener una copia de nuestras políticas completas de seguridad y confianza.
+</Note>
