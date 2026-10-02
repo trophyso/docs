@@ -2,13 +2,13 @@
   "openapi": "3.1.0",
   "info": {
     "title": "Trophy",
-    "version": "1.24.0"
+    "version": "1.26.0"
   },
   "x-fern-global-headers": [
     {
       "header": "X-SDK-VERSION",
       "name": "sdkVersion",
-      "x-fern-default": "1.24.0"
+      "x-fern-default": "1.26.0"
     }
   ],
   "paths": {
@@ -633,7 +633,7 @@
             }
           }
         },
-        "summary": "Get an attribute by ID",
+        "summary": "Get an attribute",
         "security": [
           {
             "ApiKeyAuth": []
@@ -5364,7 +5364,7 @@
             }
           }
         },
-        "summary": "Get a leaderboard by ID",
+        "summary": "Get a leaderboard",
         "security": [
           {
             "ApiKeyAuth": []
@@ -6012,6 +6012,161 @@
           }
         },
         "summary": "Restore streaks for multiple users",
+        "security": [
+          {
+            "ApiKeyAuth": []
+          }
+        ]
+      }
+    },
+    "/streaks/reset": {
+      "servers": [
+        {
+          "url": "https://admin.trophy.so/v1",
+          "description": "Admin API"
+        }
+      ],
+      "parameters": [
+        {
+          "$ref": "#/components/parameters/TenantId"
+        }
+      ],
+      "post": {
+        "description": "Reset the current streak to zero for multiple users.",
+        "operationId": "admin_streaks_reset",
+        "x-fern-server-name": "admin",
+        "x-fern-sdk-group-name": [
+          "admin",
+          "streaks"
+        ],
+        "x-fern-sdk-method-name": "reset",
+        "tags": [
+          "Admin"
+        ],
+        "x-codeSamples": [
+          {
+            "lang": "javascript",
+            "source": "import { TrophyApiClient } from '@trophyso/node';\n\nconst trophy = new TrophyApiClient({\n  apiKey: 'YOUR_API_KEY'\n});\n\nconst response = await trophy.admin.streaks.reset({\n  users: [{ id: 'user-123' }, { id: 'user-456' }]\n});\n"
+          },
+          {
+            "lang": "python",
+            "source": "from trophy import TrophyApi\n\nclient = TrophyApi(api_key='YOUR_API_KEY')\n\nresponse = client.admin.streaks.reset({\n  \"users\": [{\"id\": \"user-123\"}, {\"id\": \"user-456\"}]\n})\n"
+          },
+          {
+            "lang": "go",
+            "source": "import (\n  \"context\"\n\n  api \"github.com/trophyso/trophy-go\"\n  trophyclient \"github.com/trophyso/trophy-go/client\"\n  \"github.com/trophyso/trophy-go/option\"\n)\n\nclient := trophyclient.NewClient(\n  option.WithApiKey(\"YOUR_API_KEY\"),\n)\n\nresponse, err := client.Admin.Streaks.Reset(context.TODO(), nil)\n"
+          }
+        ],
+        "requestBody": {
+          "description": "Array of users to reset streaks for",
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ResetStreaksRequest"
+              },
+              "examples": {
+                "Reset streaks for multiple users": {
+                  "value": {
+                    "users": [
+                      {
+                        "id": "user-123"
+                      },
+                      {
+                        "id": "user-456"
+                      }
+                    ]
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successful operation",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ResetStreaksResponse"
+                },
+                "examples": {
+                  "Success with no issues": {
+                    "value": {
+                      "resetUsers": [
+                        "user-123",
+                        "user-456"
+                      ],
+                      "issues": []
+                    }
+                  },
+                  "Success with warnings": {
+                    "value": {
+                      "resetUsers": [],
+                      "issues": [
+                        {
+                          "userId": "user-123",
+                          "severity": "warning",
+                          "message": "No streak to reset"
+                        }
+                      ]
+                    }
+                  },
+                  "Mixed success and errors": {
+                    "value": {
+                      "resetUsers": [
+                        "user-123"
+                      ],
+                      "issues": [
+                        {
+                          "userId": "non-existent-user",
+                          "severity": "error",
+                          "message": "User does not exist"
+                        },
+                        {
+                          "userId": "user-789",
+                          "severity": "warning",
+                          "message": "No streak to reset"
+                        }
+                      ]
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AdminErrorBody"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AdminErrorBody"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Unprocessible Entity",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AdminErrorBody"
+                }
+              }
+            }
+          }
+        },
+        "summary": "Reset streaks to zero for multiple users",
         "security": [
           {
             "ApiKeyAuth": []
@@ -6757,6 +6912,100 @@
         ]
       }
     },
+    "/environments": {
+      "servers": [
+        {
+          "url": "https://admin.trophy.so/v1",
+          "description": "Admin API"
+        }
+      ],
+      "parameters": [
+        {
+          "$ref": "#/components/parameters/TenantId"
+        }
+      ],
+      "get": {
+        "description": "List active environments.",
+        "operationId": "admin_environments_list",
+        "x-fern-server-name": "admin",
+        "x-fern-sdk-group-name": [
+          "admin",
+          "environments"
+        ],
+        "x-fern-sdk-method-name": "list",
+        "tags": [
+          "Admin"
+        ],
+        "x-codeSamples": [
+          {
+            "lang": "javascript",
+            "source": "import { TrophyApiClient } from '@trophyso/node';\n\nconst trophy = new TrophyApiClient({\n  apiKey: 'YOUR_API_KEY'\n});\n\nconst environments = await trophy.admin.environments.list();\n"
+          },
+          {
+            "lang": "python",
+            "source": "from trophy import TrophyApi\n\nclient = TrophyApi(api_key='YOUR_API_KEY')\n\nenvironments = client.admin.environments.list()\n"
+          },
+          {
+            "lang": "go",
+            "source": "import (\n  \"context\"\n\n  api \"github.com/trophyso/trophy-go\"\n  trophyclient \"github.com/trophyso/trophy-go/client\"\n  \"github.com/trophyso/trophy-go/option\"\n)\n\nclient := trophyclient.NewClient(\n  option.WithApiKey(\"YOUR_API_KEY\"),\n)\n\nresponse, err := client.Admin.Environments.List(context.TODO(), nil)\n"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful operation",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ListEnvironmentsResponse"
+                },
+                "examples": {
+                  "Environments list": {
+                    "value": [
+                      {
+                        "name": "Production",
+                        "key": "production",
+                        "priority": 1
+                      },
+                      {
+                        "name": "Staging",
+                        "key": "staging",
+                        "priority": 2
+                      }
+                    ]
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AdminErrorBody"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Unprocessible Entity",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AdminErrorBody"
+                }
+              }
+            }
+          }
+        },
+        "summary": "List environments",
+        "security": [
+          {
+            "ApiKeyAuth": []
+          }
+        ]
+      }
+    },
     "/tenants": {
       "servers": [
         {
@@ -7317,7 +7566,7 @@
             }
           }
         },
-        "summary": "Get a tenant by ID",
+        "summary": "Get a tenant",
         "security": [
           {
             "ApiKeyAuth": []
@@ -10108,6 +10357,43 @@
           "issues"
         ]
       },
+      "ResetStreaksRequest": {
+        "title": "ResetStreaksRequest",
+        "type": "object",
+        "description": "Request body for resetting streaks to zero for multiple users.",
+        "properties": {
+          "users": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "id": {
+                  "type": "string",
+                  "description": "The ID of the user to reset the streak for.",
+                  "example": "user-123"
+                }
+              },
+              "required": [
+                "id"
+              ]
+            },
+            "description": "Array of users to reset streaks for. Maximum 100 users per request.",
+            "maxItems": 100,
+            "minItems": 1,
+            "example": [
+              {
+                "id": "user-123"
+              },
+              {
+                "id": "user-456"
+              }
+            ]
+          }
+        },
+        "required": [
+          "users"
+        ]
+      },
       "RestoreStreaksRequest": {
         "title": "RestoreStreaksRequest",
         "type": "object",
@@ -10644,6 +10930,35 @@
           }
         }
       },
+      "ResetStreaksResponse": {
+        "title": "ResetStreaksResponse",
+        "type": "object",
+        "description": "Response containing users whose streaks were reset and any issues encountered.",
+        "properties": {
+          "resetUsers": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "description": "Array of user IDs whose streaks were successfully reset to zero.",
+            "example": [
+              "user-123",
+              "user-456"
+            ]
+          },
+          "issues": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/AdminIssue"
+            },
+            "description": "Array of issues encountered during streak reset."
+          }
+        },
+        "required": [
+          "resetUsers",
+          "issues"
+        ]
+      },
       "RestoreStreaksResponse": {
         "title": "RestoreStreaksResponse",
         "type": "object",
@@ -11064,6 +11379,43 @@
           "deleted",
           "issues"
         ]
+      },
+      "AdminEnvironment": {
+        "title": "AdminEnvironment",
+        "type": "object",
+        "description": "An active environment in the organisation.",
+        "properties": {
+          "name": {
+            "type": "string",
+            "description": "Human-readable name for the environment.",
+            "example": "Production"
+          },
+          "key": {
+            "type": "string",
+            "description": "Machine-readable identifier for the environment.",
+            "example": "production"
+          },
+          "priority": {
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 10,
+            "description": "Environment precedence. Lower numbers take priority. Production is always 1.",
+            "example": 1
+          }
+        },
+        "required": [
+          "name",
+          "key",
+          "priority"
+        ]
+      },
+      "ListEnvironmentsResponse": {
+        "title": "ListEnvironmentsResponse",
+        "type": "array",
+        "description": "Array of active environments ordered by priority.",
+        "items": {
+          "$ref": "#/components/schemas/AdminEnvironment"
+        }
       },
       "AdminTenant": {
         "title": "AdminTenant",
