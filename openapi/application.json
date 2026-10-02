@@ -2,13 +2,13 @@
   "openapi": "3.1.0",
   "info": {
     "title": "Trophy",
-    "version": "1.24.0"
+    "version": "1.26.0"
   },
   "x-fern-global-headers": [
     {
       "header": "X-SDK-VERSION",
       "name": "sdkVersion",
-      "x-fern-default": "1.24.0"
+      "x-fern-default": "1.26.0"
     }
   ],
   "paths": {
@@ -5738,6 +5738,12 @@
                       "type": "boolean",
                       "description": "Whether the user's streak was paused during this period.",
                       "example": false
+                    },
+                    "resetAt": {
+                      "type": "string",
+                      "format": "date-time",
+                      "description": "The timestamp the streak was reset to zero using the admin API.",
+                      "example": "2026-09-29T18:00:00.000Z"
                     }
                   },
                   "required": [

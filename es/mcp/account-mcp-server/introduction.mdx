@@ -1,40 +1,41 @@
 ---
 title: Introducción
-description: Aprende sobre el servidor MCP de cuenta y por qué existe para agentes de IA.
-subtitle: Proporciona a los agentes de IA acceso seguro y estructurado a tu
-  cuenta de Trophy.
+description: Descubre qué es el servidor MCP de cuenta (Account MCP Server) y
+  por qué existe para los agentes de IA.
+subtitle: Ofrece a los agentes de IA un acceso seguro y estructurado a tu cuenta
+  de Trophy.
 ---
 
-El servidor MCP de cuenta es un servidor remoto de [Model Context Protocol](https://modelcontextprotocol.io) que permite a los agentes de IA leer y gestionar la configuración de gamificación en tu cuenta de Trophy.
+El Account MCP Server es un servidor remoto de [Model Context Protocol](https://modelcontextprotocol.io) que permite a los agentes de IA leer y gestionar la configuración de gamificación en tu cuenta de Trophy.
 
-En lugar de copiar y pegar clics del panel de control en el chat, puedes pedirle a tu agente que inspeccione métricas, cree sistemas de puntos, actualice clasificaciones, restaure rachas y más.
+En lugar de copiar y pegar en el chat los clics del panel de control, puedes pedirle a tu agente que inspeccione métricas, cree sistemas de puntos, actualice clasificaciones, restaure rachas y mucho más.
 
 ```bash Server URL
 https://mcp.trophy.so/mcp
 ```
 
-## ¿Por qué el MCP de cuenta? {#why-the-account-mcp}
+## ¿Por qué el Account MCP? {#why-the-account-mcp}
 
-Los agentes de codificación de IA ya son donde los equipos diseñan y envían trabajo de producto, y Trophy ha simplificado esto al proporcionar infraestructura prediseñada para construir características comunes de gamificación. Sin embargo, esto implica en gran medida mirar pantallas y hacer clic en botones.
+Los agentes de programación con IA ya son parte del lugar donde los equipos diseñan y lanzan productos, y Trophy ha simplificado este proceso al ofrecer infraestructura prediseñada para crear funcionalidades de gamificación comunes. Sin embargo, esto implica en gran medida mirar pantallas y hacer clic en botones.
 
-El servidor MCP de cuenta es la **capa de acción**: después de que el agente comprende *qué* construir (a menudo a través del [servidor MCP de documentación](/es/mcp/docs-mcp-server/introduction)), puede descubrir la configuración activa de la cuenta, realizar cambios específicos y validar resultados sin que un humano toque el panel de control.
+El Account MCP Server es la **capa de acción**: después de que el agente entiende *qué* debe crear (a menudo a través del [Docs MCP Server](/es/mcp/docs-mcp-server/introduction)), puede descubrir la configuración activa de la cuenta, aplicar cambios específicos y validar los resultados sin que una persona tenga que tocar el panel de control.
 
-Esto abre un nuevo flujo de trabajo para los equipos donde los agentes pueden razonar sobre qué características de gamificación construir, comprender cómo mapear eso a las características de Trophy y configurar una cuenta de Trophy que logre todo esto dentro del chat.
+Esto abre un nuevo flujo de trabajo para los equipos: los agentes pueden razonar sobre qué funcionalidades de gamificación crear, entender cómo asignarlas a las funcionalidades de Trophy y configurar una cuenta de Trophy que lo logre todo desde el chat.
 
-Los flujos de trabajo típicos incluyen:
+Flujos de trabajo habituales:
 
-- Estructurar métricas, atributos y sistemas de puntos al integrar Trophy en una nueva aplicación
-- Inspeccionar clasificaciones existentes o configuración de puntos antes de cambiar el código de producción
-- Ejecutar tareas operativas como otorgar congelaciones o restaurar rachas desde el chat
+- Crear la estructura base de métricas, atributos y sistemas de puntos al integrar Trophy en una nueva aplicación
+- Inspeccionar las clasificaciones o la configuración de puntos existentes antes de modificar el código de producción
+- Ejecutar tareas operativas, como conceder congelaciones o restaurar rachas, desde el chat
 
 ## Cómo funciona {#how-it-works}
 
-Trophy aloja un endpoint MCP remoto. Lo instalas una vez en tu cliente MCP, inicias sesión con OAuth usando tu cuenta de Trophy (y seleccionas la organización a autorizar), y el cliente expone herramientas que tu agente puede llamar.
+Trophy aloja un endpoint MCP remoto. Lo instalas una sola vez en tu cliente MCP, inicias sesión con OAuth usando tu cuenta de Trophy (y seleccionas la organización que quieres autorizar), y el cliente expone las herramientas que tu agente puede invocar.
 
-Estas herramientas se corresponden con operaciones de cuenta: list/get para descubrimiento, create/update para configuración, y acciones dedicadas para congelaciones de rachas, pausas, restauraciones, ajustes y lectura de analíticas.
+Esas herramientas se corresponden con operaciones de la cuenta: list/get para el descubrimiento, create/update para la configuración y acciones específicas para congelaciones de racha, pausas, restauraciones, reinicios, ajustes y lectura de analíticas.
 
 <Note>
-  El servidor MCP de cuenta está diseñado para flujos de trabajo basados en chat y agentes. Para scripts, trabajos backend o integraciones de producción, utiliza la [Admin API](/es/admin-api/introduction).
+  El servidor MCP de la cuenta está pensado para flujos de trabajo basados en chat y en agentes. Para scripts, tareas de backend o integraciones en producción, usa la [Admin API](/es/admin-api/introduction).
 </Note>
 
 ## Primeros pasos {#get-started}
@@ -44,13 +45,13 @@ Estas herramientas se corresponden con operaciones de cuenta: list/get para desc
     Conecta el servidor MCP en Claude, Cursor, VS Code y otros clientes.
   </Card>
   <Card title="Capacidades" icon="wrench" href="/es/mcp/account-mcp-server/capabilities">
-    Consulta las herramientas que tu agente puede utilizar una vez conectado.
+    Consulta las herramientas que tu agente puede usar una vez conectado.
   </Card>
-  <Card title="Mejores prácticas" icon="circle-check" href="/es/mcp/best-practice">
+  <Card title="Buenas prácticas" icon="circle-check" href="/es/mcp/best-practice">
     Formas recomendadas de trabajar con agentes y MCP.
   </Card>
 </CardGroup>
 
 ## Obtener soporte {#get-support}
 
-¿Quieres ponerte en contacto con el equipo de Trophy? Contáctanos por [correo electrónico](mailto:support@trophy.so). ¡Estamos aquí para ayudarte!
+¿Quieres ponerte en contacto con el equipo de Trophy? Escríbenos por [correo electrónico](mailto:support@trophy.so). ¡Estamos aquí para ayudarte!

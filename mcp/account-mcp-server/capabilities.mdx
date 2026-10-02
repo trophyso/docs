@@ -93,13 +93,14 @@ List the [Environments](/platform/environments) in your Trophy account.
 
 ### Streaks Tools {#streaks-tools}
 
-Look up and run operational [Streaks](/features/streaks) actions for users, including granting [Streak Freezes](/features/streaks#streak-freezes), creating [Streak Pauses](/features/streaks#streak-pauses), [restoring streaks](/features/streaks#restoring-a-users-streak), and reading or updating organization streak settings.
+Look up and run operational [Streaks](/features/streaks) actions for users, including granting [Streak Freezes](/features/streaks#streak-freezes), creating [Streak Pauses](/features/streaks#streak-pauses), [restoring streaks](/features/streaks#restoring-a-users-streak), [resetting streaks](/features/streaks#resetting-a-users-streak), and reading or updating organization streak settings.
 
 | Tool | What it does |
 | --- | --- |
 | `list_user_streaks` | Get streak length (and last extension timestamp) for up to 100 users, ranked longest first |
 | `grant_streak_freezes` | Grant streak freezes to one or more users |
 | `restore_streaks` | Restore a broken streak to its previous length |
+| `reset_streaks` | Reset streaks to zero for one or more users (up to 100 per request) |
 | `create_streak_pauses` | Create streak pauses for users over a date range (up to 100 per request) |
 | `delete_streak_pauses` | Delete streak pauses by ID (up to 100 per request) |
 | `get_streak_settings` | Get organization streak configuration (frequency, evaluation mode, metrics, days off, freezes) |
@@ -151,6 +152,10 @@ user_123 wants their streak back, restore it to its previous length.
 ```
 
 ```text
+Reset the streaks for user_123 and user_456 to zero.
+```
+
+```text
 Create a streak pause for user_123 from 2026-09-15 to 2026-09-22 while they're on holiday.
 ```
 
@@ -173,6 +178,7 @@ Update our brand color to #0F766E and set the aggregation period to weekly.
 - When [multi-tenancy](/platform/multi-tenancy) is enabled, tools can also be scoped to a [tenant](/platform/multi-tenancy). If there is only one active tenant, tool calls can default to it. If there are multiple, pass the `tenant` id you want, or use `read_tenants` to list them and choose.
 - Write tools can change live configuration. Prefer a staging or sandbox [environment](/platform/environments) when iterating.
 - Most tools cannot delete resources. The exception is `delete_streak_pauses`, which removes streak pauses by ID.
+- `reset_streaks` sets users' current streaks to zero. Use `restore_streaks` if you need to bring a streak back afterwards.
 
 ## Get Support {#get-support}
 

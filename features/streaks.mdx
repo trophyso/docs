@@ -194,6 +194,18 @@ You can also use the [restore streak admin API](/admin-api/endpoints/streaks/res
   ></video>
 </Frame>
 
+### Resetting A User's Streak {#resetting-a-users-streak}
+
+To reset a user's streak to zero, head to the user details page and use the 'Reset Streak' action. Resetting a user's streak ends their current streak immediately, regardless of whether they've met their [streak conditions](#streak-conditions) for the current period.
+
+<Tip>
+You can also use the [reset streaks admin API](/admin-api/endpoints/streaks/reset-streaks) to reset streaks for up to 100 users in a single request.
+</Tip>
+
+If you reset a user's streak by mistake, you can bring it back by [restoring the user's streak](#restoring-a-users-streak).
+
+When a streak has been reset, the matching period in the `streakHistory` field of the [user streaks API](/api-reference/endpoints/users/get-a-users-streak) includes a `resetAt` timestamp showing when the reset happened.
+
 ## Displaying Streaks {#displaying-streaks}
 
 Trophy exposes streak data in two ways, which can be used to build UI elements within your applications and display streaks to users.
