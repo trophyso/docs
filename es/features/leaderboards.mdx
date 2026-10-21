@@ -134,6 +134,46 @@ Para obtener las clasificaciones de un grupo particular de usuarios con una comb
   para que un usuario se incluya en las clasificaciones devueltas.
 </Note>
 
+## Elegibilidad {#eligibility}
+
+La elegibilidad controla qué usuarios pueden participar en una clasificación. Úsala cuando una clasificación deba estar abierta solo a un grupo específico de usuarios, por ejemplo, clientes de pago, una región concreta o una cohorte beta.
+
+La elegibilidad se basa en [atributos de usuario personalizados](/es/features/users#custom-user-attributes). Un usuario solo puede participar en una clasificación, y aparecer en su ranking, si sus atributos cumplen todas las reglas de elegibilidad que definas. Las clasificaciones sin reglas de elegibilidad están abiertas a todos los usuarios.
+
+Para definir reglas de elegibilidad, ve a la página de configuración de la clasificación y añade uno o más atributos de usuario, junto con los valores que deben tener los usuarios, en el campo **Atributos de usuario** de la sección **Elegibilidad**.
+
+<Frame>
+  <img
+    height="200"
+    width="100%"
+    noZoom
+    src="../../assets/features/leaderboards/eligibility.png"
+  />
+</Frame>
+
+<Note>
+  Cuando defines varias reglas de elegibilidad, un usuario debe cumplirlas todas
+  para ser elegible.
+</Note>
+
+Los usuarios que no son elegibles no reciben puntuación y no aparecen en los rankings. Las posiciones se calculan solo entre los usuarios elegibles, por lo que no quedan huecos donde habría estado un usuario no elegible. Si los atributos de un usuario cambian y ya no cumplen las reglas, Trophy lo elimina de la ejecución actual de la clasificación.
+
+Las ejecuciones históricas nunca se modifican. Una vez que una ejecución ha finalizado, sus rankings quedan fijados, independientemente de cómo cambien después los atributos de los usuarios.
+
+<Note>
+  Las reglas de elegibilidad solo se pueden cambiar mientras una clasificación está `Inactive`. Consulta
+  [estados de la clasificación](#leaderboard-statuses).
+</Note>
+
+### Elegibilidad frente a desgloses {#eligibility-vs-breakdowns}
+
+Los [desgloses](#ranking-breakdowns) y la elegibilidad usan atributos de usuario, pero cumplen funciones distintas:
+
+- **Los desgloses** dividen a los participantes en grupos más pequeños. Todos los usuarios siguen clasificados, pero dentro de su propio grupo.
+- **La elegibilidad** decide quién puede participar. Los usuarios que no cumplen las reglas quedan excluidos por completo.
+
+Puedes usar ambas opciones en la misma clasificación, por ejemplo, para limitar una clasificación a los usuarios de pago y luego agruparlos por país.
+
 ## Fechas de Inicio y Fin {#start-end-dates}
 
 Usa fechas de inicio y fin para controlar la ventana dentro de la cual las clasificaciones están clasificando activamente a los usuarios.
@@ -211,6 +251,8 @@ Si una clasificación ya tiene un número de participantes que coincide con su m
 
 La única excepción a esto es cuando se utilizan [atributos de desglose](#ranking-breakdowns) para agrupar a los participantes en cohortes más pequeñas. Al usar atributos de desglose, el límite de participantes se aplica a cada grupo, no de manera general.
 
+Si una clasificación tiene reglas de [elegibilidad](#eligibility), el límite de participantes solo cuenta a los usuarios elegibles.
+
 <Tip>
 Si necesitas un límite de participantes mayor, considera usar [atributos de desglose](#ranking-breakdowns) para agrupar a los participantes en cohortes más pequeñas. O contáctanos en [support@trophy.so](mailto:support@trophy.so) y estaremos encantados de aumentar tus valores predeterminados.
 </Tip>
@@ -255,7 +297,7 @@ Para crear una clasificación, dirígete a la [página de clasificaciones](https
     </Step>
 
     <Step title="Guarda los cambios">
-    Guarda los cambios y dirígete a la página de configuración para establecer [fechas de inicio y fin](#start-end-dates), [programaciones de clasificaciones recurrentes](#repeating-leaderboards) y más.
+    Guarda los cambios y ve a la página de configuración para definir la [elegibilidad](#eligibility), las [fechas de inicio y fin](#start-end-dates), las [programaciones de clasificaciones recurrentes](#repeating-leaderboards) y más.
     </Step>
 
 </Steps>
@@ -362,6 +404,14 @@ Este gráfico es un histograma de las puntuaciones de los usuarios en una clasif
     Lee más sobre esto en la [sección dedicada](#participant-limits) de esta página.
 
   </Accordion>
+
+{" "}
+
+<Accordion id="leaderboard-eligibility-faq" title="¿Puedo limitar una clasificación a determinados usuarios?">
+  Sí. Añade reglas de [elegibilidad](#eligibility) a la clasificación mediante atributos
+  de usuario personalizados, y solo los usuarios con los valores de atributo correspondientes podrán
+  participar y aparecer en la clasificación.
+</Accordion>
 
 {" "}
 

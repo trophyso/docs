@@ -134,6 +134,46 @@ To fetch rankings for a particular group of users with a specific combination of
   for a user to be included in the returned rankings.
 </Note>
 
+## Eligibility {#eligibility}
+
+Eligibility controls which users are allowed to take part in a leaderboard at all. Use it when a leaderboard should only be open to a specific group of users, for example paying customers, a particular region or a beta cohort.
+
+Eligibility is based on [custom user attributes](/features/users#custom-user-attributes). A user can only take part in, and appear in the rankings of, a leaderboard if their attributes match every eligibility rule you set. Leaderboards with no eligibility rules are open to all users.
+
+To set eligibility rules, head to the leaderboard configuration page and add one or more user attributes and the values users must have in the **User attributes** field of the **Eligibility** section.
+
+<Frame>
+  <img
+    height="200"
+    width="100%"
+    noZoom
+    src="../assets/features/leaderboards/eligibility.png"
+  />
+</Frame>
+
+<Note>
+  When you set multiple eligibility rules, a user must match all of them to be
+  eligible.
+</Note>
+
+Users who aren't eligible are not scored and don't appear in rankings. Ranks are calculated across eligible users only, so there are no gaps where ineligible users would have been. If a user's attributes change and they no longer match, Trophy removes them from the current run of the leaderboard.
+
+Historical runs are never changed. Once a run has finished its rankings are fixed, regardless of how users' attributes change afterwards.
+
+<Note>
+  Eligibility rules can only be changed while a leaderboard is `Inactive`. See
+  [leaderboard statuses](#leaderboard-statuses).
+</Note>
+
+### Eligibility vs Breakdowns {#eligibility-vs-breakdowns}
+
+[Breakdowns](#ranking-breakdowns) and eligibility both use user attributes but do different jobs:
+
+- **Breakdowns** split participants into smaller groups. Every user is still ranked, just within their own group.
+- **Eligibility** decides who can participate. Users who don't match are excluded entirely.
+
+You can use both on the same leaderboard, for example to limit a leaderboard to paying users and then group them by country.
+
 ## Start & End Dates {#start-end-dates}
 
 Use start and end dates to control the window within which leaderboards are actively ranking users.
@@ -213,6 +253,8 @@ If a leaderboard already has a number of participants that matches its configure
 
 The only exception to this is when using [breakdown attributes](#ranking-breakdowns) to group participants into smaller cohorts. When using breakdown attributes the participant limit applies to each group, not overall.
 
+If a leaderboard has [eligibility](#eligibility) rules, the participant limit only counts eligible users.
+
 <Tip>
 If you require a larger participant limit, considering using [breakdown attributes](#ranking-breakdowns) to group participants into smaller cohorts. Or please contact us at [support@trophy.so](mailto:support@trophy.so) and we'll be happy to increase your defaults.
 </Tip>
@@ -257,7 +299,7 @@ To create a leaderboard, head to the [leaderboards page](https://app.trophy.so/l
     </Step>
 
     <Step title="Hit save">
-    Hit save and head to the configure page to set up [start & end dates](#start-end-dates), [repeating leaderboard schedules](#repeating-leaderboards) and more.
+    Hit save and head to the configure page to set up [eligibility](#eligibility), [start & end dates](#start-end-dates), [repeating leaderboard schedules](#repeating-leaderboards) and more.
     </Step>
 
 </Steps>
@@ -364,6 +406,14 @@ This chart is a histogram of users' scores in a particular leaderboard. This is 
     Read more about this in the [dedicated section](#participant-limits) of this page.
 
   </Accordion>
+
+{" "}
+
+<Accordion id="leaderboard-eligibility-faq" title="Can I limit a leaderboard to certain users?">
+  Yes. Add [eligibility](#eligibility) rules to the leaderboard using custom
+  user attributes, and only users with matching attribute values will be able
+  to take part and appear in the rankings.
+</Accordion>
 
 {" "}
 
