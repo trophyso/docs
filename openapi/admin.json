@@ -2,13 +2,13 @@
   "openapi": "3.1.0",
   "info": {
     "title": "Trophy",
-    "version": "1.26.0"
+    "version": "1.27.0"
   },
   "x-fern-global-headers": [
     {
       "header": "X-SDK-VERSION",
       "name": "sdkVersion",
-      "x-fern-default": "1.26.0"
+      "x-fern-default": "1.27.0"
     }
   ],
   "paths": {
@@ -4884,7 +4884,13 @@
                           "550e8400-e29b-41d4-a716-446655440010"
                         ],
                         "runUnit": "month",
-                        "runInterval": 1
+                        "runInterval": 1,
+                        "userAttributes": [
+                          {
+                            "attributeId": "550e8400-e29b-41d4-a716-446655440010",
+                            "attributeValue": "premium"
+                          }
+                        ]
                       },
                       {
                         "id": "550e8400-e29b-41d4-a716-446655440101",
@@ -4894,7 +4900,8 @@
                         "rankBy": "streak",
                         "maxParticipants": 1000,
                         "start": "2026-04-27",
-                        "breakdownAttributes": []
+                        "breakdownAttributes": [],
+                        "userAttributes": []
                       }
                     ]
                   }
@@ -5314,7 +5321,8 @@
                         "550e8400-e29b-41d4-a716-446655440010"
                       ],
                       "runUnit": "month",
-                      "runInterval": 1
+                      "runInterval": 1,
+                      "userAttributes": []
                     }
                   },
                   "Streak leaderboard": {
@@ -5326,7 +5334,8 @@
                       "rankBy": "streak",
                       "maxParticipants": 1000,
                       "start": "2026-04-27",
-                      "breakdownAttributes": []
+                      "breakdownAttributes": [],
+                      "userAttributes": []
                     }
                   }
                 }
@@ -8149,7 +8158,7 @@
           },
           "userAttributes": {
             "type": "array",
-            "description": "User attribute filters applied to the achievement. Each `attributeId` must be an active user attribute.",
+            "description": "User attribute filters applied to the achievement.",
             "items": {
               "type": "object",
               "properties": {
@@ -8471,7 +8480,7 @@
               "array",
               "null"
             ],
-            "description": "Updated user attribute filters. Send `null` to clear. Each `attributeId` must be an active user attribute.",
+            "description": "Updated user attribute filters. Send `null` to clear.",
             "items": {
               "type": "object",
               "properties": {
@@ -8726,6 +8735,26 @@
             "minimum": 1,
             "description": "The number of `runUnit`s between repeats. Required when `runUnit` is set.",
             "example": 1
+          },
+          "userAttributes": {
+            "type": "array",
+            "description": "User attribute filters. Omit to allow every user.",
+            "items": {
+              "type": "object",
+              "properties": {
+                "attributeId": {
+                  "type": "string",
+                  "format": "uuid"
+                },
+                "attributeValue": {
+                  "type": "string"
+                }
+              },
+              "required": [
+                "attributeId",
+                "attributeValue"
+              ]
+            }
           }
         },
         "required": [
@@ -8834,6 +8863,26 @@
           "runInterval": {
             "type": "integer",
             "description": "The number of recurrence units between leaderboard runs."
+          },
+          "userAttributes": {
+            "type": "array",
+            "description": "User attribute filters.",
+            "items": {
+              "type": "object",
+              "properties": {
+                "attributeId": {
+                  "type": "string",
+                  "format": "uuid"
+                },
+                "attributeValue": {
+                  "type": "string"
+                }
+              },
+              "required": [
+                "attributeId",
+                "attributeValue"
+              ]
+            }
           }
         },
         "required": [
@@ -8844,7 +8893,8 @@
           "rankBy",
           "maxParticipants",
           "start",
-          "breakdownAttributes"
+          "breakdownAttributes",
+          "userAttributes"
         ]
       },
       "CreateLeaderboardsResponse": {
@@ -9015,6 +9065,34 @@
             "type": "integer",
             "minimum": 1,
             "description": "The updated recurrence interval."
+          },
+          "userAttributes": {
+            "oneOf": [
+              {
+                "type": "array",
+                "description": "Replacement user attribute filters.",
+                "items": {
+                  "type": "object",
+                  "properties": {
+                    "attributeId": {
+                      "type": "string",
+                      "format": "uuid"
+                    },
+                    "attributeValue": {
+                      "type": "string"
+                    }
+                  },
+                  "required": [
+                    "attributeId",
+                    "attributeValue"
+                  ]
+                }
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "description": "Replacement user attribute filters, or `null` to clear them. Omit to leave the current filters unchanged. This can only be changed while the leaderboard is inactive."
           }
         },
         "required": [

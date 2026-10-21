@@ -2,13 +2,13 @@
   "openapi": "3.1.0",
   "info": {
     "title": "Trophy",
-    "version": "1.26.0"
+    "version": "1.27.0"
   },
   "x-fern-global-headers": [
     {
       "header": "X-SDK-VERSION",
       "name": "sdkVersion",
-      "x-fern-default": "1.26.0"
+      "x-fern-default": "1.27.0"
     }
   ],
   "paths": {
@@ -79,7 +79,17 @@
                         "badgeUrl": "https://example.com/badge.png",
                         "key": "finish-onboarding",
                         "completions": 8,
-                        "rarity": 80
+                        "rarity": 80,
+                        "userAttributes": [
+                          {
+                            "key": "plan-type",
+                            "value": "premium"
+                          },
+                          {
+                            "key": "region",
+                            "value": "us-east"
+                          }
+                        ]
                       },
                       {
                         "id": "5100fe51-6bce-6j44-b0hs-bddc4e123683",
@@ -141,7 +151,17 @@
                         "badgeUrl": "https://example.com/badge.png",
                         "anniversaryYears": 1,
                         "completions": 4,
-                        "rarity": 40
+                        "rarity": 40,
+                        "userAttributes": [
+                          {
+                            "key": "plan-type",
+                            "value": "premium"
+                          },
+                          {
+                            "key": "region",
+                            "value": "us-east"
+                          }
+                        ]
                       }
                     ]
                   }
@@ -242,11 +262,18 @@
                         "description": "Complete the onboarding process.",
                         "badgeUrl": "https://example.com/badge.png",
                         "key": "finish-onboarding",
-                        "achievedAt": "2021-01-01T00:00:00Z"
+                        "achievedAt": "2021-01-01T00:00:00Z",
+                        "userAttributes": [
+                          {
+                            "key": "plan-type",
+                            "value": "premium"
+                          }
+                        ]
                       },
                       "points": {
                         "points-system-key": {
                           "id": "0040fe51-6bce-4b44-b0ad-bddc4e123534",
+                          "key": "points-system-key",
                           "name": "XP",
                           "description": null,
                           "badgeUrl": null,
@@ -262,7 +289,16 @@
                                 "id": "0040fe51-6bce-4b44-b0ad-bddc4e123534",
                                 "type": "achievement",
                                 "achievementName": "Finish onboarding",
-                                "points": 10
+                                "points": 10,
+                                "status": "active",
+                                "userAttributes": [
+                                  {
+                                    "key": "plan-type",
+                                    "value": "premium"
+                                  }
+                                ],
+                                "created": "2021-01-01T00:00:00Z",
+                                "updated": "2021-01-01T00:00:00Z"
                               }
                             }
                           ]
@@ -334,7 +370,7 @@
                       "id": "user-id",
                       "email": "user@example.com",
                       "tz": "Europe/London",
-                      "subscribedToEmails": true
+                      "subscribeToEmails": true
                     }
                   }
                 }
@@ -366,11 +402,11 @@
         "x-codeSamples": [
           {
             "lang": "javascript",
-            "source": "import { TrophyApiClient } from '@trophyso/node';\n\nconst trophy = new TrophyApiClient({\n  apiKey: 'YOUR_API_KEY'\n});\n\nconst response = await trophy.metrics.event(\n  \"words-written\",\n  {\n    user: {\n      id: 'user-id',\n      email: 'user@example.com',\n      tz: 'Europe/London',\n      subscribedToEmails: true,\n      attributes: {\n        department: 'engineering',\n        role: 'developer'\n      }\n    },\n    value: 750,\n    attributes: {\n      category: 'writing',\n      source: 'mobile-app'\n    }\n  }\n);\n"
+            "source": "import { TrophyApiClient } from '@trophyso/node';\n\nconst trophy = new TrophyApiClient({\n  apiKey: 'YOUR_API_KEY'\n});\n\nconst response = await trophy.metrics.event(\n  \"words-written\",\n  {\n    user: {\n      id: 'user-id',\n      email: 'user@example.com',\n      tz: 'Europe/London',\n      subscribeToEmails: true,\n      attributes: {\n        department: 'engineering',\n        role: 'developer'\n      }\n    },\n    value: 750,\n    attributes: {\n      category: 'writing',\n      source: 'mobile-app'\n    }\n  }\n);\n"
           },
           {
             "lang": "python",
-            "source": "from trophy import TrophyApi\n\nclient = TrophyApi(api_key='YOUR_API_KEY')\n\nuser = UpsertedUser(\n  id=\"123\",\n  email=\"user@example.com\",\n  tz=\"Europe/London\",\n  subscribedToEmails=True,\n  attributes={\n    \"department\": \"engineering\",\n    \"role\": \"developer\"\n  }\n)\n\nresponse = client.metrics.event(\n  \"words-written\",\n  user=user,\n  value=750,\n  attributes={\n    \"category\": \"writing\",\n    \"source\": \"mobile-app\"\n})\n"
+            "source": "from trophy import TrophyApi\n\nclient = TrophyApi(api_key='YOUR_API_KEY')\n\nuser = UpsertedUser(\n  id=\"123\",\n  email=\"user@example.com\",\n  tz=\"Europe/London\",\n  subscribeToEmails=True,\n  attributes={\n    \"department\": \"engineering\",\n    \"role\": \"developer\"\n  }\n)\n\nresponse = client.metrics.event(\n  \"words-written\",\n  user=user,\n  value=750,\n  attributes={\n    \"category\": \"writing\",\n    \"source\": \"mobile-app\"\n})\n"
           },
           {
             "lang": "go",
@@ -422,7 +458,13 @@
                           "metricValue": 500,
                           "name": "500 words written",
                           "description": "Write 500 words in the app.",
-                          "achievedAt": "2020-01-01T00:00:00Z"
+                          "achievedAt": "2020-01-01T00:00:00Z",
+                          "userAttributes": [
+                            {
+                              "key": "plan-type",
+                              "value": "premium"
+                            }
+                          ]
                         }
                       ],
                       "currentStreak": {
@@ -431,11 +473,13 @@
                         "started": "2025-04-02",
                         "periodStart": "2025-03-31",
                         "periodEnd": "2025-04-05",
-                        "expires": "2025-04-12"
+                        "expires": "2025-04-12",
+                        "extended": true
                       },
                       "points": {
                         "xp": {
                           "id": "0040fe51-6bce-4b44-b0ad-bddc4e123534",
+                          "key": "xp",
                           "name": "XP",
                           "description": null,
                           "badgeUrl": null,
@@ -460,7 +504,16 @@
                                 "type": "metric",
                                 "metricName": "words written",
                                 "metricThreshold": 100,
-                                "points": 10
+                                "points": 10,
+                                "status": "active",
+                                "userAttributes": [
+                                  {
+                                    "key": "plan-type",
+                                    "value": "premium"
+                                  }
+                                ],
+                                "created": "2021-01-01T00:00:00Z",
+                                "updated": "2021-01-01T00:00:00Z"
                               }
                             }
                           ]
@@ -477,6 +530,8 @@
                           "runInterval": null,
                           "maxParticipants": 100,
                           "breakdownAttribute": null,
+                          "breakdownAttributes": [],
+                          "userAttributes": [],
                           "metricName": "words written",
                           "metricKey": "words-written",
                           "threshold": 10,
@@ -610,11 +665,11 @@
         "x-codeSamples": [
           {
             "lang": "javascript",
-            "source": "import { TrophyApiClient } from '@trophyso/node';\n\nconst trophy = new TrophyApiClient({\n  apiKey: 'YOUR_API_KEY'\n});\n\nconst response = await trophy.users.create({\n  id: 'user-id',\n  email: 'user@example.com',\n  tz: 'Europe/London',\n  subscribedToEmails: true,\n  attributes: {\n    department: 'engineering',\n    role: 'developer'\n  }\n});\n"
+            "source": "import { TrophyApiClient } from '@trophyso/node';\n\nconst trophy = new TrophyApiClient({\n  apiKey: 'YOUR_API_KEY'\n});\n\nconst response = await trophy.users.create({\n  id: 'user-id',\n  email: 'user@example.com',\n  tz: 'Europe/London',\n  subscribeToEmails: true,\n  attributes: {\n    department: 'engineering',\n    role: 'developer'\n  }\n});\n"
           },
           {
             "lang": "python",
-            "source": "from trophy import TrophyApi\n\nclient = TrophyApi(api_key='YOUR_API_KEY')\n\nresponse = client.users.create(\n  id=\"123\",\n  email=\"user@example.com\",\n  tz=\"Europe/London\",\n  subscribedToEmails=True,\n  attributes={\n    \"department\": \"engineering\",\n    \"role\": \"developer\"\n  }\n)\n"
+            "source": "from trophy import TrophyApi\n\nclient = TrophyApi(api_key='YOUR_API_KEY')\n\nresponse = client.users.create(\n  id=\"123\",\n  email=\"user@example.com\",\n  tz=\"Europe/London\",\n  subscribeToEmails=True,\n  attributes={\n    \"department\": \"engineering\",\n    \"role\": \"developer\"\n  }\n)\n"
           },
           {
             "lang": "go",
@@ -651,7 +706,8 @@
                       "id": "user-id",
                       "email": "user@example.com",
                       "tz": "Europe/London",
-                      "subscribedToEmails": true,
+                      "subscribeToEmails": true,
+                      "control": false,
                       "created": "2021-01-01T00:00:00Z",
                       "updated": "2021-01-01T00:00:00Z",
                       "attributes": {
@@ -762,7 +818,8 @@
                       "id": "user-id",
                       "email": "user@example.com",
                       "tz": "Europe/London",
-                      "subscribedToEmails": true,
+                      "subscribeToEmails": true,
+                      "control": false,
                       "created": "2021-01-01T00:00:00Z",
                       "updated": "2021-01-01T00:00:00Z",
                       "attributes": {
@@ -821,7 +878,7 @@
           },
           {
             "lang": "python",
-            "source": "from trophy import TrophyApi\n\nclient = TrophyApi(api_key='YOUR_API_KEY')\n\nresponse = client.users.identify(\n  id=\"123\",\n  email=\"user@example.com\",\n  tz=\"Europe/London\",\n  subscribedToEmails=True,\n  attributes={\n    \"department\": \"engineering\",\n    \"role\": \"developer\"\n  }\n)\n"
+            "source": "from trophy import TrophyApi\n\nclient = TrophyApi(api_key='YOUR_API_KEY')\n\nresponse = client.users.identify(\n  id=\"123\",\n  email=\"user@example.com\",\n  tz=\"Europe/London\",\n  subscribeToEmails=True,\n  attributes={\n    \"department\": \"engineering\",\n    \"role\": \"developer\"\n  }\n)\n"
           },
           {
             "lang": "go",
@@ -873,6 +930,23 @@
               "application/json": {
                 "schema": {
                   "$ref": "#/components/schemas/User"
+                },
+                "examples": {
+                  "Successful operation": {
+                    "value": {
+                      "id": "user-id",
+                      "email": "user@example.com",
+                      "tz": "Europe/London",
+                      "subscribeToEmails": true,
+                      "control": false,
+                      "created": "2021-01-01T00:00:00Z",
+                      "updated": "2021-01-01T00:00:00Z",
+                      "attributes": {
+                        "department": "engineering",
+                        "role": "developer"
+                      }
+                    }
+                  }
                 }
               }
             }
@@ -923,7 +997,7 @@
           },
           {
             "lang": "python",
-            "source": "from trophy import TrophyApi\n\nclient = TrophyApi(api_key='YOUR_API_KEY')\n\nresponse = client.users.update(\n  id=\"123\",\n  email=\"user@example.com\",\n  tz=\"Europe/London\",\n  subscribedToEmails=True,\n  attributes={\n    \"department\": \"engineering\",\n    \"role\": \"developer\"\n  }\n)\n"
+            "source": "from trophy import TrophyApi\n\nclient = TrophyApi(api_key='YOUR_API_KEY')\n\nresponse = client.users.update(\n  id=\"123\",\n  email=\"user@example.com\",\n  tz=\"Europe/London\",\n  subscribeToEmails=True,\n  attributes={\n    \"department\": \"engineering\",\n    \"role\": \"developer\"\n  }\n)\n"
           },
           {
             "lang": "go",
@@ -975,6 +1049,23 @@
               "application/json": {
                 "schema": {
                   "$ref": "#/components/schemas/User"
+                },
+                "examples": {
+                  "Successful operation": {
+                    "value": {
+                      "id": "user-id",
+                      "email": "user@example.com",
+                      "tz": "Europe/London",
+                      "subscribeToEmails": true,
+                      "control": false,
+                      "created": "2021-01-01T00:00:00Z",
+                      "updated": "2021-01-01T00:00:00Z",
+                      "attributes": {
+                        "department": "engineering",
+                        "role": "developer"
+                      }
+                    }
+                  }
                 }
               }
             }
@@ -1392,7 +1483,13 @@
                             "metricId": "d01dcbcb-d51e-4c12-b054-dc811dcdc623",
                             "metricValue": 500,
                             "achievedAt": "2021-01-01T00:00:00Z",
-                            "badgeUrl": "https://example.com/badge1.png"
+                            "badgeUrl": "https://example.com/badge1.png",
+                            "userAttributes": [
+                              {
+                                "key": "plan-type",
+                                "value": "premium"
+                              }
+                            ]
                           },
                           {
                             "id": "8a07f2d0-9c72-4de1-bf92-9530ae82b4b6",
@@ -1402,7 +1499,13 @@
                             "metricId": "d01dcbcb-d51e-4c12-b054-dc811dcdc623",
                             "metricValue": 1000,
                             "achievedAt": "2021-01-02T00:00:00Z",
-                            "badgeUrl": "https://example.com/badge2.png"
+                            "badgeUrl": "https://example.com/badge2.png",
+                            "userAttributes": [
+                              {
+                                "key": "plan-type",
+                                "value": "premium"
+                              }
+                            ]
                           },
                           {
                             "id": "2090d038-aa04-4048-ab2e-e2b7bf2d3b9f",
@@ -1412,7 +1515,13 @@
                             "metricId": "d01dcbcb-d51e-4c12-b054-dc811dcdc623",
                             "metricValue": 2000,
                             "achievedAt": null,
-                            "badgeUrl": "null"
+                            "badgeUrl": "null",
+                            "userAttributes": [
+                              {
+                                "key": "plan-type",
+                                "value": "premium"
+                              }
+                            ]
                           }
                         ]
                       }
@@ -1538,7 +1647,13 @@
                           "name": "Novice Writer",
                           "metricId": "d01dcbcb-d51e-4c12-b054-dc811dcdc623",
                           "metricValue": 500,
-                          "achievedAt": "2021-01-01T00:00:00Z"
+                          "achievedAt": "2021-01-01T00:00:00Z",
+                          "userAttributes": [
+                            {
+                              "key": "plan-type",
+                              "value": "premium"
+                            }
+                          ]
                         },
                         {
                           "id": "8a07f2d0-9c72-4de1-bf92-9530ae82b4b6",
@@ -1546,7 +1661,13 @@
                           "name": "Intermediate Writer",
                           "metricId": "d01dcbcb-d51e-4c12-b054-dc811dcdc623",
                           "metricValue": 1000,
-                          "achievedAt": "2021-01-02T00:00:00Z"
+                          "achievedAt": "2021-01-02T00:00:00Z",
+                          "userAttributes": [
+                            {
+                              "key": "plan-type",
+                              "value": "premium"
+                            }
+                          ]
                         },
                         {
                           "id": "2090d038-aa04-4048-ab2e-e2b7bf2d3b9f",
@@ -1555,7 +1676,13 @@
                           "metricId": "d01dcbcb-d51e-4c12-b054-dc811dcdc623",
                           "metricValue": 2000,
                           "achievedAt": null,
-                          "badgeUrl": "https://example.com/badge.png"
+                          "badgeUrl": "https://example.com/badge.png",
+                          "userAttributes": [
+                            {
+                              "key": "plan-type",
+                              "value": "premium"
+                            }
+                          ]
                         }
                       ]
                     }
@@ -1886,7 +2013,13 @@
                         "achievedAt": "2021-01-01T00:00:00Z",
                         "badgeUrl": "https://example.com/badge2.png",
                         "completions": 100,
-                        "rarity": 50
+                        "rarity": 50,
+                        "userAttributes": [
+                          {
+                            "key": "plan-type",
+                            "value": "premium"
+                          }
+                        ]
                       },
                       {
                         "id": "d01dcbcb-d51e-4c12-b054-dc811dcdc623",
@@ -1899,7 +2032,13 @@
                         "achievedAt": "2021-02-01T00:00:00Z",
                         "badgeUrl": "https://example.com/badge1.png",
                         "completions": 100,
-                        "rarity": 50
+                        "rarity": 50,
+                        "userAttributes": [
+                          {
+                            "key": "plan-type",
+                            "value": "premium"
+                          }
+                        ]
                       },
                       {
                         "id": "d01dcbcb-d51e-4c12-b054-dc811dcdc624",
@@ -1910,7 +2049,13 @@
                         "achievedAt": "2021-03-01T00:00:00Z",
                         "badgeUrl": "https://example.com/badge2.png",
                         "completions": 100,
-                        "rarity": 50
+                        "rarity": 50,
+                        "userAttributes": [
+                          {
+                            "key": "plan-type",
+                            "value": "premium"
+                          }
+                        ]
                       },
                       {
                         "id": "d01dcbcb-d51e-4c12-b054-dc811dcdc626",
@@ -1920,7 +2065,13 @@
                         "achievedAt": "2021-04-01T00:00:00Z",
                         "badgeUrl": "https://example.com/badge3.png",
                         "completions": 40,
-                        "rarity": 20
+                        "rarity": 20,
+                        "userAttributes": [
+                          {
+                            "key": "plan-type",
+                            "value": "premium"
+                          }
+                        ]
                       }
                     ]
                   }
@@ -2340,8 +2491,17 @@
                             "id": "0040fe51-6bce-4b44-b0ad-bddc4e123534",
                             "type": "metric",
                             "points": 10,
+                            "status": "active",
                             "metricName": "words written",
-                            "metricThreshold": 1000
+                            "metricThreshold": 1000,
+                            "userAttributes": [
+                              {
+                                "key": "plan-type",
+                                "value": "premium"
+                              }
+                            ],
+                            "created": "2021-01-01T00:00:00Z",
+                            "updated": "2021-01-01T00:00:00Z"
                           }
                         }
                       ]
@@ -2814,6 +2974,8 @@
                       "end": null,
                       "maxParticipants": 100,
                       "breakdownAttribute": null,
+                      "breakdownAttributes": [],
+                      "userAttributes": [],
                       "runUnit": "day",
                       "runInterval": 7,
                       "rank": 2,
@@ -3009,7 +3171,13 @@
                               "metricName": "Words Written",
                               "achievedAt": "2024-03-15T14:30:00Z",
                               "completions": 150,
-                              "rarity": 15
+                              "rarity": 15,
+                              "userAttributes": [
+                                {
+                                  "key": "plan-type",
+                                  "value": "premium"
+                                }
+                              ]
                             }
                           ],
                           "leaderboards": {
@@ -3024,6 +3192,8 @@
                               "start": "2024-03-11",
                               "end": "2024-03-17",
                               "maxParticipants": 100,
+                              "breakdownAttributes": [],
+                              "userAttributes": [],
                               "runUnit": "day",
                               "runInterval": 7,
                               "rank": 3,
@@ -3119,7 +3289,13 @@
                               "metricName": "Words Written",
                               "achievedAt": "2024-03-15T14:30:00Z",
                               "completions": 150,
-                              "rarity": 15
+                              "rarity": 15,
+                              "userAttributes": [
+                                {
+                                  "key": "plan-type",
+                                  "value": "premium"
+                                }
+                              ]
                             }
                           ],
                           "leaderboards": {},
@@ -3446,6 +3622,12 @@
                           "points": 10,
                           "status": "active",
                           "streakLengthThreshold": 7,
+                          "userAttributes": [
+                            {
+                              "key": "plan-type",
+                              "value": "premium"
+                            }
+                          ],
                           "created": "2021-01-01T00:00:00Z",
                           "updated": "2021-01-01T00:00:00Z"
                         },
@@ -3973,6 +4155,12 @@
                           "country",
                           "plan"
                         ],
+                        "userAttributes": [
+                          {
+                            "key": "plan-type",
+                            "value": "premium"
+                          }
+                        ],
                         "runUnit": "day",
                         "runInterval": 7
                       },
@@ -3990,6 +4178,7 @@
                         "maxParticipants": 50,
                         "breakdownAttribute": null,
                         "breakdownAttributes": [],
+                        "userAttributes": [],
                         "runUnit": null,
                         "runInterval": null
                       }
@@ -4165,6 +4354,8 @@
                       "end": null,
                       "maxParticipants": 100,
                       "breakdownAttribute": null,
+                      "breakdownAttributes": [],
+                      "userAttributes": [],
                       "runUnit": "day",
                       "runInterval": 7,
                       "rankings": [
@@ -4275,7 +4466,7 @@
                       "id": "user-id",
                       "email": "user@example.com",
                       "tz": "Europe/London",
-                      "subscribedToEmails": true,
+                      "subscribeToEmails": true,
                       "created": "2021-01-01T00:00:00Z",
                       "updated": "2021-01-01T00:00:00Z",
                       "attributes": {
@@ -4346,7 +4537,7 @@
                       "id": "user-id",
                       "email": "user@example.com",
                       "tz": "Europe/London",
-                      "subscribedToEmails": true,
+                      "subscribeToEmails": true,
                       "created": "2021-01-01T00:00:00Z",
                       "updated": "2021-01-01T00:00:00Z",
                       "attributes": {
@@ -4420,7 +4611,7 @@
                       "id": "user-id",
                       "email": "user@example.com",
                       "tz": "Europe/London",
-                      "subscribedToEmails": true,
+                      "subscribeToEmails": true,
                       "created": "2021-01-01T00:00:00Z",
                       "updated": "2021-01-01T00:00:00Z",
                       "attributes": {
@@ -4494,7 +4685,7 @@
                       "id": "user-id",
                       "email": "user@example.com",
                       "tz": "Europe/London",
-                      "subscribedToEmails": true,
+                      "subscribeToEmails": true,
                       "created": "2021-01-01T00:00:00Z",
                       "updated": "2021-01-01T00:00:00Z",
                       "attributes": {
@@ -4562,7 +4753,7 @@
                       "id": "user-id",
                       "email": "user@example.com",
                       "tz": "Europe/London",
-                      "subscribedToEmails": true,
+                      "subscribeToEmails": true,
                       "created": "2021-01-01T00:00:00Z",
                       "updated": "2021-01-01T00:00:00Z",
                       "attributes": {
@@ -4631,7 +4822,7 @@
                       "id": "user-id",
                       "email": "user@example.com",
                       "tz": "Europe/London",
-                      "subscribedToEmails": true,
+                      "subscribeToEmails": true,
                       "created": "2021-01-01T00:00:00Z",
                       "updated": "2021-01-01T00:00:00Z",
                       "attributes": {
@@ -4695,7 +4886,7 @@
                       "id": "user-id",
                       "email": "user@example.com",
                       "tz": "Europe/London",
-                      "subscribedToEmails": true,
+                      "subscribeToEmails": true,
                       "created": "2021-01-01T00:00:00Z",
                       "updated": "2021-01-01T00:00:00Z",
                       "attributes": {
@@ -4822,7 +5013,7 @@
                       "id": "user-id",
                       "email": "user@example.com",
                       "tz": "Europe/London",
-                      "subscribedToEmails": true,
+                      "subscribeToEmails": true,
                       "created": "2021-01-01T00:00:00Z",
                       "updated": "2021-01-01T00:00:00Z",
                       "attributes": {
@@ -5045,6 +5236,7 @@
                       "end": null,
                       "maxParticipants": 100,
                       "breakdownAttribute": null,
+                      "userAttributes": [],
                       "runUnit": "day",
                       "runInterval": 7,
                       "rankings": [
@@ -5116,6 +5308,7 @@
                       "end": null,
                       "maxParticipants": 100,
                       "breakdownAttribute": null,
+                      "userAttributes": [],
                       "runUnit": "day",
                       "runInterval": 7,
                       "rankings": [
@@ -5199,6 +5392,7 @@
                       "end": null,
                       "maxParticipants": 100,
                       "breakdownAttribute": null,
+                      "userAttributes": [],
                       "runUnit": "day",
                       "runInterval": 7,
                       "rankings": [
@@ -5502,7 +5696,7 @@
                       "id": "user-id",
                       "email": "user@example.com",
                       "tz": "Europe/London",
-                      "subscribedToEmails": true,
+                      "subscribeToEmails": true,
                       "created": "2021-01-01T00:00:00Z",
                       "updated": "2021-01-01T00:00:00Z",
                       "attributes": {
@@ -5522,6 +5716,7 @@
                       "end": null,
                       "maxParticipants": 100,
                       "breakdownAttribute": null,
+                      "userAttributes": [],
                       "runUnit": "day",
                       "runInterval": 7,
                       "rank": 2,
@@ -6410,6 +6605,29 @@
             ],
             "description": "The interval between repetitions, relative to the start date and repetition type. Null for one-time leaderboards.",
             "example": 7
+          },
+          "userAttributes": {
+            "type": "array",
+            "description": "User attribute filters that a user must match to participate in this leaderboard and appear in its rankings.",
+            "items": {
+              "type": "object",
+              "properties": {
+                "key": {
+                  "type": "string",
+                  "description": "The key of the user attribute.",
+                  "example": "plan-type"
+                },
+                "value": {
+                  "type": "string",
+                  "description": "The required value of the user attribute.",
+                  "example": "premium"
+                }
+              },
+              "required": [
+                "key",
+                "value"
+              ]
+            }
           }
         },
         "required": [
@@ -6427,7 +6645,8 @@
           "endTime",
           "maxParticipants",
           "runUnit",
-          "runInterval"
+          "runInterval",
+          "userAttributes"
         ]
       },
       "LeaderboardResponseWithRankings": {
