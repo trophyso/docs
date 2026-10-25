@@ -6,52 +6,48 @@ subtitle: Aprende sobre los webhooks en Trophy y cómo usarlos para potenciar
   integraciones de gamificación personalizadas.
 ---
 
-<Note>
-  Esta funcionalidad está disponible en el plan [Pro](/es/account/billing#pro-plan)
-</Note>
+Trophy admite varios webhooks que se activan según eventos clave, como `achievement.completed`, `leaderboard.finished` e `streak.lost`.
 
-Trophy tiene soporte para varios webhooks que se activan según eventos clave como `achievement.completed`, `leaderboard.finished` y `streak.lost`.
+Estos eventos te permiten activar código personalizado y habilitar experiencias de gamificación avanzadas con los datos de Trophy.
 
-Estos eventos te permiten activar código personalizado y potenciar experiencias de gamificación extendidas usando datos de Trophy.
+Todos los webhooks de Trophy se entregan mediante HTTP, lo que permite a los clientes suscribirse para recibir datos de Trophy a través de solicitudes HTTP `POST` estándar.
 
-Todos los webhooks de Trophy se entregan mediante HTTP, lo que permite a los clientes suscribirse para recibir datos de Trophy a través de peticiones HTTP `POST` regulares.
+## Primeros pasos {#get-started}
 
-## Comienza {#get-started}
-
-Aprende más sobre cómo integrar Trophy webhooks en tu aplicación a continuación.
+A continuación, descubre cómo integrar los webhooks de Trophy en tu aplicación.
 
 <CardGroup>
-  <Card title="Inicio Rápido" icon="circle-play" href="/es/webhooks/quickstart">
-    Comienza a recibir eventos de webhook desde Trophy en menos de 10 minutos.
+  <Card title="Inicio rápido" icon="circle-play" href="/es/webhooks/quickstart">
+    Empieza a recibir eventos de webhook de Trophy en menos de 10 minutos.
   </Card>
   <Card title="Seguridad" icon="shield-check" href="/es/webhooks/security">
-    Asegura los endpoints de webhook usando verificación de firma.
+    Protege tus endpoints de webhook mediante la verificación de firmas.
   </Card>
   <Card title="Reintentos" icon="refresh-ccw" href="/es/webhooks/security">
-    Aprende cómo Trophy gestiona los reintentos de eventos.
+    Descubre cómo gestiona Trophy los reintentos de eventos.
   </Card>
   <Card title="Idempotencia" icon="repeat" href="/es/webhooks/security">
-    Maneja eventos duplicados y previene efectos secundarios no deseados.
+    Gestiona eventos duplicados y evita efectos secundarios no deseados.
   </Card>
   <Card title="Observabilidad" icon="activity" href="/es/webhooks/security">
-    Aprende a monitorear la entrega de webhooks y diagnosticar problemas.
+    Aprende a monitorizar la entrega de webhooks y diagnosticar problemas.
   </Card>
 </CardGroup>
 
-## Casos de Uso Comunes {#common-use-cases}
+## Casos de uso habituales {#common-use-cases}
 
-Los casos de uso comunes incluyen:
+Entre los casos de uso habituales se incluyen:
 
-- Activar secuencias personalizadas de correos electrónicos y notificaciones push
+- Activar correos electrónicos personalizados y secuencias de Notificaciones push
 - Almacenamiento de datos (data warehousing)
-- Potenciar flujos de trabajo no relacionados con gamificación como actualizaciones de suscripción y gestión de funcionalidades.
+- Impulsar flujos de trabajo no relacionados con la gamificación, como actualizaciones de suscripciones y gestión de funcionalidades
 - Integración con plataformas IFTTT
 
 <Note>
   ¿Necesitas otro evento de webhook? [Cuéntanos](mailto:support@trophy.so) tu caso
-  de uso y lo desarrollaremos.
+  de uso y lo crearemos.
 </Note>
 
-## Obtener Soporte {#get-support}
+## Obtener soporte {#get-support}
 
-¿Quieres ponerte en contacto con el equipo de Trophy? Contáctanos por [correo electrónico](mailto:support@trophy.so). ¡Estamos aquí para ayudarte!
+¿Quieres ponerte en contacto con el equipo de Trophy? Escríbenos por [correo electrónico](mailto:support@trophy.so). ¡Estamos aquí para ayudarte!

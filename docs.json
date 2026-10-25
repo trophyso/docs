@@ -51,9 +51,9 @@
         "global": {
           "anchors": [
             {
-              "anchor": "GitHub",
-              "href": "https://github.com/trophyso",
-              "icon": "github"
+              "anchor": "Security",
+              "href": "https://trust.trophy.so",
+              "icon": "shield-check"
             },
             {
               "anchor": "Status",
@@ -116,13 +116,8 @@
                   "account/overview",
                   "account/members",
                   "account/branding",
+                  "account/security",
                   "account/billing"
-                ]
-              },
-              {
-                "group": "Company",
-                "pages": [
-                  "company/security"
                 ]
               }
             ]
@@ -467,9 +462,9 @@
         "global": {
           "anchors": [
             {
-              "anchor": "GitHub",
-              "href": "https://github.com/trophyso",
-              "icon": "github"
+              "anchor": "Seguridad",
+              "href": "https://trust.trophy.so",
+              "icon": "shield-check"
             },
             {
               "anchor": "Estado",
@@ -532,13 +527,8 @@
                   "es/account/overview",
                   "es/account/members",
                   "es/account/branding",
+                  "es/account/security",
                   "es/account/billing"
-                ]
-              },
-              {
-                "group": "Empresa",
-                "pages": [
-                  "es/company/security"
                 ]
               }
             ]
@@ -894,6 +884,14 @@
     {
       "source": "/en/:slug*",
       "destination": "/:slug*"
+    },
+    {
+      "source": "/company/security",
+      "destination": "https://trust.trophy.so"
+    },
+    {
+      "source": "/es/company/security",
+      "destination": "https://trust.trophy.so"
     },
     {
       "source": "/platform/metrics",
