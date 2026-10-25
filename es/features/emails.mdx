@@ -7,15 +7,13 @@ og:description: Utiliza flujos de email automatizados para extender tu
 icon: mail
 ---
 
-import { PlanBadge } from "../components/plan-badge.jsx";
+Trophy puede enviar correos electrónicos automáticos a los usuarios a partir de desencadenantes clave, sin necesidad de escribir código. Aquí veremos cuáles son estos desencadenantes y cómo pueden formar parte de la experiencia de gamificación de tu producto.
 
-Trophy puede enviar emails automatizados a los usuarios basados en activadores clave sin requerir código. Aquí veremos cuáles son estos activadores y cómo pueden formar parte de la experiencia de gamificación de tu producto.
+## Tipos de correos electrónicos {#types-of-emails}
 
-## Tipos de Emails {#types-of-emails}
+Trophy admite 4 tipos de correos electrónicos, cada uno diseñado para un escenario habitual en la creación de experiencias de gamificación.
 
-Trophy soporta 4 tipos de emails, cada uno diseñado para adaptarse a un escenario común en la construcción de experiencias de gamificación.
-
-Todos los emails son opcionales, pero los cuatro pueden usarse simultáneamente y controlarse desde la página de [Emails](https://app.trophy.so/emails/configure) en el panel de Trophy.
+Todos los correos son opcionales, pero los cuatro pueden usarse a la vez y se controlan desde la página [Emails](https://app.trophy.so/emails/configure) del panel de Trophy.
 
 <Frame>
   <video
@@ -28,31 +26,30 @@ Todos los emails son opcionales, pero los cuatro pueden usarse simultáneamente 
   ></video>
 </Frame>
 
-- **Emails de logros** se envían a los usuarios cada vez que desbloquean un [Logro](/es/features/achievements).
-- **Emails de resumen** se envían a los usuarios con una frecuencia predefinida para resumir el progreso. Los emails de resumen pueden configurarse para enviarse diaria, semanal, mensual o anualmente según tu caso de uso.
-- **Emails de reactivación** se envían a los usuarios después de que se vuelven inactivos con el objetivo de traerlos de vuelta a tu aplicación.
-- **Emails de rachas** se envían automáticamente a los usuarios recordándoles extender su [Racha](/es/features/streaks).
+- **Los correos de Logro** se envían a los usuarios cada vez que desbloquean un [Logro](/es/features/achievements).
+- **Los correos de resumen** se envían a los usuarios con una frecuencia predefinida para resumir su progreso. Puedes configurarlos para que se envíen a diario, semanal, mensual o anualmente, según tu caso de uso.
+- **Los correos de Reactivación** se envían a los usuarios cuando dejan de estar activos, con el objetivo de que vuelvan a tu aplicación.
+- **Los correos de Racha** se envían automáticamente a los usuarios para recordarles que extiendan su [Racha](/es/features/streaks).
 
-## Envío de Emails {#sending-emails}
+## Envío de correos electrónicos {#sending-emails}
 
-Para comenzar a enviar emails con Trophy, necesitarás verificar tu dominio y añadir y activar plantillas de email para los tipos que deseas enviar.
+Para empezar a enviar correos electrónicos con Trophy, debes verificar tu dominio y añadir y activar plantillas de correo para los tipos que quieras enviar.
 
 <Tip>
-  Los usuarios pueden controlar qué notificaciones por email reciben a través del
+  Los usuarios pueden controlar qué notificaciones por correo reciben mediante la
   [API de preferencias de usuario](/es/features/users#notification-preferences) de Trophy. Esto te permite
-  construir un centro de preferencias en tu aplicación donde los usuarios pueden activar o
-  desactivar tipos específicos de emails.
+  crear un centro de preferencias en tu aplicación donde los usuarios pueden
+  activar o desactivar tipos de correo específicos.
 </Tip>
 
-### Verificación de dominio {#domain-verification}
+### Verificación del dominio {#domain-verification}
 
-Trophy admite el envío de correos electrónicos desde tu propio dominio desde el primer momento. Hay dos formas de configurar esto: Verificación del remitente y Verificación DNS.
+Trophy permite enviar correos desde tu propio dominio de forma nativa. Hay dos maneras de configurarlo: Verificación del remitente único y Verificación de DNS.
 
-Todas las configuraciones de dominio se pueden encontrar en la página [Dominios](https://app.trophy.so/emails/domains) del panel de Trophy.
+Todos los ajustes de dominio están en la página [Dominios](https://app.trophy.so/emails/domains) del panel de Trophy.
 
 <Tip>
-  Si buscas configurarte rápidamente, te recomendamos comenzar con la
-  Verificación del remitente y luego configurar la Verificación DNS cuando estés
+  Si quieres configurarlo rápidamente, te recomendamos empezar con la Verificación del remitente único y configurar la Verificación de DNS cuando estés
   listo para pasar a producción.
 </Tip>
 
@@ -62,18 +59,18 @@ Todas las configuraciones de dominio se pueden encontrar en la página [Dominios
     icon="check"
     href="#sender-verification-basic"
   >
-    Verifica rápidamente una sola dirección de correo electrónico
+    Verifica rápidamente una única dirección de correo electrónico
   </Card>
-  <Card title="Verificación DNS" icon="lock" href="#dns-verification-advanced">
-    Recomendado para uso en producción
+  <Card title="Verificación de DNS" icon="lock" href="#dns-verification-advanced">
+    Recomendada para uso en producción
   </Card>
 </CardGroup>
 
 #### Verificación del remitente (básica) {#sender-verification-basic}
 
-Durante la incorporación, se te pedirá que configures la Verificación del remitente. Esta es una forma muy sencilla de verificar rápidamente una única dirección de correo electrónico que deseas usar con Trophy sin necesidad de cambiar código ni configuraciones DNS.
+Durante la incorporación se te pedirá configurar la Verificación del remitente. Es una forma muy sencilla de verificar rápidamente una única dirección de correo electrónico que quieras usar con Trophy, sin necesidad de cambiar código ni ajustes de DNS.
 
-Se te pedirá que ingreses la dirección de correo electrónico, el nombre del remitente y el correo de respuesta que deseas que Trophy utilice al enviar correos:
+Se te pedirá que introduzcas la dirección de correo electrónico, el nombre del remitente y el correo de respuesta que quieres que Trophy use al enviar correos:
 
 <Frame>
   <img
@@ -84,40 +81,36 @@ Se te pedirá que ingreses la dirección de correo electrónico, el nombre del r
   />
 </Frame>
 
-Trophy enviará un correo de verificación a esa dirección. Simplemente haz clic en el enlace del correo para que Trophy sepa que eres el propietario de la dirección y estarás listo.
+Trophy enviará un correo de verificación a esa dirección. Solo tienes que hacer clic en el enlace del correo para confirmar a Trophy que eres el propietario de la dirección, y ya estará todo listo.
 
 <Note>
-  El correo que recibas provendrá de nuestro proveedor de correo, Postmark. ¡Así
-  que estate atento a 'Postmark Support' en tu bandeja de entrada!
+  El correo que recibirás procederá de nuestro proveedor de correo electrónico, Postmark. ¡Así que busca
+  «Postmark Support» en tu bandeja de entrada!
 </Note>
 
-La Verificación del remitente es excelente para comenzar, pero tiene la limitación de que no te beneficiarás de tu reputación de correo existente y solo podrás enviar correos desde una dirección.
+La Verificación del remitente es ideal para empezar, pero tiene limitaciones: no te beneficiarás de la reputación de tu correo electrónico actual y solo podrás enviar correos desde una dirección.
 
-Además, si deseas cambiar la dirección en el futuro, tendrás que realizar la Verificación del remitente nuevamente, lo cual puedes hacer en la [pantalla de configuración](https://app.trophy.so/integration?tab=domains).
+Además, si en el futuro quieres cambiar la dirección, tendrás que volver a realizar la Verificación del remitente, lo cual puedes hacer en la [pantalla de ajustes](https://app.trophy.so/integration?tab=domains).
 
-#### Verificación DNS (Avanzado) {#dns-verification-advanced}
+#### Verificación de DNS (avanzada) {#dns-verification-advanced}
 
-<Note>
-  Esta función está disponible en el plan [Starter](/es/account/billing#starter-plan).
-</Note>
+Para uso en producción, recomendamos la verificación de DNS. Una vez configurada, te permite configurar Trophy para enviar correos electrónicos desde cualquier dirección de tu dominio. Así, si quieres cambiar la dirección en el futuro, no tendrás que volver a verificarla.
 
-Para uso en producción, recomendamos la verificación DNS. Una vez configurada, esto te permite configurar Trophy para enviar correos electrónicos desde cualquier dirección en tu dominio. Así que si deseas cambiar la dirección en el futuro, no necesitarás verificar nuevamente.
+Completar la verificación de DNS también te permite aprovechar al máximo la reputación que ya tenga tu dominio y es la mejor forma de asegurarte de que tus correos electrónicos no acaben en la carpeta de spam.
 
-Completar la verificación DNS también te brinda todos los beneficios de cualquier reputación de dominio existente y es la mejor manera de asegurarte de que tus correos electrónicos eviten la carpeta de spam.
+Sin embargo, esto requiere añadir un par de entradas nuevas en tu DNS para que Trophy pueda verificar que eres el propietario del dominio.
 
-Sin embargo, esto requiere agregar un par de nuevas entradas en tu DNS para permitir que Trophy verifique que eres propietario del dominio.
-
-Sigue los pasos a continuación para configurar la verificación DNS:
+Sigue los pasos a continuación para configurar la verificación de DNS:
 
 <Steps>
-<Step title="Dirígete a la página de Correos electrónicos">
-    Dentro de la página de Correos electrónicos, encontrarás la pestaña [Dominios](https://app.trophy.so/emails/domains), que es donde configurarás todo lo relacionado con el dominio de correo electrónico que Trophy utilizará para enviar correos en tu nombre.
+<Step title="Ve a la página de Emails">
+    En la página de Emails encontrarás la pestaña [Domains](https://app.trophy.so/emails/domains), donde configurarás todo lo relacionado con el dominio de correo que Trophy usará para enviar correos electrónicos en tu nombre.
 </Step>
 
 <Step title="Configura tu dominio">
-    Dirígete a la sección de Verificación DNS e ingresa el dominio que deseas configurar con Trophy.
+    Ve a la sección de verificación de DNS e introduce el dominio que quieres configurar con Trophy.
 
-    También puedes configurar una Ruta de retorno personalizada. Aquí es donde Trophy reenviará las notificaciones de correos rebotados para ayudarte a investigar problemas de entregabilidad:
+    También puedes configurar una Return Path personalizada. Es la dirección a la que Trophy reenviará las notificaciones de correos rebotados para ayudarte a investigar problemas de entregabilidad:
 
     <Frame>
       <img
@@ -132,7 +125,7 @@ Sigue los pasos a continuación para configurar la verificación DNS:
 
 <Step title="Configura tus registros DNS">
 
-    Una vez que hayas ingresado tu dominio de correo electrónico, Trophy te proporcionará los detalles de dos nuevos registros DNS que necesitarás agregar a tu proveedor de DNS.
+    Una vez que hayas introducido el dominio de correo, Trophy te proporcionará los datos de dos nuevos registros DNS que deberás añadir en tu proveedor de DNS.
 
     <Frame>
       <img
@@ -143,36 +136,36 @@ Sigue los pasos a continuación para configurar la verificación DNS:
       />
     </Frame>
 
-    - Primero está el registro **DKIM** que utilizan los proveedores de correo como Google para verificar la autenticidad de los correos electrónicos. Ingresa el nombre y el valor proporcionados como un nuevo registro **TXT** en tu proveedor de DNS.
-    - Segundo está el registro **Return Path**. Este se utiliza para reenviar notificaciones de rebotes de correo electrónico a tu dominio. Ingresa el nombre y el valor proporcionados como un nuevo registro **CNAME** en tu proveedor de DNS.
+    - El primero es el registro **DKIM**, que los proveedores de bandeja de entrada, como Google, utilizan para verificar la autenticidad de los correos electrónicos. Introduce el nombre y el valor proporcionados como un nuevo registro **TXT** en tu proveedor de DNS.
+    - El segundo es el registro **Return Path**. Se utiliza para reenviar a tu dominio las notificaciones de correos rebotados. Introduce el nombre y el valor proporcionados como un nuevo registro **CNAME** en tu proveedor de DNS.
 
-    Estas son las páginas de los proveedores de DNS más comunes sobre cómo configurar nuevos registros:
+    Estas son las páginas de los proveedores de DNS más comunes con instrucciones para configurar nuevos registros:
 
     <AccordionGroup>
       <Accordion title='GoDaddy'>
-          [Agregar un registro TXT](https://www.godaddy.com/en-uk/help/add-a-txt-record-19232)
-          [Agregar un registro CNAME](https://www.godaddy.com/en-uk/help/add-a-cname-record-19236)
+          [Añadir un registro TXT](https://www.godaddy.com/en-uk/help/add-a-txt-record-19232)
+          [Añadir un registro CNAME](https://www.godaddy.com/en-uk/help/add-a-cname-record-19236)
       </Accordion>
       <Accordion title='Cloudflare'>
-          [Agregar registros DNS](https://developers.cloudflare.com/dns/manage-dns-records/how-to/create-dns-records/#create-dns-records)
+          [Añadir registros DNS](https://developers.cloudflare.com/dns/manage-dns-records/how-to/create-dns-records/#create-dns-records)
       </Accordion>
       <Accordion title="NameCheap">
-          [Agregar un registro CNAME](https://www.namecheap.com/support/knowledgebase/article.aspx/9646/2237/how-to-create-a-cname-record-for-your-domain/)
-          [Agregar un registro TXT](https://www.namecheap.com/support/knowledgebase/article.aspx/317/2237how-do-i-add-txtspfdkimdmarc-records-for-my-domain/#:~:text=this%20guide%20.-,DKIM%20records,-DKIM%20(DomainKeys%20Identified))
+          [Añadir un registro CNAME](https://www.namecheap.com/support/knowledgebase/article.aspx/9646/2237/how-to-create-a-cname-record-for-your-domain/)
+          [Añadir un registro TXT](https://www.namecheap.com/support/knowledgebase/article.aspx/317/2237how-do-i-add-txtspfdkimdmarc-records-for-my-domain/#:~:text=this%20guide%20.-,DKIM%20records,-DKIM%20(DomainKeys%20Identified))
       </Accordion>
     </AccordionGroup>
 
-    <Warning>Nota: Si estás utilizando un proxy como Cloudflare, asegúrate de desactivarlo para estos registros o Trophy no podrá verificarlos correctamente.</Warning>
+    <Warning>Nota: si usas un proxy como Cloudflare, asegúrate de desactivarlo para estos registros; de lo contrario, Trophy no podrá verificarlos correctamente.</Warning>
 
 </Step>
 
-<Step title="Verificar registros DNS">
+<Step title="Verificar los registros DNS">
 
-    Una vez que hayas agregado los dos registros en tu configuración de DNS, pulsa el ícono de actualizar y Trophy intentará verificar los registros por ti.
+    Una vez que hayas añadido los dos registros en la configuración de tu DNS, haz clic en el icono de actualizar y Trophy intentará verificarlos por ti.
 
-    Normalmente Trophy puede verificar los registros en unos pocos minutos, pero ten en cuenta que los cambios de DNS pueden tardar hasta unas horas en propagarse completamente.
+    Normalmente, Trophy puede verificar los registros en unos minutos, pero ten en cuenta que los cambios de DNS pueden tardar hasta unas horas en propagarse por completo.
 
-    Si ves la siguiente alerta, es posible que los registros aún no se hayan propagado o que haya un problema con tu configuración.
+    Si ves la siguiente alerta, es posible que los registros aún no se hayan propagado o que haya un problema en tu configuración.
 
     <Frame>
       <img
@@ -183,7 +176,7 @@ Sigue los pasos a continuación para configurar la verificación DNS:
       />
     </Frame>
 
-    Una vez que estés seguro de que todo está configurado correctamente en tu proveedor de DNS, pulsa actualizar y Trophy intentará verificar tus registros DNS una vez más.
+    Cuando te asegures de que todo está configurado correctamente en tu proveedor de DNS, haz clic en actualizar y Trophy intentará verificar tus registros DNS de nuevo.
 
     En cuanto veas el siguiente mensaje, sabrás que todo está verificado:
 
@@ -198,11 +191,11 @@ Sigue los pasos a continuación para configurar la verificación DNS:
 
 </Step>
 
-<Step title="Configura tu dirección de envío">
+<Step title="Configurar tu dirección de envío">
 
-    Una vez que tus registros DNS estén verificados, es momento de elegir la dirección de correo electrónico desde la que deseas enviar emails. Ten en cuenta que ahora que has verificado completamente tu dominio, puedes cambiar esta dirección cuando quieras sin afectar la capacidad de entrega.
+    Una vez verificados tus registros DNS, es el momento de elegir la dirección de correo electrónico desde la que quieres enviar los correos. Ten en cuenta que, ahora que has verificado completamente tu dominio, puedes cambiar esta dirección cuando quieras sin afectar a la entregabilidad.
 
-    Simplemente ingresa la dirección de correo electrónico desde la que deseas que Trophy envíe, el nombre que se mostrará a los usuarios en su bandeja de entrada cuando reciban correos y una dirección de correo de soporte que puedan usar para contactarte si es necesario:
+    Simplemente introduce la dirección de correo electrónico desde la que quieres que Trophy envíe los mensajes, el nombre que verán los usuarios en la bandeja de entrada cuando reciban los correos y una dirección de correo de soporte que puedan usar para contactarte si lo necesitan:
 
     <Frame>
       <img
@@ -219,11 +212,11 @@ Sigue los pasos a continuación para configurar la verificación DNS:
 
 ### Activadores de correo electrónico {#email-triggers}
 
-En la página de [configuración de correo electrónico](https://app.trophy.so/emails/configure), cada tipo de correo tiene su propia sección. Agrega plantillas bajo el tipo correspondiente y activa una para comenzar a enviar.
+En la página de [configuración de correo electrónico](https://app.trophy.so/emails/configure), cada tipo de correo tiene su propia sección. Añade plantillas al tipo correspondiente y activa una para empezar a enviar.
 
 #### Correos de resumen {#recap-emails}
 
-Los correos de **resumen** envían reportes de progreso semanales o mensuales a los usuarios. Puedes cambiar la frecuencia de estos correos en la página de [integración](https://app.trophy.so/integration/configure) usando la configuración de **Período de agregación**, o con la [Admin API de configuración de organización](/es/admin-api/endpoints/settings/update-organization-settings).
+Los correos de **resumen** envían a los usuarios informes de progreso semanales o mensuales. Puedes cambiar la frecuencia de estos correos en la página de [integración](https://app.trophy.so/integration/configure) con el ajuste **Periodo de agregación**, o mediante la [API de administración para la configuración de la organización](/es/admin-api/endpoints/settings/update-organization-settings).
 
 <Frame>
   <img
@@ -234,15 +227,15 @@ Los correos de **resumen** envían reportes de progreso semanales o mensuales a 
   />
 </Frame>
 
-#### Correos de Reactivación {#reactivation-emails}
+#### Correos de reactivación {#reactivation-emails}
 
-Los correos de **Reactivación** envían mensajes de recuperación a los usuarios después de que se vuelven inactivos. Estos correos se envían según el siguiente cronograma:
+Los correos de **reactivación** envían mensajes para recuperar a los usuarios cuando dejan de estar activos. Estos correos se envían según el siguiente calendario:
 
-- Después de 3 días de inactividad
-- Después de 5 días de inactividad
-- Después de 7 días de inactividad
-- Después de 14 días de inactividad
-- Después de 30 días de inactividad
+- Tras 3 días de inactividad
+- Tras 5 días de inactividad
+- Tras 7 días de inactividad
+- Tras 14 días de inactividad
+- Tras 30 días de inactividad
 
 <Frame>
   <img
@@ -253,13 +246,13 @@ Los correos de **Reactivación** envían mensajes de recuperación a los usuario
   />
 </Frame>
 
-#### Correos de Racha {#streak-emails}
+#### Correos de racha {#streak-emails}
 
-Los correos de **Racha** recuerdan a los usuarios extender su racha antes de que expire. Estos correos se envían según la frecuencia de racha que configuraste en la [página de rachas](https://app.trophy.so/streaks):
+Los correos de **racha** recuerdan a los usuarios que amplíen su racha antes de que expire. Estos correos se envían según la frecuencia de racha que hayas configurado en la [página de rachas](https://app.trophy.so/streaks):
 
-- Si tu aplicación usa una **racha diaria**, este correo se enviará cuatro horas antes del final del día (en la zona horaria de cada usuario).
-- Para **rachas semanales**, se enviará el viernes por la mañana.
-- Para **rachas mensuales**, se enviará el día 25 del mes.
+- Si tu aplicación usa una **racha diaria**, este correo se enviará cuatro horas antes de que termine el día (en la zona horaria de cada usuario).
+- Para las **rachas semanales**, se enviará el viernes por la mañana.
+- Para las **rachas mensuales**, se enviará el día 25 del mes.
 
 <Frame>
   <img
@@ -270,9 +263,9 @@ Los correos de **Racha** recuerdan a los usuarios extender su racha antes de que
   />
 </Frame>
 
-#### Correos de Logros {#achievement-emails}
+#### Correos de logro {#achievement-emails}
 
-Los correos de **Logro** felicitan a los usuarios cuando completan un [logro](/es/features/achievements) que hayas configurado en Trophy. Estos correos se envían entre las 5 y las 9 PM el día en que se completa el logro, o al día siguiente a las 5 PM si es después de las 9 PM cuando el usuario completa el logro.
+Los correos de **logro** felicitan a los usuarios cuando completan un [logro](/es/features/achievements) que has configurado en Trophy. Estos correos se envían entre las 17:00 y las 21:00 del día en que se completa el logro, o al día siguiente a las 17:00 si el usuario lo completa pasadas las 21:00.
 
 <Frame>
   <img
@@ -283,11 +276,11 @@ Los correos de **Logro** felicitan a los usuarios cuando completan un [logro](/e
   />
 </Frame>
 
-#### Limitar Correos a Tipos Específicos de Usuarios {#limiting-emails-to-specific-types-of-users}
+#### Limitar los correos electrónicos a tipos específicos de usuarios {#limiting-emails-to-specific-types-of-users}
 
-Cada plantilla de correo puede limitarse a usuarios con valores específicos de [atributos de usuario personalizados](/es/features/users#custom-user-attributes).
+Cada plantilla de correo electrónico se puede limitar a los usuarios con valores específicos de [atributos de usuario personalizados](/es/features/users#custom-user-attributes).
 
-Para cada atributo al que desees restringir el correo, haz clic en el ícono de más junto al encabezado **Filtros de Usuario** de la plantilla de correo, luego selecciona el atributo e ingresa el valor deseado. Solo los usuarios que tengan **todos** los valores de atributo especificados recibirán correos de esta plantilla.
+Para cada atributo al que quieras restringir el correo electrónico, haz clic en el icono de más junto al encabezado **Filtros de usuario** de la plantilla, selecciona el atributo e introduce el valor deseado. Solo los usuarios que tengan **todos** los valores de atributo especificados recibirán correos electrónicos de esta plantilla.
 
 <Frame>
   <img
@@ -298,32 +291,32 @@ Para cada atributo al que desees restringir el correo, haz clic en el ícono de 
   />
 </Frame>
 
-#### Zonas Horarias {#time-zones}
+#### Zonas horarias {#time-zones}
 
-Si especificas una zona horaria para cada usuario mediante [Identificación de Usuarios](/es/features/users#param-tz), Trophy utilizará esa zona horaria local para programar correos según la lógica especificada anteriormente. Si no proporcionas zonas horarias para los usuarios que identificas, Trophy utilizará por defecto la hora del Este.
+Si especificas una zona horaria para cada usuario mediante [la identificación de usuarios](/es/features/users#param-tz), Trophy usará esa zona horaria local para programar los correos electrónicos según la lógica descrita anteriormente. Si no proporcionas zonas horarias para los usuarios que identificas, Trophy usará por defecto la hora del este (Eastern Time).
 
 ### Envío de correos electrónicos mediante webhooks {#sending-emails-via-webhooks}
 
-En lugar de que Trophy envíe correos electrónicos por ti, puedes suscribirte a eventos de webhook de correo electrónico y enviar mensajes tú mismo a través de tu propio proveedor de correo o pipeline.
+En lugar de que Trophy envíe los correos electrónicos por ti, puedes suscribirte a los eventos de webhook de correo electrónico y enviar los mensajes tú mismo a través de tu propio proveedor de correo electrónico o pipeline.
 
-Cuando un correo electrónico esté programado normalmente, Trophy activa el webhook correspondiente para que puedas gestionar la entrega:
+Cuando corresponde enviar un correo electrónico, Trophy dispara el webhook correspondiente para que puedas encargarte del envío:
 
 - [`emails.recap_due`](/es/webhooks/events/emails/recap-due)
 - [`emails.reactivation_due`](/es/webhooks/events/emails/reactivation-due)
 - [`emails.streak_reminder_due`](/es/webhooks/events/emails/streak-reminder-due)
 - [`emails.achievement_due`](/es/webhooks/events/emails/achievement-due)
 
-Estos webhooks se activan en función de los propios disparadores de correo electrónico, independientemente de si las plantillas de correo electrónico están habilitadas o deshabilitadas, e independientemente de cualquier [filtro de atributos de usuario](#limiting-emails-to-specific-types-of-users) configurado en esas plantillas. Si necesitas un filtrado equivalente, aplícalo en tu controlador de webhook.
+Estos webhooks se disparan según los propios desencadenantes de los correos electrónicos, independientemente de si hay plantillas de correo habilitadas o deshabilitadas, y de los [filtros de atributos de usuario](#limiting-emails-to-specific-types-of-users) configurados en esas plantillas. Si necesitas un filtrado equivalente, aplícalo en tu controlador de webhooks.
 
-Los webhooks de correo electrónico respetan las [preferencias de notificación](/es/features/users#notification-preferences) y el [atributo de control](/es/platform/experimentation#control-ratio) utilizado para la experimentación. Trophy no activará webhooks de correo electrónico para usuarios que hayan optado por no recibir ese tipo de correo electrónico, o para usuarios en el grupo de control.
+Los webhooks de correo electrónico respetan las [preferencias de notificación](/es/features/users#notification-preferences) y el [atributo de control](/es/platform/experimentation#control-ratio) utilizado para la experimentación. Trophy no disparará webhooks de correo electrónico para los usuarios que hayan rechazado ese tipo de correo ni para los usuarios del grupo de control.
 
 <Warning>
-  Si estás enviando correos electrónicos tú mismo desde estos webhooks, asegúrate de que las plantillas de correo electrónico correspondientes estén desactivadas en Trophy. Los webhooks de correo electrónico se activan cuando se cumplen los disparadores incluso si las plantillas están deshabilitadas, pero si las plantillas permanecen habilitadas, Trophy también enviará sus propios correos electrónicos, lo que resultará en una entrega duplicada.
+  Si envías tú mismo correos electrónicos desde estos webhooks, asegúrate de que las plantillas de correo correspondientes estén desactivadas en Trophy. Los webhooks de correo se siguen activando cuando se cumplen los desencadenadores, incluso si las plantillas están desactivadas, pero si las plantillas siguen activadas, Trophy también enviará sus propios correos, lo que provocará un envío duplicado.
 </Warning>
 
 ## Diseño de correos electrónicos {#designing-emails}
 
-Trophy tiene un editor de correo electrónico basado en bloques con todas las funciones que te permite diseñar plantillas, controlando todo el texto del correo electrónico y las líneas de asunto. En la página de [correos electrónicos](https://app.trophy.so/emails/configure), añade plantillas en cada sección de [tipo de correo electrónico](#email-triggers) que desees utilizar.
+Trophy incluye un editor de correos basado en bloques, con todas las funciones, que te permite diseñar plantillas y controlar todo el texto y los asuntos de los correos. En la página de [correos electrónicos](https://app.trophy.so/emails/configure), añade plantillas en cada sección de [tipo de correo](#email-triggers) que quieras usar.
 
 <Frame>
   <video
@@ -338,23 +331,23 @@ Trophy tiene un editor de correo electrónico basado en bloques con todas las fu
 
 ### Plantillas predeterminadas {#default-templates}
 
-Por defecto, Trophy proporciona una plantilla para cada [tipo de correo electrónico](#types-of-emails) como un buen punto de partida. Las plantillas predeterminadas no se pueden cambiar, pero puedes duplicarlas y personalizarlas como desees.
+De forma predeterminada, Trophy ofrece una plantilla para cada [tipo de correo](#types-of-emails) como buen punto de partida. Las plantillas predeterminadas no se pueden modificar, pero puedes duplicarlas y personalizarlas como quieras.
 
 <Tip>
-  También puedes crear plantillas en blanco si solo quieres empezar desde cero.
+  También puedes crear plantillas en blanco si prefieres empezar desde cero.
 </Tip>
 
-### Crear una nueva plantilla {#creating-a-new-template}
+### Crear una plantilla nueva {#creating-a-new-template}
 
-Para crear una nueva plantilla de correo electrónico, sigue los pasos a continuación.
+Para crear una plantilla de correo nueva, sigue estos pasos.
 
 <Steps>
-  <Step title="Dirígete a la página de correos electrónicos">
-    En la página de correos electrónicos, encontrarás la pestaña
+  <Step title="Ve a la página de correos electrónicos">
+    En la página de correos electrónicos encontrarás la pestaña
     [Configurar](https://app.trophy.so/emails/configure), donde cada sección de tipo de correo contiene sus plantillas.
   </Step>
-  <Step title="Añadir una plantilla">
-    Haz clic en el botón *Añadir plantilla* dentro de la sección del tipo de correo para el que deseas crear una plantilla.
+  <Step title="Añade una plantilla">
+    Haz clic en el botón *Añadir plantilla* dentro de la sección del tipo de correo para el que quieras crear una plantilla.
 
     <Frame>
       <img
@@ -367,7 +360,7 @@ Para crear una nueva plantilla de correo electrónico, sigue los pasos a continu
 
   </Step>
   <Step title="Diseña tu nueva plantilla">
-    Utiliza el editor basado en bloques para diseñar tu plantilla de correo electrónico.
+    Usa el editor basado en bloques para diseñar tu plantilla de correo.
 
     <Frame>
       <video
@@ -385,7 +378,7 @@ Para crear una nueva plantilla de correo electrónico, sigue los pasos a continu
 
 ### Tipos de bloques {#block-types}
 
-El editor de correos electrónicos de Trophy admite varios tipos de bloques diferentes que sirven para distintos propósitos. Todos los componentes básicos que esperarías encontrar en un editor de correos como párrafos, encabezados e imágenes se denominan [Bloques básicos](#basic-blocks). También existe un conjunto de componentes más potentes como gráficos y rachas que aprovechan los datos de actividad de usuario y las funciones de gamificación de Trophy. Estos se denominan [Bloques inteligentes](#smart-blocks).
+El editor de correos electrónicos de Trophy admite varios tipos de bloques con distintos fines. Todos los componentes básicos que esperarías encontrar en un editor de correo, como párrafos, encabezados e imágenes, se denominan [Bloques básicos](#basic-blocks). También hay un conjunto de componentes más potentes, como gráficos y rachas, que aprovechan los datos de actividad de los usuarios y las funciones de gamificación de Trophy. Se denominan [Bloques inteligentes](#smart-blocks).
 
 <Frame>
   <img
@@ -398,26 +391,26 @@ El editor de correos electrónicos de Trophy admite varios tipos de bloques dife
 
 #### Bloques básicos {#basic-blocks}
 
-Aquí está la lista completa de bloques básicos sin opinión que Trophy admite:
+Esta es la lista completa de bloques básicos de propósito general que admite Trophy:
 
-- **Párrafo** - Útil para fragmentos de texto cortos o largos.
+- **Párrafo** - Ideal para fragmentos de texto cortos o largos.
 - **H1, H2, H3** - Útiles para encabezados de distintos tamaños.
-- **Botón** - Crea una llamada a la acción para que los usuarios la realicen en los correos electrónicos.
-- **Tarjeta** - Puede anidar otros bloques, centrando la atención.
-- **Divisor** - Útil para separar el contenido en secciones lógicas.
-- **Emoji** - Incluye cualquier emoji compatible, controlando el tamaño.
-- **Imagen** - Sube cualquier imagen y Trophy la renderizará en los correos electrónicos.
-- **Espaciador** - Útil para dar espacio a los bloques y que destaquen.
-- **Columnas** - Útiles para crear diseños de hasta 3 columnas con cualquier contenido.
-- **Logo** - Renderizará el logo de tu organización, configurado en la página de [Marca](https://app.trophy.so/branding).
+- **Botón** - Crea una llamada a la acción para que los usuarios la realicen desde el correo.
+- **Tarjeta** - Puede anidar otros bloques para centrar la atención.
+- **Divisor** - Ideal para separar el contenido en secciones lógicas.
+- **Emoji** - Incluye cualquier emoji compatible y permite controlar su tamaño.
+- **Imagen** - Sube cualquier imagen y Trophy la mostrará en los correos.
+- **Espaciador** - Ideal para dar espacio a los bloques y que destaquen.
+- **Columnas** - Útil para crear diseños de hasta 3 columnas con cualquier contenido.
+- **Logotipo** - Muestra el logotipo de tu organización, configurado en la página de [Marca](https://app.trophy.so/branding).
 
 #### Bloques condicionales {#conditional-blocks}
 
-Trophy también cuenta con un potente sistema de renderizado condicional basado en el tipo de bloque _Conditional_.
+Trophy también incluye un potente sistema de renderizado condicional basado en el tipo de bloque _Condicional_.
 
-Al anidar cualquier otro bloque dentro de un bloque condicional y configurar la lógica de condiciones, puedes crear prácticamente cualquier diseño de email que muestre diferentes bloques en los correos según la evaluación de condiciones en el momento del envío.
+Al anidar cualquier otro bloque dentro de un bloque condicional y configurar la lógica de las condiciones, puedes crear casi cualquier diseño de correo que muestre bloques distintos según el resultado de la evaluación de las condiciones en el momento del envío.
 
-Si estás familiarizado con los operadores lógicos `if/else`, esto te resultará muy familiar. De lo contrario, aquí tienes un diagrama rápido para explicar cómo funciona.
+Si conoces los operadores lógicos `if/else`, esto te resultará muy familiar. Si no, aquí tienes un diagrama rápido que explica cómo funciona.
 
 ```mermaid
 flowchart LR
@@ -433,7 +426,7 @@ flowchart LR
     D-- No --->F
 ```
 
-Un caso de uso común para el bloque condicional es mostrar condicionalmente a un usuario su racha (uno de los [Smart Blocks](#smart-blocks) integrados de Trophy) y algún texto motivacional relacionado con la racha solo si tiene una racha activa. Si el destinatario no está en una racha en el momento en que se envía el email, se muestra un mensaje simple en su lugar.
+Un caso de uso común del bloque condicional es mostrar al usuario su racha (uno de los [Bloques inteligentes](#smart-blocks) integrados de Trophy) y un texto motivacional relacionado con la racha solo si tiene una racha activa. Si el destinatario no tiene una racha en el momento en que se envía el correo, se muestra un mensaje sencillo en su lugar.
 
 <Frame>
   <img
@@ -444,35 +437,35 @@ Un caso de uso común para el bloque condicional es mostrar condicionalmente a u
   />
 </Frame>
 
-Esto crea un marco potente para diseñar emails basados en datos de usuario altamente relevantes y personalizados, y se puede usar para crear una amplia gama de emails para casos de uso comunes de gamificación.
+Esto crea un marco potente para diseñar correos electrónicos basados en datos de usuario muy relevantes y personalizados, y permite crear una amplia variedad de correos para los casos de uso más habituales de gamificación.
 
-#### Smart Blocks {#smart-blocks}
+#### Bloques inteligentes {#smart-blocks}
 
-Los smart blocks son componentes potentes diseñados para admitir casos de uso comunes de gamificación e integrarse con todas las funcionalidades de Trophy, incluyendo métricas, logros y rachas.
+Los bloques inteligentes son componentes potentes diseñados para cubrir casos de uso habituales de gamificación y se integran con todas las funciones de Trophy, incluidas las métricas, los logros y las rachas.
 
-Puedes encontrar todos los smart blocks en la sección _Recommended Blocks_, y siempre son reconocibles por el icono <Icon icon="zap" />.
+Encontrarás todos los bloques inteligentes en la sección _Bloques recomendados_ y siempre los reconocerás por el icono <Icon icon="zap" />.
 
-Mira a Charlie explicar los smart blocks y cómo funcionan:
+Mira cómo Charlie explica los bloques inteligentes y cómo funcionan:
 
 <Frame>
   <iframe
     width="560"
     height="315"
     src="https://www.youtube.com/embed/CA7i8Gd5K1s?si=mHkAwVPZYMoBPm15"
-    title="YouTube video player"
+    title="Reproductor de vídeo de YouTube"
     frameborder="0"
     allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
     allowfullscreen
   ></iframe>
 </Frame>
 
-Lea más sobre el caso de uso de cada bloque inteligente:
+Descubre más sobre el caso de uso de cada bloque inteligente:
 
 <AccordionGroup>
   <Accordion title="Gráfico de progreso de logros" icon="zap">
-    El bloque de gráfico de progreso de logros muestra un gráfico con barras para hasta cinco logros de una métrica en particular, destacando los que el destinatario ha desbloqueado.
+    El bloque de gráfico de progreso de logros muestra un gráfico con barras para hasta cinco logros de una métrica concreta y resalta los que el destinatario ha desbloqueado.
     
-    Elija la métrica para mostrar logros usando el selector de métrica.
+    Elige la métrica cuyos logros quieres mostrar con el selector de métricas.
 
     <Frame>
       <video
@@ -490,9 +483,9 @@ Lea más sobre el caso de uso de cada bloque inteligente:
 {" "}
 
 <Accordion title="Logros desbloqueados" icon="zap">
-  El bloque de logros desbloqueados muestra el logro que el destinatario ha desbloqueado. Esto solo es útil en el contexto de correos electrónicos de logros desbloqueados. Si el destinatario no ha desbloqueado ningún logro, este bloque no se mostrará en los correos electrónicos.
+  El bloque de logros desbloqueados muestra el logro que ha desbloqueado el destinatario. Solo resulta útil en el contexto de correos de logros desbloqueados. Si el destinatario no ha desbloqueado ningún logro, este bloque no se mostrará en los correos.
 
-Cuando los logros tienen insignias, estas se mostrarán automáticamente, así como el nombre del logro.
+Cuando los logros tienen insignias, estas se muestran automáticamente, junto con el nombre del logro.
 
   <Frame>
       <video
@@ -509,7 +502,7 @@ Cuando los logros tienen insignias, estas se mostrarán automáticamente, así c
 {" "}
 
 <Accordion title="Gráfico de progreso" icon="zap">
-  El bloque de gráfico de progreso muestra el progreso del destinatario con respecto a una métrica en particular durante los últimos 3 [períodos de agregación](#aggregation-period).
+  El bloque de gráfico de progreso muestra el progreso del destinatario en una métrica concreta durante los últimos 3 [periodos de agregación](#aggregation-period).
 
   <Frame>
       <video
@@ -524,9 +517,9 @@ Cuando los logros tienen insignias, estas se mostrarán automáticamente, así c
 </Accordion>
 
   <Accordion title="Racha" icon="zap">
-    El bloque de racha muestra la racha actual del destinatario según la configuración de rachas de su cuenta.
+    El bloque de racha muestra la racha actual del destinatario según la configuración de rachas de tu cuenta.
     
-    Para rachas diarias, se muestra un bloque de calendario que muestra el historial de rachas del último mes. Las rachas semanales y mensuales muestran los últimos 7 períodos del historial de rachas.
+    En las rachas diarias, se muestra un bloque de calendario con el historial de rachas del último mes. Las rachas semanales y mensuales muestran los últimos 7 periodos del historial de rachas.
 
     <Frame>
       <video
@@ -542,17 +535,17 @@ Cuando los logros tienen insignias, estas se mostrarán automáticamente, así c
   </Accordion>
 </AccordionGroup>
 
-### Variables de correo electrónico {#email-variables}
+### Variables de correo {#email-variables}
 
-Trophy proporciona un amplio conjunto de variables de correo electrónico que se pueden usar para insertar texto altamente relevante y personalizado en el cuerpo de los correos electrónicos y líneas de asunto.
+Trophy ofrece un amplio conjunto de variables de correo que puedes usar para insertar texto personalizado y muy relevante en el cuerpo y en el asunto de los correos.
 
-Las variables aportan contexto de tu cuenta de Trophy, los datos de progreso del destinatario y la configuración específica del correo a tus plantillas de email.
+Las variables incorporan a tus plantillas de correo el contexto de tu cuenta de Trophy, los datos de progreso del destinatario y los ajustes específicos de cada correo.
 
-Las variables de email se pueden insertar escribiendo `@` en cualquier bloque que admita texto enriquecido, como encabezados, párrafos y botones, y buscando la variable deseada.
+Puedes insertar variables de correo escribiendo `@` en cualquier bloque que admita texto enriquecido, como encabezados, párrafos y botones, y buscando la variable que quieras.
 
-Esto abrirá la ventana del editor de variables donde puedes configurar las variables como en la demostración a continuación.
+Esto abrirá la ventana del editor de variables, donde podrás configurarlas como se muestra en la demo siguiente.
 
-<Tip>También puedes usar variables en las líneas de asunto de los correos.</Tip>
+<Tip>También puedes usar variables en las líneas de asunto de los correos electrónicos.</Tip>
 
 <Frame>
   <video
@@ -565,60 +558,60 @@ Esto abrirá la ventana del editor de variables donde puedes configurar las vari
   ></video>
 </Frame>
 
-A continuación, consulta la lista completa de todas las variables de email compatibles con el creador de correos, desglosadas por categoría.
+A continuación encontrarás la lista completa de las variables de correo electrónico compatibles con el editor de correos, organizadas por categoría.
 
 <AccordionGroup>
 <Accordion title="Usuario">
-Variables relacionadas con el destinatario del correo.
+Variables relacionadas con el destinatario del correo electrónico.
 
-- **Nombre**: El nombre del destinatario, si está configurado
+- **Nombre**: El nombre del destinatario, si está definido
 
-Adicionalmente, todos los [atributos de usuario personalizados](/es/features/users#custom-user-attributes) están disponibles como variables de email.
+Además, todos los [atributos de usuario personalizados](/es/features/users#custom-user-attributes) están disponibles como variables de correo electrónico.
 
 </Accordion>
 <Accordion title="Métricas">
-  Variables relacionadas con los datos de eventos rastreados del destinatario en las métricas.
+  Variables relacionadas con los datos de eventos del destinatario registrados en las métricas.
 
-Cada métrica de Trophy admite las siguientes variables de email:
+Cada métrica de Trophy admite las siguientes variables de correo electrónico:
 
 - **Nombre de la métrica**: El nombre de la métrica
 - **Unidades de la métrica**: Las unidades de la métrica
 - **Total actual**: La suma de todos los valores de eventos del destinatario hasta la fecha
-- **Cambio en este periodo**: Cambio absoluto en el total actual del destinatario en el periodo de agregación actual
-- **Cambio en este periodo (%)**: Cambio porcentual en el total actual del destinatario en el periodo de agregación actual
-- **Percentil (Histórico)**: El total actual del destinatario comparado con todos los demás usuarios de todos los tiempos
-- **Percentil (Este periodo)**: El total actual del destinatario comparado con todos los demás usuarios en el periodo de agregación actual
+- **Cambio en este período**: Cambio absoluto en el total actual del destinatario durante el período de agregación actual
+- **Cambio en este período (%)**: Cambio porcentual en el total actual del destinatario durante el período de agregación actual
+- **Percentil (histórico)**: El total actual del destinatario en comparación con el de todos los demás usuarios en todo el historial
+- **Percentil (este período)**: El total actual del destinatario en comparación con el de todos los demás usuarios durante el período de agregación actual
 
-Adicionalmente, los alias dinámicos **Más alto** y **Más bajo** admiten el mismo conjunto de variables. Al usar estos alias, Trophy seleccionará la métrica donde el destinatario tenga el total actual más alto o más bajo en el momento del envío.
+Además, los alias dinámicos **Más alto** y **Más bajo** admiten el mismo conjunto de variables. Al usar estos alias, Trophy elegirá la métrica en la que el destinatario tenga el total actual más alto o más bajo en el momento del envío.
 
-Al usar variables de métricas, también tienes la opción de filtrar los datos a los que hacen referencia cualquiera de las variables anteriores mediante un [atributo de evento personalizado](/es/features/events#custom-event-attributes).
+Al usar variables de métricas, también tienes la opción de filtrar los datos a los que hace referencia cualquiera de las variables anteriores mediante un [atributo de evento personalizado](/es/features/events#custom-event-attributes).
 
     </Accordion>
 
 <Accordion title="Puntos">
 
-De manera similar a las métricas, cada sistema de puntos tiene las siguientes variables que se pueden usar para agregar datos dinámicos al contenido del correo electrónico:
+Al igual que las métricas, cada sistema de puntos tiene las siguientes variables, que se pueden usar para añadir datos dinámicos al texto de los correos:
 
-- **Total Actual**: El total de puntos del destinatario
-- **Cambio Este Período**: Cambio absoluto en el total de puntos del destinatario en el período de agregación actual
-- **Cambio Este Período (%)**: Cambio porcentual en el total de puntos del destinatario en el período de agregación actual
-- **Percentil (Todo el Tiempo)**: El total de puntos del destinatario comparado con todos los demás usuarios de todos los tiempos
-- **Percentil (Este Período)**: El total de puntos del destinatario comparado con todos los demás usuarios en el período de agregación actual
+- **Total actual**: Los puntos totales del destinatario
+- **Cambio en este período**: Cambio absoluto en los puntos totales del destinatario durante el período de agregación actual
+- **Cambio en este período (%)**: Cambio porcentual en los puntos totales del destinatario durante el período de agregación actual
+- **Percentil (histórico)**: Los puntos totales del destinatario comparados con los de todos los demás usuarios a lo largo de todo el tiempo
+- **Percentil (este período)**: Los puntos totales del destinatario comparados con los de todos los demás usuarios durante el período de agregación actual
 
 .
 
 </Accordion>
 <Accordion title="Logros">
   <Note>
-  Estas variables solo son relevantes para [correos electrónicos de logros](#achievement-emails).
+  Estas variables solo son relevantes para los [correos de logros](#achievement-emails).
   </Note>
 
-Al configurar una plantilla para usar con correos electrónicos de logros, las siguientes variables están disponibles:
+Al configurar una plantilla para los correos de logros, están disponibles las siguientes variables:
 
-- **Es Logro Final**: Si el logro que activa el correo electrónico es parte de una serie de logros de métricas, esto es verdadero cuando el logro es el logro final de la serie
-- **Porcentaje Hasta el Siguiente Logro**: Si el logro que activa el correo electrónico es parte de una serie de logros de métricas, este es el porcentaje hasta que el usuario desbloquee el siguiente logro de la serie
-- **Nombre del Logro**: El nombre del logro que activó el correo electrónico
-- **Descripción del Logro**: La descripción del logro que activó el correo electrónico
+- **Es el logro final**: Si el logro que activa el correo forma parte de una serie de logros de métricas, el valor es verdadero cuando ese logro es el último de la serie
+- **Porcentaje hasta el siguiente logro**: Si el logro que activa el correo forma parte de una serie de logros de métricas, indica el porcentaje que falta para que el usuario desbloquee el siguiente logro de la serie
+- **Nombre del logro**: El nombre del logro que activó el correo
+- **Descripción del logro**: La descripción del logro que activó el correo
 
 .
 
@@ -626,43 +619,43 @@ Al configurar una plantilla para usar con correos electrónicos de logros, las s
 <Accordion title="Racha">
   Variables relacionadas con la racha del destinatario.
 
-- **Tiene Racha Activa**: Verdadero si el destinatario tiene una racha activa al momento de enviar el correo electrónico, falso en caso contrario
-- **Longitud de la Racha**: La longitud de la racha actual del destinatario
-- **Racha Extendida**: Verdadero si la racha del destinatario fue extendida, falso en caso contrario
-- **Días Desde la Última Extensión**: El número de días desde que el usuario extendió por última vez su racha
+- **Tiene racha activa**: Verdadero si el destinatario tiene una racha activa en el momento de enviar el correo; falso en caso contrario
+- **Duración de la racha**: La duración de la racha actual del destinatario
+- **Racha extendida**: Verdadero si la racha del destinatario se extendió; falso en caso contrario
+- **Días desde la última extensión**: El número de días transcurridos desde que el usuario extendió su racha por última vez
 
 .
 
 </Accordion>
 <Accordion title="Reactivación">
   <Note>
-  Estas variables solo son relevantes para [correos de reactivación](#reactivation-emails).
+  Estas variables solo son relevantes para los [correos electrónicos de reactivación](#reactivation-emails).
   </Note>
 
-- **Número de Mensaje**: El número del mensaje en la secuencia de reactivación (1-5)
+- **Número de mensaje**: el número del mensaje en la secuencia de reactivación (1-5)
 
 .
 
 </Accordion>
-<Accordion id="aggregation-period" title="Período de Agregación">
+<Accordion id="aggregation-period" title="Período de agregación">
     <Note>
-  Estas variables solo son relevantes para [correos resumen](#recap-emails).
+  Estas variables solo son relevantes para los [correos electrónicos de resumen](#recap-emails).
   </Note>
 
-- **Rango de Fechas del Período Actual**: Las fechas de inicio y fin del período de agregación actual
+- **Rango de fechas del período actual**: las fechas de inicio y fin del período de agregación actual
 
 .
 
 </Accordion>
 </AccordionGroup>
 
-#### Uso Avanzado {#advanced-usage}
+#### Uso avanzado {#advanced-usage}
 
-Hay un par de opciones adicionales a considerar al usar variables de correo.
+Hay un par de opciones adicionales que conviene tener en cuenta al usar variables en los correos electrónicos.
 
-**Prefijo y Sufijo**
+**Prefijo y sufijo**
 
-Puede proporcionar un prefijo y sufijo para variables de texto como el nombre del destinatario o el nombre de una métrica en particular.
+Puedes definir un prefijo y un sufijo para variables de texto, como el nombre del destinatario o el nombre de una métrica concreta.
 
 <Frame>
   <img
@@ -673,11 +666,11 @@ Puede proporcionar un prefijo y sufijo para variables de texto como el nombre de
   />
 </Frame>
 
-Si el valor de la variable no se renderiza cuando se envía el correo, Trophy no mostrará la variable ni el prefijo o sufijo para mantener los correos limpios.
+Si el valor de la variable no se puede renderizar cuando se envía el correo electrónico, Trophy no mostrará ni la variable ni el prefijo o sufijo, para mantener los correos limpios.
 
-**Singular y Plural**
+**Singular y plural**
 
-Al usar variables numéricas como el total actual de puntos del destinatario o el total de métricas, también puede proporcionar un sufijo singular y plural que lo acompañe.
+Al usar variables numéricas, como el total actual de puntos del destinatario o el total de una métrica, también puedes definir un sufijo en singular y otro en plural que las acompañen.
 
 <Frame>
   <img
@@ -688,27 +681,27 @@ Al usar variables numéricas como el total actual de puntos del destinatario o e
   />
 </Frame>
 
-### Variaciones de Texto {#text-variations}
+### Variaciones de texto {#text-variations}
 
-Las variaciones se pueden usar para agregar aleatoriedad al texto dentro de los correos enviados por Trophy. Esto evita que los correos se vuelvan aburridos y ayuda a mejorar las tasas de apertura y clics.
+Las variaciones sirven para añadir aleatoriedad al texto de los correos electrónicos que envía Trophy. Así se evita que los correos resulten monótonos y se mejoran las tasas de apertura y de clics.
 
 <Frame>
   <iframe
     width="560"
     height="315"
     src="https://www.youtube.com/embed/mlxMqHsdql8?si=hhizWfwiylgxxEuV"
-    title="YouTube video player"
+    title="Reproductor de vídeo de YouTube"
     frameborder="0"
     allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
     allowfullscreen
   ></iframe>
 </Frame>
 
-Cualquier bloque que admita entrada de texto, incluidos H1, H2, H3 y párrafo, admite variaciones.
+Cualquier bloque que admita la entrada de texto, incluidos H1, H2, H3 y párrafo, admite variaciones.
 
-<Tip>También puede usar variaciones para agregar aleatoriedad a los asuntos de correo.</Tip>
+<Tip>También puedes usar variaciones para añadir aleatoriedad a las líneas de asunto de los correos electrónicos.</Tip>
 
-Para crear una variación, haga clic en el botón _Agregar Variación_ en cualquier bloque que las admita.
+Para crear una variación, haz clic en el botón _Añadir variación_ de cualquier bloque que las admita.
 
 <Frame>
   <video
@@ -722,16 +715,17 @@ Para crear una variación, haga clic en el botón _Agregar Variación_ en cualqu
 </Frame>
 
 <Note>
-  Las variaciones aún no admiten pruebas A/B, pero esto está en nuestra hoja de ruta, así que permanece atento...
+  Las variaciones aún no admiten pruebas A/B, pero está en nuestra hoja de ruta, así que
+  estate atento...
 </Note>
 
 ### Uso del editor {#using-the-editor}
 
-El editor de plantillas de correo electrónico es un lienzo en blanco para diseñar correos que se vean geniales en la bandeja de entrada. Usar [bloques](#block-types) preconfigurados facilita enormemente la creación de plantillas de correo electrónico que se adapten a casos de uso comunes de gamificación. Aquí te explicaremos cómo utilizar mejor el editor para crear correos electrónicos con un aspecto increíble.
+El editor de plantillas de correo electrónico es un lienzo en blanco para diseñar correos que se vean muy bien en la bandeja de entrada. El uso de [bloques](#block-types) preconfigurados facilita la creación de plantillas de correo que se ajustan a los casos de uso habituales de gamificación. A continuación, veremos cómo aprovechar al máximo el editor para crear correos con un aspecto genial.
 
 #### Añadir bloques {#adding-blocks}
 
-Para añadir un nuevo bloque a una plantilla de correo electrónico, presiona la tecla <Icon icon="square-slash" />. Esto abrirá el diálogo de selección de bloques donde puedes elegir el bloque que deseas añadir.
+Para añadir un nuevo bloque a una plantilla de correo electrónico, pulsa la tecla <Icon icon="square-slash" />. Se abrirá el cuadro de diálogo de selección de bloques, donde podrás elegir el bloque que quieres añadir.
 
 <Frame>
   <video
@@ -744,7 +738,7 @@ Para añadir un nuevo bloque a una plantilla de correo electrónico, presiona la
   ></video>
 </Frame>
 
-O si quieres añadir un bloque inmediatamente después de otro bloque, utiliza el menú de bloques.
+O, si quieres añadir un bloque justo después de otro, usa el menú de bloques.
 
 <Frame>
   <video
@@ -759,7 +753,7 @@ O si quieres añadir un bloque inmediatamente después de otro bloque, utiliza e
 
 #### Organizar bloques {#arranging-blocks}
 
-Los bloques se pueden arrastrar hacia arriba y hacia abajo usando el menú de bloques.
+Puedes arrastrar los bloques hacia arriba y hacia abajo con el menú de bloques.
 
 <Frame>
   <video
@@ -774,7 +768,7 @@ Los bloques se pueden arrastrar hacia arriba y hacia abajo usando el menú de bl
 
 #### Formato de texto {#text-formatting}
 
-El editor de correo electrónico ofrece formato de texto enriquecido que incluye negrita, cursiva, [hipervínculos](https://www.youtube.com/watch?v=dQw4w9WgXcQ) y formato `code`.
+El editor de correo electrónico ofrece formato de texto enriquecido, que incluye negrita, cursiva, [hipervínculos](https://www.youtube.com/watch?v=dQw4w9WgXcQ) y formato `code`.
 
 <Frame>
   <video
@@ -789,7 +783,7 @@ El editor de correo electrónico ofrece formato de texto enriquecido que incluye
 
 ### Estilo de fuente {#font-style}
 
-En la [página de configuración de correo electrónico](https://app.trophy.so/emails/configure), encontrarás una configuración para cambiar el estilo de fuente utilizado en todos los correos electrónicos.
+En la [página de configuración de correos electrónicos](https://app.trophy.so/emails/configure) encontrarás un ajuste para cambiar el estilo de fuente que se usa en todos los correos.
 
 <Frame>
   <img
@@ -800,35 +794,35 @@ En la [página de configuración de correo electrónico](https://app.trophy.so/e
   />
 </Frame>
 
-Otros estilos de correo electrónico se extraen de la configuración de [Marca](https://app.trophy.so/branding) de tu cuenta de Trophy.
+El resto de los estilos del correo se obtienen de los ajustes de [Marca](https://app.trophy.so/branding) de tu cuenta de Trophy.
 
-## Gestión de cancelaciones de suscripción {#handling-unsubscribes}
+## Gestión de las bajas de suscripción {#handling-unsubscribes}
 
-Todos los correos electrónicos que Trophy envía incluyen un enlace y mensaje para cancelar la suscripción. Esto es importante para mantener el cumplimiento de las regulaciones y no es posible ocultarlo.
+Todos los correos electrónicos que envía Trophy incluyen un enlace y un mensaje para cancelar la suscripción. Esto es importante para cumplir con la normativa y no es posible ocultarlo.
 
 <Info>
-  El mensaje se leerá de la siguiente manera: Estás recibiendo este correo electrónico porque
-  estás suscrito a informes de progreso y correos de logros. Si ya no
-  deseas recibir estos correos, puedes cancelar tu suscripción.
+  El mensaje dice lo siguiente: Recibes este correo porque estás suscrito a los
+  correos de informes de progreso y de logros. Si ya no deseas recibir estos
+  correos, puedes cancelar la suscripción.
 </Info>
 
-Cualquier destinatario que haga clic en este enlace será redirigido a una página con tu marca que le permite controlar qué notificaciones por correo electrónico recibe.
+Cualquier destinatario que haga clic en este enlace accederá a una página con tu marca que le permite controlar qué notificaciones por correo electrónico recibe.
 
 <Tip>
-  Como alternativa al enlace de cancelación de suscripción, también puedes crear un centro de
-  preferencias en tu aplicación usando la [API de preferencias de
-  usuario](/es/features/users#notification-preferences) de Trophy. Esto brinda a los usuarios un control más
-  granular sobre qué tipos de correos electrónicos reciben.
+  Como alternativa al enlace de cancelación de suscripción, también puedes crear
+  un centro de preferencias en tu aplicación con la [API de preferencias de
+  usuario](/es/features/users#notification-preferences) de Trophy. Esto ofrece a
+  los usuarios un control más detallado sobre los tipos de correos que reciben.
 </Tip>
 
 ## Analíticas de correo electrónico {#email-analytics}
 
-Trophy tiene analíticas integradas para todos los correos electrónicos que envía. Esto incluye:
+Trophy incluye analíticas integradas para todos los correos electrónicos que envía. Estas incluyen:
 
-- Destinatarios (El número total de personas que recibieron el correo electrónico)
-- Tasa de apertura (El porcentaje de destinatarios que abrieron el correo electrónico)
-- Tasa de clics (El porcentaje de destinatarios que hicieron clic en al menos un enlace del correo electrónico)
-- Tasa de retención (El porcentaje de usuarios que abrieron el correo electrónico y regresaron a usar tu plataforma después de al menos 2 días)
+- Destinatarios (el número total de personas que recibieron el correo)
+- Tasa de apertura (el porcentaje de destinatarios que abrieron el correo)
+- Tasa de clics (el porcentaje de destinatarios que hicieron clic en al menos un enlace del correo)
+- Tasa de retención (el porcentaje de usuarios que abrieron el correo y volvieron a usar tu plataforma al menos 2 días después)
 
 <Frame>
   <video
@@ -845,18 +839,18 @@ Trophy tiene analíticas integradas para todos los correos electrónicos que env
 
 <AccordionGroup>
 <Accordion title="¿Puedo enviar correos electrónicos desde mi propio dominio?">
-    ¡Sí! El envío de correos electrónicos desde tu propio dominio es compatible de forma inmediata. Sigue los pasos en la sección sobre [envío de correos electrónicos](#sending-emails) para comenzar.
+    ¡Sí! El envío de correos electrónicos desde tu propio dominio es compatible de forma predeterminada. Sigue los pasos de la sección sobre [envío de correos electrónicos](#sending-emails) para empezar.
   </Accordion>
 
 {" "}
 
 <Accordion title="¿Limitan la cantidad de correos electrónicos que puedo enviar?">
-  No, no limitamos la cantidad de correos electrónicos que puedes enviar. Sin embargo, monitoreamos el uso
-  para prevenir abusos.
+  No, no limitamos la cantidad de correos electrónicos que puedes enviar. Sin embargo, supervisamos el uso
+  para evitar abusos.
 </Accordion>
 
 </AccordionGroup>
 
-## Obtener Soporte {#get-support}
+## Obtener soporte {#get-support}
 
-¿Quieres ponerte en contacto con el equipo de Trophy? Contáctanos por [correo electrónico](mailto:support@trophy.so). ¡Estamos aquí para ayudarte!
+¿Quieres ponerte en contacto con el equipo de Trophy? Escríbenos por [correo electrónico](mailto:support@trophy.so). ¡Estamos aquí para ayudarte!

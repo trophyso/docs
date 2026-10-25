@@ -1,26 +1,31 @@
 export const PlanBadge = ({ plan }) => {
+  const styles = `
+    .plan-badge {
+      background-color: #f0fdf4 !important;
+      background-image: linear-gradient(to bottom right, #bbf7d0, #f0fdf4, #bbf7d0) !important;
+      color: #4cc74a !important;
+      border: 0 !important;
+      font-weight: 500 !important;
+      box-shadow: inset 0 0 0 1px rgba(78, 200, 76, 0.4) !important;
+    }
+    .plan-badge-business {
+      box-shadow: inset 0 0 0 1px #4cc74a !important;
+    }
+    .plan-badge-enterprise {
+      background-color: #000000 !important;
+      background-image: linear-gradient(to bottom right, #737373, #000000, #737373) !important;
+      color: #ffffff !important;
+      font-weight: 600 !important;
+      box-shadow: inset 0 0 0 1px #000000 !important;
+    }
+  `;
+
   return (
-    <div>
-      <span
-        style={{
-          display: 'inline-flex',
-          alignItems: 'center',
-          borderRadius: '0.375rem',
-          paddingLeft: '0.5rem',
-          paddingRight: '0.5rem',
-          paddingTop: '0.25rem',
-          paddingBottom: '0.25rem',
-          fontSize: '0.75rem',
-          lineHeight: '1rem',
-          fontWeight: plan === 'pro' ? '600' : '500',
-          backgroundColor: plan === 'free' ? '#fefce8' : '#f0fdf4',
-          color: plan === 'free' ? '#ca8a04' : '#4CC74A',
-          boxShadow: plan === 'free' ? 'inset 0 0 0 1px rgba(200, 138, 4, 0.4)' : plan === 'starter' ? 'inset 0 0 0 1px rgba(78, 200, 76, 0.4)' : 'inset 0 0 0 1px #4CC74A',
-          backgroundImage: plan === 'pro' ? 'linear-gradient(to bottom right, #bbf7d0, #f0fdf4, #bbf7d0)' : 'none',
-        }}
-      >
+    <>
+      <style>{styles}</style>
+      <Badge className={`plan-badge plan-badge-${plan}`}>
         {plan.charAt(0).toUpperCase() + plan.slice(1)}
-      </span>
-    </div>
+      </Badge>
+    </>
   );
 };

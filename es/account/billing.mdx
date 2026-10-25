@@ -22,59 +22,56 @@ Trophy sigue un modelo de precios basado en uso donde los clientes solo pagan po
 
 Trophy define un MAU como un único usuario que envía al menos un [evento de métrica](/es/features/events) a Trophy en un mes determinado.
 
-Ten en cuenta que nunca pagas por usuarios que han abandonado. Si un usuario se registra en tu producto en un mes determinado pero no regresa, solo pagas por ese usuario una vez y nunca más.
+Ten en cuenta que nunca pagas por los usuarios que abandonan. Si un usuario se registra en tu producto en un mes determinado pero no vuelve, solo pagas por ese usuario una vez y nunca más.
 
-## Nivel gratuito {#free-tier}
+## Prueba gratuita {#free-trial}
 
-El nivel gratuito permite a los equipos probar y evaluar Trophy hasta **1,000 MAU** sin acumular cargos por uso.
+Cada cuenta nueva en los planes <PlanBadge plan="pro" /> y <PlanBadge plan="business" /> comienza con una **prueba gratuita de 30 días** para que puedas probar y evaluar Trophy antes de pagar.
 
-<Note>
-  Una vez que superes el plan gratuito, tu cuenta seguirá funcionando y
-  nos pondremos en contacto contigo directamente con un amable recordatorio para actualizar.
-</Note>
+## Planes {#plans}
 
-## Planes de pago {#paid-plans}
-
-Trophy tiene dos planes de pago, [Starter](#starter-plan) y [Pro](#pro-plan).
-
-### Plan Starter {#starter-plan}
-
-El plan starter es para clientes que han superado la fase de prueba y evaluación y están usando Trophy en implementaciones de producción a pequeña escala.
-
-A diferencia del [Nivel gratuito](#free-tier), el plan starter no tiene límites en MAU.
+Trophy tiene tres planes: <PlanBadge plan="pro" />, <PlanBadge plan="business" /> y <PlanBadge plan="enterprise" />.
 
 ### Plan Pro {#pro-plan}
 
-El plan pro es para clientes que están usando Trophy en implementaciones de mayor escala o que requieren funciones más avanzadas.
+El plan <PlanBadge plan="pro" /> está pensado para equipos que ejecutan Trophy en producción. Incluye todas las funciones principales de gamificación de Trophy: logros, rachas, puntos, clasificaciones, correos electrónicos y notificaciones push.
 
-### Límites del Plan {#plan-allowances}
+### Plan Business {#business-plan}
 
-Aquí hay una comparación de los límites de cada plan de pago:
+El plan <PlanBadge plan="business" /> está pensado para equipos que necesitan seguridad, controles de acceso y soporte adicionales, incluidos el inicio de sesión único (SSO), el control de acceso basado en roles, la sincronización de datos y un canal de Slack dedicado.
 
-| Elemento                        | Starter | Pro      |
-| ------------------------------- | ------- | -------- |
-| Precio base                     | `$25`   | `$299`   |
-| MAU incluidos                   | `1,000` | `10,000` |
-| Correos electrónicos incluidos  | `2,000` | `20,000` |
-| Notificaciones push incluidas   | `2,000` | `20,000` |
+### Plan Enterprise {#enterprise-plan}
+
+El plan <PlanBadge plan="enterprise" /> está pensado para organizaciones más grandes con requisitos personalizados, como multitenencia, residencia de datos, informes de cumplimiento y contratos a medida. [Ponte en contacto](mailto:support@trophy.so) con nosotros para hablar sobre los precios.
+
+### Cuotas de los planes {#plan-allowances}
+
+Esta es una comparación de las cuotas de cada plan:
+
+| Elemento                         | <PlanBadge plan="pro" /> | <PlanBadge plan="business" /> | <PlanBadge plan="enterprise" /> |
+| -------------------------------- | -------- | -------- | ---------- |
+| Precio base                      | `$299`   | `$599`   | Personalizado |
+| MAU incluidos                    | `10,000` | `10,000` | Personalizado |
+| Correos electrónicos incluidos   | `20,000` | `20,000` | Personalizado |
+| Notificaciones push incluidas    | `20,000` | `20,000` | Personalizado |
 
 ### Excedentes {#overages}
 
-Los excedentes se cobran en los planes de pago por encima de los [límites](#plan-allowances) incluidos a las siguientes tarifas:
+Los excedentes se cobran en los planes <PlanBadge plan="pro" /> y <PlanBadge plan="business" /> cuando se superan las [asignaciones incluidas](#plan-allowances), con las siguientes tarifas:
 
-| Elemento                     | Starter  | Pro      |
-| ---------------------------- | -------- | -------- |
-| 1 MAU                        | `$0.015` | `$0.015` |
-| 1,000 correos electrónicos   | `$2.50`  | `$2.00`  |
-| 1,000 Notificaciones push    | `$1.50`  | `$1.00`  |
+| Elemento                 | <PlanBadge plan="pro" /> | <PlanBadge plan="business" /> |
+| ------------------------ | -------- | -------- |
+| 1 MAU                    | `$0.015` | `$0.015` |
+| 1000 correos electrónicos | `$2.00`  | `$2.00`  |
+| 1000 Notificaciones push | `$1.00`  | `$1.00`  |
 
-Los descuentos por volumen están disponibles como parte de [contratos personalizados](#custom-contracts).
+Hay descuentos por volumen disponibles como parte de los [contratos personalizados](#custom-contracts).
 
 ## Funcionalidades {#features}
 
-Aquí hay una lista de todas las funcionalidades de Trophy y el plan en el que están disponibles:
+Esta es la lista de todas las funcionalidades de Trophy y el plan en el que están disponibles:
 
-<PlanBadge plan="free" />
+<PlanBadge plan="pro" />
 
 - [Logros](/es/features/achievements)
 - [Rachas](/es/features/streaks)
@@ -82,23 +79,46 @@ Aquí hay una lista de todas las funcionalidades de Trophy y el plan en el que e
 - [Clasificaciones](/es/features/leaderboards)
 - [Correos electrónicos](/es/features/emails)
 - [Notificaciones push](/es/features/push-notifications)
-- Análisis de 7 días
-
-<PlanBadge plan="starter" />
-
-- MAU adicionales permitidos
-- Análisis de 12 meses
-
-<PlanBadge plan="pro" />
-
 - [Webhooks](/es/webhooks)
-- [Atributos personalizados](/es/features/users#custom-user-attributes)
+- Asistencia para la integración durante los primeros 30 días
+- SLA de disponibilidad del 99,9 %
+- Registros de auditoría de 7 días
 
-## Contratos Personalizados {#custom-contracts}
+<PlanBadge plan="business" />
 
-Si tienes más de 100K MAU y te gustaría discutir contratos personalizados que incluyan descuentos por volumen para adaptarse a las necesidades de tu negocio, [contáctanos](mailto:support@trophy.so) y estaremos encantados de ayudarte.
+Todo lo incluido en <PlanBadge plan="pro" />, y además:
 
-## Consultar Tu Uso {#viewing-your-usage}
+- Asistencia continua para la integración
+- Sincronización de datos
+- Soporte por Slack con un canal de Slack dedicado
+- Inicio de sesión único (SSO)
+- Autenticación multifactor (MFA)
+- Control de acceso basado en roles (RBAC)
+- Registros de auditoría de 30 días
+
+<PlanBadge plan="enterprise" />
+
+Todo lo incluido en <PlanBadge plan="business" />, y además:
+
+- Descuentos personalizados por uso y volumen
+- Compromisos de uso reservado
+- Multitenencia
+- Control de residencia de datos
+- SLA de disponibilidad del 99,99 %
+- Informes SOC 2 e ISO
+- DPA personalizado y residencia de datos alternativa
+- Registros de auditoría, SLA y acuerdos de soporte personalizados
+- Elegibilidad para el programa para startups
+
+## Contratos personalizados {#custom-contracts}
+
+Si tienes más de 100 K MAU y quieres hablar sobre contratos personalizados que incluyan descuentos por volumen adaptados a las necesidades de tu empresa, [ponte en contacto con nosotros](mailto:support@trophy.so) y estaremos encantados de ayudarte.
+
+## Programa para startups {#startup-program}
+
+Las startups que cumplan los requisitos pueden obtener un año gratis del plan <PlanBadge plan="pro" /> para hasta 100 000 MAU. La aceptación en el programa no está garantizada. [Ponte en contacto con nosotros](mailto:support@trophy.so) para obtener más información.
+
+## Consulta tu uso {#viewing-your-usage}
 
 Puedes consultar tu uso del período de facturación actual en la [página de facturación](https://app.trophy.so/billing) del panel de Trophy y ver todas las facturas anteriores en tu portal de facturación.
 
@@ -111,14 +131,14 @@ Puedes consultar tu uso del período de facturación actual en la [página de fa
   />
 </Frame>
 
-## Preguntas Frecuentes {#frequently-asked-questions}
+## Preguntas frecuentes {#frequently-asked-questions}
 
 <AccordionGroup>
     <Accordion title="¿Cuándo se me cobrará?">
-      Cobramos a todos los clientes el día 1 de cada mes por el uso del mes anterior y por las tarifas del plan por adelantado.
+      Cobramos a todos los clientes el día 1 de cada mes: el uso se factura a mes vencido y las cuotas del plan, por adelantado.
     </Accordion>
 </AccordionGroup>
 
-## Obtener Soporte {#get-support}
+## Obtener soporte {#get-support}
 
-¿Quieres ponerte en contacto con el equipo de Trophy? Contáctanos por [correo electrónico](mailto:support@trophy.so). ¡Estamos aquí para ayudarte!
+¿Quieres ponerte en contacto con el equipo de Trophy? Escríbenos por [correo electrónico](mailto:support@trophy.so). ¡Estamos aquí para ayudarte!
