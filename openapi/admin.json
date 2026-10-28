@@ -2,13 +2,13 @@
   "openapi": "3.1.0",
   "info": {
     "title": "Trophy",
-    "version": "1.27.0"
+    "version": "1.28.0"
   },
   "x-fern-global-headers": [
     {
       "header": "X-SDK-VERSION",
       "name": "sdkVersion",
-      "x-fern-default": "1.27.0"
+      "x-fern-default": "1.28.0"
     }
   ],
   "paths": {
@@ -1318,6 +1318,1299 @@
           }
         },
         "summary": "Get an achievement by ID",
+        "security": [
+          {
+            "ApiKeyAuth": []
+          }
+        ]
+      }
+    },
+    "/rewards": {
+      "servers": [
+        {
+          "url": "https://admin.trophy.so/v1",
+          "description": "Admin API"
+        }
+      ],
+      "parameters": [
+        {
+          "$ref": "#/components/parameters/TenantId"
+        }
+      ],
+      "get": {
+        "description": "List rewards.",
+        "operationId": "admin_rewards_list",
+        "x-fern-server-name": "admin",
+        "x-fern-sdk-group-name": [
+          "admin",
+          "rewards"
+        ],
+        "x-fern-sdk-method-name": "list",
+        "tags": [
+          "Admin"
+        ],
+        "x-codeSamples": [
+          {
+            "lang": "javascript",
+            "source": "import { TrophyApiClient } from '@trophyso/node';\n\nconst trophy = new TrophyApiClient({\n  apiKey: 'YOUR_API_KEY'\n});\n\nconst rewards = await trophy.admin.rewards.list({\n  limit: 10,\n  skip: 0\n});\n"
+          },
+          {
+            "lang": "python",
+            "source": "from trophy import TrophyApi\n\nclient = TrophyApi(api_key='YOUR_API_KEY')\n\nrewards = client.admin.rewards.list(\n  limit=10,\n  skip=0\n)\n"
+          },
+          {
+            "lang": "go",
+            "source": "import (\n  \"context\"\n\n  api \"github.com/trophyso/trophy-go\"\n  trophyclient \"github.com/trophyso/trophy-go/client\"\n  \"github.com/trophyso/trophy-go/option\"\n)\n\nclient := trophyclient.NewClient(\n  option.WithApiKey(\"YOUR_API_KEY\"),\n)\n\nresponse, err := client.Admin.Rewards.List(context.TODO(), nil)\n"
+          }
+        ],
+        "parameters": [
+          {
+            "name": "limit",
+            "in": "query",
+            "description": "Number of records to return.",
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "minimum": 1,
+              "maximum": 100,
+              "default": 10
+            },
+            "example": 10
+          },
+          {
+            "name": "skip",
+            "in": "query",
+            "description": "Number of records to skip from the start of the list.",
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "minimum": 0,
+              "default": 0
+            },
+            "example": 0
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful operation",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ListRewardsResponse"
+                },
+                "examples": {
+                  "Rewards list": {
+                    "value": [
+                      {
+                        "id": "550e8400-e29b-41d4-a716-446655440000",
+                        "name": "Welcome bonus",
+                        "key": "welcome-bonus",
+                        "description": "Points for finishing onboarding",
+                        "status": "active",
+                        "type": "points",
+                        "pointsSystemId": "660f9500-f30c-42e5-b827-557766550001",
+                        "points": 100,
+                        "maxRedemptions": 1,
+                        "userAttributes": []
+                      }
+                    ]
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AdminErrorBody"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Unprocessible Entity",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AdminErrorBody"
+                }
+              }
+            }
+          }
+        },
+        "summary": "List rewards",
+        "security": [
+          {
+            "ApiKeyAuth": []
+          }
+        ]
+      },
+      "post": {
+        "description": "Create rewards. Optionally include triggers in each reward payload to create them alongside the reward. A reward with any invalid trigger is not created.",
+        "operationId": "admin_rewards_create",
+        "x-fern-server-name": "admin",
+        "x-fern-sdk-group-name": [
+          "admin",
+          "rewards"
+        ],
+        "x-fern-sdk-method-name": "create",
+        "tags": [
+          "Admin"
+        ],
+        "x-codeSamples": [
+          {
+            "lang": "javascript",
+            "source": "import { TrophyApiClient } from '@trophyso/node';\n\nconst trophy = new TrophyApiClient({\n  apiKey: 'YOUR_API_KEY'\n});\n\nconst result = await trophy.admin.rewards.create([\n  {\n    name: 'Welcome bonus',\n    key: 'welcome-bonus',\n    type: 'points',\n    pointsSystemId: 'points-system-uuid',\n    points: 100,\n    triggers: [\n      { type: 'achievement', achievementId: 'achievement-uuid', status: 'active' }\n    ]\n  }\n]);\n"
+          },
+          {
+            "lang": "python",
+            "source": "from trophy import TrophyApi\n\nclient = TrophyApi(api_key='YOUR_API_KEY')\n\nresult = client.admin.rewards.create(\n  request=[{\n    \"name\": \"Welcome bonus\",\n    \"key\": \"welcome-bonus\",\n    \"type\": \"points\",\n    \"points_system_id\": \"points-system-uuid\",\n    \"points\": 100,\n    \"triggers\": [\n      {\"type\": \"achievement\", \"achievement_id\": \"achievement-uuid\", \"status\": \"active\"}\n    ]\n  }]\n)\n"
+          },
+          {
+            "lang": "go",
+            "source": "import (\n  \"context\"\n\n  api \"github.com/trophyso/trophy-go\"\n  trophyclient \"github.com/trophyso/trophy-go/client\"\n  \"github.com/trophyso/trophy-go/option\"\n)\n\nclient := trophyclient.NewClient(\n  option.WithApiKey(\"YOUR_API_KEY\"),\n)\n\nresponse, err := client.Admin.Rewards.Create(context.TODO(), api.CreateRewardsRequest{})\n"
+          }
+        ],
+        "requestBody": {
+          "description": "Array of rewards to create. Maximum 100 rewards per request.",
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CreateRewardsRequest"
+              },
+              "examples": {
+                "Create a reward with a trigger": {
+                  "value": [
+                    {
+                      "name": "Welcome bonus",
+                      "key": "welcome-bonus",
+                      "description": "Points for finishing onboarding",
+                      "type": "points",
+                      "pointsSystemId": "660f9500-f30c-42e5-b827-557766550001",
+                      "points": 100,
+                      "maxRedemptions": 1,
+                      "triggers": [
+                        {
+                          "type": "achievement",
+                          "achievementId": "770a0600-a41d-43f6-c938-668877660002",
+                          "status": "active"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successful operation (no rewards created)",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/CreateRewardsResponse"
+                },
+                "examples": {
+                  "All requests had errors": {
+                    "value": {
+                      "created": [],
+                      "issues": [
+                        {
+                          "index": 0,
+                          "severity": "error",
+                          "message": "triggers[0]: achievementId is required for achievement triggers"
+                        }
+                      ]
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "201": {
+            "description": "Created (at least one reward created)",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/CreateRewardsResponse"
+                },
+                "examples": {
+                  "Success with no issues": {
+                    "value": {
+                      "created": [
+                        {
+                          "id": "550e8400-e29b-41d4-a716-446655440000",
+                          "name": "Welcome bonus",
+                          "key": "welcome-bonus",
+                          "description": "Points for finishing onboarding",
+                          "status": "inactive",
+                          "type": "points",
+                          "pointsSystemId": "660f9500-f30c-42e5-b827-557766550001",
+                          "points": 100,
+                          "maxRedemptions": 1,
+                          "userAttributes": [],
+                          "triggers": [
+                            {
+                              "id": "880b1700-b52e-44a7-d049-779988770003",
+                              "type": "achievement",
+                              "status": "active",
+                              "userAttributes": [],
+                              "achievementId": "770a0600-a41d-43f6-c938-668877660002"
+                            }
+                          ]
+                        }
+                      ],
+                      "issues": []
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AdminErrorBody"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Unprocessible Entity",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AdminErrorBody"
+                }
+              }
+            }
+          }
+        },
+        "summary": "Create rewards",
+        "security": [
+          {
+            "ApiKeyAuth": []
+          }
+        ]
+      },
+      "patch": {
+        "description": "Update rewards by ID. Maximum 100 rewards per request. Only provided fields are updated; omitted fields are preserved. Use the reward triggers endpoints to change a reward's triggers.",
+        "operationId": "admin_rewards_update",
+        "x-fern-server-name": "admin",
+        "x-fern-sdk-group-name": [
+          "admin",
+          "rewards"
+        ],
+        "x-fern-sdk-method-name": "update",
+        "tags": [
+          "Admin"
+        ],
+        "x-codeSamples": [
+          {
+            "lang": "javascript",
+            "source": "import { TrophyApiClient } from '@trophyso/node';\n\nconst trophy = new TrophyApiClient({\n  apiKey: 'YOUR_API_KEY'\n});\n\nconst result = await trophy.admin.rewards.update([\n  { id: 'reward-uuid', status: 'active', points: 150 }\n]);\n"
+          },
+          {
+            "lang": "python",
+            "source": "from trophy import TrophyApi\n\nclient = TrophyApi(api_key='YOUR_API_KEY')\n\nresult = client.admin.rewards.update(\n  request=[{\"id\": \"reward-uuid\", \"status\": \"active\", \"points\": 150}]\n)\n"
+          },
+          {
+            "lang": "go",
+            "source": "import (\n  \"context\"\n\n  api \"github.com/trophyso/trophy-go\"\n  trophyclient \"github.com/trophyso/trophy-go/client\"\n  \"github.com/trophyso/trophy-go/option\"\n)\n\nclient := trophyclient.NewClient(\n  option.WithApiKey(\"YOUR_API_KEY\"),\n)\n\nresponse, err := client.Admin.Rewards.Update(context.TODO(), api.UpdateRewardsRequest{})\n"
+          }
+        ],
+        "requestBody": {
+          "description": "Array of reward updates. Maximum 100 rewards per request.",
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/UpdateRewardsRequest"
+              },
+              "examples": {
+                "Activate a reward": {
+                  "value": [
+                    {
+                      "id": "550e8400-e29b-41d4-a716-446655440000",
+                      "status": "active",
+                      "points": 150
+                    }
+                  ]
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successful operation",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/UpdateRewardsResponse"
+                },
+                "examples": {
+                  "Success": {
+                    "value": {
+                      "updated": [
+                        {
+                          "id": "550e8400-e29b-41d4-a716-446655440000",
+                          "name": "Welcome bonus",
+                          "key": "welcome-bonus",
+                          "description": "Points for finishing onboarding",
+                          "status": "active",
+                          "type": "points",
+                          "pointsSystemId": "660f9500-f30c-42e5-b827-557766550001",
+                          "points": 150,
+                          "maxRedemptions": 1,
+                          "userAttributes": []
+                        }
+                      ],
+                      "issues": []
+                    }
+                  },
+                  "Mixed success and errors": {
+                    "value": {
+                      "updated": [],
+                      "issues": [
+                        {
+                          "id": "550e8400-e29b-41d4-a716-446655440999",
+                          "severity": "error",
+                          "message": "Reward not found by ID"
+                        }
+                      ]
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AdminErrorBody"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Unprocessible Entity",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AdminErrorBody"
+                }
+              }
+            }
+          }
+        },
+        "summary": "Update rewards",
+        "security": [
+          {
+            "ApiKeyAuth": []
+          }
+        ]
+      },
+      "delete": {
+        "description": "Delete rewards by ID. Maximum 100 reward IDs per request. A deleted reward's triggers are deleted too.",
+        "operationId": "admin_rewards_delete",
+        "x-fern-server-name": "admin",
+        "x-fern-sdk-group-name": [
+          "admin",
+          "rewards"
+        ],
+        "x-fern-sdk-method-name": "delete",
+        "tags": [
+          "Admin"
+        ],
+        "x-codeSamples": [
+          {
+            "lang": "javascript",
+            "source": "import { TrophyApiClient } from '@trophyso/node';\n\nconst trophy = new TrophyApiClient({\n  apiKey: 'YOUR_API_KEY'\n});\n\nconst result = await trophy.admin.rewards.delete({\n  ids: ['reward-uuid-1', 'reward-uuid-2']\n});\n"
+          },
+          {
+            "lang": "python",
+            "source": "from trophy import TrophyApi\n\nclient = TrophyApi(api_key='YOUR_API_KEY')\n\nresult = client.admin.rewards.delete(\n  ids=['reward-uuid-1', 'reward-uuid-2']\n)\n"
+          },
+          {
+            "lang": "go",
+            "source": "import (\n  \"context\"\n\n  api \"github.com/trophyso/trophy-go\"\n  trophyclient \"github.com/trophyso/trophy-go/client\"\n  \"github.com/trophyso/trophy-go/option\"\n)\n\nclient := trophyclient.NewClient(\n  option.WithApiKey(\"YOUR_API_KEY\"),\n)\n\nresponse, err := client.Admin.Rewards.Delete(context.TODO(), nil)\n"
+          }
+        ],
+        "parameters": [
+          {
+            "name": "ids",
+            "in": "query",
+            "description": "Reward IDs to delete. Can be repeated or comma-separated.",
+            "required": true,
+            "schema": {
+              "type": "array",
+              "items": {
+                "type": "string",
+                "format": "uuid"
+              }
+            },
+            "style": "form",
+            "explode": true,
+            "example": [
+              "550e8400-e29b-41d4-a716-446655440000"
+            ]
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful operation",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/DeleteRewardsResponse"
+                },
+                "examples": {
+                  "Success with no issues": {
+                    "value": {
+                      "deleted": [
+                        {
+                          "id": "550e8400-e29b-41d4-a716-446655440000"
+                        }
+                      ],
+                      "issues": []
+                    }
+                  },
+                  "Mixed success and errors": {
+                    "value": {
+                      "deleted": [
+                        {
+                          "id": "550e8400-e29b-41d4-a716-446655440000"
+                        }
+                      ],
+                      "issues": [
+                        {
+                          "id": "not-a-uuid",
+                          "severity": "error",
+                          "message": "id must be a valid UUID"
+                        },
+                        {
+                          "id": "550e8400-e29b-41d4-a716-446655440999",
+                          "severity": "error",
+                          "message": "Reward not found by ID"
+                        }
+                      ]
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AdminErrorBody"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Unprocessible Entity",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AdminErrorBody"
+                }
+              }
+            }
+          }
+        },
+        "summary": "Delete rewards",
+        "security": [
+          {
+            "ApiKeyAuth": []
+          }
+        ]
+      }
+    },
+    "/rewards/{id}": {
+      "servers": [
+        {
+          "url": "https://admin.trophy.so/v1",
+          "description": "Admin API"
+        }
+      ],
+      "parameters": [
+        {
+          "$ref": "#/components/parameters/TenantId"
+        }
+      ],
+      "get": {
+        "description": "Get a reward by ID.",
+        "operationId": "admin_rewards_get",
+        "x-fern-server-name": "admin",
+        "x-fern-sdk-group-name": [
+          "admin",
+          "rewards"
+        ],
+        "x-fern-sdk-method-name": "get",
+        "tags": [
+          "Admin"
+        ],
+        "x-codeSamples": [
+          {
+            "lang": "javascript",
+            "source": "import { TrophyApiClient } from '@trophyso/node';\n\nconst trophy = new TrophyApiClient({\n  apiKey: 'YOUR_API_KEY'\n});\n\nconst reward = await trophy.admin.rewards.get('reward-uuid');\n"
+          },
+          {
+            "lang": "python",
+            "source": "from trophy import TrophyApi\n\nclient = TrophyApi(api_key='YOUR_API_KEY')\n\nreward = client.admin.rewards.get(id='reward-uuid')\n"
+          },
+          {
+            "lang": "go",
+            "source": "import (\n  \"context\"\n\n  api \"github.com/trophyso/trophy-go\"\n  trophyclient \"github.com/trophyso/trophy-go/client\"\n  \"github.com/trophyso/trophy-go/option\"\n)\n\nclient := trophyclient.NewClient(\n  option.WithApiKey(\"YOUR_API_KEY\"),\n)\n\nresponse, err := client.Admin.Rewards.Get(context.TODO(), \"550e8400-e29b-41d4-a716-446655440000\")\n"
+          }
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            },
+            "description": "The ID of the reward.",
+            "example": "550e8400-e29b-41d4-a716-446655440000"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful operation",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AdminReward"
+                },
+                "examples": {
+                  "Reward": {
+                    "value": {
+                      "id": "550e8400-e29b-41d4-a716-446655440000",
+                      "name": "Welcome bonus",
+                      "key": "welcome-bonus",
+                      "description": "Points for finishing onboarding",
+                      "status": "active",
+                      "type": "points",
+                      "pointsSystemId": "660f9500-f30c-42e5-b827-557766550001",
+                      "points": 100,
+                      "maxRedemptions": 1,
+                      "userAttributes": []
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AdminErrorBody"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not Found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AdminErrorBody"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Unprocessible Entity",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AdminErrorBody"
+                }
+              }
+            }
+          }
+        },
+        "summary": "Get a reward by ID",
+        "security": [
+          {
+            "ApiKeyAuth": []
+          }
+        ]
+      }
+    },
+    "/rewards/{rewardId}/triggers": {
+      "servers": [
+        {
+          "url": "https://admin.trophy.so/v1",
+          "description": "Admin API"
+        }
+      ],
+      "parameters": [
+        {
+          "$ref": "#/components/parameters/TenantId"
+        }
+      ],
+      "get": {
+        "description": "List triggers for a reward. Active triggers are listed first.",
+        "operationId": "admin_rewards_triggers_list",
+        "x-fern-server-name": "admin",
+        "x-fern-sdk-group-name": [
+          "admin",
+          "rewards",
+          "triggers"
+        ],
+        "x-fern-sdk-method-name": "list",
+        "tags": [
+          "Admin"
+        ],
+        "x-codeSamples": [
+          {
+            "lang": "javascript",
+            "source": "import { TrophyApiClient } from '@trophyso/node';\n\nconst trophy = new TrophyApiClient({\n  apiKey: 'YOUR_API_KEY'\n});\n\nconst triggers = await trophy.admin.rewards.triggers.list('reward-uuid', {\n  limit: 10,\n  skip: 0\n});\n"
+          },
+          {
+            "lang": "python",
+            "source": "from trophy import TrophyApi\n\nclient = TrophyApi(api_key='YOUR_API_KEY')\n\ntriggers = client.admin.rewards.triggers.list(\n  reward_id='reward-uuid',\n  limit=10,\n  skip=0\n)\n"
+          },
+          {
+            "lang": "go",
+            "source": "import (\n  \"context\"\n\n  api \"github.com/trophyso/trophy-go\"\n  trophyclient \"github.com/trophyso/trophy-go/client\"\n  \"github.com/trophyso/trophy-go/option\"\n)\n\nclient := trophyclient.NewClient(\n  option.WithApiKey(\"YOUR_API_KEY\"),\n)\n\nresponse, err := client.Admin.Rewards.Triggers.List(context.TODO(), \"reward-uuid\", nil)\n"
+          }
+        ],
+        "parameters": [
+          {
+            "name": "rewardId",
+            "in": "path",
+            "description": "The UUID of the reward.",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            },
+            "example": "550e8400-e29b-41d4-a716-446655440000"
+          },
+          {
+            "name": "limit",
+            "in": "query",
+            "description": "Maximum number of results to return (1-100, default 10).",
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "minimum": 1,
+              "maximum": 100,
+              "default": 10
+            }
+          },
+          {
+            "name": "skip",
+            "in": "query",
+            "description": "Number of results to skip for pagination (default 0).",
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "minimum": 0,
+              "default": 0
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "A paginated list of reward triggers.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ListRewardTriggersResponse"
+                },
+                "examples": {
+                  "Triggers list": {
+                    "value": [
+                      {
+                        "id": "880b1700-b52e-44a7-d049-779988770003",
+                        "type": "metric",
+                        "status": "active",
+                        "userAttributes": [],
+                        "metricId": "990c2800-c63f-45b8-e15a-88aa99880004",
+                        "metricThreshold": 10,
+                        "eventAttributes": []
+                      }
+                    ]
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AdminErrorBody"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not Found (reward not found)",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AdminErrorBody"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Unprocessible Entity",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AdminErrorBody"
+                }
+              }
+            }
+          }
+        },
+        "summary": "List reward triggers",
+        "security": [
+          {
+            "ApiKeyAuth": []
+          }
+        ]
+      },
+      "post": {
+        "description": "Create reward triggers in bulk. Maximum 100 triggers per request.",
+        "operationId": "admin_rewards_triggers_create",
+        "x-fern-server-name": "admin",
+        "x-fern-sdk-group-name": [
+          "admin",
+          "rewards",
+          "triggers"
+        ],
+        "x-fern-sdk-method-name": "create",
+        "tags": [
+          "Admin"
+        ],
+        "x-codeSamples": [
+          {
+            "lang": "javascript",
+            "source": "import { TrophyApiClient } from '@trophyso/node';\n\nconst trophy = new TrophyApiClient({\n  apiKey: 'YOUR_API_KEY'\n});\n\nconst result = await trophy.admin.rewards.triggers.create('reward-uuid', [\n  {\n    type: 'metric',\n    metricId: 'metric-uuid',\n    metricThreshold: 10\n  }\n]);\n"
+          },
+          {
+            "lang": "python",
+            "source": "from trophy import TrophyApi\n\nclient = TrophyApi(api_key='YOUR_API_KEY')\n\nresult = client.admin.rewards.triggers.create(\n  reward_id='reward-uuid',\n  request=[{\n    'type': 'metric',\n    'metric_id': 'metric-uuid',\n    'metric_threshold': 10\n  }]\n)\n"
+          },
+          {
+            "lang": "go",
+            "source": "import (\n  \"context\"\n\n  api \"github.com/trophyso/trophy-go\"\n  trophyclient \"github.com/trophyso/trophy-go/client\"\n  \"github.com/trophyso/trophy-go/option\"\n)\n\nclient := trophyclient.NewClient(\n  option.WithApiKey(\"YOUR_API_KEY\"),\n)\n\nresponse, err := client.Admin.Rewards.Triggers.Create(context.TODO(), \"reward-uuid\", api.CreateRewardTriggersRequest{})\n"
+          }
+        ],
+        "parameters": [
+          {
+            "name": "rewardId",
+            "in": "path",
+            "description": "The UUID of the reward.",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            },
+            "example": "550e8400-e29b-41d4-a716-446655440000"
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CreateRewardTriggersRequest"
+              },
+              "examples": {
+                "Create a metric trigger": {
+                  "value": [
+                    {
+                      "type": "metric",
+                      "metricId": "990c2800-c63f-45b8-e15a-88aa99880004",
+                      "metricThreshold": 10
+                    }
+                  ]
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Request was valid but no triggers were created (all items had issues).",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/CreateRewardTriggersResponse"
+                },
+                "examples": {
+                  "All requests had errors": {
+                    "value": {
+                      "created": [],
+                      "issues": [
+                        {
+                          "index": 0,
+                          "severity": "error",
+                          "message": "Metric not found"
+                        }
+                      ]
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "201": {
+            "description": "At least one trigger was created.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/CreateRewardTriggersResponse"
+                },
+                "examples": {
+                  "Created triggers": {
+                    "value": {
+                      "created": [
+                        {
+                          "id": "880b1700-b52e-44a7-d049-779988770003",
+                          "type": "metric",
+                          "status": "inactive",
+                          "userAttributes": [],
+                          "metricId": "990c2800-c63f-45b8-e15a-88aa99880004",
+                          "metricThreshold": 10,
+                          "eventAttributes": []
+                        }
+                      ],
+                      "issues": []
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AdminErrorBody"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not Found (reward not found)",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AdminErrorBody"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Unprocessible Entity",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AdminErrorBody"
+                }
+              }
+            }
+          }
+        },
+        "summary": "Create reward triggers",
+        "security": [
+          {
+            "ApiKeyAuth": []
+          }
+        ]
+      },
+      "patch": {
+        "description": "Update reward triggers in bulk. Maximum 100 triggers per request. Only provided fields are updated; omitted fields are preserved. A trigger keeps its ID when its criteria change.",
+        "operationId": "admin_rewards_triggers_update",
+        "x-fern-server-name": "admin",
+        "x-fern-sdk-group-name": [
+          "admin",
+          "rewards",
+          "triggers"
+        ],
+        "x-fern-sdk-method-name": "update",
+        "tags": [
+          "Admin"
+        ],
+        "x-codeSamples": [
+          {
+            "lang": "javascript",
+            "source": "import { TrophyApiClient } from '@trophyso/node';\n\nconst trophy = new TrophyApiClient({\n  apiKey: 'YOUR_API_KEY'\n});\n\nconst result = await trophy.admin.rewards.triggers.update('reward-uuid', [\n  { id: 'trigger-uuid', status: 'active' }\n]);\n"
+          },
+          {
+            "lang": "python",
+            "source": "from trophy import TrophyApi\n\nclient = TrophyApi(api_key='YOUR_API_KEY')\n\nresult = client.admin.rewards.triggers.update(\n  reward_id='reward-uuid',\n  request=[{'id': 'trigger-uuid', 'status': 'active'}]\n)\n"
+          },
+          {
+            "lang": "go",
+            "source": "import (\n  \"context\"\n\n  api \"github.com/trophyso/trophy-go\"\n  trophyclient \"github.com/trophyso/trophy-go/client\"\n  \"github.com/trophyso/trophy-go/option\"\n)\n\nclient := trophyclient.NewClient(\n  option.WithApiKey(\"YOUR_API_KEY\"),\n)\n\nresponse, err := client.Admin.Rewards.Triggers.Update(context.TODO(), \"reward-uuid\", api.UpdateRewardTriggersRequest{})\n"
+          }
+        ],
+        "parameters": [
+          {
+            "name": "rewardId",
+            "in": "path",
+            "description": "The UUID of the reward.",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            },
+            "example": "550e8400-e29b-41d4-a716-446655440000"
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/UpdateRewardTriggersRequest"
+              },
+              "examples": {
+                "Activate a trigger": {
+                  "value": [
+                    {
+                      "id": "880b1700-b52e-44a7-d049-779988770003",
+                      "status": "active"
+                    }
+                  ]
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successfully processed the update request.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/UpdateRewardTriggersResponse"
+                },
+                "examples": {
+                  "Updated triggers": {
+                    "value": {
+                      "updated": [
+                        {
+                          "id": "880b1700-b52e-44a7-d049-779988770003",
+                          "type": "metric",
+                          "status": "active",
+                          "userAttributes": [],
+                          "metricId": "990c2800-c63f-45b8-e15a-88aa99880004",
+                          "metricThreshold": 10,
+                          "eventAttributes": []
+                        }
+                      ],
+                      "issues": []
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AdminErrorBody"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not Found (reward not found)",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AdminErrorBody"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Unprocessible Entity",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AdminErrorBody"
+                }
+              }
+            }
+          }
+        },
+        "summary": "Update reward triggers",
+        "security": [
+          {
+            "ApiKeyAuth": []
+          }
+        ]
+      },
+      "delete": {
+        "description": "Delete reward triggers by ID. Maximum 100 trigger IDs per request. A reward with no triggers is not awarded until a trigger is added.",
+        "operationId": "admin_rewards_triggers_delete",
+        "x-fern-server-name": "admin",
+        "x-fern-sdk-group-name": [
+          "admin",
+          "rewards",
+          "triggers"
+        ],
+        "x-fern-sdk-method-name": "delete",
+        "tags": [
+          "Admin"
+        ],
+        "x-codeSamples": [
+          {
+            "lang": "javascript",
+            "source": "import { TrophyApiClient } from '@trophyso/node';\n\nconst trophy = new TrophyApiClient({\n  apiKey: 'YOUR_API_KEY'\n});\n\nconst result = await trophy.admin.rewards.triggers.delete('reward-uuid', {\n  ids: ['trigger-uuid-1', 'trigger-uuid-2']\n});\n"
+          },
+          {
+            "lang": "python",
+            "source": "from trophy import TrophyApi\n\nclient = TrophyApi(api_key='YOUR_API_KEY')\n\nresult = client.admin.rewards.triggers.delete(\n  reward_id='reward-uuid',\n  ids=['trigger-uuid-1', 'trigger-uuid-2']\n)\n"
+          },
+          {
+            "lang": "go",
+            "source": "import (\n  \"context\"\n\n  api \"github.com/trophyso/trophy-go\"\n  trophyclient \"github.com/trophyso/trophy-go/client\"\n  \"github.com/trophyso/trophy-go/option\"\n)\n\nclient := trophyclient.NewClient(\n  option.WithApiKey(\"YOUR_API_KEY\"),\n)\n\nresponse, err := client.Admin.Rewards.Triggers.Delete(context.TODO(), \"reward-uuid\", nil)\n"
+          }
+        ],
+        "parameters": [
+          {
+            "name": "rewardId",
+            "in": "path",
+            "description": "The UUID of the reward.",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            },
+            "example": "550e8400-e29b-41d4-a716-446655440000"
+          },
+          {
+            "name": "ids",
+            "in": "query",
+            "description": "Trigger IDs to delete. Can be repeated or comma-separated.",
+            "required": true,
+            "schema": {
+              "type": "array",
+              "items": {
+                "type": "string",
+                "format": "uuid"
+              }
+            },
+            "style": "form",
+            "explode": true,
+            "example": [
+              "880b1700-b52e-44a7-d049-779988770003"
+            ]
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successfully processed the delete request.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/DeleteRewardTriggersResponse"
+                },
+                "examples": {
+                  "Deleted triggers": {
+                    "value": {
+                      "deleted": [
+                        {
+                          "id": "880b1700-b52e-44a7-d049-779988770003"
+                        }
+                      ],
+                      "issues": []
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AdminErrorBody"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not Found (reward not found)",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AdminErrorBody"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Unprocessible Entity",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AdminErrorBody"
+                }
+              }
+            }
+          }
+        },
+        "summary": "Delete reward triggers",
+        "security": [
+          {
+            "ApiKeyAuth": []
+          }
+        ]
+      }
+    },
+    "/rewards/{rewardId}/triggers/{id}": {
+      "servers": [
+        {
+          "url": "https://admin.trophy.so/v1",
+          "description": "Admin API"
+        }
+      ],
+      "parameters": [
+        {
+          "$ref": "#/components/parameters/TenantId"
+        }
+      ],
+      "get": {
+        "description": "Get a single reward trigger by ID.",
+        "operationId": "admin_rewards_triggers_get",
+        "x-fern-server-name": "admin",
+        "x-fern-sdk-group-name": [
+          "admin",
+          "rewards",
+          "triggers"
+        ],
+        "x-fern-sdk-method-name": "get",
+        "tags": [
+          "Admin"
+        ],
+        "x-codeSamples": [
+          {
+            "lang": "javascript",
+            "source": "import { TrophyApiClient } from '@trophyso/node';\n\nconst trophy = new TrophyApiClient({\n  apiKey: 'YOUR_API_KEY'\n});\n\nconst trigger = await trophy.admin.rewards.triggers.get('reward-uuid', 'trigger-uuid');\n"
+          },
+          {
+            "lang": "python",
+            "source": "from trophy import TrophyApi\n\nclient = TrophyApi(api_key='YOUR_API_KEY')\n\ntrigger = client.admin.rewards.triggers.get(\n  reward_id='reward-uuid',\n  id='trigger-uuid'\n)\n"
+          },
+          {
+            "lang": "go",
+            "source": "import (\n  \"context\"\n\n  api \"github.com/trophyso/trophy-go\"\n  trophyclient \"github.com/trophyso/trophy-go/client\"\n  \"github.com/trophyso/trophy-go/option\"\n)\n\nclient := trophyclient.NewClient(\n  option.WithApiKey(\"YOUR_API_KEY\"),\n)\n\nresponse, err := client.Admin.Rewards.Triggers.Get(context.TODO(), \"reward-uuid\", \"trigger-uuid\")\n"
+          }
+        ],
+        "parameters": [
+          {
+            "name": "rewardId",
+            "in": "path",
+            "description": "The UUID of the reward.",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            },
+            "example": "550e8400-e29b-41d4-a716-446655440000"
+          },
+          {
+            "name": "id",
+            "in": "path",
+            "description": "The UUID of the reward trigger.",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            },
+            "example": "880b1700-b52e-44a7-d049-779988770003"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "The reward trigger.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AdminRewardTrigger"
+                },
+                "examples": {
+                  "A single trigger": {
+                    "value": {
+                      "id": "880b1700-b52e-44a7-d049-779988770003",
+                      "type": "leaderboard",
+                      "status": "active",
+                      "userAttributes": [],
+                      "leaderboardId": "aa0d3900-d74a-46c9-f26b-99bbaa990005",
+                      "rank": 1
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AdminErrorBody"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not Found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AdminErrorBody"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Unprocessible Entity",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AdminErrorBody"
+                }
+              }
+            }
+          }
+        },
+        "summary": "Get a reward trigger by ID",
         "security": [
           {
             "ApiKeyAuth": []
@@ -11795,6 +13088,843 @@
               "$ref": "#/components/schemas/DeletedResource"
             },
             "description": "Array of deleted tenant IDs."
+          },
+          "issues": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/AdminIssue"
+            },
+            "description": "Array of issues encountered during deletion."
+          }
+        },
+        "required": [
+          "deleted",
+          "issues"
+        ]
+      },
+      "CreateRewardTriggerRequestItem": {
+        "title": "CreateRewardTriggerRequestItem",
+        "type": "object",
+        "description": "A reward trigger to create.",
+        "properties": {
+          "type": {
+            "type": "string",
+            "enum": [
+              "metric",
+              "achievement",
+              "streak",
+              "leaderboard"
+            ],
+            "description": "The type of trigger.",
+            "example": "metric"
+          },
+          "status": {
+            "type": "string",
+            "enum": [
+              "active",
+              "inactive"
+            ],
+            "default": "inactive",
+            "description": "The status of the trigger. Defaults to 'inactive'.",
+            "example": "inactive"
+          },
+          "userAttributes": {
+            "type": [
+              "array",
+              "null"
+            ],
+            "description": "Optional user attribute filters for the trigger.",
+            "items": {
+              "type": "object",
+              "properties": {
+                "attributeId": {
+                  "type": "string",
+                  "format": "uuid",
+                  "description": "The UUID of the user attribute."
+                },
+                "attributeValue": {
+                  "type": "string",
+                  "description": "The value to match."
+                }
+              },
+              "required": [
+                "attributeId",
+                "attributeValue"
+              ]
+            }
+          },
+          "metricId": {
+            "type": "string",
+            "format": "uuid",
+            "description": "Required if type is `metric`. The UUID of the metric."
+          },
+          "metricThreshold": {
+            "type": "integer",
+            "minimum": 1,
+            "description": "Required if type is `metric`. The reward is awarded each time the user's metric total grows by this amount."
+          },
+          "eventAttributes": {
+            "type": [
+              "array",
+              "null"
+            ],
+            "description": "Optional event attribute filters. Only permitted if type is `metric`.",
+            "items": {
+              "type": "object",
+              "properties": {
+                "attributeId": {
+                  "type": "string",
+                  "format": "uuid",
+                  "description": "The UUID of the event attribute."
+                },
+                "attributeValue": {
+                  "type": "string",
+                  "description": "The value to match."
+                }
+              },
+              "required": [
+                "attributeId",
+                "attributeValue"
+              ]
+            }
+          },
+          "achievementId": {
+            "type": "string",
+            "format": "uuid",
+            "description": "Required if type is `achievement`. The UUID of the achievement."
+          },
+          "streakLength": {
+            "type": "integer",
+            "minimum": 1,
+            "description": "Required if type is `streak`. The number of streak periods that awards the reward. It is awarded again each time the streak grows by this many periods."
+          },
+          "leaderboardId": {
+            "type": "string",
+            "format": "uuid",
+            "description": "Required if type is `leaderboard`. The UUID of the leaderboard."
+          },
+          "rank": {
+            "type": "integer",
+            "minimum": 1,
+            "description": "Required if type is `leaderboard`. The final rank that awards the reward."
+          }
+        },
+        "required": [
+          "type"
+        ]
+      },
+      "CreateRewardTriggersRequest": {
+        "title": "CreateRewardTriggersRequest",
+        "type": "array",
+        "description": "Array of reward triggers to create. Maximum 100 triggers per request.",
+        "items": {
+          "$ref": "#/components/schemas/CreateRewardTriggerRequestItem"
+        },
+        "maxItems": 100,
+        "minItems": 1
+      },
+      "AdminRewardTrigger": {
+        "title": "AdminRewardTrigger",
+        "type": "object",
+        "description": "A reward trigger as returned from admin endpoints.",
+        "properties": {
+          "id": {
+            "type": "string",
+            "format": "uuid",
+            "description": "The UUID of the trigger."
+          },
+          "type": {
+            "type": "string",
+            "enum": [
+              "metric",
+              "achievement",
+              "streak",
+              "leaderboard"
+            ],
+            "description": "The type of trigger."
+          },
+          "status": {
+            "type": "string",
+            "enum": [
+              "active",
+              "inactive"
+            ],
+            "description": "The status of the trigger. Only active triggers award the reward."
+          },
+          "userAttributes": {
+            "type": "array",
+            "description": "User attribute filters applied to the trigger.",
+            "items": {
+              "type": "object",
+              "properties": {
+                "attributeId": {
+                  "type": "string",
+                  "format": "uuid"
+                },
+                "attributeValue": {
+                  "type": "string"
+                }
+              },
+              "required": [
+                "attributeId",
+                "attributeValue"
+              ]
+            }
+          },
+          "metricId": {
+            "type": "string",
+            "format": "uuid",
+            "description": "The UUID of the metric. Only present for metric triggers."
+          },
+          "metricThreshold": {
+            "type": "integer",
+            "description": "The metric threshold. Only present for metric triggers."
+          },
+          "eventAttributes": {
+            "type": "array",
+            "description": "Event attribute filters applied to the trigger. Only present for metric triggers.",
+            "items": {
+              "type": "object",
+              "properties": {
+                "attributeId": {
+                  "type": "string",
+                  "format": "uuid"
+                },
+                "attributeValue": {
+                  "type": "string"
+                }
+              },
+              "required": [
+                "attributeId",
+                "attributeValue"
+              ]
+            }
+          },
+          "achievementId": {
+            "type": "string",
+            "format": "uuid",
+            "description": "The UUID of the achievement. Only present for achievement triggers."
+          },
+          "streakLength": {
+            "type": "integer",
+            "description": "The streak length. Only present for streak triggers."
+          },
+          "leaderboardId": {
+            "type": "string",
+            "format": "uuid",
+            "description": "The UUID of the leaderboard. Only present for leaderboard triggers."
+          },
+          "rank": {
+            "type": "integer",
+            "description": "The rank. Only present for leaderboard triggers."
+          }
+        },
+        "required": [
+          "id",
+          "type",
+          "status",
+          "userAttributes"
+        ]
+      },
+      "ListRewardTriggersResponse": {
+        "title": "ListRewardTriggersResponse",
+        "type": "array",
+        "description": "A paginated list of reward triggers.",
+        "items": {
+          "$ref": "#/components/schemas/AdminRewardTrigger"
+        }
+      },
+      "CreateRewardTriggersResponse": {
+        "title": "CreateRewardTriggersResponse",
+        "type": "object",
+        "description": "Response containing created triggers and any per-item issues.",
+        "properties": {
+          "created": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/AdminRewardTrigger"
+            },
+            "description": "Array of successfully created triggers."
+          },
+          "issues": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/AdminIssue"
+            },
+            "description": "Array of issues encountered during trigger creation."
+          }
+        },
+        "required": [
+          "created",
+          "issues"
+        ]
+      },
+      "UpdateRewardTriggersRequest": {
+        "title": "UpdateRewardTriggersRequest",
+        "type": "array",
+        "description": "Array of reward trigger updates. Maximum 100 per request.",
+        "items": {
+          "type": "object",
+          "properties": {
+            "id": {
+              "type": "string",
+              "format": "uuid",
+              "description": "The UUID of the trigger to update."
+            },
+            "type": {
+              "type": "string",
+              "enum": [
+                "metric",
+                "achievement",
+                "streak",
+                "leaderboard"
+              ],
+              "description": "Updated trigger type. Can only be changed when the trigger is inactive. Required fields for the new type must be provided."
+            },
+            "status": {
+              "type": "string",
+              "enum": [
+                "active",
+                "inactive"
+              ],
+              "description": "Updated status."
+            },
+            "userAttributes": {
+              "type": [
+                "array",
+                "null"
+              ],
+              "description": "Updated user attribute filters. Set to null to clear.",
+              "items": {
+                "type": "object",
+                "properties": {
+                  "attributeId": {
+                    "type": "string",
+                    "format": "uuid"
+                  },
+                  "attributeValue": {
+                    "type": "string"
+                  }
+                },
+                "required": [
+                  "attributeId",
+                  "attributeValue"
+                ]
+              }
+            },
+            "metricId": {
+              "type": "string",
+              "format": "uuid",
+              "description": "Updated metric ID. Only permitted for metric triggers."
+            },
+            "metricThreshold": {
+              "type": "integer",
+              "minimum": 1,
+              "description": "Updated metric threshold. Only permitted for metric triggers."
+            },
+            "eventAttributes": {
+              "type": [
+                "array",
+                "null"
+              ],
+              "description": "Updated event attribute filters. Only permitted for metric triggers. Set to null to clear.",
+              "items": {
+                "type": "object",
+                "properties": {
+                  "attributeId": {
+                    "type": "string",
+                    "format": "uuid"
+                  },
+                  "attributeValue": {
+                    "type": "string"
+                  }
+                },
+                "required": [
+                  "attributeId",
+                  "attributeValue"
+                ]
+              }
+            },
+            "achievementId": {
+              "type": "string",
+              "format": "uuid",
+              "description": "Updated achievement ID. Only permitted for achievement triggers."
+            },
+            "streakLength": {
+              "type": "integer",
+              "minimum": 1,
+              "description": "Updated streak length. Only permitted for streak triggers."
+            },
+            "leaderboardId": {
+              "type": "string",
+              "format": "uuid",
+              "description": "Updated leaderboard ID. Only permitted for leaderboard triggers."
+            },
+            "rank": {
+              "type": "integer",
+              "minimum": 1,
+              "description": "Updated rank. Only permitted for leaderboard triggers."
+            }
+          },
+          "required": [
+            "id"
+          ]
+        },
+        "maxItems": 100,
+        "minItems": 1
+      },
+      "UpdateRewardTriggersResponse": {
+        "title": "UpdateRewardTriggersResponse",
+        "type": "object",
+        "description": "Response containing updated triggers and any issues encountered.",
+        "properties": {
+          "updated": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/AdminRewardTrigger"
+            },
+            "description": "Array of successfully updated triggers."
+          },
+          "issues": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/AdminIssue"
+            },
+            "description": "Array of issues encountered during trigger updates."
+          }
+        },
+        "required": [
+          "updated",
+          "issues"
+        ]
+      },
+      "DeleteRewardTriggersResponse": {
+        "title": "DeleteRewardTriggersResponse",
+        "type": "object",
+        "description": "Response containing the reward triggers that were deleted and any per-item issues.",
+        "properties": {
+          "deleted": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/DeletedResource"
+            },
+            "description": "Array of deleted reward triggers represented by ID."
+          },
+          "issues": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/AdminIssue"
+            },
+            "description": "Array of issues encountered during trigger deletion."
+          }
+        },
+        "required": [
+          "deleted",
+          "issues"
+        ]
+      },
+      "CreateRewardsRequest": {
+        "title": "CreateRewardsRequest",
+        "type": "array",
+        "description": "Request body for creating rewards.",
+        "items": {
+          "$ref": "#/components/schemas/CreateRewardRequestItem"
+        },
+        "minItems": 1,
+        "maxItems": 100
+      },
+      "CreateRewardRequestItem": {
+        "title": "CreateRewardRequestItem",
+        "type": "object",
+        "description": "A reward to create. Optionally include triggers.",
+        "properties": {
+          "name": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 200,
+            "description": "The reward name.",
+            "example": "Welcome bonus"
+          },
+          "key": {
+            "type": "string",
+            "pattern": "^[a-zA-Z\\d-_]+$",
+            "maxLength": 100,
+            "description": "The reward key. Only alphanumeric characters, hyphens, and underscores are permitted.",
+            "example": "welcome-bonus"
+          },
+          "description": {
+            "type": [
+              "string",
+              "null"
+            ],
+            "maxLength": 2000,
+            "description": "A short description of the reward.",
+            "example": "Points for finishing onboarding"
+          },
+          "status": {
+            "type": "string",
+            "enum": [
+              "active",
+              "inactive"
+            ],
+            "default": "inactive",
+            "description": "The status of the reward. Defaults to 'inactive'.",
+            "example": "inactive"
+          },
+          "type": {
+            "type": "string",
+            "enum": [
+              "points",
+              "custom"
+            ],
+            "description": "The type of reward. `points` rewards grant points when redeemed. `custom` rewards are fulfilled by your own system.",
+            "example": "points"
+          },
+          "pointsSystemId": {
+            "type": [
+              "string",
+              "null"
+            ],
+            "format": "uuid",
+            "description": "Required if type is `points`. The UUID of the points system to grant points in."
+          },
+          "points": {
+            "type": [
+              "integer",
+              "null"
+            ],
+            "minimum": 1,
+            "description": "Required if type is `points`. The number of points to grant."
+          },
+          "maxRedemptions": {
+            "type": [
+              "integer",
+              "null"
+            ],
+            "minimum": 1,
+            "description": "The maximum number of times a user can be awarded the reward. Null means unlimited."
+          },
+          "userAttributes": {
+            "type": [
+              "array",
+              "null"
+            ],
+            "description": "Optional user attribute filters. Only users who match are awarded the reward.",
+            "items": {
+              "type": "object",
+              "properties": {
+                "attributeId": {
+                  "type": "string",
+                  "format": "uuid",
+                  "description": "The UUID of the user attribute."
+                },
+                "attributeValue": {
+                  "type": "string",
+                  "description": "The value to match."
+                }
+              },
+              "required": [
+                "attributeId",
+                "attributeValue"
+              ]
+            }
+          },
+          "triggers": {
+            "type": "array",
+            "description": "Optional array of triggers to create alongside the reward.",
+            "items": {
+              "$ref": "#/components/schemas/CreateRewardTriggerRequestItem"
+            }
+          }
+        },
+        "required": [
+          "name",
+          "key",
+          "type"
+        ]
+      },
+      "AdminReward": {
+        "title": "AdminReward",
+        "type": "object",
+        "description": "A reward returned from the admin rewards endpoints.",
+        "properties": {
+          "id": {
+            "type": "string",
+            "format": "uuid",
+            "description": "The UUID of the reward."
+          },
+          "name": {
+            "type": "string",
+            "description": "The reward name."
+          },
+          "key": {
+            "type": "string",
+            "description": "The reward key."
+          },
+          "description": {
+            "type": [
+              "string",
+              "null"
+            ],
+            "description": "The reward description."
+          },
+          "status": {
+            "type": "string",
+            "enum": [
+              "active",
+              "inactive"
+            ],
+            "description": "The reward status."
+          },
+          "type": {
+            "type": "string",
+            "enum": [
+              "points",
+              "custom"
+            ],
+            "description": "The type of reward."
+          },
+          "pointsSystemId": {
+            "type": "string",
+            "format": "uuid",
+            "description": "The UUID of the points system. Only present for points rewards."
+          },
+          "points": {
+            "type": "integer",
+            "description": "The number of points granted. Only present for points rewards."
+          },
+          "maxRedemptions": {
+            "type": [
+              "integer",
+              "null"
+            ],
+            "description": "The maximum number of times a user can be awarded the reward. Null means unlimited."
+          },
+          "userAttributes": {
+            "type": "array",
+            "description": "User attribute filters applied to the reward.",
+            "items": {
+              "type": "object",
+              "properties": {
+                "attributeId": {
+                  "type": "string",
+                  "format": "uuid"
+                },
+                "attributeValue": {
+                  "type": "string"
+                }
+              },
+              "required": [
+                "attributeId",
+                "attributeValue"
+              ]
+            }
+          }
+        },
+        "required": [
+          "id",
+          "name",
+          "key",
+          "description",
+          "status",
+          "type",
+          "maxRedemptions",
+          "userAttributes"
+        ]
+      },
+      "CreatedAdminReward": {
+        "title": "CreatedAdminReward",
+        "description": "A reward returned from the creation endpoint. Extends AdminReward with the triggers created alongside it, present when triggers were included in the creation request.",
+        "allOf": [
+          {
+            "$ref": "#/components/schemas/AdminReward"
+          },
+          {
+            "type": "object",
+            "properties": {
+              "triggers": {
+                "type": "array",
+                "items": {
+                  "$ref": "#/components/schemas/AdminRewardTrigger"
+                },
+                "description": "Triggers created alongside the reward. Present when triggers were provided in the request."
+              }
+            }
+          }
+        ]
+      },
+      "ListRewardsResponse": {
+        "title": "ListRewardsResponse",
+        "type": "array",
+        "description": "Response containing a list of rewards.",
+        "items": {
+          "$ref": "#/components/schemas/AdminReward"
+        }
+      },
+      "CreateRewardsResponse": {
+        "title": "CreateRewardsResponse",
+        "type": "object",
+        "description": "Response containing created rewards and any per-item issues.",
+        "properties": {
+          "created": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/CreatedAdminReward"
+            },
+            "description": "Array of successfully created rewards."
+          },
+          "issues": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/AdminIssue"
+            },
+            "description": "Array of issues encountered during creation."
+          }
+        },
+        "required": [
+          "created",
+          "issues"
+        ]
+      },
+      "UpdateRewardsRequest": {
+        "title": "UpdateRewardsRequest",
+        "type": "array",
+        "description": "Request body for updating rewards.",
+        "items": {
+          "$ref": "#/components/schemas/UpdateRewardRequestItem"
+        },
+        "minItems": 1,
+        "maxItems": 100
+      },
+      "UpdateRewardRequestItem": {
+        "title": "UpdateRewardRequestItem",
+        "type": "object",
+        "description": "A reward update object. Only id is required; all other fields are optional. Triggers are updated through the reward triggers endpoints.",
+        "properties": {
+          "id": {
+            "type": "string",
+            "format": "uuid",
+            "description": "The UUID of the reward to update.",
+            "example": "550e8400-e29b-41d4-a716-446655440000"
+          },
+          "name": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 200,
+            "description": "Updated name."
+          },
+          "description": {
+            "type": [
+              "string",
+              "null"
+            ],
+            "maxLength": 2000,
+            "description": "Updated description. Set to null to clear."
+          },
+          "status": {
+            "type": "string",
+            "enum": [
+              "active",
+              "inactive"
+            ],
+            "description": "Updated status."
+          },
+          "type": {
+            "type": "string",
+            "enum": [
+              "points",
+              "custom"
+            ],
+            "description": "Updated type. Changing to `points` requires pointsSystemId and points if the reward has none."
+          },
+          "pointsSystemId": {
+            "type": [
+              "string",
+              "null"
+            ],
+            "format": "uuid",
+            "description": "Updated points system ID. Only permitted for points rewards."
+          },
+          "points": {
+            "type": [
+              "integer",
+              "null"
+            ],
+            "minimum": 1,
+            "description": "Updated number of points. Only permitted for points rewards."
+          },
+          "maxRedemptions": {
+            "type": [
+              "integer",
+              "null"
+            ],
+            "minimum": 1,
+            "description": "Updated maximum awards per user. Set to null for unlimited."
+          },
+          "userAttributes": {
+            "type": [
+              "array",
+              "null"
+            ],
+            "description": "Updated user attribute filters. Set to null to clear.",
+            "items": {
+              "type": "object",
+              "properties": {
+                "attributeId": {
+                  "type": "string",
+                  "format": "uuid"
+                },
+                "attributeValue": {
+                  "type": "string"
+                }
+              },
+              "required": [
+                "attributeId",
+                "attributeValue"
+              ]
+            }
+          }
+        },
+        "required": [
+          "id"
+        ]
+      },
+      "UpdateRewardsResponse": {
+        "title": "UpdateRewardsResponse",
+        "type": "object",
+        "description": "Response containing updated rewards and any per-item issues.",
+        "properties": {
+          "updated": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/AdminReward"
+            },
+            "description": "Array of successfully updated rewards."
+          },
+          "issues": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/AdminIssue"
+            },
+            "description": "Array of issues encountered during update."
+          }
+        },
+        "required": [
+          "updated",
+          "issues"
+        ]
+      },
+      "DeleteRewardsResponse": {
+        "title": "DeleteRewardsResponse",
+        "type": "object",
+        "description": "Response containing deleted reward IDs and any per-item issues.",
+        "properties": {
+          "deleted": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/DeletedResource"
+            },
+            "description": "Array of deleted reward IDs."
           },
           "issues": {
             "type": "array",

@@ -96,6 +96,7 @@
                   "features/streaks",
                   "features/points",
                   "features/leaderboards",
+                  "features/rewards",
                   "features/emails",
                   "features/push-notifications"
                 ]
@@ -198,6 +199,12 @@
                 ]
               },
               {
+                "group": "Rewards",
+                "pages": [
+                  "api-reference/endpoints/rewards/redeem-a-reward"
+                ]
+              },
+              {
                 "group": "Users",
                 "pages": [
                   "api-reference/endpoints/users/identify-a-user",
@@ -213,6 +220,7 @@
                   "api-reference/endpoints/users/get-a-users-points-boosts",
                   "api-reference/endpoints/users/get-a-users-points-summary",
                   "api-reference/endpoints/users/get-a-users-leaderboard",
+                  "api-reference/endpoints/users/get-a-users-rewards",
                   "api-reference/endpoints/users/get-a-users-wrapped",
                   "api-reference/endpoints/users/get-user-preferences",
                   "api-reference/endpoints/users/update-user-preferences"
@@ -317,6 +325,21 @@
                 ]
               },
               {
+                "group": "Rewards",
+                "pages": [
+                  "admin-api/endpoints/rewards/list-rewards",
+                  "admin-api/endpoints/rewards/get-a-reward",
+                  "admin-api/endpoints/rewards/update-rewards",
+                  "admin-api/endpoints/rewards/create-rewards",
+                  "admin-api/endpoints/rewards/delete-rewards",
+                  "admin-api/endpoints/rewards/list-reward-triggers",
+                  "admin-api/endpoints/rewards/get-a-reward-trigger",
+                  "admin-api/endpoints/rewards/update-reward-triggers",
+                  "admin-api/endpoints/rewards/create-reward-triggers",
+                  "admin-api/endpoints/rewards/delete-reward-triggers"
+                ]
+              },
+              {
                 "group": "Tenants",
                 "pages": [
                   "admin-api/endpoints/tenants/list-tenants",
@@ -389,6 +412,13 @@
                   "webhooks/events/leaderboards/leaderboard-changed",
                   "webhooks/events/leaderboards/leaderboard-rank-changed",
                   "webhooks/events/leaderboards/leaderboard-finished"
+                ]
+              },
+              {
+                "group": "Rewards",
+                "pages": [
+                  "webhooks/events/rewards/reward-awarded",
+                  "webhooks/events/rewards/reward-redeemed"
                 ]
               },
               {

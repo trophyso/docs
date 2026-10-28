@@ -1,0 +1,168 @@
+<CodeGroup>
+```bash cURL
+curl -X POST https://admin.trophy.so/v1/rewards \
+     -H "X-API-KEY: <api-key>" \
+     -H "Content-Type: application/json" \
+     -d '[
+       {
+         "name": "Welcome bonus",
+         "key": "welcome-bonus",
+         "type": "points",
+         "pointsSystemId": "points-system-uuid",
+         "points": 100,
+         "triggers": [
+           {
+             "type": "achievement",
+             "achievementId": "achievement-uuid",
+             "status": "active"
+           }
+         ]
+       }
+     ]'
+```
+
+```typescript Node
+await trophy.admin.rewards.create([
+  {
+    name: "Welcome bonus",
+    key: "welcome-bonus",
+    type: "points",
+    pointsSystemId: "points-system-uuid",
+    points: 100,
+    triggers: [
+      {
+        type: "achievement",
+        achievementId: "achievement-uuid",
+        status: "active",
+      },
+    ],
+  },
+]);
+```
+
+```python Python
+client.admin.rewards.create(
+    request=[
+        {
+            "name": "Welcome bonus",
+            "key": "welcome-bonus",
+            "type": "points",
+            "points_system_id": "points-system-uuid",
+            "points": 100,
+            "triggers": [
+                {
+                    "type": "achievement",
+                    "achievement_id": "achievement-uuid",
+                    "status": "active",
+                }
+            ],
+        }
+    ],
+)
+```
+
+```php PHP
+$trophy->admin->rewards->create([
+    [
+        'name' => 'Welcome bonus',
+        'key' => 'welcome-bonus',
+        'type' => 'points',
+        'pointsSystemId' => 'points-system-uuid',
+        'points' => 100,
+        'triggers' => [
+            [
+                'type' => 'achievement',
+                'achievementId' => 'achievement-uuid',
+                'status' => 'active',
+            ],
+        ],
+    ],
+]);
+```
+
+```java Java
+CreateRewardsResponse response = client.admin().rewards().create(
+  List.of(
+    CreateRewardRequestItem.builder()
+      .name("Welcome bonus")
+      .key("welcome-bonus")
+      .type(CreateRewardRequestItemType.POINTS)
+      .pointsSystemId("points-system-uuid")
+      .points(100)
+      .triggers(List.of(
+        CreateRewardTriggerRequestItem.builder()
+          .type(CreateRewardTriggerRequestItemType.ACHIEVEMENT)
+          .achievementId("achievement-uuid")
+          .status(CreateRewardTriggerRequestItemStatus.ACTIVE)
+          .build()
+      ))
+      .build()
+  )
+);
+```
+
+```go Go
+response, err := client.Admin.Rewards.Create(
+    context.TODO(),
+    []*api.CreateRewardRequestItem{
+        {
+            Name: "Welcome bonus",
+            Key: "welcome-bonus",
+            Type: api.CreateRewardRequestItemTypePoints,
+            PointsSystemId: api.String("points-system-uuid"),
+            Points: api.Int(100),
+            Triggers: []*api.CreateRewardTriggerRequestItem{
+                {
+                    Type: api.CreateRewardTriggerRequestItemTypeAchievement,
+                    AchievementId: api.String("achievement-uuid"),
+                    Status: api.CreateRewardTriggerRequestItemStatusActive.Ptr(),
+                },
+            },
+        },
+    },
+)
+```
+
+```csharp C#
+await trophy.Admin.Rewards.CreateAsync(new[]
+{
+    new CreateRewardRequestItem
+    {
+        Name = "Welcome bonus",
+        Key = "welcome-bonus",
+        Type = CreateRewardRequestItemType.Points,
+        PointsSystemId = "points-system-uuid",
+        Points = 100,
+        Triggers = new[]
+        {
+            new CreateRewardTriggerRequestItem
+            {
+                Type = CreateRewardTriggerRequestItemType.Achievement,
+                AchievementId = "achievement-uuid",
+                Status = CreateRewardTriggerRequestItemStatus.Active,
+            },
+        },
+    },
+});
+```
+
+```ruby Ruby
+result = client.admin.rewards.create([
+  {
+    name: 'Welcome bonus',
+    key: 'welcome-bonus',
+    type: 'points',
+    points_system_id: 'points-system-uuid',
+    points: 100,
+    triggers: [
+      {
+        type: 'achievement',
+        achievement_id: 'achievement-uuid',
+        status: 'active'
+      }
+    ]
+  }
+])
+```
+
+</CodeGroup>

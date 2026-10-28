@@ -1,0 +1,41 @@
+{/* vale off */}
+
+```json Webhook reward.awarded — request body [expandable]
+{
+  "type": "reward.awarded",
+  "timestamp": "2026-10-20T09:15:00Z",
+  "user": {
+    "id": "user-id",
+    "email": "user@example.com",
+    "tz": "Europe/London",
+    "subscribedToEmails": true,
+    "created": "2021-01-01T00:00:00Z",
+    "updated": "2021-01-01T00:00:00Z",
+    "attributes": {
+      "department": "engineering",
+      "role": "developer"
+    }
+  },
+  "reward": {
+    "id": "7c3f1a52-4d1e-4b8a-9a55-1d6f0b7c2e11",
+    "key": "welcome-bonus",
+    "name": "Welcome bonus",
+    "description": "Points for finishing onboarding",
+    "type": "points",
+    "points": 100,
+    "pointsSystemId": "0040fe51-6bce-4b44-b0ad-bddc4e123534",
+    "pointsSystemKey": "xp"
+  },
+  "redemption": {
+    "id": "e1a9c0d4-2b7f-4f3e-8a6d-5c9b1f2e3a47",
+    "redeemed": false,
+    "awardedAt": "2026-10-20T09:15:00Z",
+    "redeemedAt": null,
+    "trigger": {
+      "id": "b2d4e6f8-1a3c-4e5b-9d7f-0a2c4e6f8b1d",
+      "type": "achievement",
+      "achievementId": "5100fe51-6bce-6j44-b0hs-bddc4e123682"
+    }
+  }
+}
+```

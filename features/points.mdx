@@ -21,11 +21,15 @@ Points systems are used to create counters that track users' interactions with [
 
 ## Use Cases {#use-cases}
 
-### Rewards {#rewards}
+### Automatic Rewards {#rewards}
 
-Points systems can be used to create features like 'XP' or 'Gems' that reward users for a number of interactions at different rates.
+Points systems can be used to create features like 'XP' or 'Gems' that automatically reward users for a number of interactions at different rates. Points are added to the user's balance as soon as a [points trigger](#points-triggers) fires.
 
 In this way points can be used to weight the value of certain interactions differently to others to reward users for taking the actions you consider most closely correlated to retention.
+
+<Tip>
+  Use a points trigger when points should be applied to a user's balance automatically. If users need to claim a reward before it's applied, or you want to hand out something other than points, use [Rewards](/features/rewards) instead.
+</Tip>
 
 ### Metering {#metering}
 
@@ -79,6 +83,10 @@ To create a points system, head to the [points page](https://app.trophy.so/point
 In Trophy, points are awarded to or deducted from users through triggers. These define the different mechanics that make up your points system.
 
 You can add as many triggers as you like to each points system you set up, allowing you to create different logic for how points are awarded or deducted for different points systems.
+
+<Note>
+  Points triggers add points to a user's balance automatically. If you need users to redeem points before they're applied, use a [points reward](/features/rewards#points-rewards) instead. Points granted by redeemed rewards still count towards the points system's balance, history and levels.
+</Note>
 
 ### Types of Triggers {#types-of-triggers}
 

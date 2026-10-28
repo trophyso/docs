@@ -1,0 +1,253 @@
+---
+title: Rewards
+description: Learn how to use Rewards in a gamified product experience with Trophy.
+og:description: Award users prizes, bonus points or custom perks when they hit
+  milestones, then let them redeem those rewards when they're ready.
+icon: gift
+---
+
+import RedeemRewardRequest from "../snippets/redeem-reward-request-block.mdx";
+import RedeemRewardResponse from "../snippets/redeem-reward-response-block.mdx";
+import UserRewardsRequest from "../snippets/user-rewards-request-block.mdx";
+import UserRewardsResponse from "../snippets/user-rewards-response-block.mdx";
+import MetricEventRewardsResponseExcerpt from "../snippets/metric-event-rewards-response-excerpt-block.mdx";
+import WebhookRewardAwardedPayload from "../snippets/webhook-reward-awarded-payload-block.mdx";
+import WebhookRewardRedeemedPayload from "../snippets/webhook-reward-redeemed-payload-block.mdx";
+import AdminCreateRewardRequest from "../snippets/admin-create-reward-request-block.mdx";
+import AdminCreateRewardTriggerRequest from "../snippets/admin-create-reward-trigger-request-block.mdx";
+
+## What are Rewards? {#what-are-rewards}
+
+Rewards let you give users something when they hit a milestone, and let them choose when to claim it.
+
+A reward is **awarded** automatically when a user meets one of its [triggers](#reward-triggers), for example unlocking an achievement or reaching a streak length. It is only **fulfilled** when it is **redeemed**, which you do by calling the [redeem endpoint](/api-reference/endpoints/rewards/redeem-a-reward) when the user claims it in your product.
+
+Awarding a reward never changes a user's points balance on its own.
+
+## Rewards or Points Triggers? {#rewards-or-points-triggers}
+
+Rewards and [points triggers](/features/points#points-triggers) can both give users points when something happens, but they work differently.
+
+| | Points triggers | Rewards |
+| --- | --- | --- |
+| Points are added to the user's balance | Automatically, as soon as the trigger fires | Only when the reward is redeemed |
+| Needs a redemption step in your product | No | Yes |
+| Can grant something other than points | No | Yes, with custom rewards |
+| Webhooks | `points.changed` | `reward.awarded` and `reward.redeemed` |
+
+<Tip>
+  If you want points to be applied to a user's balance automatically and don't need a redemption step, use a [points trigger](/features/points#points-triggers). Use rewards when users need to claim something, or when you need to fulfill it yourself.
+</Tip>
+
+## Use Cases {#use-cases}
+
+### Claimable bonuses {#claimable-bonuses}
+
+Award users bonus points for hitting a milestone, but let them tap a 'Claim' button in your product to receive them. The claim moment is a natural place for a celebration screen or animation.
+
+### Prizes and perks {#prizes-and-perks}
+
+Use custom rewards to hand out things that live outside Trophy, like a discount code, a free month or a physical prize. Trophy tells you when the reward is awarded and redeemed, and your system handles the rest.
+
+## Reward Types {#reward-types}
+
+### Points Rewards {#points-rewards}
+
+Points rewards grant a set number of points from a [points system](/features/points) when they are redeemed.
+
+Points are granted at the reward's points value at the time of redemption, and respect any [boosts](/features/points#points-boosts) and the points system's maximum. If the maximum would be exceeded part way through redeeming several awards, the awards that fit are redeemed and the rest stay unredeemed so they can be retried.
+
+### Custom Rewards {#custom-rewards}
+
+Custom rewards do nothing inside Trophy when they are redeemed apart from sending the `reward.redeemed` [webhook](#webhooks). Use them when you want to fulfill the reward yourself.
+
+## Creating Rewards {#creating-rewards}
+
+To create a reward, head to the [rewards page](https://app.trophy.so/rewards) and follow the steps below.
+
+<Tip>
+  New rewards are created as 'Inactive' with no triggers so you can configure and test them before they go live.
+</Tip>
+
+<Steps>
+  <Step title="Hit New Reward">
+    Give the reward a name and a unique key. The key is what you'll use to reference the reward in APIs, and can't be changed after the reward is created.
+  </Step>
+  <Step title="Choose a reward type">
+    Choose between a [points reward](#points-rewards) and a [custom reward](#custom-rewards).
+  </Step>
+  <Step title="Configure the reward">
+    For a points reward, choose the points system and the number of points to grant when the reward is redeemed. You can also add a description which is returned from APIs to be displayed in your application.
+  </Step>
+  <Step title="Set a redemption limit (Optional)">
+    Limit how many times each user can be awarded the reward. See [redemption limits](#redemption-limits).
+  </Step>
+  <Step title="Add user filters (Optional)">
+    Restrict the reward to users with specific [custom user attributes](/features/users#custom-user-attributes). See [user filters](#user-filters).
+  </Step>
+  <Step title="Add triggers and activate">
+    Add one or more [triggers](#reward-triggers) and then change the reward's status to active to make it live.
+  </Step>
+</Steps>
+
+You can also create rewards and their triggers programmatically with the Admin API:
+
+<AdminCreateRewardRequest />
+
+## Reward Triggers {#reward-triggers}
+
+Rewards are awarded through triggers. You can add as many triggers as you like to a reward, and each can be activated and deactivated independently.
+
+<Note>
+  Triggers work independently of each other. Each active trigger can award the reward on its own, so a user does **not** need to meet all of a reward's triggers. For example, a reward with a streak trigger and an achievement trigger is awarded when the user reaches the streak length, and again when they complete the achievement. Any [redemption limit](#redemption-limits) applies across all of a reward's triggers combined.
+</Note>
+
+### Types of Triggers {#types-of-triggers}
+
+#### Metric Triggers {#metric-triggers}
+
+The reward is awarded every time the user's total for a [metric](/features/metrics) grows by the threshold you set, for example "award every 10 tasks completed". Counting starts from when the trigger was activated.
+
+Activating the trigger again, or changing its metric, threshold or event attributes, starts a new count.
+
+#### Streak Triggers {#streak-triggers}
+
+The reward is awarded every time the user's current [streak](/features/streaks) grows by the streak length you set, for example "award every 7 days". The period the trigger was activated in counts as the first period, and changing the streak length starts a new count.
+
+A streak that ended before the trigger was activated, or broke after it, does not offset the count.
+
+<Tip>
+  Streak triggers award repeatedly. Set a [redemption limit](#redemption-limits) of 1 to award the reward only once.
+</Tip>
+
+#### Achievement Triggers {#achievement-triggers}
+
+The reward is awarded once, when the user completes a specific [achievement](/features/achievements). Users who completed the achievement before the trigger existed are not awarded.
+
+#### Leaderboard Triggers {#leaderboard-triggers}
+
+The reward is awarded to the user who finishes a [leaderboard](/features/leaderboards) run at exactly the rank you set. For leaderboards with breakdown attributes, the user at that rank in each segment is awarded.
+
+### Creating Triggers {#creating-triggers}
+
+To add a trigger, open the reward from the [rewards page](https://app.trophy.so/rewards) and follow the steps below.
+
+<Tip>
+  All new reward triggers are created as 'Inactive' to allow testing before deployment to production. A trigger's type can only be changed while it's inactive.
+</Tip>
+
+<Steps>
+  <Step title="Hit New Trigger">
+    Choose a [trigger type](#types-of-triggers).
+  </Step>
+  <Step title="Set up the trigger">
+    - For a **Metric** trigger, choose the metric and the threshold.
+    - For a **Streak** trigger, set the streak length.
+    - For an **Achievement** trigger, choose the achievement.
+    - For a **Leaderboard** trigger, choose the leaderboard and the rank.
+  </Step>
+  <Step title="Add attribute filters (Optional)">
+    - To limit a **Metric** trigger to events with specific [custom event attributes](/features/events#custom-event-attributes), add one or more filters in the **Event Attributes** section. When you set multiple event attribute filters, all of them must match.
+    - To limit any trigger to users with specific [custom user attributes](/features/users#custom-user-attributes), add attributes and the desired values in the **User Attributes** section.
+  </Step>
+  <Step title="Hit save, then activate">
+    Once you're happy the trigger will behave as expected, change its status to active to make it live.
+  </Step>
+</Steps>
+
+Triggers can also be added with the Admin API:
+
+<AdminCreateRewardTriggerRequest />
+
+### When Rewards Are Not Awarded {#when-rewards-are-not-awarded}
+
+Rewards are only awarded for things users do after a trigger is active. This means:
+
+- **Existing achievement completions don't award rewards.** If a user completed an achievement before you added an achievement trigger, they aren't awarded the reward.
+- **Backdated achievements don't award rewards.** When you activate or edit an achievement, or set a user's `signUpDate`, Trophy [completes achievements for users who already qualify](/features/achievements#backdating-achievements). These silent completions don't award rewards.
+- **Past progress doesn't count.** Metric and streak triggers count from when the trigger was activated, so progress users made before then isn't awarded.
+
+Inactive rewards and inactive triggers stop new awards, but existing awards can still be redeemed. Archived rewards are not awarded, listed or redeemed.
+
+## Redemption Limits {#redemption-limits}
+
+Set a redemption limit on a reward to cap how many times each user can be awarded it. Once a user reaches the limit they stop being awarded the reward.
+
+## User Filters {#user-filters}
+
+Add user attribute filters to a reward, or to individual triggers, to control who can be awarded. A user must match the reward's filters and the trigger's filters to be awarded.
+
+## Tracking a User's Rewards {#tracking-a-users-rewards}
+
+### Rewards Awarded by an Event {#rewards-awarded-by-an-event}
+
+When a [metric event](/api-reference/endpoints/events/submit-a-metric-event) or an [achievement completion](/api-reference/endpoints/achievements/mark-an-achievement-as-completed) awards a reward, the response includes it in the `rewards` array. This is the same shape as the response from the user rewards endpoint. Replaying an event with the same [idempotency key](/api-reference/idempotency) returns an empty array.
+
+Use this to show a "You earned a reward" message the moment it happens.
+
+<MetricEventRewardsResponseExcerpt />
+
+Awards from other sources, such as leaderboard triggers when a run finishes, are not returned from API calls. Use the [`reward.awarded` webhook](#webhooks) or the user rewards endpoint to find them.
+
+### Listing a User's Rewards {#listing-a-users-rewards}
+
+Use the [user rewards endpoint](/api-reference/endpoints/users/get-a-users-rewards) to list the rewards a user has been awarded. Filter by `redeemed` to show only rewards waiting to be claimed, and by date range to page through history.
+
+<UserRewardsRequest />
+
+<UserRewardsResponse />
+
+Each award includes the trigger that earned it as it is configured now, with only the fields for its current type.
+
+## Redeeming Rewards {#redeeming-rewards}
+
+When a user claims a reward in your product, call the [redeem endpoint](/api-reference/endpoints/rewards/redeem-a-reward) with the reward's key and the user's ID.
+
+<RedeemRewardRequest />
+
+Trophy redeems all of the user's unredeemed awards for that reward at once, oldest first, and returns them in `redemptions`. For points rewards, the response also includes the combined `points` granted and any `leaderboards` the user's rank changed on.
+
+<RedeemRewardResponse />
+
+Redeeming still works for inactive rewards, but not for archived or deleted ones. The request returns an error when it can't redeem anything:
+
+- `404` if the user was never awarded the reward.
+- `409` if every award has already been redeemed.
+
+If the points maximum is reached part way through, the awards that fit are redeemed and the rest stay unredeemed so you can retry later.
+
+## Webhooks {#webhooks}
+
+Trophy sends two [webhooks](/webhooks/introduction) for rewards:
+
+- [`reward.awarded`](/webhooks/events/rewards/reward-awarded) fires when a user is awarded a reward. Nothing has been applied yet.
+- [`reward.redeemed`](/webhooks/events/rewards/reward-redeemed) fires when the reward is redeemed, once for each award. For custom rewards, this is your cue to fulfill the reward.
+
+Both include the reward, the redemption and the trigger that earned it.
+
+<WebhookRewardAwardedPayload />
+
+<WebhookRewardRedeemedPayload />
+
+## Rewards and Points {#rewards-and-points}
+
+Points granted by redeeming a reward behave like any other points:
+
+- They show up in the user's points history and [points summary](/api-reference/endpoints/users/get-a-users-points-summary).
+- They update [points leaderboards](/features/leaderboards) for that points system.
+- They are not included in the `points` returned from metric events and achievement completions, since nothing is granted until redemption.
+
+## Rewards Analytics {#rewards-analytics}
+
+Each reward in the Trophy dashboard has built-in analytics including:
+
+- Awards over time
+- Redemptions over time
+- Awards broken down by trigger type
+- For points rewards, an estimate of the points awarded and the points actually redeemed (including boosts and the points maximum)
+
+Filter by user attributes to compare how different groups of users engage with a reward. Points granted by rewards also appear as their own row in the points source chart.
+
+## Get Support {#get-support}
+
+Want to get in touch with the Trophy team? Reach out to us via [email](mailto:support@trophy.so). We're here to help!
