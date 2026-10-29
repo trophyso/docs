@@ -31,3 +31,7 @@ _[\w\s]+_
 \*[\w\s]+\*
 `[\w\s]+`
 `[a-zA-Z][a-zA-Z0-9]*`
+[Rr]edemptions?
+achievementId
+metricId
+metricThreshold
