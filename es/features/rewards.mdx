@@ -26,6 +26,20 @@ Una recompensa se **otorga** automáticamente cuando un usuario cumple uno de su
 
 Otorgar una recompensa nunca modifica por sí solo el saldo de puntos de un usuario.
 
+## Tipos de recompensas {#reward-types}
+
+Hay dos tipos de recompensa.
+
+### Recompensas de puntos {#points-rewards}
+
+Las recompensas de puntos otorgan una cantidad fija de puntos de un [sistema de puntos](/es/features/points) cuando se canjean.
+
+Los puntos se otorgan según el valor en puntos de la recompensa en el momento del canje, y respetan cualquier [potenciador](/es/features/points#points-boosts) y el máximo del sistema de puntos. Si se superara el máximo a mitad del canje de varias recompensas otorgadas, se canjean las que caben y el resto permanece sin canjear para que puedas reintentarlo.
+
+### Recompensas personalizadas {#custom-rewards}
+
+Las recompensas personalizadas no hacen nada dentro de Trophy al canjearse, salvo enviar el `reward.redeemed` [webhook](#webhooks). Úsalas cuando quieras entregar la recompensa tú mismo.
+
 ## ¿Recompensas o desencadenadores de puntos? {#rewards-or-points-triggers}
 
 Tanto las recompensas como los [desencadenadores de puntos](/es/features/points#points-triggers) pueden dar puntos a los usuarios cuando ocurre algo, pero funcionan de forma distinta.
@@ -50,18 +64,6 @@ Otorga a los usuarios puntos de bonificación por alcanzar un hito, pero deja qu
 ### Premios y ventajas {#prizes-and-perks}
 
 Usa recompensas personalizadas para entregar elementos que existen fuera de Trophy, como un código de descuento, un mes gratis o un premio físico. Trophy te informa cuándo se otorga y se canjea la recompensa, y tu sistema se encarga del resto.
-
-## Tipos de recompensas {#reward-types}
-
-### Recompensas de puntos {#points-rewards}
-
-Las recompensas de puntos otorgan una cantidad fija de puntos de un [sistema de puntos](/es/features/points) cuando se canjean.
-
-Los puntos se otorgan según el valor en puntos de la recompensa en el momento del canje, y respetan cualquier [potenciador](/es/features/points#points-boosts) y el máximo del sistema de puntos. Si se superara el máximo a mitad del canje de varias recompensas otorgadas, se canjean las que caben y el resto permanece sin canjear para que puedas reintentarlo.
-
-### Recompensas personalizadas {#custom-rewards}
-
-Las recompensas personalizadas no hacen nada dentro de Trophy al canjearse, salvo enviar el `reward.redeemed` [webhook](#webhooks). Úsalas cuando quieras entregar la recompensa tú mismo.
 
 ## Crear recompensas {#creating-rewards}
 

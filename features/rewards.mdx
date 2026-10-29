@@ -24,6 +24,20 @@ A reward is **awarded** automatically when a user meets one of its [triggers](#r
 
 Awarding a reward never changes a user's points balance on its own.
 
+## Reward Types {#reward-types}
+
+There are two types of reward.
+
+### Points Rewards {#points-rewards}
+
+Points rewards grant a set number of points from a [points system](/features/points) when they are redeemed.
+
+Points are granted at the reward's points value at the time of redemption, and respect any [boosts](/features/points#points-boosts) and the points system's maximum. If the maximum would be exceeded part way through redeeming several awards, the awards that fit are redeemed and the rest stay unredeemed so they can be retried.
+
+### Custom Rewards {#custom-rewards}
+
+Custom rewards do nothing inside Trophy when they are redeemed apart from sending the `reward.redeemed` [webhook](#webhooks). Use them when you want to fulfill the reward yourself.
+
 ## Rewards or Points Triggers? {#rewards-or-points-triggers}
 
 Rewards and [points triggers](/features/points#points-triggers) can both give users points when something happens, but they work differently.
@@ -49,18 +63,6 @@ Award users bonus points for hitting a milestone, but let them tap a 'Claim' but
 
 Use custom rewards to hand out things that live outside Trophy, like a discount code, a free month or a physical prize. Trophy tells you when the reward is awarded and redeemed, and your system handles the rest.
 
-## Reward Types {#reward-types}
-
-### Points Rewards {#points-rewards}
-
-Points rewards grant a set number of points from a [points system](/features/points) when they are redeemed.
-
-Points are granted at the reward's points value at the time of redemption, and respect any [boosts](/features/points#points-boosts) and the points system's maximum. If the maximum would be exceeded part way through redeeming several awards, the awards that fit are redeemed and the rest stay unredeemed so they can be retried.
-
-### Custom Rewards {#custom-rewards}
-
-Custom rewards do nothing inside Trophy when they are redeemed apart from sending the `reward.redeemed` [webhook](#webhooks). Use them when you want to fulfill the reward yourself.
-
 ## Creating Rewards {#creating-rewards}
 
 To create a reward, head to the [rewards page](https://app.trophy.so/rewards) and follow the steps below.
@@ -70,7 +72,7 @@ To create a reward, head to the [rewards page](https://app.trophy.so/rewards) an
 </Tip>
 
 <Steps>
-  <Step title="Hit New Reward">
+  <Step title="Click New Reward">
     Give the reward a name and a unique key. The key is what you'll use to reference the reward in APIs, and can't be changed after the reward is created.
   </Step>
   <Step title="Choose a reward type">
@@ -137,7 +139,7 @@ To add a trigger, open the reward from the [rewards page](https://app.trophy.so/
 </Tip>
 
 <Steps>
-  <Step title="Hit New Trigger">
+  <Step title="Click New Trigger">
     Choose a [trigger type](#types-of-triggers).
   </Step>
   <Step title="Set up the trigger">
@@ -150,7 +152,7 @@ To add a trigger, open the reward from the [rewards page](https://app.trophy.so/
     - To limit a **Metric** trigger to events with specific [custom event attributes](/features/events#custom-event-attributes), add one or more filters in the **Event Attributes** section. When you set multiple event attribute filters, all of them must match.
     - To limit any trigger to users with specific [custom user attributes](/features/users#custom-user-attributes), add attributes and the desired values in the **User Attributes** section.
   </Step>
-  <Step title="Hit save, then activate">
+  <Step title="Click save, then activate">
     Once you're happy the trigger will behave as expected, change its status to active to make it live.
   </Step>
 </Steps>
