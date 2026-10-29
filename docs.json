@@ -537,6 +537,7 @@
                   "es/features/streaks",
                   "es/features/points",
                   "es/features/leaderboards",
+                  "es/features/rewards",
                   "es/features/emails",
                   "es/features/push-notifications"
                 ]
@@ -639,6 +640,12 @@
                 ]
               },
               {
+                "group": "Recompensas",
+                "pages": [
+                  "es/api-reference/endpoints/rewards/redeem-a-reward"
+                ]
+              },
+              {
                 "group": "Usuarios",
                 "pages": [
                   "es/api-reference/endpoints/users/identify-a-user",
@@ -654,6 +661,7 @@
                   "es/api-reference/endpoints/users/get-a-users-points-boosts",
                   "es/api-reference/endpoints/users/get-a-users-points-summary",
                   "es/api-reference/endpoints/users/get-a-users-leaderboard",
+                  "es/api-reference/endpoints/users/get-a-users-rewards",
                   "es/api-reference/endpoints/users/get-a-users-wrapped",
                   "es/api-reference/endpoints/users/get-user-preferences",
                   "es/api-reference/endpoints/users/update-user-preferences"
@@ -758,6 +766,21 @@
                 ]
               },
               {
+                "group": "Recompensas",
+                "pages": [
+                  "es/admin-api/endpoints/rewards/list-rewards",
+                  "es/admin-api/endpoints/rewards/get-a-reward",
+                  "es/admin-api/endpoints/rewards/update-rewards",
+                  "es/admin-api/endpoints/rewards/create-rewards",
+                  "es/admin-api/endpoints/rewards/delete-rewards",
+                  "es/admin-api/endpoints/rewards/list-reward-triggers",
+                  "es/admin-api/endpoints/rewards/get-a-reward-trigger",
+                  "es/admin-api/endpoints/rewards/update-reward-triggers",
+                  "es/admin-api/endpoints/rewards/create-reward-triggers",
+                  "es/admin-api/endpoints/rewards/delete-reward-triggers"
+                ]
+              },
+              {
                 "group": "Clientes",
                 "pages": [
                   "es/admin-api/endpoints/tenants/list-tenants",
@@ -830,6 +853,13 @@
                   "es/webhooks/events/leaderboards/leaderboard-changed",
                   "es/webhooks/events/leaderboards/leaderboard-rank-changed",
                   "es/webhooks/events/leaderboards/leaderboard-finished"
+                ]
+              },
+              {
+                "group": "Recompensas",
+                "pages": [
+                  "es/webhooks/events/rewards/reward-awarded",
+                  "es/webhooks/events/rewards/reward-redeemed"
                 ]
               },
               {

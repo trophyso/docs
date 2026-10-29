@@ -22,21 +22,25 @@ Los sistemas de puntos se utilizan para crear contadores que rastrean las intera
 
 ## Casos de Uso {#use-cases}
 
-### Recompensas {#rewards}
+### Recompensas automáticas {#automatic-rewards}
 
-Los sistemas de puntos pueden utilizarse para crear funcionalidades como 'XP' o 'Gemas' que recompensan a los usuarios por diversas interacciones a diferentes tasas.
+Los sistemas de puntos permiten crear funcionalidades como 'XP' o 'Gemas' que recompensan automáticamente a los usuarios por distintas interacciones, a ritmos diferentes. Los puntos se suman al saldo del usuario en cuanto se activa un [disparador de puntos](#points-triggers).
 
 De esta manera, los puntos pueden usarse para ponderar el valor de ciertas interacciones de forma diferente a otras, recompensando a los usuarios por realizar las acciones que consideras más estrechamente correlacionadas con la retención.
 
-### Medición {#metering}
+<Tip>
+  Usa un disparador de puntos cuando quieras que los puntos se apliquen automáticamente al saldo del usuario. Si los usuarios deben reclamar una recompensa antes de que se aplique, o si quieres entregar algo que no sean puntos, usa [Recompensas](/es/features/rewards).
+</Tip>
 
-Los sistemas de puntos también pueden utilizarse para crear funcionalidades como 'Energía' que miden el uso de tu producto de manera que te da control sobre promover y restringir la actividad del usuario.
+### Medición de uso {#metering}
 
-Esto te permite controlar la velocidad a la que los usuarios pueden usar tu producto con una mecánica flexible que está fuera de tu código base.
+Los sistemas de puntos también sirven para crear funcionalidades como 'Energía', que miden el uso de tu producto y te dan control para fomentar o restringir la actividad de los usuarios.
 
-## Creación de Sistemas de Puntos {#creating-points-systems}
+Así puedes controlar la frecuencia con la que los usuarios utilizan tu producto mediante un mecanismo flexible que funciona fuera de tu código base.
 
-Trophy te permite configurar múltiples sistemas de puntos para diferentes casos de uso dentro de tu aplicación.
+## Crear sistemas de Puntos {#creating-points-systems}
+
+Trophy te permite configurar varios sistemas de puntos para distintos casos de uso dentro de tu aplicación.
 
 <Frame>
   <video
@@ -49,69 +53,73 @@ Trophy te permite configurar múltiples sistemas de puntos para diferentes casos
   ></video>
 </Frame>
 
-Para crear un sistema de puntos, dirígete a la [página de puntos](https://app.trophy.so/points) y sigue los pasos a continuación.
+Para crear un sistema de puntos, ve a la [página de puntos](https://app.trophy.so/points) y sigue estos pasos.
 
 <Steps>
-  <Step title="Presiona Nuevo Sistema de Puntos">
-    Dale un nombre al nuevo sistema de puntos y una clave única. La clave es lo que usarás
-    para hacer referencia al sistema de puntos en las APIs y en las plantillas de correo electrónico si
-    es relevante.
+  <Step title="Pulsa Nuevo sistema de Puntos">
+    Asigna un nombre y una clave única al nuevo sistema de puntos. La clave es la
+    que usarás para hacer referencia al sistema de puntos en las API y, si
+    corresponde, en las plantillas de correo electrónico.
   </Step>
-  <Step title="Añade una descripción (Opcional)">
-    También puedes darle al sistema de puntos una descripción que se devuelve desde
-    las APIs para mostrarse en tu aplicación.
+  <Step title="Añade una descripción (opcional)">
+    También puedes asignar una descripción al sistema de puntos. Las API la
+    devuelven para que la muestres en tu aplicación.
   </Step>
-  <Step title="Configura los puntos máximos (Opcional)">
-  Si deseas limitar el número de puntos que cada usuario puede tener en tu nuevo sistema, establece un valor en el campo 'puntos máximos'.
+  <Step title="Configura el máximo de puntos (opcional)">
+  Si quieres limitar el número de puntos que cada usuario puede tener en tu nuevo sistema, define un valor en el campo 'máximo de puntos'.
 
   <Tip>
-  Cualquier [activador de puntos](#points-triggers) que configures para este sistema de puntos respetará el máximo establecido.
+  Los [activadores de puntos](#points-triggers) que configures en este sistema de puntos respetarán el máximo establecido.
   </Tip>
   </Step>
-  <Step title="Asigna una insignia (Opcional)">
-    Puedes asignar una insignia o logotipo subiendo una imagen o ingresando una
-    URL de imagen personalizada. Las APIs devuelven una URL compatible con `src` para mostrarla en tu
+  <Step title="Asigna una insignia (opcional)">
+    Puedes asignar una insignia o un logotipo subiendo una imagen o introduciendo una
+    URL de imagen personalizada. Las API devuelven una URL compatible con `src` para mostrarla en tu
     aplicación.
   </Step>
 </Steps>
 
-## Activadores de Puntos {#points-triggers}
+## Activadores de puntos {#points-triggers}
 
-En Trophy, los puntos se otorgan o deducen de los usuarios mediante activadores. Estos definen las diferentes mecánicas que conforman tu sistema de puntos.
+En Trophy, los puntos se otorgan o se deducen a los usuarios mediante activadores. Estos definen las distintas mecánicas que componen tu sistema de puntos.
 
-Puedes añadir tantos activadores como desees a cada sistema de puntos que configures, lo que te permite crear diferentes lógicas para cómo se otorgan o deducen los puntos para distintos sistemas de puntos.
+Puedes añadir tantos activadores como quieras a cada sistema de puntos que configures, lo que te permite crear una lógica distinta para otorgar o deducir puntos en cada sistema de puntos.
 
-### Tipos de Activadores {#types-of-triggers}
+<Note>
+  Los activadores de puntos suman puntos al saldo de un usuario automáticamente. Si necesitas que los usuarios canjeen los puntos antes de aplicarlos, utiliza en su lugar una [recompensa de puntos](/es/features/rewards#points-rewards). Los puntos otorgados por recompensas canjeadas también cuentan para el saldo, el historial y los niveles del sistema de puntos.
+</Note>
 
-Existen múltiples tipos de activadores en Trophy que pueden usarse para otorgar o deducir puntos de diferentes maneras.
+### Tipos de activadores {#types-of-triggers}
 
-#### Activadores de Métricas {#metric-triggers}
+En Trophy hay varios tipos de activadores que puedes usar para otorgar o deducir puntos de distintas maneras.
 
-Los puntos pueden otorgarse o deducirse de forma continua a medida que los usuarios incrementan las [Métricas](/es/features/metrics). Puedes elegir otorgar o deducir cualquier número arbitrario de puntos en cualquier umbral de métrica arbitrario, por ejemplo "otorgar 10 puntos por cada 3 tareas completadas".
+#### Activadores de métricas {#metric-triggers}
 
-#### Activadores de Racha {#streak-triggers}
+Los puntos se pueden otorgar o deducir de forma continua a medida que los usuarios incrementan las [Métricas](/es/features/metrics). Puedes elegir otorgar o deducir cualquier cantidad de puntos en cualquier umbral de métrica, por ejemplo: "otorga 10 puntos por cada 3 tareas completadas".
 
-Los Puntos se pueden otorgar o deducir al alcanzar cualquier duración arbitraria de una [Racha](/es/features/streaks), por ejemplo "otorgar 50 puntos por cada racha de 7 días".
+#### Activadores de rachas {#streak-triggers}
 
-#### Activadores de Logro {#achievement-triggers}
+Los puntos se pueden otorgar o deducir al alcanzar cualquier duración de una [Racha](/es/features/streaks), por ejemplo: "otorga 50 puntos por cada racha de 7 días".
 
-Los Puntos se pueden otorgar o deducir cuando los usuarios desbloquean [Logros](/es/features/achievements) específicos, por ejemplo "otorgar 100 puntos cuando los usuarios completen el logro `profile-completed`".
+#### Activadores de logros {#achievement-triggers}
+
+Los puntos se pueden otorgar o deducir cuando los usuarios desbloquean [Logros](/es/features/achievements) específicos, por ejemplo: "otorgar 100 puntos cuando los usuarios completen el logro `profile-completed`".
 
 #### Activadores basados en tiempo {#time-based-triggers}
 
-Los Puntos se pueden otorgar o deducir a intervalos de tiempo repetidos, cada hora o cada día. Por ejemplo "otorgar 10 puntos cada 3 horas".
+Los puntos se pueden otorgar o deducir a intervalos de tiempo repetitivos, como cada hora o cada día. Por ejemplo: "otorgar 10 puntos cada 3 horas".
 
-#### Activadores de identificación de usuario {#user-identification-triggers}
+#### Activadores de identificación de usuarios {#user-identification-triggers}
 
-Los Puntos se pueden otorgar cuando los usuarios se identifican por primera vez en Trophy, útil para conceder una cantidad inicial de puntos cuando se registran en tu producto.
+Los puntos se pueden otorgar cuando los usuarios se identifican por primera vez en Trophy, lo que resulta útil para conceder una cantidad inicial de puntos cuando se registran en tu producto.
 
 ### Crear activadores {#creating-triggers}
 
-Para crear un nuevo activador de puntos, dirígete al sistema de puntos para el que deseas crear un activador y sigue los pasos a continuación.
+Para crear un nuevo activador de puntos, ve al sistema de puntos para el que quieres crear el activador y sigue los pasos a continuación.
 
 <Tip>
-  Todos los nuevos activadores de puntos se crean como 'Inactivos' para permitir pruebas y
-  ajustes antes del despliegue a producción.
+  Todos los activadores de puntos nuevos se crean como 'Inactivos' para permitir
+  las pruebas y el ajuste del equilibrio antes de pasar a producción.
 </Tip>
 
 <Frame>
@@ -127,56 +135,56 @@ Para crear un nuevo activador de puntos, dirígete al sistema de puntos para el 
 
 <Steps>
 <Step title="Elige un tipo de activador">
-  Elige cómo deseas que se otorguen o deduzcan puntos según lo descrito por los [tipos de activadores](#types-of-triggers) disponibles.
+  Elige cómo quieres que se otorguen o se deduzcan los puntos según los [tipos de activadores](#types-of-triggers) disponibles.
 </Step>
 
 <Step title="Configura el activador">
-  Una vez que hayas elegido el tipo de activador de puntos, necesitas configurar los ajustes del activador.
+  Una vez que hayas elegido el tipo de activador de puntos, debes configurar los ajustes del activador.
 
-- Si elegiste el activador de **Métrica**, necesitarás elegir la métrica y el umbral en el que se otorgarán o deducirán puntos.
+- Si elegiste el activador de **Métrica**, deberás elegir la métrica y el umbral en el que se otorgarán o deducirán puntos.
 
-- Si elegiste el activador de **Racha**, necesitarás establecer la duración de la racha que debe otorgar o deducir puntos.
+- Si elegiste el activador de **Racha**, deberás establecer la duración de la racha que debe otorgar o deducir puntos.
 
-- Si elegiste el activador de **Logro**, deberás seleccionar el logro que debe otorgar o descontar puntos al completarse.
+- Si elegiste el activador de **Logro**, deberás elegir el logro que debe otorgar o deducir puntos al completarse.
 
-- Si elegiste el activador de **Tiempo**, deberás seleccionar la unidad de tiempo en la que quieres otorgar o descontar puntos (horas o días) y el número de esas unidades de tiempo después de las cuales deseas otorgar o descontar puntos.
+- Si elegiste el activador de **Tiempo**, deberás elegir la unidad de tiempo en la que quieres otorgar o deducir puntos (horas o días) y el número de esas unidades de tiempo tras el cual quieres otorgar o deducir puntos.
 
-- Si elegiste el activador de **Primera Identificación de Usuario**, no necesitarás agregar ninguna configuración adicional.
+- Si elegiste el disparador **Primera identificación de usuario**, no necesitas añadir ninguna configuración adicional.
 
 </Step>
 
-<Step title="Establece los puntos a otorgar/descontar">
-  Una vez configurado tu activador, establece el número de puntos a otorgar o descontar
-  cuando se active.
+<Step title="Define los puntos que se otorgan o se restan">
+  Una vez configurado el disparador, define la cantidad de puntos que se otorgan o se restan
+  cuando se activa.
 </Step>
 
-<Step title="Agrega filtros de atributos (Opcional)">
-  Puedes asignar filtros de atributos a un activador de puntos para restringir aún más cuándo se aplican.
+<Step title="Añade filtros de atributos (opcional)">
+  Puedes asignar filtros de atributos a un disparador de puntos para restringir aún más cuándo se aplica.
 
-- Para limitar un **activador de métrica** a que solo se aplique a eventos con [atributos de evento personalizados](/es/features/events#custom-event-attributes) específicos, agrega uno o más filtros en la sección **Atributos de Evento**.
+- Para limitar un **disparador de métrica** de modo que solo se aplique a eventos con [atributos de evento personalizados](/es/features/events#custom-event-attributes) específicos, añade uno o más filtros en la sección **Atributos del evento**.
 
-- Para limitar cualquier tipo de activador a que solo se aplique a un usuario con uno o más [atributos de usuario personalizados](/es/features/users#custom-user-attributes) específicos, agrega atributos y los valores deseados en la sección **Atributos de Usuario**.
+- Para limitar cualquier tipo de disparador de modo que solo se aplique a usuarios con uno o más [atributos de usuario personalizados](/es/features/users#custom-user-attributes) específicos, añade los atributos y los valores deseados en la sección **Atributos del usuario**.
 
 <Note>
-  Cuando estableces múltiples filtros de atributos de evento, todos deben coincidir para que
-  el activador de métrica se active.
+  Si defines varios filtros de atributos de evento, todos deben coincidir para que
+  se active el disparador de métrica.
 </Note>
 
 </Step>
 
 <Step title="Guarda los cambios">
-  Guarda el nuevo activador de puntos.
+  Guarda el nuevo disparador de puntos.
 </Step>
-<Step title="Activa">
-  Una vez que estés satisfecho de que tu nuevo activador funcionará como esperas, cambia su estado a activo para ponerlo en funcionamiento.
+<Step title="Actívalo">
+  Cuando estés seguro de que el nuevo disparador se comportará como esperas, cambia su estado a activo para ponerlo en producción.
 </Step>
 </Steps>
 
-## Equilibrio de Puntos {#balancing-points}
+## Cómo equilibrar los Puntos {#balancing-points}
 
-Gestionar un sistema de puntos eficaz requiere encontrar el ritmo óptimo al que los usuarios ganan puntos. Demasiado rápido, y los usuarios sufrirán fatiga de puntos, volviéndolos inútiles. Demasiado lento, y los usuarios pueden aburrirse y abandonar.
+Para que un sistema de puntos sea eficaz, es necesario encontrar el ritmo óptimo al que los usuarios ganan puntos. Si es demasiado rápido, los usuarios sufrirán fatiga de puntos y estos perderán todo su valor. Si es demasiado lento, los usuarios pueden aburrirse y abandonar el producto.
 
-La herramienta de vista previa de Trophy puede modelar diferentes escenarios para ayudarte a determinar con qué frecuencia los usuarios deben ganar puntos en cada uno de tus sistemas de Puntos.
+La herramienta de vista previa de Trophy puede modelar distintos escenarios para ayudarte a determinar con qué frecuencia deben ganar puntos los usuarios en cada uno de tus sistemas de puntos.
 
 <Frame>
   <video
@@ -189,30 +197,30 @@ La herramienta de vista previa de Trophy puede modelar diferentes escenarios par
   ></video>
 </Frame>
 
-## Impulsos de Puntos {#points-boosts}
+## Multiplicadores de Puntos {#points-boosts}
 
-Los impulsos de puntos son multiplicadores que puedes usar para aumentar el número de puntos otorgados a los usuarios durante un período de tiempo específico.
+Los multiplicadores de puntos permiten aumentar la cantidad de puntos que se otorgan a los usuarios durante un período de tiempo específico.
 
-Esta sección explica cómo funcionan los impulsos y cómo se pueden utilizar para aumentar la retención y el engagement de tu aplicación.
+Esta sección explica cómo funcionan los boosts y cómo puedes usarlos para aumentar la retención y la interacción en tu aplicación.
 
-### Segmentación de Impulsos {#boost-targeting}
+### Segmentación de boosts {#boost-targeting}
 
-Hay varias formas en las que puedes usar impulsos en Trophy.
+Hay varias formas de usar boosts en Trophy.
 
-- **Impulsos globales** multiplican los puntos ganados por todos los usuarios durante la ventana del impulso, o pueden limitarse a una cohorte de usuarios específica utilizando [atributos de usuario personalizados](/es/features/users#custom-user-attributes).
-- **Impulsos específicos por usuario** solo multiplican los puntos ganados por un único usuario dentro de la ventana del impulso.
+- **Los boosts globales** multiplican los puntos que obtienen todos los usuarios durante el periodo del boost, o pueden limitarse a una cohorte de usuarios específica mediante [atributos de usuario personalizados](/es/features/users#custom-user-attributes).
+- **Los boosts específicos de usuario** solo multiplican los puntos que obtiene un único usuario durante el periodo del boost.
 
-Típicamente, los impulsos globales se utilizan para aumentar el engagement en toda la plataforma durante eventos clave del calendario como Black Friday/Cyber Monday en comercio electrónico, Año Nuevo en fitness y temporada de exámenes en plataformas educativas.
+Normalmente, los boosts globales se usan para aumentar la interacción en toda la plataforma durante fechas clave del calendario, como el Black Friday/Cyber Monday en el comercio electrónico, el Año Nuevo en fitness o la temporada de exámenes en plataformas de ed-tech.
 
-Por el contrario, los impulsos específicos por usuario se usan comúnmente para proporcionar incentivos adicionales a los usuarios para que realicen acciones que están correlacionadas con una mayor retención.
+Por el contrario, los boosts específicos de usuario se suelen usar para ofrecer incentivos adicionales que animen a los usuarios a realizar acciones relacionadas con una mayor retención.
 
-### Crear Impulsos {#creating-boosts}
+### Crear boosts {#creating-boosts}
 
 <Note>
-Los impulsos específicos por usuario solo se pueden crear programáticamente a través de la [Admin API](/es/admin-api/endpoints/points/create-boosts).
+Los boosts específicos de usuario solo se pueden crear de forma programática a través de la [Admin API](/es/admin-api/endpoints/points/create-boosts).
 </Note>
 
-Para crear un impulso de puntos global en el panel de Trophy, sigue los pasos a continuación.
+Para crear un boost de puntos global en el panel de Trophy, sigue estos pasos.
 
 <Frame>
   <video
@@ -226,25 +234,20 @@ Para crear un impulso de puntos global en el panel de Trophy, sigue los pasos a 
 </Frame>
 
 <Steps>
-  <Step title="Ve a la página de Impulsos">
-    Ve a la [página de puntos](https://app.trophy.so/points) y haz clic en el sistema de puntos para el que deseas crear un impulso. Luego navega a la pestaña Impulsos y haz clic en el botón *Nuevo Impulso*.
+  <Step title="Ve a la página de Boosts">
+    Ve a la [página de puntos](https://app.trophy.so/points) y haz clic en el sistema de puntos para el que quieras crear un boost. Después, ve a la pestaña Boosts y haz clic en el botón *Nuevo boost*.
   </Step>
   <Step title="Elige un nombre">
-    Elige un nombre para tu impulso que describa claramente para qué es. Por ejemplo "Impulso 2X - Todos los Usuarios - Navidad 2026".
+    Elige un nombre para tu boost que describa claramente su finalidad. Por ejemplo: "Boost 2X - Todos los usuarios - Navidad 2026".
   </Step>
-  <Step title="Establece el multiplicador">
-    Establece el valor numérico por el que el impulso multiplicará los puntos ganados. Si eliges un multiplicador decimal, tendrás la opción de elegir el [comportamiento de redondeo](#boost-rounding) que debe usar el impulso.
+  <Step title="Define el multiplicador">
+    Define el valor numérico por el que el boost multiplicará los puntos obtenidos. Si eliges un multiplicador decimal, podrás elegir el [comportamiento de redondeo](#boost-rounding) que debe usar el boost.
   </Step>
-  <Step title="Establece la ventana del impulso">
-    Elige una fecha de inicio y (opcionalmente) una fecha de finalización para tu impulso. Si eliges una fecha de inicio futura, Trophy programará el impulso para que se active en la fecha elegida. De manera similar, si estableces una fecha de finalización, Trophy se encargará de detener tu impulso por ti.
+  <Step title="Define el periodo del boost">
+    Elige una fecha de inicio y, de forma opcional, una fecha de finalización para tu boost. Si eliges una fecha de inicio futura, Trophy programará el boost para que se active en la fecha elegida. Del mismo modo, si defines una fecha de finalización, Trophy se encargará de detener el boost por ti.
   </Step>
-  <Step title="Agrega filtros de atributos (opcional)">
-
-    <Note>
-      Esta función requiere [atributos de usuario personalizados](/es/features/users#custom-user-attributes) que están disponibles en el plan [Pro](/es/account/billing#pro-plan).
-    </Note>
-
-    Si deseas que tu impulso afecte solo a una cohorte específica de usuarios, establece condiciones de atributos de usuario que coincidan con las de tu cohorte objetivo. Trophy se encargará de aplicar el impulso únicamente a los Puntos ganados por usuarios con valores de atributos de usuario coincidentes.
+  <Step title="Añade filtros de atributos (opcional)">
+    Si quieres que tu boost afecte solo a una cohorte de usuarios específica, define condiciones de atributos de usuario que coincidan con las de tu cohorte objetivo. Trophy se encargará de aplicar el boost únicamente a los puntos obtenidos por los usuarios con valores de atributos coincidentes.
 
     <Frame>
       <img
@@ -356,7 +359,7 @@ Combina `total` con la lista de niveles ordenada del paso anterior para dibujar 
 
 #### Notificaciones de cambio de nivel {#level-change-notifications}
 
-Cuando envías un [evento de cambio de métrica](/es/api-reference/endpoints/events/submit-a-metric-event), la respuesta incluirá un mapa `points` indexado por las claves de tu sistema de puntos para cada sistema que cambió como resultado del evento.
+Cuando envías un [evento de cambio de métrica](/es/api-reference/endpoints/events/submit-a-metric-event), la respuesta incluye un mapa `points` indexado por las claves de tus sistemas de puntos, con una entrada por cada sistema que haya cambiado como resultado del evento.
 
 Los datos contienen una clave `level` solo cuando el nivel del usuario cambió debido a este evento. Si su nivel permaneció igual, esa clave se omite, por lo que puedes tratar de forma segura un `level` presente como una señal de cambio de nivel sin necesidad de seguimiento adicional.
 
@@ -408,7 +411,7 @@ Existen varias formas de usar Trophy para obtener y mostrar puntos en tu aplicac
 
 ### Activación de UI transaccional {#triggering-transactional-ui}
 
-En primer lugar, cualquier punto otorgado o deducido de los usuarios como resultado de un evento de cambio de métrica se devuelve en la respuesta al usar la [API de evento de cambio de métrica](/es/api-reference/endpoints/events/submit-a-metric-event).
+En primer lugar, los puntos otorgados a los usuarios o deducidos de ellos como resultado de un evento de cambio de métrica se devuelven en la respuesta al usar la [API de eventos de cambio de métrica](/es/api-reference/endpoints/events/submit-a-metric-event).
 
 La respuesta incluye el nuevo total de puntos del usuario, cuántos puntos se otorgaron o dedujeron como resultado del evento, y los detalles de los activadores de puntos específicos que se dispararon. Cuando los [Niveles de Puntos](#points-levels) están habilitados, cada objeto de puntos en esa respuesta también puede incluir **`level`**: Trophy incluye el **nuevo** nivel del usuario **solo cuando cambió** como resultado de ese evento. El mismo comportamiento opcional de `level` se aplica cuando los puntos cambian debido a la [finalización de un logro](/es/api-reference/endpoints/achievements/mark-an-achievement-as-completed).
 

@@ -138,9 +138,9 @@ Para obtener las clasificaciones de un grupo particular de usuarios con una comb
 
 La elegibilidad controla qué usuarios pueden participar en una clasificación. Úsala cuando una clasificación deba estar abierta solo a un grupo específico de usuarios, por ejemplo, clientes de pago, una región concreta o una cohorte beta.
 
-La elegibilidad se basa en [atributos de usuario personalizados](/es/features/users#custom-user-attributes). Un usuario solo puede participar en una clasificación, y aparecer en su ranking, si sus atributos cumplen todas las reglas de elegibilidad que definas. Las clasificaciones sin reglas de elegibilidad están abiertas a todos los usuarios.
+La elegibilidad se basa en [atributos de usuario personalizados](/es/features/users#custom-user-attributes). Un usuario solo puede participar en una clasificación, y aparecer en sus rankings, si sus atributos cumplen todas las reglas de elegibilidad que establezcas. Las clasificaciones sin reglas de elegibilidad están abiertas a todos los usuarios.
 
-Para definir reglas de elegibilidad, ve a la página de configuración de la clasificación y añade uno o más atributos de usuario, junto con los valores que deben tener los usuarios, en el campo **Atributos de usuario** de la sección **Elegibilidad**.
+Para establecer reglas de elegibilidad, ve a la página de configuración de la clasificación y añade uno o más atributos de usuario, junto con los valores que deben tener los usuarios, en el campo **Atributos de usuario** de la sección **Elegibilidad**.
 
 <Frame>
   <img
@@ -152,16 +152,16 @@ Para definir reglas de elegibilidad, ve a la página de configuración de la cla
 </Frame>
 
 <Note>
-  Cuando defines varias reglas de elegibilidad, un usuario debe cumplirlas todas
+  Si estableces varias reglas de elegibilidad, un usuario debe cumplirlas todas
   para ser elegible.
 </Note>
 
-Los usuarios que no son elegibles no reciben puntuación y no aparecen en los rankings. Las posiciones se calculan solo entre los usuarios elegibles, por lo que no quedan huecos donde habría estado un usuario no elegible. Si los atributos de un usuario cambian y ya no cumplen las reglas, Trophy lo elimina de la ejecución actual de la clasificación.
+Los usuarios que no son elegibles no reciben puntuación y no aparecen en los rankings. Las posiciones se calculan únicamente entre los usuarios elegibles, por lo que no quedan huecos donde habrían estado los usuarios no elegibles. Si los atributos de un usuario cambian y deja de cumplir las reglas, Trophy lo elimina de la ejecución actual de la clasificación.
 
 Las ejecuciones históricas nunca se modifican. Una vez que una ejecución ha finalizado, sus rankings quedan fijados, independientemente de cómo cambien después los atributos de los usuarios.
 
 <Note>
-  Las reglas de elegibilidad solo se pueden cambiar mientras una clasificación está `Inactive`. Consulta
+  Las reglas de elegibilidad solo se pueden cambiar mientras una clasificación está `Inactive`. Consulta los
   [estados de la clasificación](#leaderboard-statuses).
 </Note>
 
@@ -169,14 +169,14 @@ Las ejecuciones históricas nunca se modifican. Una vez que una ejecución ha fi
 
 Los [desgloses](#ranking-breakdowns) y la elegibilidad usan atributos de usuario, pero cumplen funciones distintas:
 
-- **Los desgloses** dividen a los participantes en grupos más pequeños. Todos los usuarios siguen clasificados, pero dentro de su propio grupo.
-- **La elegibilidad** decide quién puede participar. Los usuarios que no cumplen las reglas quedan excluidos por completo.
+- Los **desgloses** dividen a los participantes en grupos más pequeños. Todos los usuarios siguen apareciendo en el ranking, pero dentro de su propio grupo.
+- La **elegibilidad** decide quién puede participar. Los usuarios que no cumplen las reglas quedan excluidos por completo.
 
-Puedes usar ambas opciones en la misma clasificación, por ejemplo, para limitar una clasificación a los usuarios de pago y luego agruparlos por país.
+Puedes usar ambas en la misma clasificación, por ejemplo, para limitar una clasificación a usuarios de pago y luego agruparlos por país.
 
-## Fechas de Inicio y Fin {#start-end-dates}
+## Fechas de inicio y fin {#start-end-dates}
 
-Usa fechas de inicio y fin para controlar la ventana dentro de la cual las clasificaciones están clasificando activamente a los usuarios.
+Usa las fechas de inicio y fin para controlar el periodo en el que las clasificaciones clasifican activamente a los usuarios.
 
 <Frame>
   <img
@@ -189,35 +189,37 @@ Usa fechas de inicio y fin para controlar la ventana dentro de la cual las clasi
 
 ### Fechas de inicio {#start-dates}
 
-Las clasificaciones en Trophy se pueden configurar para que inicien en una fecha futura de su elección. Esto suele ser útil para permitir tiempo para cambios o ajustes de último momento antes de que las clasificaciones empiecen a clasificar a los usuarios.
+Las clasificaciones de Trophy se pueden programar para que comiencen en la fecha futura que elijas. Esto suele ser útil para disponer de tiempo para hacer cambios o ajustes de última hora antes de que las clasificaciones empiecen a ordenar a los usuarios.
 
-Las clasificaciones con una fecha de inicio en el futuro se programan y se activan automáticamente en la fecha de inicio que usted elija.
+Las clasificaciones con una fecha de inicio futura quedan programadas y se activan automáticamente en la fecha de inicio que elijas.
 
-### Fechas de finalización {#end-dates}
+### Fechas de fin {#end-dates}
 
-Las clasificaciones en Trophy pueden tener fechas de finalización. Si establece una fecha de finalización en una clasificación, después de esa fecha entrará en estado `finished` y las clasificaciones se finalizarán y se elegirán los ganadores.
+Las clasificaciones de Trophy pueden tener fecha de fin. Si estableces una fecha de fin en una clasificación, después de esa fecha pasará al estado `finished`, las posiciones se finalizarán y se elegirán los ganadores.
 
 <Note>
-  Debido a las diferencias en [zonas horarias](#handling-time-zones), las clasificaciones pueden finalizarse hasta 12 horas después de la fecha de finalización en UTC para permitir que todos los usuarios alcancen la fecha de finalización según su reloj local.
+  Debido a las diferencias entre [zonas horarias](#handling-time-zones), las clasificaciones pueden
+  finalizarse hasta 12 horas después de la fecha de fin en UTC, para permitir que todos los usuarios lleguen
+  a la fecha de fin según su reloj local.
 </Note>
 
 ## Restricciones de tiempo {#time-restrictions}
 
-Además de las [fechas de inicio y finalización](#start-end-dates), las clasificaciones se pueden configurar para tener restricciones de tiempo.
+Además de las [fechas de inicio y fin](#start-end-dates), las clasificaciones se pueden configurar con restricciones de tiempo.
 
-Cuando las restricciones de tiempo están habilitadas, las clasificaciones solo se actualizarán durante el período de tiempo configurado.
+Cuando las restricciones de tiempo están habilitadas, las posiciones de la clasificación solo se actualizan durante el periodo configurado.
 
-Las restricciones de tiempo son útiles al crear clasificaciones para eventos o promociones de tiempo limitado que se ejecutan durante un período de tiempo específico.
+Las restricciones de tiempo son útiles al crear clasificaciones para eventos o promociones de duración limitada que se ejecutan durante un periodo específico.
 
-Las restricciones de tiempo funcionan en todas las clasificaciones, incluidas las [clasificaciones recurrentes](#repeating-leaderboards). Cuando una clasificación recurrente tiene una restricción de tiempo, la restricción de tiempo se aplicará a cada ejecución de la clasificación.
+Las restricciones de tiempo funcionan en todas las clasificaciones, incluidas las [clasificaciones recurrentes](#repeating-leaderboards). Cuando una clasificación recurrente tiene una restricción de tiempo, esta se aplica a cada ciclo de la clasificación.
 
-### Configurar restricciones de tiempo {#setting-time-restrictions}
+### Configuración de restricciones de tiempo {#setting-time-restrictions}
 
-Para establecer restricciones de tiempo en una clasificación, diríjase a la página de configuración de la clasificación y active el interruptor etiquetado 'Restringir a ventana de tiempo'. Esto le dará dos campos, una hora de inicio y una hora de finalización.
+Para establecer restricciones de tiempo en una clasificación, ve a la página de configuración de la clasificación y activa el interruptor con la etiqueta 'Restringir a franja horaria'. Esto mostrará dos campos: una hora de inicio y una hora de fin.
 
-- Configurar solo una hora de inicio significa que las clasificaciones de la tabla de clasificación solo comenzarán a actualizarse después de la hora de inicio en cada día en que la clasificación esté activa.
-- De manera similar, configurar solo una hora de finalización significa que las clasificaciones de la tabla de clasificación dejarán de actualizarse después de la hora de finalización en cada día en que la clasificación esté activa.
-- Configurar tanto una hora de inicio como de finalización significa que las clasificaciones de la tabla de clasificación solo se actualizarán durante el período de tiempo configurado.
+- Si estableces solo una hora de inicio, las posiciones de la clasificación empezarán a actualizarse únicamente después de esa hora, cada día en que la clasificación esté activa.
+- Del mismo modo, si estableces solo una hora de fin, las posiciones de la clasificación dejarán de actualizarse después de esa hora, cada día en que la clasificación esté activa.
+- Si estableces una hora de inicio y una de fin, las posiciones de la clasificación solo se actualizarán durante el periodo configurado.
 
 <Frame>
   <img
@@ -228,15 +230,15 @@ Para establecer restricciones de tiempo en una clasificación, diríjase a la p�
   />
 </Frame>
 
-### Consideraciones de Zona Horaria {#time-zone-considerations}
+### Consideraciones sobre la zona horaria {#time-zone-considerations}
 
-Las restricciones de tiempo en las clasificaciones se aplican en **hora local** para cada participante según su [zona horaria](/es/features/users#param-tz) configurada.
+Las restricciones de tiempo en las clasificaciones se aplican en la **hora local** de cada participante, según su [zona horaria](/es/features/users#param-tz) configurada.
 
-Esto significa que cada usuario puede participar en la clasificación en cualquier momento durante la restricción de tiempo configurada según su reloj local.
+Esto significa que cada usuario puede participar en la clasificación en cualquier momento dentro de la restricción de tiempo configurada, según su reloj local.
 
-## Límites de Participantes {#participant-limits}
+## Límites de participantes {#participant-limits}
 
-Las clasificaciones en Trophy tienen un número máximo predeterminado de participantes de **1,000**. Sin embargo, una clasificación puede configurarse para tener cualquier número arbitrario de participantes para admitir casos de uso como _Top 100_ o similares.
+Las clasificaciones en Trophy tienen un número máximo de participantes predeterminado de **1000**. Sin embargo, se puede configurar una clasificación con cualquier número de participantes para admitir casos de uso como _Top 100_ o similares.
 
 <Frame>
   <img
@@ -247,19 +249,19 @@ Las clasificaciones en Trophy tienen un número máximo predeterminado de partic
   />
 </Frame>
 
-Si una clasificación ya tiene un número de participantes que coincide con su máximo configurado, los nuevos usuarios tendrán que superar la puntuación del rango más bajo para unirse a la clasificación.
+Si una clasificación ya tiene un número de participantes igual al máximo configurado, los nuevos usuarios tendrán que superar la puntuación del último puesto para unirse a ella.
 
-La única excepción a esto es cuando se utilizan [atributos de desglose](#ranking-breakdowns) para agrupar a los participantes en cohortes más pequeñas. Al usar atributos de desglose, el límite de participantes se aplica a cada grupo, no de manera general.
+La única excepción es cuando se usan [atributos de desglose](#ranking-breakdowns) para agrupar a los participantes en cohortes más pequeñas. Con los atributos de desglose, el límite de participantes se aplica a cada grupo, no al total.
 
 Si una clasificación tiene reglas de [elegibilidad](#eligibility), el límite de participantes solo cuenta a los usuarios elegibles.
 
 <Tip>
-Si necesitas un límite de participantes mayor, considera usar [atributos de desglose](#ranking-breakdowns) para agrupar a los participantes en cohortes más pequeñas. O contáctanos en [support@trophy.so](mailto:support@trophy.so) y estaremos encantados de aumentar tus valores predeterminados.
+Si necesitas un límite de participantes mayor, considera usar [atributos de desglose](#ranking-breakdowns) para agrupar a los participantes en cohortes más pequeñas. También puedes escribirnos a [support@trophy.so](mailto:support@trophy.so) y con gusto aumentaremos tus valores predeterminados.
 </Tip>
 
-## Creación de Clasificaciones {#creating-leaderboards}
+## Creación de clasificaciones {#creating-leaderboards}
 
-Para crear una clasificación, dirígete a la [página de clasificaciones](https://app.trophy.so/leaderboards) en el panel de Trophy y haz clic en el botón _Nueva Clasificación_.
+Para crear una clasificación, ve a la [página de clasificaciones](https://app.trophy.so/leaderboards) en el panel de Trophy y haz clic en el botón _Nueva clasificación_.
 
 <Frame>
   <video
@@ -273,40 +275,40 @@ Para crear una clasificación, dirígete a la [página de clasificaciones](https
 </Frame>
 
 <Steps>
-  <Step title="Ingresa un nombre">
+  <Step title="Introduce un nombre">
     Elige un nombre para la clasificación.
   </Step>
   
-  <Step title="Ingresa una clave única">
-    Ingresa una clave de referencia única para la clasificación. Esto es lo que usarás para referenciar la clasificación en el código de tu aplicación.
+  <Step title="Introduce una clave única">
+    Introduce una clave de referencia única para la clasificación. Es la que usarás para hacer referencia a la clasificación en el código de tu aplicación.
   </Step>
 
-   <Step title="Elige un método de clasificación">
-    Elige uno de los [métodos](#ranking-methods) por el cual la clasificación ordenará a los usuarios:
+   <Step title="Elige un método de ranking">
+    Elige uno de los [métodos](#ranking-methods) con los que la clasificación ordenará a los usuarios:
 
-    - **Métrica**: Ordena a los usuarios por el valor total de una métrica elegida
-    - **Puntos**: Ordena a los usuarios por los puntos totales en un sistema de puntos elegido
-    - **Racha**: Ordena a los usuarios por la longitud de la racha actual
+    - **Métrica**: ordena a los usuarios por el valor total de una métrica elegida
+    - **Puntos**: ordena a los usuarios por el total de puntos de un sistema de puntos elegido
+    - **Racha**: ordena a los usuarios por la duración de su racha actual
 
   </Step>
 
-    <Step title="Establece el máximo de participantes">
-    Elige el número máximo de participantes que la clasificación debe soportar. El
-    límite superior actual soportado por Trophy es de 1,000. Lee [esta
+    <Step title="Define el máximo de participantes">
+    Elige el número máximo de participantes que debe admitir la clasificación. El
+    límite superior actual que admite Trophy es de 1000. Lee [esta
     sección](#participant-limits) para saber más sobre cómo elegimos este límite.
     </Step>
 
     <Step title="Guarda los cambios">
-    Guarda los cambios y ve a la página de configuración para definir la [elegibilidad](#eligibility), las [fechas de inicio y fin](#start-end-dates), las [programaciones de clasificaciones recurrentes](#repeating-leaderboards) y más.
+    Guarda los cambios y ve a la página de configuración para definir la [elegibilidad](#eligibility), las [fechas de inicio y fin](#start-end-dates), los [calendarios de clasificaciones recurrentes](#repeating-leaderboards) y mucho más.
     </Step>
 
 </Steps>
 
-## Gestión de Clasificaciones {#managing-leaderboards}
+## Gestión de clasificaciones {#managing-leaderboards}
 
-Las clasificaciones en Trophy tienen varios estados que te ayudan a controlar cuándo y cómo los usuarios pueden unirse a ellas.
+Las clasificaciones en Trophy tienen varios estados que te ayudan a controlar cuándo y cómo pueden unirse los usuarios.
 
-### Estados de Clasificación {#leaderboard-statuses}
+### Estados de la clasificación {#leaderboard-statuses}
 
 Las clasificaciones pueden tener uno de los siguientes estados:
 
@@ -315,24 +317,24 @@ Las clasificaciones pueden tener uno de los siguientes estados:
 - `Active`
 - `Finished`
 
-Todas las nuevas clasificaciones se crean como `Inactive`. Mientras están inactivas, cualquier propiedad o configuración de la clasificación puede modificarse, no serán visibles para los usuarios y los usuarios no podrán unirse a ellas.
+Todas las clasificaciones nuevas se crean como `Inactive`. Mientras están inactivas, se puede cambiar cualquier propiedad o ajuste de la clasificación; no serán visibles para los usuarios y estos no podrán unirse a ellas.
 
-Una vez que estés listo para que los usuarios comiencen a participar, puedes hacerlo `Active`. Esto significa que Trophy empezará a rastrear la actividad de los usuarios e ingresarlos en las clasificaciones.
+Cuando quieras que los usuarios empiecen a participar, puedes establecerla como `Active`. Esto significa que Trophy empezará a registrar la actividad de los usuarios e incluirlos en las clasificaciones.
 
-Las clasificaciones que se hayan configurado con una [fecha de inicio](#start-dates) en el futuro no pueden activarse, solo pueden estar `Scheduled`. Una vez que la fecha de inicio haya pasado, Trophy las hará `Active` automáticamente y comenzará a aceptar participantes.
+Las clasificaciones configuradas con una [fecha de inicio](#start-dates) en el futuro no se pueden activar; solo pueden estar en estado `Scheduled`. Cuando pase la fecha de inicio, Trophy las pasará automáticamente a `Active` y empezará a aceptar participantes.
 
-Si una clasificación tiene una [fecha de finalización](#end-dates), una vez que haya pasado Trophy la moverá automáticamente al estado `Finished` y dejará de monitorear la actividad de los usuarios. Una vez que una clasificación haya finalizado, no será visible para los usuarios, pero aún podrás consultar las APIs para obtener las posiciones de ejecuciones históricas.
+Si una clasificación tiene una [fecha de finalización](#end-dates), cuando esta pase, Trophy la pasará automáticamente al estado `Finished` y dejará de monitorizar la actividad de los usuarios. Una vez finalizada, la clasificación no será visible para los usuarios, pero aún puedes consultar las API para obtener las posiciones de ejecuciones históricas.
 
-## Mostrar Clasificaciones {#displaying-leaderboards}
+## Mostrar clasificaciones {#displaying-leaderboards}
 
 <Tip>
   Consulta nuestra [guía completa](/es/guides/how-to-build-a-leaderboards-feature) sobre
-  cómo agregar clasificaciones a tu aplicación para más detalles.
+  cómo añadir clasificaciones a tu app para obtener más detalles.
 </Tip>
 
-## Analíticas de Clasificaciones {#leaderboard-analytics}
+## Analíticas de la clasificación {#leaderboard-analytics}
 
-Trophy tiene analíticas integradas para ayudarte a entender cómo los usuarios interactúan con tus clasificaciones.
+Trophy incluye analíticas integradas para ayudarte a entender cómo interactúan los usuarios con tus clasificaciones.
 
 <Frame>
   <img
@@ -343,9 +345,9 @@ Trophy tiene analíticas integradas para ayudarte a entender cómo los usuarios 
   />
 </Frame>
 
-### Total de Participantes Únicos {#total-unique-participants}
+### Total de participantes únicos {#total-unique-participants}
 
-Este gráfico muestra cuántos usuarios únicos han participado en cualquier ejecución de una clasificación a lo largo del tiempo. Esto es útil para comprender cuántos de tus usuarios realmente participan en las clasificaciones y cómo los [límites de participantes](#participant-limits) están afectando esto.
+Este gráfico muestra cuántos usuarios únicos han participado en cualquier ejecución de una clasificación a lo largo del tiempo. Es útil para entender cuántos de tus usuarios participan realmente en las clasificaciones y cómo influyen en ello los [límites de participantes](#participant-limits).
 
 <Frame>
   <img
@@ -356,9 +358,9 @@ Este gráfico muestra cuántos usuarios únicos han participado en cualquier eje
   />
 </Frame>
 
-### Usuarios Activos {#active-users}
+### Usuarios activos {#active-users}
 
-Este gráfico muestra la cantidad de usuarios que han cambiado de posición al menos una vez en una clasificación determinada. Esto es útil para tener una idea de qué tan competitivo es el usuario promedio en una clasificación particular.
+Este gráfico muestra el número de usuarios que han cambiado de posición al menos una vez en una clasificación determinada. Es útil para hacerse una idea de lo competitivo que es el usuario promedio en una clasificación concreta.
 
 <Frame>
   <img
@@ -423,6 +425,10 @@ Este gráfico es un histograma de las puntuaciones de los usuarios en una clasif
 </Accordion>
 </AccordionGroup>
 
-## Obtener soporte {#get-support}
+## Obtener soporte {#rewarding-leaderboard-winners}
 
 ¿Quieres ponerte en contacto con el equipo de Trophy? Comunícate con nosotros por [correo electrónico](mailto:support@trophy.so). ¡Estamos aquí para ayudarte!
+
+## Obtener soporte {#get-support}
+
+¿Quieres ponerte en contacto con el equipo de Trophy? Escríbenos por [correo electrónico](mailto:support@trophy.so). ¡Estamos aquí para ayudarte!

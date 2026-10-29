@@ -38,14 +38,14 @@ Puedes elegir qué métricas forman parte de tu racha y, para las que elijas, es
 </Frame>
 
 Al combinar métricas, puedes elegir entre dos modos de evaluación:
-- `ALL` significa que un usuario debe alcanzar todos los umbrales de las métricas para extender su racha
-- `OR` significa que un usuario solo tiene que alcanzar uno de los umbrales de las métricas para extender su racha
+- `ALL` significa que el usuario debe alcanzar el umbral de todas las métricas para extender su racha
+- `OR` significa que el usuario solo tiene que alcanzar el umbral de una de tus métricas para extender su racha
 
 De este modo, puedes diseñar la lógica de tu racha para que se ajuste al caso de uso de tu aplicación.
 
 ### Días libres {#days-off}
 
-Para las rachas diarias, puedes marcar días concretos de la semana como días libres en la [página de rachas](https://app.trophy.so/streaks) del panel de Trophy. Esos días no cuentan para la racha: los usuarios pueden seguir ampliando su racha si están activos, pero si no hacen actividad en un día libre, la racha no se rompe.
+En las rachas diarias, puedes marcar días concretos de la semana como días libres en la [página de rachas](https://app.trophy.so/streaks) del panel de Trophy. Esos días no cuentan para la racha: los usuarios todavía pueden extender su racha si están activos, pero no estar activos en un día libre no la romperá.
 
 <Frame>
   <img
@@ -58,25 +58,25 @@ Para las rachas diarias, puedes marcar días concretos de la semana como días l
 
 Debes dejar al menos un día que cuente para la racha. Las rachas semanales y mensuales ignoran los días libres.
 
-A diferencia de las [congelaciones de racha](#streak-freezes), los días libres no se consumen. Se aplican todas las semanas hasta que los cambies.
+A diferencia de las [congelaciones de racha](#streak-freezes), los días libres no se consumen. Se aplican cada semana hasta que los cambies.
 
-Si has habilitado la [personalización de rachas](#streak-personalization), los usuarios pueden sustituir los días libres predeterminados mediante las [preferencias de usuario](/es/features/users#streak-preferences).
+Si has habilitado la [personalización de rachas](#streak-personalization), los usuarios pueden anular los días libres predeterminados mediante las [preferencias de usuario](/es/features/users#streak-preferences).
 
 ## Congelaciones de racha {#streak-freezes}
 
-Las congelaciones de racha ayudan a los usuarios a mantener sus rachas durante más tiempo, ya que les permiten omitir un número determinado de períodos sin que la racha vuelva a cero. Así, las rachas siguen siendo motivadoras aunque los usuarios no mantengan un hábito de uso perfecto.
+Las congelaciones de racha ayudan a los usuarios a conservar sus rachas durante más tiempo, ya que les permiten omitir un número determinado de períodos sin que la racha vuelva a cero. Así, las rachas siguen siendo motivadoras aunque los usuarios no mantengan un hábito de uso perfecto.
 
 Las congelaciones de racha son opcionales y se pueden configurar en la [página de rachas](https://app.trophy.so/streaks) del panel de Trophy.
 
-Cuando están habilitadas, tú decides cuántas congelaciones puede tener un usuario y cuántas se le otorgan con el tiempo. Cuando un usuario omite un período, se consume una congelación. Las congelaciones se consumen hasta que el usuario se queda sin ninguna; en ese momento, su racha se restablece a cero.
+Cuando están habilitadas, tú decides cuántas congelaciones puede tener un usuario y cuántas se le conceden con el tiempo. Cuando un usuario omite un período, se consume una congelación. Las congelaciones se consumen hasta que al usuario no le queda ninguna; en ese momento, su racha se restablece a cero.
 
 <Note>
-Las congelaciones de racha se diferencian de las [pausas de racha](#streak-pauses) en que las congelaciones permiten a los usuarios omitir un número determinado de períodos sin romper su racha, independientemente del motivo, mientras que las pausas de racha protegen una racha específicamente durante un intervalo de fechas conocido y predefinido, como unas vacaciones o un descanso programados. Las congelaciones se consumen automáticamente cuando el usuario no realiza una actividad requerida, mientras que las pausas se crean manualmente con antelación para cubrir ausencias planificadas.
+Las congelaciones de racha se diferencian de las [pausas de racha](#streak-pauses) en que las congelaciones permiten a los usuarios omitir un número determinado de períodos sin perder su racha, sea cual sea el motivo, mientras que las pausas de racha protegen específicamente una racha durante un intervalo de fechas conocido y predefinido, como unas vacaciones o un descanso programados. Las congelaciones se consumen automáticamente cuando el usuario no realiza una actividad requerida, mientras que las pausas se crean manualmente con antelación para cubrir ausencias planificadas.
 </Note>
 
 ### Otorgar congelaciones {#granting-freezes}
 
-Puedes configurar cualquier cantidad de congelaciones para otorgarlas a los nuevos usuarios cuando los identifiques por primera vez con Trophy. Para configurarlo, activa la concesión de congelaciones y define el número inicial de congelaciones en la página de rachas del panel de Trophy.
+Puedes configurar cualquier número de congelaciones para otorgar a los nuevos usuarios cuando los identifiques por primera vez con Trophy. Para configurarlo, activa la concesión de congelaciones y define el número inicial de congelaciones en la página de rachas del panel de Trophy.
 
 <Frame>
   <video
@@ -89,9 +89,9 @@ Puedes configurar cualquier cantidad de congelaciones para otorgarlas a los nuev
   ></video>
 </Frame>
 
-Trophy también puede otorgar congelaciones de racha a los usuarios de forma automática con el tiempo. Puedes elegir el número de días durante los cuales se otorgará a cada usuario la cantidad de congelaciones que prefieras.
+Trophy también puede otorgar congelaciones de racha automáticamente a los usuarios con el tiempo. Puedes elegir un número arbitrario de días durante los cuales otorgar un número arbitrario de congelaciones a cada usuario.
 
-Para configurarlo, define en la página de rachas del panel de Trophy el número de días durante los cuales se otorgarán las congelaciones y la cantidad de congelaciones que se otorgarán. Aquí también puedes establecer el número máximo de congelaciones que puede tener cada usuario, con un límite de 100.
+Para configurarlo, define el número de días durante los cuales se otorgarán congelaciones y la cantidad de congelaciones que se otorgarán en la página de rachas del panel de Trophy. Aquí también puedes establecer el número máximo de congelaciones que puede tener cada usuario, con un límite de 100.
 
 <Frame>
   <video
@@ -104,18 +104,18 @@ Para configurarlo, define en la página de rachas del panel de Trophy el número
   ></video>
 </Frame>
 
-Si has configurado zonas horarias para tus usuarios, Trophy consumirá automáticamente las congelaciones a medianoche en la zona horaria del usuario cuando sea necesario para extender su racha. Si corresponde otorgar nuevas congelaciones a un usuario, se le otorgarán hasta diez minutos después.
+Si has configurado zonas horarias para tus usuarios, Trophy consumirá automáticamente las congelaciones a medianoche en la zona horaria del usuario cuando sea necesario para mantener su racha, y si hay que otorgar nuevas congelaciones a un usuario, se otorgarán hasta diez minutos más tarde.
 ## Pausas de racha {#streak-pauses}
 
-Las pausas de racha protegen la racha de un usuario durante un intervalo de fechas conocido, como unas vacaciones u otro descanso planificado. Mientras una pausa cubre un período, Trophy mantiene la longitud de la racha del usuario en lugar de finalizarla si no cumple sus [condiciones de racha](#streak-conditions).
+Las pausas de racha protegen la racha de un usuario durante un intervalo de fechas conocido, como unas vacaciones u otro descanso planificado. Mientras una pausa cubre un periodo, Trophy mantiene la longitud de la racha del usuario en lugar de finalizarla si no cumple sus [condiciones de racha](#streak-conditions).
 
 <Note>
-Las pausas de racha se diferencian de las [congelaciones de racha](#streak-freezes) en que las pausas protegen específicamente la racha de un usuario durante un intervalo de fechas conocido y predefinido, como unas vacaciones o un descanso programado, mientras que las congelaciones permiten a los usuarios omitir un número determinado de días (o períodos) sin perder su racha, sin importar el motivo. Las pausas se crean manualmente con antelación para cubrir ausencias planificadas, mientras que las congelaciones se consumen automáticamente cuando el usuario no realiza una actividad requerida.
+Las pausas de racha se diferencian de las [congelaciones de racha](#streak-freezes) en que las pausas protegen la racha de un usuario durante un intervalo de fechas conocido y predefinido, como unas vacaciones o un descanso programados, mientras que las congelaciones permiten a los usuarios omitir un número determinado de días (o periodos) sin perder su racha, independientemente del motivo. Las pausas se crean manualmente con antelación para cubrir ausencias planificadas, mientras que las congelaciones se consumen automáticamente cuando el usuario no realiza una actividad requerida.
 </Note>
 
-### Creación de pausas {#creating-pauses}
+### Crear pausas {#creating-pauses}
 
-Crea pausas con la [API de administración para crear pausas de rachas](/es/admin-api/endpoints/streaks/create-pauses). Puedes crear pausas para hasta 100 usuarios en una sola solicitud.
+Crea pausas con la [API de administración para crear pausas de racha](/es/admin-api/endpoints/streaks/create-pauses). Puedes crear pausas para hasta 100 usuarios en una sola solicitud.
 
 Cada pausa requiere:
 
@@ -125,33 +125,33 @@ Cada pausa requiere:
 
 Se rechazan las fechas de inicio en el pasado. Si has [configurado zonas horarias](/es/features/users#param-tz) para tus usuarios, Trophy evalúa `start` respecto a la fecha actual en la zona horaria local de cada usuario.
 
-### Eliminación de pausas {#deleting-pauses}
+### Eliminar pausas {#deleting-pauses}
 
-Para evitar que se aplique una pausa, elimínala con la [API de administración para eliminar pausas de rachas](/es/admin-api/endpoints/streaks/delete-pauses).
+Para que una pausa deje de aplicarse, elimínala con la [API de administración para eliminar pausas de racha](/es/admin-api/endpoints/streaks/delete-pauses).
 
-### Lectura de pausas {#reading-pauses}
+### Consultar pausas {#reading-pauses}
 
-La [API de rachas de usuario](/es/api-reference/endpoints/users/get-a-users-streak) devuelve las pausas próximas y las activas en el campo `pauses`. Se omiten las pausas pasadas y las eliminadas.
+La [API de rachas de usuario](/es/api-reference/endpoints/users/get-a-users-streak) devuelve las pausas próximas y las activas en el campo `pauses`. Se omiten las pausas pasadas y eliminadas.
 
-Cada período de `streakHistory` incluye `usedPause`, que es `true` cuando la racha del usuario estuvo en pausa durante ese período.
+Cada periodo de `streakHistory` incluye `usedPause`, que es `true` cuando la racha del usuario estuvo en pausa durante ese periodo.
 
 ## Seguimiento de rachas {#tracking-streaks}
 
-Trophy calcula automáticamente las rachas de todos los usuarios a partir de los [eventos de métricas](/es/features/events#tracking-metric-events) que reportas a Trophy.
+Trophy calcula automáticamente las rachas de todos los usuarios a partir de los [eventos de métricas](/es/features/events#tracking-metric-events) que envías a Trophy.
 
-No se requiere trabajo adicional para hacer el seguimiento de las rachas y puedes empezar a usarlas de inmediato. Solo asegúrate de que las rachas estén activadas en el panel de Trophy.
+No se requiere ningún trabajo adicional para hacer el seguimiento de las rachas, y puedes empezar a usarlas de inmediato. Solo asegúrate de que las rachas estén habilitadas en el panel de Trophy.
 
-También puedes leer y actualizar la configuración de rachas de la organización —frecuencia, modo de evaluación, métricas, días libres, personalización y congelaciones— con la [API de administración de ajustes de rachas](/es/admin-api/endpoints/streaks/update-streak-settings).
+También puedes consultar y actualizar la configuración de rachas de la organización (frecuencia, modo de evaluación, métricas, días libres, personalización y congelaciones) con la [API de administración de configuración de rachas](/es/admin-api/endpoints/streaks/update-streak-settings).
 
 <Tip>
-Para ver un recorrido completo sobre cómo configurar una funcionalidad de rachas con Trophy, consulta nuestra [guía oficial](/es/guides/how-to-build-a-streaks-feature).
+Para ver una guía completa sobre cómo configurar una función de rachas con Trophy, consulta nuestra [guía oficial](/es/guides/how-to-build-a-streaks-feature).
 </Tip>
 
 ## Personalización de rachas {#streak-personalization}
 
-Trophy permite que los usuarios personalicen el funcionamiento de su racha dentro de los límites que tú definas. Para ello, activa la personalización de rachas en la [página de rachas](https://app.trophy.so/streaks) del panel de Trophy.
+Trophy permite que los usuarios personalicen el funcionamiento de su racha dentro de los límites que tú establezcas. Para ello, activa la personalización de rachas en la [página de rachas](https://app.trophy.so/streaks) del panel de Trophy.
 
-Una vez habilitada la función, los usuarios podrán personalizar, a través de las preferencias de usuario, las [condiciones de la racha](#streak-conditions) que deben cumplir para extender su racha, incluidos el modo de evaluación de la racha, el umbral de cada métrica y los [días libres](#days-off).
+Una vez habilitada, los usuarios podrán personalizar, a través de las preferencias de usuario, las [condiciones de la racha](#streak-conditions) que deben cumplir para extenderla, incluidos el modo de evaluación de la racha, el umbral de cada métrica y los [días libres](#days-off).
 
 <Tip>
 Para obtener más información sobre cómo establecer las preferencias de un usuario específico, consulta la documentación dedicada a las [preferencias de usuario](/es/features/users#streak-preferences).
@@ -171,13 +171,13 @@ Para obtener más información sobre cómo establecer las preferencias de un usu
   />
 </Frame>
 
-## Gestión de Rachas {#managing-streaks}
+## Gestión de rachas {#managing-streaks}
 
 Esta sección describe algunas de las operaciones que puedes realizar para gestionar las rachas de los usuarios en tu aplicación.
 
-### Restauración de la Racha de un usuario {#restoring-a-users-streak}
+### Restaurar la racha de un usuario {#restoring-a-users-streak}
 
-Para restaurar la racha de un usuario, ve a la página de detalles del usuario y usa la acción 'Restaurar Racha'. Al restaurar la racha de un usuario, esta vuelve a la duración que tenía cuando la perdió por última vez.
+Para restaurar la racha de un usuario, ve a la página de detalles del usuario y usa la acción 'Restaurar racha'. Al restaurar la racha de un usuario, esta vuelve a la duración que tenía cuando la perdió por última vez.
 
 <Tip>
 También puedes usar la [API de administración para restaurar rachas](/es/admin-api/endpoints/streaks/restore-streaks) para restaurar rachas de forma programática.
@@ -194,9 +194,9 @@ También puedes usar la [API de administración para restaurar rachas](/es/admin
   ></video>
 </Frame>
 
-### Restablecimiento de la Racha de un usuario {#resetting-a-users-streak}
+### Restablecer la racha de un usuario {#resetting-a-users-streak}
 
-Para restablecer a cero la racha de un usuario, ve a la página de detalles del usuario y usa la acción 'Restablecer Racha'. Al restablecer la racha de un usuario, su racha actual termina de inmediato, independientemente de si ha cumplido sus [condiciones de la racha](#streak-conditions) en el período actual.
+Para restablecer a cero la racha de un usuario, ve a la página de detalles del usuario y usa la acción "Restablecer racha". Al restablecer la racha de un usuario, su racha actual termina de inmediato, independientemente de si ha cumplido sus [condiciones de racha](#streak-conditions) para el período actual.
 
 <Tip>
 También puedes usar la [API de administración para restablecer rachas](/es/admin-api/endpoints/streaks/reset-streaks) para restablecer las rachas de hasta 100 usuarios en una sola solicitud.
@@ -330,6 +330,10 @@ Si quieres mostrar las rachas de varios usuarios a la vez, por ejemplo, para adm
   }
 ]
 ```
+
+## Obtener soporte {#rewarding-streaks}
+
+¿Quieres ponerte en contacto con el equipo de Trophy? Escríbenos por [correo electrónico](mailto:support@trophy.so). ¡Estamos aquí para ayudarte!
 
 ## Obtener soporte {#get-support}
 

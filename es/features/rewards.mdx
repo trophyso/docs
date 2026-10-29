@@ -1,0 +1,255 @@
+---
+title: Recompensas
+description: Aprende a usar las recompensas en una experiencia de producto
+  gamificada con Trophy.
+og:description: Otorga a los usuarios premios, puntos extra o ventajas
+  personalizadas cuando alcancen hitos, y deja que canjeen esas recompensas
+  cuando quieran.
+icon: gift
+---
+
+import RedeemRewardRequest from "../../snippets/redeem-reward-request-block.mdx";
+import RedeemRewardResponse from "../../snippets/redeem-reward-response-block.mdx";
+import UserRewardsRequest from "../../snippets/user-rewards-request-block.mdx";
+import UserRewardsResponse from "../../snippets/user-rewards-response-block.mdx";
+import MetricEventRewardsResponseExcerpt from "../../snippets/metric-event-rewards-response-excerpt-block.mdx";
+import WebhookRewardAwardedPayload from "../../snippets/webhook-reward-awarded-payload-block.mdx";
+import WebhookRewardRedeemedPayload from "../../snippets/webhook-reward-redeemed-payload-block.mdx";
+import AdminCreateRewardRequest from "../../snippets/admin-create-reward-request-block.mdx";
+import AdminCreateRewardTriggerRequest from "../../snippets/admin-create-reward-trigger-request-block.mdx";
+
+## ¿Qué son las recompensas? {#what-are-rewards}
+
+Las recompensas te permiten dar algo a los usuarios cuando alcanzan un hito, y dejar que elijan cuándo reclamarlo.
+
+Una recompensa se **otorga** automáticamente cuando un usuario cumple uno de sus [desencadenadores](#reward-triggers), por ejemplo, al desbloquear un logro o alcanzar una racha de cierta duración. Solo se **entrega** cuando se **canjea**, lo cual haces llamando al [endpoint de canje](/es/api-reference/endpoints/rewards/redeem-a-reward) cuando el usuario la reclama en tu producto.
+
+Otorgar una recompensa nunca modifica por sí solo el saldo de puntos de un usuario.
+
+## ¿Recompensas o desencadenadores de puntos? {#rewards-or-points-triggers}
+
+Tanto las recompensas como los [desencadenadores de puntos](/es/features/points#points-triggers) pueden dar puntos a los usuarios cuando ocurre algo, pero funcionan de forma distinta.
+
+| | Desencadenadores de puntos | Recompensas |
+| --- | --- | --- |
+| Los puntos se añaden al saldo del usuario | Automáticamente, en cuanto se activa el desencadenador | Solo cuando se canjea la recompensa |
+| Requiere un paso de canje en tu producto | No | Sí |
+| Puede otorgar algo distinto de puntos | No | Sí, con recompensas personalizadas |
+| Webhooks | `points.changed` | `reward.awarded` y `reward.redeemed` |
+
+<Tip>
+  Si quieres que los puntos se apliquen automáticamente al saldo de un usuario y no necesitas un paso de canje, usa un [desencadenador de puntos](/es/features/points#points-triggers). Usa las recompensas cuando los usuarios deban reclamar algo o cuando tengas que entregarlo tú mismo.
+</Tip>
+
+## Casos de uso {#use-cases}
+
+### Bonificaciones reclamables {#claimable-bonuses}
+
+Otorga a los usuarios puntos de bonificación por alcanzar un hito, pero deja que pulsen un botón 'Reclamar' en tu producto para recibirlos. El momento de la reclamación es un lugar natural para mostrar una pantalla o una animación de celebración.
+
+### Premios y ventajas {#prizes-and-perks}
+
+Usa recompensas personalizadas para entregar elementos que existen fuera de Trophy, como un código de descuento, un mes gratis o un premio físico. Trophy te informa cuándo se otorga y se canjea la recompensa, y tu sistema se encarga del resto.
+
+## Tipos de recompensas {#reward-types}
+
+### Recompensas de puntos {#points-rewards}
+
+Las recompensas de puntos otorgan una cantidad fija de puntos de un [sistema de puntos](/es/features/points) cuando se canjean.
+
+Los puntos se otorgan según el valor en puntos de la recompensa en el momento del canje, y respetan cualquier [potenciador](/es/features/points#points-boosts) y el máximo del sistema de puntos. Si se superara el máximo a mitad del canje de varias recompensas otorgadas, se canjean las que caben y el resto permanece sin canjear para que puedas reintentarlo.
+
+### Recompensas personalizadas {#custom-rewards}
+
+Las recompensas personalizadas no hacen nada dentro de Trophy al canjearse, salvo enviar el `reward.redeemed` [webhook](#webhooks). Úsalas cuando quieras entregar la recompensa tú mismo.
+
+## Crear recompensas {#creating-rewards}
+
+Para crear una recompensa, ve a la [página de recompensas](https://app.trophy.so/rewards) y sigue los pasos que se indican a continuación.
+
+<Tip>
+  Las recompensas nuevas se crean como 'Inactivas' y sin desencadenadores, para que puedas configurarlas y probarlas antes de publicarlas.
+</Tip>
+
+<Steps>
+  <Step title="Haz clic en Nueva recompensa">
+    Asigna un nombre y una clave única a la recompensa. La clave es lo que usarás para hacer referencia a la recompensa en las APIs y no se puede cambiar después de crearla.
+  </Step>
+  <Step title="Elige un tipo de recompensa">
+    Elige entre una [recompensa de puntos](#points-rewards) y una [recompensa personalizada](#custom-rewards).
+  </Step>
+  <Step title="Configura la recompensa">
+    En una recompensa de puntos, elige el sistema de puntos y la cantidad de puntos que se otorgarán cuando se canjee la recompensa. También puedes añadir una descripción que las APIs devuelven para mostrarla en tu aplicación.
+  </Step>
+  <Step title="Establece un límite de canje (opcional)">
+    Limita cuántas veces se puede otorgar la recompensa a cada usuario. Consulta [límites de canje](#redemption-limits).
+  </Step>
+  <Step title="Añade filtros de usuario (opcional)">
+    Restringe la recompensa a los usuarios con [atributos de usuario personalizados](/es/features/users#custom-user-attributes) específicos. Consulta [filtros de usuario](#user-filters).
+  </Step>
+  <Step title="Añade activadores y activa">
+    Añade uno o más [activadores](#reward-triggers) y luego cambia el estado de la recompensa a activo para ponerla en producción.
+  </Step>
+</Steps>
+
+También puedes crear recompensas y sus activadores de forma programática con la API de administración:
+
+<AdminCreateRewardRequest />
+
+## Activadores de recompensa {#reward-triggers}
+
+Las recompensas se otorgan mediante activadores. Puedes añadir tantos activadores como quieras a una recompensa, y cada uno se puede activar y desactivar de forma independiente.
+
+<Note>
+  Los activadores funcionan de forma independiente entre sí. Cada activador activo puede otorgar la recompensa por sí solo, por lo que el usuario **no** necesita cumplir todos los activadores de una recompensa. Por ejemplo, una recompensa con un activador de racha y un activador de logro se otorga cuando el usuario alcanza la longitud de la racha y de nuevo cuando completa el logro. Cualquier [límite de canje](#redemption-limits) se aplica a todos los activadores de la recompensa en conjunto.
+</Note>
+
+### Tipos de disparadores {#types-of-triggers}
+
+#### Disparadores de métrica {#metric-triggers}
+
+La recompensa se otorga cada vez que el total de una [métrica](/es/features/metrics) del usuario aumenta según el umbral que establezcas, por ejemplo "otorgar cada 10 tareas completadas". El recuento comienza desde que se activó el disparador.
+
+Si vuelves a activar el disparador, o cambias su métrica, umbral o atributos de evento, se inicia un nuevo recuento.
+
+#### Disparadores de racha {#streak-triggers}
+
+La recompensa se otorga cada vez que la [racha](/es/features/streaks) actual del usuario aumenta según la duración de racha que establezcas, por ejemplo "otorgar cada 7 días". El período en el que se activó el disparador cuenta como el primer período, y si cambias la duración de la racha, se inicia un nuevo recuento.
+
+Una racha que terminó antes de activarse el disparador, o que se interrumpió después, no reduce el recuento.
+
+<Tip>
+  Los disparadores de racha otorgan la recompensa de forma repetida. Establece un [límite de canjes](#redemption-limits) de 1 para otorgarla solo una vez.
+</Tip>
+
+#### Disparadores de logro {#achievement-triggers}
+
+La recompensa se otorga una sola vez, cuando el usuario completa un [logro](/es/features/achievements) específico. No se otorga a los usuarios que completaron el logro antes de que existiera el disparador.
+
+#### Disparadores de clasificación {#leaderboard-triggers}
+
+La recompensa se otorga al usuario que termina una ejecución de [clasificación](/es/features/leaderboards) en exactamente la posición que establezcas. En las clasificaciones con atributos de desglose, se otorga al usuario que ocupa esa posición en cada segmento.
+
+### Creación de disparadores {#creating-triggers}
+
+Para añadir un disparador, abre la recompensa desde la [página de recompensas](https://app.trophy.so/rewards) y sigue los pasos siguientes.
+
+<Tip>
+  Todos los disparadores de recompensa nuevos se crean como 'Inactivo' para permitir las pruebas antes de implementarlos en producción. El tipo de un disparador solo se puede cambiar mientras está inactivo.
+</Tip>
+
+<Steps>
+  <Step title="Haz clic en Nuevo activador">
+    Elige un [tipo de activador](#types-of-triggers).
+  </Step>
+  <Step title="Configura el activador">
+    - Para un activador de **Métrica**, elige la métrica y el umbral.
+    - Para un activador de **Racha**, define la duración de la racha.
+    - Para un activador de **Logro**, elige el logro.
+    - Para un activador de **Clasificación**, elige la clasificación y la posición.
+  </Step>
+  <Step title="Añade filtros de atributos (opcional)">
+    - Para limitar un activador de **Métrica** a eventos con [atributos de evento personalizados](/es/features/events#custom-event-attributes) específicos, añade uno o más filtros en la sección **Atributos del evento**. Si defines varios filtros de atributos de evento, todos deben coincidir.
+    - Para limitar cualquier activador a usuarios con [atributos de usuario personalizados](/es/features/users#custom-user-attributes) específicos, añade los atributos y los valores deseados en la sección **Atributos del usuario**.
+  </Step>
+  <Step title="Guarda y activa">
+    Cuando estés seguro de que el activador se comportará como esperas, cambia su estado a activo para ponerlo en funcionamiento.
+  </Step>
+</Steps>
+
+Los activadores también se pueden añadir con la API de administración:
+
+<AdminCreateRewardTriggerRequest />
+
+### Cuándo no se otorgan recompensas {#when-rewards-are-not-awarded}
+
+Las recompensas solo se otorgan por las acciones que los usuarios realizan después de que un activador esté activo. Esto significa que:
+
+- **Los logros ya completados no otorgan recompensas.** Si un usuario completó un logro antes de que añadieras un activador de logro, no recibe la recompensa.
+- **Los logros retroactivos no otorgan recompensas.** Cuando activas o editas un logro, o estableces el `signUpDate` de un usuario, Trophy [completa los logros de los usuarios que ya cumplen los requisitos](/es/features/achievements#backdating-achievements). Estas finalizaciones silenciosas no otorgan recompensas.
+- **El progreso anterior no cuenta.** Los activadores de métrica y de racha cuentan desde el momento en que se activó el activador, por lo que el progreso que los usuarios lograron antes no se recompensa.
+
+Las recompensas inactivas y los activadores inactivos detienen la concesión de nuevas recompensas, pero las recompensas ya concedidas aún se pueden canjear. Las recompensas archivadas no se conceden, no se listan ni se canjean.
+
+## Límites de canje {#redemption-limits}
+
+Establece un límite de canje en una recompensa para limitar cuántas veces se puede conceder a cada usuario. Cuando un usuario alcanza el límite, deja de recibir la recompensa.
+
+## Filtros de usuario {#user-filters}
+
+Añade filtros de atributos de usuario a una recompensa, o a activadores individuales, para controlar quién puede recibirla. Para recibir una recompensa, un usuario debe cumplir los filtros de la recompensa y los del activador.
+
+## Seguimiento de las recompensas de un usuario {#tracking-a-users-rewards}
+
+### Recompensas concedidas por un evento {#rewards-awarded-by-an-event}
+
+Cuando un [evento de métrica](/es/api-reference/endpoints/events/submit-a-metric-event) o la [finalización de un logro](/es/api-reference/endpoints/achievements/mark-an-achievement-as-completed) concede una recompensa, la respuesta la incluye en el array `rewards`. Tiene el mismo formato que la respuesta del endpoint de recompensas del usuario. Si se repite un evento con la misma [clave de idempotencia](/es/api-reference/idempotency), se devuelve un array vacío.
+
+Úsalo para mostrar un mensaje del tipo "Has obtenido una recompensa" en el mismo momento en que ocurre.
+
+<MetricEventRewardsResponseExcerpt />
+
+Las recompensas concedidas por otras fuentes, como los activadores de clasificación cuando finaliza una ejecución, no se devuelven en las llamadas a la API. Usa el [webhook `reward.awarded`](#webhooks) o el endpoint de recompensas del usuario para encontrarlas.
+
+### Listado de las recompensas de un usuario {#listing-a-users-rewards}
+
+Usa el [endpoint de recompensas del usuario](/es/api-reference/endpoints/users/get-a-users-rewards) para listar las recompensas que se han concedido a un usuario. Filtra por `redeemed` para mostrar solo las recompensas pendientes de reclamar, y por rango de fechas para recorrer el historial.
+
+<UserRewardsRequest />
+
+<UserRewardsResponse />
+
+Cada concesión incluye el activador que la originó tal como está configurado actualmente, solo con los campos correspondientes a su tipo actual.
+
+## Canjear recompensas {#redeeming-rewards}
+
+Cuando un usuario reclame una recompensa en tu producto, llama al [endpoint de canje](/es/api-reference/endpoints/rewards/redeem-a-reward) con la clave de la recompensa y el ID del usuario.
+
+<RedeemRewardRequest />
+
+Trophy canjea de una sola vez todas las recompensas otorgadas al usuario que siguen sin canjear, empezando por las más antiguas, y las devuelve en `redemptions`. En las recompensas de puntos, la respuesta también incluye el total de `points` concedidos y cada `leaderboards` donde cambió el rango del usuario.
+
+<RedeemRewardResponse />
+
+El canje sigue funcionando para las recompensas inactivas, pero no para las archivadas ni las eliminadas. La solicitud devuelve un error cuando no puede canjear nada:
+
+- `404` si nunca se otorgó la recompensa al usuario.
+- `409` si ya se han canjeado todas las recompensas otorgadas.
+
+Si se alcanza el máximo de puntos a mitad del proceso, se canjean las recompensas que caben y el resto queda sin canjear para que puedas reintentarlo más tarde.
+
+## Webhooks {#webhooks}
+
+Trophy envía dos [webhooks](/es/webhooks/introduction) para las recompensas:
+
+- [`reward.awarded`](/es/webhooks/events/rewards/reward-awarded) se activa cuando se otorga una recompensa a un usuario. Todavía no se ha aplicado nada.
+- [`reward.redeemed`](/es/webhooks/events/rewards/reward-redeemed) se activa cuando se canjea la recompensa, una vez por cada recompensa otorgada. En las recompensas personalizadas, esta es la señal para entregarlas.
+
+Ambos incluyen la recompensa, el canje y el desencadenante que la originó.
+
+<WebhookRewardAwardedPayload />
+
+<WebhookRewardRedeemedPayload />
+
+## Recompensas y puntos {#rewards-and-points}
+
+Los puntos concedidos al canjear una recompensa se comportan como cualquier otro tipo de puntos:
+
+- Aparecen en el historial de puntos del usuario y en su [resumen de puntos](/es/api-reference/endpoints/users/get-a-users-points-summary).
+- Actualizan las [clasificaciones de puntos](/es/features/leaderboards) de ese sistema de puntos.
+- No se incluyen en el `points` devuelto por los eventos de métrica ni al completar un Logro, ya que no se concede nada hasta el canje.
+
+## Analíticas de recompensas {#rewards-analytics}
+
+Cada recompensa del panel de Trophy incluye analíticas integradas, como:
+
+- Concesiones a lo largo del tiempo
+- Canjes a lo largo del tiempo
+- Concesiones desglosadas por tipo de activador
+- En las recompensas de puntos, una estimación de los puntos otorgados y de los puntos realmente canjeados (incluidos los potenciadores y el máximo de puntos)
+
+Filtra por atributos de usuario para comparar cómo interactúan con una recompensa distintos grupos de usuarios. Los puntos otorgados por las recompensas también aparecen como una fila independiente en el gráfico de fuentes de puntos.
+
+## Obtener soporte {#get-support}
+
+¿Quieres ponerte en contacto con el equipo de Trophy? Escríbenos por [correo electrónico](mailto:support@trophy.so). ¡Estamos aquí para ayudarte!
