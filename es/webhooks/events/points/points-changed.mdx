@@ -1,8 +1,12 @@
 ---
 title: Puntos cambiados
-openapi: "/openapi/application.json webhook points.changed"
+openapi: /openapi/application.json webhook points.changed
 ---
 
 <Note>
-  Los webhooks de puntos cambiados se activan como máximo una vez cada 15 minutos por usuario.
+  Los webhooks de cambio de puntos se activan como máximo una vez cada 15 minutos por usuario.
+</Note>
+
+<Note>
+  Los puntos otorgados al canjear una [recompensa](/es/features/rewards) también activan este webhook, pero solo cuando se canjea la recompensa. Otorgar una recompensa por sí solo no modifica los puntos de un usuario.
 </Note>

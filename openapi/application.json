@@ -2,13 +2,13 @@
   "openapi": "3.1.0",
   "info": {
     "title": "Trophy",
-    "version": "1.27.0"
+    "version": "1.28.0"
   },
   "x-fern-global-headers": [
     {
       "header": "X-SDK-VERSION",
       "name": "sdkVersion",
-      "x-fern-default": "1.27.0"
+      "x-fern-default": "1.28.0"
     }
   ],
   "paths": {
@@ -303,7 +303,49 @@
                             }
                           ]
                         }
-                      }
+                      },
+                      "leaderboards": {
+                        "points-leaderboard": {
+                          "id": "0040fe51-6bce-4b44-b0ad-bddc4e123535",
+                          "key": "points-leaderboard",
+                          "name": "Points Leaderboard",
+                          "description": null,
+                          "rankBy": "points",
+                          "runUnit": null,
+                          "runInterval": null,
+                          "maxParticipants": 100,
+                          "breakdownAttribute": null,
+                          "breakdownAttributes": [],
+                          "userAttributes": [],
+                          "pointsSystemKey": "points-system-key",
+                          "pointsSystemName": "XP",
+                          "threshold": 1,
+                          "start": "2021-01-01",
+                          "end": null,
+                          "previousRank": null,
+                          "rank": 1
+                        }
+                      },
+                      "rewards": [
+                        {
+                          "id": "7a3c1e52-9f1d-4c8e-a6b2-3d5e7f9a1b2c",
+                          "awardedAt": "2021-01-01T00:00:00Z",
+                          "redeemed": false,
+                          "redeemedAt": null,
+                          "reward": {
+                            "id": "2b4d6f81-3a5c-4e7f-9b1d-8c0e2a4f6b8d",
+                            "key": "onboarding-gift",
+                            "name": "Onboarding gift",
+                            "description": "A thank you for finishing onboarding.",
+                            "type": "custom"
+                          },
+                          "trigger": {
+                            "id": "9e1f3a5c-7b9d-4f2a-8c6e-0d2b4f6a8c1e",
+                            "type": "achievement",
+                            "achievementId": "5100fe51-6bce-6j44-b0hs-bddc4e123682"
+                          }
+                        }
+                      ]
                     }
                   }
                 }
@@ -378,6 +420,121 @@
             }
           }
         }
+      }
+    },
+    "/rewards/{key}/redeem": {
+      "servers": [
+        {
+          "url": "https://api.trophy.so/v1",
+          "description": "Application API"
+        }
+      ],
+      "parameters": [
+        {
+          "$ref": "#/components/parameters/TenantId"
+        }
+      ],
+      "post": {
+        "description": "Redeem a reward for a user.",
+        "operationId": "rewards_redeem",
+        "x-fern-server-name": "api",
+        "x-fern-sdk-group-name": "rewards",
+        "x-fern-sdk-method-name": "redeem",
+        "tags": [
+          "Rewards"
+        ],
+        "x-codeSamples": [
+          {
+            "lang": "javascript",
+            "source": "import { TrophyApiClient } from '@trophyso/node';\n\nconst trophy = new TrophyApiClient({\n  apiKey: 'YOUR_API_KEY'\n});\n\nconst response = await trophy.rewards.redeem(\"reward-key\", {\n  user: {\n    id: \"user-id\",\n  }\n});\n"
+          },
+          {
+            "lang": "python",
+            "source": "from trophy import TrophyApi\n\nclient = TrophyApi(api_key='YOUR_API_KEY')\n\nresponse = client.rewards.redeem(\"reward-key\", user={\"id\": \"user-id\"})\n"
+          },
+          {
+            "lang": "go",
+            "source": "import (\n  \"context\"\n  \"fmt\"\n\n  trophy \"github.com/trophyso/trophy-go\"\n)\n\nclient := trophy.NewClient(trophy.WithAPIKey(\"YOUR_API_KEY\"))\nresponse, err := client.Rewards.Redeem(context.TODO(), \"reward-key\", &trophy.RedeemRewardRequest{\n  User: &trophy.User{\n    ID: \"user-id\",\n  },\n})\nif err != nil {\n  panic(err)\n}\nfmt.Printf(\"%+v\", response)\n"
+          }
+        ],
+        "parameters": [
+          {
+            "name": "key",
+            "in": "path",
+            "description": "The key of the reward to redeem.",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "user": {
+                    "$ref": "#/components/schemas/UpsertedUser",
+                    "description": "The user redeeming the reward. The user must already exist."
+                  }
+                },
+                "required": [
+                  "user"
+                ]
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "The reward was redeemed and fulfilled.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/RedeemRewardResponse"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Reward or user not found, or the reward has not been awarded.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorBody"
+                }
+              }
+            }
+          },
+          "409": {
+            "description": "The reward has already been redeemed.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorBody"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Points could not be granted because the points cap was reached or the points system is not available, or the request is invalid.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorBody"
+                }
+              }
+            }
+          }
+        },
+        "summary": "Redeem a reward",
+        "security": [
+          {
+            "ApiKeyAuth": []
+          }
+        ]
       }
     },
     "/metrics/{key}/event": {
@@ -540,7 +697,31 @@
                           "previousRank": null,
                           "rank": 100
                         }
-                      }
+                      },
+                      "rewards": [
+                        {
+                          "id": "7a3c1e52-9f1d-4c8e-a6b2-3d5e7f9a1b2c",
+                          "awardedAt": "2021-01-01T00:00:00Z",
+                          "redeemed": false,
+                          "redeemedAt": null,
+                          "reward": {
+                            "id": "2b4d6f81-3a5c-4e7f-9b1d-8c0e2a4f6b8d",
+                            "key": "bonus-xp",
+                            "name": "Bonus XP",
+                            "description": null,
+                            "type": "points",
+                            "points": 50,
+                            "pointsSystemId": "0040fe51-6bce-4b44-b0ad-bddc4e123534",
+                            "pointsSystemKey": "xp"
+                          },
+                          "trigger": {
+                            "id": "9e1f3a5c-7b9d-4f2a-8c6e-0d2b4f6a8c1e",
+                            "type": "metric",
+                            "metricId": "d01dcbcb-d51e-4c12-b054-dc811dcdc623",
+                            "metricThreshold": 500
+                          }
+                        }
+                      ]
                     }
                   }
                 }
@@ -2111,6 +2292,144 @@
           }
         },
         "summary": "Get a user's achievements",
+        "security": [
+          {
+            "ApiKeyAuth": []
+          }
+        ]
+      }
+    },
+    "/users/{id}/rewards": {
+      "servers": [
+        {
+          "url": "https://api.trophy.so/v1",
+          "description": "Application API"
+        }
+      ],
+      "parameters": [
+        {
+          "$ref": "#/components/parameters/TenantId"
+        }
+      ],
+      "get": {
+        "description": "Get rewards awarded to a user. Filter by redeemed state and the date the reward was awarded.",
+        "operationId": "users_rewards",
+        "x-fern-server-name": "api",
+        "x-fern-sdk-group-name": [
+          "users"
+        ],
+        "x-fern-sdk-method-name": "rewards",
+        "tags": [
+          "Users"
+        ],
+        "x-codeSamples": [
+          {
+            "lang": "javascript",
+            "source": "import { TrophyApiClient } from '@trophyso/node';\n\nconst trophy = new TrophyApiClient({\n  apiKey: 'YOUR_API_KEY'\n});\n\nconst response = await trophy.users.rewards(\"user-id\", {\n  redeemed: false,\n  limit: 100,\n  skip: 0\n});\n"
+          },
+          {
+            "lang": "python",
+            "source": "from trophy import TrophyApi\n\nclient = TrophyApi(api_key='YOUR_API_KEY')\n\nresponse = client.users.rewards(\"user-id\", redeemed=False, limit=100, skip=0)\n"
+          },
+          {
+            "lang": "go",
+            "source": "import (\n  \"context\"\n  \"fmt\"\n\n  trophy \"github.com/trophyso/trophy-go\"\n)\n\nclient := trophy.NewClient(trophy.WithAPIKey(\"YOUR_API_KEY\"))\nredeemed := false\nresponse, err := client.Users.Rewards(context.TODO(), \"user-id\", &trophy.UsersRewardsRequest{\n  Redeemed: &redeemed,\n})\nif err != nil {\n  panic(err)\n}\nfmt.Printf(\"%+v\", response)\n"
+          }
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "The ID of the user in your database.",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "redeemed",
+            "in": "query",
+            "description": "When set, only return rewards that have or have not been redeemed.",
+            "schema": {
+              "type": "boolean"
+            }
+          },
+          {
+            "name": "startDate",
+            "in": "query",
+            "description": "Inclusive start of the awarded-at range, as YYYY-MM-DD in UTC.",
+            "schema": {
+              "type": "string",
+              "format": "date"
+            }
+          },
+          {
+            "name": "endDate",
+            "in": "query",
+            "description": "Inclusive end of the awarded-at range, as YYYY-MM-DD in UTC.",
+            "schema": {
+              "type": "string",
+              "format": "date"
+            }
+          },
+          {
+            "name": "skip",
+            "in": "query",
+            "description": "Number of rewards to skip. Defaults to 0.",
+            "schema": {
+              "type": "integer",
+              "minimum": 0,
+              "default": 0
+            }
+          },
+          {
+            "name": "limit",
+            "in": "query",
+            "description": "Maximum number of rewards to return. Defaults to 100 and cannot exceed 100.",
+            "schema": {
+              "type": "integer",
+              "minimum": 1,
+              "maximum": 100,
+              "default": 100
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "The user's rewards, newest award first.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/UserRewardResponse"
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "User not found.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorBody"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Unprocessible Entity",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorBody"
+                }
+              }
+            }
+          }
+        },
+        "summary": "Get a user's rewards",
         "security": [
           {
             "ApiKeyAuth": []
@@ -4496,6 +4815,50 @@
         }
       }
     },
+    "reward.awarded": {
+      "post": {
+        "summary": "Reward awarded",
+        "operationId": "webhooks_reward_awarded",
+        "description": "Triggered when a reward is awarded to a user. The reward is not fulfilled until it is redeemed.",
+        "requestBody": {
+          "description": "The webhook event.",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/RewardWebhookEvent"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Return a 200 status to indicate the webhook was received and processed."
+          }
+        }
+      }
+    },
+    "reward.redeemed": {
+      "post": {
+        "summary": "Reward redeemed",
+        "operationId": "webhooks_reward_redeemed",
+        "description": "Triggered when a reward is fulfilled. For points rewards this is when points are granted. For custom rewards the customer handles fulfillment.",
+        "requestBody": {
+          "description": "The webhook event.",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/RewardWebhookEvent"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Return a 200 status to indicate the webhook was received and processed."
+          }
+        }
+      }
+    },
     "streak.started": {
       "post": {
         "summary": "Streak started",
@@ -6006,7 +6369,8 @@
               "achievement",
               "streak",
               "time",
-              "user_creation"
+              "user_creation",
+              "reward"
             ]
           },
           "points": {
@@ -6045,6 +6409,14 @@
           "achievementName": {
             "type": "string",
             "description": "If the trigger has type 'achievement', the name of the achievement"
+          },
+          "rewardKey": {
+            "type": "string",
+            "description": "If the trigger has type 'reward', the key of the reward that granted these points."
+          },
+          "rewardName": {
+            "type": "string",
+            "description": "If the trigger has type 'reward', the name of the reward that granted these points."
           },
           "timeUnit": {
             "type": "string",
@@ -7445,12 +7817,28 @@
               "$ref": "#/components/schemas/MetricEventPointsResponse"
             },
             "description": "A map of points systems by key that were affected by this achievement completion."
+          },
+          "leaderboards": {
+            "type": "object",
+            "additionalProperties": {
+              "$ref": "#/components/schemas/MetricEventLeaderboardResponse"
+            },
+            "description": "A map of leaderboards by key. Only contains leaderboards that were affected by this achievement completion."
+          },
+          "rewards": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/UserRewardResponse"
+            },
+            "description": "Rewards awarded as a result of this achievement completion."
           }
         },
         "required": [
           "completionId",
           "achievement",
-          "points"
+          "points",
+          "leaderboards",
+          "rewards"
         ]
       },
       "EventResponse": {
@@ -7498,6 +7886,13 @@
             },
             "description": "A map of leaderboards by key. Only contains leaderboards that were affected by the event."
           },
+          "rewards": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/UserRewardResponse"
+            },
+            "description": "Rewards awarded as a result of this event."
+          },
           "idempotencyKey": {
             "type": "string",
             "description": "The idempotency key used for the event, if one was provided."
@@ -7514,7 +7909,8 @@
           "achievements",
           "currentStreak",
           "points",
-          "leaderboards"
+          "leaderboards",
+          "rewards"
         ]
       },
       "PointsRange": {
@@ -8178,6 +8574,247 @@
         "required": [
           "user",
           "activity"
+        ]
+      },
+      "RedeemRewardResponse": {
+        "title": "RedeemRewardResponse",
+        "type": "object",
+        "properties": {
+          "reward": {
+            "$ref": "#/components/schemas/RewardSummary"
+          },
+          "redemptions": {
+            "type": "array",
+            "description": "The awards redeemed by this request, oldest first.",
+            "items": {
+              "$ref": "#/components/schemas/RedeemedReward"
+            }
+          },
+          "points": {
+            "type": "object",
+            "additionalProperties": {
+              "$ref": "#/components/schemas/MetricEventPointsResponse"
+            },
+            "description": "Points granted by a points reward, keyed by points system key. Includes one award per redemption."
+          },
+          "leaderboards": {
+            "type": "object",
+            "additionalProperties": {
+              "$ref": "#/components/schemas/MetricEventLeaderboardResponse"
+            },
+            "description": "A map of leaderboards by key. Only contains leaderboards that were affected by the points this request granted."
+          }
+        },
+        "required": [
+          "reward",
+          "redemptions",
+          "leaderboards"
+        ]
+      },
+      "RedeemedReward": {
+        "title": "RedeemedReward",
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "description": "The ID of the reward redemption."
+          },
+          "awardedAt": {
+            "type": "string",
+            "format": "date-time",
+            "description": "When the reward was awarded."
+          },
+          "redeemedAt": {
+            "type": "string",
+            "format": "date-time",
+            "description": "When the reward was redeemed."
+          }
+        },
+        "required": [
+          "id",
+          "awardedAt",
+          "redeemedAt"
+        ]
+      },
+      "UserRewardResponse": {
+        "title": "UserRewardResponse",
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "description": "The ID of the reward redemption."
+          },
+          "awardedAt": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "redeemed": {
+            "type": "boolean"
+          },
+          "redeemedAt": {
+            "type": "string",
+            "format": "date-time",
+            "nullable": true
+          },
+          "reward": {
+            "$ref": "#/components/schemas/RewardSummary"
+          },
+          "trigger": {
+            "$ref": "#/components/schemas/UserRewardTrigger",
+            "nullable": true
+          }
+        },
+        "required": [
+          "id",
+          "awardedAt",
+          "redeemed",
+          "reward"
+        ]
+      },
+      "RewardSummary": {
+        "title": "RewardSummary",
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string"
+          },
+          "key": {
+            "type": "string"
+          },
+          "name": {
+            "type": "string"
+          },
+          "description": {
+            "type": "string",
+            "nullable": true
+          },
+          "type": {
+            "type": "string",
+            "enum": [
+              "points",
+              "custom"
+            ]
+          },
+          "points": {
+            "type": "integer"
+          },
+          "pointsSystemId": {
+            "type": "string"
+          },
+          "pointsSystemKey": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "id",
+          "key",
+          "name",
+          "type"
+        ]
+      },
+      "UserRewardTrigger": {
+        "title": "UserRewardTrigger",
+        "type": "object",
+        "description": "The trigger that awarded the reward, as it is configured now. Only the fields for the trigger's current type are included.",
+        "properties": {
+          "id": {
+            "type": "string"
+          },
+          "type": {
+            "type": "string",
+            "enum": [
+              "metric",
+              "achievement",
+              "streak",
+              "leaderboard"
+            ]
+          },
+          "metricId": {
+            "type": "string",
+            "description": "For metric triggers, the ID of the metric."
+          },
+          "metricThreshold": {
+            "type": "integer",
+            "description": "For metric triggers, the reward is awarded each time the user's total for the metric increases by this amount."
+          },
+          "achievementId": {
+            "type": "string",
+            "description": "For achievement triggers, the ID of the achievement."
+          },
+          "streakLengthThreshold": {
+            "type": "integer",
+            "description": "For streak triggers, the reward is awarded every this many periods of the user's streak."
+          },
+          "leaderboardId": {
+            "type": "string",
+            "description": "For leaderboard triggers, the ID of the leaderboard."
+          },
+          "rank": {
+            "type": "integer",
+            "description": "For leaderboard triggers, the rank a user must finish a leaderboard run at."
+          }
+        },
+        "required": [
+          "id",
+          "type"
+        ]
+      },
+      "RewardWebhookEvent": {
+        "title": "RewardWebhookEvent",
+        "type": "object",
+        "properties": {
+          "type": {
+            "type": "string",
+            "enum": [
+              "reward.awarded",
+              "reward.redeemed"
+            ]
+          },
+          "timestamp": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "user": {
+            "$ref": "#/components/schemas/User"
+          },
+          "reward": {
+            "$ref": "#/components/schemas/RewardSummary"
+          },
+          "redemption": {
+            "type": "object",
+            "properties": {
+              "id": {
+                "type": "string"
+              },
+              "redeemed": {
+                "type": "boolean"
+              },
+              "awardedAt": {
+                "type": "string",
+                "format": "date-time"
+              },
+              "redeemedAt": {
+                "type": "string",
+                "format": "date-time",
+                "nullable": true
+              },
+              "trigger": {
+                "$ref": "#/components/schemas/UserRewardTrigger"
+              }
+            },
+            "required": [
+              "id",
+              "redeemed",
+              "awardedAt"
+            ]
+          }
+        },
+        "required": [
+          "type",
+          "timestamp",
+          "user",
+          "reward",
+          "redemption"
         ]
       }
     },

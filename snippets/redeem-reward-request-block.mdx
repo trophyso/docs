@@ -1,0 +1,80 @@
+<CodeGroup>
+```bash cURL
+curl -X POST https://api.trophy.so/v1/rewards/welcome-bonus/redeem \
+     -H "X-API-KEY: <api-key>" \
+     -H "Content-Type: application/json" \
+     -d '{
+  "user": {
+    "id": "18"
+  }
+}'
+```
+
+```typescript Node
+trophy.rewards.redeem("welcome-bonus", {
+  user: {
+    id: "18",
+  },
+});
+```
+
+```python Python
+client.rewards.redeem(
+    key="welcome-bonus",
+    user={"id": "18"},
+)
+```
+
+```php PHP
+$request = new RewardsRedeemRequest([
+    'user' => new UpsertedUser([
+        'id' => '18'
+    ])
+]);
+
+$trophy->rewards->redeem("welcome-bonus", $request);
+```
+
+```java Java
+RedeemRewardRequest request = RedeemRewardRequest.builder()
+      .user(
+        UpsertedUser.builder()
+          .id("18")
+          .build()
+      )
+      .build();
+
+RedeemRewardResponse response = client.rewards().redeem("welcome-bonus", request);
+```
+
+```go Go
+response, err := client.Rewards.Redeem(
+    "welcome-bonus",
+    &api.RedeemRewardRequest{
+        User: &api.UpsertedUser{
+            Id: "18",
+        },
+    },
+)
+```
+
+```csharp C#
+var request = new RedeemRewardRequest {
+   User = new UpsertedUser {
+      Id = "18"
+   }
+};
+
+await trophy.Rewards.RedeemAsync("welcome-bonus", request);
+```
+
+```ruby Ruby
+result = client.rewards.redeem(
+  :key => 'welcome-bonus',
+  :user => {
+    :id => '18'
+  }
+)
+```
+
+</CodeGroup>

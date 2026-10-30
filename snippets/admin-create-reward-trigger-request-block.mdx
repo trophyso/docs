@@ -1,0 +1,108 @@
+<CodeGroup>
+```bash cURL
+curl -X POST https://admin.trophy.so/v1/rewards/{rewardId}/triggers \
+     -H "X-API-KEY: <api-key>" \
+     -H "Content-Type: application/json" \
+     -d '[
+       {
+         "type": "metric",
+         "metricId": "metric-uuid",
+         "metricThreshold": 10,
+         "status": "active"
+       }
+     ]'
+```
+
+```typescript Node
+await trophy.admin.rewards.triggers.create("reward-uuid", [
+  {
+    type: "metric",
+    metricId: "metric-uuid",
+    metricThreshold: 10,
+    status: "active",
+  },
+]);
+```
+
+```python Python
+client.admin.rewards.triggers.create(
+    reward_id="reward-uuid",
+    request=[
+        {
+            "type": "metric",
+            "metric_id": "metric-uuid",
+            "metric_threshold": 10,
+            "status": "active",
+        }
+    ],
+)
+```
+
+```php PHP
+$trophy->admin->rewards->triggers->create("reward-uuid", [
+    [
+        'type' => 'metric',
+        'metricId' => 'metric-uuid',
+        'metricThreshold' => 10,
+        'status' => 'active',
+    ],
+]);
+```
+
+```java Java
+CreateRewardTriggersResponse response = client.admin().rewards().triggers().create(
+  "reward-uuid",
+  List.of(
+    CreateRewardTriggerRequestItem.builder()
+      .type(CreateRewardTriggerRequestItemType.METRIC)
+      .metricId("metric-uuid")
+      .metricThreshold(10)
+      .status(CreateRewardTriggerRequestItemStatus.ACTIVE)
+      .build()
+  )
+);
+```
+
+```go Go
+response, err := client.Admin.Rewards.Triggers.Create(
+    context.TODO(),
+    "reward-uuid",
+    []*api.CreateRewardTriggerRequestItem{
+        {
+            Type: api.CreateRewardTriggerRequestItemTypeMetric,
+            MetricId: api.String("metric-uuid"),
+            MetricThreshold: api.Int(10),
+            Status: api.CreateRewardTriggerRequestItemStatusActive.Ptr(),
+        },
+    },
+)
+```
+
+```csharp C#
+await trophy.Admin.Rewards.Triggers.CreateAsync("reward-uuid", new[]
+{
+    new CreateRewardTriggerRequestItem
+    {
+        Type = CreateRewardTriggerRequestItemType.Metric,
+        MetricId = "metric-uuid",
+        MetricThreshold = 10,
+        Status = CreateRewardTriggerRequestItemStatus.Active,
+    },
+});
+```
+
+```ruby Ruby
+result = client.admin.rewards.triggers.create(
+  'reward-uuid',
+  [
+    {
+      type: 'metric',
+      metric_id: 'metric-uuid',
+      metric_threshold: 10,
+      status: 'active'
+    }
+  ]
+)
+```
+
+</CodeGroup>

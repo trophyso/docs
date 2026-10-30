@@ -6,3 +6,7 @@ openapi: "/openapi/application.json webhook points.changed"
 <Note>
   Points changed webhooks fire maximum once every 15 minutes per user.
 </Note>
+
+<Note>
+  Points granted by redeeming a [reward](/features/rewards) also fire this webhook, but only once the reward is redeemed. Awarding a reward on its own does not change a user's points.
+</Note>

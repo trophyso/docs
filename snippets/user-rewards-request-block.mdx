@@ -1,0 +1,61 @@
+<CodeGroup>
+```bash cURL
+curl --request GET \
+  --url "https://api.trophy.so/v1/users/{id}/rewards?redeemed=false" \
+  --header 'X-API-KEY: <api-key>'
+```
+
+```typescript Node
+trophy.users.rewards("user-id", {
+  redeemed: false,
+});
+```
+
+```python Python
+client.users.rewards(
+    id="user-id",
+    redeemed=False,
+)
+```
+
+```php PHP
+$request = new UsersRewardsRequest([
+    'redeemed' => false
+]);
+
+$trophy->users->rewards("user-id", $request);
+```
+
+```java Java
+UsersRewardsRequest request = UsersRewardsRequest.builder()
+      .redeemed(false)
+      .build();
+
+List<UserRewardResponse> response = client.users().rewards("user-id", request);
+```
+
+```go Go
+redeemed := false
+
+response, err := client.Users.Rewards(
+    "user-id",
+    &api.UsersRewardsRequest{
+        Redeemed: &redeemed,
+    },
+)
+```
+
+```csharp C#
+await trophy.Users.RewardsAsync("user-id", new UsersRewardsRequest {
+   Redeemed = false
+});
+```
+
+```ruby Ruby
+result = client.users.rewards(
+  :id => 'user-id',
+  :redeemed => false
+)
+```
+
+</CodeGroup>
