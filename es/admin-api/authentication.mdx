@@ -1,11 +1,11 @@
 ---
 title: Autenticación
-description: Integra de forma segura con la Admin API utilizando claves de API
-  de administrador a nivel de cuenta transmitidas en el encabezado
-  `X-API-KEY`.
-og:description: Integra de forma segura con la Admin API de Trophy utilizando
-  claves de API de administrador a nivel de cuenta transmitidas en el encabezado
-  `X-API-KEY`.
+description: Integra de forma segura con la API de administración mediante
+  claves de API de administración a nivel de cuenta, transmitidas en el
+  encabezado `X-API-KEY`.
+og:description: Integra de forma segura con la API de administración de Trophy
+  mediante claves de API de administración a nivel de cuenta, transmitidas en el
+  encabezado `X-API-KEY`.
 icon: key
 ---
 
@@ -13,59 +13,59 @@ import AdminApiAuthenticateRequestBlock from "../../snippets/admin-api-authentic
 import ApplicationApiAuthenticateRequestBlock from "../../snippets/application-api-authenticate-request-block.mdx";
 
 <Tip>
-  Para acceso del lado del cliente o de usuarios finales a la Application API, crea
-  [claves de API de aplicación](/es/api-reference/authentication) con alcance limitado a un solo usuario
-  en su lugar.
+  Para el acceso desde el cliente o de usuarios finales a la API de aplicación,
+  crea en su lugar [claves de API de aplicación](/es/api-reference/authentication)
+  limitadas a un solo usuario.
 </Tip>
 
-## Claves de API de administrador {#admin-api-keys}
+## Claves de API de administración {#admin-api-keys}
 
-Las claves de API de administrador son credenciales a nivel de cuenta con permisos amplios. Úsalas para autenticar solicitudes a la Admin API y, opcionalmente, a la [Application API](/es/api-reference/authentication) desde entornos de servidor confiables.
+Las claves de API de administración son credenciales a nivel de cuenta con permisos amplios. Úsalas para autenticar las solicitudes a la API de administración y, opcionalmente, a la [API de aplicación](/es/api-reference/authentication) desde entornos de servidor de confianza.
 
-Cada cuenta puede crear un máximo de 3 claves de API de administrador desde la [página de integración](https://app.trophy.so/integration) del panel de Trophy.
+Cada cuenta puede crear un máximo de 3 claves de API de administración desde la [página de integración](https://app.trophy.so/integration) del panel de Trophy.
 
-Trophy realiza un seguimiento y muestra cuándo se creó cada clave de API de administrador en tu cuenta y cuándo se usó por última vez, para que puedas supervisar fácilmente su uso.
+Trophy registra y muestra cuándo se creó cada clave de API de administración de tu cuenta y cuándo se usó por última vez, para que puedas hacer un seguimiento sencillo del uso.
 
 <Frame>
   <img height="200" noZoom src="../../assets/api/authentication/api_keys.png" />
 </Frame>
 
 <Warning>
-  Las claves de API de administrador pueden acceder a cualquier usuario y cualquier operación de administrador en tu cuenta.
-  Nunca las expongas en código del lado del cliente, aplicaciones móviles o repositorios públicos.
+  Las claves de API de administración pueden acceder a cualquier usuario y a cualquier operación de administración de tu cuenta.
+  No las expongas nunca en código del lado del cliente, aplicaciones móviles ni repositorios públicos.
 </Warning>
 
-### Anatomía de una clave de API de administrador {#anatomy-of-an-admin-api-key}
+### Anatomía de una clave de API de administración {#anatomy-of-an-admin-api-key}
 
-Cada clave de API de administrador está compuesta por 2 partes separadas por un punto:
+Cada clave de API de administración consta de 2 partes separadas por un punto:
 
 ```bash
 {prefix}.{body}
 ```
 
-- El _prefijo_ son los primeros 8 caracteres. Es legible y siempre permanecerá igual, por lo que es fácilmente reconocible.
-- El _cuerpo_ es la parte secreta y solo se te muestra una vez cuando creas la clave.
+- El _prefijo_ son los primeros 8 caracteres. Es legible y siempre permanece igual, por lo que es fácil de reconocer.
+- El _cuerpo_ es la parte secreta y solo se muestra una vez, cuando creas la clave.
 
 <Note>
-  Al usar la API, ambas partes de tu clave de API de administrador deben enviarse en el
+  Al usar la API, ambas partes de tu clave de API de administración deben enviarse en el
   encabezado `X-API-KEY`.
 </Note>
 
 ### Autenticación de solicitudes {#authenticating-requests}
 
-Al realizar solicitudes al Admin API, incluye ambas partes de tu clave de admin API en el encabezado `X-API-KEY`, o pásala al inicializar un cliente SDK:
+Al realizar solicitudes a la API de administración, incluye ambas partes de tu clave de API de administrador en el encabezado `X-API-KEY`, o pásala al inicializar un cliente del SDK:
 
 <AdminApiAuthenticateRequestBlock />
 
-La misma clave autentica las solicitudes del Application API cuando utilizas una clave de admin API desde un entorno del lado del servidor:
+La misma clave autentica las solicitudes a la API de aplicación cuando usas una clave de API de administrador desde un entorno de servidor:
 
 <ApplicationApiAuthenticateRequestBlock />
 
-Si no proporcionas una clave API o tu clave API no es válida, recibirás un código de respuesta `401`.
+Si no pasas una clave de API, o tu clave de API no es válida, recibirás un código de respuesta `401`.
 
-## Administración de claves de admin API {#managing-admin-api-keys}
+## Gestión de las claves de API de administrador {#managing-admin-api-keys}
 
-Existen varias operaciones que puedes realizar sobre las claves de admin API desde tu panel de Trophy para gestionar tu integración.
+Hay varias operaciones que puedes realizar con las claves de API de administrador desde tu panel de Trophy para gestionar tu integración.
 
 <Frame>
   <img
@@ -77,28 +77,28 @@ Existen varias operaciones que puedes realizar sobre las claves de admin API des
 
 ### Rotación de claves {#rotating-keys}
 
-Las claves de admin API pueden rotarse si deseas cambiarlas por cualquier motivo. En el momento de la rotación, la clave API original dejará de funcionar y cualquier solicitud que aún la utilice comenzará a recibir respuestas `401` de inmediato.
+Las claves de API de administrador se pueden rotar si quieres cambiarlas por cualquier motivo. En el momento de la rotación, la clave de API original dejará de funcionar y las solicitudes que sigan usándola empezarán a recibir respuestas `401` de inmediato.
 
 <Note>
-  Ten en cuenta que al rotar claves, tanto el prefijo como el cuerpo cambiarán.
+  Ten en cuenta que, al rotar las claves, cambian tanto el prefijo como el cuerpo.
 </Note>
 
 ### Revocación de claves {#revoking-keys}
 
-Las claves de admin API también pueden revocarse por completo, momento en el cual pasan a estar _Inactivas_. En el momento de la revocación, la clave API dejará de funcionar y cualquier solicitud que aún la utilice comenzará a recibir respuestas `401` de inmediato.
+Las claves de API de administrador también se pueden revocar por completo, y en ese caso pasan a estar _inactivas_. En el momento de la revocación, la clave de API dejará de funcionar y las solicitudes que sigan usándola empezarán a recibir respuestas `401` de inmediato.
 
-Una vez revocada, puedes reactivar la clave API en cualquier momento.
+Una vez revocada, puedes volver a activar la clave de API en cualquier momento.
 
 <Note>
-  Ni el prefijo ni el cuerpo de la clave cambian cuando se revoca o se reactiva.
+  Ni el prefijo ni el cuerpo de la clave cambian al revocarla o volver a activarla.
 </Note>
 
-### Eliminación de claves API {#deleting-api-keys}
+### Eliminación de claves de API {#deleting-api-keys}
 
-Si estás 100% seguro de que ya no necesitas una clave de admin API, pueden eliminarse.
+Si estás 100 % seguro de que ya no necesitas una clave de API de administrador, puedes eliminarla.
 
-<Error>Una vez que se eliminan las claves de API, no se pueden recuperar.</Error>
+<Danger>Una vez eliminadas las claves de API, no se pueden recuperar.</Danger>
 
-## Obtener Soporte {#get-support}
+## Obtener soporte {#get-support}
 
-¿Quieres ponerte en contacto con el equipo de Trophy? Contáctanos por [correo electrónico](mailto:support@trophy.so). ¡Estamos aquí para ayudarte!
+¿Quieres ponerte en contacto con el equipo de Trophy? Escríbenos por [correo electrónico](mailto:support@trophy.so). ¡Estamos aquí para ayudarte!
