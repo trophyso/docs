@@ -2,13 +2,13 @@
   "openapi": "3.1.0",
   "info": {
     "title": "Trophy",
-    "version": "1.28.0"
+    "version": "1.29.0"
   },
   "x-fern-global-headers": [
     {
       "header": "X-SDK-VERSION",
       "name": "sdkVersion",
-      "x-fern-default": "1.28.0"
+      "x-fern-default": "1.29.0"
     }
   ],
   "paths": {
@@ -889,6 +889,7 @@
                       "tz": "Europe/London",
                       "subscribeToEmails": true,
                       "control": false,
+                      "agenticMessagingEnabled": false,
                       "created": "2021-01-01T00:00:00Z",
                       "updated": "2021-01-01T00:00:00Z",
                       "attributes": {
@@ -1001,6 +1002,7 @@
                       "tz": "Europe/London",
                       "subscribeToEmails": true,
                       "control": false,
+                      "agenticMessagingEnabled": false,
                       "created": "2021-01-01T00:00:00Z",
                       "updated": "2021-01-01T00:00:00Z",
                       "attributes": {
@@ -1120,6 +1122,7 @@
                       "tz": "Europe/London",
                       "subscribeToEmails": true,
                       "control": false,
+                      "agenticMessagingEnabled": false,
                       "created": "2021-01-01T00:00:00Z",
                       "updated": "2021-01-01T00:00:00Z",
                       "attributes": {
@@ -1239,6 +1242,7 @@
                       "tz": "Europe/London",
                       "subscribeToEmails": true,
                       "control": false,
+                      "agenticMessagingEnabled": false,
                       "created": "2021-01-01T00:00:00Z",
                       "updated": "2021-01-01T00:00:00Z",
                       "attributes": {
@@ -3447,6 +3451,7 @@
                         "created": "2024-01-15T10:30:00Z",
                         "updated": "2024-06-20T14:45:00Z",
                         "control": false,
+                        "agenticMessagingEnabled": false,
                         "attributes": {
                           "plan-type": "premium",
                           "region": "us-east"
@@ -7621,6 +7626,11 @@
             "description": "Whether the user is in the control group, meaning they do not receive emails or other communications from Trophy.",
             "example": false
           },
+          "agenticMessagingEnabled": {
+            "type": "boolean",
+            "description": "Whether the user is opted into Trophy's agentic messaging.",
+            "example": false
+          },
           "created": {
             "type": "string",
             "format": "date-time",
@@ -7643,6 +7653,7 @@
           "subscribeToEmails",
           "attributes",
           "control",
+          "agenticMessagingEnabled",
           "created",
           "updated"
         ]
