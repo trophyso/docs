@@ -1,7 +1,7 @@
 /*
  * Trophy Daylight for Mintlify.
  *
- * docs.json sets the accent (morning blue in Day, light indigo in Night),
+ * docs.json sets the accent (deep sage in Day, light indigo in Night),
  * page grounds (mist) and the heading/body fonts. This file covers what
  * docs.json can't: Daylight's warm neutrals, the mono face, pill-shaped
  * controls, callouts, badges and code wells. Icons are swapped for
@@ -40,10 +40,10 @@ html:root {
   --dl-ink-muted: #4a4954;
   --dl-ink-subtle: #676670;
   --dl-on-ink: #ffffff;
-  /* The accent follows the hour of the sky (web: accents.css): morning in
+  /* The accent follows the hour of the sky (web: accents.css): afternoon in
      Day, night in Night. */
-  --dl-accent: #2c5f9e; /* deep morning blue */
-  --dl-accent-wash: #e2ecf7; /* its muted shade */
+  --dl-accent: #5c6914; /* deep sage */
+  --dl-accent-wash: #ecefd6; /* its muted shade */
   --dl-positive: #0f7a63;
   --dl-positive-muted: #dcf0e9;
   --dl-negative: #b53a2b;
@@ -377,7 +377,7 @@ html .callout[data-callout-type="info"] {
 html .callout[data-callout-type="tip"],
 html .callout[data-callout-type="check"] {
   --dl-callout-bg: var(--dl-accent-wash);
-  --dl-callout-border: rgba(44, 95, 158, 0.15);
+  --dl-callout-border: rgba(92, 105, 20, 0.15);
   --dl-callout-text: var(--dl-ink);
   --dl-callout-icon: var(--dl-accent);
 }

@@ -1,16 +1,16 @@
 export const PlanBadge = ({ plan }) => {
   // Trophy Daylight: paid plans wear the accent's muted shade with accent
-  // text (morning blue in Day, indigo in Night); Enterprise is the ink pill.
+  // text (deep sage in Day, indigo in Night); Enterprise is the ink pill.
   // No gradients.
   const styles = `
     .plan-badge {
-      background-color: #e2ecf7 !important;
+      background-color: #ecefd6 !important;
       background-image: none !important;
-      color: #2c5f9e !important;
+      color: #5c6914 !important;
       border: 0 !important;
       border-radius: 999px !important;
       font-weight: 600 !important;
-      box-shadow: inset 0 0 0 1px rgba(44, 95, 158, 0.2) !important;
+      box-shadow: inset 0 0 0 1px rgba(92, 105, 20, 0.2) !important;
     }
     .dark .plan-badge {
       background-color: #24234a !important;
