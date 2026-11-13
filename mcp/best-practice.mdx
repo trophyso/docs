@@ -1,12 +1,12 @@
 ---
-title: Best Practice
+title: Best practice
 description: How to use Trophy’s Docs MCP and Account MCP servers together.
 og:description: How to use Trophy’s Docs MCP and Account MCP servers together.
 ---
 
 The Trophy Docs MCP Server and Account MCP Server are designed to be used together. This page covers the recommended ways to use them.
 
-## Using Both Servers Together {#using-both-servers-together}
+## Using both servers together {#using-both-servers-together}
 
 Install both servers in your MCP client using distinct names so tools stay easy to target:
 
@@ -17,7 +17,7 @@ Install both servers in your MCP client using distinct names so tools stay easy 
 
 Installation guides: [Docs MCP](/mcp/docs-mcp-server/installation), [Account MCP](/mcp/account-mcp-server/installation).
 
-## Docs MCP: Live Documentation {#docs-mcp-live-documentation}
+## Docs MCP: live documentation {#docs-mcp-live-documentation}
 
 Use the Docs MCP as live context for how Trophy works. Use it when you need to:
 
@@ -29,7 +29,7 @@ The Trophy Docs MCP Server is **read-only** and always reads live public documen
 
 See [Docs MCP capabilities](/mcp/docs-mcp-server/capabilities) for more details.
 
-## Account MCP: Account Configuration and Operations {#account-mcp-account-configuration-and-operations}
+## Account MCP: account configuration and operations {#account-mcp-account-configuration-and-operations}
 
 Use the Account MCP when you need to take actions in your Trophy account. Use it when you need to:
 
@@ -41,7 +41,7 @@ Access is scoped to the Trophy organization you authorize during OAuth. Tools ac
 
 See [Account MCP capabilities](/mcp/account-mcp-server/capabilities) for more details.
 
-## Recommended Workflow {#recommended-workflow}
+## Recommended workflow {#recommended-workflow}
 
 For most agentic Trophy work, use both servers together:
 
@@ -51,7 +51,7 @@ For most agentic Trophy work, use both servers together:
 4. **Your app** — implement Application API calls in code using docs-backed shapes and your API keys
 5. **Verify** — re-read account state or docs if something fails
 
-### Example Prompt {#example-prompt}
+### Example prompt {#example-prompt}
 
 ```text
 Using Trophy Docs MCP, review how metrics and event tracking works.
@@ -60,6 +60,6 @@ Create a new 'workouts completed' metric if one does not already exist.
 Then integrate event tracking to this metric in my code based on the docs.
 ```
 
-## Get Support {#get-support}
+## Get support {#get-support}
 
 Want to get in touch with the Trophy team? Reach out to us via [email](mailto:support@trophy.so). We're here to help!

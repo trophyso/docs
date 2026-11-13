@@ -12,11 +12,11 @@ Most configuration resources offer paired **read** and **write** tools:
 - **Read** tools list and fetch resources
 - **Write** tools create or update resources in batch to speed up operations
 
-## Tool Reference {#tool-reference}
+## Tool reference {#tool-reference}
 
 The full list of tools available in the Trophy Account MCP Server.
 
-### Metrics Tools {#metrics-tools}
+### Metrics tools {#metrics-tools}
 
 Create and manage the [Metrics](/features/metrics) that drive streaks, achievements, points, and leaderboards.
 
@@ -25,7 +25,7 @@ Create and manage the [Metrics](/features/metrics) that drive streaks, achieveme
 | `read_metrics` | List metrics, or get a single metric by ID |
 | `write_metrics` | Create or update metrics |
 
-### Attributes Tools {#attributes-tools}
+### Attributes tools {#attributes-tools}
 
 Manage [Custom User Attributes](/features/users#custom-user-attributes) and [Custom Event Attributes](/features/events#custom-event-attributes) used for feature targeting and personalization.
 
@@ -34,7 +34,7 @@ Manage [Custom User Attributes](/features/users#custom-user-attributes) and [Cus
 | `read_attributes` | List attributes, or get a single attribute by ID |
 | `write_attributes` | Create or update attributes |
 
-### Achievements Tools {#achievements-tools}
+### Achievements tools {#achievements-tools}
 
 Configure [Achievements](/features/achievements) and read completion analytics for your account.
 
@@ -44,7 +44,7 @@ Configure [Achievements](/features/achievements) and read completion analytics f
 | `write_achievements` | Create or update achievements |
 | `read_achievements_analytics` | List achievements with completion counts and rarity; optionally filter by `user_attributes` |
 
-### Leaderboards Tools {#leaderboards-tools}
+### Leaderboards tools {#leaderboards-tools}
 
 Configure [Leaderboards](/features/leaderboards) and read live rankings.
 
@@ -54,7 +54,7 @@ Configure [Leaderboards](/features/leaderboards) and read live rankings.
 | `write_leaderboards` | Create or update leaderboards |
 | `read_leaderboard_rankings` | Get a leaderboard with live rankings by key (optional pagination, run date, user centering, and attribute filters) |
 
-### Points Tools {#points-tools}
+### Points tools {#points-tools}
 
 Configure full [Points](/features/points) systems, including [Triggers](/features/points#points-triggers), [Levels](/features/points#points-levels), and [Boosts](/features/points#points-boosts), and read distribution analytics.
 
@@ -70,7 +70,7 @@ Configure full [Points](/features/points) systems, including [Triggers](/feature
 | `write_points_boosts` | Create or update boosts for a points system |
 | `read_points_analytics` | Points distribution and level breakdowns for a system (`summary` or `level_summary`; optional `user_attributes` on summary) |
 
-### Tenants Tools {#tenants-tools}
+### Tenants tools {#tenants-tools}
 
 Manage [Multi-Tenant](/platform/multi-tenancy) organization records when multi-tenancy is enabled on your account.
 
@@ -83,7 +83,7 @@ Manage [Multi-Tenant](/platform/multi-tenancy) organization records when multi-t
 If multi-tenancy is not enabled on your account, these tools will not function.
 </Note>
 
-### Environments Tools {#environments-tools}
+### Environments tools {#environments-tools}
 
 List the [Environments](/platform/environments) in your Trophy account.
 
@@ -91,7 +91,7 @@ List the [Environments](/platform/environments) in your Trophy account.
 | --- | --- |
 | `read_environments` | List all active environments ordered by priority (name, key, priority; production is always priority 1) |
 
-### Streaks Tools {#streaks-tools}
+### Streaks tools {#streaks-tools}
 
 Look up and run operational [Streaks](/features/streaks) actions for users, including granting [Streak Freezes](/features/streaks#streak-freezes), creating [Streak Pauses](/features/streaks#streak-pauses), [restoring streaks](/features/streaks#restoring-a-users-streak), [resetting streaks](/features/streaks#resetting-a-users-streak), and reading or updating organization streak settings.
 
@@ -106,7 +106,7 @@ Look up and run operational [Streaks](/features/streaks) actions for users, incl
 | `get_streak_settings` | Get organization streak configuration (frequency, evaluation mode, metrics, days off, freezes) |
 | `update_streak_settings` | Update organization streak configuration |
 
-### Settings Tools {#settings-tools}
+### Settings tools {#settings-tools}
 
 Read and update organization settings, including [Branding](/account/branding), [Experimentation](/platform/experimentation), and aggregation period.
 
@@ -115,7 +115,7 @@ Read and update organization settings, including [Branding](/account/branding), 
 | `get_settings` | Get branding, experimentation, and aggregation period settings |
 | `update_settings` | Update branding, experimentation, and aggregation period settings |
 
-## Example Prompts {#example-prompts}
+## Example prompts {#example-prompts}
 
 Use natural language — your agent picks the right tool and parameters:
 
@@ -171,7 +171,7 @@ Create an achievement called 'First Workout' that unlocks when users complete 1 
 Update our brand color to #0F766E and set the aggregation period to weekly.
 ```
 
-## Scope and Safety {#scope-and-safety}
+## Scope and safety {#scope-and-safety}
 
 - Access is scoped to the Trophy organization you authorize during OAuth.
 - Tools act on a specific [environment](/platform/environments). If the account has only one, tool calls default to it (normally `production`). If there are multiple, pass the `environment` key you want—or use `read_environments` to list them and choose.
@@ -180,6 +180,6 @@ Update our brand color to #0F766E and set the aggregation period to weekly.
 - Most tools cannot delete resources. The exception is `delete_streak_pauses`, which removes streak pauses by ID.
 - `reset_streaks` sets users' current streaks to zero. Use `restore_streaks` if you need to bring a streak back afterwards.
 
-## Get Support {#get-support}
+## Get support {#get-support}
 
 Want to get in touch with the Trophy team? Reach out to us via [email](mailto:support@trophy.so). We're here to help!

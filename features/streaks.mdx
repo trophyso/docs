@@ -8,11 +8,11 @@ icon: flame
 
 import MetricChangeResponseBlock from "../snippets/metric-change-response-block.mdx";
 
-## What are Streaks? {#what-are-streaks}
+## What are streaks? {#what-are-streaks}
 
 A streak is a period of consecutive days, weeks or months that a user has performed a key action on your platform. Streaks have been shown to meaningfully increase retention, particularly when the user action being tracked aligns with the core value of your product.
 
-## Streak Frequency {#streak-frequency}
+## Streak frequency {#streak-frequency}
 
 Streaks in Trophy can be **daily, weekly or monthly**. This means that a user must meet their [streak conditions](#streak-conditions) at least once every calendar day, week or month to maintain their streak.
 
@@ -22,7 +22,7 @@ If you've [configured time zones](/features/users#param-tz) for your users, Trop
 Trophy automatically computes streak data for every streak frequency, meaning you can switch at any time.
 </Note>
 
-## Streak Conditions {#streak-conditions}
+## Streak conditions {#streak-conditions}
 
 In Trophy you can set the thresholds that a user must meet in order to extend their streak based on your configured [Metrics](/features/metrics).
 
@@ -43,7 +43,7 @@ When combining metrics, you can choose between two evaluation modes:
 
 In this way you can design your streak logic to match your application use case.
 
-### Days Off {#days-off}
+### Days off {#days-off}
 
 For daily streaks, you can mark specific days of the week as days off on the [streaks page](https://app.trophy.so/streaks) of the Trophy dashboard. Those days do not count toward the streak: users can still extend their streak if they are active, but missing a day off will not break it.
 
@@ -62,7 +62,7 @@ Unlike [streak freezes](#streak-freezes), days off are not consumed. They apply 
 
 If you've enabled [streak personalization](#streak-personalization), users can override the default days off through [user preferences](/features/users#streak-preferences).
 
-## Streak Freezes {#streak-freezes}
+## Streak freezes {#streak-freezes}
 
 Streak freezes help users keep their streaks for longer by allowing them to miss a set number of periods without it resetting to zero. This helps keep streaks motivating even if users don't maintain a perfect usage habit.
 
@@ -74,7 +74,7 @@ When enabled, you decide how many freezes a user can have, and how many are gran
 Streak freezes are different from [streak pauses](#streak-pauses) in that freezes allow users to miss a set number of periods without breaking their streak, regardless of the reason, while streak pauses specifically protect a streak over a known and pre-defined date range, such as a scheduled vacation or break. Freezes are consumed automatically when the user misses a required activity, whereas pauses are manually created in advance to cover planned absences.
 </Note>
 
-### Granting Freezes {#granting-freezes}
+### Granting freezes {#granting-freezes}
 
 You can configure any number of arbitrary freezes to grant to new users when you first identify them with Trophy. To set this up, enable freeze grants and set the starting freeze count on the streaks page of the Trophy dashboard.
 
@@ -105,7 +105,7 @@ To set this up, set the number of days over which to grant freezes and the numbe
 </Frame>
 
 If you've configured time zones for your users, Trophy will automatically consume freezes at midnight in the user's time zone when necessary to extend their streak, and if any new freezes are due to be granted to a user, they will be granted up to ten minutes later.
-## Streak Pauses {#streak-pauses}
+## Streak pauses {#streak-pauses}
 
 Streak pauses protect a user's streak over a known date range, such as a vacation or other planned break. While a pause covers a period, Trophy maintains the user's streak length instead of ending the streak if they miss their [streak conditions](#streak-conditions).
 
@@ -113,7 +113,7 @@ Streak pauses protect a user's streak over a known date range, such as a vacatio
 Streak pauses are different from [streak freezes](#streak-freezes) in that pauses specifically protect a user's streak over a known and pre-defined date range, such as a scheduled vacation or break, while freezes allow users to miss a set number of days (or periods) without breaking their streak, regardless of the reason. Pauses are manually created in advance to cover planned absences, whereas freezes are consumed automatically when the user misses a required activity.
 </Note>
 
-### Creating Pauses {#creating-pauses}
+### Creating pauses {#creating-pauses}
 
 Create pauses with the [create streak pauses admin API](/admin-api/endpoints/streaks/create-pauses). You can create pauses for up to 100 users in a single request.
 
@@ -125,17 +125,17 @@ Each pause requires:
 
 Start dates in the past are rejected. If you've [configured time zones](/features/users#param-tz) for your users, Trophy evaluates `start` against today in each user's local timezone.
 
-### Deleting Pauses {#deleting-pauses}
+### Deleting pauses {#deleting-pauses}
 
 To stop a pause from applying, delete it with the [delete streak pauses admin API](/admin-api/endpoints/streaks/delete-pauses).
 
-### Reading Pauses {#reading-pauses}
+### Reading pauses {#reading-pauses}
 
 The [user streaks API](/api-reference/endpoints/users/get-a-users-streak) returns upcoming and currently active pauses in the `pauses` field. Past and deleted pauses are omitted.
 
 Each period in `streakHistory` includes `usedPause`, which is `true` when the user's streak was paused during that period.
 
-## Tracking Streaks {#tracking-streaks}
+## Tracking streaks {#tracking-streaks}
 
 Trophy automatically calculates streaks for all users based on the [metric events](/features/events#tracking-metric-events) you report to Trophy.
 
@@ -147,7 +147,7 @@ You can also read and update organization streak configuration — frequency, ev
 For a full walk through on how to set up a streak feature using Trophy, check out our [official guide](/guides/how-to-build-a-streaks-feature).
 </Tip>
 
-## Streak Personalization {#streak-personalization}
+## Streak personalization {#streak-personalization}
 
 Trophy can support users personalizing how their streak works within guardrails you set for them. To do this, turn on streak personalization in the [streaks page](https://app.trophy.so/streaks) of the Trophy dashboard.
 
@@ -171,11 +171,11 @@ To learn more about how to set user preferences for a specific user, read the de
   />
 </Frame>
 
-## Managing Streaks {#managing-streaks}
+## Managing streaks {#managing-streaks}
 
 This section outlines some of the operations you can perform to manage user's streaks in your application.
 
-### Restoring A User's Streak {#restoring-a-users-streak}
+### Restoring a user's streak {#restoring-a-users-streak}
 
 To restore a user's streak, head to the user details page and use the 'Restore Streak' action. Restoring a user's streak sets it to the length it was when they last lost it.
 
@@ -194,7 +194,7 @@ You can also use the [restore streak admin API](/admin-api/endpoints/streaks/res
   ></video>
 </Frame>
 
-### Resetting A User's Streak {#resetting-a-users-streak}
+### Resetting a user's streak {#resetting-a-users-streak}
 
 To reset a user's streak to zero, head to the user details page and use the 'Reset Streak' action. Resetting a user's streak ends their current streak immediately, regardless of whether they've met their [streak conditions](#streak-conditions) for the current period.
 
@@ -206,7 +206,7 @@ If you reset a user's streak by mistake, you can bring it back by [restoring the
 
 When a streak has been reset, the matching period in the `streakHistory` field of the [user streaks API](/api-reference/endpoints/users/get-a-users-streak) includes a `resetAt` timestamp showing when the reset happened.
 
-## Displaying Streaks {#displaying-streaks}
+## Displaying streaks {#displaying-streaks}
 
 Trophy exposes streak data in two ways, which can be used to build UI elements within your applications and display streaks to users.
 
@@ -215,7 +215,7 @@ Trophy exposes streak data in two ways, which can be used to build UI elements w
   streaks feature to your app for more details.
 </Tip>
 
-### Metric Event Response {#metric-event-response}
+### Metric event response {#metric-event-response}
 
 When you [increment a metric](/features/events#tracking-metric-events) for a user, the [metric API](/api-reference/endpoints/events/submit-a-metric-event) response will include the user's current
 streak.
@@ -227,7 +227,7 @@ This can be used to transactionally trigger UI/UX elements including:
 - Showing in-app pop-ups
 - Playing sound effects
 
-### User Streaks API {#user-streaks-api}
+### User streaks API {#user-streaks-api}
 
 The [user streaks API](/api-reference/endpoints/users/get-a-users-streak) returns the current streak for a single user, along with their recent streak history and any upcoming or active [streak pauses](#streak-pauses). Use the `historyPeriods` query parameter to control how many periods to return.
 
@@ -308,7 +308,7 @@ Use this data to display a user's streak history within your application.
   />
 </Frame>
 
-### List Multiple User's Streaks {#list-multiple-users-streaks}
+### List multiple user's streaks {#list-multiple-users-streaks}
 
 If you want to display streaks for multiple users at once, for example to support a friend streak or user group feature, then use the [list user streaks API](/api-reference/endpoints/streaks/get-streaks).
 
@@ -332,10 +332,10 @@ If you want to display streaks for multiple users at once, for example to suppor
 ]
 ```
 
-## Rewarding Streaks {#rewarding-streaks}
+## Rewarding streaks {#rewarding-streaks}
 
 To give users something when they reach a streak length, like bonus points they claim or a prize you fulfill yourself, add a streak trigger to a [reward](/features/rewards#streak-triggers). If you just want points added automatically, use a [points trigger](/features/points#streak-triggers) instead.
 
-## Get Support {#get-support}
+## Get support {#get-support}
 
 Want to get in touch with the Trophy team? Reach out to us via [email](mailto:support@trophy.so). We're here to help!

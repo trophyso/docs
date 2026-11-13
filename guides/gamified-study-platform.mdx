@@ -1,5 +1,5 @@
 ---
-title: How to Build a Gamified Study Platform
+title: How to build a gamified study platform
 description: Follow along as we build out a gamified study platform using Trophy
   with achievements, a daily streak, XP and leaderboards.
 subtitle: Follow along as we build out a gamified study platform using Trophy.
@@ -22,7 +22,7 @@ In this tutorial we'll build an example study platform using Trophy for gamifica
   ></video>
 </Frame>
 
-## Table of Contents {#table-of-contents}
+## Table of contents {#table-of-contents}
 
 - [Tech Stack](#tech-stack)
 - [Pre-requisites](#pre-requisites)
@@ -34,7 +34,7 @@ In this tutorial we'll build an example study platform using Trophy for gamifica
 - [Adding an Energy System](#adding-an-energy-system)
 - [The Result](#the-result)
 
-## Tech Stack {#tech-stack}
+## Tech stack {#tech-stack}
 
 - [NextJS 15](https://nextjs.org/docs) (React 19)
 - [Shadcn/Ui](https://ui.shadcn.com)
@@ -47,7 +47,7 @@ In this tutorial we'll build an example study platform using Trophy for gamifica
 
 - A Trophy account (don't worry we'll set this up as we go along...)
 
-## Setup & Installation {#setup-installation}
+## Setup & installation {#setup-installation}
 
 <Tip>
   Want to skip the setup? Head straight to [the fun
@@ -92,9 +92,9 @@ Some packages may fail to install due to peer dependency issues in npm (see http
 
 For the purposes of this tutorial I chose `--force` but you should choose whichever setting you feel suits your requirements.
 
-## Building the Flashcards Feature {#building-the-flashcards-feature}
+## Building the flashcards feature {#building-the-flashcards-feature}
 
-### Setting Up Flashcard Data {#setting-up-flashcard-data}
+### Setting up flashcard data {#setting-up-flashcard-data}
 
 For the purposes of this tutorial, we're going to be using some simple types with an in-memory data store. In a production application you'd probably want to consider storing this information in a database.
 
@@ -217,7 +217,7 @@ export const flashcards: IFlashcard[] = [
 ];
 ```
 
-### Basic Flashcard Layout {#basic-flashcard-layout}
+### Basic flashcard layout {#basic-flashcard-layout}
 
 With some basic data set up, we need to add a way for users to flick through their flashcards.
 
@@ -297,7 +297,7 @@ At the end of this step, you should have a working flashcard UI that allows you 
   ></video>
 </Frame>
 
-### Flipping Flashcards {#flipping-flashcards}
+### Flipping flashcards {#flipping-flashcards}
 
 Now this is great, but it's not much use as a study app right now as there's no way to see if you got the answer right! We need to add a way to flip flashcards over and check our answer...
 
@@ -476,7 +476,7 @@ You'll notice we also added a couple of styles here. These do a couple of things
 }
 ```
 
-### A Flippin' Bug! {#a-flippin-bug}
+### A flippin' bug! {#a-flippin-bug}
 
 Sweet! Our project is now starting to feel like a real study tool! However the keen eyed (or maybe not so keen...) will notice there's one major bug here. When we flip a card over, the answer on the back appears in reverse 😢...
 
@@ -539,7 +539,7 @@ Ok awesome. Now when we flip over a card the answer on the back should read in t
   ></video>
 </Frame>
 
-### Tracking Progress {#tracking-progress}
+### Tracking progress {#tracking-progress}
 
 The next step is to add some UI to show the user how many flashcards they've looked at, and how many in the set they have left. We'll use a simple progress bar to achieve this.
 
@@ -672,7 +672,7 @@ Sweet! Now things are really starting to come together.
 
 Now the real fun begins...
 
-## Adding Basic Gamification {#adding-basic-gamification}
+## Adding basic gamification {#adding-basic-gamification}
 
 In this section we'll be adding the following gamification elements to the flashcard project:
 
@@ -692,7 +692,7 @@ Yup, you can. Trophy makes it super easy to build these features with a few line
 
 So, let's get started...
 
-### How Trophy Works {#how-trophy-works}
+### How Trophy works {#how-trophy-works}
 
 First off, we need a new [Trophy account](https://app.trophy.so/sign-up). Then we can start to piece together the various parts of our gamification experience.
 
@@ -725,7 +725,7 @@ Recording an event against a metric for a specific user makes use of Trophy's [m
 
 That's how in just a few lines of code we can power a whole suite of gamification features. However, before we can start sending events, we need to set up our new Trophy account.
 
-### Setting Up Trophy {#setting-up-trophy}
+### Setting up Trophy {#setting-up-trophy}
 
 Here's how we'll setup our Trophy account for our study app:
 
@@ -964,7 +964,7 @@ We can validate this is working by checking the Trophy [dashboard](https://app.t
 
 Next, we'll add some UI to show off our gamification features in practice.
 
-### Adding Gamification UX {#adding-gamification-ux}
+### Adding gamification UX {#adding-gamification-ux}
 
 The response to the API call that we make to track events in Trophy helpfully gives us back any changes to the users progress as a result of that event:
 
@@ -980,7 +980,7 @@ This makes it really easy for us to react to changes in the users progress and d
 - Show a pop-up toast
 - Play a sound effect
 
-#### Achievement Unlocked Toasts {#achievement-unlocked-toasts}
+#### Achievement unlocked toasts {#achievement-unlocked-toasts}
 
 First, we'll show a toast when users unlock new achievements. For this we need to add the `sonner` component from shadcn/ui to our project:
 
@@ -1183,7 +1183,7 @@ To see this in action, all we need to do is unlock our first achievement by view
   ></video>
 </Frame>
 
-#### Streak Extended Toasts {#streak-extended-toasts}
+#### Streak extended toasts {#streak-extended-toasts}
 
 We'll use the same methods to show similar toasts when a user extends their streak. As we've set up a daily streak in Trophy, this will trigger the first time a user views a flashcard each day.
 
@@ -1292,7 +1292,7 @@ Now the first time a user views a flashcard each day, they'll see one of our str
   ></video>
 </Frame>
 
-#### Sound Effects {#sound-effects}
+#### Sound effects {#sound-effects}
 
 Gamification is first and foremost about increasing user retention. The best way to do this is to make the features we build as engaging as possible. A great way to do this that's often overlooked is with sound effects.
 
@@ -1412,7 +1412,7 @@ export default function Flashcards({ flashcards }: Props) {
 }
 ```
 
-#### Displaying Study Journey {#displaying-study-journey}
+#### Displaying study journey {#displaying-study-journey}
 
 The last piece of UI we'll add will be a dialog to display the user's study progress, including their streak and any achievements they've unlocked so far.
 
@@ -1745,11 +1745,11 @@ export default async function Home() {
   ></video>
 </Frame>
 
-## Adding an XP System {#adding-an-xp-system}
+## Adding an XP system {#adding-an-xp-system}
 
 Now let's take our study platform to the next level by adding an XP (points) system. This will give users a sense of progression and reward them for their study activity.
 
-### Setting Up Points in Trophy {#setting-up-points-in-trophy}
+### Setting up points in Trophy {#setting-up-points-in-trophy}
 
 First, head to the Trophy [points page](https://app.trophy.so/points) and create a new points system. We'll call ours "XP" with the key `points`.
 
@@ -1766,7 +1766,7 @@ First, head to the Trophy [points page](https://app.trophy.so/points) and create
 
 Configure your points system to award XP for viewing flashcards. You can also set up bonus XP for streak milestones.
 
-### Integrating Points API {#integrating-points-api}
+### Integrating points API {#integrating-points-api}
 
 Add new server actions to fetch points data:
 
@@ -1821,7 +1821,7 @@ export async function getPointsSummary(
 }
 ```
 
-### Creating a Points Context {#creating-a-points-context}
+### Creating a points context {#creating-a-points-context}
 
 To manage points state across the app, create a React context:
 
@@ -1914,7 +1914,7 @@ export function useUserPoints() {
 }
 ```
 
-### Building the Points Center UI {#building-the-points-center-ui}
+### Building the points center UI {#building-the-points-center-ui}
 
 Create a points display component that shows the user's XP with a satisfying number animation:
 
@@ -1977,7 +1977,7 @@ export default function PointsCenter() {
 }
 ```
 
-### Updating Points on Flashcard View {#updating-points-on-flashcard-view}
+### Updating points on flashcard view {#updating-points-on-flashcard-view}
 
 Finally, re-fetch points whenever a user views a flashcard to show real-time XP updates:
 
@@ -2017,11 +2017,11 @@ Now when users view flashcards, they'll see their XP update in real-time with a 
   ></video>
 </Frame>
 
-## Adding Leaderboards {#adding-leaderboards}
+## Adding leaderboards {#adding-leaderboards}
 
 Nothing drives engagement like friendly competition. Let's add a leaderboard to show how users stack up against each other.
 
-### Setting Up Leaderboards in Trophy {#setting-up-leaderboards-in-trophy}
+### Setting up leaderboards in Trophy {#setting-up-leaderboards-in-trophy}
 
 Head to the Trophy [leaderboards page](https://app.trophy.so/leaderboards) and create a new leaderboard. We'll create a daily leaderboard with the key `daily-champions` that ranks users by flashcards viewed.
 
@@ -2036,7 +2036,7 @@ Head to the Trophy [leaderboards page](https://app.trophy.so/leaderboards) and c
   ></video>
 </Frame>
 
-### Leaderboard API Integration {#leaderboard-api-integration}
+### Leaderboard API integration {#leaderboard-api-integration}
 
 Add server actions for fetching leaderboard data:
 
@@ -2083,7 +2083,7 @@ export async function getUserLeaderboard(
 }
 ```
 
-### Building the Leaderboard UI {#building-the-leaderboard-ui}
+### Building the leaderboard UI {#building-the-leaderboard-ui}
 
 Create a leaderboard component that displays rankings with pagination:
 
@@ -2143,11 +2143,11 @@ export default function LeaderboardCenter() {
 
 The leaderboard automatically updates as users study, creating a dynamic competitive environment that encourages daily engagement.
 
-## Adding an Energy System {#adding-an-energy-system}
+## Adding an energy system {#adding-an-energy-system}
 
 Energy (or "lives") systems are a proven retention mechanic that encourages users to return throughout the day. Let's add one to our study platform.
 
-### Setting Up Energy in Trophy {#setting-up-energy-in-trophy}
+### Setting up energy in Trophy {#setting-up-energy-in-trophy}
 
 Trophy's points system is flexible enough to handle energy mechanics. Create a new points system with the key `energy` and configure it with:
 
@@ -2164,7 +2164,7 @@ Trophy's points system is flexible enough to handle energy mechanics. Create a n
   />
 </Frame>
 
-### Energy API Integration {#energy-api-integration}
+### Energy API integration {#energy-api-integration}
 
 Add server actions for energy management:
 
@@ -2200,7 +2200,7 @@ export async function getUserEnergy(
 }
 ```
 
-### Creating an Energy Context {#creating-an-energy-context}
+### Creating an energy context {#creating-an-energy-context}
 
 Similar to points, create a context for managing energy state:
 
@@ -2268,7 +2268,7 @@ export function useUserEnergy() {
 }
 ```
 
-### Building the Energy UI {#building-the-energy-ui}
+### Building the energy UI {#building-the-energy-ui}
 
 Create an energy display that shows remaining energy with visual indicators:
 
@@ -2296,7 +2296,7 @@ export default function EnergyCenter() {
 
 With energy in place, users have a reason to return multiple times throughout the day as their energy regenerates, boosting your daily active users.
 
-## The Result {#the-result}
+## The result {#the-result}
 
 Congrats! If you're reading this you made it to the end of the tutorial and built yourself a fully-functioning study platform. Of course there's loads more we could do to this, so here's a few ideas:
 
@@ -2310,6 +2310,6 @@ Congrats! If you're reading this you made it to the end of the tutorial and buil
   a star on [GitHub](https://github.com/trophyso/example-study-platform)!
 </Tip>
 
-## Get Support {#get-support}
+## Get support {#get-support}
 
 Want to get in touch with the Trophy team? Reach out to us via [email](mailto:support@trophy.so). We're here to help!

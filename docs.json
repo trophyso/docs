@@ -6,18 +6,23 @@
     "library": "lucide"
   },
   "colors": {
-    "primary": "#4CC74A",
-    "light": "#4CC74A",
-    "dark": "#4CC74A"
+    "primary": "#5C6914",
+    "light": "#A9A8FF",
+    "dark": "#5C6914"
   },
   "background": {
     "color": {
-      "light": "#F9F9FB",
-      "dark": "#181818"
+      "light": "#F6F5F1",
+      "dark": "#0E0F1A"
     }
   },
   "fonts": {
-    "family": "Plus Jakarta Sans"
+    "heading": {
+      "family": "Funnel Display"
+    },
+    "body": {
+      "family": "Funnel Sans"
+    }
   },
   "favicon": {
     "light": "/assets/logomark_light.svg",
@@ -78,7 +83,7 @@
             "icon": "house",
             "groups": [
               {
-                "group": "Getting Started",
+                "group": "Getting started",
                 "pages": [
                   "getting-started/introduction",
                   "getting-started/quickstart",
@@ -129,7 +134,7 @@
             "description": "Gamification how-to guides",
             "groups": [
               {
-                "group": "Feature Guides",
+                "group": "Feature guides",
                 "pages": [
                   "guides/how-to-build-an-achievements-feature",
                   "guides/how-to-build-a-streaks-feature",
@@ -139,7 +144,7 @@
                 ]
               },
               {
-                "group": "Use Cases",
+                "group": "Use cases",
                 "pages": [
                   "guides/gamified-study-platform",
                   "guides/gamified-fitness-platform"
@@ -350,7 +355,7 @@
                 ]
               },
               {
-                "group": "Application API Keys",
+                "group": "Application API keys",
                 "pages": [
                   "admin-api/endpoints/application-api-keys/create-application-api-keys",
                   "admin-api/endpoints/application-api-keys/delete-application-api-keys"
@@ -437,14 +442,14 @@
             "icon": "/icons/mcp.svg",
             "groups": [
               {
-                "group": "Getting Started",
+                "group": "Getting started",
                 "pages": [
                   "mcp/overview",
                   "mcp/best-practice"
                 ]
               },
               {
-                "group": "Docs MCP Server",
+                "group": "Docs MCP server",
                 "pages": [
                   "mcp/docs-mcp-server/introduction",
                   "mcp/docs-mcp-server/installation",
@@ -452,7 +457,7 @@
                 ]
               },
               {
-                "group": "Account MCP Server",
+                "group": "Account MCP server",
                 "pages": [
                   "mcp/account-mcp-server/introduction",
                   "mcp/account-mcp-server/installation",
