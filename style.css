@@ -145,8 +145,11 @@ html .font-mono,
   text-transform: uppercase;
 }
 
-/* Focus: a 2px ink ring at 2px offset, everywhere. */
-html :focus-visible {
+/* Focus: a 2px ink ring at 2px offset on every control. Not on dialogs or
+   the search and assistant text fields: Mintlify focuses them as they open,
+   which drew the ring around the whole search box; they show focus with
+   their caret. */
+html :focus-visible:not([role="dialog"]):not([id^="headlessui-dialog"]):not(#search-input):not(#chat-assistant-textarea):not([role="dialog"] input) {
   outline: 2px solid var(--dl-ink);
   outline-offset: 2px;
 }
