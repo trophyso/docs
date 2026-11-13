@@ -1,0 +1,8 @@
+---
+description: Start the Mintlify dev server without opening a browser
+alwaysApply: true
+---
+
+# Dev server
+
+- Never open a browser when starting the dev server. Use `npm run dev` (already passes `--no-open`) or, if invoking Mintlify directly, always pass `--no-open` (for example `mint dev --no-open`).

@@ -15,13 +15,13 @@ import UserPointsResponse from "../snippets/user-points-response-block.mdx";
 import UserPointsEventSummaryResponse from "../snippets/user-points-summary-response-block.mdx";
 import WebhookPointsLevelChangedPayload from "../snippets/webhook-points-level-changed-payload-block.mdx";
 
-## What is a Points System? {#what-is-a-points-system}
+## What is a points system? {#what-is-a-points-system}
 
 Points systems are used to create counters that track users' interactions with [Metrics](/features/metrics), [Achievements](/features/achievements) and [Streaks](/features/streaks). You can then build features like 'XP' and 'Energy' around these counters within your product.
 
-## Use Cases {#use-cases}
+## Use cases {#use-cases}
 
-### Automatic Rewards {#automatic-rewards}
+### Automatic rewards {#automatic-rewards}
 
 Points systems can be used to create features like 'XP' or 'Gems' that automatically reward users for a number of interactions at different rates. Points are added to the user's balance as soon as a [points trigger](#points-triggers) fires.
 
@@ -37,7 +37,7 @@ Points systems can also be used to create features like 'Energy' that meter usag
 
 This allows you to control the rate at which users can use your product with a flexible mechanic that sits outside your codebase.
 
-## Creating Points Systems {#creating-points-systems}
+## Creating points systems {#creating-points-systems}
 
 Trophy let's you set up multiple points systems for different use cases within your application.
 
@@ -78,7 +78,7 @@ To create a points system, head to the [points page](https://app.trophy.so/point
   </Step>
 </Steps>
 
-## Points Triggers {#points-triggers}
+## Points triggers {#points-triggers}
 
 In Trophy, points are awarded to or deducted from users through triggers. These define the different mechanics that make up your points system.
 
@@ -88,31 +88,31 @@ You can add as many triggers as you like to each points system you set up, allow
   Points triggers add points to a user's balance automatically. If you need users to redeem points before they're applied, use a [points reward](/features/rewards#points-rewards) instead. Points granted by redeemed rewards still count towards the points system's balance, history and levels.
 </Note>
 
-### Types of Triggers {#types-of-triggers}
+### Types of triggers {#types-of-triggers}
 
 There are multiple types of triggers in Trophy that can be used to award or deduct points in different ways.
 
-#### Metric Triggers {#metric-triggers}
+#### Metric triggers {#metric-triggers}
 
 Points can be awarded or deducted continually as users increment [Metrics](/features/metrics). You can choose to award or deduct any arbitrary number of points at any arbitrary metric threshold, for example "award 10 points for every 3 tasks completed".
 
-#### Streak Triggers {#streak-triggers}
+#### Streak triggers {#streak-triggers}
 
 Points can be awarded or deducted for reaching any arbitrary length of a [Streak](/features/streaks), for example "award 50 points for every 7 days streak".
 
-#### Achievement Triggers {#achievement-triggers}
+#### Achievement triggers {#achievement-triggers}
 
 Points can be awarded or deducted when users unlock specific [Achievements](/features/achievements), for example "award 100 points when users completed the `profile-completed` achievement".
 
-#### Time-based Triggers {#time-based-triggers}
+#### Time-based triggers {#time-based-triggers}
 
 Points can be awarded or deducted at repeating time intervals, every hour or every day. For example "award 10 points every 3 hours".
 
-#### User Identification Triggers {#user-identification-triggers}
+#### User identification triggers {#user-identification-triggers}
 
 Points can be awarded when users are first identified in Trophy, useful for granting an initial amount of points when they sign up to your product.
 
-### Creating Triggers {#creating-triggers}
+### Creating triggers {#creating-triggers}
 
 To create a new points trigger, head to the points system that you want to create a trigger for and follow the steps below.
 
@@ -179,7 +179,7 @@ To create a new points trigger, head to the points system that you want to creat
 </Step>
 </Steps>
 
-## Balancing Points {#balancing-points}
+## Balancing points {#balancing-points}
 
 Running an effective points system requires finding the optimal pace at which users earn points. Too fast, and users will get points fatigue, rendering them useless. Too slow, and users may get bored and churn.
 
@@ -196,13 +196,13 @@ Trophy's preview tool can model different scenarios to help you determine how fr
   ></video>
 </Frame>
 
-## Points Boosts {#points-boosts}
+## Points boosts {#points-boosts}
 
 Points boosts are multipliers that you can use to increase the number of points awarded to users during a specific time period.
 
 This section explains how boosts work and how they can be used to increase your application's retention and engagement.
 
-### Boost Targeting {#boost-targeting}
+### Boost targeting {#boost-targeting}
 
 There are a few different ways you can use boosts in Trophy.
 
@@ -213,7 +213,7 @@ Typically, global boosts are used to increase platform-wide engagement during ke
 
 Conversely, user-specific boosts are commonly used to provide additional incentives for users to take actions that are correlated with higher retention.
 
-### Creating Boosts {#creating-boosts}
+### Creating boosts {#creating-boosts}
 
 <Note>
 User-specific boosts can only be created programmatically through the [Admin API](/admin-api/endpoints/points/create-boosts).
@@ -262,13 +262,13 @@ To create a global points boost in the Trophy dashboard, follow the steps below.
   </Step>
 </Steps>
 
-### Boost Multipliers {#boost-multipliers}
+### Boost multipliers {#boost-multipliers}
 
 Every boost has a single multiplier value that increases the total points earned by users affected by that boost.
 
 Boost multipliers must be positive numbers, but can be decimals to support scenarios where percentage boosts like '50% more points' may be required.
 
-### Boost Stacking {#boost-stacking}
+### Boost stacking {#boost-stacking}
 
 Points boosts in Trophy stack through [multiplication](#boost-multipliers). This is to support allowing users to benefit from multiple boosts simultaneously.
 
@@ -278,7 +278,7 @@ To demonstrate stacking consider a 2X, 1.5X and a 3X boost all active within the
 Overall Multiplier (3 boosts) = 2X * 1.5X * 3X = 9X
 ```
 
-### Boost Rounding {#boost-rounding}
+### Boost rounding {#boost-rounding}
 
 Trophy supports [floating point metric event values](/features/events#event-value), but takes care of rounding points to integers automatically.
 
@@ -296,7 +296,7 @@ In scenarios where points are used to mimic platform credit mechanics, it's reco
 
 Simply choose your preferred rounding mode when [creating boosts](/features/points#creating-boosts) through the Trophy dashboard.
 
-## Points Levels {#points-levels}
+## Points levels {#points-levels}
 
 Points levels are discrete milestones you define on a points system in Trophy.
 
@@ -336,11 +336,11 @@ To set up levels for a points system, open it from the [points page](https://app
   </Step>
 </Steps>
 
-### Displaying Levels {#displaying-levels}
+### Displaying levels {#displaying-levels}
 
 Most teams combine three approaches: a static picture of every level (for progression screens), the user’s current level (for headers and profile), and immediate feedback when an action pushes them into a new level.
 
-#### Displaying All Levels {#displaying-all-levels}
+#### Displaying all levels {#displaying-all-levels}
 
 Call the [get levels API](/api-reference/endpoints/points/get-points-levels) once per points system key (for example on app load or from your server when rendering a progression page).
 
@@ -348,7 +348,7 @@ The response is an array of levels with `key`, `name`, `description`, optional `
 
 <PointsLevelsListResponse />
 
-#### Displaying User Level {#displaying-user-level}
+#### Displaying user level {#displaying-user-level}
 
 The [user points API](/api-reference/endpoints/users/get-a-users-points) returns the user’s `total`, their current `level` object, and recent `awards`. The `level` field contains the user's current level, or null if no levels exist or they have not reached the points threshold for any level yet.
 
@@ -356,7 +356,7 @@ Pair `total` with the ordered level list from the previous step to draw a progre
 
 <UserPointsResponse />
 
-#### Level Change Notifications {#level-change-notifications}
+#### Level change notifications {#level-change-notifications}
 
 When you send a [metric change event](/api-reference/endpoints/events/submit-a-metric-event), the response will include a `points` map keyed by your points system keys for each system that changed as a result of the event.
 
@@ -387,7 +387,7 @@ The [get level summary API](/api-reference/endpoints/points/get-points-level-sum
 
 <PointsLevelSummaryResponse />
 
-## Displaying Points {#displaying-points}
+## Displaying points {#displaying-points}
 
 There are a few ways to use Trophy to fetch and display points in your app.
 
@@ -408,7 +408,7 @@ There are a few ways to use Trophy to fetch and display points in your app.
   ></video>
 </Frame>
 
-### Triggering Transactional UI {#triggering-transactional-ui}
+### Triggering transactional UI {#triggering-transactional-ui}
 
 Firstly, any points awarded to or deducted from users as a result of a metric change event are returned in the response when using the [metric change event API](/api-reference/endpoints/events/submit-a-metric-event).
 
@@ -423,7 +423,7 @@ This makes it really simple to read the response and trigger any of the followin
 - Displaying in-app notifications and pop-ups
 - Playing sound effects
 
-### Displaying User's Points {#displaying-users-points}
+### Displaying user's points {#displaying-users-points}
 
 Trophy also has APIs that allow you fetch user's points data whenever you want.
 
@@ -455,7 +455,7 @@ Example `GET /users/{id}/points/{key}/event-summary` **200** response (Trophy AP
   />
 </Frame>
 
-### Displaying Aggregate Data {#displaying-aggregate-data}
+### Displaying aggregate data {#displaying-aggregate-data}
 
 Additionally there are a number of APIs that can be used to fetch and display points data at the account level.
 
@@ -490,7 +490,7 @@ Use the [points system API](/api-reference/endpoints/points/get-points) response
   />
 </Frame>
 
-## Points Analytics {#points-analytics}
+## Points analytics {#points-analytics}
 
 Trophy has built-in analytics to track points awards for each points system you configure across your users in real time including:
 
@@ -507,6 +507,6 @@ Trophy has built-in analytics to track points awards for each points system you 
   />
 </Frame>
 
-## Get Support {#get-support}
+## Get support {#get-support}
 
 Want to get in touch with the Trophy team? Reach out to us via [email](mailto:support@trophy.so). We're here to help!

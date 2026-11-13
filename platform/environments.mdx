@@ -5,11 +5,11 @@ og:description: Learn how to use environments to help you test and review change
 icon: layers
 ---
 
-## What are Environments? {#what-are-environments}
+## What are environments? {#what-are-environments}
 
 Environments are core structures in Trophy that help you isolate data according to your team's development workflows and copy changes between them.
 
-### Types of Environments {#types-of-environments}
+### Types of environments {#types-of-environments}
 
 Trophy supports three types of environments, each with a different use case in your development workflow:
 
@@ -17,7 +17,7 @@ Trophy supports three types of environments, each with a different use case in y
 - <Badge color="blue" stroke>Staging</Badge> - Each Trophy account can have **multiple** staging environments. Staging environments can be used to map to different stages of your development workflow, like QA, UAT, or Pre-Production.
 - <Badge color="gray" stroke>Development</Badge> - Each Trophy account can have **multiple** development environments. Development environments can be used to test new features or changes to your Trophy account without affecting other environments.
 
-## Switching Between Environments {#switching-between-environments}
+## Switching between environments {#switching-between-environments}
 
 You can switch between environments by clicking the environment selector in the top left of the screen or the dedicated [environments page](https://app.trophy.so/environments).
 
@@ -36,7 +36,7 @@ When you're in a non-production environment, you'll see a banner across the top 
 
 This is to remind you that any changes you make in non-production environments are not automatically propagated to production, and to follow the correct [workflow](#change-tracking-and-propagation) for copying changes between environments.
 
-## Creating Environments {#creating-environments}
+## Creating environments {#creating-environments}
 
 New environments can be created in the Trophy dashboard through the environment selector in the top left of the screen or the dedicated [environments page](https://app.trophy.so/environments). Either way the process is the same.
 
@@ -72,13 +72,13 @@ New environments can be created in the Trophy dashboard through the environment 
   </Step>
 </Steps>
 
-## Change Tracking and Propagation {#change-tracking-and-propagation}
+## Change tracking and propagation {#change-tracking-and-propagation}
 
 Here we outline Trophy's model for change tracking and propagation across environments and how you can use this to model your team's development workflow.
 
 <Note>When using [multi-tenancy](/platform/multi-tenancy), changes are **not** automatically propagated between environments. Instead, environments are treated as totally isolated from each other in order to allow for maximum flexibility in how you can use Trophy.</Note>
 
-### Environment Priority {#environment-priority}
+### Environment priority {#environment-priority}
 
 Environment priority is fundamental to how change tracking and propagation works across environments in Trophy.
 
@@ -94,7 +94,7 @@ When created, new environments are automatically added as the lowest priority en
 
 <Note>You cannot change the order of <Badge color="gray" stroke size="sm">Development</Badge> environments. All <Badge color="gray" stroke size="sm">Development</Badge> environments in Trophy have the same priority.</Note>
 
-### Change Tracking {#change-tracking}
+### Change tracking {#change-tracking}
 
 Trophy automatically keeps track of changes made in each of your environments and detects differences between them.
 
@@ -104,7 +104,7 @@ Changes between environments are detected and tracked from the highest [environm
 
 <Tip>If you've ever worked with [git](https://git-scm.com/) before, you'll be very familiar with how environments work in Trophy.</Tip>
 
-### Viewing Changes {#viewing-changes}
+### Viewing changes {#viewing-changes}
 
 When changes are made in non-production environments, they are not automatically propagated to <Badge color="green" stroke size="sm">Production</Badge>. Instead, they are isolated within the environment they were made in until you copy them to another environment.
 
@@ -123,7 +123,7 @@ You can view the changes made in each environment relative to another target env
 
 Here Trophy highlights all the changes detected between your current environment and your target environment. By changing your target environment, you can see changes between your current environment and other environments in your account.
 
-### Copying Changes {#copying-changes}
+### Copying changes {#copying-changes}
 
 On the view changes screen you can copy changes to your chosen target environment by clicking the 'Copy All Changes' button. This will apply the changes listed to your target environment. Once the process is complete, your target environment will be up to date with your current environment and you can continue to make new changes.
 
@@ -138,7 +138,7 @@ On the view changes screen you can copy changes to your chosen target environmen
   ></video>
 </Frame>
 
-### Reverting Changes {#reverting-changes}
+### Reverting changes {#reverting-changes}
 
 On the view changes screen you can revert specific changes by clicking the 'Revert' icon next to each change you want to revert.
 
@@ -157,7 +157,7 @@ On the view changes screen you can revert specific changes by clicking the 'Reve
   Reverting changes will remove them from your current environment and cannot be undone.
 </Warning>
 
-### Change Propagation {#change-propagation}
+### Change propagation {#change-propagation}
 
 When a change is made in an environment, it is propagated to all environments with a lower [environment priority](#environment-priority) automatically. This keeps all environments in sync with their natural direction of propagation and saves time in copying changes manually.
 
@@ -167,7 +167,7 @@ Similarly, when changes are made in a <Badge color="blue" stroke size="sm">Stagi
 
 Finally, when changes are made in a <Badge color="gray" stroke size="sm">Development</Badge> environment, they will not be propagated to any other environments.
 
-## Frequently Asked Questions {#frequently-asked-questions}
+## Frequently asked questions {#frequently-asked-questions}
 
 <AccordionGroup>
   <Accordion title="How many environments can I create?">
@@ -197,6 +197,6 @@ Finally, when changes are made in a <Badge color="gray" stroke size="sm">Develop
   </Accordion>
 </AccordionGroup>
 
-## Get Support {#get-support}
+## Get support {#get-support}
 
 Want to get in touch with the Trophy team? Reach out to us via [email](mailto:support@trophy.so). We're here to help!

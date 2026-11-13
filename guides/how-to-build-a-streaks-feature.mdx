@@ -1,5 +1,5 @@
 ---
-title: How To Build A Streaks Feature
+title: How to build a streaks feature
 description: Learn how to use Trophy to add a streaks feature to your web or mobile app.
 subtitle: Learn how to use Trophy to add a streaks feature to your web or mobile app.
 noindex: true
@@ -25,7 +25,7 @@ For illustration purposes we'll use the example of a study platform that uses a 
 - A [Trophy](https://app.trophy.so/sign-up) account
 - About 10 minutes
 
-## Trophy Setup {#trophy-setup}
+## Trophy setup {#trophy-setup}
 
 In Trophy, [Metrics](/features/metrics) are the building blocks of gamification and model the different interactions users make with your product.
 
@@ -74,7 +74,7 @@ TROPHY_API_KEY='*******'
   Make sure you **don't** expose your API key in client-side code.
 </Warning>
 
-## Tracking User Interactions {#tracking-user-interactions}
+## Tracking user interactions {#tracking-user-interactions}
 
 To track an event (user interaction) against your metric, use the [metric change API](/api-reference/endpoints/events/submit-a-metric-event).
 
@@ -112,11 +112,11 @@ The response to this API call is the complete set of changes to any features you
 
 Validate this is working by checking the Trophy [dashboard](https://app.trophy.so).
 
-## Displaying Streaks {#displaying-streaks}
+## Displaying streaks {#displaying-streaks}
 
 You have a number of options for displaying streaks in your application. Here we'll look at the most common options.
 
-### Pop-up Notifications {#pop-up-notifications}
+### Pop-up notifications {#pop-up-notifications}
 
 We can use the response of the [metric change API](/api-reference/endpoints/events/submit-a-metric-event) to show pop-up notifications (or 'toasts') when user extends their streak.
 
@@ -158,7 +158,7 @@ if (response.currentStreak?.extended) {
   we recommend.
 </Tip>
 
-### Displaying User Streaks {#displaying-user-streaks}
+### Displaying user streaks {#displaying-user-streaks}
 
 To fetch data on a user's streak use the [user streak API](/api-reference/endpoints/users/get-a-users-streak).
 
@@ -198,18 +198,18 @@ The [streaks page](https://app.trophy.so/streaks) in Trophy shows data on active
   />
 </Frame>
 
-## Streak Freezes {#streak-freezes}
+## Streak freezes {#streak-freezes}
 
 Trophy also supports streak freezes which can help prevent users from losing their streak if they accidentally miss a period.
 
 Learn more about streak freezes in the dedicated [streak freezes docs](/features/streaks#streak-freezes).
 
-## Streak Pauses {#streak-pauses}
+## Streak pauses {#streak-pauses}
 
 Trophy also supports streak pauses, which protect a user's streak over a known date range instead of ending it.
 
 Learn more about streak pauses in the dedicated [streak pauses docs](/features/streaks#streak-pauses).
 
-## Get Support {#get-support}
+## Get support {#get-support}
 
 Want to get in touch with the Trophy team? Reach out to us via [email](mailto:support@trophy.so). We're here to help!

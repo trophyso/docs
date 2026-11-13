@@ -1,22 +1,31 @@
 export const PlanBadge = ({ plan }) => {
+  // Trophy Daylight: paid plans wear the accent's muted shade with accent
+  // text (morning blue in Day, indigo in Night); Enterprise is the ink pill.
+  // No gradients.
   const styles = `
     .plan-badge {
-      background-color: #f0fdf4 !important;
-      background-image: linear-gradient(to bottom right, #bbf7d0, #f0fdf4, #bbf7d0) !important;
-      color: #4cc74a !important;
+      background-color: #e2ecf7 !important;
+      background-image: none !important;
+      color: #2c5f9e !important;
       border: 0 !important;
-      font-weight: 500 !important;
-      box-shadow: inset 0 0 0 1px rgba(78, 200, 76, 0.4) !important;
+      border-radius: 999px !important;
+      font-weight: 600 !important;
+      box-shadow: inset 0 0 0 1px rgba(44, 95, 158, 0.2) !important;
     }
-    .plan-badge-business {
-      box-shadow: inset 0 0 0 1px #4cc74a !important;
+    .dark .plan-badge {
+      background-color: #24234a !important;
+      color: #a9a8ff !important;
+      box-shadow: inset 0 0 0 1px rgba(169, 168, 255, 0.25) !important;
     }
     .plan-badge-enterprise {
-      background-color: #000000 !important;
-      background-image: linear-gradient(to bottom right, #737373, #000000, #737373) !important;
+      background-color: #16161d !important;
       color: #ffffff !important;
-      font-weight: 600 !important;
-      box-shadow: inset 0 0 0 1px #000000 !important;
+      box-shadow: inset 0 0 0 1px #16161d !important;
+    }
+    .dark .plan-badge-enterprise {
+      background-color: #f2f1f6 !important;
+      color: #16161d !important;
+      box-shadow: inset 0 0 0 1px #f2f1f6 !important;
     }
   `;
 

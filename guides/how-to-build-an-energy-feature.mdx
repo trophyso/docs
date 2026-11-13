@@ -1,5 +1,5 @@
 ---
-title: How To Build An Energy Feature
+title: How to build an energy feature
 description: Learn how to use Trophy to add an energy feature to your web or mobile app.
 subtitle: Learn how to use Trophy to add an energy feature to your web or mobile app.
 noindex: true
@@ -26,7 +26,7 @@ For illustration purposes we'll use the example of a study platform that uses en
 - A [Trophy](https://app.trophy.so/sign-up) account
 - About 10 minutes
 
-## Trophy Setup {#trophy-setup}
+## Trophy setup {#trophy-setup}
 
 In Trophy, [Metrics](/features/metrics) are the building blocks of gamification and model the different interactions users make with your product.
 
@@ -99,7 +99,7 @@ TROPHY_API_KEY='*******'
   Make sure you **don't** expose your API key in client-side code.
 </Warning>
 
-## Tracking User Interactions {#tracking-user-interactions}
+## Tracking user interactions {#tracking-user-interactions}
 
 To track an event (user interaction) against your metric, use the [metric change API](/api-reference/endpoints/events/submit-a-metric-event).
 
@@ -148,7 +148,7 @@ The response to this API call is the complete set of changes to any features you
 
 Validate this is working by checking the Trophy [dashboard](https://app.trophy.so).
 
-## Metering Usage {#metering-usage}
+## Metering usage {#metering-usage}
 
 To prevent users from taking actions in your product based on energy, use the [user points API](/api-reference/endpoints/users/get-a-users-points) to fetch their current total energy.
 
@@ -174,7 +174,7 @@ if (energy.total > 0) {
 
 You can then modify your trigger setup in Trophy and control the rate at which users can interact with your product right from the Trophy dashboard without needing to make any code changes.
 
-## Displaying Energy {#displaying-energy}
+## Displaying energy {#displaying-energy}
 
 To fetch a users energy use the [user points API](/api-reference/endpoints/users/get-a-users-points).
 
@@ -212,6 +212,6 @@ In Trophy your [energy system page](https://app.trophy.so/points), includes anal
   />
 </Frame>
 
-## Get Support {#get-support}
+## Get support {#get-support}
 
 Want to get in touch with the Trophy team? Reach out to us via [email](mailto:support@trophy.so). We're here to help!

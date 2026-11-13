@@ -9,7 +9,7 @@ icon: /icons/leaderboard.svg
 import LeaderboardSingleAttributeRequest from "../snippets/leaderboard-rankings-request-single-attribute.mdx";
 import LeaderboardMultiAttributeRequest from "../snippets/leaderboard-rankings-request-multiple-attributes.mdx";
 
-## What are Leaderboards? {#what-are-leaderboards}
+## What are leaderboards? {#what-are-leaderboards}
 
 Leaderboards are social competitions between users of your application. Use leaderboards to increase engagement and foster social interaction.
 
@@ -22,17 +22,17 @@ Leaderboards are social competitions between users of your application. Use lead
   />
 </Frame>
 
-## Types of Leaderboards {#types-of-leaderboards}
+## Types of leaderboards {#types-of-leaderboards}
 
 In this section we outline the different types of leaderboards supported in Trophy and when to use each one.
 
-### Perpetual Leaderboards {#perpetual-leaderboards}
+### Perpetual leaderboards {#perpetual-leaderboards}
 
 Perpetual leaderboards never reset. Once started they continually track and rank users progress over time forever, or until the configured [end date](#end-dates).
 
 Use perpetual leaderboards when you want to create all-time rankings of user activity.
 
-### Repeating Leaderboards {#repeating-leaderboards}
+### Repeating leaderboards {#repeating-leaderboards}
 
 Repeating leaderboards can be configured to reset after any arbitrary number of days, months or years.
 
@@ -46,23 +46,23 @@ Trophy tracks the rankings in each run of a repeating leaderboard individually a
   users, helping to prevent leaderboards from becoming stale.
 </Tip>
 
-#### Handling Time Zones {#handling-time-zones}
+#### Handling time zones {#handling-time-zones}
 
 If you have tracked users' [time zones](/features/users#param-tz) with Trophy, these will be used to ensure that each user has an equal chance of winning no matter where they are in the world.
 
 In practice this means leaderboards are finalized and winners chosen about 12 hours after they naturally finish in UTC to allow users in all time zones to make their final push.
 
-#### Tips for Weekly Leaderboards {#tips-for-weekly-leaderboards}
+#### Tips for weekly leaderboards {#tips-for-weekly-leaderboards}
 
 To create a weekly leaderboard, set up a [repeating leaderboard](#repeating-leaderboards) on a 7 day schedule and set the start date to be the next occurring first day of the week.
 
 While you wait for the start date to come around, the leaderboard will be in `scheduled` status and will automatically go live on the start date.
 
-## Ranking Logic {#ranking-logic}
+## Ranking logic {#ranking-logic}
 
 Leaderboards in Trophy are configurable to rank participants in a number of different ways to support common use cases.
 
-### Ranking Methods {#ranking-methods}
+### Ranking methods {#ranking-methods}
 
 The ranking method of a leaderboard determines on what dimension participants will be ordered.
 
@@ -75,19 +75,19 @@ The ranking method of a leaderboard determines on what dimension participants wi
   />
 </Frame>
 
-#### Metric Rankings {#metric-rankings}
+#### Metric rankings {#metric-rankings}
 
 Metric leaderboards are linked to an existing Trophy [Metric](/features/metrics) and rank users based on their total metric value.
 
 Use metric leaderboards if you only want to rank users based on a single interaction.
 
-#### Points Rankings {#points-rankings}
+#### Points rankings {#points-rankings}
 
 Points leaderboards are linked to an existing Trophy [Points System](/features/points) and automatically rank users according to their total points.
 
 Use a points leaderboard if you want to rank users based on a combination of metrics, achievements or other Trophy features.
 
-#### Streak Rankings {#streak-rankings}
+#### Streak rankings {#streak-rankings}
 
 Streak leaderboards rank users based on their current streak length.
 
@@ -95,7 +95,7 @@ Streak leaderboards rank users based on their current streak length.
   Streak leaderboards can only be [perpetual](#perpetual-leaderboards).
 </Note>
 
-### Ranking Breakdowns {#ranking-breakdowns}
+### Ranking breakdowns {#ranking-breakdowns}
 
 If you have a large user base, it's best practice to split up leaderboard participants into smaller, more socially-connected groups. This often leads to higher engagement than when using global leaderboards.
 
@@ -165,7 +165,7 @@ Historical runs are never changed. Once a run has finished its rankings are fixe
   [leaderboard statuses](#leaderboard-statuses).
 </Note>
 
-### Eligibility vs Breakdowns {#eligibility-vs-breakdowns}
+### Eligibility vs breakdowns {#eligibility-vs-breakdowns}
 
 [Breakdowns](#ranking-breakdowns) and eligibility both use user attributes but do different jobs:
 
@@ -174,7 +174,7 @@ Historical runs are never changed. Once a run has finished its rankings are fixe
 
 You can use both on the same leaderboard, for example to limit a leaderboard to paying users and then group them by country.
 
-## Start & End Dates {#start-end-dates}
+## Start & end dates {#start-end-dates}
 
 Use start and end dates to control the window within which leaderboards are actively ranking users.
 
@@ -187,13 +187,13 @@ Use start and end dates to control the window within which leaderboards are acti
   />
 </Frame>
 
-### Start Dates {#start-dates}
+### Start dates {#start-dates}
 
 Leaderboards in Trophy can be set to start at a future date of your choice. This is often useful to allow some time for last minute changes or adjustments before leaderboards start ranking users.
 
 Leaderboards with a start date in the future are scheduled and automatically go live on the start date you choose.
 
-### End Dates {#end-dates}
+### End dates {#end-dates}
 
 Leaderboards in Trophy can have end dates. If you set an end date on a leaderboard then after that date it will enter `finished` status and rankings will be finalized and winners chosen.
 
@@ -203,7 +203,7 @@ Leaderboards in Trophy can have end dates. If you set an end date on a leaderboa
   the end date according to their local clock.
 </Note>
 
-## Time Restrictions {#time-restrictions}
+## Time restrictions {#time-restrictions}
 
 In addition to [start & end dates](#start-end-dates), leaderboards can be configured to have time restrictions.
 
@@ -213,7 +213,7 @@ Time restrictions are useful when building leaderboards for limited-time events 
 
 Time restrictions work on all leaderboards, including [repeating leaderboards](#repeating-leaderboards). Where a repeating leaderboard has a time restriction, the time restriction will be applied to each run of the leaderboard.
 
-### Setting Time Restrictions {#setting-time-restrictions}
+### Setting time restrictions {#setting-time-restrictions}
 
 To set time restrictions on a leaderboard, head to the leaderboard configuration page and turn on the switch labelled 'Restrict to time window'. This will give you two fields, a start and end time.
 
@@ -230,13 +230,13 @@ To set time restrictions on a leaderboard, head to the leaderboard configuration
   />
 </Frame>
 
-### Time Zone Considerations {#time-zone-considerations}
+### Time zone considerations {#time-zone-considerations}
 
 Time restrictions on leaderboards are applied in **local time** for each participant based on their configured [time zone](/features/users#param-tz).
 
 This means that each user can participate in the leaderboard at any time during the configured time restriction according to their local clock.
 
-## Participant Limits {#participant-limits}
+## Participant limits {#participant-limits}
 
 Leaderboards in Trophy have a default maximum number of participants of **1,000**. However a leaderboard can be configured to have any arbitrary number of participants to support use cases like _Top 100_ or similar.
 
@@ -259,7 +259,7 @@ If a leaderboard has [eligibility](#eligibility) rules, the participant limit on
 If you require a larger participant limit, considering using [breakdown attributes](#ranking-breakdowns) to group participants into smaller cohorts. Or please contact us at [support@trophy.so](mailto:support@trophy.so) and we'll be happy to increase your defaults.
 </Tip>
 
-## Creating Leaderboards {#creating-leaderboards}
+## Creating leaderboards {#creating-leaderboards}
 
 To create a leaderboard, head to the [leaderboards page](https://app.trophy.so/leaderboards) in the Trophy dashboard and click the _New Leaderboard_ button.
 
@@ -304,11 +304,11 @@ To create a leaderboard, head to the [leaderboards page](https://app.trophy.so/l
 
 </Steps>
 
-## Managing Leaderboards {#managing-leaderboards}
+## Managing leaderboards {#managing-leaderboards}
 
 Leaderboards in Trophy have a number of statuses to help you control when users and how users can join them.
 
-### Leaderboard Statuses {#leaderboard-statuses}
+### Leaderboard statuses {#leaderboard-statuses}
 
 Leaderboards can have one of the following statuses:
 
@@ -325,14 +325,14 @@ Leaderboards that have been configured with a [start date](#start-dates) in the 
 
 If a leaderboard has an [end date](#end-dates), then once it has past Trophy will automatically move it to `Finished` status and stop monitoring user activity. Once a leaderboard has finished it won't be visible to users but you can still query APIs to get rankings for historical runs.
 
-## Displaying Leaderboards {#displaying-leaderboards}
+## Displaying leaderboards {#displaying-leaderboards}
 
 <Tip>
   Check out our [full guide](/guides/how-to-build-a-leaderboards-feature) on
   adding leaderboards to your app for more details.
 </Tip>
 
-## Leaderboard Analytics {#leaderboard-analytics}
+## Leaderboard analytics {#leaderboard-analytics}
 
 Trophy has built-in analytics to help you understand how users are engaging with your leaderboards.
 
@@ -345,7 +345,7 @@ Trophy has built-in analytics to help you understand how users are engaging with
   />
 </Frame>
 
-### Total Unique Participants {#total-unique-participants}
+### Total unique participants {#total-unique-participants}
 
 This chart shows how many unique users have participated in any run of a leaderboard over time. This is useful to understand how many of your users actually take part in leaderboards and how [participant limits](#participant-limits) are affecting this.
 
@@ -358,7 +358,7 @@ This chart shows how many unique users have participated in any run of a leaderb
   />
 </Frame>
 
-### Active Users {#active-users}
+### Active users {#active-users}
 
 This chart show the number of users who have changed rank at least once in a given leaderboard. This is useful to get a sense of how competitive the average user is in a particular leaderboard.
 
@@ -371,7 +371,7 @@ This chart show the number of users who have changed rank at least once in a giv
   />
 </Frame>
 
-### Rank Changes {#rank-changes}
+### Rank changes {#rank-changes}
 
 This chart shows the total number of rank changes in a particular leaderboard over time. This is useful to understand how competitive users are across the board.
 
@@ -384,7 +384,7 @@ This chart shows the total number of rank changes in a particular leaderboard ov
   />
 </Frame>
 
-### Score Distribution {#score-distribution}
+### Score distribution {#score-distribution}
 
 This chart is a histogram of users' scores in a particular leaderboard. This is useful to get a sense of how bunched up or spread out users are, and what sections of the rankings are the most competitive.
 
@@ -397,7 +397,7 @@ This chart is a histogram of users' scores in a particular leaderboard. This is 
   />
 </Frame>
 
-## Frequently Asked Questions {#frequently-asked-questions}
+## Frequently asked questions {#frequently-asked-questions}
 
 <AccordionGroup>
   <Accordion id="leaderboard-participant-limit-faq" title="How many participants can be in a leaderboard at once?">
@@ -425,10 +425,10 @@ This chart is a histogram of users' scores in a particular leaderboard. This is 
 </Accordion>
 </AccordionGroup>
 
-## Rewarding Leaderboard Winners {#rewarding-leaderboard-winners}
+## Rewarding leaderboard winners {#rewarding-leaderboard-winners}
 
 To give users something when they finish a leaderboard run at a particular rank, add a leaderboard trigger to a [reward](/features/rewards#leaderboard-triggers). Winners can then redeem the reward in your product.
 
-## Get Support {#get-support}
+## Get support {#get-support}
 
 Want to get in touch with the Trophy team? Reach out to us via [email](mailto:support@trophy.so). We're here to help!
