@@ -9,7 +9,7 @@ icon: flask-conical
 
 import ControlFlagBlock from "../snippets/control-flag-block.mdx";
 
-{/* TODO(media): re-create in the new dashboard theme: assets/platform/experimentation/control_ratio.mp4, assets/platform/experimentation/charts.png, assets/platform/experimentation/retention_chart.png, assets/platform/experimentation/engagement_chart.png, assets/platform/experimentation/early_engagement_chart.png */}
+{/* TODO(media): re-create in the new dashboard theme: assets/platform/experimentation/charts.png, assets/platform/experimentation/retention_chart.png, assets/platform/experimentation/engagement_chart.png, assets/platform/experimentation/early_engagement_chart.png */}
 
 Trophy provides a core set of primitives to help you ship engagement experiences faster. But engagement is not something you can set and forget.
 
@@ -27,7 +27,7 @@ Usually, you'd have to build these tools yourself, but with Trophy you get a sim
 
 Trophy has a built-in capability to automatically A/B test in-app features using a control ratio.
 
-Found on the [integration page](https://app.trophy.so/integration/configure) of the Trophy dashboard, the control ratio adjusts the percentage of users that are assigned to the 'control' group versus the 'experimental' group.
+Found on the [Settings page](https://app.trophy.so/settings) of the Trophy dashboard, the control ratio adjusts the percentage of users that are assigned to the 'control' group versus the 'experimental' group.
 
 You can also read and update `controlRatio` and `userActivationWindow` with the [organization settings Admin API](/admin-api/endpoints/settings/update-organization-settings).
 
@@ -37,7 +37,7 @@ You can also read and update `controlRatio` and `userActivationWindow` with the 
     muted
     loop
     playsInline
-    className="w-full aspect-15/4"
+    className="w-full aspect-video"
     src="../assets/platform/experimentation/control_ratio.mp4"
   ></video>
 </Frame>
@@ -80,7 +80,7 @@ Trophy includes a retention chart for each metric on its metric dashboard and an
   />
 </Frame>
 
-The [integration page](https://app.trophy.so/integration/configure) allows you to control the time frame over which you want to measure retention through the 'New User Activation Window' setting.
+The [Settings page](https://app.trophy.so/settings) allows you to control the time frame over which you want to measure retention through the 'New user activation window' setting.
 
 <Frame>
   <img
@@ -124,7 +124,7 @@ Trophy also displays charts that show user engagement within users' first days a
   />
 </Frame>
 
-We refer to this as 'early engagement' and it is user engagement as measured by Trophy only for users within the time frame set in the 'New User Activation Window' setting on the [integration page](https://app.trophy.so/integration/configure).
+We refer to this as 'early engagement' and it is user engagement as measured by Trophy only for users within the time frame set in the 'New user activation window' setting on the [Settings page](https://app.trophy.so/settings).
 
 <Frame>
   <img

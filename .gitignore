@@ -2,3 +2,6 @@ node_modules
 .DS_Store
 .env
 .tmpscripts/media-mocks/.build
+scripts/media-videos/node_modules
+scripts/media-videos/public/captures
+scripts/media-videos/out

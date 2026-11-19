@@ -12,8 +12,6 @@ import MetricChangeResponseBlock from "../snippets/metric-change-response-block.
 import IdempotentEventTracking from "../snippets/idempotent-event-tracking.mdx";
 import ParallelEventsValueExample from "../snippets/parallel-events-value-example.mdx";
 
-{/* TODO(media): re-create in the new dashboard theme: assets/features/events/create_custom_event_attribute.mp4, assets/features/events/using_attributes_in_emails.mp4, assets/features/events/using_attributes_in_email_charts.mp4 */}
-
 ## What are events? {#what-are-events}
 
 Events represent individual user interactions against [Metrics](/features/metrics) in Trophy. One event corresponds to a single interaction made by a single user.
@@ -50,7 +48,7 @@ Using custom event attributes in this way allows you to enrich events in Trophy 
 
 ### Creating attributes {#creating-attributes}
 
-To create a new custom event attribute, head to the metrics page in the Trophy dashboard and click the _Add Event Attribute_ button.
+To create a new custom event attribute, head to the [Attributes page](https://app.trophy.so/attributes) under _Data sources_ in the Trophy dashboard and click the _Add event attribute_ button.
 
 Give the attribute a name and a unique key, you'll use the key when referencing the attribute in API calls.
 
@@ -60,7 +58,7 @@ Give the attribute a name and a unique key, you'll use the key when referencing 
     muted
     loop
     playsInline
-    className="w-full aspect-15/4"
+    className="w-full aspect-video"
     src="../assets/features/events/create_custom_event_attribute.mp4"
   ></video>
 </Frame>
@@ -141,7 +139,7 @@ For example here's a case where we use an email variable to tell users what thei
     muted
     loop
     playsInline
-    className="w-full aspect-15/4"
+    className="w-full aspect-video"
     src="../assets/features/events/using_attributes_in_emails.mp4"
   ></video>
 </Frame>
@@ -154,7 +152,7 @@ Secondly, here's an example where we add a chart to an email that shows users ho
     muted
     loop
     playsInline
-    className="w-full aspect-15/4"
+    className="w-full aspect-video"
     src="../assets/features/events/using_attributes_in_email_charts.mp4"
   ></video>
 </Frame>
