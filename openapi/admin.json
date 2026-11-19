@@ -2,7 +2,7 @@
   "openapi": "3.1.0",
   "info": {
     "title": "Trophy",
-    "version": "1.29.0"
+    "version": "1.31.0"
   },
   "x-fern-global-headers": [
     {
@@ -11812,6 +11812,7 @@
           "GEOMETRIC_SANS",
           "HEAVY_SANS",
           "ROUNDED_SANS",
+          "SYSTEM_SANS",
           "MODERN_SERIF",
           "BOOK_SERIF",
           "MONOSPACE"

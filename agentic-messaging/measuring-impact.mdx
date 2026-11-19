@@ -1,0 +1,74 @@
+---
+title: Measuring impact
+description: Learn how to measure the impact of agentic messaging against a holdout group.
+og:description: Trophy compares users receiving agentic messages against legacy
+  and control groups, so you can prove uplift on your objectives, not just clicks.
+icon: chart-line
+---
+
+Trophy measures agentic messaging against a holdout group, so you see the incremental lift on your [objectives](/agentic-messaging/objectives), not just opens and clicks.
+
+You'll find everything on this page on the [Analytics](https://app.trophy.so/agentic-messaging) page under **Agentic messaging** in the Trophy dashboard.
+
+## Cohorts {#cohorts}
+
+Analytics compare three groups of users:
+
+| Cohort | What they receive |
+| --- | --- |
+| **Agent** | Agentic messages. |
+| **Legacy** | Template-based [emails](/features/emails) and [push notifications](/features/push-notifications), if you send them. |
+| **Control** | No messages from Trophy. These are the users in your [control group](/platform/experimentation#control-ratio). |
+
+Comparing the agent cohort with the control cohort shows the total impact of agentic messaging. Comparing it with the legacy cohort shows how it performs against the template-based messaging it replaces.
+
+## Retention {#retention}
+
+The retention chart shows the share of users in each cohort who are still active a set number of days after they were created, grouped by when the user was created.
+
+## Impact {#impact}
+
+The impact table shows how the agent cohort compares with the legacy and control cohorts on each measure:
+
+- **Retention**: the share of users still active after a set number of days.
+- **Streaks continued**: how often users keep their [streaks](/features/streaks) going.
+- **Reactivated**: how often users come back after a few days without activity.
+- **{Metric} per active user**: one row for each metric weighted in your [objectives](/agentic-messaging/objectives).
+- **Emails per active user** and **Push notifications per active user**: how many messages users receive.
+- **Unsubscribes per 1,000 emails**.
+
+Each comparison is shown with a 95% confidence interval. Results are highlighted green or red only when the interval rules out no difference, so you can tell real lift from noise.
+
+<Tip>
+  Agentic messaging often sends fewer messages than template-based messaging
+  while improving retention. Watch the messages per active user rows alongside
+  your objectives.
+</Tip>
+
+## Message engagement {#message-engagement}
+
+The message engagement table breaks down performance by channel, and by whether messages were sent by agents or by legacy templates:
+
+- **Open rate**: email opens, or push notifications that opened your app.
+- **Click rate**: messages where the user clicked a link.
+- **Reengage rate**: messages after which the user came back to your app.
+- **👍 rate** and **👎 rate**: how users rated your emails.
+
+### Message ratings {#message-ratings}
+
+Users can rate each agentic email with a 👍 or 👎. Ratings tell you how users feel about the messages they receive, and agents learn from them too, sending more of what users like and less of what they don't.
+
+## Viewing messages {#viewing-messages}
+
+The [Queue](https://app.trophy.so/agentic-messaging/queue) page lists agentic messages in two tabs:
+
+- **Scheduled**: messages agents plan to send, with the user, channel and send time.
+- **Sent**: messages that have already been sent.
+
+Click any message to preview it. Previews are filled in with today's data, so values may differ from what was or will be sent.
+
+You can also see the agentic messages scheduled for and sent to a specific user on their profile in the [Users](https://app.trophy.so/users) page.
+
+## Get support {#get-support}
+
+Want to get in touch with the Trophy team? Reach out to us via [email](mailto:support@trophy.so). We're here to help!

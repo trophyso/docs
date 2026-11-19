@@ -1,13 +1,15 @@
 ---
 title: Leaderboards
-description: Learn how to use Leaderboards in a gamified product experience with Trophy.
+description: Learn how to create competition between users in your web or mobile app with Trophy leaderboards.
 og:description: Create daily, weekly or monthly competitions that rank users
   based on metrics, points or streaks and increase user engagement.
-icon: /icons/leaderboard.svg
+icon: chart-bar
 ---
 
 import LeaderboardSingleAttributeRequest from "../snippets/leaderboard-rankings-request-single-attribute.mdx";
 import LeaderboardMultiAttributeRequest from "../snippets/leaderboard-rankings-request-multiple-attributes.mdx";
+
+{/* TODO(media): re-create in the new dashboard theme: assets/features/leaderboards/hero.png, assets/features/leaderboards/ranking_methods.png, assets/features/leaderboards/breakdowns.mp4, assets/features/leaderboards/eligibility.png, assets/features/leaderboards/start_end_dates.png, assets/features/leaderboards/time_restrictions.png, assets/features/leaderboards/max_participants.png, assets/features/leaderboards/creating_leaderboards.mp4, assets/features/leaderboards/analytics.png, assets/features/leaderboards/total_unique_participants.png, assets/features/leaderboards/active_users.png, assets/features/leaderboards/rank_changes.png, assets/features/leaderboards/score_distribution.png */}
 
 ## What are leaderboards? {#what-are-leaderboards}
 
@@ -85,7 +87,7 @@ Use metric leaderboards if you only want to rank users based on a single interac
 
 Points leaderboards are linked to an existing Trophy [Points System](/features/points) and automatically rank users according to their total points.
 
-Use a points leaderboard if you want to rank users based on a combination of metrics, achievements or other Trophy features.
+Use a points leaderboard if you want to rank users based on a combination of metrics, milestones or other Trophy features.
 
 #### Streak rankings {#streak-rankings}
 
@@ -327,11 +329,6 @@ If a leaderboard has an [end date](#end-dates), then once it has past Trophy wil
 
 ## Displaying leaderboards {#displaying-leaderboards}
 
-<Tip>
-  Check out our [full guide](/guides/how-to-build-a-leaderboards-feature) on
-  adding leaderboards to your app for more details.
-</Tip>
-
 ## Leaderboard analytics {#leaderboard-analytics}
 
 Trophy has built-in analytics to help you understand how users are engaging with your leaderboards.
@@ -428,6 +425,10 @@ This chart is a histogram of users' scores in a particular leaderboard. This is 
 ## Rewarding leaderboard winners {#rewarding-leaderboard-winners}
 
 To give users something when they finish a leaderboard run at a particular rank, add a leaderboard trigger to a [reward](/features/rewards#leaderboard-triggers). Winners can then redeem the reward in your product.
+
+## Leaderboards in agentic messaging {#leaderboards-in-agentic-messaging}
+
+Rank changes give [agentic messaging](/agentic-messaging/overview) a reason to bring users back into the competition. Lifecycle agents use leaderboard data, along with everything else they know about each user, to pick the best message at the best moment.
 
 ## Get support {#get-support}
 

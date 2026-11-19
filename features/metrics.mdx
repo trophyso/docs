@@ -1,16 +1,18 @@
 ---
 title: Metrics
 description: Learn how to model user interactions using Trophy Metrics. Model
-  any user interaction and trigger automated gamification flows with just a few
-  lines of code.
+  any user interaction and power agentic messaging and in-app features with just
+  a few lines of code.
 og:description: Metrics are flexible data primitives that can be used to model
-  any user interaction and drive a wide range of gamified features.
+  any user interaction and power agentic messaging and in-app features.
 icon: box
 ---
 
+{/* TODO(media): re-create in the new dashboard theme: assets/features/metrics/create_new_metric.mp4, assets/features/metrics/metric_analytics.png, assets/features/metrics/achievement_completions.png */}
+
 ## What are metrics? {#what-are-metrics}
 
-All gamification features are centered around user interactions. At Trophy, we use the term **Metrics** to refer to the data objects that model those interactions within your web or mobile app.
+Customer engagement starts with how users interact with your product. At Trophy, we use the term **Metrics** to refer to the data objects that model those interactions within your web or mobile app.
 
 Metrics are un-opinionated, meaning they can be used to model absolutely any user interaction you can think of. Examples could include:
 
@@ -21,7 +23,7 @@ Metrics are un-opinionated, meaning they can be used to model absolutely any use
 - Words written
 - ...
 
-Metrics are the building blocks of the infrastructure that powers Trophy's gamification features. Each user interaction that relates to a metric is stored as an [Event](/features/events).
+Metrics are the event layer for customer engagement. They power both Trophy's [agentic messaging](/agentic-messaging/overview) and its in-app features. Each user interaction that relates to a metric is stored as an [Event](/features/events).
 
 Events are stored and processed in chronological order. At any particular point in time, the combined state of a user's event history reflects their overall progress on your platform.
 
@@ -71,7 +73,7 @@ Trophy has a built-in analytics dashboard for each metric you create. It shows y
 
 - The total value of all tracked events against the metric
 - The number of users actively making progress against the metric
-- The metric's [Achievement Completion Chart](#achievement-completion-chart)
+- The metric's [Milestone Completion Chart](#achievement-completion-chart)
 
 <Frame>
   <img
@@ -81,11 +83,11 @@ Trophy has a built-in analytics dashboard for each metric you create. It shows y
   />
 </Frame>
 
-### Achievement completion chart {#achievement-completion-chart}
+### Milestone completion chart {#achievement-completion-chart}
 
-The achievement completion chart shows the current state of the userbase in terms of the number of users who have completed each achievement that you've configured against this metric.
+The milestone completion chart shows the current state of the userbase in terms of the number of users who have completed each milestone that you've configured against this metric.
 
-[Learn more about achievements](/features/achievements).
+[Learn more about milestones](/features/milestones).
 
 <Frame>
   <img
@@ -103,7 +105,7 @@ The achievement completion chart shows the current state of the userbase in term
   </Accordion>
 
     <Accordion title="Can Trophy control my UI when events are tracked?">
-    No, metrics are purely server-side and only support the business logic around achievements, streaks and other workflows like sending emails.
+    No, metrics are purely server-side and only support the business logic around milestones, streaks and other workflows like sending messages.
 
     They don't control any in-app UI, but our APIs provide all the data you need to build whatever UI you want.
     </Accordion>

@@ -1,24 +1,59 @@
 ---
 title: Welcome to Trophy
-description: Trophy is the gamification layer for consumer apps. Build points, achievements, streaks, and leaderboards in minutes with Trophy's pre-built APIs and SDKs.
-og:description: Trophy is the gamification layer for consumer apps. Build points, achievements, streaks, and leaderboards in minutes with Trophy's pre-built APIs and SDKs.
+description: Trophy is the customer engagement platform for consumer web and mobile apps. Deploy 1:1 AI lifecycle agents that send personalized email and push to every user, alongside in-app features like milestones, streaks, points and leaderboards.
+og:description: Trophy is the customer engagement platform for consumer web and mobile apps. Deploy 1:1 AI lifecycle agents that send personalized email and push to every user, alongside in-app features like milestones, streaks, points and leaderboards.
 ---
 
 import SdkInstallCommand from "../snippets/sdk-install-command.mdx";
-import VerifiedFirstEvent from "../snippets/verified-first-event.mdx";
-import MetricChangeResponseBlock from "../snippets/metric-change-response-block.mdx";
 
-Trophy is the gamification layer for consumer apps. Build points, achievements, streaks, and leaderboards in minutes with Trophy’s pre-built APIs and SDKs.
+Trophy is the 1:1 customer engagement platform for consumer web and mobile apps. Instead of moving every user through the same generic sequences, Trophy deploys an AI lifecycle agent for each user. The agent delivers the right message at the right time, alongside in-app features like milestones, streaks, points and leaderboards that give users a reason to come back.
+
+## Agentic messaging {#agentic-messaging}
+
+Trophy's AI lifecycle agents read each user's in-app activity and pick the best message for that user at the best moment. They write each email and push notification in your brand voice and stay inside the guardrails you set. Sometimes the best message is no message at all.
+
+Agentic messaging is set up together with the Trophy team. [Book a call](https://trophy.so/contact-sales?utm_source=docs&utm_medium=introduction) to get started.
+
+<CardGroup cols={3}>
+  <Card title="Agentic messaging" icon="bot" href="/agentic-messaging/overview">
+    How 1:1 lifecycle agents replace sequences and journeys.
+  </Card>
+  <Card title="Brand kit" icon="palette" href="/context/brand-kit">
+    Teach agents your app, your voice and what never to say.
+  </Card>
+  <Card title="Measuring impact" icon="chart-line" href="/agentic-messaging/measuring-impact">
+    Prove uplift against holdout groups.
+  </Card>
+</CardGroup>
+
+## In-app features {#in-app-features}
+
+Trophy's in-app features give users a reason to come back to your app, and give your lifecycle agents rich first-party data about each user's progress.
+
+<CardGroup cols={2}>
+  <Card title="Milestones" icon="trophy" href="/features/milestones">
+    Celebrate user progress and one-time actions.
+  </Card>
+  <Card title="Streaks" icon="flame" href="/features/streaks">
+    Build robust daily, weekly or monthly usage habits.
+  </Card>
+  <Card title="Points" icon="sparkle" href="/features/points">
+    Turn in-app actions into progress with levels and boosts.
+  </Card>
+  <Card title="Leaderboards" icon="chart-bar" href="/features/leaderboards">
+    Create friendly competition between users.
+  </Card>
+</CardGroup>
 
 ## Getting started {#getting-started}
 
-Install a Trophy SDK to track user activity and power points, achievements, streaks, and leaderboards in your app.
+Install a Trophy SDK to track user activity, which powers everything in Trophy. Follow the [quickstart](/getting-started/quickstart) to send your first event, then choose between agentic messaging and in-app features.
 
 <SdkInstallCommand />
 
 <CardGroup cols={3}>
   <Card title="Quick Start" icon="circle-play" href="/getting-started/quickstart">
-    Set up a Trophy account and build your first feature in five minutes.
+    Set up a Trophy account and send your first event in five minutes.
   </Card>
   <Card title="Use the REST API" icon="code" href="/api-reference/introduction">
     Learn how to use the REST API to integrate Trophy into your application.
@@ -28,13 +63,13 @@ Install a Trophy SDK to track user activity and power points, achievements, stre
     icon="github"
     href="https://github.com/trophyso/example-study-platform/tree/demo"
   >
-    Full example application with a full gamification stack using Trophy.
+    Full example application built on Trophy's in-app features.
   </Card>
 </CardGroup>
 
-## Using AI agents {#using-ai-agents}
+## Using AI coding agents {#using-ai-agents}
 
-Connect Trophy’s MCP servers so agents can read live docs and configure your account while integrating.
+Connect Trophy’s MCP servers so AI coding agents can read live docs and configure your account while integrating.
 
 <Tip>
 Using Trophy's MCP servers is recommended for a faster set up and development experience.
@@ -42,84 +77,15 @@ Using Trophy's MCP servers is recommended for a faster set up and development ex
 
 <CardGroup cols={3}>
   <Card title="Docs MCP" icon="book-open" href="/mcp/docs-mcp-server/introduction">
-    Live documentation search for AI agents.
+    Live documentation search for AI coding agents.
   </Card>
   <Card title="Account MCP" icon="cog" href="/mcp/account-mcp-server/introduction">
-    Configure your Trophy account using AI agents.
+    Configure your Trophy account using AI coding agents.
   </Card>
   <Card title="Best practice" icon="circle-check" href="/mcp/best-practice">
     Recommended setup for using both MCP servers together.
   </Card>
 </CardGroup>
-
-## Send your first event {#send-your-first-event}
-
-All gamification features are powered by [metric events](/features/events). Here's how to send your first event using a Trophy SDK:
-
-<VerifiedFirstEvent />
-
-The response includes changes to gamification state as a result of the event including:
-- The user's new total value for the metric
-- Any newly unlocked achievements
-- New points totals
-- Any rewards awarded
-- An updated streak object
-- Any new leaderboard positions
-
-Use this response to react to changes in the user's gamification state and power UI elements.
-
-<MetricChangeResponseBlock />
-
-## Build by use case {#build-by-use-case}
-
-For more information on how to build common gamification features using Trophy, see the following guides:
-
-<CardGroup>
-  <Card title="Achievements" icon="trophy" href="/guides/how-to-build-an-achievements-feature">
-    Unlock achievements from progress or one-time actions.
-  </Card>
-    <Card title="Streaks" icon="flame" href="/guides/how-to-build-a-streaks-feature">
-    Drive daily or weekly habit loops with timezone-awareness built-in.
-  </Card>
-  <Card title="Points" icon="sparkle" href="/guides/how-to-build-an-xp-feature">
-    Award points from in-app actions and set up levels and boosts.
-  </Card>
-  <Card
-    title="Leaderboards"
-    icon={
-      <svg
-        width="20"
-        height="18"
-        viewBox="0 0 20 18"
-        fill="none"
-        xmlns="http://www.w3.org/2000/svg"
-        className="text-primary dark:text-primary-light"
-      >
-        <path
-          d="M2 16H6V8H2V16ZM8 16H12V2H8V16ZM14 16H18V10H14V16ZM0 16V8C0 7.45 0.195833 6.97917 0.5875 6.5875C0.979167 6.19583 1.45 6 2 6H6V2C6 1.45 6.19583 0.979167 6.5875 0.5875C6.97917 0.195833 7.45 0 8 0H12C12.55 0 13.0208 0.195833 13.4125 0.5875C13.8042 0.979167 14 1.45 14 2V8H18C18.55 8 19.0208 8.19583 19.4125 8.5875C19.8042 8.97917 20 9.45 20 10V16C20 16.55 19.8042 17.0208 19.4125 17.4125C19.0208 17.8042 18.55 18 18 18H2C1.45 18 0.979167 17.8042 0.5875 17.4125C0.195833 17.0208 0 16.55 0 16Z"
-          fill="currentColor"
-        />
-      </svg>
-    }
-    href="/guides/how-to-build-a-leaderboards-feature"
-  >
-    Create recurring or one-off leaderboards.
-  </Card>
-  <Card title="Emails" icon="mail" href="/features/emails">
-    Lifecycle emails driven by streaks, achievements, and activity.
-  </Card>
-  <Card title="Push notifications" icon="bell" href="/features/push-notifications">
-    Automated notification flows using gamification data.
-  </Card>
-</CardGroup>
-
-## UI Kit {#ui-kit}
-
-Ship gamification UI faster with Trophy’s React component library, built on shadcn/ui and designed to work with Trophy data shapes.
-
-<Card title="UI Kit" icon="shapes" href="https://ui.trophy.so">
-  Explore pre-built UI components for streaks, achievements, leaderboards, points and more.
-</Card>
 
 ## Production checklist {#production-checklist}
 
@@ -131,16 +97,16 @@ Before you deploy your integration to production, review the recommended steps i
 
 ## Pricing {#pricing}
 
-Trophy meters usage by **monthly active users (MAUs)**. An MAU is a user who sends at least one [metric event](/features/events) in a given calendar month. You are not charged for churned users who stop sending events.
+Trophy charges by **monthly active users (MAUs)**, so you never pay for churn. An MAU is a user who sends at least one [metric event](/features/events) in a given calendar month.
 
-Plans start at $299/month with a 30-day free trial and **10,000 MAUs** included, with overages above that.
+There are three plans: Pro, Business and Enterprise. AI lifecycle agents and every in-app feature are included on all plans. [Book a demo](https://trophy.so/contact-sales?utm_source=docs) and we'll help you find the right plan for your team.
 
 <CardGroup cols={2}>
   <Card title="Billing" icon="gauge" href="/account/billing">
-    Plans, allowances, and overages.
+    Plans, what each includes and how usage is calculated.
   </Card>
-  <Card title="Pricing estimator" icon="calculator" href="https://trophy.so/pricing">
-    Get an estimate of monthly costs based on expected usage.
+  <Card title="Pricing" icon="tag" href="https://trophy.so/pricing">
+    Compare plans on the Trophy website.
   </Card>
 </CardGroup>
 

@@ -1,0 +1,54 @@
+---
+title: Guardrails
+description: Learn about the limits Trophy's lifecycle agents always work inside.
+og:description: Sending limits, quiet hours, content rules and safety reviews
+  keep every agentic message on brand and every user's inbox under control.
+icon: shield-check
+---
+
+Agents make every individual decision, but always inside limits that you and your users set. You set the rules, users curate their own experience, and agents never send outside either.
+
+## Sending limits {#sending-limits}
+
+Sending limits cap how many messages each user can receive:
+
+- Emails per user per day and per week.
+- Push notifications per user per day and per week.
+- A maximum **message style**, the furthest toward "everything, conversational" any user can choose. See [user preferences](/agentic-messaging/user-preferences#temperature).
+
+Agents treat these limits as a budget, not a target. They spend it on the moments most likely to drive action and often send fewer messages than the limit allows. A journey keeps sending until a user exits; an agent only reaches out when it has something worth saying.
+
+Agents also pace messages on the same channel so they don't arrive in bursts, and avoid repeating themselves on the same subject.
+
+<Note>
+  Sending limits are configured with the Trophy team. Reach out to your Trophy
+  contact or [email us](mailto:support@trophy.so) to change them.
+</Note>
+
+## Quiet hours {#quiet-hours}
+
+Agents only send during waking hours in each user's local time zone. Set the `tz` attribute when you [identify users](/features/users#optional-attributes) so agents know each user's local clock.
+
+## Content guardrails {#content-guardrails}
+
+Every message agents write must pass a set of content rules before it can be sent:
+
+- **Your brand kit**: messages follow your [voice](/context/brand-kit#voice) and never use your [never say](/context/brand-kit#never-say) phrases.
+- **Approved building blocks**: emails are built from a fixed set of approved email blocks and variables.
+- **Restricted links**: messages only link to your app and to the links in your brand kit's [metric context](/context/brand-kit#metrics).
+- **No invented claims**: agents can't make up offers, rewards or numbers. Facts in a message come from the user's real data.
+- **Length and style limits**: subject lines, push titles and push bodies have maximum lengths, and emoji use is limited.
+
+Each message is also checked by a separate safety review before it's sent. A message that fails any of these checks isn't sent.
+
+## Send-time checks {#send-time-checks}
+
+A message can be scheduled before it's sent. If the reason for sending it no longer applies by the time it's due, for example the user has already come back and done the thing the message was about, the message is cancelled instead of sent.
+
+## Automatic pausing {#automatic-pausing}
+
+Trophy monitors agentic messaging and pauses it automatically if unsubscribes or safety review rejections rise well above normal levels. While it's paused, the agentic messaging pages in the dashboard show an **Agentic messaging is paused** callout, and the Trophy team investigates before it resumes.
+
+## Get support {#get-support}
+
+Want to get in touch with the Trophy team? Reach out to us via [email](mailto:support@trophy.so). We're here to help!

@@ -1,6 +1,6 @@
 ---
 title: Users
-description: Learn how to track interactions across your userbase using Trophy.
+description: Learn how to tell Trophy about the people using your web or mobile app.
 og:description: Users are the people that use your platform. Learn how to tell
   Trophy about them.
 icon: users
@@ -12,9 +12,11 @@ import UpdateUserNotificationPreferencesBlock from "../snippets/update-user-noti
 import GetUserNotificationPreferencesBlock from "../snippets/get-user-notification-preferences-block.mdx";
 import UserStreakPreferencesResponseBlock from "../snippets/user-streak-preferences-response-block.mdx";
 
+{/* TODO(media): re-create in the new dashboard theme: assets/features/users/custom_user_attributes.png, assets/features/users/create_custom_user_attribute.mp4, assets/features/users/segmenting_analytics.mp4, assets/features/users/notification_preferences.png, assets/features/users/user_analytics.png, assets/features/users/usage_block.png */}
+
 ## What are users? {#what-are-users}
 
-Users are the individual people that use your product. You tell Trophy about your users through APIs and use the dashboard to design gamification experiences around them.
+Users are the individual people that use your product. You tell Trophy about your users through APIs. Trophy then uses what it knows about each user to power in-app features and personalize [agentic messaging](/agentic-messaging/overview).
 
 Users must be individuals, they cannot be companies or organisations. To create organizational structures or user groupings, consider using a [custom user attribute](#custom-user-attributes).
 
@@ -37,7 +39,7 @@ Trophy only requires one key attribute, `id`. Every user you tell Trophy about m
 
 ### Optional attributes {#optional-attributes}
 
-Additionally, you can tell Trophy about any of the following optional key attributes and it will make them available to you as part of your gamification experience:
+Additionally, you can tell Trophy about any of the following optional key attributes and it will make them available to you across Trophy:
 
 <ParamField path="name" type="string">
   The user's full name. This is accessible in email templates and other areas
@@ -45,15 +47,15 @@ Additionally, you can tell Trophy about any of the following optional key attrib
 </ParamField>
 
 <ParamField path="email" type="string">
-  The user's email address. This address will be used in any
-  [Emails](/features/emails) that you set up as part of your gamification
-  experience with Trophy.
+  The user's email address. This address is used to send
+  [agentic messages](/agentic-messaging/channels) and any
+  [Emails (Legacy)](/features/emails) to the user.
 </ParamField>
 
 <ParamField path="tz" type="string">
   The user's time zone. Must be specified as an [IANA timezone
   identifier](https://en.wikipedia.org/wiki/List_of_tz_database_time_zones).
-  Used for streaks, leaderboard rankings and sending emails to users in
+  Used for streaks, leaderboard rankings and sending messages to users in
   accordance with their local clock.
 
 In JavaScript, you can fetch the users time zone using this snippet:
@@ -84,6 +86,27 @@ const timezone = Intl.DateTimeFormat().resolvedOptions().timeZone;
   be sent to a user when this field is provided.
 </ParamField>
 
+### Read-only attributes {#read-only-attributes}
+
+Trophy also sets the following key attributes on every user. They're returned when you [retrieve a user](#retrieving-user-information) but can't be set when identifying users.
+
+<ResponseField name="control" type="boolean">
+  Whether the user is in the control group. Users in the control group receive
+  no messages from Trophy, and you can use this flag to conditionally enroll
+  users in in-app features. Learn more about
+  [experimentation](/platform/experimentation).
+</ResponseField>
+
+<ResponseField name="agenticMessagingEnabled" type="boolean">
+  Whether the user receives [agentic messages](/agentic-messaging/overview).
+  When `true`, the user receives agentic messages instead of
+  [Emails (Legacy)](/features/emails) and
+  [Push notifications (Legacy)](/features/push-notifications), never both.
+  Which users receive agentic messages depends on your
+  [rollout](/agentic-messaging/rollout). Always `false` for users in the
+  control group.
+</ResponseField>
+
 ## Custom user attributes {#custom-user-attributes}
 
 <Frame>
@@ -98,11 +121,11 @@ Custom user attributes are managed by you and can be anything you like based on 
 
 For example a language learning app might use a custom user attribute for the language a user is learning, or a study platform might use one for the users favourite subject.
 
-Custom user attributes let you tell Trophy about this contextual information and use it to personalize gamification features.
+Custom user attributes let you tell Trophy about this contextual information and use it to personalize in-app features and messaging.
 
 ### Creating attributes {#creating-attributes}
 
-To create a new custom user attribute, head to the [attributes tab](https://app.trophy.so/users/attributes) of the users page in the Trophy dashboard and click the _Add User Attribute_ button.
+To create a new custom user attribute, head to the [Attributes page](https://app.trophy.so/attributes) under _Data sources_ in the Trophy dashboard and click the _Add User Attribute_ button.
 
 Give the attribute a name and a unique key. The key is what you'll use to reference the attribute in API calls.
 
@@ -155,19 +178,19 @@ Across all APIs, the schema for setting attribute values is consistent. Here's a
 
 ### Using attributes {#using-attributes}
 
-Use custom user attributes across Trophy to personalize gamification features , aggregate and filter data returned from APIs, and to segment and compare user cohorts in analytics.
+Use custom user attributes across Trophy to personalize in-app features and messaging, aggregate and filter data returned from APIs, and to segment and compare user cohorts in analytics.
 
 #### Feature personalization {#feature-personalization}
 
-Custom user attributes can be used to personalize achievements, customize the way points are earned by different users and more. Follow the links to the relevant pages below to learn more.
+Custom user attributes can be used to personalize milestones, customize the way points are earned by different users and more. Follow the links to the relevant pages below to learn more.
 
 <CardGroup>
   <Card
-    title="Personalizing Achievements"
+    title="Personalizing Milestones"
     icon="trophy"
-    href="/features/achievements#creating-achievements"
+    href="/features/milestones#creating-achievements"
   >
-    Configure achievements that can only be unlocked by specific users.
+    Configure milestones that can only be completed by specific users.
   </Card>
   <Card
     title="Personalizing Points"
@@ -181,7 +204,7 @@ Custom user attributes can be used to personalize achievements, customize the wa
     icon="split"
     href="/features/emails#limiting-emails-to-specific-types-of-users"
   >
-    Control which users receive gamified emails.
+    Control which users receive legacy emails.
   </Card>
   <Card
     title="Email Personalization"
@@ -201,7 +224,7 @@ Custom user attributes can be used to personalize achievements, customize the wa
 
 #### Data aggregation and filtering {#data-aggregation-and-filtering}
 
-You can use custom user attributes to aggregate and filter data returned from some APIs to support a wide range of gamification use cases. In all cases, attributes are included in the `userAttributes` query parameter using a consistent schema:
+You can use custom user attributes to aggregate and filter data returned from some APIs to support a wide range of use cases. In all cases, attributes are included in the `userAttributes` query parameter using a consistent schema:
 
 `?userAttributes=city:london,subscription-plan:pro`
 
@@ -213,7 +236,7 @@ Here's a list of all APIs that support the `userAttributes` query parameter:
 
 Custom user attributes can be used to segment and compare retention and engagement charts between user groups.
 
-This is useful to understand which cohorts are making full use of your gamification features, and which are struggling to engage and therefore require some attention.
+This is useful to understand which cohorts are making full use of your in-app features, and which are struggling to engage and therefore require some attention.
 
 <Frame>
   <video
@@ -319,13 +342,17 @@ Any properties that you pass to Trophy will be updated to the new values you spe
 
 ## Setting user preferences {#setting-user-preferences}
 
-Trophy has APIs to help you power a preference center that your users can use to control and customize how they interact with your gamification features.
+Trophy has APIs to help you power a preference center that your users can use to control and customize how they interact with your in-app features and the messages they receive.
 
 This section walks through all the preferences that you can expose to your users, and their function.
 
 ### Notification preferences {#notification-preferences}
 
-You can use Trophy to send gamified [Emails](/features/emails) and [Push Notifications](/features/push-notifications) to your users.
+The notification preferences in this section apply to template-based [Emails (Legacy)](/features/emails) and [Push notifications (Legacy)](/features/push-notifications).
+
+<Info>
+  Users in the agentic messaging cohort control how often they hear from you and on which channels instead. See [user preferences for agentic messaging](/agentic-messaging/user-preferences).
+</Info>
 
 Trophy's [update preferences API](/api-reference/endpoints/users/update-user-preferences) allows you to build a preference center within your application that your users can interact with to control which notifications they receive, and through which channels.
 
@@ -339,7 +366,7 @@ Trophy's [update preferences API](/api-reference/endpoints/users/update-user-pre
 
 The API lets you update a user's notification preferences for different notification types:
 
-- **achievement_completed**: Notifications sent when a user completes an achievement
+- **achievement_completed**: Notifications sent when a user completes a milestone
 - **recap**: Periodic summary notifications about user progress
 - **reactivation**: Notifications sent to re-engage inactive users
 - **streak_reminder**: Reminders to help users maintain their streaks
@@ -401,9 +428,9 @@ Once streak preferences are set, the [get preferences API](/api-reference/endpoi
 
 To fetch the details of a user that you've already identified with Trophy, use the [Get User API](/api-reference/endpoints/users/get-a-single-user).
 
-This will return the full details of the user along with the `control` attribute that you can use to conditionally enroll users in any gamification features. Learn more about [Experimentation](/platform/experimentation).
+This will return the full details of the user, including the [read-only attributes](#read-only-attributes) `control` and `agenticMessagingEnabled`. Use `control` to conditionally enroll users in in-app features, and `agenticMessagingEnabled` to check whether the user receives agentic messages.
 
-```json Response {3}
+```json Response {3-4}
 {
   "id": "user-id",
   "control": false,

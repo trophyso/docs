@@ -1,12 +1,14 @@
 ---
 title: Streaks
-description: Learn how to use streaks in a gamified product experience with Trophy.
+description: Learn how to build daily, weekly or monthly usage habits in your web or mobile app with Trophy streaks.
 og:description: Use daily, weekly or monthly streaks to create habitual usage
   patterns and keep users coming back to your app.
 icon: flame
 ---
 
 import MetricChangeResponseBlock from "../snippets/metric-change-response-block.mdx";
+
+{/* TODO(media): re-create in the new dashboard theme: assets/features/streaks/streak_config.png, assets/features/streaks/days_off.png, assets/features/streaks/freeze_grants.mp4, assets/features/streaks/freeze_accumulation.mp4, assets/features/streaks/streak_personalization.mp4, assets/features/streaks/restoring_streaks.mp4 */}
 
 ## What are streaks? {#what-are-streaks}
 
@@ -143,10 +145,6 @@ There's no extra work required to track streaks, and you can start using them ri
 
 You can also read and update organization streak configuration — frequency, evaluation mode, metrics, days off, personalization, and freezes — with the [streak settings Admin API](/admin-api/endpoints/streaks/update-streak-settings).
 
-<Tip>
-For a full walk through on how to set up a streak feature using Trophy, check out our [official guide](/guides/how-to-build-a-streaks-feature).
-</Tip>
-
 ## Streak personalization {#streak-personalization}
 
 Trophy can support users personalizing how their streak works within guardrails you set for them. To do this, turn on streak personalization in the [streaks page](https://app.trophy.so/streaks) of the Trophy dashboard.
@@ -209,11 +207,6 @@ When a streak has been reset, the matching period in the `streakHistory` field o
 ## Displaying streaks {#displaying-streaks}
 
 Trophy exposes streak data in two ways, which can be used to build UI elements within your applications and display streaks to users.
-
-<Tip>
-  Check out our [full guide](/guides/how-to-build-a-streaks-feature) on adding a
-  streaks feature to your app for more details.
-</Tip>
 
 ### Metric event response {#metric-event-response}
 
@@ -335,6 +328,10 @@ If you want to display streaks for multiple users at once, for example to suppor
 ## Rewarding streaks {#rewarding-streaks}
 
 To give users something when they reach a streak length, like bonus points they claim or a prize you fulfill yourself, add a streak trigger to a [reward](/features/rewards#streak-triggers). If you just want points added automatically, use a [points trigger](/features/points#streak-triggers) instead.
+
+## Streaks in agentic messaging {#streaks-in-agentic-messaging}
+
+Streak data is one of the strongest signals [agentic messaging](/agentic-messaging/overview) has about each user's habits. Lifecycle agents use it to send timely, personalized streak reminders and to celebrate streaks worth celebrating, picking the best message for each user at the best moment.
 
 ## Get support {#get-support}
 

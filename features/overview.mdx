@@ -1,15 +1,15 @@
 ---
 title: Overview
-description: Learn the key concepts behind Trophy's gamification system.
-og:description: Learn the key concepts behind Trophy's gamification system
-  including Metrics, Events, Achievements and Streaks.
+description: Learn the key concepts behind Trophy's in-app features and messaging.
+og:description: Learn the key concepts behind Trophy's customer engagement platform
+  including Metrics, Events, Milestones and Streaks.
 ---
 
-Trophy is built around a set of key concepts that all gamification experiences have in common, while still offering enough customization for you to build any kind of gamified experience you need.
+Trophy is built around a set of key concepts that power both agentic messaging and in-app features, while still offering enough customization to fit any web or mobile app.
 
-## Platform concepts {#platform-concepts}
+## Data foundation {#platform-concepts}
 
-Trophy's platform concepts are scalable building blocks that support all of Trophy's features and are the main things for developers to get comfortable with.
+Trophy's data foundation is a set of scalable building blocks that power every Trophy feature, including agentic messaging. These are the main things for developers to get comfortable with.
 
 <CardGroup>
   <Card title="Metrics" icon="box" href="/features/metrics">
@@ -23,13 +23,13 @@ Trophy's platform concepts are scalable building blocks that support all of Trop
   </Card>
 </CardGroup>
 
-## Gamification concepts {#gamification-concepts}
+## In-app features {#gamification-concepts}
 
-Trophy's gamification concepts are flexible primitives built on the infrastructure concepts that support a wide range of common gamification use cases.
+Trophy's in-app features are flexible primitives built on the data foundation. They give users a reason to come back, and give lifecycle agents rich first-party data about each user's progress.
 
 <CardGroup>
-  <Card title="Achievements" icon="trophy" href="/features/achievements">
-    Encourage users to make continued progress or to take specific actions.
+  <Card title="Milestones" icon="trophy" href="/features/milestones">
+    Celebrate continued progress or specific actions.
   </Card>
   <Card title="Streaks" icon="flame" href="/features/streaks">
     Motivate users to build regular usage habits.
@@ -39,21 +39,7 @@ Trophy's gamification concepts are flexible primitives built on the infrastructu
   </Card>
   <Card
     title="Leaderboards"
-    icon={
-      <svg
-        width="20"
-        height="18"
-        viewBox="0 0 20 18"
-        fill="none"
-        xmlns="http://www.w3.org/2000/svg"
-        className="text-primary dark:text-primary-light"
-      >
-        <path
-          d="M2 16H6V8H2V16ZM8 16H12V2H8V16ZM14 16H18V10H14V16ZM0 16V8C0 7.45 0.195833 6.97917 0.5875 6.5875C0.979167 6.19583 1.45 6 2 6H6V2C6 1.45 6.19583 0.979167 6.5875 0.5875C6.97917 0.195833 7.45 0 8 0H12C12.55 0 13.0208 0.195833 13.4125 0.5875C13.8042 0.979167 14 1.45 14 2V8H18C18.55 8 19.0208 8.19583 19.4125 8.5875C19.8042 8.97917 20 9.45 20 10V16C20 16.55 19.8042 17.0208 19.4125 17.4125C19.0208 17.8042 18.55 18 18 18H2C1.45 18 0.979167 17.8042 0.5875 17.4125C0.195833 17.0208 0 16.55 0 16Z"
-          fill="currentColor"
-        />
-      </svg>
-    }
+    icon="chart-bar"
     href="/features/leaderboards"
   >
     Create friendly competitions to increase user engagement.
@@ -61,15 +47,25 @@ Trophy's gamification concepts are flexible primitives built on the infrastructu
   <Card title="Rewards" icon="gift" href="/features/rewards">
     Award users with redeemable points and custom rewards.
   </Card>
-  <Card title="Emails" icon="mail" href="/features/emails">
-    Deliver personalized lifecycle emails to users to increase retention.
+</CardGroup>
+
+## Messaging {#messaging}
+
+Trophy's AI lifecycle agents send personalized email and push to every user. Template-based emails and push notifications remain available as legacy messaging.
+
+<CardGroup>
+  <Card title="Agentic messaging" icon="bot" href="/agentic-messaging/overview">
+    Deploy a 1:1 AI lifecycle agent for every user.
+  </Card>
+  <Card title="Emails (Legacy)" icon="mail" href="/features/emails">
+    Template-based emails sent from key triggers.
   </Card>
   <Card
-    title="Push Notifications"
+    title="Push notifications (Legacy)"
     icon="bell"
     href="/features/push-notifications"
   >
-    Drive automated notification flows using personalized gamification data
+    Template-based push notifications sent from key triggers.
   </Card>
 </CardGroup>
 

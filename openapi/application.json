@@ -2,7 +2,7 @@
   "openapi": "3.1.0",
   "info": {
     "title": "Trophy",
-    "version": "1.29.0"
+    "version": "1.31.0"
   },
   "x-fern-global-headers": [
     {
@@ -1311,7 +1311,7 @@
         }
       ],
       "get": {
-        "description": "Get a user's notification preferences.",
+        "description": "Get a user's notification, streak and agentic messaging preferences.",
         "operationId": "users_get_preferences",
         "x-fern-server-name": "api",
         "tags": [
@@ -1369,6 +1369,13 @@
                           "email",
                           "push"
                         ]
+                      },
+                      "messaging": {
+                        "channels": [
+                          "email",
+                          "push"
+                        ],
+                        "temperature": 3
                       }
                     }
                   }
@@ -1415,7 +1422,7 @@
         ]
       },
       "patch": {
-        "description": "Update a user's notification and streak preferences. Streak preferences other than `streak.enabled` require streak customization to be enabled in your Trophy dashboard settings.",
+        "description": "Update a user's notification, streak and agentic messaging preferences. Streak preferences other than `streak.enabled` require streak customization to be enabled in your Trophy dashboard settings.",
         "operationId": "users_update_preferences",
         "x-fern-server-name": "api",
         "tags": [
@@ -1484,6 +1491,12 @@
                           0,
                           6
                         ]
+                      },
+                      "messaging": {
+                        "channels": [
+                          "email"
+                        ],
+                        "temperature": 2
                       }
                     }
                   }
@@ -7769,6 +7782,32 @@
           }
         }
       },
+      "MessagingPreferences": {
+        "title": "MessagingPreferences",
+        "type": "object",
+        "description": "The user's agentic messaging preferences: the channels its messages may use, and how many and what kinds of messages they want.",
+        "properties": {
+          "channels": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/NotificationChannel"
+            },
+            "uniqueItems": true,
+            "description": "Channels agentic messages may use. An empty array turns agentic messages off for this user.",
+            "default": [
+              "email",
+              "push"
+            ]
+          },
+          "temperature": {
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 5,
+            "description": "How many and what kinds of agentic messages the user wants, from 1 (fewer: progress and celebrations only, at most one email and one push a week) to 5 (more).",
+            "default": 3
+          }
+        }
+      },
       "UserPreferencesResponse": {
         "title": "UserPreferencesResponse",
         "type": "object",
@@ -7779,10 +7818,14 @@
           },
           "streak": {
             "$ref": "#/components/schemas/StreakPreferences"
+          },
+          "messaging": {
+            "$ref": "#/components/schemas/MessagingPreferences"
           }
         },
         "required": [
-          "notifications"
+          "notifications",
+          "messaging"
         ]
       },
       "UpdateUserPreferencesRequest": {
@@ -7795,6 +7838,9 @@
           },
           "streak": {
             "$ref": "#/components/schemas/StreakPreferences"
+          },
+          "messaging": {
+            "$ref": "#/components/schemas/MessagingPreferences"
           }
         }
       },

@@ -38,7 +38,7 @@ Here's an example of what using an idempotency key looks like:
 
 When Trophy detects an idempotency key has been sent with an event, it will first check if the user the event relates to has used it before. It will then proceed to take one of the following actions:
 
-- If the user has used the idempotency key before, Trophy will not process the event, returning a `202 Accepted` response. The response will reflect the current state of the system, but will not increase the users metric total, complete any achievements, award any points, extend the streak, etc.
+- If the user has used the idempotency key before, Trophy will not process the event, returning a `202 Accepted` response. The response will reflect the current state of the system, but will not increase the users metric total, complete any milestones, award any points, extend the streak, etc.
 - If instead Trophy detects the user hasn't used the idempotency key before, it will process the event as usual, returning a `201 Created` response. Finally Trophy will store the idempotency key for lookup during any subsequent requests.
 
 <Note>

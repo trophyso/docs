@@ -1,0 +1,70 @@
+---
+title: Channels
+description: Learn how Trophy's lifecycle agents send email from your domain and push through your own providers.
+og:description: Agents send email from your own domain and push notifications
+  natively through APNs, Firebase Cloud Messaging or Expo.
+icon: send
+---
+
+Agents send messages over two channels, email and push notifications. They pick the channel that works best for each user, based on how that user engages and which channels the user has chosen in their [preferences](/agentic-messaging/user-preferences).
+
+Both channels are managed on the [Channels](https://app.trophy.so/agentic-messaging/channels) page under **Agentic messaging** in the Trophy dashboard, which has an **Emails** tab and a **Push** tab.
+
+## Email {#email}
+
+Agentic emails send from your own domain, with your [branding](/context/brand-kit#branding).
+
+To send email, Trophy needs:
+
+<Steps>
+  <Step title="A verified sending domain">
+    Verify your domain on the **Emails** tab. Single Sender Verification works
+    for testing, and DNS Verification is recommended for production. Follow the
+    [domain verification](/features/emails#domain-verification) guide for each
+    option.
+  </Step>
+  <Step title="An email address for each user">
+    Set the `email` attribute when you [identify
+    users](/features/users#identifying-users). Users without an email address, or
+    who have unsubscribed, aren't sent agentic emails.
+  </Step>
+</Steps>
+
+## Push notifications {#push-notifications}
+
+Agentic push notifications are delivered natively through your own push setup. Trophy supports:
+
+- [Apple Push Notification Service (APNs)](/features/push-notifications#apple-push-notification-service-apns)
+- [Firebase Cloud Messaging (FCM)](/features/push-notifications#firebase-cloud-messaging-fcm)
+- [Expo Push Service](/features/push-notifications#expo-push-service)
+
+To send push notifications, Trophy needs:
+
+<Steps>
+  <Step title="A configured push provider">
+    Add your provider's credentials on the **Push** tab, following the setup
+    guide for your provider above.
+  </Step>
+  <Step title="Device tokens for each user">
+    Associate device tokens with each user when you identify them or send metric
+    events. See [associating device
+    tokens](/features/push-notifications#sending-push-notifications) for
+    examples.
+  </Step>
+</Steps>
+
+## Reachable users {#reachable-users}
+
+Agents only consider users they can reach on at least one channel. A user with an email address but no device tokens only receives email, and a user with device tokens but no email address only receives push.
+
+Set up both channels to give agents the most room to pick the right one for each user.
+
+<Tip>
+  If you already send [legacy emails](/features/emails) or [push
+  notifications](/features/push-notifications), your domain and push providers
+  are shared with agentic messaging, so there's nothing new to set up.
+</Tip>
+
+## Get support {#get-support}
+
+Want to get in touch with the Trophy team? Reach out to us via [email](mailto:support@trophy.so). We're here to help!

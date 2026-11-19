@@ -1,28 +1,31 @@
 ---
 title: Experimentation
-description: Learn how to use Trophy to experiment with the gamification
+description: Learn how to use Trophy to experiment with your engagement
   experience and increase retention and user engagement.
-og:description: Learn how to use Trophy to experiment with the gamification
+og:description: Learn how to use Trophy to experiment with your engagement
   experience and increase retention and user engagement.
 icon: flask-conical
 ---
 
 import ControlFlagBlock from "../snippets/control-flag-block.mdx";
 
-Trophy provides a core set of primitives to help you ship gamification experiences faster. But gamification is not something you can set and forget.
+{/* TODO(media): re-create in the new dashboard theme: assets/platform/experimentation/control_ratio.mp4, assets/platform/experimentation/charts.png, assets/platform/experimentation/retention_chart.png, assets/platform/experimentation/new_user_activiation_window.png, assets/platform/experimentation/engagement_chart.png, assets/platform/experimentation/early_engagement_chart.png */}
 
-A key part of running a gamified platform is experimentation — tweaking and optimizing the user experience to ensure that users keep coming back.
+Trophy provides a core set of primitives to help you ship engagement experiences faster. But engagement is not something you can set and forget.
+
+A key part of running an engaging product is experimentation — tweaking and optimizing the user experience to ensure that users keep coming back.
 
 Usually, you'd have to build these tools yourself, but with Trophy you get a simple experimentation stack out-of-the-box.
 
-<Tip>
-  We have plans to extend Trophy's experimentation capabilities in the future to
-  support more granular A/B testing of your gamification features.
-</Tip>
+<Note>
+  [Agentic messaging](/agentic-messaging/overview) has holdouts built in, so
+  you can measure its impact without setting up your own experiments. See
+  [Measuring impact](/agentic-messaging/measuring-impact).
+</Note>
 
 ## Control ratio {#control-ratio}
 
-Trophy has a built-in capability to automatically A/B test gamification features using a control ratio.
+Trophy has a built-in capability to automatically A/B test in-app features using a control ratio.
 
 Found on the [integration page](https://app.trophy.so/integration/configure) of the Trophy dashboard, the control ratio adjusts the percentage of users that are assigned to the 'control' group versus the 'experimental' group.
 
@@ -39,9 +42,9 @@ You can also read and update `controlRatio` and `userActivationWindow` with the 
   ></video>
 </Frame>
 
-Trophy returns the `control` attribute as `true` or `false` in most APIs that relate to user data allowing you to conditionally show gamification features to users who are in the experimental group.
+Trophy returns the `control` attribute as `true` or `false` in most APIs that relate to user data allowing you to conditionally show in-app features to users who are in the experimental group.
 
-If you plan to measure the overall impact of gamification features, make sure to only show those features to users with `control` set to `false`.
+If you plan to measure the overall impact of in-app features, make sure to only show those features to users with `control` set to `false`.
 
 <ControlFlagBlock />
 

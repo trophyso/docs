@@ -12,11 +12,13 @@ import MetricChangeResponseBlock from "../snippets/metric-change-response-block.
 import IdempotentEventTracking from "../snippets/idempotent-event-tracking.mdx";
 import ParallelEventsValueExample from "../snippets/parallel-events-value-example.mdx";
 
+{/* TODO(media): re-create in the new dashboard theme: assets/features/events/custom_event_attributes.png, assets/features/events/create_custom_event_attribute.mp4, assets/features/events/using_attributes_in_emails.mp4, assets/features/events/using_attributes_in_email_charts.mp4 */}
+
 ## What are events? {#what-are-events}
 
 Events represent individual user interactions against [Metrics](/features/metrics) in Trophy. One event corresponds to a single interaction made by a single user.
 
-When you [integrate metrics](#tracking-metric-events) into your platform, you're setting up your platform to continuously stream events to your Trophy metrics for each user interaction. These interactions then drive all the gamification features you set up around these metrics.
+When you [integrate metrics](#tracking-metric-events) into your platform, you're setting up your platform to continuously stream events to your Trophy metrics for each user interaction. These interactions then drive all the in-app features you set up around these metrics, and give [agentic messaging](/agentic-messaging/overview) an up-to-date picture of each user's activity.
 
 ## Key attributes {#key-attributes}
 
@@ -44,7 +46,7 @@ For example, a language learning app might have a 'Questions Completed' metric a
 
 Similarly a fitness app might use an 'Exercises Completed' metric and use a custom event attribute to store the weight that was used in each exercise and another custom event attribute to store how long the exercise lasted.
 
-Using custom event attributes in this way allows you to enrich events in Trophy with additional context relevant to your use case and use it to power even more engaging gamification features.
+Using custom event attributes in this way allows you to enrich events in Trophy with additional context relevant to your use case and use it to power even more engaging in-app features.
 
 ### Creating attributes {#creating-attributes}
 
@@ -100,19 +102,19 @@ Here's an example of an event payload where the values of two attributes, `devic
 
 ### Using attributes {#using-attributes}
 
-Custom event attributes can be used to power more advanced triggers for achievements and points and can be used in email templates to customize copy and to control the data shown in charts.
+Custom event attributes can be used to power more advanced triggers for milestones and points and can be used in email templates to customize copy and to control the data shown in charts.
 
 #### Advanced feature triggers {#advanced-feature-triggers}
 
-Custom event attributes can be used to set up achievements or points triggers that only track events with specific attribute values. Follow the links to the relevant pages below to learn more.
+Custom event attributes can be used to set up milestone or points triggers that only track events with specific attribute values. Follow the links to the relevant pages below to learn more.
 
 <CardGroup>
   <Card
-    title="Achievement Triggers"
+    title="Milestone Triggers"
     icon="trophy"
-    href="/features/achievements#creating-achievements"
+    href="/features/milestones#creating-achievements"
   >
-    Configure achievements that can only be unlocked by events with certain
+    Configure milestones that can only be completed by events with certain
     attribute values.
   </Card>
   <Card
@@ -171,13 +173,13 @@ Here's an example where a fictional study platform is using a metric to track th
 
 <MetricChangeRequestBlock />
 
-Any [Achievements](/features/achievements), [Streaks](/features/streaks), [Points](/features/points) or [Leaderboards](/features/leaderboards) that have been set up against this metric will be automatically processed, and the response will contain any updates to the user's progress that are a direct result of the event occurring:
+Any [Milestones](/features/milestones), [Streaks](/features/streaks), [Points](/features/points) or [Leaderboards](/features/leaderboards) that have been set up against this metric will be automatically processed, and the response will contain any updates to the user's progress that are a direct result of the event occurring:
 
 <MetricChangeResponseBlock />
 
 In this example the response includes the following:
 
-- The user's newly unlocked achievements as a result of the event
+- The user's newly completed milestones (`achievements` in the response) as a result of the event
 - The user's latest streak as result of the event
 - The user's latest points for each points system that changed as a result of the event
 - The user's latest leaderboard data for each leaderboard that changed as a result of the event
@@ -187,21 +189,6 @@ With a little bit of custom code, this response data can be used to drive any in
 - Triggering in-app notifications
 - Sound effects
 - Animations
-
-Watch Charlie integrate metric tracking into a simple NextJS application using the Trophy [NodeJS SDK](/api-reference/client-libraries):
-
-<Frame>
-  <iframe
-    width="560"
-    height="315"
-    src="https://www.youtube.com/embed/ZxbOylQ6kQU?si=2C8IvN0trlIzLeO7"
-    title="YouTube video player"
-    frameborder="0"
-    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-    referrerpolicy="strict-origin-when-cross-origin"
-    allowfullscreen
-  ></iframe>
-</Frame>
 
 ### Idempotent events {#idempotent-events}
 

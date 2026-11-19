@@ -354,6 +354,102 @@ html [data-component-part="card-icon"] svg:not([style*="mask"]) {
   color: var(--dl-ink);
 }
 
+/* Mermaid diagrams. Mintlify draws them with Mermaid's stock theme (and
+   redraws them on a theme switch); these rules repaint them in Daylight
+   tokens so Day and Night both follow the site. Nodes are raised cards with
+   a hairline, decisions take the accent wash, start and end points are ink,
+   and lines are the strong neutral. Milestone states in features/milestones
+   use the classes milestoneInactive, milestoneActive and milestoneLocked. */
+html [data-component-name="mermaid-container"] {
+  --dl-diagram-ground: #f6f5f1; /* docs.json page ground, Day */
+}
+
+html.dark [data-component-name="mermaid-container"] {
+  --dl-diagram-ground: #0e0f1a; /* docs.json page ground, Night */
+}
+
+html [data-component-name="mermaid-container"] svg .node rect.label-container,
+html [data-component-name="mermaid-container"] svg .node path.label-container {
+  fill: var(--dl-mist-raised) !important;
+  stroke: var(--dl-line) !important;
+  stroke-width: 1px !important;
+  rx: 12px;
+  ry: 12px;
+}
+
+html [data-component-name="mermaid-container"] svg .node polygon.label-container {
+  fill: var(--dl-accent-wash) !important;
+  stroke: color-mix(in srgb, var(--dl-accent) 35%, transparent) !important;
+  stroke-width: 1px !important;
+}
+
+html [data-component-name="mermaid-container"] svg .node circle {
+  fill: var(--dl-diagram-ground) !important;
+  stroke: var(--dl-ink) !important;
+  stroke-width: 1.5px !important;
+}
+
+html [data-component-name="mermaid-container"] svg .node circle.state-start,
+html [data-component-name="mermaid-container"] svg .node circle:last-child:not(:first-child) {
+  fill: var(--dl-ink) !important;
+}
+
+/* framed-circle end points are drawn as paths: an outer ring and an inner dot. */
+html [data-component-name="mermaid-container"] svg .node .outer-path > path:not([fill="none"]) {
+  fill: var(--dl-diagram-ground) !important;
+}
+
+html [data-component-name="mermaid-container"] svg .node .outer-path > path:not([stroke="none"]) {
+  stroke: var(--dl-ink) !important;
+  stroke-width: 1.5px !important;
+}
+
+html [data-component-name="mermaid-container"] svg .node .outer-path > g > path {
+  fill: var(--dl-ink) !important;
+  stroke: var(--dl-ink) !important;
+}
+
+html [data-component-name="mermaid-container"] svg .nodeLabel,
+html [data-component-name="mermaid-container"] svg .nodeLabel p {
+  color: var(--dl-ink) !important;
+  fill: var(--dl-ink) !important;
+}
+
+html [data-component-name="mermaid-container"] svg .flowchart-link {
+  stroke: var(--dl-line-strong) !important;
+  stroke-width: 1.5px !important;
+}
+
+html [data-component-name="mermaid-container"] svg .marker,
+html [data-component-name="mermaid-container"] svg .arrowMarkerPath {
+  fill: var(--dl-line-strong) !important;
+  stroke: var(--dl-line-strong) !important;
+}
+
+html [data-component-name="mermaid-container"] svg .edgeLabel,
+html [data-component-name="mermaid-container"] svg .edgeLabel p,
+html [data-component-name="mermaid-container"] svg .edgeLabel rect,
+html [data-component-name="mermaid-container"] svg .labelBkg {
+  background-color: var(--dl-diagram-ground) !important;
+  fill: var(--dl-diagram-ground) !important;
+  color: var(--dl-ink-muted) !important;
+}
+
+html [data-component-name="mermaid-container"] svg .node.milestoneInactive .label-container {
+  fill: var(--dl-caution-muted) !important;
+  stroke: color-mix(in srgb, var(--dl-caution) 30%, transparent) !important;
+}
+
+html [data-component-name="mermaid-container"] svg .node.milestoneActive .label-container {
+  fill: var(--dl-positive-muted) !important;
+  stroke: color-mix(in srgb, var(--dl-positive) 30%, transparent) !important;
+}
+
+html [data-component-name="mermaid-container"] svg .node.milestoneLocked .label-container {
+  fill: var(--dl-mist-sunken) !important;
+  stroke: var(--dl-line) !important;
+}
+
 /* Callouts. Note and info are neutral raised cards; tip and check introduce
    a feature in the accent wash; warning is caution; danger is negative. */
 html .callout[data-callout-type] {

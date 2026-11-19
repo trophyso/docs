@@ -37,8 +37,8 @@ const ICONS = {
   // Features (as the website's Product menu)
   flame: 'fire', // streaks
   trophy: 'seal-check', // achievements
-  sparkle: 'sparkle', // points
-  star: 'sparkle', // XP points
+  sparkle: 'points', // points (custom, see LOCAL_ICONS)
+  star: 'points', // XP points
   'chart-bar': 'ranking', // leaderboards
   gift: 'gift', // rewards
   mail: 'envelope-simple', // emails
@@ -98,6 +98,14 @@ const ICONS = {
   'square-slash': 'keyboard', // the "/" key
 };
 
+/**
+ * Icons kept in icons/phosphor/ by hand instead of downloaded from Phosphor.
+ * points.svg is the website's points icon (web repo,
+ * components/icons/points-icon.tsx): Phosphor's Sparkle, regular weight,
+ * without its two small sparkles and re-centred in the 256 grid.
+ */
+const LOCAL_ICONS = new Set(['points']);
+
 /** Custom SVG icons rendered as <img>: path → Phosphor icon name. */
 const IMG_ICONS = {
   '/icons/leaderboard.svg': 'ranking',
@@ -110,6 +118,7 @@ const cssPath = path.join(root, 'phosphor-icons.css');
 async function download(name) {
   const file = path.join(outDir, `${name}.svg`);
   if (existsSync(file)) return;
+  if (LOCAL_ICONS.has(name)) throw new Error(`Local icon "${name}.svg" is missing from icons/phosphor/`);
   const res = await fetch(`${SOURCE}/${name}.svg`);
   if (!res.ok) throw new Error(`Phosphor icon "${name}" not found (${res.status})`);
   const svg = await res.text();

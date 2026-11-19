@@ -1,7 +1,7 @@
 ---
 title: Quick start
-description: Install a Trophy SDK, authenticate, identify a user, and submit your first metric event in about five minutes.
-og:description: Install a Trophy SDK, authenticate, identify a user, and submit your first metric event in about five minutes.
+description: Install a Trophy SDK, authenticate, identify a user, and send your first metric event in about five minutes.
+og:description: Install a Trophy SDK, authenticate, identify a user, and send your first metric event in about five minutes.
 ---
 
 import SdkInstallCommand from "../snippets/sdk-install-command.mdx";
@@ -10,7 +10,9 @@ import TrophyClientInitBlock from "../snippets/trophy-client-init-block.mdx";
 import MetricChangeResponseBlock from "../snippets/metric-change-response-block.mdx";
 import VerifiedFirstEvent from "../snippets/verified-first-event.mdx";
 
-Here you'll integrate your application with Trophy and start building your first gamified feature in about five minutes.
+{/* TODO(media): re-create in the new dashboard theme: assets/features/metrics/create_new_metric.mp4, assets/quick-start/copy_metric_key.mp4 */}
+
+Here you'll integrate your application with Trophy and send your first metric event in about five minutes. Everything in Trophy is powered by the user activity you send as events, so this is the first step whatever you're building.
 
 <Tabs>
   <Tab title="Using AI" icon="bot">
@@ -43,7 +45,7 @@ Here you'll integrate your application with Trophy and start building your first
           iconType="solid"
           actions={["copy", "cursor"]}
         >
-          I'm adding gamification to my app using Trophy.
+          I'm integrating Trophy into my app.
 
           Before making changes, verify the connected Trophy MCP Servers are available. Use the Docs MCP server as the primary source of truth for Trophy integration details, and the Account MCP server to configure my account.
 
@@ -60,128 +62,16 @@ Here you'll integrate your application with Trophy and start building your first
           - Keep secrets out of source control.
           - Use existing project patterns and naming conventions.
           - Show a concise summary of changed files and how to test the setup.
-          - Suggest next steps based on the gamification features Trophy supports and the use case.
+          - Suggest next steps based on my use case: agentic messaging, in-app features, or both.
         </Prompt>
 
         This will:
 
         1. Add the relevant [Trophy SDK](/api-reference/client-libraries) to your app based on your tech stack
         2. Add a new `TROPHY_API_KEY` variable to your environment settings
-        3. Add code to track metric events for the chosen user activity using the Trophy SDK client - required for all gamification features.
-      </Step>
-      <Step title="Build your first gamification feature">
-        Once initial setup is complete, pick a common use case and paste the matching prompt into your AI assistant:
+        3. Add code to track metric events for the chosen user activity using the Trophy SDK client - required for all Trophy features.
 
-        <Prompt
-          description="Daily streak"
-          icon="paperclip"
-          iconType="solid"
-          actions={["copy", "cursor"]}
-        >
-          Build a daily streak feature with Trophy.
-
-          Use the Docs MCP as the source of truth for how streaks work, and the Account MCP to configure my account.
-
-          Goals:
-          1. Drive the streak from a core user activity already tracked (or that we should track) as a Trophy metric.
-          2. Ensure every user identify/upsert and metric event includes the user's `tz` attribute (IANA timezone). This is required for streaks to evaluate calendar days correctly for each user.
-          3. Configure the streak featuer in Trophy using a sensible threshold for the chosen metric.
-          4. Enable streak freezes and streak pauses if they fit this product; otherwise omit them and say why.
-          5. Wire any app-side reads or UI needed to show the user's current streak, freezes, and pause state.
-          6. Summarize what was configured, what code changed, and how to verify the streak end to end. Explicitly explain back why sending `tz` matters for a functioning streak feature.
-        </Prompt>
-
-        <Prompt
-          description="Achievements library"
-          icon="paperclip"
-          iconType="solid"
-          actions={["copy", "cursor"]}
-        >
-          Build an achievements library with Trophy.
-
-          Use the Docs MCP as the source of truth for achievement types and triggers, and the Account MCP to configure my account.
-
-          Goals:
-          1. Create a set of achievements tied to core user actions tracked as Trophy metric events.
-          2. Add any one-time API-triggered achievements (and other achievement types) that fit the product.
-          3. Wire app-side handling for unlocks and a minimal way to list completed vs incomplete achievements.
-          4. Summarize what was configured, what code changed, and how to verify unlocks end to end.
-        </Prompt>
-
-        <Prompt
-          description="XP system"
-          icon="paperclip"
-          iconType="solid"
-          actions={["copy", "cursor"]}
-        >
-          Build an XP points system with Trophy.
-
-          Use the Docs MCP as the source of truth for points systems, triggers, and levels, and the Account MCP to configure my account.
-
-          Goals:
-          1. Create a points system that awards XP for a few key user actions tracked as Trophy metrics.
-          2. Configure triggers in the points system to award XP for the chosen user actions.
-          3. Configure levels and boosts if relevant for the use case.
-          4. Wire app-side reads or UI needed to show the user's XP total and level progress.
-          5. Summarize what was configured, what code changed, and how to verify points awards end to end.
-        </Prompt>
-
-        <Prompt
-          description="Weekly leaderboard"
-          icon="paperclip"
-          iconType="solid"
-          actions={["copy", "cursor"]}
-        >
-          Build a repeating weekly leaderboard with Trophy.
-
-          Use the Docs MCP as the source of truth for leaderboards, and the Account MCP to configure my account.
-
-          Goals:
-          1. Create a weekly recurring leaderboard driven by a core user action tracked as a Trophy metric.
-          2. Configure ranking logic based on the chosen metric and configure the weekly reset schedule for the leaderboard.
-          3. Wire app-side reads or UI needed to show rankings for the current week and the current user's place.
-          4. Summarize what was configured, what code changed, and how to verify rankings end to end.
-        </Prompt>
-
-        For more ideas on what to build next, explore:
-
-        <CardGroup>
-          <Card title="Achievements" icon="trophy" href="/features/achievements">
-            Reward users for continued progress or taking specific actions.
-          </Card>
-          <Card title="Streaks" icon="flame" href="/features/streaks">
-            Motivate users to build regular usage habits.
-          </Card>
-          <Card title="Points" icon="sparkle" href="/features/points">
-            Build sophisticated points systems to reward and retain users.
-          </Card>
-          <Card
-            title="Leaderboards"
-            icon={
-              <svg
-                width="20"
-                height="18"
-                viewBox="0 0 20 18"
-                fill="none"
-                xmlns="http://www.w3.org/2000/svg"
-                className="text-primary dark:text-primary-light"
-              >
-                <path
-                  d="M2 16H6V8H2V16ZM8 16H12V2H8V16ZM14 16H18V10H14V16ZM0 16V8C0 7.45 0.195833 6.97917 0.5875 6.5875C0.979167 6.19583 1.45 6 2 6H6V2C6 1.45 6.19583 0.979167 6.5875 0.5875C6.97917 0.195833 7.45 0 8 0H12C12.55 0 13.0208 0.195833 13.4125 0.5875C13.8042 0.979167 14 1.45 14 2V8H18C18.55 8 19.0208 8.19583 19.4125 8.5875C19.8042 8.97917 20 9.45 20 10V16C20 16.55 19.8042 17.0208 19.4125 17.4125C19.0208 17.8042 18.55 18 18 18H2C1.45 18 0.979167 17.8042 0.5875 17.4125C0.195833 17.0208 0 16.55 0 16Z"
-                  fill="currentColor"
-                />
-              </svg>
-            }
-            href="/features/leaderboards">
-            Create friendly competitions to increase user engagement.
-          </Card>
-          <Card title="Emails" icon="mail" href="/features/emails">
-            Deliver personalized lifecycle emails to users at the perfect moment.
-          </Card>
-          <Card title="Push Notifications" icon="bell" href="/features/push-notifications">
-            Drive automated notification flows using personalized gamification data.
-          </Card>
-        </CardGroup>
+        Once your first event is sent, see [next steps](#next-steps) to choose what to build.
       </Step>
     </Steps>
   </Tab>
@@ -217,7 +107,7 @@ Here you'll integrate your application with Trophy and start building your first
         Make sure all Trophy SDK calls use this client for authentication.
       </Step>
       <Step title="Create your first metric">
-        All gamification features are driven by user interactions. In Trophy, you use [Metrics](/features/metrics) to define and model those interactions and [Events](/features/events) to track them.
+        Everything in Trophy is driven by user interactions. In Trophy, you use [Metrics](/features/metrics) to define and model those interactions and [Events](/features/events) to track them.
         
         Here you'll create your first metric to get started. In the Trophy dashboard, head into the [metrics page](https://app.trophy.so/metrics) and click the _New Metric_ button:
 
@@ -253,62 +143,139 @@ Here you'll integrate your application with Trophy and start building your first
 
         <VerifiedFirstEvent />
 
-        By making this call, you're telling Trophy that a specific user made an interaction with your product. As a result, Trophy will process any gamification features like achievements or streaks that you've configured against the metric automatically.
+        By making this call, you're telling Trophy that a specific user made an interaction with your product. Trophy records the user's activity and automatically processes anything you've configured against the metric.
+
+        <Tip>
+          Include the user's `email` and `tz` (IANA time zone) attributes where you can. Trophy uses them to reach users and to work out each user's local day.
+        </Tip>
         
-        Use the response to react to changes in the user's gamification state and power UI elements:
+        Use the response to react to changes in the user's progress and power UI elements:
 
         <MetricChangeResponseBlock />
 
-      </Step>
-      <Step title="Continue building your gamification experience">
-        With a metric integrated into your backend, you're ready to start adding gamification features to your product.
-        
-        Follow the links below to learn more about each feature you can build with Trophy:
-
-        <CardGroup>
-          <Card title="Achievements" icon="trophy" href="/features/achievements">
-            Reward users for continued progress or taking specific actions.
-          </Card>
-          <Card title="Streaks" icon="flame" href="/features/streaks">
-            Motivate users to build regular usage habits.
-          </Card>
-          <Card title="Points" icon="sparkle" href="/features/points">
-            Build sophisticated points systems to reward and retain users.
-          </Card>
-          <Card
-            title="Leaderboards"
-            icon={
-              <svg
-                width="20"
-                height="18"
-                viewBox="0 0 20 18"
-                fill="none"
-                xmlns="http://www.w3.org/2000/svg"
-                className="text-primary dark:text-primary-light"
-              >
-                <path
-                  d="M2 16H6V8H2V16ZM8 16H12V2H8V16ZM14 16H18V10H14V16ZM0 16V8C0 7.45 0.195833 6.97917 0.5875 6.5875C0.979167 6.19583 1.45 6 2 6H6V2C6 1.45 6.19583 0.979167 6.5875 0.5875C6.97917 0.195833 7.45 0 8 0H12C12.55 0 13.0208 0.195833 13.4125 0.5875C13.8042 0.979167 14 1.45 14 2V8H18C18.55 8 19.0208 8.19583 19.4125 8.5875C19.8042 8.97917 20 9.45 20 10V16C20 16.55 19.8042 17.0208 19.4125 17.4125C19.0208 17.8042 18.55 18 18 18H2C1.45 18 0.979167 17.8042 0.5875 17.4125C0.195833 17.0208 0 16.55 0 16Z"
-                  fill="currentColor"
-                />
-              </svg>
-            }
-            href="/features/leaderboards">
-            Create friendly competitions to increase user engagement.
-          </Card>
-          <Card title="Emails" icon="mail" href="/features/emails">
-            Deliver personalized lifecycle emails to users at the perfect moment.
-          </Card>
-          <Card title="Push Notifications" icon="bell" href="/features/push-notifications">
-            Drive automated notification flows using personalized gamification data.
-          </Card>
-        </CardGroup>
-
-        Or, explore our [API reference](/api-reference/introduction) to get familiar with what Trophy can do.
-
+        Once your first event is sent, see [next steps](#next-steps) to choose what to build.
       </Step>
     </Steps>
   </Tab>
 </Tabs>
+
+## Next steps {#next-steps}
+
+Now that Trophy is receiving events, choose what you want to build. You can use agentic messaging, in-app features, or both on the same events.
+
+### Send agentic messages {#send-agentic-messages}
+
+Deploy a 1:1 AI lifecycle agent for every user that sends personalized email and push at the right moment. Agentic messaging is set up together with the Trophy team. [Book a call](https://trophy.so/contact-sales?utm_source=docs&utm_medium=quickstart) to get started.
+
+<CardGroup cols={3}>
+  <Card title="Agentic messaging" icon="bot" href="/agentic-messaging/overview">
+    How 1:1 lifecycle agents replace sequences and journeys.
+  </Card>
+  <Card title="Rollout" icon="rocket" href="/agentic-messaging/rollout">
+    What you'll set up with the Trophy team before going live.
+  </Card>
+  <Card title="Channels" icon="send" href="/agentic-messaging/channels">
+    Connect email and push so agents can reach your users.
+  </Card>
+</CardGroup>
+
+### Build in-app features {#build-in-app-features}
+
+Add features to your app that give users a reason to come back, powered by the events you're already sending.
+
+<CardGroup cols={2}>
+  <Card title="Milestones" icon="trophy" href="/features/milestones">
+    Celebrate continued progress or specific actions.
+  </Card>
+  <Card title="Streaks" icon="flame" href="/features/streaks">
+    Motivate users to build regular usage habits.
+  </Card>
+  <Card title="Points" icon="sparkle" href="/features/points">
+    Build points systems with levels and boosts.
+  </Card>
+  <Card title="Leaderboards" icon="chart-bar" href="/features/leaderboards">
+    Create friendly competition between users.
+  </Card>
+</CardGroup>
+
+Using an AI assistant? Paste one of these prompts to build your first in-app feature:
+
+<AccordionGroup>
+  <Accordion title="Prompts for AI assistants" id="in-app-feature-prompts">
+    <Prompt
+      description="Daily streak"
+      icon="paperclip"
+      iconType="solid"
+      actions={["copy", "cursor"]}
+    >
+      Build a daily streak feature with Trophy.
+
+      Use the Docs MCP as the source of truth for how streaks work, and the Account MCP to configure my account.
+
+      Goals:
+      1. Drive the streak from a core user activity already tracked (or that we should track) as a Trophy metric.
+      2. Ensure every user identify/upsert and metric event includes the user's `tz` attribute (IANA timezone). This is required for streaks to evaluate calendar days correctly for each user.
+      3. Configure the streak feature in Trophy using a sensible threshold for the chosen metric.
+      4. Enable streak freezes and streak pauses if they fit this product; otherwise omit them and say why.
+      5. Wire any app-side reads or UI needed to show the user's current streak, freezes, and pause state.
+      6. Summarize what was configured, what code changed, and how to verify the streak end to end. Explicitly explain back why sending `tz` matters for a functioning streak feature.
+    </Prompt>
+
+    <Prompt
+      description="Milestones library"
+      icon="paperclip"
+      iconType="solid"
+      actions={["copy", "cursor"]}
+    >
+      Build a milestones library with Trophy. Milestones are called achievements in the Trophy API, SDKs and MCP tools.
+
+      Use the Docs MCP as the source of truth for achievement types and triggers, and the Account MCP to configure my account.
+
+      Goals:
+      1. Create a set of achievements tied to core user actions tracked as Trophy metric events.
+      2. Add any one-time API-triggered achievements (and other achievement types) that fit the product.
+      3. Wire app-side handling for unlocks and a minimal way to list completed vs incomplete achievements.
+      4. Summarize what was configured, what code changed, and how to verify unlocks end to end.
+    </Prompt>
+
+    <Prompt
+      description="XP system"
+      icon="paperclip"
+      iconType="solid"
+      actions={["copy", "cursor"]}
+    >
+      Build an XP points system with Trophy.
+
+      Use the Docs MCP as the source of truth for points systems, triggers, and levels, and the Account MCP to configure my account.
+
+      Goals:
+      1. Create a points system that awards XP for a few key user actions tracked as Trophy metrics.
+      2. Configure triggers in the points system to award XP for the chosen user actions.
+      3. Configure levels and boosts if relevant for the use case.
+      4. Wire app-side reads or UI needed to show the user's XP total and level progress.
+      5. Summarize what was configured, what code changed, and how to verify points awards end to end.
+    </Prompt>
+
+    <Prompt
+      description="Weekly leaderboard"
+      icon="paperclip"
+      iconType="solid"
+      actions={["copy", "cursor"]}
+    >
+      Build a repeating weekly leaderboard with Trophy.
+
+      Use the Docs MCP as the source of truth for leaderboards, and the Account MCP to configure my account.
+
+      Goals:
+      1. Create a weekly recurring leaderboard driven by a core user action tracked as a Trophy metric.
+      2. Configure ranking logic based on the chosen metric and configure the weekly reset schedule for the leaderboard.
+      3. Wire app-side reads or UI needed to show rankings for the current week and the current user's place.
+      4. Summarize what was configured, what code changed, and how to verify rankings end to end.
+    </Prompt>
+  </Accordion>
+</AccordionGroup>
+
+Or, explore the [API reference](/api-reference/introduction) to get familiar with what Trophy can do.
 
 ## Get support {#get-support}
 

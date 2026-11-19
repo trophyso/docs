@@ -30,7 +30,7 @@
   },
   "seo": {
     "metatags": {
-      "og:description": "Trophy is a developer-friendly platform for building gamified product experiences that retain users in any mobile or web app. Add features like achievements, streaks, points systems and leaderboards plus deliver personalized progress report and reactivation emails with no code.",
+      "og:description": "Trophy is the customer engagement platform for consumer web and mobile apps. 1:1 AI lifecycle agents write and send personalized email and push to every user, alongside in-app experiences like milestones, streaks, and leaderboards that give users a reason to come back.",
       "og:image": "https://trophy.so/opengraph-image"
     }
   },
@@ -91,13 +91,31 @@
                 ]
               },
               {
+                "group": "Context",
+                "pages": [
+                  "context/brand-kit"
+                ]
+              },
+              {
+                "group": "Agentic messaging",
+                "pages": [
+                  "agentic-messaging/overview",
+                  "agentic-messaging/objectives",
+                  "agentic-messaging/channels",
+                  "agentic-messaging/guardrails",
+                  "agentic-messaging/user-preferences",
+                  "agentic-messaging/measuring-impact",
+                  "agentic-messaging/rollout"
+                ]
+              },
+              {
                 "group": "Features",
                 "pages": [
                   "features/overview",
                   "features/metrics",
                   "features/events",
                   "features/users",
-                  "features/achievements",
+                  "features/milestones",
                   "features/streaks",
                   "features/points",
                   "features/leaderboards",
@@ -121,33 +139,8 @@
                 "pages": [
                   "account/overview",
                   "account/members",
-                  "account/branding",
                   "account/security",
                   "account/billing"
-                ]
-              }
-            ]
-          },
-          {
-            "tab": "Guides",
-            "icon": "rocket",
-            "description": "Gamification how-to guides",
-            "groups": [
-              {
-                "group": "Feature guides",
-                "pages": [
-                  "guides/how-to-build-an-achievements-feature",
-                  "guides/how-to-build-a-streaks-feature",
-                  "guides/how-to-build-an-xp-feature",
-                  "guides/how-to-build-an-energy-feature",
-                  "guides/how-to-build-a-leaderboards-feature"
-                ]
-              },
-              {
-                "group": "Use cases",
-                "pages": [
-                  "guides/gamified-study-platform",
-                  "guides/gamified-fitness-platform"
                 ]
               }
             ]
@@ -168,7 +161,7 @@
                 ]
               },
               {
-                "group": "Achievements",
+                "group": "Milestones",
                 "pages": [
                   "api-reference/endpoints/achievements/mark-an-achievement-as-completed",
                   "api-reference/endpoints/achievements/all-achievements"
@@ -273,7 +266,7 @@
                 ]
               },
               {
-                "group": "Achievements",
+                "group": "Milestones",
                 "pages": [
                   "admin-api/endpoints/achievements/list-achievements",
                   "admin-api/endpoints/achievements/get-an-achievement",
@@ -386,7 +379,7 @@
                 ]
               },
               {
-                "group": "Achievements",
+                "group": "Milestones",
                 "pages": [
                   "webhooks/events/achievements/achievement-completed"
                 ]
@@ -532,13 +525,19 @@
                 ]
               },
               {
+                "group": "Contexto",
+                "pages": [
+                  "es/context/brand-kit"
+                ]
+              },
+              {
                 "group": "Funciones",
                 "pages": [
                   "es/features/overview",
                   "es/features/metrics",
                   "es/features/events",
                   "es/features/users",
-                  "es/features/achievements",
+                  "es/features/milestones",
                   "es/features/streaks",
                   "es/features/points",
                   "es/features/leaderboards",
@@ -562,33 +561,8 @@
                 "pages": [
                   "es/account/overview",
                   "es/account/members",
-                  "es/account/branding",
                   "es/account/security",
                   "es/account/billing"
-                ]
-              }
-            ]
-          },
-          {
-            "tab": "Guías",
-            "icon": "rocket",
-            "description": "Guías prácticas de gamificación",
-            "groups": [
-              {
-                "group": "Guías de funcionalidades",
-                "pages": [
-                  "es/guides/how-to-build-an-achievements-feature",
-                  "es/guides/how-to-build-a-streaks-feature",
-                  "es/guides/how-to-build-an-xp-feature",
-                  "es/guides/how-to-build-an-energy-feature",
-                  "es/guides/how-to-build-a-leaderboards-feature"
-                ]
-              },
-              {
-                "group": "Casos de uso",
-                "pages": [
-                  "es/guides/gamified-study-platform",
-                  "es/guides/gamified-fitness-platform"
                 ]
               }
             ]
@@ -976,7 +950,7 @@
     },
     {
       "source": "/platform/achievements",
-      "destination": "/features/achievements"
+      "destination": "/features/milestones"
     },
     {
       "source": "/platform/streaks",
@@ -1036,7 +1010,7 @@
     },
     {
       "source": "/es/platform/achievements",
-      "destination": "/es/features/achievements"
+      "destination": "/es/features/milestones"
     },
     {
       "source": "/es/platform/streaks",
@@ -1077,6 +1051,90 @@
     {
       "source": "/es/experimentation/engagement",
       "destination": "/es/platform/experimentation#what-is-engagement"
+    },
+    {
+      "source": "/features/achievements",
+      "destination": "/features/milestones"
+    },
+    {
+      "source": "/es/features/achievements",
+      "destination": "/es/features/milestones"
+    },
+    {
+      "source": "/account/branding",
+      "destination": "/context/brand-kit"
+    },
+    {
+      "source": "/es/account/branding",
+      "destination": "/es/context/brand-kit"
+    },
+    {
+      "source": "/agentic-messaging/brand-kit",
+      "destination": "/context/brand-kit"
+    },
+    {
+      "source": "/guides/how-to-build-a-milestones-feature",
+      "destination": "/features/milestones"
+    },
+    {
+      "source": "/es/guides/how-to-build-a-milestones-feature",
+      "destination": "/es/features/milestones"
+    },
+    {
+      "source": "/guides/how-to-build-an-achievements-feature",
+      "destination": "/features/milestones"
+    },
+    {
+      "source": "/es/guides/how-to-build-an-achievements-feature",
+      "destination": "/es/features/milestones"
+    },
+    {
+      "source": "/guides/how-to-build-a-streaks-feature",
+      "destination": "/features/streaks"
+    },
+    {
+      "source": "/es/guides/how-to-build-a-streaks-feature",
+      "destination": "/es/features/streaks"
+    },
+    {
+      "source": "/guides/how-to-build-an-xp-feature",
+      "destination": "/features/points"
+    },
+    {
+      "source": "/es/guides/how-to-build-an-xp-feature",
+      "destination": "/es/features/points"
+    },
+    {
+      "source": "/guides/how-to-build-an-energy-feature",
+      "destination": "/features/points"
+    },
+    {
+      "source": "/es/guides/how-to-build-an-energy-feature",
+      "destination": "/es/features/points"
+    },
+    {
+      "source": "/guides/how-to-build-a-leaderboards-feature",
+      "destination": "/features/leaderboards"
+    },
+    {
+      "source": "/es/guides/how-to-build-a-leaderboards-feature",
+      "destination": "/es/features/leaderboards"
+    },
+    {
+      "source": "/guides/gamified-study-platform",
+      "destination": "/getting-started/quickstart"
+    },
+    {
+      "source": "/es/guides/gamified-study-platform",
+      "destination": "/es/getting-started/quickstart"
+    },
+    {
+      "source": "/guides/gamified-fitness-platform",
+      "destination": "/getting-started/quickstart"
+    },
+    {
+      "source": "/es/guides/gamified-fitness-platform",
+      "destination": "/es/getting-started/quickstart"
     }
   ],
   "api": {

@@ -1,6 +1,6 @@
 ---
 title: Rewards
-description: Learn how to use Rewards in a gamified product experience with Trophy.
+description: Learn how to give users redeemable bonuses and prizes in your web or mobile app with Trophy rewards.
 og:description: Award users prizes, bonus points or custom perks when they hit
   milestones, then let them redeem those rewards when they're ready.
 icon: gift
@@ -20,7 +20,7 @@ import AdminCreateRewardTriggerRequest from "../snippets/admin-create-reward-tri
 
 Rewards let you give users something when they hit a milestone, and let them choose when to claim it.
 
-A reward is **awarded** automatically when a user meets one of its [triggers](#reward-triggers), for example unlocking an achievement or reaching a streak length. It is only **fulfilled** when it is **redeemed**, which you do by calling the [redeem endpoint](/api-reference/endpoints/rewards/redeem-a-reward) when the user claims it in your product.
+A reward is **awarded** automatically when a user meets one of its [triggers](#reward-triggers), for example completing a milestone or reaching a streak length. It is only **fulfilled** when it is **redeemed**, which you do by calling the [redeem endpoint](/api-reference/endpoints/rewards/redeem-a-reward) when the user claims it in your product.
 
 Awarding a reward never changes a user's points balance on its own.
 
@@ -101,7 +101,7 @@ You can also create rewards and their triggers programmatically with the Admin A
 Rewards are awarded through triggers. You can add as many triggers as you like to a reward, and each can be activated and deactivated independently.
 
 <Note>
-  Triggers work independently of each other. Each active trigger can award the reward on its own, so a user does **not** need to meet all of a reward's triggers. For example, a reward with a streak trigger and an achievement trigger is awarded when the user reaches the streak length, and again when they complete the achievement. Any [redemption limit](#redemption-limits) applies across all of a reward's triggers combined.
+  Triggers work independently of each other. Each active trigger can award the reward on its own, so a user does **not** need to meet all of a reward's triggers. For example, a reward with a streak trigger and a milestone trigger is awarded when the user reaches the streak length, and again when they complete the milestone. Any [redemption limit](#redemption-limits) applies across all of a reward's triggers combined.
 </Note>
 
 ### Types of triggers {#types-of-triggers}
@@ -122,9 +122,9 @@ A streak that ended before the trigger was activated, or broke after it, does no
   Streak triggers award repeatedly. Set a [redemption limit](#redemption-limits) of 1 to award the reward only once.
 </Tip>
 
-#### Achievement triggers {#achievement-triggers}
+#### Milestone triggers {#achievement-triggers}
 
-The reward is awarded once, when the user completes a specific [achievement](/features/achievements). Users who completed the achievement before the trigger existed are not awarded.
+The reward is awarded once, when the user completes a specific [milestone](/features/milestones). Users who completed the milestone before the trigger existed are not awarded.
 
 #### Leaderboard triggers {#leaderboard-triggers}
 
@@ -145,7 +145,7 @@ To add a trigger, open the reward from the [rewards page](https://app.trophy.so/
   <Step title="Set up the trigger">
     - For a **Metric** trigger, choose the metric and the threshold.
     - For a **Streak** trigger, set the streak length.
-    - For an **Achievement** trigger, choose the achievement.
+    - For a **Milestone** trigger, choose the milestone.
     - For a **Leaderboard** trigger, choose the leaderboard and the rank.
   </Step>
   <Step title="Add attribute filters (Optional)">
@@ -165,8 +165,8 @@ Triggers can also be added with the Admin API:
 
 Rewards are only awarded for things users do after a trigger is active. This means:
 
-- **Existing achievement completions don't award rewards.** If a user completed an achievement before you added an achievement trigger, they aren't awarded the reward.
-- **Backdated achievements don't award rewards.** When you activate or edit an achievement, or set a user's `signUpDate`, Trophy [completes achievements for users who already qualify](/features/achievements#backdating-achievements). These silent completions don't award rewards.
+- **Existing milestone completions don't award rewards.** If a user completed a milestone before you added a milestone trigger, they aren't awarded the reward.
+- **Backdated milestones don't award rewards.** When you activate or edit a milestone, or set a user's `signUpDate`, Trophy [completes milestones for users who already qualify](/features/milestones#backdating-achievements). These silent completions don't award rewards.
 - **Past progress doesn't count.** Metric and streak triggers count from when the trigger was activated, so progress users made before then isn't awarded.
 
 Inactive rewards and inactive triggers stop new awards, but existing awards can still be redeemed. Archived rewards are not awarded, listed or redeemed.
@@ -183,7 +183,7 @@ Add user attribute filters to a reward, or to individual triggers, to control wh
 
 ### Rewards awarded by an event {#rewards-awarded-by-an-event}
 
-When a [metric event](/api-reference/endpoints/events/submit-a-metric-event) or an [achievement completion](/api-reference/endpoints/achievements/mark-an-achievement-as-completed) awards a reward, the response includes it in the `rewards` array. This is the same shape as the response from the user rewards endpoint. Replaying an event with the same [idempotency key](/api-reference/idempotency) returns an empty array.
+When a [metric event](/api-reference/endpoints/events/submit-a-metric-event) or a [milestone completion](/api-reference/endpoints/achievements/mark-an-achievement-as-completed) awards a reward, the response includes it in the `rewards` array. This is the same shape as the response from the user rewards endpoint. Replaying an event with the same [idempotency key](/api-reference/idempotency) returns an empty array.
 
 Use this to show a "You earned a reward" message the moment it happens.
 
@@ -237,7 +237,7 @@ Points granted by redeeming a reward behave like any other points:
 
 - They show up in the user's points history and [points summary](/api-reference/endpoints/users/get-a-users-points-summary).
 - They update [points leaderboards](/features/leaderboards) for that points system.
-- They are not included in the `points` returned from metric events and achievement completions, since nothing is granted until redemption.
+- They are not included in the `points` returned from metric events and milestone completions, since nothing is granted until redemption.
 
 ## Rewards analytics {#rewards-analytics}
 
@@ -249,6 +249,10 @@ Each reward in the Trophy dashboard has built-in analytics including:
 - For points rewards, an estimate of the points awarded and the points actually redeemed (including boosts and the points maximum)
 
 Filter by user attributes to compare how different groups of users engage with a reward. Points granted by rewards also appear as their own row in the points source chart.
+
+## Rewards in agentic messaging {#rewards-in-agentic-messaging}
+
+Rewards give users a concrete reason to come back. Lifecycle agents in [agentic messaging](/agentic-messaging/overview) can use reward data to remind users about what they've earned, picking the best message for each user at the best moment.
 
 ## Get support {#get-support}
 

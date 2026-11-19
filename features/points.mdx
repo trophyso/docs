@@ -1,6 +1,6 @@
 ---
 title: Points
-description: Learn how to build points-based systems using Trophy
+description: Learn how to turn in-app actions into progress with Trophy points systems.
 og:description: Use points systems to reward users for in-app actions.
 icon: sparkle
 ---
@@ -15,9 +15,11 @@ import UserPointsResponse from "../snippets/user-points-response-block.mdx";
 import UserPointsEventSummaryResponse from "../snippets/user-points-summary-response-block.mdx";
 import WebhookPointsLevelChangedPayload from "../snippets/webhook-points-level-changed-payload-block.mdx";
 
+{/* TODO(media): re-create in the new dashboard theme: assets/features/points/create_system.mp4, assets/features/points/create_trigger.mp4, assets/features/points/points_preview.mp4, assets/features/points/create_points_boost.mp4, assets/features/points/points_boost_attributes.png, assets/features/points/create_points_level.mp4, assets/features/points/displaying_points.mp4, assets/features/points/points_awards.png, assets/features/points/user_points_summary.png, assets/features/points/points_summary.png, assets/features/points/points_triggers.png, assets/features/points/points_analytics.png */}
+
 ## What is a points system? {#what-is-a-points-system}
 
-Points systems are used to create counters that track users' interactions with [Metrics](/features/metrics), [Achievements](/features/achievements) and [Streaks](/features/streaks). You can then build features like 'XP' and 'Energy' around these counters within your product.
+Points systems are used to create counters that track users' interactions with [Metrics](/features/metrics), [Milestones](/features/milestones) and [Streaks](/features/streaks). You can then build features like 'XP' and 'Energy' around these counters within your product.
 
 ## Use cases {#use-cases}
 
@@ -100,9 +102,9 @@ Points can be awarded or deducted continually as users increment [Metrics](/feat
 
 Points can be awarded or deducted for reaching any arbitrary length of a [Streak](/features/streaks), for example "award 50 points for every 7 days streak".
 
-#### Achievement triggers {#achievement-triggers}
+#### Milestone triggers {#achievement-triggers}
 
-Points can be awarded or deducted when users unlock specific [Achievements](/features/achievements), for example "award 100 points when users completed the `profile-completed` achievement".
+Points can be awarded or deducted when users complete specific [Milestones](/features/milestones), for example "award 100 points when users complete the `profile-completed` milestone".
 
 #### Time-based triggers {#time-based-triggers}
 
@@ -144,7 +146,7 @@ To create a new points trigger, head to the points system that you want to creat
 
 - If you chose the **Streak** trigger, you'll need to set the streak length that should award or deduct points.
 
-- If you chose the **Achievement** trigger, you'll need to choose the achievement that should award or deduct points when completed.
+- If you chose the **Milestone** trigger, you'll need to choose the milestone that should award or deduct points when completed.
 
 - If you chose the **Time** trigger, you'll need to choose the time unit you want to award or deduct points on (hours or days) and the number of those time units that you want to award or deduct points after.
 
@@ -375,7 +377,7 @@ if (pts?.level) {
 }
 ```
 
-The same `level` behavior applies when points change from an [achievement completion](/api-reference/endpoints/achievements/mark-an-achievement-as-completed).
+The same `level` behavior applies when points change from a [milestone completion](/api-reference/endpoints/achievements/mark-an-achievement-as-completed).
 
 For server-driven notifications (email, push, CRM) that must not depend on the client seeing the HTTP response, subscribe to the [`points.level_changed`](/webhooks/events/points/points-level-changed) webhook instead.
 
@@ -390,12 +392,6 @@ The [get level summary API](/api-reference/endpoints/points/get-points-level-sum
 ## Displaying points {#displaying-points}
 
 There are a few ways to use Trophy to fetch and display points in your app.
-
-<Note>
-  For working examples check out our guides on adding an [XP
-  feature](/guides/how-to-build-an-xp-feature) or an [energy
-  feature](/guides/how-to-build-an-energy-feature) to your web or mobile app.
-</Note>
 
 <Frame>
   <video
@@ -412,7 +408,7 @@ There are a few ways to use Trophy to fetch and display points in your app.
 
 Firstly, any points awarded to or deducted from users as a result of a metric change event are returned in the response when using the [metric change event API](/api-reference/endpoints/events/submit-a-metric-event).
 
-The response includes the user's new total points, how many points were awarded or deducted as a result of the event, and the details of the specific points triggers that fired. When [Points Levels](#points-levels) are enabled, each points object in that response may also include **`level`**: Trophy includes the user's **new** level **only when it changed** as a result of that event. The same optional `level` behavior applies when points change from an [achievement completion](/api-reference/endpoints/achievements/mark-an-achievement-as-completed).
+The response includes the user's new total points, how many points were awarded or deducted as a result of the event, and the details of the specific points triggers that fired. When [Points Levels](#points-levels) are enabled, each points object in that response may also include **`level`**: Trophy includes the user's **new** level **only when it changed** as a result of that event. The same optional `level` behavior applies when points change from a [milestone completion](/api-reference/endpoints/achievements/mark-an-achievement-as-completed).
 
 Example `POST /metrics/{key}/event` response (fields match the Trophy API spec; your keys under `points` and `leaderboards` depend on your account):
 
@@ -506,6 +502,10 @@ Trophy has built-in analytics to track points awards for each points system you 
     src="../assets/features/points/points_analytics.png"
   />
 </Frame>
+
+## Points in agentic messaging {#points-in-agentic-messaging}
+
+Points and levels give [agentic messaging](/agentic-messaging/overview) more ways to recognize progress. Lifecycle agents can congratulate users on a new level or nudge users who are close to the next one, picking the best message for each user at the best moment.
 
 ## Get support {#get-support}
 

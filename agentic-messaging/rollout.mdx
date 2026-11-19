@@ -1,0 +1,77 @@
+---
+title: Rollout
+description: Learn how agentic messaging is rolled out, from integration to full launch.
+og:description: Agentic messaging is rolled out with the Trophy team to a growing
+  percentage of new users, measured against a holdout group.
+icon: rocket
+---
+
+Agentic messaging is rolled out together with the Trophy team. Most of the work is giving agents good data and clear rules. Once that's in place, there's no code to change: agents get to work across the whole lifecycle.
+
+<Note>
+  Ready to get started? [Book a
+  call](https://trophy.so/contact-sales?utm_source=docs) with the Trophy team.
+</Note>
+
+## Rollout checklist {#rollout-checklist}
+
+<Steps>
+  <Step title="Integrate your data">
+    Agents are only as good as the data they see. Send Trophy the
+    [events](/features/events) that matter in your app against
+    [metrics](/features/metrics), and [identify users](/features/users#identifying-users)
+    with their email address and time zone (`tz`).
+
+    If you're new to Trophy, start with the [quickstart](/getting-started/quickstart).
+
+  </Step>
+  <Step title="Add in-app features (optional)">
+    [Streaks](/features/streaks), [milestones](/features/milestones),
+    [points](/features/points) and [leaderboards](/features/leaderboards) give
+    users a reason to come back, and give agents more to write about.
+  </Step>
+  <Step title="Set up channels">
+    Verify your email domain and configure your push provider. See
+    [channels](/agentic-messaging/channels).
+  </Step>
+  <Step title="Fill in your brand kit">
+    Describe your app, share example messages, explain your metrics and list
+    anything agents should never say. See [brand kit](/context/brand-kit).
+  </Step>
+  <Step title="Agree objectives and guardrails">
+    Work with the Trophy team to set your
+    [objectives](/agentic-messaging/objectives) and [sending
+    limits](/agentic-messaging/guardrails#sending-limits).
+  </Step>
+  <Step title="Start with a percentage of new users">
+    The Trophy team turns agentic messaging on for a small percentage of users
+    who sign up from launch day onwards, while a
+    [control group](/platform/experimentation#control-ratio) receives no
+    messages.
+  </Step>
+  <Step title="Measure and expand">
+    Compare the agent cohort against your control and legacy cohorts on the
+    [Analytics](/agentic-messaging/measuring-impact) page, then increase the
+    percentage of new users over time.
+  </Step>
+</Steps>
+
+## How users are added {#how-users-are-added}
+
+Agentic messaging is rolled out to new users only. From launch, a set percentage of users who sign up receive agentic messages, and that percentage grows over time as you see results. Users are assigned at random, so the agent cohort is directly comparable with other new users.
+
+Existing users aren't moved over. They keep receiving your [legacy emails](/features/emails) and [push notifications](/features/push-notifications) as before.
+
+New users in the agent cohort receive agentic messages instead of legacy messages, never both. Other new users receive your legacy messages. Users in your control group never receive messages from Trophy.
+
+You can check which users receive agentic messages with the `agenticMessagingEnabled` field on the [user object](/agentic-messaging/user-preferences#who-receives-agentic-messages).
+
+## Before you launch {#before-you-launch}
+
+- Check that your users have time zones set, so messages arrive at sensible local times.
+- Make sure each metric has [metric context](/context/brand-kit#metrics) with a link, so agents can point users to the right place in your app.
+- Review the [production checklist](/getting-started/production-checklist) for your integration.
+
+## Get support {#get-support}
+
+Want to get in touch with the Trophy team? Reach out to us via [email](mailto:support@trophy.so). We're here to help!

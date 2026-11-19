@@ -229,8 +229,8 @@ html [style*="/lucide/"][style*="/shield-check.svg"] {
 }
 
 html [style*="/lucide/"][style*="/sparkle.svg"] {
-  -webkit-mask-image: url("/icons/phosphor/sparkle.svg") !important;
-  mask-image: url("/icons/phosphor/sparkle.svg") !important;
+  -webkit-mask-image: url("/icons/phosphor/points.svg") !important;
+  mask-image: url("/icons/phosphor/points.svg") !important;
 }
 
 html [style*="/lucide/"][style*="/split.svg"] {
@@ -244,8 +244,8 @@ html [style*="/lucide/"][style*="/square-slash.svg"] {
 }
 
 html [style*="/lucide/"][style*="/star.svg"] {
-  -webkit-mask-image: url("/icons/phosphor/sparkle.svg") !important;
-  mask-image: url("/icons/phosphor/sparkle.svg") !important;
+  -webkit-mask-image: url("/icons/phosphor/points.svg") !important;
+  mask-image: url("/icons/phosphor/points.svg") !important;
 }
 
 html [style*="/lucide/"][style*="/tag.svg"] {

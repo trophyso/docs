@@ -126,7 +126,7 @@ Una racha que terminó antes de activarse el disparador, o que se interrumpió d
 
 #### Disparadores de logro {#achievement-triggers}
 
-La recompensa se otorga una sola vez, cuando el usuario completa un [logro](/es/features/achievements) específico. No se otorga a los usuarios que completaron el logro antes de que existiera el disparador.
+La recompensa se otorga una sola vez, cuando el usuario completa un [logro](/es/features/milestones) específico. No se otorga a los usuarios que completaron el logro antes de que existiera el disparador.
 
 #### Disparadores de clasificación {#leaderboard-triggers}
 
@@ -168,7 +168,7 @@ Los activadores también se pueden añadir con la API de administración:
 Las recompensas solo se otorgan por las acciones que los usuarios realizan después de que un activador esté activo. Esto significa que:
 
 - **Los logros ya completados no otorgan recompensas.** Si un usuario completó un logro antes de que añadieras un activador de logro, no recibe la recompensa.
-- **Los logros retroactivos no otorgan recompensas.** Cuando activas o editas un logro, o estableces el `signUpDate` de un usuario, Trophy [completa los logros de los usuarios que ya cumplen los requisitos](/es/features/achievements#backdating-achievements). Estas finalizaciones silenciosas no otorgan recompensas.
+- **Los logros retroactivos no otorgan recompensas.** Cuando activas o editas un logro, o estableces el `signUpDate` de un usuario, Trophy [completa los logros de los usuarios que ya cumplen los requisitos](/es/features/milestones#backdating-achievements). Estas finalizaciones silenciosas no otorgan recompensas.
 - **El progreso anterior no cuenta.** Los activadores de métrica y de racha cuentan desde el momento en que se activó el activador, por lo que el progreso que los usuarios lograron antes no se recompensa.
 
 Las recompensas inactivas y los activadores inactivos detienen la concesión de nuevas recompensas, pero las recompensas ya concedidas aún se pueden canjear. Las recompensas archivadas no se conceden, no se listan ni se canjean.
