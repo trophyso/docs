@@ -10,7 +10,7 @@ icon: mail
 {/* TODO(media): re-create in the new dashboard theme: assets/features/emails/achievement_progress_block.mp4, assets/features/emails/email_analytics.mp4 */}
 
 <Info>
-  These are Trophy's legacy, template-based emails, sent from fixed triggers. For users in the [agentic messaging](/agentic-messaging/overview) cohort, agentic messaging replaces them: lifecycle agents write and send personalized emails instead. The [domain verification](#domain-verification) set up on this page is shared by both. See [agentic messaging channels](/agentic-messaging/channels).
+  These are Trophy's legacy, template-based emails, sent from fixed triggers. For users in the [agentic messaging](/agentic-messaging/overview) cohort, agentic messaging replaces them: lifecycle agents write and send personalized emails instead. Both send from the same verified domain, which you set up on the [channels](/agentic-messaging/channels#domain-verification) page.
 </Info>
 
 Trophy can send automated emails to users based on key triggers without requiring any code. Here we'll look at what these triggers are, and how they can help bring users back to your product.
@@ -39,7 +39,7 @@ All emails are optional, but all four can be used simultaneously and can be cont
 
 ## Sending emails {#sending-emails}
 
-To start sending emails with Trophy, you'll need to verify your domain and add and activate email templates for the types you want to send.
+To start sending emails with Trophy, you'll need to [verify your domain](/agentic-messaging/channels#domain-verification) and add and activate email templates for the types you want to send.
 
 <Tip>
   Users can control which email notifications they receive through Trophy's
@@ -50,172 +50,10 @@ To start sending emails with Trophy, you'll need to verify your domain and add a
 
 ### Domain verification {#domain-verification}
 
-Trophy supports sending emails from your own domain out-of-the-box. There are two ways to set this up, Single Sender Verification and DNS Verification.
+<a id="sender-verification-basic" />
+<a id="dns-verification-advanced" />
 
-All domain settings can be found in the [Domains](https://app.trophy.so/emails/domains) page in the Trophy dashboard.
-
-<Tip>
-  If you're looking to get set up quickly we recommend starting with Single
-  Sender Verification then setting up DNS Verification when you're ready to move
-  to production.
-</Tip>
-
-<CardGroup cols={2}>
-  <Card
-    title="Sender Verification"
-    icon="check"
-    href="#sender-verification-basic"
-  >
-    Quickly verify a single email address
-  </Card>
-  <Card title="DNS Verification" icon="lock" href="#dns-verification-advanced">
-    Recommended for production use
-  </Card>
-</CardGroup>
-
-#### Sender verification (basic) {#sender-verification-basic}
-
-During onboarding you'll be prompted to set up Sender Verification. This is a super simple way to quickly verify a single email address that you want to use with Trophy without needing to change any code or DNS settings.
-
-You'll be prompted to enter the email address, from name and reply-to email that you'd like Trophy to use when sending emails:
-
-<Frame>
-  <img
-    height="200"
-    width="75%"
-    noZoom
-    src="../assets/features/emails/sender_verification.jpg"
-  />
-</Frame>
-
-Trophy will send a verification email to that address. Simply click the link in the email to let Trophy know what you own the address and you'll be good to go.
-
-<Note>
-  The email you receive will come from our email provider, Postmark. So keep an
-  eye out for 'Postmark Support' in your inbox!
-</Note>
-
-Sender Verification is great for getting started but is limited in that you won't benefit from your existing email reputation and can only send emails from one address.
-
-Also, if you want to change the address in the future, you'll have to go through Sender Verification again which you can do in the [settings screen](https://app.trophy.so/integration?tab=domains).
-
-#### DNS verification (advanced) {#dns-verification-advanced}
-
-For production use we recommend DNS Verification. Once set up, this allows you to configure Trophy to send emails from any address on your domain. So if you want to change the address in future, you won't need to verify again.
-
-Completing DNS verification also gives you the full benefits of any existing domain reputation and is the best way to make sure your emails avoid the spam folder.
-
-This does however require adding a couple of new entries into your DNS to allow Trophy to verify you own the domain.
-
-Follow the steps below to set up DNS verification:
-
-<Steps>
-<Step title="Head to the Emails page">
-    Within the Emails page, you'll find the [Domains](https://app.trophy.so/emails/domains) tab which is where you'll configure everything related to the email domain Trophy will use to send emails on your behalf.
-</Step>
-
-<Step title="Configure your domain">
-    Head down to the DNS Verification section and enter the domain you want to set up with Trophy.
-
-    You can also also configure a custom Return Path. This is where Trophy will forward notifications of bounced emails to help you investigate deliverability issues:
-
-    <Frame>
-      <img
-        height="200"
-        width="75%"
-        noZoom
-        src="../assets/features/emails/dns-verification-1.png"
-      />
-    </Frame>
-
-</Step>
-
-<Step title="Set up your DNS records">
-
-    Once you've entered your email domain, Trophy will provide you with details for two new DNS records that you'll need to add to your DNS provider.
-
-    <Frame>
-      <img
-        height="200"
-        width="75%"
-        noZoom
-        src="../assets/features/emails/dns-verification-2.png"
-      />
-    </Frame>
-
-    - First is the **DKIM** record which is used by inbox providers like Google to verify the authenticity of emails. Enter the name and value provided as a new **TXT** record in your DNS provider.
-    - Second is the **Return Path** record. This is used to forward notifications of email bounces to your domain. Enter the name and value provided as a new **CNAME** record in your DNS provider.
-
-    Here are the pages for the most common DNS providers on how to set up new records:
-
-    <AccordionGroup>
-      <Accordion title='GoDaddy'>
-          [Add a TXT record](https://www.godaddy.com/en-uk/help/add-a-txt-record-19232)
-          [Add a CNAME record](https://www.godaddy.com/en-uk/help/add-a-cname-record-19236)
-      </Accordion>
-      <Accordion title='Cloudflare'>
-          [Add DNS records](https://developers.cloudflare.com/dns/manage-dns-records/how-to/create-dns-records/#create-dns-records)
-      </Accordion>
-      <Accordion title="NameCheap">
-          [Add a CNAME record](https://www.namecheap.com/support/knowledgebase/article.aspx/9646/2237/how-to-create-a-cname-record-for-your-domain/)
-          [Add a TXT record](https://www.namecheap.com/support/knowledgebase/article.aspx/317/2237how-do-i-add-txtspfdkimdmarc-records-for-my-domain/#:~:text=this%20guide%20.-,DKIM%20records,-DKIM%20(DomainKeys%20Identified))
-      </Accordion>
-    </AccordionGroup>
-
-    <Warning>Note: If you're using a proxy like Cloudflare, make sure to turn  it off for these records or Trophy won't be able to properly verify them.</Warning>
-
-</Step>
-
-<Step title="Verify DNS records">
-
-    Once you've added the two records into your DNS settings, click the refresh icon and Trophy will attempt to verify the records for you.
-
-    Usually Trophy can verify records within a few minutes but bear in mind that DNS changes can take up to a few hours to fully propogate.
-
-    If you see the following alert, the records may not have propogated yet, or there may be an issue with your setup.
-
-    <Frame>
-      <img
-        height="200"
-        width="75%"
-        noZoom
-        src="../assets/features/emails/dns-verification-3.png"
-      />
-    </Frame>
-
-    Once you're sure everything's set up correctly in your DNS provider, click refresh and Trophy will attempt to verify your DNS records once again.
-
-    As soon as you see the following message, you know everything's verified:
-
-    <Frame>
-      <img
-        height="200"
-        width="75%"
-        noZoom
-        src="../assets/features/emails/dns-verification-4.png"
-      />
-    </Frame>
-
-</Step>
-
-<Step title="Configure your sending address">
-
-    Once your DNS records are verified, it's time to choose the email address you want to send emails from. Note that now you've fully verified your domain, you can change this address whenever you like without impacting deliverability.
-
-    Simply enter the email address you want Trophy to send from, the name to show to users in the inbox when they receive emails and a support email address they can use to contact you if needed:
-
-    <Frame>
-      <img
-        height="200"
-        width="75%"
-        noZoom
-        src="../assets/features/emails/dns-verification-5.png"
-      />
-    </Frame>
-
-</Step>
-
-</Steps>
+Legacy emails send from the same verified domain as agentic messaging, so you only need to set it up once. Follow the [domain verification](/agentic-messaging/channels#domain-verification) guide on the channels page to set up [Single Sender Verification](/agentic-messaging/channels#sender-verification-basic) or [DNS Verification](/agentic-messaging/channels#dns-verification-advanced).
 
 ### Email triggers {#email-triggers}
 
@@ -815,7 +653,7 @@ Trophy has built-in analytics for all Emails that it sends. This includes:
 
 <AccordionGroup>
 <Accordion title="Can I send emails from my own domain?">
-    Yes! Sending emails from your own domain is supported out-of-the-box. Follow the steps in the section on [sending emails](#sending-emails) to get started.
+    Yes! Sending emails from your own domain is supported out-of-the-box. Follow the [domain verification](/agentic-messaging/channels#domain-verification) guide to get started.
   </Accordion>
 
 {" "}

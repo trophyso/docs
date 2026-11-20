@@ -1,69 +1,324 @@
 ---
 title: Channels
-description: Learn how Trophy's lifecycle agents send email from your domain and push through your own providers.
-og:description: Agents send email from your own domain and push notifications
-  natively through APNs, Firebase Cloud Messaging or Expo.
+description: Learn how to set up email and push notifications so Trophy can reach your users.
+og:description: Send email from your own domain and push notifications natively
+  through APNs, Firebase Cloud Messaging or Expo.
 icon: send
 ---
+
+import IdentifyUserWithDeviceTokensRequestBlock from "../snippets/identify-user-with-device-tokens-request-block.mdx";
+import MetricEventWithDeviceTokensRequestBlock from "../snippets/metric-event-with-device-tokens-request-block.mdx";
+
+{/* TODO(media): record a walkthrough of the Push tab on Agentic messaging › Channels (configuring a push provider) */}
 
 Agents send messages over two channels, email and push notifications. They pick the channel that works best for each user, based on how that user engages and which channels the user has chosen in their [preferences](/agentic-messaging/user-preferences).
 
 Both channels are managed on the [Channels](https://app.trophy.so/agentic-messaging/channels) page under **Agentic messaging** in the Trophy dashboard, which has an **Emails** tab and a **Push** tab.
 
+<Note>
+  Channels are shared across Trophy. The domain and push providers you set up
+  here are also used by [legacy emails](/features/emails) and [legacy push
+  notifications](/features/push-notifications), so you only need to set them up
+  once.
+</Note>
+
 ## Email {#email}
 
-Agentic emails send from your own domain, with your [branding](/context/brand-kit#branding).
+Trophy sends email from your own domain, with your [branding](/context/brand-kit#branding).
 
 To send email, Trophy needs:
 
 <Steps>
   <Step title="A verified sending domain">
-    Verify your domain on the **Emails** tab. Single Sender Verification works
-    for testing, and DNS Verification is recommended for production. Follow the
-    [domain verification](/features/emails#domain-verification) guide for each
-    option.
+    Verify your domain on the **Emails** tab. See [domain
+    verification](#domain-verification) below.
   </Step>
   <Step title="An email address for each user">
     Set the `email` attribute when you [identify
     users](/data-sources/users#identifying-users). Users without an email address, or
-    who have unsubscribed, aren't sent agentic emails.
+    who have unsubscribed, aren't sent emails.
   </Step>
+</Steps>
+
+### Domain verification {#domain-verification}
+
+Trophy supports sending emails from your own domain out-of-the-box. There are two ways to set this up, Single Sender Verification and DNS Verification.
+
+All domain settings are on the **Emails** tab of the [Channels](https://app.trophy.so/agentic-messaging/channels) page in the Trophy dashboard.
+
+<Tip>
+  If you're looking to get set up quickly we recommend starting with Single
+  Sender Verification then setting up DNS Verification when you're ready to move
+  to production.
+</Tip>
+
+<CardGroup cols={2}>
+  <Card
+    title="Sender Verification"
+    icon="check"
+    href="#sender-verification-basic"
+  >
+    Quickly verify a single email address
+  </Card>
+  <Card title="DNS Verification" icon="lock" href="#dns-verification-advanced">
+    Recommended for production use
+  </Card>
+</CardGroup>
+
+#### Sender verification (basic) {#sender-verification-basic}
+
+Sender Verification is a quick way to verify a single email address that you want to use with Trophy without needing to change any code or DNS settings.
+
+Enter the email address, from name and reply-to email that you'd like Trophy to use when sending emails:
+
+<Frame>
+  <img
+    height="200"
+    width="75%"
+    noZoom
+    src="../assets/features/emails/sender_verification.jpg"
+  />
+</Frame>
+
+Trophy will send a verification email to that address. Simply click the link in the email to let Trophy know that you own the address and you'll be good to go.
+
+<Note>
+  The email you receive will come from our email provider, Postmark. So keep an
+  eye out for 'Postmark Support' in your inbox!
+</Note>
+
+Sender Verification is great for getting started but is limited in that you won't benefit from your existing email reputation and can only send emails from one address.
+
+Also, if you want to change the address in the future, you'll have to go through Sender Verification again on the **Emails** tab of the [Channels](https://app.trophy.so/agentic-messaging/channels) page.
+
+#### DNS verification (advanced) {#dns-verification-advanced}
+
+For production use we recommend DNS Verification. Once set up, this allows you to configure Trophy to send emails from any address on your domain. So if you want to change the address in future, you won't need to verify again.
+
+Completing DNS verification also gives you the full benefits of any existing domain reputation and is the best way to make sure your emails avoid the spam folder.
+
+This does however require adding a couple of new entries into your DNS to allow Trophy to verify you own the domain.
+
+Follow the steps below to set up DNS verification:
+
+<Steps>
+<Step title="Head to the Channels page">
+    Open the **Emails** tab of the [Channels](https://app.trophy.so/agentic-messaging/channels) page. This is where you'll configure everything related to the email domain Trophy will use to send emails on your behalf.
+</Step>
+
+<Step title="Configure your domain">
+    Head down to the DNS Verification section and enter the domain you want to set up with Trophy.
+
+    You can also configure a custom Return Path. This is where Trophy will forward notifications of bounced emails to help you investigate deliverability issues:
+
+    <Frame>
+      <img
+        height="200"
+        width="75%"
+        noZoom
+        src="../assets/features/emails/dns-verification-1.png"
+      />
+    </Frame>
+
+</Step>
+
+<Step title="Set up your DNS records">
+
+    Once you've entered your email domain, Trophy will provide you with details for two new DNS records that you'll need to add to your DNS provider.
+
+    <Frame>
+      <img
+        height="200"
+        width="75%"
+        noZoom
+        src="../assets/features/emails/dns-verification-2.png"
+      />
+    </Frame>
+
+    - First is the **DKIM** record which is used by inbox providers like Google to verify the authenticity of emails. Enter the name and value provided as a new **TXT** record in your DNS provider.
+    - Second is the **Return Path** record. This is used to forward notifications of email bounces to your domain. Enter the name and value provided as a new **CNAME** record in your DNS provider.
+
+    Here are the pages for the most common DNS providers on how to set up new records:
+
+    <AccordionGroup>
+      <Accordion title='GoDaddy'>
+          [Add a TXT record](https://www.godaddy.com/en-uk/help/add-a-txt-record-19232)
+          [Add a CNAME record](https://www.godaddy.com/en-uk/help/add-a-cname-record-19236)
+      </Accordion>
+      <Accordion title='Cloudflare'>
+          [Add DNS records](https://developers.cloudflare.com/dns/manage-dns-records/how-to/create-dns-records/#create-dns-records)
+      </Accordion>
+      <Accordion title="NameCheap">
+          [Add a CNAME record](https://www.namecheap.com/support/knowledgebase/article.aspx/9646/2237/how-to-create-a-cname-record-for-your-domain/)
+          [Add a TXT record](https://www.namecheap.com/support/knowledgebase/article.aspx/317/2237how-do-i-add-txtspfdkimdmarc-records-for-my-domain/#:~:text=this%20guide%20.-,DKIM%20records,-DKIM%20(DomainKeys%20Identified))
+      </Accordion>
+    </AccordionGroup>
+
+    <Warning>Note: If you're using a proxy like Cloudflare, make sure to turn  it off for these records or Trophy won't be able to properly verify them.</Warning>
+
+</Step>
+
+<Step title="Verify DNS records">
+
+    Once you've added the two records into your DNS settings, click the refresh icon and Trophy will attempt to verify the records for you.
+
+    Usually Trophy can verify records within a few minutes but bear in mind that DNS changes can take up to a few hours to fully propagate.
+
+    If you see the following alert, the records may not have propagated yet, or there may be an issue with your setup.
+
+    <Frame>
+      <img
+        height="200"
+        width="75%"
+        noZoom
+        src="../assets/features/emails/dns-verification-3.png"
+      />
+    </Frame>
+
+    Once you're sure everything's set up correctly in your DNS provider, click refresh and Trophy will attempt to verify your DNS records once again.
+
+    As soon as you see the following message, you know everything's verified:
+
+    <Frame>
+      <img
+        height="200"
+        width="75%"
+        noZoom
+        src="../assets/features/emails/dns-verification-4.png"
+      />
+    </Frame>
+
+</Step>
+
+<Step title="Configure your sending address">
+
+    Once your DNS records are verified, it's time to choose the email address you want to send emails from. Note that now you've fully verified your domain, you can change this address whenever you like without impacting deliverability.
+
+    Simply enter the email address you want Trophy to send from, the name to show to users in the inbox when they receive emails and a support email address they can use to contact you if needed:
+
+    <Frame>
+      <img
+        height="200"
+        width="75%"
+        noZoom
+        src="../assets/features/emails/dns-verification-5.png"
+      />
+    </Frame>
+
+</Step>
+
 </Steps>
 
 ## Push notifications {#push-notifications}
 
-Agentic push notifications are delivered natively through your own push setup. Trophy supports:
-
-- [Apple Push Notification Service (APNs)](/features/push-notifications#apple-push-notification-service-apns)
-- [Firebase Cloud Messaging (FCM)](/features/push-notifications#firebase-cloud-messaging-fcm)
-- [Expo Push Service](/features/push-notifications#expo-push-service)
+Trophy delivers push notifications natively through your own push setup.
 
 To send push notifications, Trophy needs:
 
 <Steps>
   <Step title="A configured push provider">
-    Add your provider's credentials on the **Push** tab, following the setup
-    guide for your provider above.
+    Add your provider's credentials on the **Push** tab. See [supported
+    providers](#supported-channels) below.
   </Step>
   <Step title="Device tokens for each user">
     Associate device tokens with each user when you identify them or send metric
-    events. See [associating device
-    tokens](/features/push-notifications#sending-push-notifications) for
-    examples.
+    events. See [device tokens](#device-tokens) below.
   </Step>
 </Steps>
+
+### Supported providers {#supported-channels}
+
+Trophy supports sending push notifications through 3 providers, which can all be configured on the **Push** tab of the [Channels](https://app.trophy.so/agentic-messaging/channels/push) page in the Trophy dashboard.
+
+#### Apple Push Notification Service (APNs) {#apple-push-notification-service-apns}
+
+Trophy supports sending push notifications to users via APNs through a certificate-based connection.
+
+To send push notifications using APNs, you'll need to provide Trophy with the following credentials from your Apple Developer Account:
+
+- **APN Signing Key**: Trophy uses this to securely send notifications via APNs
+- **Team ID**: The team ID of your Apple Developer Account
+- **Key ID**: The ID of your APNs authentication key
+- **Bundle ID**: Your app's unique bundle identifier
+
+<Note>
+  For more information on how to configure certificate-based connection to APNs
+  from a third-party service, read the [official setup
+  guide](https://developer.apple.com/documentation/usernotifications/establishing-a-certificate-based-connection-to-apns).
+</Note>
+
+#### Firebase Cloud Messaging (FCM) {#firebase-cloud-messaging-fcm}
+
+Trophy supports sending push notifications to users via FCM. To achieve this you'll need to provide Trophy with your Firebase Service Account JSON in the following format:
+
+{/* vale off */}
+
+```json FCM Service Account JSON
+{
+  "type": "service_account",
+  "project_id": "XXX",
+  "private_key_id": "XXX",
+  "private_key": "-----BEGIN PRIVATE KEY-----\n\n-----END PRIVATE KEY-----\n",
+  "client_email": "XXX@XXX.com",
+  "client_id": "XXX",
+  "auth_uri": "https://accounts.google.com/o/oauth2/auth",
+  "token_uri": "https://oauth2.googleapis.com/token",
+  "auth_provider_x509_cert_url": "https://www.googleapis.com/oauth2/v1/certs",
+  "client_x509_cert_url": "https://www.googleapis.com/robot/v1/metadata/x509/XXX"
+}
+```
+
+{/* vale on */}
+
+<Note>
+  For more information on Firebase service accounts and how to authenticate
+  external services to use FCM, read the [official service accounts
+  guide](https://firebase.google.com/support/guides/service-accounts).
+</Note>
+
+#### Expo Push Service {#expo-push-service}
+
+Trophy supports sending push notifications to users via Expo Push Service.
+
+Expo Push Service saves you having to integrate with FCM and APNs individually and automatically directs notifications through the relevant service based on your users platform.
+
+To achieve this you must provide Trophy with a few key details from your Expo account:
+
+- **Expo Project Name**: The name of your Expo project
+- **Expo Push Token**: Your authentication token for sending notifications via Expo (required if using [enhanced security](https://docs.expo.dev/push-notifications/sending-notifications/#additional-security)).
+
+<Note>
+  For more information on Expo Push Service and how to authenticate external
+  providers, see the [official
+  guide](https://docs.expo.dev/push-notifications/sending-notifications).
+</Note>
+
+### Device tokens {#device-tokens}
+
+To send notifications to users, Trophy needs to know the unique tokens assigned to their devices. You tell Trophy about devices by associating device tokens with each user you identify.
+
+Trophy will use the device tokens you associate with each user when communicating with your [push provider](#supported-channels) to route notifications to the correct device.
+
+To associate a device token with a user in Trophy, either assign `deviceTokens` when [identifying users explicitly](/api-reference/endpoints/users/identify-a-user), or when [sending metric events](/api-reference/endpoints/events/submit-a-metric-event).
+
+Here's how to associate device tokens when identifying users:
+
+<IdentifyUserWithDeviceTokensRequestBlock />
+
+And here's how to associate device tokens when sending metric events:
+
+<MetricEventWithDeviceTokensRequestBlock />
+
+<Tip>
+  Each user can have multiple device tokens associated with them, to support
+  users who use multiple devices.
+</Tip>
 
 ## Reachable users {#reachable-users}
 
 Agents only consider users they can reach on at least one channel. A user with an email address but no device tokens only receives email, and a user with device tokens but no email address only receives push.
 
 Set up both channels to give agents the most room to pick the right one for each user.
-
-<Tip>
-  If you already send [legacy emails](/features/emails) or [push
-  notifications](/features/push-notifications), your domain and push providers
-  are shared with agentic messaging, so there's nothing new to set up.
-</Tip>
 
 ## Get support {#get-support}
 

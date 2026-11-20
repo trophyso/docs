@@ -8,11 +8,8 @@ og:description: Use template-based push notification flows to reach users
 icon: bell
 ---
 
-import IdentifyUserWithDeviceTokensRequestBlock from "../snippets/identify-user-with-device-tokens-request-block.mdx";
-import MetricEventWithDeviceTokensRequestBlock from "../snippets/metric-event-with-device-tokens-request-block.mdx";
-
 <Info>
-  These are Trophy's legacy, template-based push notifications, sent from fixed triggers. For users in the [agentic messaging](/agentic-messaging/overview) cohort, agentic messaging replaces them: lifecycle agents write and send personalized push notifications instead. The push channels set up on this page are shared by both. See [agentic messaging channels](/agentic-messaging/channels).
+  These are Trophy's legacy, template-based push notifications, sent from fixed triggers. For users in the [agentic messaging](/agentic-messaging/overview) cohort, agentic messaging replaces them: lifecycle agents write and send personalized push notifications instead. Both send through the same push providers, which you set up on the [channels](/agentic-messaging/channels#push-notifications) page.
 </Info>
 
 Trophy can send automated push notifications to users based on key triggers without requiring any code. Here we’ll look at what these triggers are, and how they can help bring users back to your product.
@@ -41,70 +38,11 @@ All push notifications are optional, but all four can be used simultaneously and
 
 ## Supported channels {#supported-channels}
 
-Trophy supports sending push notifications using 3 channels which can all be configured on the [Channels](https://app.trophy.so/push/channels) page of the Trophy dashboard.
+<a id="apple-push-notification-service-apns" />
+<a id="firebase-cloud-messaging-fcm" />
+<a id="expo-push-service" />
 
-### Apple Push Notification Service (APNs) {#apple-push-notification-service-apns}
-
-Trophy supports sending push notifications to users via APNs through a certificate-based connection.
-
-To send push notifications using APNs, you'll need to provide Trophy with the following credentials from your Apple Developer Account:
-
-- **APN Signing Key**: Trophy uses this to securely send notifications via APNs
-- **Team ID**: The team ID of your Apple Developer Account
-- **Key ID**: The ID of your APNs authentication key
-- **Bundle ID**: Your app's unique bundle identifier
-
-<Note>
-  For more information on how to configure certificate-based connection to APNs
-  from a third-party service, read the [official setup
-  guide](https://developer.apple.com/documentation/usernotifications/establishing-a-certificate-based-connection-to-apns).
-</Note>
-
-### Firebase Cloud Messaging (FCM) {#firebase-cloud-messaging-fcm}
-
-Trophy supports sending push notifications to users via FCM. To achieve this you'll need to provide Trophy with your Firebase Service Account JSON in the following format:
-
-{/* vale off */}
-
-```json FCM Service Account JSON
-{
-  "type": "service_account",
-  "project_id": "XXX",
-  "private_key_id": "XXX",
-  "private_key": "-----BEGIN PRIVATE KEY-----\n\n-----END PRIVATE KEY-----\n",
-  "client_email": "XXX@XXX.com",
-  "client_id": "XXX",
-  "auth_uri": "https://accounts.google.com/o/oauth2/auth",
-  "token_uri": "https://oauth2.googleapis.com/token",
-  "auth_provider_x509_cert_url": "https://www.googleapis.com/oauth2/v1/certs",
-  "client_x509_cert_url": "https://www.googleapis.com/robot/v1/metadata/x509/XXX"
-}
-```
-
-{/* vale on */}
-
-<Note>
-  For more information on Firebase service accounts and how to authenticate
-  external services to use FCM, read the [official service accounts
-  guide](https://firebase.google.com/support/guides/service-accounts).
-</Note>
-
-### Expo Push Service {#expo-push-service}
-
-Trophy supports sending push notifications to users via Expo Push Service.
-
-Expo Push Service saves you having to integrate with FCM and APNs individually and automatically directs notifications through the relevant service based on your users platform.
-
-To achieve this you must provide Trophy with a few key details from your Expo account:
-
-- **Expo Project Name**: The name of your Expo project
-- **Expo Push Token**: Your authentication token for sending notifications via Expo (required if using [enhanced security](https://docs.expo.dev/push-notifications/sending-notifications/#additional-security)).
-
-<Note>
-  For more information on Expo Push Service and how to authenticate external
-  providers, see the [official
-  guide](https://docs.expo.dev/push-notifications/sending-notifications).
-</Note>
+Trophy sends push notifications through [Apple Push Notification Service (APNs)](/agentic-messaging/channels#apple-push-notification-service-apns), [Firebase Cloud Messaging (FCM)](/agentic-messaging/channels#firebase-cloud-messaging-fcm) or [Expo Push Service](/agentic-messaging/channels#expo-push-service). Push providers are shared with agentic messaging, so you only need to set them up once. Follow the [supported providers](/agentic-messaging/channels#supported-channels) guide on the channels page.
 
 ## Sending push notifications {#sending-push-notifications}
 
@@ -119,9 +57,7 @@ Follow the steps below to start sending push notifications using Trophy.
 
 <Steps>
   <Step title="Set up channels">
-    Trophy support sending push notifications via 3 channels, [Apple Push Notification Service (APNs)](#apple-push-notification-service-apns), [Firebase Cloud Messaging (FCM)](#firebase-cloud-messaging-fcm) or [Expo Push Service](#expo-push-service).
-
-    Head into the [channels page](https://app.trophy.so/push/channels) of the Trophy dashboard and configure your preferred channel by following the dedicated guides above.
+    Configure a push provider by following the [supported providers](/agentic-messaging/channels#supported-channels) guide on the channels page. You'll also find your providers on the **Channels** tab of the [Push](https://app.trophy.so/push/channels) page.
 
 <Frame>
     <video
@@ -131,9 +67,7 @@ Follow the steps below to start sending push notifications using Trophy.
     playsInline
     className="w-full aspect-video"
     src="../assets/features/push/push_channels.mp4"
-
-> </video>
-
+  ></video>
 </Frame>
 
   </Step>
@@ -155,25 +89,8 @@ Follow the steps below to start sending push notifications using Trophy.
 
   </Step>
   <Step title="Associate device tokens">
-    To send notifications to users, Trophy needs to know the unique tokens assigned to their devices. You tell Trophy about devices by associating device tokens with each user you identify.
-    
-    Trophy will use the device tokens you associate with each user when communicating with supported [push notification channels](#supported-channels) to route notifications to the correct device.
-
-    To associate a device token with a user in Trophy, either assign `deviceTokens` when [identifying users explicitly](https://docs.trophy.so/api-reference/endpoints/users/identify-a-user#body-device-tokens), or when [sending metric events](https://docs.trophy.so/api-reference/endpoints/events/submit-a-metric-event#body-user-device-tokens).
-
-    Here's how to associated device tokens when identifying users:
-
-    <IdentifyUserWithDeviceTokensRequestBlock />
-
-    And here's how to associate device tokens when sending metric events:
-
-    <MetricEventWithDeviceTokensRequestBlock />
-
-    <Tip>
-    Each user can have multiple device tokens associated with them, to support users who use multiple devices.
-    </Tip>
-
-</Step>
+    Trophy needs to know the unique tokens assigned to each user's devices to route notifications to them. Associate `deviceTokens` with each user when you identify them or send metric events. See [device tokens](/agentic-messaging/channels#device-tokens) for examples.
+  </Step>
   <Step title="Activate templates">
     The last step is to activate a template within each [type of push notification](#types-of-push-notifications) section that you want to send.
 

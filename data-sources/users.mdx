@@ -81,9 +81,9 @@ const timezone = Intl.DateTimeFormat().resolvedOptions().timeZone;
 </ParamField>
 
 <ParamField path="deviceTokens" type="array<string>">
-  The list of device tokens to associate with the user. If you've configured any
-  Trophy [Push Notifications](/features/push-notifications), then they'll only
-  be sent to a user when this field is provided.
+  The list of device tokens to associate with the user. Push notifications, both
+  agentic and [legacy](/features/push-notifications), are only sent to users
+  with device tokens. See [device tokens](/agentic-messaging/channels#device-tokens).
 </ParamField>
 
 ### Read-only attributes {#read-only-attributes}
