@@ -19,7 +19,7 @@ import WebhookPointsLevelChangedPayload from "../snippets/webhook-points-level-c
 
 ## What is a points system? {#what-is-a-points-system}
 
-Points systems are used to create counters that track users' interactions with [Metrics](/features/metrics), [Milestones](/features/milestones) and [Streaks](/features/streaks). You can then build features like 'XP' and 'Energy' around these counters within your product.
+Points systems are used to create counters that track users' interactions with [Metrics](/data-sources/metrics), [Milestones](/features/milestones) and [Streaks](/features/streaks). You can then build features like 'XP' and 'Energy' around these counters within your product.
 
 ## Use cases {#use-cases}
 
@@ -96,7 +96,7 @@ There are multiple types of triggers in Trophy that can be used to award or dedu
 
 #### Metric triggers {#metric-triggers}
 
-Points can be awarded or deducted continually as users increment [Metrics](/features/metrics). You can choose to award or deduct any arbitrary number of points at any arbitrary metric threshold, for example "award 10 points for every 3 tasks completed".
+Points can be awarded or deducted continually as users increment [Metrics](/data-sources/metrics). You can choose to award or deduct any arbitrary number of points at any arbitrary metric threshold, for example "award 10 points for every 3 tasks completed".
 
 #### Streak triggers {#streak-triggers}
 
@@ -162,9 +162,9 @@ To create a new points trigger, head to the points system that you want to creat
 <Step title="Add attribute filters (Optional)">
   You can assign attribute filters to a points trigger to further restrict when they apply.
 
-- To limit a **Metric trigger** to only apply to events with specific [custom event attributes](/features/events#custom-event-attributes), add one or more filters in the **Event Attributes** section.
+- To limit a **Metric trigger** to only apply to events with specific [custom event attributes](/data-sources/events#custom-event-attributes), add one or more filters in the **Event Attributes** section.
 
-- To limit any type of trigger to only apply to a user with one or more specific [custom user attributes](/features/users#custom-user-attributes), add attributes and the desired values in the **User Attributes** section.
+- To limit any type of trigger to only apply to a user with one or more specific [custom user attributes](/data-sources/users#custom-user-attributes), add attributes and the desired values in the **User Attributes** section.
 
 <Note>
   When you set multiple event attribute filters, all of them must match for the
@@ -208,7 +208,7 @@ This section explains how boosts work and how they can be used to increase your 
 
 There are a few different ways you can use boosts in Trophy.
 
-- **Global boosts** multiply points earned by all users during the boost window, or can be scoped to a specific user cohort by using [custom user attributes](/features/users#custom-user-attributes).
+- **Global boosts** multiply points earned by all users during the boost window, or can be scoped to a specific user cohort by using [custom user attributes](/data-sources/users#custom-user-attributes).
 - **User-specific boosts** only multiply points earned by a single user within the boost window.
 
 Typically, global boosts are used to increase platform-wide engagement during key calendar events like Black Friday/Cyber Monday in e-commerce, New Year in fitness and exam season in ed-tech platforms.
@@ -282,7 +282,7 @@ Overall Multiplier (3 boosts) = 2X * 1.5X * 3X = 9X
 
 ### Boost rounding {#boost-rounding}
 
-Trophy supports [floating point metric event values](/features/events#event-value), but takes care of rounding points to integers automatically.
+Trophy supports [floating point metric event values](/data-sources/events#event-value), but takes care of rounding points to integers automatically.
 
 However, when using decimal [boost multipliers](#boost-multipliers), there may be some scenarios where this default rounding is not enough to always produce integer points values.
 
@@ -469,7 +469,7 @@ Finally, the [points system API](/api-reference/endpoints/points/get-points) ret
 
 <Tip>
   The points summary API can also be filtered to only return data for users with specific
-  [custom user attributes](/features/users#custom-user-attributes).
+  [custom user attributes](/data-sources/users#custom-user-attributes).
 </Tip>
 
 <Frame>

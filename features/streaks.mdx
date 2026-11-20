@@ -16,7 +16,7 @@ A streak is a period of consecutive days, weeks or months that a user has perfor
 
 Streaks in Trophy can be **daily, weekly or monthly**. This means that a user must meet their [streak conditions](#streak-conditions) at least once every calendar day, week or month to maintain their streak.
 
-If you've [configured time zones](/features/users#param-tz) for your users, Trophy will automatically track each user's streak in their local time zone (including taking into account when users change time zones) and keep streaks in tact.
+If you've [configured time zones](/data-sources/users#param-tz) for your users, Trophy will automatically track each user's streak in their local time zone (including taking into account when users change time zones) and keep streaks in tact.
 
 <Note>
 Trophy automatically computes streak data for every streak frequency, meaning you can switch at any time.
@@ -24,7 +24,7 @@ Trophy automatically computes streak data for every streak frequency, meaning yo
 
 ## Streak conditions {#streak-conditions}
 
-In Trophy you can set the thresholds that a user must meet in order to extend their streak based on your configured [Metrics](/features/metrics).
+In Trophy you can set the thresholds that a user must meet in order to extend their streak based on your configured [Metrics](/data-sources/metrics).
 
 You can choose which metrics should be part of your streak, and for those that you chose, you can set a custom threshold that users must meet.
 
@@ -60,7 +60,7 @@ You must leave at least one day that counts toward the streak. Weekly and monthl
 
 Unlike [streak freezes](#streak-freezes), days off are not consumed. They apply every week until you change them.
 
-If you've enabled [streak personalization](#streak-personalization), users can override the default days off through [user preferences](/features/users#streak-preferences).
+If you've enabled [streak personalization](#streak-personalization), users can override the default days off through [user preferences](/data-sources/users#streak-preferences).
 
 ## Streak freezes {#streak-freezes}
 
@@ -123,7 +123,7 @@ Each pause requires:
 - `start`: the first date the pause covers
 - `end`: the last date the pause covers
 
-Start dates in the past are rejected. If you've [configured time zones](/features/users#param-tz) for your users, Trophy evaluates `start` against today in each user's local timezone.
+Start dates in the past are rejected. If you've [configured time zones](/data-sources/users#param-tz) for your users, Trophy evaluates `start` against today in each user's local timezone.
 
 ### Deleting pauses {#deleting-pauses}
 
@@ -137,7 +137,7 @@ Each period in `streakHistory` includes `usedPause`, which is `true` when the us
 
 ## Tracking streaks {#tracking-streaks}
 
-Trophy automatically calculates streaks for all users based on the [metric events](/features/events#tracking-metric-events) you report to Trophy.
+Trophy automatically calculates streaks for all users based on the [metric events](/data-sources/events#tracking-metric-events) you report to Trophy.
 
 There's no extra work required to track streaks, and you can start using them right away. Just make sure that streaks are enabled in the Trophy dashboard.
 
@@ -150,7 +150,7 @@ Trophy can support users personalizing how their streak works within guardrails 
 Once enabled, users will be able to customize the [streak conditions](#streak-conditions) that they must meet to extend their streak, including streak evaluation mode, the threshold for each metric, and [days off](#days-off), through user preferences.
 
 <Tip>
-To learn more about how to set user preferences for a specific user, read the dedicated documentation on [user preferences](/features/users#streak-preferences).
+To learn more about how to set user preferences for a specific user, read the dedicated documentation on [user preferences](/data-sources/users#streak-preferences).
 </Tip>
 
 <Frame>
@@ -208,7 +208,7 @@ Trophy exposes streak data in two ways, which can be used to build UI elements w
 
 ### Metric event response {#metric-event-response}
 
-When you [increment a metric](/features/events#tracking-metric-events) for a user, the [metric API](/api-reference/endpoints/events/submit-a-metric-event) response will include the user's current
+When you [increment a metric](/data-sources/events#tracking-metric-events) for a user, the [metric API](/api-reference/endpoints/events/submit-a-metric-event) response will include the user's current
 streak.
 
 <MetricChangeResponseBlock />

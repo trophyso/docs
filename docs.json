@@ -91,6 +91,14 @@
                 ]
               },
               {
+                "group": "Data sources",
+                "pages": [
+                  "data-sources/metrics",
+                  "data-sources/events",
+                  "data-sources/users"
+                ]
+              },
+              {
                 "group": "Context",
                 "pages": [
                   "context/brand-kit"
@@ -112,9 +120,6 @@
                 "group": "Features",
                 "pages": [
                   "features/overview",
-                  "features/metrics",
-                  "features/events",
-                  "features/users",
                   "features/milestones",
                   "features/streaks",
                   "features/points",
@@ -525,6 +530,14 @@
                 ]
               },
               {
+                "group": "Fuentes de datos",
+                "pages": [
+                  "es/data-sources/metrics",
+                  "es/data-sources/events",
+                  "es/data-sources/users"
+                ]
+              },
+              {
                 "group": "Contexto",
                 "pages": [
                   "es/context/brand-kit"
@@ -534,9 +547,6 @@
                 "group": "Funciones",
                 "pages": [
                   "es/features/overview",
-                  "es/features/metrics",
-                  "es/features/events",
-                  "es/features/users",
                   "es/features/milestones",
                   "es/features/streaks",
                   "es/features/points",
@@ -934,7 +944,7 @@
     },
     {
       "source": "/platform/metrics",
-      "destination": "/features/metrics"
+      "destination": "/data-sources/metrics"
     },
     {
       "source": "/api-reference/endpoints/metrics/send-a-metric-change-event",
@@ -942,11 +952,23 @@
     },
     {
       "source": "/platform/events",
-      "destination": "/features/events"
+      "destination": "/data-sources/events"
     },
     {
       "source": "/platform/users",
-      "destination": "/features/users"
+      "destination": "/data-sources/users"
+    },
+    {
+      "source": "/features/metrics",
+      "destination": "/data-sources/metrics"
+    },
+    {
+      "source": "/features/events",
+      "destination": "/data-sources/events"
+    },
+    {
+      "source": "/features/users",
+      "destination": "/data-sources/users"
     },
     {
       "source": "/platform/achievements",
@@ -994,7 +1016,7 @@
     },
     {
       "source": "/es/platform/metrics",
-      "destination": "/es/features/metrics"
+      "destination": "/es/data-sources/metrics"
     },
     {
       "source": "/es/api-reference/endpoints/metrics/send-a-metric-change-event",
@@ -1002,11 +1024,23 @@
     },
     {
       "source": "/es/platform/events",
-      "destination": "/es/features/events"
+      "destination": "/es/data-sources/events"
     },
     {
       "source": "/es/platform/users",
-      "destination": "/es/features/users"
+      "destination": "/es/data-sources/users"
+    },
+    {
+      "source": "/es/features/metrics",
+      "destination": "/es/data-sources/metrics"
+    },
+    {
+      "source": "/es/features/events",
+      "destination": "/es/data-sources/events"
+    },
+    {
+      "source": "/es/features/users",
+      "destination": "/es/data-sources/users"
     },
     {
       "source": "/es/platform/achievements",

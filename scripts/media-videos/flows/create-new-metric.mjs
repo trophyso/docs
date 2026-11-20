@@ -1,6 +1,6 @@
 /**
  * Create a new metric: New metric → name it → Create metric.
- * Used on getting-started/quickstart and features/metrics.
+ * Used on getting-started/quickstart and data-sources/metrics.
  * The name matches the quickstart's example key, flashcards-flipped.
  */
 export const meta = {

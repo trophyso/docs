@@ -87,7 +87,7 @@ Para crear una recompensa, ve a la [página de recompensas](https://app.trophy.s
     Limita cuántas veces se puede otorgar la recompensa a cada usuario. Consulta [límites de canje](#redemption-limits).
   </Step>
   <Step title="Añade filtros de usuario (opcional)">
-    Restringe la recompensa a los usuarios con [atributos de usuario personalizados](/es/features/users#custom-user-attributes) específicos. Consulta [filtros de usuario](#user-filters).
+    Restringe la recompensa a los usuarios con [atributos de usuario personalizados](/es/data-sources/users#custom-user-attributes) específicos. Consulta [filtros de usuario](#user-filters).
   </Step>
   <Step title="Añade activadores y activa">
     Añade uno o más [activadores](#reward-triggers) y luego cambia el estado de la recompensa a activo para ponerla en producción.
@@ -110,7 +110,7 @@ Las recompensas se otorgan mediante activadores. Puedes añadir tantos activador
 
 #### Disparadores de métrica {#metric-triggers}
 
-La recompensa se otorga cada vez que el total de una [métrica](/es/features/metrics) del usuario aumenta según el umbral que establezcas, por ejemplo "otorgar cada 10 tareas completadas". El recuento comienza desde que se activó el disparador.
+La recompensa se otorga cada vez que el total de una [métrica](/es/data-sources/metrics) del usuario aumenta según el umbral que establezcas, por ejemplo "otorgar cada 10 tareas completadas". El recuento comienza desde que se activó el disparador.
 
 Si vuelves a activar el disparador, o cambias su métrica, umbral o atributos de evento, se inicia un nuevo recuento.
 
@@ -151,8 +151,8 @@ Para añadir un disparador, abre la recompensa desde la [página de recompensas]
     - Para un activador de **Clasificación**, elige la clasificación y la posición.
   </Step>
   <Step title="Añade filtros de atributos (opcional)">
-    - Para limitar un activador de **Métrica** a eventos con [atributos de evento personalizados](/es/features/events#custom-event-attributes) específicos, añade uno o más filtros en la sección **Atributos del evento**. Si defines varios filtros de atributos de evento, todos deben coincidir.
-    - Para limitar cualquier activador a usuarios con [atributos de usuario personalizados](/es/features/users#custom-user-attributes) específicos, añade los atributos y los valores deseados en la sección **Atributos del usuario**.
+    - Para limitar un activador de **Métrica** a eventos con [atributos de evento personalizados](/es/data-sources/events#custom-event-attributes) específicos, añade uno o más filtros en la sección **Atributos del evento**. Si defines varios filtros de atributos de evento, todos deben coincidir.
+    - Para limitar cualquier activador a usuarios con [atributos de usuario personalizados](/es/data-sources/users#custom-user-attributes) específicos, añade los atributos y los valores deseados en la sección **Atributos del usuario**.
   </Step>
   <Step title="Guarda y activa">
     Cuando estés seguro de que el activador se comportará como esperas, cambia su estado a activo para ponerlo en funcionamiento.

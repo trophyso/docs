@@ -35,6 +35,7 @@
         "getting-started/*.mdx",
         "platform/*.mdx",
         "features/*.mdx",
+        "data-sources/*.mdx",
         "agentic-messaging/*.mdx",
         "context/*.mdx",
         "webhooks/*.mdx",

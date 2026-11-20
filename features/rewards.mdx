@@ -85,7 +85,7 @@ To create a reward, head to the [rewards page](https://app.trophy.so/rewards) an
     Limit how many times each user can be awarded the reward. See [redemption limits](#redemption-limits).
   </Step>
   <Step title="Add user filters (Optional)">
-    Restrict the reward to users with specific [custom user attributes](/features/users#custom-user-attributes). See [user filters](#user-filters).
+    Restrict the reward to users with specific [custom user attributes](/data-sources/users#custom-user-attributes). See [user filters](#user-filters).
   </Step>
   <Step title="Add triggers and activate">
     Add one or more [triggers](#reward-triggers) and then change the reward's status to active to make it live.
@@ -108,7 +108,7 @@ Rewards are awarded through triggers. You can add as many triggers as you like t
 
 #### Metric triggers {#metric-triggers}
 
-The reward is awarded every time the user's total for a [metric](/features/metrics) grows by the threshold you set, for example "award every 10 tasks completed". Counting starts from when the trigger was activated.
+The reward is awarded every time the user's total for a [metric](/data-sources/metrics) grows by the threshold you set, for example "award every 10 tasks completed". Counting starts from when the trigger was activated.
 
 Activating the trigger again, or changing its metric, threshold or event attributes, starts a new count.
 
@@ -149,8 +149,8 @@ To add a trigger, open the reward from the [rewards page](https://app.trophy.so/
     - For a **Leaderboard** trigger, choose the leaderboard and the rank.
   </Step>
   <Step title="Add attribute filters (Optional)">
-    - To limit a **Metric** trigger to events with specific [custom event attributes](/features/events#custom-event-attributes), add one or more filters in the **Event Attributes** section. When you set multiple event attribute filters, all of them must match.
-    - To limit any trigger to users with specific [custom user attributes](/features/users#custom-user-attributes), add attributes and the desired values in the **User Attributes** section.
+    - To limit a **Metric** trigger to events with specific [custom event attributes](/data-sources/events#custom-event-attributes), add one or more filters in the **Event Attributes** section. When you set multiple event attribute filters, all of them must match.
+    - To limit any trigger to users with specific [custom user attributes](/data-sources/users#custom-user-attributes), add attributes and the desired values in the **User Attributes** section.
   </Step>
   <Step title="Click save, then activate">
     Once you're happy the trigger will behave as expected, change its status to active to make it live.

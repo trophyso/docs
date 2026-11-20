@@ -1,6 +1,6 @@
 /**
  * Create a custom event attribute: Add event attribute → name → Create.
- * Used on features/events (Custom event attributes → Creating attributes).
+ * Used on data-sources/events (Custom event attributes → Creating attributes).
  * The button now lives on the Attributes page (Data sources → Attributes).
  */
 export const meta = {

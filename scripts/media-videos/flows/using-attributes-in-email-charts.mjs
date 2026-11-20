@@ -1,6 +1,6 @@
 /**
  * Event attributes in email charts: add a Progress Chart block and filter it
- * to workouts with the Equipment attribute "bike". Used on features/events
+ * to workouts with the Equipment attribute "bike". Used on data-sources/events
  * (Email customization). Works on its own template, deleted again in cleanup;
  * never saves.
  */

@@ -1,6 +1,6 @@
 /**
  * Event attributes in email variables: insert a Workouts variable filtered to
- * the Equipment attribute "bike". Used on features/events (Email
+ * the Equipment attribute "bike". Used on data-sources/events (Email
  * customization). Works on its own template, deleted again in cleanup; never saves.
  */
 import { activeEditor, createTemplate, openEditorTop, removeTemplate } from './_emails-templates.mjs'

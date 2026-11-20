@@ -49,7 +49,7 @@ Trophy tracks the rankings in each run of a repeating leaderboard individually a
 
 #### Handling time zones {#handling-time-zones}
 
-If you have tracked users' [time zones](/features/users#param-tz) with Trophy, these will be used to ensure that each user has an equal chance of winning no matter where they are in the world.
+If you have tracked users' [time zones](/data-sources/users#param-tz) with Trophy, these will be used to ensure that each user has an equal chance of winning no matter where they are in the world.
 
 In practice this means leaderboards are finalized and winners chosen about 12 hours after they naturally finish in UTC to allow users in all time zones to make their final push.
 
@@ -78,7 +78,7 @@ The ranking method of a leaderboard determines on what dimension participants wi
 
 #### Metric rankings {#metric-rankings}
 
-Metric leaderboards are linked to an existing Trophy [Metric](/features/metrics) and rank users based on their total metric value.
+Metric leaderboards are linked to an existing Trophy [Metric](/data-sources/metrics) and rank users based on their total metric value.
 
 Use metric leaderboards if you only want to rank users based on a single interaction.
 
@@ -100,7 +100,7 @@ Streak leaderboards rank users based on their current streak length.
 
 If you have a large user base, it's best practice to split up leaderboard participants into smaller, more socially-connected groups. This often leads to higher engagement than when using global leaderboards.
 
-Leaderboards in Trophy can be configured to group users into smaller groups according to one or more [custom user attributes](/features/users#custom-user-attributes).
+Leaderboards in Trophy can be configured to group users into smaller groups according to one or more [custom user attributes](/data-sources/users#custom-user-attributes).
 
 <Tip>
   When using leaderboard breakdowns, [participant limits](#participant-limits)
@@ -139,7 +139,7 @@ To fetch rankings for a particular group of users with a specific combination of
 
 Eligibility controls which users are allowed to take part in a leaderboard at all. Use it when a leaderboard should only be open to a specific group of users, for example paying customers, a particular region or a beta cohort.
 
-Eligibility is based on [custom user attributes](/features/users#custom-user-attributes). A user can only take part in, and appear in the rankings of, a leaderboard if their attributes match every eligibility rule you set. Leaderboards with no eligibility rules are open to all users.
+Eligibility is based on [custom user attributes](/data-sources/users#custom-user-attributes). A user can only take part in, and appear in the rankings of, a leaderboard if their attributes match every eligibility rule you set. Leaderboards with no eligibility rules are open to all users.
 
 To set eligibility rules, head to the leaderboard configuration page and add one or more user attributes and the values users must have in the **User attributes** field of the **Eligibility** section.
 
@@ -233,7 +233,7 @@ To set time restrictions on a leaderboard, head to the leaderboard configuration
 
 ### Time zone considerations {#time-zone-considerations}
 
-Time restrictions on leaderboards are applied in **local time** for each participant based on their configured [time zone](/features/users#param-tz).
+Time restrictions on leaderboards are applied in **local time** for each participant based on their configured [time zone](/data-sources/users#param-tz).
 
 This means that each user can participate in the leaderboard at any time during the configured time restriction according to their local clock.
 

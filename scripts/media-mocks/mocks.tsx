@@ -229,7 +229,7 @@ function UserMilestones() {
 }
 
 /* ---------------------------------------------------------------------------
- * Users (features/users.mdx)
+ * Users (data-sources/users.mdx)
  * ------------------------------------------------------------------------ */
 
 /** A preference center for legacy emails and push: one switch per type */
@@ -315,7 +315,7 @@ function CustomUserAttributes() {
 }
 
 /* ---------------------------------------------------------------------------
- * Events (features/events.mdx)
+ * Events (data-sources/events.mdx)
  * ------------------------------------------------------------------------ */
 
 /** One event's attributes, and points triggers that only count some events */

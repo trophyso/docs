@@ -17,7 +17,7 @@ Los logros son recompensas que los usuarios pueden desbloquear mientras usan tu 
 Los logros funcionan mejor cuando están diseñados para incentivar a los usuarios a realizar acciones que probablemente conduzcan a un aumento de la retención.
 
 <Tip>
-  Usa las [analíticas de métricas](/es/features/metrics#metric-analytics) de Trophy para comparar
+  Usa las [analíticas de métricas](/es/data-sources/metrics#metric-analytics) de Trophy para comparar
   la retención de cada interacción del usuario, luego configura logros en torno a
   estas interacciones para maximizar el impacto en la retención.
 </Tip>
@@ -44,7 +44,7 @@ Trophy ofrece cinco tipos de logros: [Métrica](#metric-achievements), [API](#ap
 
 ### Logros de Métrica {#metric-achievements}
 
-Los logros de métrica están vinculados a [Métricas](/es/features/metrics) y se utilizan mejor cuando quieres incentivar a los usuarios a realizar la misma acción una y otra vez.
+Los logros de métrica están vinculados a [Métricas](/es/data-sources/metrics) y se utilizan mejor cuando quieres incentivar a los usuarios a realizar la misma acción una y otra vez.
 
 Tomemos el ejemplo de una plataforma de estudio que usa Trophy para animar a los usuarios a ver más tarjetas de estudio con logros de métrica de la siguiente manera:
 
@@ -57,7 +57,7 @@ Tomemos el ejemplo de una plataforma de estudio que usa Trophy para animar a los
 
 En este caso crearías una métrica llamada _Tarjetas Volteadas_ y crearías logros vinculados a la métrica para cada hito.
 
-Dado que estos logros están directamente vinculados a la métrica _Tarjetas Volteadas_, Trophy rastreará automáticamente cuándo los usuarios desbloquean estos logros a medida que [incrementan la métrica](/es/features/events#tracking-metric-events).
+Dado que estos logros están directamente vinculados a la métrica _Tarjetas Volteadas_, Trophy rastreará automáticamente cuándo los usuarios desbloquean estos logros a medida que [incrementan la métrica](/es/data-sources/events#tracking-metric-events).
 
 Cuando se desbloquean logros, Trophy incluye información sobre ellos en la respuesta de la [API de eventos](/es/api-reference/endpoints/events/submit-a-metric-event) y, si está configurado, activa automáticamente los [correos de logros](/es/features/emails#achievement-emails).
 
@@ -89,11 +89,11 @@ Al igual que los logros de métrica y API, puedes agregar un nombre personalizad
 
 Los logros de aniversario se desbloquean automáticamente cuando un usuario cumple un aniversario concreto de su fecha de registro.
 
-Crea un logro por cada año que quieras celebrar, por ejemplo 1 año, 2 años y 5 años. Trophy desbloquea cada logro cuando se alcanza el [`signUpDate`](/es/features/users#optional-attributes) del usuario más ese número de años.
+Crea un logro por cada año que quieras celebrar, por ejemplo 1 año, 2 años y 5 años. Trophy desbloquea cada logro cuando se alcanza el [`signUpDate`](/es/data-sources/users#optional-attributes) del usuario más ese número de años.
 
-Los usuarios sin `signUpDate` no son elegibles. Define `signUpDate` cuando [identifiques](/es/features/users#identifying-users) o [actualices](/es/features/users#keeping-users-up-to-date) a los usuarios para que Trophy pueda detectar los aniversarios.
+Los usuarios sin `signUpDate` no son elegibles. Define `signUpDate` cuando [identifiques](/es/data-sources/users#identifying-users) o [actualices](/es/data-sources/users#keeping-users-up-to-date) a los usuarios para que Trophy pueda detectar los aniversarios.
 
-Trophy evalúa el aniversario en el día del calendario de la [`tz`](/es/features/users#optional-attributes) del usuario. Define `tz` para que el logro se desbloquee en el día local correcto.
+Trophy evalúa el aniversario en el día del calendario de la [`tz`](/es/data-sources/users#optional-attributes) del usuario. Define `tz` para que el logro se desbloquee en el día local correcto.
 
 Al igual que otros tipos de logros, los logros de aniversario pueden activar [correos de logros](/es/features/emails#achievement-emails) cuando se desbloquean.
 
@@ -151,7 +151,7 @@ También puedes crear, actualizar y eliminar logros mediante programación con l
 
 - Si eliges **Racha**, el logro se desbloqueará automáticamente cuando la duración de la racha del usuario alcance el valor de activación del logro.
 
-- Si eliges **Aniversario**, el logro se desbloqueará automáticamente cuando el usuario alcance el aniversario especificado de su [`signUpDate`](/es/features/users#optional-attributes).
+- Si eliges **Aniversario**, el logro se desbloqueará automáticamente cuando el usuario alcance el aniversario especificado de su [`signUpDate`](/es/data-sources/users#optional-attributes).
 
 - Si eliges **Llamada a la API**, el logro solo se desbloqueará cuando tu código lo marque explícitamente como completado mediante una solicitud a la [API para completar logros](/es/api-reference/endpoints/achievements/mark-an-achievement-as-completed).
 
@@ -177,9 +177,9 @@ También puedes crear, actualizar y eliminar logros mediante programación con l
 <Step title="Añadir filtros de atributos (opcional)">
 Puedes asignar filtros de atributos a un logro para restringir aún más quién puede desbloquearlo y cuándo.
 
-- Para limitar un logro de tipo **Métrica** de modo que solo se aplique a eventos con [atributos de evento personalizados](/es/features/events#custom-event-attributes) específicos, añade uno o más filtros en la sección **Atributos de evento**.
+- Para limitar un logro de tipo **Métrica** de modo que solo se aplique a eventos con [atributos de evento personalizados](/es/data-sources/events#custom-event-attributes) específicos, añade uno o más filtros en la sección **Atributos de evento**.
 
-- Para limitar cualquier tipo de logro de modo que solo se aplique a usuarios con uno o más [atributos de usuario personalizados](/es/features/users#custom-user-attributes) específicos, añade los atributos y los valores deseados en la sección **Atributos de usuario**.
+- Para limitar cualquier tipo de logro de modo que solo se aplique a usuarios con uno o más [atributos de usuario personalizados](/es/data-sources/users#custom-user-attributes) específicos, añade los atributos y los valores deseados en la sección **Atributos de usuario**.
 
 <Note>
   Si estableces varios filtros de atributos de evento, todos deben coincidir para que se aplique el
@@ -235,11 +235,11 @@ flowchart LR
 
 ## Cómo completar logros {#completing-achievements}
 
-Si utilizas logros de métrica, no es necesario _completar_ los logros de forma explícita. Una vez que hayas configurado el [seguimiento de métricas](/es/features/events#tracking-metric-events) en tu código, se hará un seguimiento automático de todos los logros vinculados a la métrica.
+Si utilizas logros de métrica, no es necesario _completar_ los logros de forma explícita. Una vez que hayas configurado el [seguimiento de métricas](/es/data-sources/events#tracking-metric-events) en tu código, se hará un seguimiento automático de todos los logros vinculados a la métrica.
 
 Del mismo modo, si utilizas logros de racha, todos los logros relacionados con la racha del usuario se desbloquearán automáticamente cuando este alcance la longitud de racha correspondiente.
 
-Los logros de aniversario también se completan automáticamente. Se desbloquean cuando un usuario alcanza el aniversario configurado de su [`signUpDate`](/es/features/users#optional-attributes). Los usuarios que no tengan `signUpDate` no pueden desbloquearlos.
+Los logros de aniversario también se completan automáticamente. Se desbloquean cuando un usuario alcanza el aniversario configurado de su [`signUpDate`](/es/data-sources/users#optional-attributes). Los usuarios que no tengan `signUpDate` no pueden desbloquearlos.
 
 Los logros compuestos también se completan automáticamente. Se desbloquean en cuanto un usuario ha completado todos los logros que son requisito previo. No se necesitan llamadas adicionales a la API.
 
@@ -272,7 +272,7 @@ De forma predeterminada, cada vez que cambias un logro al [estado](#managing-ach
 
 Esto significa que, cuando lanzas nuevos logros a producción o editas un logro activo existente, la aplicación retroactiva se realiza automáticamente.
 
-Lo mismo ocurre cuando estableces o cambias el [`signUpDate`](/es/features/users#optional-attributes) de un usuario. Si el usuario ya cumple los requisitos de algún logro de aniversario activo, Trophy lo completa de forma silenciosa.
+Lo mismo ocurre cuando estableces o cambias el [`signUpDate`](/es/data-sources/users#optional-attributes) de un usuario. Si el usuario ya cumple los requisitos de algún logro de aniversario activo, Trophy lo completa de forma silenciosa.
 
 <Note>
   Cuando los logros se completan de esta manera, los usuarios no reciben
@@ -367,7 +367,7 @@ Si, en cambio, estás creando elementos de interfaz específicos de cada usuario
 
 ## Analíticas de logros {#achievement-analytics}
 
-Si tienes logros configurados para alguna de tus [Métricas](/es/features/metrics), la página de analíticas de la métrica muestra un gráfico con el progreso actual de todos los usuarios, como se muestra a continuación:
+Si tienes logros configurados para alguna de tus [Métricas](/es/data-sources/metrics), la página de analíticas de la métrica muestra un gráfico con el progreso actual de todos los usuarios, como se muestra a continuación:
 
 <Frame>
   <img
@@ -396,7 +396,7 @@ Si tienes logros configurados para alguna de tus [Métricas](/es/features/metric
     <Accordion title="¿Qué logros debería crear?">
     Los logros, como toda la gamificación, ofrecen la mejor retención cuando están estrechamente alineados con la razón principal por la que el usuario usa tu plataforma.
 
-    Usa los [análisis de métricas](/es/features/metrics#metric-analytics) de Trophy para comparar la retención de cada interacción del usuario, luego configura logros en torno a estas interacciones para maximizar el impacto en la retención.
+    Usa los [análisis de métricas](/es/data-sources/metrics#metric-analytics) de Trophy para comparar la retención de cada interacción del usuario, luego configura logros en torno a estas interacciones para maximizar el impacto en la retención.
 
 </Accordion>
 

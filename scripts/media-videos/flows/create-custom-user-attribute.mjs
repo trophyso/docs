@@ -1,6 +1,6 @@
 /**
  * Create a custom user attribute: Add user attribute → name → Create.
- * Used on features/users (Custom user attributes → Creating attributes).
+ * Used on data-sources/users (Custom user attributes → Creating attributes).
  */
 export const meta = {
   start: '/attributes',

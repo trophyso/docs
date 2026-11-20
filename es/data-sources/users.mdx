@@ -390,7 +390,7 @@ Una vez habilitada la personalización de rachas, la [API de actualización de p
 
 Las preferencias del usuario pueden reemplazar los siguientes ajustes de racha:
 - `enabled`: indica si se calculan las rachas para este usuario. Cuando es `false`, la racha del usuario siempre es `0` y no se envían webhooks ni notificaciones de racha.
-- `metrics`: un array de [métricas](/es/features/metrics) con umbrales personalizados necesarios para extender la racha.
+- `metrics`: un array de [métricas](/es/data-sources/metrics) con umbrales personalizados necesarios para extender la racha.
 - `evaluationMode`: determina cómo se combinan las métricas para extender la racha. Puede ser `ALL` o `OR`.
 - `daysOff`: un array de números de días de la semana (`0` = domingo hasta `6` = sábado) que reemplazan los [días libres](/es/features/streaks#days-off) de la organización. El usuario no perderá su racha si está inactivo en esos días.
 

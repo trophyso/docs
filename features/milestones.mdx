@@ -24,7 +24,7 @@ Milestones work best when designed to incentivize users to take actions that
 are likely to lead to increased retention.
 
 <Tip>
-  Use Trophy's [metric analytics](/features/metrics#metric-analytics) to compare
+  Use Trophy's [metric analytics](/data-sources/metrics#metric-analytics) to compare
   the retention of each user interaction, then configure milestones around
   these interactions to maximize retention impact.
 </Tip>
@@ -37,7 +37,7 @@ Trophy offers five types of milestones, [Metric](#metric-achievements), [API](#a
 
 ### Metric milestones {#metric-achievements}
 
-Metric milestones are tied to [Metrics](/features/metrics) and are best used when you want to incentivize users to take the same action over and over again.
+Metric milestones are tied to [Metrics](/data-sources/metrics) and are best used when you want to incentivize users to take the same action over and over again.
 
 Let's take the example of a study platform that uses Trophy to encourage users to view more flashcards with metric milestones as follows:
 
@@ -50,7 +50,7 @@ Let's take the example of a study platform that uses Trophy to encourage users t
 
 In this case you would create a metric called _Flashcards Flipped_ and create a milestone against the metric for each threshold.
 
-Since these milestones are directly tied to the _Flashcards Flipped_ metric, Trophy will automatically track when users unlock these milestones as they [increment the metric](/features/events#tracking-metric-events).
+Since these milestones are directly tied to the _Flashcards Flipped_ metric, Trophy will automatically track when users unlock these milestones as they [increment the metric](/data-sources/events#tracking-metric-events).
 
 When milestones are unlocked, Trophy includes information about the unlocked milestones in the [Event API](/api-reference/endpoints/events/submit-a-metric-event) response, and automatically triggers [milestone emails](/features/emails#achievement-emails) if configured.
 
@@ -82,11 +82,11 @@ Just like metric and API milestones, you can add a custom name and assign a badg
 
 Anniversary milestones unlock automatically when a user reaches a specific anniversary of their sign-up date.
 
-Create one milestone for each year you want to celebrate, for example 1 year, 2 years and 5 years. Trophy unlocks each milestone when the user's [`signUpDate`](/features/users#optional-attributes) plus that number of years is reached.
+Create one milestone for each year you want to celebrate, for example 1 year, 2 years and 5 years. Trophy unlocks each milestone when the user's [`signUpDate`](/data-sources/users#optional-attributes) plus that number of years is reached.
 
-Users without a `signUpDate` are not eligible. Set `signUpDate` when you [identify](/features/users#identifying-users) or [update](/features/users#keeping-users-up-to-date) users so Trophy can detect anniversaries.
+Users without a `signUpDate` are not eligible. Set `signUpDate` when you [identify](/data-sources/users#identifying-users) or [update](/data-sources/users#keeping-users-up-to-date) users so Trophy can detect anniversaries.
 
-Trophy evaluates the anniversary on the calendar day in the user's [`tz`](/features/users#optional-attributes). Set `tz` so the milestone unlocks on the correct local day.
+Trophy evaluates the anniversary on the calendar day in the user's [`tz`](/data-sources/users#optional-attributes). Set `tz` so the milestone unlocks on the correct local day.
 
 Just like other milestone types, anniversary milestones can trigger [milestone emails](/features/emails#achievement-emails) when unlocked.
 
@@ -144,7 +144,7 @@ You can also create, update, and delete milestones programmatically with the [Ad
 
 - Choosing **Streak** will mean the milestone will be automatically unlocked when the user's streak length reaches the milestone trigger value.
 
-- Choosing **Anniversary** will mean the milestone will be automatically unlocked when the user reaches the specified anniversary of their [`signUpDate`](/features/users#optional-attributes).
+- Choosing **Anniversary** will mean the milestone will be automatically unlocked when the user reaches the specified anniversary of their [`signUpDate`](/data-sources/users#optional-attributes).
 
 - Choosing **API Call** will mean the milestone will only be unlocked when explicitly marked as completed by your code through a request to the [complete achievement API](/api-reference/endpoints/achievements/mark-an-achievement-as-completed).
 
@@ -170,9 +170,9 @@ You can also create, update, and delete milestones programmatically with the [Ad
 <Step title="Add attribute filters (Optional)">
 You can assign attribute filters to a milestone to further restrict who can unlock them and when.
 
-- To limit a **Metric** milestone to only apply to events with specific [custom event attributes](/features/events#custom-event-attributes), add one or more filters in the **Event Attributes** section.
+- To limit a **Metric** milestone to only apply to events with specific [custom event attributes](/data-sources/events#custom-event-attributes), add one or more filters in the **Event Attributes** section.
 
-- To limit any type of milestone to only apply to a user with one or more specific [custom user attributes](/features/users#custom-user-attributes), add attributes and the desired values in the **User Attributes** section.
+- To limit any type of milestone to only apply to a user with one or more specific [custom user attributes](/data-sources/users#custom-user-attributes), add attributes and the desired values in the **User Attributes** section.
 
 <Note>
   When you set multiple event attribute filters, all of them must match for the
@@ -228,11 +228,11 @@ flowchart LR
 
 ## Completing milestones {#completing-achievements}
 
-If you're using metric milestones, there's no need to explicitly _complete_ milestones. Once you've set up [metric tracking](/features/events#tracking-metric-events) in your code, all milestones linked to the metric will be automatically tracked.
+If you're using metric milestones, there's no need to explicitly _complete_ milestones. Once you've set up [metric tracking](/data-sources/events#tracking-metric-events) in your code, all milestones linked to the metric will be automatically tracked.
 
 Similarly, if you're using streak milestones, all milestones related to the user's streak will automatically be unlocked when a user reaches the respective streak length.
 
-Anniversary milestones are also completed automatically. They unlock when a user reaches the configured anniversary of their [`signUpDate`](/features/users#optional-attributes). Users without a `signUpDate` cannot unlock them.
+Anniversary milestones are also completed automatically. They unlock when a user reaches the configured anniversary of their [`signUpDate`](/data-sources/users#optional-attributes). Users without a `signUpDate` cannot unlock them.
 
 Composite milestones are also completed automatically. They unlock as soon as a user has completed all of their prerequisite milestones. No additional API calls are needed.
 
@@ -265,7 +265,7 @@ By default, whenever you move a milestone to 'Active' [status](#managing-achieve
 
 This means when you release new milestones into production, or edit an existing live milestone, backdating will happen automatically.
 
-The same applies when you set or change a user's [`signUpDate`](/features/users#optional-attributes). If the user already qualifies for any active anniversary milestones, Trophy completes them silently.
+The same applies when you set or change a user's [`signUpDate`](/data-sources/users#optional-attributes). If the user already qualifies for any active anniversary milestones, Trophy completes them silently.
 
 <Note>
   When milestones are completed in this way, users don't receive any
@@ -355,7 +355,7 @@ If instead you're building user-specific UI elements, then use the [user achieve
 
 ## Milestone analytics {#achievement-analytics}
 
-If you have milestones set up for any of your [Metrics](/features/metrics), then the metric analytics page displays a chart that shows you the current progress of all Users as follows:
+If you have milestones set up for any of your [Metrics](/data-sources/metrics), then the metric analytics page displays a chart that shows you the current progress of all Users as follows:
 
 <Frame>
   <img
@@ -384,7 +384,7 @@ If you have milestones set up for any of your [Metrics](/features/metrics), then
     <Accordion title="What milestones should I create?">
     Milestones offer the best retention when tightly aligned to the user's core reason for using your platform.
 
-    Use Trophy's [metric analytics](/features/metrics#metric-analytics) to compare the retention of each user interaction, then configure milestones around these interactions to maximize retention impact.
+    Use Trophy's [metric analytics](/data-sources/metrics#metric-analytics) to compare the retention of each user interaction, then configure milestones around these interactions to maximize retention impact.
 
 </Accordion>
 
