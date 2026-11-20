@@ -1,10 +1,9 @@
 name: Translate on main
 
+# Automatic runs on push to main are disabled (Spanish docs are paused).
+# Re-add a `push: branches: [main]` trigger to turn them back on.
 on:
   workflow_dispatch:
-  push:
-    branches:
-      - main
 
 permissions:
   contents: write
