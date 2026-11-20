@@ -1,0 +1,20 @@
+{
+  "name": "trophy-docs-media-videos",
+  "private": true,
+  "description": "Scripted dashboard walkthrough videos for the docs: Playwright captures, Remotion renders.",
+  "type": "module",
+  "scripts": {
+    "login": "node login.mjs",
+    "make": "node make.mjs",
+    "studio": "remotion studio src/index.ts"
+  },
+  "dependencies": {
+    "@remotion/bundler": "4.0.545",
+    "@remotion/cli": "4.0.545",
+    "@remotion/motion-blur": "4.0.545",
+    "@remotion/renderer": "4.0.545",
+    "react": "^19.3.1",
+    "react-dom": "^19.3.1",
+    "remotion": "4.0.545"
+  }
+}

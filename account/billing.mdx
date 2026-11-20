@@ -1,122 +1,125 @@
 ---
 title: Billing
-description: Learn how Trophy controls costs by charging based on monthly active users.
-og:description: Learn how Trophy controls costs by charging based on monthly active users.
+description: Learn how Trophy's plans work and how usage is calculated.
+og:description: Compare Trophy's Pro, Business and Enterprise plans and learn how Trophy charges by monthly active users, so you never pay for churn.
 icon: gauge
 ---
 
 import { PlanBadge } from "../components/plan-badge.jsx";
 
-## Usage-based Billing {#usage-based-billing}
 
-Trophy follows a usage-based pricing model where customers only pay for the units of usage they consume. For Trophy, a unit of usage corresponds to a single [Monthly Active User](#monthly-active-users-maus) (MAU).
+## Usage-based billing {#usage-based-billing}
+
+Trophy charges by [monthly active users](#monthly-active-users-maus) (MAUs), so you never pay for churn.
 
 <Info>
-  See our [pricing page](https://trophy.so/pricing) to get an estimate of your
-  costs based on your expected usage.
+  [Book a demo](https://trophy.so/contact-sales?utm_source=docs) and we'll help
+  you find the right plan for your team, or compare plans on our [pricing
+  page](https://trophy.so/pricing).
 </Info>
 
-## Monthly Active Users (MAUs) {#monthly-active-users-maus}
+## Monthly active users (MAUs) {#monthly-active-users-maus}
 
-Trophy defines an MAU as a single user that sends at least one [metric event](/features/events) to Trophy in a given month.
+Trophy counts how many unique users you've told Trophy about each month. As long as a user sends at least one [metric event](/data-sources/events) in a given month, they count as an active user.
 
-Bear in mind you never pay for churned users. If a user signs up for your product in a given month but doesn't return, you only pay for that user once and never again.
-
-## Free Trial {#free-trial}
-
-Every new account on the <PlanBadge plan="pro" /> and <PlanBadge plan="business" /> plans starts with a **30-day free trial** so you can test and evaluate Trophy before you pay.
+Users who aren't active in later months aren't charged. If a user signs up for your product in a given month but doesn't return, you only pay for that user once and never again.
 
 ## Plans {#plans}
 
 Trophy has three plans, <PlanBadge plan="pro" />, <PlanBadge plan="business" /> and <PlanBadge plan="enterprise" />.
 
-### Pro Plan {#pro-plan}
+### Pro plan {#pro-plan}
 
-The <PlanBadge plan="pro" /> plan is for teams running Trophy in production. It includes all of Trophy's core gamification features: achievements, streaks, points, leaderboards, emails and push notifications.
+The <PlanBadge plan="pro" /> plan is for teams who want to explore AI customer engagement. It includes:
 
-### Business Plan {#business-plan}
+- [AI lifecycle agents](/agentic-messaging/overview)
+- In-app personalization: [milestones](/features/milestones), [streaks](/features/streaks), [points](/features/points), [leaderboards](/features/leaderboards) and [rewards](/features/rewards)
+- A dedicated Slack channel
 
-The <PlanBadge plan="business" /> plan is for teams that need additional security, access controls and support, including single sign-on, role-based access control, data sync and a dedicated Slack channel.
+### Business plan {#business-plan}
 
-### Enterprise Plan {#enterprise-plan}
+The <PlanBadge plan="business" /> plan is for teams with additional security and support needs. It includes everything in <PlanBadge plan="pro" />, plus:
 
-The <PlanBadge plan="enterprise" /> plan is for larger organizations with custom requirements such as multi-tenancy, data residency, compliance reports and custom contracts. [Get in touch](mailto:support@trophy.so) to discuss pricing.
+- [Single sign-on](/account/security#single-sign-on-sso)
+- [Multi-factor authentication](/account/security#multi-factor-authentication-mfa)
+- [Role-based access control](/account/security#role-based-access-control-rbac)
 
-### Plan Allowances {#plan-allowances}
+### Enterprise plan {#enterprise-plan}
 
-Here's a comparison of the allowances of each plan:
+The <PlanBadge plan="enterprise" /> plan is for high-volume applications with bespoke needs. It includes everything in <PlanBadge plan="business" />, plus:
 
-| Item                        | <PlanBadge plan="pro" /> | <PlanBadge plan="business" /> | <PlanBadge plan="enterprise" /> |
-| --------------------------- | -------- | -------- | ---------- |
-| Base price                  | `$299`   | `$599`   | Custom     |
-| Included MAUs               | `10,000` | `10,000` | Custom     |
-| Included Emails             | `20,000` | `20,000` | Custom     |
-| Included Push Notifications | `20,000` | `20,000` | Custom     |
+- Data residency control
+- Custom uptime SLA
+- SOC 2 / ISO reports
 
-### Overages {#overages}
-
-Overages are charged on the <PlanBadge plan="pro" /> and <PlanBadge plan="business" /> plans above the included [allowances](#plan-allowances) at the following rates:
-
-| Item                     | <PlanBadge plan="pro" /> | <PlanBadge plan="business" /> |
-| ------------------------ | -------- | -------- |
-| 1 MAU                    | `$0.015` | `$0.015` |
-| 1,000 Emails             | `$2.00`  | `$2.00`  |
-| 1,000 Push Notifications | `$1.00`  | `$1.00`  |
-
-Volume discounts are available as part of [custom contracts](#custom-contracts).
+[Contact sales](https://trophy.so/contact-sales?utm_source=docs) to discuss pricing.
 
 ## Features {#features}
 
-Here's a list of all Trophy features and the plan they become available on:
+Here's everything included in each plan.
 
-<PlanBadge plan="pro" />
+### AI lifecycle agents {#ai-lifecycle-agents}
 
-- [Achievements](/features/achievements)
-- [Streaks](/features/streaks)
-- [Points](/features/points)
-- [Leaderboards](/features/leaderboards)
-- [Emails](/features/emails)
-- [Push Notifications](/features/push-notifications)
-- [Webhooks](/webhooks)
-- Integration guidance for the first 30 days
-- 99.9% uptime SLA
-- 7-day audit logs
+| Feature | <PlanBadge plan="pro" /> | <PlanBadge plan="business" /> | <PlanBadge plan="enterprise" /> |
+| --- | --- | --- | --- |
+| [AI lifecycle agents](/agentic-messaging/overview) | Included | Included | Included |
+| Emails | Included | Included | Included |
+| Push notifications | Included | Included | Included |
 
-<PlanBadge plan="business" />
+### In-app personalization {#in-app-personalization}
 
-Everything in <PlanBadge plan="pro" />, plus:
+| Feature | <PlanBadge plan="pro" /> | <PlanBadge plan="business" /> | <PlanBadge plan="enterprise" /> |
+| --- | --- | --- | --- |
+| [Milestones](/features/milestones) | Included | Included | Included |
+| [Streaks](/features/streaks) | Included | Included | Included |
+| [Points](/features/points) | Included | Included | Included |
+| [Leaderboards](/features/leaderboards) | Included | Included | Included |
+| [Rewards](/features/rewards) | Included | Included | Included |
 
-- Ongoing integration guidance
-- Data sync
-- Slack support with a dedicated Slack channel
-- Single sign-on (SSO)
-- Multi-factor authentication (MFA)
-- Role-based access control (RBAC)
-- 30-day audit logs
+### Integration {#integration}
 
-<PlanBadge plan="enterprise" />
+| Feature | <PlanBadge plan="pro" /> | <PlanBadge plan="business" /> | <PlanBadge plan="enterprise" /> |
+| --- | --- | --- | --- |
+| [Webhooks](/webhooks/introduction) | Included | Included | Included |
+| [Multiple environments](/platform/environments) | Included | Included | Included |
+| [MCP server](/mcp/overview) | Included | Included | Included |
+| [Data sync](/platform/data-sync) | — | Included | Included |
 
-Everything in <PlanBadge plan="business" />, plus:
+### Deployment methods {#deployment-methods}
 
-- Custom usage and volume discounts
-- Reserved usage commitments
-- Multi-tenancy
-- Data residency control
-- 99.99% uptime SLA
-- SOC 2 and ISO reports
-- Custom DPA and alternative data residency
-- Custom audit logs, SLAs and support agreements
-- Startup program eligibility
+| Feature | <PlanBadge plan="pro" /> | <PlanBadge plan="business" /> | <PlanBadge plan="enterprise" /> |
+| --- | --- | --- | --- |
+| [Lifecycle emails](/features/emails) | Included | Included | Included |
+| Drop-in pages | Included | Included | Included |
+| Custom integrations | Included | Included | Included |
+| [Multi-tenancy](/platform/multi-tenancy) | — | — | Included |
 
-## Custom Contracts {#custom-contracts}
+### Support {#support}
 
-If you have more than 100K MAUs and would like to discuss custom contracts including volume discounts to suit your business needs then please [get in touch](mailto:support@trophy.so) and we'll be happy to help.
+| Feature | <PlanBadge plan="pro" /> | <PlanBadge plan="business" /> | <PlanBadge plan="enterprise" /> |
+| --- | --- | --- | --- |
+| Dedicated Slack channel | Included | Included | Included |
+| Uptime SLA | 99.9% | 99.9% | Custom |
+| Custom agreements | — | — | Included |
+| Support SLAs | — | — | Included |
 
-## Startup Program {#startup-program}
+### Compliance {#compliance}
 
-Eligible startups can get one free year of the <PlanBadge plan="pro" /> plan for up to 100K MAUs. Acceptance into the program is not guaranteed. [Get in touch](mailto:support@trophy.so) to find out more.
+| Feature | <PlanBadge plan="pro" /> | <PlanBadge plan="business" /> | <PlanBadge plan="enterprise" /> |
+| --- | --- | --- | --- |
+| [Audit logs](/account/security#audit-logs) | 7 days | 30 days | Custom |
+| [Single sign-on](/account/security#single-sign-on-sso) | — | Included | Included |
+| [Multi-factor authentication](/account/security#multi-factor-authentication-mfa) | — | Included | Included |
+| [Role-based access control](/account/security#role-based-access-control-rbac) | — | Included | Included |
+| SOC 2 / ISO reports | — | — | Included |
+| Custom DPA | — | — | Included |
+| Alternative residency | — | — | Included |
 
-## Viewing Your Usage {#viewing-your-usage}
+## Startup program {#startup-program}
+
+Just getting started? Eligible startups can get one free year of the <PlanBadge plan="pro" /> plan. Acceptance into the program is not guaranteed. [Apply](https://trophy.so/contact-sales?program=startup&utm_source=docs) to find out more.
+
+## Viewing your usage {#viewing-your-usage}
 
 You can view your usage for the current billing period on the [billing page](https://app.trophy.so/billing) of the Trophy dashboard and view all past invoices in your billing portal.
 
@@ -129,7 +132,7 @@ You can view your usage for the current billing period on the [billing page](htt
   />
 </Frame>
 
-## Frequently Asked Questions {#frequently-asked-questions}
+## Frequently asked questions {#frequently-asked-questions}
 
 <AccordionGroup>
     <Accordion title="When will I be charged?">
@@ -137,6 +140,6 @@ You can view your usage for the current billing period on the [billing page](htt
     </Accordion>
 </AccordionGroup>
 
-## Get Support {#get-support}
+## Get support {#get-support}
 
 Want to get in touch with the Trophy team? Reach out to us via [email](mailto:support@trophy.so). We're here to help!

@@ -1,16 +1,23 @@
 ---
 title: Emails
-description: Learn how to use emails in a gamified product experience with Trophy.
-og:description: Use automated email flows to extend your gamification experience
-  outside your app and remind users to keep coming back.
+sidebarTitle: "Emails (Legacy)"
+description: Learn how to send template-based emails from key triggers with Trophy.
+og:description: Use template-based email flows to reach users outside your app
+  and remind them to keep coming back.
 icon: mail
 ---
 
-Trophy can send automated emails to users based on key triggers without requiring any code. Here we'll look at what these triggers are, and how they can form part of your product's gamification experience.
+{/* TODO(media): re-create in the new dashboard theme: assets/features/emails/achievement_progress_block.mp4, assets/features/emails/email_analytics.mp4 */}
 
-## Types Of Emails {#types-of-emails}
+<Info>
+  These are Trophy's legacy, template-based emails, sent from fixed triggers. For users in the [agentic messaging](/agentic-messaging/overview) cohort, agentic messaging replaces them: lifecycle agents write and send personalized emails instead. Both send from the same verified domain, which you set up on the [channels](/agentic-messaging/channels#domain-verification) page.
+</Info>
 
-Trophy supports 4 types of emails, each of which is designed to suit a common scenario in building gamification experiences.
+Trophy can send automated emails to users based on key triggers without requiring any code. Here we'll look at what these triggers are, and how they can help bring users back to your product.
+
+## Types of emails {#types-of-emails}
+
+Trophy supports 4 types of emails, each of which is designed to suit a common engagement scenario.
 
 All emails are optional, but all four can be used simultaneously and can be controlled from the [Emails](https://app.trophy.so/emails/configure) page in the Trophy dashboard.
 
@@ -20,203 +27,41 @@ All emails are optional, but all four can be used simultaneously and can be cont
     muted
     loop
     playsInline
-    className="w-full aspect-15/4"
+    className="w-full aspect-video"
     src="../assets/features/emails/email_types.mp4"
   ></video>
 </Frame>
 
-- **Achievement emails** are sent to users each time they unlock an [Achievement](/features/achievements).
+- **Milestone emails** are sent to users each time they complete a [Milestone](/features/milestones).
 - **Recap emails** are sent to users on a pre-defined frequency to summarize progress. Recap Emails can be configured to be sent daily, weekly, monthly or yearly depending on your use case.
 - **Reactivation emails** are sent to users after they become inactive with the goal of bringing them back to your app.
 - **Streak emails** are automatically sent to users reminding them to extend their [Streak](/features/streaks).
 
-## Sending Emails {#sending-emails}
+## Sending emails {#sending-emails}
 
-To start sending emails with Trophy, you'll need to verify your domain and add and activate email templates for the types you want to send.
+To start sending emails with Trophy, you'll need to [verify your domain](/agentic-messaging/channels#domain-verification) and add and activate email templates for the types you want to send.
 
 <Tip>
   Users can control which email notifications they receive through Trophy's
-  [user preferences API](/features/users#notification-preferences). This allows
+  [user preferences API](/data-sources/users#notification-preferences). This allows
   you to build a preference center in your application where users can opt in or
   out of specific email types.
 </Tip>
 
-### Domain Verification {#domain-verification}
+### Domain verification {#domain-verification}
 
-Trophy supports sending emails from your own domain out-of-the-box. There are two ways to set this up, Single Sender Verification and DNS Verification.
+<a id="sender-verification-basic" />
+<a id="dns-verification-advanced" />
 
-All domain settings can be found in the [Domains](https://app.trophy.so/emails/domains) page in the Trophy dashboard.
+Legacy emails send from the same verified domain as agentic messaging, so you only need to set it up once. Follow the [domain verification](/agentic-messaging/channels#domain-verification) guide on the channels page to set up [Single Sender Verification](/agentic-messaging/channels#sender-verification-basic) or [DNS Verification](/agentic-messaging/channels#dns-verification-advanced).
 
-<Tip>
-  If you're looking to get set up quickly we recommend starting with Single
-  Sender Verification then setting up DNS Verification when you're ready to move
-  to production.
-</Tip>
-
-<CardGroup cols={2}>
-  <Card
-    title="Sender Verification"
-    icon="check"
-    href="#sender-verification-basic"
-  >
-    Quickly verify a single email address
-  </Card>
-  <Card title="DNS Verification" icon="lock" href="#dns-verification-advanced">
-    Recommended for production use
-  </Card>
-</CardGroup>
-
-#### Sender Verification (Basic) {#sender-verification-basic}
-
-During onboarding you'll be prompted to set up Sender Verification. This is a super simple way to quickly verify a single email address that you want to use with Trophy without needing to change any code or DNS settings.
-
-You'll be prompted to enter the email address, from name and reply-to email that you'd like Trophy to use when sending emails:
-
-<Frame>
-  <img
-    height="200"
-    width="75%"
-    noZoom
-    src="../assets/features/emails/sender_verification.jpg"
-  />
-</Frame>
-
-Trophy will send a verification email to that address. Simply click the link in the email to let Trophy know what you own the address and you'll be good to go.
-
-<Note>
-  The email you receive will come from our email provider, Postmark. So keep an
-  eye out for 'Postmark Support' in your inbox!
-</Note>
-
-Sender Verification is great for getting started but is limited in that you won't benefit from your existing email reputation and can only send emails from one address.
-
-Also, if you want to change the address in the future, you'll have to go through Sender Verification again which you can do in the [settings screen](https://app.trophy.so/integration?tab=domains).
-
-#### DNS Verification (Advanced) {#dns-verification-advanced}
-
-For production use we recommend DNS Verification. Once set up, this allows you to configure Trophy to send emails from any address on your domain. So if you want to change the address in future, you won't need to verify again.
-
-Completing DNS verification also gives you the full benefits of any existing domain reputation and is the best way to make sure your emails avoid the spam folder.
-
-This does however require adding a couple of new entries into your DNS to allow Trophy to verify you own the domain.
-
-Follow the steps below to set up DNS verification:
-
-<Steps>
-<Step title="Head to the Emails page">
-    Within the Emails page, you'll find the [Domains](https://app.trophy.so/emails/domains) tab which is where you'll configure everything related to the email domain Trophy will use to send emails on your behalf.
-</Step>
-
-<Step title="Configure your domain">
-    Head down to the DNS Verification section and enter the domain you want to set up with Trophy.
-
-    You can also also configure a custom Return Path. This is where Trophy will forward notifications of bounced emails to help you investigate deliverability issues:
-
-    <Frame>
-      <img
-        height="200"
-        width="75%"
-        noZoom
-        src="../assets/features/emails/dns-verification-1.png"
-      />
-    </Frame>
-
-</Step>
-
-<Step title="Set up your DNS records">
-
-    Once you've entered your email domain, Trophy will provide you with details for two new DNS records that you'll need to add to your DNS provider.
-
-    <Frame>
-      <img
-        height="200"
-        width="75%"
-        noZoom
-        src="../assets/features/emails/dns-verification-2.png"
-      />
-    </Frame>
-
-    - First is the **DKIM** record which is used by inbox providers like Google to verify the authenticity of emails. Enter the name and value provided as a new **TXT** record in your DNS provider.
-    - Second is the **Return Path** record. This is used to forward notifications of email bounces to your domain. Enter the name and value provided as a new **CNAME** record in your DNS provider.
-
-    Here are the pages for the most common DNS providers on how to set up new records:
-
-    <AccordionGroup>
-      <Accordion title='GoDaddy'>
-          [Add a TXT record](https://www.godaddy.com/en-uk/help/add-a-txt-record-19232)
-          [Add a CNAME record](https://www.godaddy.com/en-uk/help/add-a-cname-record-19236)
-      </Accordion>
-      <Accordion title='Cloudflare'>
-          [Add DNS records](https://developers.cloudflare.com/dns/manage-dns-records/how-to/create-dns-records/#create-dns-records)
-      </Accordion>
-      <Accordion title="NameCheap">
-          [Add a CNAME record](https://www.namecheap.com/support/knowledgebase/article.aspx/9646/2237/how-to-create-a-cname-record-for-your-domain/)
-          [Add a TXT record](https://www.namecheap.com/support/knowledgebase/article.aspx/317/2237how-do-i-add-txtspfdkimdmarc-records-for-my-domain/#:~:text=this%20guide%20.-,DKIM%20records,-DKIM%20(DomainKeys%20Identified))
-      </Accordion>
-    </AccordionGroup>
-
-    <Warning>Note: If you're using a proxy like Cloudflare, make sure to turn  it off for these records or Trophy won't be able to properly verify them.</Warning>
-
-</Step>
-
-<Step title="Verify DNS records">
-
-    Once you've added the two records into your DNS settings, click the refresh icon and Trophy will attempt to verify the records for you.
-
-    Usually Trophy can verify records within a few minutes but bear in mind that DNS changes can take up to a few hours to fully propogate.
-
-    If you see the following alert, the records may not have propogated yet, or there may be an issue with your setup.
-
-    <Frame>
-      <img
-        height="200"
-        width="75%"
-        noZoom
-        src="../assets/features/emails/dns-verification-3.png"
-      />
-    </Frame>
-
-    Once you're sure everything's set up correctly in your DNS provider, click refresh and Trophy will attempt to verify your DNS records once again.
-
-    As soon as you see the following message, you know everything's verified:
-
-    <Frame>
-      <img
-        height="200"
-        width="75%"
-        noZoom
-        src="../assets/features/emails/dns-verification-4.png"
-      />
-    </Frame>
-
-</Step>
-
-<Step title="Configure your sending address">
-
-    Once your DNS records are verified, it's time to choose the email address you want to send emails from. Note that now you've fully verified your domain, you can change this address whenever you like without impacting deliverability.
-
-    Simply enter the email address you want Trophy to send from, the name to show to users in the inbox when they receive emails and a support email address they can use to contact you if needed:
-
-    <Frame>
-      <img
-        height="200"
-        width="75%"
-        noZoom
-        src="../assets/features/emails/dns-verification-5.png"
-      />
-    </Frame>
-
-</Step>
-
-</Steps>
-
-### Email Triggers {#email-triggers}
+### Email triggers {#email-triggers}
 
 On the [email configuration](https://app.trophy.so/emails/configure) page, each email type has its own section. Add templates under the relevant type and activate one to start sending.
 
-#### Recap Emails {#recap-emails}
+#### Recap emails {#recap-emails}
 
-**Recap** emails send weekly or monthly progress reports to users. You can change the frequency of these emails on the [integration](https://app.trophy.so/integration/configure) page using the **Aggregation Period** setting, or with the [organization settings Admin API](/admin-api/endpoints/settings/update-organization-settings).
+**Recap** emails send weekly or monthly progress reports to users. You can change the frequency of these emails on the [Settings](https://app.trophy.so/settings) page using the **Aggregation period** setting, or with the [organization settings Admin API](/admin-api/endpoints/settings/update-organization-settings).
 
 <Frame>
   <img
@@ -227,7 +72,7 @@ On the [email configuration](https://app.trophy.so/emails/configure) page, each 
   />
 </Frame>
 
-#### Reactivation Emails {#reactivation-emails}
+#### Reactivation emails {#reactivation-emails}
 
 **Reactivation** emails send win-back messages to users after they become inactive. These emails are sent according to the following timeline:
 
@@ -246,7 +91,7 @@ On the [email configuration](https://app.trophy.so/emails/configure) page, each 
   />
 </Frame>
 
-#### Streak Emails {#streak-emails}
+#### Streak emails {#streak-emails}
 
 **Streak** emails remind users to extend their streak before it expires. These emails are sent according to the streak frequency you configured on the [streaks page](https://app.trophy.so/streaks):
 
@@ -263,9 +108,9 @@ On the [email configuration](https://app.trophy.so/emails/configure) page, each 
   />
 </Frame>
 
-#### Achievement Emails {#achievement-emails}
+#### Milestone emails {#achievement-emails}
 
-**Achievement** emails congratulate users when they complete an [achievement](/features/achievements) you've configured in Trophy. These emails send between 5-9PM on the day the achievement is completed, or the next day at 5PM if it is past 9PM when the user completes the achievement.
+**Milestone** emails congratulate users when they complete a [milestone](/features/milestones) you've configured in Trophy. These emails send between 5-9PM on the day the milestone is completed, or the next day at 5PM if it is past 9PM when the user completes the milestone.
 
 <Frame>
   <img
@@ -276,9 +121,9 @@ On the [email configuration](https://app.trophy.so/emails/configure) page, each 
   />
 </Frame>
 
-#### Limiting Emails to Specific Types of Users {#limiting-emails-to-specific-types-of-users}
+#### Limiting emails to specific types of users {#limiting-emails-to-specific-types-of-users}
 
-Each email template can be limited to users with specific [custom user attribute](/features/users#custom-user-attributes) values.
+Each email template can be limited to users with specific [custom user attribute](/data-sources/users#custom-user-attributes) values.
 
 For each attribute you'd like to restrict the email to, click the plus icon next to the **User Filters** header for the email template, then select the attribute and enter the desired value. Only users that have **all** specified attribute values will receive emails from this template.
 
@@ -291,11 +136,11 @@ For each attribute you'd like to restrict the email to, click the plus icon next
   />
 </Frame>
 
-#### Time Zones {#time-zones}
+#### Time zones {#time-zones}
 
-If you specify a timezone for each user through [User Identification](/features/users#param-tz), Trophy will use that local time zone to schedule emails according to the logic specified above. If you do not provide time zones for the users you identify, Trophy will default to Eastern Time.
+If you specify a timezone for each user through [User Identification](/data-sources/users#param-tz), Trophy will use that local time zone to schedule emails according to the logic specified above. If you do not provide time zones for the users you identify, Trophy will default to Eastern Time.
 
-### Sending Emails Via Webhooks {#sending-emails-via-webhooks}
+### Sending emails via webhooks {#sending-emails-via-webhooks}
 
 Instead of having Trophy send emails for you, you can subscribe to email webhook events and send messages yourself through your own email provider or pipeline.
 
@@ -308,13 +153,13 @@ When an email would normally be due, Trophy fires the corresponding webhook so y
 
 These webhooks fire based on the email triggers themselves, regardless of whether any email templates are enabled or disabled, and regardless of any [user attribute filters](#limiting-emails-to-specific-types-of-users) configured on those templates. If you need equivalent filtering, apply it in your webhook handler.
 
-Email webhooks respect [notification preferences](/features/users#notification-preferences) and the [control attribute](/platform/experimentation#control-ratio) used for experimentation. Trophy will not fire email webhooks for users who have opted out of that email type, or for users in the control group.
+Email webhooks respect [notification preferences](/data-sources/users#notification-preferences) and the [control attribute](/platform/experimentation#control-ratio) used for experimentation. Trophy will not fire email webhooks for users who have opted out of that email type, or for users in the control group.
 
 <Warning>
   If you are sending emails yourself from these webhooks, make sure the corresponding email templates are turned off in Trophy. Email webhooks still fire when triggers are due even if templates are disabled, but if templates remain enabled Trophy will also send its own emails resulting in duplicate delivery.
 </Warning>
 
-## Designing Emails {#designing-emails}
+## Designing emails {#designing-emails}
 
 Trophy has a fully-featured block-based email builder that allows you to design templates, controlling all email copy and subject lines. On the [emails](https://app.trophy.so/emails/configure) page, add templates under each [email type](#email-triggers) section you want to use.
 
@@ -324,12 +169,12 @@ Trophy has a fully-featured block-based email builder that allows you to design 
     muted
     loop
     playsInline
-    className="w-full aspect-15/4"
+    className="w-full aspect-video"
     src="../assets/features/emails/designing_emails.mp4"
   ></video>
 </Frame>
 
-### Default Templates {#default-templates}
+### Default templates {#default-templates}
 
 By default, Trophy provides a template for each [email type](#types-of-emails) as a good starting point. The default templates can't be changed, but you can duplicate and customize these as you wish.
 
@@ -337,7 +182,7 @@ By default, Trophy provides a template for each [email type](#types-of-emails) a
   You can also create blank templates if you just want to start from scratch.
 </Tip>
 
-### Creating A New Template {#creating-a-new-template}
+### Creating a new template {#creating-a-new-template}
 
 To create a new email template, follow the steps below.
 
@@ -368,7 +213,7 @@ To create a new email template, follow the steps below.
         muted
         loop
         playsInline
-        className="w-full aspect-15/4"
+        className="w-full aspect-video"
         src="../assets/features/emails/designing_emails.mp4"
       ></video>
     </Frame>
@@ -376,9 +221,9 @@ To create a new email template, follow the steps below.
   </Step>
 </Steps>
 
-### Block Types {#block-types}
+### Block types {#block-types}
 
-Trophy's email builder supports a number of different block types that serve different purposes. All the basic components you'd expect to find in an email editor like paragraphs, headers, and images are called [Basic Blocks](#basic-blocks). There is also a set of more powerful components like charts and streaks that leverage Trophy's user activity data and gamification features. These are called [Smart Blocks](#smart-blocks).
+Trophy's email builder supports a number of different block types that serve different purposes. All the basic components you'd expect to find in an email editor like paragraphs, headers, and images are called [Basic Blocks](#basic-blocks). There is also a set of more powerful components like charts and streaks that leverage Trophy's user activity data and in-app features. These are called [Smart Blocks](#smart-blocks).
 
 <Frame>
   <img
@@ -389,7 +234,7 @@ Trophy's email builder supports a number of different block types that serve dif
   />
 </Frame>
 
-#### Basic Blocks {#basic-blocks}
+#### Basic blocks {#basic-blocks}
 
 Here's the full list of un-opinionated basic blocks that Trophy supports:
 
@@ -404,7 +249,7 @@ Here's the full list of un-opinionated basic blocks that Trophy supports:
 - **Columns** - Useful for creating up to 3-column layouts with any content.
 - **Logo** - Will render your organization's logo, set on the [Branding](https://app.trophy.so/branding) page.
 
-#### Conditional Blocks {#conditional-blocks}
+#### Conditional blocks {#conditional-blocks}
 
 Trophy also has a powerful conditional rendering system powered by the _Conditional_ block type.
 
@@ -437,35 +282,21 @@ One common use case for the conditional block is to conditionally show a user th
   />
 </Frame>
 
-This creates a powerful framework to design emails based on highly relevant and personalized user data and can be used to create a wide-range of emails for common gamification use cases.
+This creates a powerful framework to design emails based on highly relevant and personalized user data and can be used to create a wide-range of emails for common engagement use cases.
 
-#### Smart Blocks {#smart-blocks}
+#### Smart blocks {#smart-blocks}
 
-Smart blocks are powerful components designed to support common gamification use cases and integrate with all of Trophy's features including metrics, achievements and streaks.
+Smart blocks are powerful components designed to support common engagement use cases and integrate with all of Trophy's features including metrics, milestones and streaks.
 
 You can find all smart blocks in the _Recommended Blocks_ section, and they are always recognizable by the <Icon icon="zap" /> icon.
-
-Watch Charlie walk through smart blocks and how they work:
-
-<Frame>
-  <iframe
-    width="560"
-    height="315"
-    src="https://www.youtube.com/embed/CA7i8Gd5K1s?si=mHkAwVPZYMoBPm15"
-    title="YouTube video player"
-    frameborder="0"
-    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-    allowfullscreen
-  ></iframe>
-</Frame>
 
 Read more about the use case of each smart block:
 
 <AccordionGroup>
   <Accordion title="Achievement Progress Chart" icon="zap">
-    The achievement progress chart block displays a chart with bars for up to five achievements for a particular metric, highlighting any that the recipient has unlocked.
+    The achievement progress chart block displays a chart with bars for up to five milestones for a particular metric, highlighting any that the recipient has unlocked.
     
-    Choose the metric to display achievements for using the metric selector.
+    Choose the metric to display milestones for using the metric selector.
 
     <Frame>
       <video
@@ -483,9 +314,9 @@ Read more about the use case of each smart block:
 {" "}
 
 <Accordion title="Achievements Unlocked" icon="zap">
-  The achievements unlocked block displays the achievement the recipient has unlocked. This is only useful in the context of achievement unlocked emails. If the recipient hasn't unlocked any achievements, then this block won't show in emails.
+  The achievements unlocked block displays the milestone the recipient has completed. This is only useful in the context of milestone emails. If the recipient hasn't completed any milestones, then this block won't show in emails.
 
-Where achievements have badges, these will be automatically shown, as well as the name of the achievement.
+Where milestones have badges, these will be automatically shown, as well as the name of the milestone.
 
   <Frame>
       <video
@@ -535,7 +366,7 @@ Where achievements have badges, these will be automatically shown, as well as th
   </Accordion>
 </AccordionGroup>
 
-### Email Variables {#email-variables}
+### Email variables {#email-variables}
 
 Trophy provides an expansive set of email variables that can be used to insert highly relevant and personalized copy into the body of emails and subject lines.
 
@@ -566,7 +397,7 @@ Variables related to the recipient of the email.
 
 - **Name**: The recipient's name, if set
 
-Additionally all [custom user attributes](/features/users#custom-user-attributes) are available as email variables.
+Additionally all [custom user attributes](/data-sources/users#custom-user-attributes) are available as email variables.
 
 </Accordion>
 <Accordion title="Metrics">
@@ -584,7 +415,7 @@ Each Trophy metric supports the following email variables:
 
 Additionally, the **Highest** and **Lowest** dynamic aliases support the same set of variables. When using these aliases, Trophy will pick the metric where the recipient has either the highest or lowest current total at send time.
 
-When using metric variables, you also have the option of filtering the data that any of the above variables reference through a [custom event attribute](/features/events#custom-event-attributes).
+When using metric variables, you also have the option of filtering the data that any of the above variables reference through a [custom event attribute](/data-sources/events#custom-event-attributes).
 
     </Accordion>
 
@@ -603,15 +434,15 @@ Similarly to metrics, each points system has the following variables that can be
 </Accordion>
 <Accordion title="Achievements">
   <Note>
-  These variables are only relevant for [achievement emails](#achievement-emails).
+  These variables are only relevant for [milestone emails](#achievement-emails).
   </Note>
 
-When configuring a template for use with achievement emails, the following variables are available:
+When configuring a template for use with milestone emails, the following variables are available:
 
-- **Is Final Achievement**: If the achievement triggering the email is part of a series of metric achievements, this is true when the achievement is the final achievement in the series
-- **Percent To Next Achievement**: If the achievement triggering the email is part of a series of metric achievements, this is the percentage until the user unlocks the next achievement in the series
-- **Achievement Name**: The name of the achievement that triggered the email
-- **Achievement Description**: The description of the achievement that triggered the email
+- **Is Final Achievement**: If the milestone triggering the email is part of a series of metric milestones, this is true when the milestone is the final milestone in the series
+- **Percent To Next Achievement**: If the milestone triggering the email is part of a series of metric milestones, this is the percentage until the user completes the next milestone in the series
+- **Achievement Name**: The name of the milestone that triggered the email
+- **Achievement Description**: The description of the milestone that triggered the email
 
 .
 
@@ -649,7 +480,7 @@ When configuring a template for use with achievement emails, the following varia
 </Accordion>
 </AccordionGroup>
 
-#### Advanced Usage {#advanced-usage}
+#### Advanced usage {#advanced-usage}
 
 There are a couple of additional options to consider when using emails variables.
 
@@ -681,21 +512,9 @@ When using numeric variables like the recipients current points total or metric 
   />
 </Frame>
 
-### Text Variations {#text-variations}
+### Text variations {#text-variations}
 
 Variations can be used to add randomness to text within emails sent by Trophy. This prevents emails from getting boring and helps improve open and click rates.
-
-<Frame>
-  <iframe
-    width="560"
-    height="315"
-    src="https://www.youtube.com/embed/mlxMqHsdql8?si=hhizWfwiylgxxEuV"
-    title="YouTube video player"
-    frameborder="0"
-    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-    allowfullscreen
-  ></iframe>
-</Frame>
 
 Any block that supports text entry including H1, H2, H3 and paragraph support variations.
 
@@ -714,16 +533,11 @@ To create a variation click the _Add Variation_ button on any block that support
   ></video>
 </Frame>
 
-<Note>
-  Variations do not support A/B testing yet, but this is on our roadmap so stay
-  tuned...
-</Note>
+### Using the editor {#using-the-editor}
 
-### Using The Editor {#using-the-editor}
+The email template editor is a blank canvas for designing emails that look great in the inbox. Using pre-configured [Blocks](#block-types) makes it really easy to create email templates that suit common engagement use cases. Here we'll walk through how to best use the editor to create awesome looking emails.
 
-The email template editor is a blank canvas for designing emails that look great in the inbox. Using pre-configured [Blocks](#block-types) makes it really easy to create email templates that suit common gamification use cases. Here we'll walk through how to best use the editor to create awesome looking emails.
-
-#### Adding Blocks {#adding-blocks}
+#### Adding blocks {#adding-blocks}
 
 To add a new block an email template hit the <Icon icon="square-slash" /> key, this will open the block selection dialog where you can choose the block you want to add.
 
@@ -751,7 +565,7 @@ Or if you want to add a block immediately after another block, use the block men
   ></video>
 </Frame>
 
-#### Arranging Blocks {#arranging-blocks}
+#### Arranging blocks {#arranging-blocks}
 
 Blocks can be dragged up and down using the block menu.
 
@@ -766,9 +580,9 @@ Blocks can be dragged up and down using the block menu.
   ></video>
 </Frame>
 
-#### Text Formatting {#text-formatting}
+#### Text formatting {#text-formatting}
 
-The email editor offers rich text formatting including bold, italics, [hyperlinks](https://www.youtube.com/watch?v=dQw4w9WgXcQ) and `code` formatting.
+The email editor offers rich text formatting including bold, italics, [hyperlinks](https://example.com) and `code` formatting.
 
 <Frame>
   <video
@@ -781,7 +595,7 @@ The email editor offers rich text formatting including bold, italics, [hyperlink
   ></video>
 </Frame>
 
-### Font Style {#font-style}
+### Font style {#font-style}
 
 On the [email configure page](https://app.trophy.so/emails/configure), you'll find a setting to change the font style used in all emails.
 
@@ -796,13 +610,13 @@ On the [email configure page](https://app.trophy.so/emails/configure), you'll fi
 
 Other email styles are pulled from your Trophy account's [Branding](https://app.trophy.so/branding) settings.
 
-## Handling Unsubscribes {#handling-unsubscribes}
+## Handling unsubscribes {#handling-unsubscribes}
 
 All emails that Trophy sends include an unsubscribe link and message. This is important for maintaining compliance with regulations and it's not possible to hide it.
 
 <Info>
   The message will read as follows: You are receiving this email because you
-  are subscribed to progress report and achievement emails. If you no longer
+  are subscribed to progress report and milestone emails. If you no longer
   wish to receive these emails, you can unsubscribe.
 </Info>
 
@@ -811,11 +625,11 @@ Any recipient that clicks this link will be taken to a branded page that allows 
 <Tip>
   As an alternative to the unsubscribe link, you can also build a preference
   center in your application using Trophy's [user preferences
-  API](/features/users#notification-preferences). This gives users more granular
+  API](/data-sources/users#notification-preferences). This gives users more granular
   control over which types of emails they receive.
 </Tip>
 
-## Email Analytics {#email-analytics}
+## Email analytics {#email-analytics}
 
 Trophy has built-in analytics for all Emails that it sends. This includes:
 
@@ -835,11 +649,11 @@ Trophy has built-in analytics for all Emails that it sends. This includes:
   ></video>
 </Frame>
 
-## Frequently Asked Questions {#frequently-asked-questions}
+## Frequently asked questions {#frequently-asked-questions}
 
 <AccordionGroup>
 <Accordion title="Can I send emails from my own domain?">
-    Yes! Sending emails from your own domain is supported out-of-the-box. Follow the steps in the section on [sending emails](#sending-emails) to get started.
+    Yes! Sending emails from your own domain is supported out-of-the-box. Follow the [domain verification](/agentic-messaging/channels#domain-verification) guide to get started.
   </Accordion>
 
 {" "}
@@ -851,6 +665,6 @@ Trophy has built-in analytics for all Emails that it sends. This includes:
 
 </AccordionGroup>
 
-## Get Support {#get-support}
+## Get support {#get-support}
 
 Want to get in touch with the Trophy team? Reach out to us via [email](mailto:support@trophy.so). We're here to help!

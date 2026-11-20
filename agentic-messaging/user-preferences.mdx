@@ -1,0 +1,78 @@
+---
+title: User preferences
+description: Learn how users curate the agentic messages they receive.
+og:description: Users choose what kind of messages they get, whether they hear
+  about promotions, and which channels agents use, through Trophy's hosted
+  preferences page or your own preference center.
+icon: sliders-horizontal
+---
+
+Users curate their own experience. Each user chooses what kind of messages they get and whether they hear about promotions, and agents never send outside those choices.
+
+## Messaging preferences {#messaging-preferences}
+
+Each user has the following agentic messaging preferences.
+
+### Message style {#temperature}
+
+Message style sets what kind of messages a user wants, on a scale from 1 to 5. In the API, it's called `temperature`.
+
+- **1, essentials and direct**: only the messages that matter most to the user, like their own progress, kept short and to the point.
+- **3**: the default.
+- **5, everything and conversational**: the full range of messages agents can send, in a more conversational tone.
+
+Further toward "everything" also means agents can reach out a little more often. A user's message style can't go beyond the maximum set in your [sending limits](/agentic-messaging/guardrails#sending-limits).
+
+### Promotional messages {#promotional-messages}
+
+Whether the user wants to hear about promotions, like offers and announcements. Users who turn promotional messages off still get messages about their own progress in your app.
+
+### Channels {#channels}
+
+The channels agents may use for this user, `email` and/or `push`. Both are on by default. An empty list turns agentic messages off for the user.
+
+## Hosted preferences page {#hosted-preferences-page}
+
+Every agentic email links to a preferences page hosted by Trophy, where users can set their own preferences:
+
+- **What kind of messages do you like?**: a slider from **Essentials, direct** to **Everything, conversational** that sets the user's message style.
+- **Promotional messages**: a toggle to turn promotions on or off.
+- **Unsubscribe from all**: a toggle to stop all emails. Turning it back off resubscribes the user.
+
+You don't need to build anything for users to manage their preferences this way.
+
+## Building your own preference center {#building-your-own-preference-center}
+
+To let users manage their preferences inside your app, use the [get a user's preferences](/api-reference/endpoints/users/get-user-preferences) and [update a user's preferences](/api-reference/endpoints/users/update-user-preferences) endpoints. Agentic messaging preferences are in the `messaging` object:
+
+```json
+{
+  "messaging": {
+    "channels": ["email", "push"],
+    "temperature": 3
+  }
+}
+```
+
+For example, to send a user only emails, with a more essential and direct style, update their preferences with:
+
+```json
+{
+  "messaging": {
+    "channels": ["email"],
+    "temperature": 2
+  }
+}
+```
+
+## Who receives agentic messages {#who-receives-agentic-messages}
+
+Each user receives either agentic messages or [legacy emails](/features/emails) and [push notifications](/features/push-notifications), never both. Which one a user gets depends on your [rollout](/agentic-messaging/rollout).
+
+You can check which one applies to a user with the `agenticMessagingEnabled` field on the user object, returned by the [get a single user](/api-reference/endpoints/users/get-a-single-user) endpoint. It's `true` for users receiving agentic messages.
+
+Users in your [control group](/platform/experimentation#control-ratio) receive no messages from Trophy at all, so their `agenticMessagingEnabled` field is always `false`.
+
+## Get support {#get-support}
+
+Want to get in touch with the Trophy team? Reach out to us via [email](mailto:support@trophy.so). We're here to help!

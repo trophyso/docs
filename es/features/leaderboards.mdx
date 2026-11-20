@@ -48,7 +48,7 @@ Trophy rastrea las clasificaciones en cada ejecución de una clasificación recu
 
 #### Manejo de zonas horarias {#handling-time-zones}
 
-Si has rastreado las [zonas horarias](/es/features/users#param-tz) de tus usuarios con Trophy, estas se utilizarán para garantizar que cada usuario tenga las mismas oportunidades de ganar sin importar dónde se encuentre en el mundo.
+Si has rastreado las [zonas horarias](/es/data-sources/users#param-tz) de tus usuarios con Trophy, estas se utilizarán para garantizar que cada usuario tenga las mismas oportunidades de ganar sin importar dónde se encuentre en el mundo.
 
 En la práctica, esto significa que las clasificaciones se finalizan y los ganadores se eligen aproximadamente 12 horas después de que terminen naturalmente en UTC para permitir que los usuarios de todas las zonas horarias hagan su último esfuerzo.
 
@@ -77,7 +77,7 @@ El método de clasificación de una clasificación determina en qué dimensión 
 
 #### Clasificaciones por métrica {#metric-rankings}
 
-Las clasificaciones por métrica están vinculadas a una [Métrica](/es/features/metrics) existente de Trophy y ordenan a los usuarios según su valor métrico total.
+Las clasificaciones por métrica están vinculadas a una [Métrica](/es/data-sources/metrics) existente de Trophy y ordenan a los usuarios según su valor métrico total.
 
 Utiliza clasificaciones por métrica si solo deseas ordenar a los usuarios según una única interacción.
 
@@ -99,7 +99,7 @@ Las clasificaciones de racha ordenan a los usuarios según la duración de su ra
 
 Si tienes una base de usuarios grande, es una buena práctica dividir a los participantes de la clasificación en grupos más pequeños y socialmente conectados. Esto a menudo genera mayor participación que cuando se usan clasificaciones globales.
 
-Las clasificaciones en Trophy se pueden configurar para agrupar usuarios en grupos más pequeños según uno o más [atributos de usuario personalizados](/es/features/users#custom-user-attributes).
+Las clasificaciones en Trophy se pueden configurar para agrupar usuarios en grupos más pequeños según uno o más [atributos de usuario personalizados](/es/data-sources/users#custom-user-attributes).
 
 <Tip>
   Cuando se usan desgloses de clasificación, los [límites de participantes](#participant-limits)
@@ -138,7 +138,7 @@ Para obtener las clasificaciones de un grupo particular de usuarios con una comb
 
 La elegibilidad controla qué usuarios pueden participar en una clasificación. Úsala cuando una clasificación deba estar abierta solo a un grupo específico de usuarios, por ejemplo, clientes de pago, una región concreta o una cohorte beta.
 
-La elegibilidad se basa en [atributos de usuario personalizados](/es/features/users#custom-user-attributes). Un usuario solo puede participar en una clasificación, y aparecer en sus rankings, si sus atributos cumplen todas las reglas de elegibilidad que establezcas. Las clasificaciones sin reglas de elegibilidad están abiertas a todos los usuarios.
+La elegibilidad se basa en [atributos de usuario personalizados](/es/data-sources/users#custom-user-attributes). Un usuario solo puede participar en una clasificación, y aparecer en sus rankings, si sus atributos cumplen todas las reglas de elegibilidad que establezcas. Las clasificaciones sin reglas de elegibilidad están abiertas a todos los usuarios.
 
 Para establecer reglas de elegibilidad, ve a la página de configuración de la clasificación y añade uno o más atributos de usuario, junto con los valores que deben tener los usuarios, en el campo **Atributos de usuario** de la sección **Elegibilidad**.
 
@@ -232,7 +232,7 @@ Para establecer restricciones de tiempo en una clasificación, ve a la página d
 
 ### Consideraciones sobre la zona horaria {#time-zone-considerations}
 
-Las restricciones de tiempo en las clasificaciones se aplican en la **hora local** de cada participante, según su [zona horaria](/es/features/users#param-tz) configurada.
+Las restricciones de tiempo en las clasificaciones se aplican en la **hora local** de cada participante, según su [zona horaria](/es/data-sources/users#param-tz) configurada.
 
 Esto significa que cada usuario puede participar en la clasificación en cualquier momento dentro de la restricción de tiempo configurada, según su reloj local.
 

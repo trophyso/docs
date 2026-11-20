@@ -4,7 +4,7 @@ description: Learn about the Account MCP Server and why it exists for AI agents.
 subtitle: Give AI agents secure, structured access to your Trophy account.
 ---
 
-The Account MCP Server is a remote [Model Context Protocol](https://modelcontextprotocol.io) server that lets AI agents read and manage gamification configuration in your Trophy account.
+The Account MCP Server is a remote [Model Context Protocol](https://modelcontextprotocol.io) server that lets AI coding agents read and manage the configuration of your Trophy account.
 
 Instead of copy-pasting dashboard clicks into chat, you can ask your agent to inspect metrics, create points systems, update leaderboards, restore streaks, and more.
 
@@ -14,11 +14,11 @@ https://mcp.trophy.so/mcp
 
 ## Why the Account MCP? {#why-the-account-mcp}
 
-AI coding agents are already where teams design and ship product work and Trophy has simplified this by providing pre-built infrastructure for building common gamification features. However this largely involves looking at screens and clicking buttons.
+AI coding agents are already where teams design and ship product work and Trophy has simplified this by providing pre-built infrastructure for common engagement features. However this largely involves looking at screens and clicking buttons.
 
 The Account MCP Server is the **action layer**: after the agent understands *what* to build (often via the [Docs MCP Server](/mcp/docs-mcp-server/introduction)), it can discover live account configuration, make targeted changes, and validate results without a human touching the dashboard.
 
-This opens up a new workflow for teams where agents can reason about what gamification features to build, understand how to map that to Trophy features, and configure a Trophy account that achieves this all within chat.
+This opens up a new workflow for teams where agents can reason about what engagement features to build, understand how to map that to Trophy features, and configure a Trophy account that achieves this all within chat.
 
 Typical workflows include:
 
@@ -26,7 +26,7 @@ Typical workflows include:
 - Inspecting existing leaderboards or points configuration before changing production code
 - Running operational tasks like granting freezes or restoring streaks from chat
 
-## How It Works {#how-it-works}
+## How it works {#how-it-works}
 
 Trophy hosts a remote MCP endpoint. You install it once in your MCP client, sign in with OAuth using your Trophy account (and select the organization to authorize), and the client exposes tools your agent can call.
 
@@ -36,7 +36,7 @@ Those tools map to account operations — list/get for discovery, create/update 
   The Account MCP Server is intended for chat-based and agent workflows. For scripts, backend jobs, or production integrations, use the [Admin API](/admin-api/introduction).
 </Note>
 
-## Get Started {#get-started}
+## Get started {#get-started}
 
 <CardGroup>
   <Card title="Installation" icon="download" href="/mcp/account-mcp-server/installation">
@@ -50,6 +50,6 @@ Those tools map to account operations — list/get for discovery, create/update 
   </Card>
 </CardGroup>
 
-## Get Support {#get-support}
+## Get support {#get-support}
 
 Want to get in touch with the Trophy team? Reach out to us via [email](mailto:support@trophy.so). We're here to help!

@@ -18,7 +18,7 @@ import WebhookPointsLevelChangedPayload from "../../snippets/webhook-points-leve
 
 ## ¿Qué es un Sistema de Puntos? {#what-is-a-points-system}
 
-Los sistemas de puntos se utilizan para crear contadores que rastrean las interacciones de los usuarios con [Métricas](/es/features/metrics), [Logros](/es/features/achievements) y [Rachas](/es/features/streaks). Luego puedes construir funcionalidades como 'XP' y 'Energía' alrededor de estos contadores dentro de tu producto.
+Los sistemas de puntos se utilizan para crear contadores que rastrean las interacciones de los usuarios con [Métricas](/es/data-sources/metrics), [Logros](/es/features/milestones) y [Rachas](/es/features/streaks). Luego puedes construir funcionalidades como 'XP' y 'Energía' alrededor de estos contadores dentro de tu producto.
 
 ## Casos de Uso {#use-cases}
 
@@ -95,7 +95,7 @@ En Trophy hay varios tipos de activadores que puedes usar para otorgar o deducir
 
 #### Activadores de métricas {#metric-triggers}
 
-Los puntos se pueden otorgar o deducir de forma continua a medida que los usuarios incrementan las [Métricas](/es/features/metrics). Puedes elegir otorgar o deducir cualquier cantidad de puntos en cualquier umbral de métrica, por ejemplo: "otorga 10 puntos por cada 3 tareas completadas".
+Los puntos se pueden otorgar o deducir de forma continua a medida que los usuarios incrementan las [Métricas](/es/data-sources/metrics). Puedes elegir otorgar o deducir cualquier cantidad de puntos en cualquier umbral de métrica, por ejemplo: "otorga 10 puntos por cada 3 tareas completadas".
 
 #### Activadores de rachas {#streak-triggers}
 
@@ -103,7 +103,7 @@ Los puntos se pueden otorgar o deducir al alcanzar cualquier duración de una [R
 
 #### Activadores de logros {#achievement-triggers}
 
-Los puntos se pueden otorgar o deducir cuando los usuarios desbloquean [Logros](/es/features/achievements) específicos, por ejemplo: "otorgar 100 puntos cuando los usuarios completen el logro `profile-completed`".
+Los puntos se pueden otorgar o deducir cuando los usuarios desbloquean [Logros](/es/features/milestones) específicos, por ejemplo: "otorgar 100 puntos cuando los usuarios completen el logro `profile-completed`".
 
 #### Activadores basados en tiempo {#time-based-triggers}
 
@@ -161,9 +161,9 @@ Para crear un nuevo activador de puntos, ve al sistema de puntos para el que qui
 <Step title="Añade filtros de atributos (opcional)">
   Puedes asignar filtros de atributos a un disparador de puntos para restringir aún más cuándo se aplica.
 
-- Para limitar un **disparador de métrica** de modo que solo se aplique a eventos con [atributos de evento personalizados](/es/features/events#custom-event-attributes) específicos, añade uno o más filtros en la sección **Atributos del evento**.
+- Para limitar un **disparador de métrica** de modo que solo se aplique a eventos con [atributos de evento personalizados](/es/data-sources/events#custom-event-attributes) específicos, añade uno o más filtros en la sección **Atributos del evento**.
 
-- Para limitar cualquier tipo de disparador de modo que solo se aplique a usuarios con uno o más [atributos de usuario personalizados](/es/features/users#custom-user-attributes) específicos, añade los atributos y los valores deseados en la sección **Atributos del usuario**.
+- Para limitar cualquier tipo de disparador de modo que solo se aplique a usuarios con uno o más [atributos de usuario personalizados](/es/data-sources/users#custom-user-attributes) específicos, añade los atributos y los valores deseados en la sección **Atributos del usuario**.
 
 <Note>
   Si defines varios filtros de atributos de evento, todos deben coincidir para que
@@ -207,7 +207,7 @@ Esta sección explica cómo funcionan los boosts y cómo puedes usarlos para aum
 
 Hay varias formas de usar boosts en Trophy.
 
-- **Los boosts globales** multiplican los puntos que obtienen todos los usuarios durante el periodo del boost, o pueden limitarse a una cohorte de usuarios específica mediante [atributos de usuario personalizados](/es/features/users#custom-user-attributes).
+- **Los boosts globales** multiplican los puntos que obtienen todos los usuarios durante el periodo del boost, o pueden limitarse a una cohorte de usuarios específica mediante [atributos de usuario personalizados](/es/data-sources/users#custom-user-attributes).
 - **Los boosts específicos de usuario** solo multiplican los puntos que obtiene un único usuario durante el periodo del boost.
 
 Normalmente, los boosts globales se usan para aumentar la interacción en toda la plataforma durante fechas clave del calendario, como el Black Friday/Cyber Monday en el comercio electrónico, el Año Nuevo en fitness o la temporada de exámenes en plataformas de ed-tech.
@@ -281,7 +281,7 @@ Overall Multiplier (3 boosts) = 2X * 1.5X * 3X = 9X
 
 ### Redondeo de impulsos {#boost-rounding}
 
-Trophy admite [valores de eventos de métricas de punto flotante](/es/features/events#event-value), pero se encarga de redondear los Puntos a enteros automáticamente.
+Trophy admite [valores de eventos de métricas de punto flotante](/es/data-sources/events#event-value), pero se encarga de redondear los Puntos a enteros automáticamente.
 
 Sin embargo, al usar [multiplicadores de impulsos](#boost-multipliers) decimales, puede haber algunos escenarios donde este redondeo predeterminado no sea suficiente para producir siempre valores de Puntos enteros.
 
@@ -474,7 +474,7 @@ Finalmente, la [API del sistema de puntos](/es/api-reference/endpoints/points/ge
 
 <Tip>
   La API de resumen de puntos también se puede filtrar para devolver solo datos de usuarios con
-  [atributos de usuario personalizados](/es/features/users#custom-user-attributes) específicos.
+  [atributos de usuario personalizados](/es/data-sources/users#custom-user-attributes) específicos.
 </Tip>
 
 <Frame>

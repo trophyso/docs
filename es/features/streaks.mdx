@@ -16,7 +16,7 @@ Una racha es un período de días, semanas o meses consecutivos en los que un us
 
 Las rachas en Trophy pueden ser **diarias, semanales o mensuales**. Esto significa que un usuario debe cumplir sus [condiciones de racha](#streak-conditions) al menos una vez cada día, semana o mes natural para mantener su racha.
 
-Si has [configurado zonas horarias](/es/features/users#param-tz) para tus usuarios, Trophy hará un seguimiento automático de la racha de cada usuario en su zona horaria local (incluso cuando cambien de zona horaria) y mantendrá las rachas intactas.
+Si has [configurado zonas horarias](/es/data-sources/users#param-tz) para tus usuarios, Trophy hará un seguimiento automático de la racha de cada usuario en su zona horaria local (incluso cuando cambien de zona horaria) y mantendrá las rachas intactas.
 
 <Note>
 Trophy calcula automáticamente los datos de racha para cada frecuencia de racha, por lo que puedes cambiar de frecuencia en cualquier momento.
@@ -24,7 +24,7 @@ Trophy calcula automáticamente los datos de racha para cada frecuencia de racha
 
 ## Condiciones de la racha {#streak-conditions}
 
-En Trophy puedes definir los umbrales que un usuario debe alcanzar para extender su racha según tus [Métricas](/es/features/metrics) configuradas.
+En Trophy puedes definir los umbrales que un usuario debe alcanzar para extender su racha según tus [Métricas](/es/data-sources/metrics) configuradas.
 
 Puedes elegir qué métricas forman parte de tu racha y, para las que elijas, establecer un umbral personalizado que los usuarios deben alcanzar.
 
@@ -60,7 +60,7 @@ Debes dejar al menos un día que cuente para la racha. Las rachas semanales y me
 
 A diferencia de las [congelaciones de racha](#streak-freezes), los días libres no se consumen. Se aplican cada semana hasta que los cambies.
 
-Si has habilitado la [personalización de rachas](#streak-personalization), los usuarios pueden anular los días libres predeterminados mediante las [preferencias de usuario](/es/features/users#streak-preferences).
+Si has habilitado la [personalización de rachas](#streak-personalization), los usuarios pueden anular los días libres predeterminados mediante las [preferencias de usuario](/es/data-sources/users#streak-preferences).
 
 ## Congelaciones de racha {#streak-freezes}
 
@@ -123,7 +123,7 @@ Cada pausa requiere:
 - `start`: la primera fecha que cubre la pausa
 - `end`: la última fecha que cubre la pausa
 
-Se rechazan las fechas de inicio en el pasado. Si has [configurado zonas horarias](/es/features/users#param-tz) para tus usuarios, Trophy evalúa `start` respecto a la fecha actual en la zona horaria local de cada usuario.
+Se rechazan las fechas de inicio en el pasado. Si has [configurado zonas horarias](/es/data-sources/users#param-tz) para tus usuarios, Trophy evalúa `start` respecto a la fecha actual en la zona horaria local de cada usuario.
 
 ### Eliminar pausas {#deleting-pauses}
 
@@ -137,7 +137,7 @@ Cada periodo de `streakHistory` incluye `usedPause`, que es `true` cuando la rac
 
 ## Seguimiento de rachas {#tracking-streaks}
 
-Trophy calcula automáticamente las rachas de todos los usuarios a partir de los [eventos de métricas](/es/features/events#tracking-metric-events) que envías a Trophy.
+Trophy calcula automáticamente las rachas de todos los usuarios a partir de los [eventos de métricas](/es/data-sources/events#tracking-metric-events) que envías a Trophy.
 
 No se requiere ningún trabajo adicional para hacer el seguimiento de las rachas, y puedes empezar a usarlas de inmediato. Solo asegúrate de que las rachas estén habilitadas en el panel de Trophy.
 
@@ -154,7 +154,7 @@ Trophy permite que los usuarios personalicen el funcionamiento de su racha dentr
 Una vez habilitada, los usuarios podrán personalizar, a través de las preferencias de usuario, las [condiciones de la racha](#streak-conditions) que deben cumplir para extenderla, incluidos el modo de evaluación de la racha, el umbral de cada métrica y los [días libres](#days-off).
 
 <Tip>
-Para obtener más información sobre cómo establecer las preferencias de un usuario específico, consulta la documentación dedicada a las [preferencias de usuario](/es/features/users#streak-preferences).
+Para obtener más información sobre cómo establecer las preferencias de un usuario específico, consulta la documentación dedicada a las [preferencias de usuario](/es/data-sources/users#streak-preferences).
 </Tip>
 
 <Frame>
@@ -217,7 +217,7 @@ Trophy expone los datos de rachas de dos maneras, que puedes usar para crear ele
 
 ### Respuesta del evento de métrica {#metric-event-response}
 
-Cuando [incrementas una métrica](/es/features/events#tracking-metric-events) para un usuario, la respuesta de la [API de métricas](/es/api-reference/endpoints/events/submit-a-metric-event) incluye la Racha actual del usuario.
+Cuando [incrementas una métrica](/es/data-sources/events#tracking-metric-events) para un usuario, la respuesta de la [API de métricas](/es/api-reference/endpoints/events/submit-a-metric-event) incluye la Racha actual del usuario.
 
 <MetricChangeResponseBlock />
 

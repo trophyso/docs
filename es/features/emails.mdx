@@ -26,7 +26,7 @@ Todos los correos son opcionales, pero los cuatro pueden usarse a la vez y se co
   ></video>
 </Frame>
 
-- **Los correos de Logro** se envían a los usuarios cada vez que desbloquean un [Logro](/es/features/achievements).
+- **Los correos de Logro** se envían a los usuarios cada vez que desbloquean un [Logro](/es/features/milestones).
 - **Los correos de resumen** se envían a los usuarios con una frecuencia predefinida para resumir su progreso. Puedes configurarlos para que se envíen a diario, semanal, mensual o anualmente, según tu caso de uso.
 - **Los correos de Reactivación** se envían a los usuarios cuando dejan de estar activos, con el objetivo de que vuelvan a tu aplicación.
 - **Los correos de Racha** se envían automáticamente a los usuarios para recordarles que extiendan su [Racha](/es/features/streaks).
@@ -37,7 +37,7 @@ Para empezar a enviar correos electrónicos con Trophy, debes verificar tu domin
 
 <Tip>
   Los usuarios pueden controlar qué notificaciones por correo reciben mediante la
-  [API de preferencias de usuario](/es/features/users#notification-preferences) de Trophy. Esto te permite
+  [API de preferencias de usuario](/es/data-sources/users#notification-preferences) de Trophy. Esto te permite
   crear un centro de preferencias en tu aplicación donde los usuarios pueden
   activar o desactivar tipos de correo específicos.
 </Tip>
@@ -265,7 +265,7 @@ Los correos de **racha** recuerdan a los usuarios que amplíen su racha antes de
 
 #### Correos de logro {#achievement-emails}
 
-Los correos de **logro** felicitan a los usuarios cuando completan un [logro](/es/features/achievements) que has configurado en Trophy. Estos correos se envían entre las 17:00 y las 21:00 del día en que se completa el logro, o al día siguiente a las 17:00 si el usuario lo completa pasadas las 21:00.
+Los correos de **logro** felicitan a los usuarios cuando completan un [logro](/es/features/milestones) que has configurado en Trophy. Estos correos se envían entre las 17:00 y las 21:00 del día en que se completa el logro, o al día siguiente a las 17:00 si el usuario lo completa pasadas las 21:00.
 
 <Frame>
   <img
@@ -278,7 +278,7 @@ Los correos de **logro** felicitan a los usuarios cuando completan un [logro](/e
 
 #### Limitar los correos electrónicos a tipos específicos de usuarios {#limiting-emails-to-specific-types-of-users}
 
-Cada plantilla de correo electrónico se puede limitar a los usuarios con valores específicos de [atributos de usuario personalizados](/es/features/users#custom-user-attributes).
+Cada plantilla de correo electrónico se puede limitar a los usuarios con valores específicos de [atributos de usuario personalizados](/es/data-sources/users#custom-user-attributes).
 
 Para cada atributo al que quieras restringir el correo electrónico, haz clic en el icono de más junto al encabezado **Filtros de usuario** de la plantilla, selecciona el atributo e introduce el valor deseado. Solo los usuarios que tengan **todos** los valores de atributo especificados recibirán correos electrónicos de esta plantilla.
 
@@ -293,7 +293,7 @@ Para cada atributo al que quieras restringir el correo electrónico, haz clic en
 
 #### Zonas horarias {#time-zones}
 
-Si especificas una zona horaria para cada usuario mediante [la identificación de usuarios](/es/features/users#param-tz), Trophy usará esa zona horaria local para programar los correos electrónicos según la lógica descrita anteriormente. Si no proporcionas zonas horarias para los usuarios que identificas, Trophy usará por defecto la hora del este (Eastern Time).
+Si especificas una zona horaria para cada usuario mediante [la identificación de usuarios](/es/data-sources/users#param-tz), Trophy usará esa zona horaria local para programar los correos electrónicos según la lógica descrita anteriormente. Si no proporcionas zonas horarias para los usuarios que identificas, Trophy usará por defecto la hora del este (Eastern Time).
 
 ### Envío de correos electrónicos mediante webhooks {#sending-emails-via-webhooks}
 
@@ -308,7 +308,7 @@ Cuando corresponde enviar un correo electrónico, Trophy dispara el webhook corr
 
 Estos webhooks se disparan según los propios desencadenantes de los correos electrónicos, independientemente de si hay plantillas de correo habilitadas o deshabilitadas, y de los [filtros de atributos de usuario](#limiting-emails-to-specific-types-of-users) configurados en esas plantillas. Si necesitas un filtrado equivalente, aplícalo en tu controlador de webhooks.
 
-Los webhooks de correo electrónico respetan las [preferencias de notificación](/es/features/users#notification-preferences) y el [atributo de control](/es/platform/experimentation#control-ratio) utilizado para la experimentación. Trophy no disparará webhooks de correo electrónico para los usuarios que hayan rechazado ese tipo de correo ni para los usuarios del grupo de control.
+Los webhooks de correo electrónico respetan las [preferencias de notificación](/es/data-sources/users#notification-preferences) y el [atributo de control](/es/platform/experimentation#control-ratio) utilizado para la experimentación. Trophy no disparará webhooks de correo electrónico para los usuarios que hayan rechazado ese tipo de correo ni para los usuarios del grupo de control.
 
 <Warning>
   Si envías tú mismo correos electrónicos desde estos webhooks, asegúrate de que las plantillas de correo correspondientes estén desactivadas en Trophy. Los webhooks de correo se siguen activando cuando se cumplen los desencadenadores, incluso si las plantillas están desactivadas, pero si las plantillas siguen activadas, Trophy también enviará sus propios correos, lo que provocará un envío duplicado.
@@ -566,7 +566,7 @@ Variables relacionadas con el destinatario del correo electrónico.
 
 - **Nombre**: El nombre del destinatario, si está definido
 
-Además, todos los [atributos de usuario personalizados](/es/features/users#custom-user-attributes) están disponibles como variables de correo electrónico.
+Además, todos los [atributos de usuario personalizados](/es/data-sources/users#custom-user-attributes) están disponibles como variables de correo electrónico.
 
 </Accordion>
 <Accordion title="Métricas">
@@ -584,7 +584,7 @@ Cada métrica de Trophy admite las siguientes variables de correo electrónico:
 
 Además, los alias dinámicos **Más alto** y **Más bajo** admiten el mismo conjunto de variables. Al usar estos alias, Trophy elegirá la métrica en la que el destinatario tenga el total actual más alto o más bajo en el momento del envío.
 
-Al usar variables de métricas, también tienes la opción de filtrar los datos a los que hace referencia cualquiera de las variables anteriores mediante un [atributo de evento personalizado](/es/features/events#custom-event-attributes).
+Al usar variables de métricas, también tienes la opción de filtrar los datos a los que hace referencia cualquiera de las variables anteriores mediante un [atributo de evento personalizado](/es/data-sources/events#custom-event-attributes).
 
     </Accordion>
 
@@ -811,7 +811,7 @@ Cualquier destinatario que haga clic en este enlace accederá a una página con 
 <Tip>
   Como alternativa al enlace de cancelación de suscripción, también puedes crear
   un centro de preferencias en tu aplicación con la [API de preferencias de
-  usuario](/es/features/users#notification-preferences) de Trophy. Esto ofrece a
+  usuario](/es/data-sources/users#notification-preferences) de Trophy. Esto ofrece a
   los usuarios un control más detallado sobre los tipos de correos que reciben.
 </Tip>
 

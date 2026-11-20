@@ -87,7 +87,7 @@ Para crear una recompensa, ve a la [página de recompensas](https://app.trophy.s
     Limita cuántas veces se puede otorgar la recompensa a cada usuario. Consulta [límites de canje](#redemption-limits).
   </Step>
   <Step title="Añade filtros de usuario (opcional)">
-    Restringe la recompensa a los usuarios con [atributos de usuario personalizados](/es/features/users#custom-user-attributes) específicos. Consulta [filtros de usuario](#user-filters).
+    Restringe la recompensa a los usuarios con [atributos de usuario personalizados](/es/data-sources/users#custom-user-attributes) específicos. Consulta [filtros de usuario](#user-filters).
   </Step>
   <Step title="Añade activadores y activa">
     Añade uno o más [activadores](#reward-triggers) y luego cambia el estado de la recompensa a activo para ponerla en producción.
@@ -110,7 +110,7 @@ Las recompensas se otorgan mediante activadores. Puedes añadir tantos activador
 
 #### Disparadores de métrica {#metric-triggers}
 
-La recompensa se otorga cada vez que el total de una [métrica](/es/features/metrics) del usuario aumenta según el umbral que establezcas, por ejemplo "otorgar cada 10 tareas completadas". El recuento comienza desde que se activó el disparador.
+La recompensa se otorga cada vez que el total de una [métrica](/es/data-sources/metrics) del usuario aumenta según el umbral que establezcas, por ejemplo "otorgar cada 10 tareas completadas". El recuento comienza desde que se activó el disparador.
 
 Si vuelves a activar el disparador, o cambias su métrica, umbral o atributos de evento, se inicia un nuevo recuento.
 
@@ -126,7 +126,7 @@ Una racha que terminó antes de activarse el disparador, o que se interrumpió d
 
 #### Disparadores de logro {#achievement-triggers}
 
-La recompensa se otorga una sola vez, cuando el usuario completa un [logro](/es/features/achievements) específico. No se otorga a los usuarios que completaron el logro antes de que existiera el disparador.
+La recompensa se otorga una sola vez, cuando el usuario completa un [logro](/es/features/milestones) específico. No se otorga a los usuarios que completaron el logro antes de que existiera el disparador.
 
 #### Disparadores de clasificación {#leaderboard-triggers}
 
@@ -151,8 +151,8 @@ Para añadir un disparador, abre la recompensa desde la [página de recompensas]
     - Para un activador de **Clasificación**, elige la clasificación y la posición.
   </Step>
   <Step title="Añade filtros de atributos (opcional)">
-    - Para limitar un activador de **Métrica** a eventos con [atributos de evento personalizados](/es/features/events#custom-event-attributes) específicos, añade uno o más filtros en la sección **Atributos del evento**. Si defines varios filtros de atributos de evento, todos deben coincidir.
-    - Para limitar cualquier activador a usuarios con [atributos de usuario personalizados](/es/features/users#custom-user-attributes) específicos, añade los atributos y los valores deseados en la sección **Atributos del usuario**.
+    - Para limitar un activador de **Métrica** a eventos con [atributos de evento personalizados](/es/data-sources/events#custom-event-attributes) específicos, añade uno o más filtros en la sección **Atributos del evento**. Si defines varios filtros de atributos de evento, todos deben coincidir.
+    - Para limitar cualquier activador a usuarios con [atributos de usuario personalizados](/es/data-sources/users#custom-user-attributes) específicos, añade los atributos y los valores deseados en la sección **Atributos del usuario**.
   </Step>
   <Step title="Guarda y activa">
     Cuando estés seguro de que el activador se comportará como esperas, cambia su estado a activo para ponerlo en funcionamiento.
@@ -168,7 +168,7 @@ Los activadores también se pueden añadir con la API de administración:
 Las recompensas solo se otorgan por las acciones que los usuarios realizan después de que un activador esté activo. Esto significa que:
 
 - **Los logros ya completados no otorgan recompensas.** Si un usuario completó un logro antes de que añadieras un activador de logro, no recibe la recompensa.
-- **Los logros retroactivos no otorgan recompensas.** Cuando activas o editas un logro, o estableces el `signUpDate` de un usuario, Trophy [completa los logros de los usuarios que ya cumplen los requisitos](/es/features/achievements#backdating-achievements). Estas finalizaciones silenciosas no otorgan recompensas.
+- **Los logros retroactivos no otorgan recompensas.** Cuando activas o editas un logro, o estableces el `signUpDate` de un usuario, Trophy [completa los logros de los usuarios que ya cumplen los requisitos](/es/features/milestones#backdating-achievements). Estas finalizaciones silenciosas no otorgan recompensas.
 - **El progreso anterior no cuenta.** Los activadores de métrica y de racha cuentan desde el momento en que se activó el activador, por lo que el progreso que los usuarios lograron antes no se recompensa.
 
 Las recompensas inactivas y los activadores inactivos detienen la concesión de nuevas recompensas, pero las recompensas ya concedidas aún se pueden canjear. Las recompensas archivadas no se conceden, no se listan ni se canjean.
