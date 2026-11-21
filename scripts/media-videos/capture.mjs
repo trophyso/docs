@@ -21,6 +21,8 @@ import os from 'node:os'
 import path from 'node:path'
 import { fileURLToPath, pathToFileURL } from 'node:url'
 
+import { fakeAnalytics } from './src/fake-analytics.mjs'
+
 export const here = path.dirname(fileURLToPath(import.meta.url))
 export const docsRoot = path.resolve(here, '../..')
 const WEB = path.resolve(process.env.WEB_REPO ?? path.join(docsRoot, '../web'))
@@ -162,6 +164,9 @@ export async function capture(name) {
 
   const { ctx, page } = await openDashboard()
   try {
+    // Staging has too little data for analytics pages: fill them with realistic numbers
+    if (meta.fakeAnalytics) await fakeAnalytics(page)
+
     // Start from a clean slate in case an earlier run stopped before cleanup
     if (cleanup) await cleanup(page, BASE)
 

@@ -106,10 +106,26 @@ export async function cleanup(page, base) {
 Optional `meta` fields:
 - `leadIn` / `tail` (ms): idle time at the start and end of the capture.
 - `prepare(page)`: runs after the start page loads, before recording. Use it to edit page text for realistic data.
+- `fakeAnalytics: true`: fill analytics pages with realistic numbers (see "Analytics" below).
 
-**Find selectors first, don't guess.** `node inspect.mjs <route> [--click "Button text" …]`:
+**Find selectors first, don't guess.** `node inspect.mjs <route> [--click "Button text" …] [--fake-analytics]`:
 - saves `out/inspect.png`
-- prints every visible button, link, input (with placeholder and value), listbox and open dialog, with positions and `disabled` state
+- prints every visible button, link, input (with placeholder and value), listbox, listbox option and open dialog, with positions and `disabled` state
+
+## Analytics
+
+Staging has too few events for analytics, so its analytics pages show grey
+placeholder charts and a "No Data" callout. `src/fake-analytics.mjs` fixes that
+in the browser:
+- Every analytics page loads its numbers from a Next.js server action. The script lets each action request through, then rewrites row `1:` of the RSC response (plain JSON) before the page sees it. The real response already has the right dates, labels and shape; only the values change.
+- One transform per response shape: Home, metric, points system, leaderboard, Users, Emails (legacy) and the email send counts. Unknown shapes pass through untouched. When the app changes a shape, update its transform.
+- The numbers describe the fictional fitness app: about 6,200 MAUs, matching the sidebar usage card. Milestone completions match `check_user_completions.png`. They're seeded from the request, so the same page always shows the same numbers.
+- Filtering by a user attribute gives a smaller segment with its own retention, and each extra filter narrows it further.
+- Retention charts need a range longer than the 14-day activation window plus 3 days, so pick **Last 30 days** or **Last 3 months** in `prepare`.
+
+Flows opt in with `meta.fakeAnalytics` (see `flows/segmenting-analytics.mjs` and `flows/email-analytics.mjs`).
+
+The analytics **stills** come from `node analytics-stills.mjs [name filter] [--review]`. It writes full pages (1680×1050 at 2×) and single-card crops straight into `assets/`, or into `out/stills/` with `--review`. The shot list is at the top of the file.
 
 Read that output, then write the flow. To see what the **old** video showed, run
 `node frames.mjs ../../assets/<path>.mp4 [count]`. It writes frames to `out/old/<name>/`.
@@ -161,7 +177,8 @@ Read that output, then write the flow. To see what the **old** video showed, run
   - hides the tenant selector (the test org's tenants use real company names and logos)
   - sets the sidebar usage card to 6,248 MAUs
   - never shows `staging-app` in the address bar (`meta.url` is drawn instead)
-- **Staging analytics are placeholders.** Analytics pages show skeleton charts ("Not enough data", fake 25k/6k figures), so don't record analytics until there's real data.
+- **Staging analytics are placeholders** unless you use `fakeAnalytics` (see "Analytics"). Without it, analytics pages show skeleton charts ("Not enough data", fake 25k/6k figures).
+- **Scrolling:** `box()` jumps the page with `scrollIntoViewIfNeeded`, which looks abrupt. For a visible scroll, wheel in small steps until the target is in place first (`scrollTo` in `flows/email-analytics.mjs`), so the following action doesn't jump.
 - **Test org data** to build flows around:
   - metrics: Workouts, Lessons
   - attributes: Plan, Subscription Plan, City

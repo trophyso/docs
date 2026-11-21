@@ -7,17 +7,20 @@
  *   node inspect.mjs /attributes
  *   node inspect.mjs /attributes --click "New attribute"
  *   node inspect.mjs /metrics --click "New metric" --click "Cancel"
+ *   node inspect.mjs /leaderboards/<id> --fake-analytics   (realistic analytics numbers)
  *   → out/inspect.png
  */
 import path from 'node:path'
 
 import { BASE, here, openDashboard, signIn } from './capture.mjs'
+import { fakeAnalytics } from './src/fake-analytics.mjs'
 
 const args = process.argv.slice(2)
 const route = args[0] ?? '/'
 const clicks = args.flatMap((a, i) => (a === '--click' ? [args[i + 1]] : []))
 
 const { ctx, page } = await openDashboard()
+if (args.includes('--fake-analytics')) await fakeAnalytics(page, { log: true })
 try {
   await page.goto(BASE + route, { waitUntil: 'networkidle' })
   if (/sign-in|accounts\./.test(page.url()) && !(await signIn(page))) throw new Error('Not signed in: ask the user to run node login.mjs')
@@ -45,6 +48,7 @@ try {
       links: pick('a[href^="/"]').slice(0, 40),
       inputs: pick('input, textarea'),
       listboxes: pick('[aria-haspopup=listbox]'),
+      options: pick('[role=option]'),
       dialog,
     }
   })
