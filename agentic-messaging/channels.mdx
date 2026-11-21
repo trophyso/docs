@@ -9,8 +9,6 @@ icon: send
 import IdentifyUserWithDeviceTokensRequestBlock from "../snippets/identify-user-with-device-tokens-request-block.mdx";
 import MetricEventWithDeviceTokensRequestBlock from "../snippets/metric-event-with-device-tokens-request-block.mdx";
 
-{/* TODO(media): record a walkthrough of the Push tab on Agentic messaging › Channels (configuring a push provider) */}
-
 Agents send messages over two channels, email and push notifications. They pick the channel that works best for each user, based on how that user engages and which channels the user has chosen in their [preferences](/agentic-messaging/user-preferences).
 
 Both channels are managed on the [Channels](https://app.trophy.so/agentic-messaging/channels) page under **Agentic messaging** in the Trophy dashboard, which has an **Emails** tab and a **Push** tab.
@@ -229,6 +227,17 @@ To send push notifications, Trophy needs:
 ### Supported providers {#supported-channels}
 
 Trophy supports sending push notifications through 3 providers, which can all be configured on the **Push** tab of the [Channels](https://app.trophy.so/agentic-messaging/channels/push) page in the Trophy dashboard.
+
+<Frame>
+  <video
+    autoPlay
+    muted
+    loop
+    playsInline
+    className="w-full aspect-video"
+    src="../assets/agentic-messaging/push_provider.mp4"
+  ></video>
+</Frame>
 
 #### Apple Push Notification Service (APNs) {#apple-push-notification-service-apns}
 

@@ -178,6 +178,9 @@ Read that output, then write the flow. To see what the **old** video showed, run
   - sets the sidebar usage card to 6,248 MAUs
   - never shows `staging-app` in the address bar (`meta.url` is drawn instead)
 - **Staging analytics are placeholders** unless you use `fakeAnalytics` (see "Analytics"). Without it, analytics pages show skeleton charts ("Not enough data", fake 25k/6k figures).
+- **Environment change tracking** (View changes, Copy all, Revert) is switched off for multi-tenant orgs, and the usual test org (Runnr) is multi-tenant. `flows/_environment-changes.mjs` records in the single-tenant "Staging [Old]" org instead, with a temporary "Feature dev" environment, and switches back to Runnr in teardown.
+  - Never copy into a Staging environment there: a copy propagates to every Development environment, including the org's real Charlie-Dev and Jason-Dev.
+  - Reverting in a Development environment is safe, since Development environments share the lowest priority and nothing is downstream.
 - **Scrolling:** `box()` jumps the page with `scrollIntoViewIfNeeded`, which looks abrupt. For a visible scroll, wheel in small steps until the target is in place first (`scrollTo` in `flows/email-analytics.mjs`), so the following action doesn't jump.
 - **Test org data** to build flows around:
   - metrics: Workouts, Lessons
