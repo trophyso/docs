@@ -1,0 +1,25 @@
+<CodeGroup>
+```bash cURL
+curl -X PATCH https://api.trophy.so/v1/users/user-123/goals/first-essay \
+     -H "X-API-KEY: <api-key>" \
+     -H "Content-Type: application/json" \
+     -d '{
+  "completed": true
+}'
+```
+
+```typescript Node
+trophy.users.updateGoal("user-123", "first-essay", {
+  completed: true,
+});
+```
+
+```python Python
+client.users.update_goal(
+    id="user-123",
+    key="first-essay",
+    completed=True,
+)
+```
+
+</CodeGroup>

@@ -1,0 +1,206 @@
+---
+title: Goals
+description: Learn how to tell Trophy about the goals your users are working towards, from deadlines and exams to study plans and metric targets.
+og:description: Goals are the deadlines, plans and targets your users work
+  towards. Tell Trophy about them and agents remind, encourage and celebrate at
+  the right moments.
+icon: flag
+---
+
+import CreateGoalRequestBlock from "../snippets/create-goal-request-block.mdx";
+import CreateGoalPlanRequestBlock from "../snippets/create-goal-plan-request-block.mdx";
+import CreateGoalStepRequestBlock from "../snippets/create-goal-step-request-block.mdx";
+import UpdateGoalRequestBlock from "../snippets/update-goal-request-block.mdx";
+import UserGoalsResponseBlock from "../snippets/user-goals-response-block.mdx";
+
+## What are goals? {#what-are-goals}
+
+A goal is something one user is working towards: an essay due on Friday, an exam on November 20, or 50 lessons this month. You tell Trophy about each user's goals through the [Application API](/api-reference/endpoints/users/create-a-goal-for-a-user), and [agentic messaging](/agentic-messaging/overview) uses them to remind users before a goal is due, encourage them when they miss one and celebrate the ones they complete.
+
+Goals belong to a single user. Each one has a `key` that you choose, unique for that user, which you use to update or delete it. The user must already exist in Trophy, so [identify the user](/data-sources/users) before creating their goals.
+
+## Key attributes {#key-attributes}
+
+<ParamField path="key" type="string" required={true}>
+  The goal's key, unique per user. 1–100 letters, numbers, hyphens or
+  underscores. `plural` and `singular` are reserved.
+</ParamField>
+
+<ParamField path="label" type="string">
+  What the goal is, up to 200 characters. Messages name the goal by its label,
+  so write it the way you'd want it to read in a message, for example "Spanish
+  B1 exam".
+</ParamField>
+
+<ParamField path="completion" type="string" default="manual">
+  How the goal is completed: `manual`, `none` or `metric`. See [completion
+  types](#completion-types).
+</ParamField>
+
+<ParamField path="dueAt" type="string">
+  When the goal is due, as an ISO 8601 date and time. A time without an offset,
+  like `2026-11-20T09:00:00`, is in the user's time zone, so set the user's
+  [`tz`](/data-sources/users#optional-attributes). Required for goals with
+  `completion: none`.
+</ParamField>
+
+<ParamField path="completed" type="boolean" default="false">
+  Whether the user has completed the goal. Only for goals with `completion:
+  manual`.
+</ParamField>
+
+<ParamField path="metric" type="string">
+  Goals with `completion: metric` only. The key of the [metric](/data-sources/metrics)
+  that counts towards the goal.
+</ParamField>
+
+<ParamField path="target" type="number">
+  Goals with `completion: metric` only. The metric total that completes the
+  goal. Must be greater than 0.
+</ParamField>
+
+<ParamField path="start" type="string">
+  Goals with `completion: metric` only. The date, as `YYYY-MM-DD` in the user's
+  time zone, that the metric total counts from. Defaults to the user's today.
+</ParamField>
+
+<ParamField path="steps" type="array">
+  The goal's [steps](#steps), in order, up to 100.
+</ParamField>
+
+## Completion types {#completion-types}
+
+A goal's `completion` says how it's completed.
+
+| `completion` | Completed                                                      | For example               |
+| ------------ | -------------------------------------------------------------- | ------------------------- |
+| `manual`     | When you mark it completed                                     | An essay due on Friday    |
+| `none`       | Never. It's a date the user works towards                      | An exam on November 20    |
+| `metric`     | Automatically, when a metric's total since `start` reaches `target` | 50 lessons by November 20 |
+
+### Manual goals {#manual-goals}
+
+Manual goals are for things the user finishes in your app, like submitting an essay. Mark the goal completed with `completed: true` when they do, and set `completed: false` to undo it.
+
+### Dates to work towards {#dates-to-work-towards}
+
+Goals with `completion: none` are dates the user prepares for, like an exam or a race. There's nothing to mark as done, so they need a `dueAt` and are never completed. Messages about them help the user prepare, rather than urging them to finish.
+
+### Metric goals {#metric-goals}
+
+Metric goals complete themselves. Each goal counts the user's total for its `metric` from `start` onwards, and Trophy marks it completed as soon as an [event](/data-sources/events) brings that total to the `target`.
+
+Changing a metric goal's `metric`, `target` or `start` checks it against its target again, which can complete it or, if the new total falls short, uncomplete it. Metric goals can't be marked completed with `completed`.
+
+## Steps {#steps}
+
+A goal can have steps, which turns it into a plan. For example, a study plan for an exam might have a step for each unit, each with its own due time.
+
+Steps are one level deep and each one is a goal in its own right. A step has its own `key`, unique among all of the user's goals, and its own `label`, `completion`, `dueAt` and metric. You update, complete and delete a step through its own key, just like any other goal.
+
+A goal with steps also tracks how many of them are completed, which messages use to show the user's progress through the plan.
+
+## Status {#status}
+
+Each goal has a `status`, which Trophy works out from the goal whenever you retrieve it:
+
+| `status`    | When                                                                     |
+| ----------- | ------------------------------------------------------------------------ |
+| `active`    | The goal isn't completed and isn't due yet, or has no due time           |
+| `completed` | The goal is completed, even if that was after it was due                 |
+| `missed`    | A `manual` or `metric` goal's due time has passed without it being completed |
+| `ended`     | A `none` goal's due time has passed                                      |
+
+## Managing goals {#managing-goals}
+
+### Creating goals {#creating-goals}
+
+Create a goal with the [create goal](/api-reference/endpoints/users/create-a-goal-for-a-user) endpoint. Here's a goal for an exam the user is preparing for:
+
+<CreateGoalRequestBlock />
+
+A request with a key the user already has, for a goal or a step, fails with a `409`.
+
+### Creating a plan {#creating-a-plan}
+
+Pass `steps` to create a goal and its steps in one request:
+
+<CreateGoalPlanRequestBlock />
+
+To add a single step to the end of an existing goal's steps, create it with the goal's key as its `parent`:
+
+<CreateGoalStepRequestBlock />
+
+A goal can have up to 100 steps, and steps can't have steps of their own.
+
+### Updating goals {#updating-goals}
+
+Update a goal or a step with the [update goal](/api-reference/endpoints/users/update-a-goal-for-a-user) endpoint. Fields you leave out stay as they are, and `null` clears a `label` or `dueAt`. Here's a goal being marked completed:
+
+<UpdateGoalRequestBlock />
+
+Passing `steps` replaces all of the goal's steps, in the order given: steps whose key the goal already has are updated, new keys are added, and steps you leave out are deleted. Use it to reorder or rebuild a plan, and the `parent` field on [create](#creating-a-plan) to add one step at a time.
+
+```json Replace a goal's steps
+{
+  "steps": [
+    { "key": "unit-1" },
+    { "key": "unit-2", "dueAt": "2026-11-15T09:00:00Z" },
+    { "key": "unit-3", "label": "Unit 3 listening" }
+  ]
+}
+```
+
+### Deleting goals {#deleting-goals}
+
+Delete a goal or a step with the [delete goal](/api-reference/endpoints/users/delete-a-users-goal) endpoint. Deleting a goal deletes its steps too. Once it's deleted, its key is free to use for a new goal.
+
+### Retrieving goals {#retrieving-goals}
+
+The [user goals](/api-reference/endpoints/users/get-a-users-goals) endpoint returns all of a user's goals, soonest due first and then those with no due time. Each goal includes its `status` and its steps, a goal with steps adds `done` and `total`, and a metric goal adds its `metric`, `target`, `start` and `current` total:
+
+<UserGoalsResponseBlock />
+
+## How agents use goals {#how-agents-use-goals}
+
+Agents read each user's goals and decide when a message about one is worth sending, the same way they decide about everything else. Every goal gives them three moments to work with:
+
+- **Before it's due**: agents can remind the user about a goal that isn't completed. Reminders come more often as the due date gets closer, and on the due date a reminder can arrive a few hours before the due time. Goals without a due time can be mentioned while the user is active in your app.
+- **When it's missed**: once a `manual` or `metric` goal's due time passes without it being completed, agents can encourage the user to get back on track.
+- **When it's completed**: agents can celebrate a completed goal, once per goal.
+
+Messages about a goal include the user's progress: how many steps are done and the next ones up, or how far a metric goal is from its target. Emails can also show the goal's time left, a progress bar and its next steps.
+
+Messages about a goal are written for its completion type. A `manual` or `metric` goal is something to finish, while a `none` goal is a date to prepare for.
+
+Before a scheduled message about a goal sends, Trophy checks that it still applies. A reminder is cancelled if the goal has been completed, its due time or completion type has changed, or its due time has passed. See [send-time checks](/agentic-messaging/guardrails#send-time-checks).
+
+Goals created already completed or past due, or moved to a due time that has already passed, don't get a completion or missed message. That means you can import a user's past goals without sending them messages about them. Steps of a completed goal don't get messages either.
+
+## Frequently asked questions {#frequently-asked-questions}
+
+<AccordionGroup>
+  <Accordion title="Do I need to set goals up in the dashboard?" id="dashboard-setup">
+    No. Goals are created per user through the API. The only setup is for
+    metric goals, whose `metric` must be a [metric](/data-sources/metrics) you've
+    already created.
+  </Accordion>
+
+  <Accordion title="What happens when I move a goal's due time?" id="moving-due-time">
+    Reminders already scheduled for the old due time are cancelled, and agents
+    plan around the new one.
+  </Accordion>
+
+  <Accordion title="Can I reuse a key after deleting a goal?" id="reusing-keys">
+    Yes. A goal created with a deleted goal's key is a new goal, so its
+    messages are planned from scratch.
+  </Accordion>
+
+  <Accordion title="How many goals can a user have?" id="goal-limits">
+    As many as you like. Each goal can have up to 100 steps.
+  </Accordion>
+</AccordionGroup>
+
+## Get support {#get-support}
+
+Want to get in touch with the Trophy team? Reach out to us via [email](mailto:support@trophy.so). We're here to help!

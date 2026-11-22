@@ -1,0 +1,33 @@
+<CodeGroup>
+```bash cURL
+curl -X POST https://api.trophy.so/v1/users/user-123/goals \
+     -H "X-API-KEY: <api-key>" \
+     -H "Content-Type: application/json" \
+     -d '{
+  "key": "spanish-exam",
+  "label": "Spanish B1 exam",
+  "completion": "none",
+  "dueAt": "2026-11-20T09:00:00Z"
+}'
+```
+
+```typescript Node
+trophy.users.createGoal("user-123", {
+  key: "spanish-exam",
+  label: "Spanish B1 exam",
+  completion: "none",
+  dueAt: "2026-11-20T09:00:00Z",
+});
+```
+
+```python Python
+client.users.create_goal(
+    id="user-123",
+    key="spanish-exam",
+    label="Spanish B1 exam",
+    completion="none",
+    due_at="2026-11-20T09:00:00Z",
+)
+```
+
+</CodeGroup>

@@ -95,7 +95,8 @@
                 "pages": [
                   "data-sources/metrics",
                   "data-sources/events",
-                  "data-sources/users"
+                  "data-sources/users",
+                  "data-sources/goals"
                 ]
               },
               {
@@ -224,6 +225,10 @@
                   "api-reference/endpoints/users/get-a-users-points-summary",
                   "api-reference/endpoints/users/get-a-users-leaderboard",
                   "api-reference/endpoints/users/get-a-users-rewards",
+                  "api-reference/endpoints/users/get-a-users-goals",
+                  "api-reference/endpoints/users/create-a-goal-for-a-user",
+                  "api-reference/endpoints/users/update-a-goal-for-a-user",
+                  "api-reference/endpoints/users/delete-a-users-goal",
                   "api-reference/endpoints/users/get-a-users-wrapped",
                   "api-reference/endpoints/users/get-user-preferences",
                   "api-reference/endpoints/users/update-user-preferences"
