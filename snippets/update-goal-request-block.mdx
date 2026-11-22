@@ -22,4 +22,47 @@ client.users.update_goal(
 )
 ```
 
+```php PHP
+$request = new UpdateGoalRequest([
+    'completed' => true
+]);
+
+$trophy->users->updateGoal("user-123", "first-essay", $request);
+```
+
+```java Java
+UpdateGoalRequest request = UpdateGoalRequest.builder()
+      .completed(true)
+      .build();
+
+GoalResponse response = client.users().updateGoal("user-123", "first-essay", request);
+```
+
+```go Go
+response, err := client.Users.UpdateGoal(
+    context.TODO(),
+    "user-123",
+    "first-essay",
+    &api.UpdateGoalRequest{
+        Completed: api.Bool(true),
+    },
+)
+```
+
+```csharp C#
+var request = new UpdateGoalRequest {
+   Completed = true
+};
+
+await trophy.Users.UpdateGoalAsync("user-123", "first-essay", request);
+```
+
+```ruby Ruby
+result = client.users.update_goal(
+  :id => 'user-123',
+  :key => 'first-essay',
+  :completed => true
+)
+```
+
 </CodeGroup>

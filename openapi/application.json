@@ -2623,15 +2623,15 @@
         "x-codeSamples": [
           {
             "lang": "javascript",
-            "source": "import { TrophyApiClient } from '@trophyso/node';\n\nconst trophy = new TrophyApiClient({\n  apiKey: 'YOUR_API_KEY'\n});\n\nconst response = await trophy.users.createGoal(\"user-123\", {\n  key: \"spanish-exam\",\n  label: \"Spanish B1 exam\",\n  completion: \"none\",\n  dueAt: \"2026-11-20T09:00:00Z\"\n});\n"
+            "source": "import { TrophyApiClient } from '@trophyso/node';\n\nconst trophy = new TrophyApiClient({\n  apiKey: 'YOUR_API_KEY'\n});\n\nconst response = await trophy.users.createGoal(\"user-123\", {\n  key: \"spanish-exam\",\n  label: \"Spanish B1 exam\",\n  completion: \"none\",\n  dueAt: new Date(\"2026-11-20T09:00:00Z\")\n});\n"
           },
           {
             "lang": "python",
-            "source": "from trophy import TrophyApi\n\nclient = TrophyApi(api_key='YOUR_API_KEY')\n\nresponse = client.users.create_goal(\n  id=\"user-123\",\n  key=\"spanish-exam\",\n  label=\"Spanish B1 exam\",\n  completion=\"none\",\n  due_at=\"2026-11-20T09:00:00Z\"\n)\n"
+            "source": "import datetime\n\nfrom trophy import TrophyApi\n\nclient = TrophyApi(api_key='YOUR_API_KEY')\n\nresponse = client.users.create_goal(\n  id=\"user-123\",\n  key=\"spanish-exam\",\n  label=\"Spanish B1 exam\",\n  completion=\"none\",\n  due_at=datetime.datetime(2026, 11, 20, 9, 0, tzinfo=datetime.timezone.utc)\n)\n"
           },
           {
             "lang": "go",
-            "source": "import (\n  \"context\"\n\n  api \"github.com/trophyso/trophy-go\"\n  trophyclient \"github.com/trophyso/trophy-go/client\"\n  \"github.com/trophyso/trophy-go/option\"\n)\n\nclient := trophyclient.NewClient(\n  option.WithApiKey(\"YOUR_API_KEY\"),\n)\n\nlabel := \"Spanish B1 exam\"\ncompletion := api.GoalCompletionNone\ndueAt := \"2026-11-20T09:00:00Z\"\nresponse, err := client.Users.CreateGoal(\n  context.TODO(),\n  \"user-123\",\n  &api.CreateGoalRequest{\n    Key:        \"spanish-exam\",\n    Label:      &label,\n    Completion: &completion,\n    DueAt:      &dueAt,\n  },\n)\n"
+            "source": "import (\n  \"context\"\n  \"time\"\n\n  api \"github.com/trophyso/trophy-go\"\n  trophyclient \"github.com/trophyso/trophy-go/client\"\n  \"github.com/trophyso/trophy-go/option\"\n)\n\nclient := trophyclient.NewClient(\n  option.WithApiKey(\"YOUR_API_KEY\"),\n)\n\nresponse, err := client.Users.CreateGoal(\n  context.TODO(),\n  \"user-123\",\n  &api.CreateGoalRequest{\n    Key:        \"spanish-exam\",\n    Label:      api.String(\"Spanish B1 exam\"),\n    Completion: api.GoalCompletionNone.Ptr(),\n    DueAt:      api.Time(time.Date(2026, time.November, 20, 9, 0, 0, 0, time.UTC)),\n  },\n)\n"
           }
         ],
         "parameters": [
@@ -2816,7 +2816,7 @@
           },
           {
             "lang": "go",
-            "source": "import (\n  \"context\"\n\n  api \"github.com/trophyso/trophy-go\"\n  trophyclient \"github.com/trophyso/trophy-go/client\"\n  \"github.com/trophyso/trophy-go/option\"\n)\n\nclient := trophyclient.NewClient(\n  option.WithApiKey(\"YOUR_API_KEY\"),\n)\n\ncompleted := true\nresponse, err := client.Users.UpdateGoal(\n  context.TODO(),\n  \"user-123\",\n  \"first-essay\",\n  &api.UpdateGoalRequest{\n    Completed: &completed,\n  },\n)\n"
+            "source": "import (\n  \"context\"\n\n  api \"github.com/trophyso/trophy-go\"\n  trophyclient \"github.com/trophyso/trophy-go/client\"\n  \"github.com/trophyso/trophy-go/option\"\n)\n\nclient := trophyclient.NewClient(\n  option.WithApiKey(\"YOUR_API_KEY\"),\n)\n\nresponse, err := client.Users.UpdateGoal(\n  context.TODO(),\n  \"user-123\",\n  \"first-essay\",\n  &api.UpdateGoalRequest{\n    Completed: api.Bool(true),\n  },\n)\n"
           }
         ],
         "parameters": [
