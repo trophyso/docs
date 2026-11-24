@@ -362,6 +362,16 @@
               }
             }
           },
+          "403": {
+            "description": "An application user's key, for a user other than its own",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorBody"
+                }
+              }
+            }
+          },
           "404": {
             "description": "Achievement Not Found",
             "content": {
@@ -494,6 +504,16 @@
               "application/json": {
                 "schema": {
                   "$ref": "#/components/schemas/RedeemRewardResponse"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "An application user's key, for a user other than its own",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorBody"
                 }
               }
             }
@@ -748,6 +768,16 @@
               }
             }
           },
+          "403": {
+            "description": "An application user's key, for a user other than its own",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorBody"
+                }
+              }
+            }
+          },
           "422": {
             "description": "Unprocessible Entity",
             "content": {
@@ -922,6 +952,16 @@
               }
             }
           },
+          "403": {
+            "description": "An application user's key, for a user other than its own",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorBody"
+                }
+              }
+            }
+          },
           "422": {
             "description": "Unprocessible Entity",
             "content": {
@@ -1027,6 +1067,16 @@
           },
           "401": {
             "description": "Unauthorized",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorBody"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "An application user's key, for a user other than its own",
             "content": {
               "application/json": {
                 "schema": {
@@ -1155,6 +1205,16 @@
               }
             }
           },
+          "403": {
+            "description": "An application user's key, for a user other than its own",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorBody"
+                }
+              }
+            }
+          },
           "422": {
             "description": "Unprocessible Entity",
             "content": {
@@ -1275,6 +1335,16 @@
               }
             }
           },
+          "403": {
+            "description": "An application user's key, for a user other than its own",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorBody"
+                }
+              }
+            }
+          },
           "404": {
             "description": "User Not Found",
             "content": {
@@ -1385,6 +1455,16 @@
           },
           "401": {
             "description": "Unauthorized",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorBody"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "An application user's key, for a user other than its own",
             "content": {
               "application/json": {
                 "schema": {
@@ -1515,7 +1595,7 @@
             }
           },
           "403": {
-            "description": "Streak customization is not enabled for this organisation",
+            "description": "Streak customization is not enabled for this organisation, or an application user's key is for a user other than its own",
             "content": {
               "application/json": {
                 "schema": {
@@ -1739,6 +1819,16 @@
               }
             }
           },
+          "403": {
+            "description": "An application user's key, for a user other than its own",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorBody"
+                }
+              }
+            }
+          },
           "404": {
             "description": "User Not Found",
             "content": {
@@ -1891,6 +1981,16 @@
           },
           "401": {
             "description": "Unauthorized",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorBody"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "An application user's key, for a user other than its own",
             "content": {
               "application/json": {
                 "schema": {
@@ -2082,6 +2182,16 @@
           },
           "401": {
             "description": "Unauthorized",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorBody"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "An application user's key, for a user other than its own",
             "content": {
               "application/json": {
                 "schema": {
@@ -2287,6 +2397,16 @@
               }
             }
           },
+          "403": {
+            "description": "An application user's key, for a user other than its own",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorBody"
+                }
+              }
+            }
+          },
           "404": {
             "description": "Not Found",
             "content": {
@@ -2425,6 +2545,16 @@
               }
             }
           },
+          "403": {
+            "description": "An application user's key, for a user other than its own",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorBody"
+                }
+              }
+            }
+          },
           "404": {
             "description": "User not found.",
             "content": {
@@ -2467,7 +2597,7 @@
         }
       ],
       "get": {
-        "description": "Get all of a user's goals.",
+        "description": "Get a user's goals, each with its steps. Filter by status, and page through them with `skip` and `limit`.",
         "operationId": "users_goals",
         "x-fern-server-name": "api",
         "x-fern-sdk-group-name": [
@@ -2480,15 +2610,15 @@
         "x-codeSamples": [
           {
             "lang": "javascript",
-            "source": "import { TrophyApiClient } from '@trophyso/node';\n\nconst trophy = new TrophyApiClient({\n  apiKey: 'YOUR_API_KEY'\n});\n\nconst response = await trophy.users.goals(\"user-123\");\n"
+            "source": "import { TrophyApiClient } from '@trophyso/node';\n\nconst trophy = new TrophyApiClient({\n  apiKey: 'YOUR_API_KEY'\n});\n\nconst response = await trophy.users.goals(\"user-123\", {\n  status: \"active\",\n  limit: 100,\n  skip: 0\n});\n"
           },
           {
             "lang": "python",
-            "source": "from trophy import TrophyApi\n\nclient = TrophyApi(api_key='YOUR_API_KEY')\n\nresponse = client.users.goals(id=\"user-123\")\n"
+            "source": "from trophy import TrophyApi\n\nclient = TrophyApi(api_key='YOUR_API_KEY')\n\nresponse = client.users.goals(id=\"user-123\", status=\"active\", limit=100, skip=0)\n"
           },
           {
             "lang": "go",
-            "source": "import (\n  \"context\"\n\n  trophyclient \"github.com/trophyso/trophy-go/client\"\n  \"github.com/trophyso/trophy-go/option\"\n)\n\nclient := trophyclient.NewClient(\n  option.WithApiKey(\"YOUR_API_KEY\"),\n)\n\nresponse, err := client.Users.Goals(context.TODO(), \"user-123\")\n"
+            "source": "import (\n  \"context\"\n\n  api \"github.com/trophyso/trophy-go\"\n  trophyclient \"github.com/trophyso/trophy-go/client\"\n  \"github.com/trophyso/trophy-go/option\"\n)\n\nclient := trophyclient.NewClient(\n  option.WithApiKey(\"YOUR_API_KEY\"),\n)\n\nresponse, err := client.Users.Goals(\n  context.TODO(),\n  \"user-123\",\n  &api.UsersGoalsRequest{\n    Status: api.GoalStatusActive.Ptr(),\n  },\n)\n"
           }
         ],
         "parameters": [
@@ -2501,6 +2631,35 @@
               "type": "string"
             },
             "example": "user-123"
+          },
+          {
+            "name": "status",
+            "in": "query",
+            "description": "When set, only return goals with this status. A goal's steps come with it, whatever their own status.",
+            "schema": {
+              "$ref": "#/components/schemas/GoalStatus"
+            }
+          },
+          {
+            "name": "skip",
+            "in": "query",
+            "description": "Number of goals to skip. Defaults to 0.",
+            "schema": {
+              "type": "integer",
+              "minimum": 0,
+              "default": 0
+            }
+          },
+          {
+            "name": "limit",
+            "in": "query",
+            "description": "Maximum number of goals to return. Defaults to 100 and cannot exceed 100.",
+            "schema": {
+              "type": "integer",
+              "minimum": 1,
+              "maximum": 100,
+              "default": 100
+            }
           }
         ],
         "responses": {
@@ -2518,14 +2677,21 @@
                   "Successful operation": {
                     "value": [
                       {
+                        "id": "7d1c4e2a-3b5f-4a8e-9c6d-1e2f3a4b5c6d",
                         "key": "first-essay",
                         "label": "First essay",
                         "completion": "manual",
                         "dueAt": "2026-11-12T17:00:00.000Z",
                         "completedAt": "2026-11-12T14:21:08.000Z",
-                        "status": "completed"
+                        "status": "completed",
+                        "steps": [],
+                        "done": 0,
+                        "total": 0,
+                        "created": "2026-11-02T08:30:00.000Z",
+                        "updated": "2026-11-12T14:21:08.000Z"
                       },
                       {
+                        "id": "0f9a5c1e-6c3b-4f43-9f63-2f3e3a7c9d10",
                         "key": "spanish-exam",
                         "label": "Spanish B1 exam",
                         "completion": "none",
@@ -2534,36 +2700,56 @@
                         "status": "active",
                         "steps": [
                           {
+                            "id": "2b8e6f1d-4c7a-4e9b-8d3f-5a6b7c8d9e0f",
                             "key": "unit-1",
                             "label": "Unit 1 vocabulary",
                             "completion": "manual",
                             "dueAt": "2026-11-10T09:00:00.000Z",
                             "completedAt": "2026-11-09T19:12:44.000Z",
-                            "status": "completed"
+                            "status": "completed",
+                            "steps": [],
+                            "done": 0,
+                            "total": 0,
+                            "created": "2026-11-01T10:15:00.000Z",
+                            "updated": "2026-11-09T19:12:44.000Z"
                           },
                           {
+                            "id": "9c4d2e7f-1a3b-4c5d-8e6f-7a8b9c0d1e2f",
                             "key": "unit-2",
                             "label": "Unit 2 grammar",
                             "completion": "manual",
                             "dueAt": "2026-11-14T09:00:00.000Z",
                             "completedAt": null,
-                            "status": "active"
+                            "status": "active",
+                            "steps": [],
+                            "done": 0,
+                            "total": 0,
+                            "created": "2026-11-01T10:15:00.000Z",
+                            "updated": "2026-11-01T10:15:00.000Z"
                           }
                         ],
                         "done": 1,
-                        "total": 2
+                        "total": 2,
+                        "created": "2026-11-01T10:15:00.000Z",
+                        "updated": "2026-11-01T10:15:00.000Z"
                       },
                       {
+                        "id": "5e6f7a8b-9c0d-4e1f-a2b3-c4d5e6f7a8b9",
                         "key": "lessons",
                         "label": "50 lessons",
                         "completion": "metric",
                         "dueAt": null,
                         "completedAt": null,
                         "status": "active",
+                        "steps": [],
+                        "done": 0,
+                        "total": 0,
                         "metric": "lessons",
                         "target": 50,
                         "start": "2026-11-01",
-                        "current": 30
+                        "current": 30,
+                        "created": "2026-11-01T10:20:00.000Z",
+                        "updated": "2026-11-01T10:20:00.000Z"
                       }
                     ]
                   }
@@ -2573,6 +2759,16 @@
           },
           "401": {
             "description": "Unauthorized",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorBody"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "An application user's key, for a user other than its own",
             "content": {
               "application/json": {
                 "schema": {
@@ -2721,12 +2917,18 @@
                 "examples": {
                   "Successful operation": {
                     "value": {
+                      "id": "0f9a5c1e-6c3b-4f43-9f63-2f3e3a7c9d10",
                       "key": "spanish-exam",
                       "label": "Spanish B1 exam",
                       "completion": "none",
                       "dueAt": "2026-11-20T09:00:00.000Z",
                       "completedAt": null,
-                      "status": "active"
+                      "status": "active",
+                      "steps": [],
+                      "done": 0,
+                      "total": 0,
+                      "created": "2026-11-01T10:15:00.000Z",
+                      "updated": "2026-11-01T10:15:00.000Z"
                     }
                   }
                 }
@@ -2735,6 +2937,16 @@
           },
           "401": {
             "description": "Unauthorized",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorBody"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "An application user's key, for a user other than its own",
             "content": {
               "application/json": {
                 "schema": {
@@ -2794,6 +3006,145 @@
           "$ref": "#/components/parameters/TenantId"
         }
       ],
+      "get": {
+        "description": "Get a user's goal or step by its key, with a goal's steps.",
+        "operationId": "users_get_goal",
+        "x-fern-server-name": "api",
+        "x-fern-sdk-group-name": [
+          "users"
+        ],
+        "x-fern-sdk-method-name": "getGoal",
+        "tags": [
+          "Users"
+        ],
+        "x-codeSamples": [
+          {
+            "lang": "javascript",
+            "source": "import { TrophyApiClient } from '@trophyso/node';\n\nconst trophy = new TrophyApiClient({\n  apiKey: 'YOUR_API_KEY'\n});\n\nconst response = await trophy.users.getGoal(\"user-123\", \"spanish-exam\");\n"
+          },
+          {
+            "lang": "python",
+            "source": "from trophy import TrophyApi\n\nclient = TrophyApi(api_key='YOUR_API_KEY')\n\nresponse = client.users.get_goal(id=\"user-123\", key=\"spanish-exam\")\n"
+          },
+          {
+            "lang": "go",
+            "source": "import (\n  \"context\"\n\n  trophyclient \"github.com/trophyso/trophy-go/client\"\n  \"github.com/trophyso/trophy-go/option\"\n)\n\nclient := trophyclient.NewClient(\n  option.WithApiKey(\"YOUR_API_KEY\"),\n)\n\nresponse, err := client.Users.GetGoal(context.TODO(), \"user-123\", \"spanish-exam\")\n"
+          }
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "The user's ID in your database.",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "example": "user-123"
+          },
+          {
+            "name": "key",
+            "in": "path",
+            "description": "The goal's or step's key.",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "example": "spanish-exam"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "The goal.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/GoalResponse"
+                },
+                "examples": {
+                  "Successful operation": {
+                    "value": {
+                      "id": "0f9a5c1e-6c3b-4f43-9f63-2f3e3a7c9d10",
+                      "key": "spanish-exam",
+                      "label": "Spanish B1 exam",
+                      "completion": "none",
+                      "dueAt": "2026-11-20T09:00:00.000Z",
+                      "completedAt": null,
+                      "status": "active",
+                      "steps": [
+                        {
+                          "id": "2b8e6f1d-4c7a-4e9b-8d3f-5a6b7c8d9e0f",
+                          "key": "unit-1",
+                          "label": "Unit 1 vocabulary",
+                          "completion": "manual",
+                          "dueAt": "2026-11-10T09:00:00.000Z",
+                          "completedAt": "2026-11-09T19:12:44.000Z",
+                          "status": "completed",
+                          "steps": [],
+                          "done": 0,
+                          "total": 0,
+                          "created": "2026-11-01T10:15:00.000Z",
+                          "updated": "2026-11-09T19:12:44.000Z"
+                        }
+                      ],
+                      "done": 1,
+                      "total": 1,
+                      "created": "2026-11-01T10:15:00.000Z",
+                      "updated": "2026-11-01T10:15:00.000Z"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorBody"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "An application user's key, for a user other than its own",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorBody"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "User or goal not found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorBody"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Unprocessible Entity",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorBody"
+                }
+              }
+            }
+          }
+        },
+        "summary": "Get a user's goal",
+        "security": [
+          {
+            "ApiKeyAuth": []
+          }
+        ]
+      },
       "patch": {
         "description": "Update a goal for a user.",
         "operationId": "users_update_goal",
@@ -2808,15 +3159,15 @@
         "x-codeSamples": [
           {
             "lang": "javascript",
-            "source": "import { TrophyApiClient } from '@trophyso/node';\n\nconst trophy = new TrophyApiClient({\n  apiKey: 'YOUR_API_KEY'\n});\n\nconst response = await trophy.users.updateGoal(\"user-123\", \"first-essay\", {\n  completed: true\n});\n"
+            "source": "import { TrophyApiClient } from '@trophyso/node';\n\nconst trophy = new TrophyApiClient({\n  apiKey: 'YOUR_API_KEY'\n});\n\nconst response = await trophy.users.updateGoal(\"user-123\", \"first-essay\", {\n  completedAt: \"2026-11-12T14:21:08Z\"\n});\n"
           },
           {
             "lang": "python",
-            "source": "from trophy import TrophyApi\n\nclient = TrophyApi(api_key='YOUR_API_KEY')\n\nresponse = client.users.update_goal(\n  id=\"user-123\",\n  key=\"first-essay\",\n  completed=True\n)\n"
+            "source": "from trophy import TrophyApi\n\nclient = TrophyApi(api_key='YOUR_API_KEY')\n\nresponse = client.users.update_goal(\n  id=\"user-123\",\n  key=\"first-essay\",\n  completed_at=\"2026-11-12T14:21:08Z\"\n)\n"
           },
           {
             "lang": "go",
-            "source": "import (\n  \"context\"\n\n  api \"github.com/trophyso/trophy-go\"\n  trophyclient \"github.com/trophyso/trophy-go/client\"\n  \"github.com/trophyso/trophy-go/option\"\n)\n\nclient := trophyclient.NewClient(\n  option.WithApiKey(\"YOUR_API_KEY\"),\n)\n\nresponse, err := client.Users.UpdateGoal(\n  context.TODO(),\n  \"user-123\",\n  \"first-essay\",\n  &api.UpdateGoalRequest{\n    Completed: api.Bool(true),\n  },\n)\n"
+            "source": "import (\n  \"context\"\n\n  api \"github.com/trophyso/trophy-go\"\n  trophyclient \"github.com/trophyso/trophy-go/client\"\n  \"github.com/trophyso/trophy-go/option\"\n)\n\nclient := trophyclient.NewClient(\n  option.WithApiKey(\"YOUR_API_KEY\"),\n)\n\nresponse, err := client.Users.UpdateGoal(\n  context.TODO(),\n  \"user-123\",\n  \"first-essay\",\n  &api.UpdateGoalRequest{\n    CompletedAt: api.String(\"2026-11-12T14:21:08Z\"),\n  },\n)\n"
           }
         ],
         "parameters": [
@@ -2851,7 +3202,7 @@
               "examples": {
                 "Mark it completed": {
                   "value": {
-                    "completed": true
+                    "completedAt": "2026-11-12T14:21:08Z"
                   }
                 },
                 "Move its due time": {
@@ -2891,12 +3242,18 @@
                 "examples": {
                   "Successful operation": {
                     "value": {
+                      "id": "7d1c4e2a-3b5f-4a8e-9c6d-1e2f3a4b5c6d",
                       "key": "first-essay",
                       "label": "First essay",
                       "completion": "manual",
                       "dueAt": "2026-11-12T17:00:00.000Z",
                       "completedAt": "2026-11-12T14:21:08.000Z",
-                      "status": "completed"
+                      "status": "completed",
+                      "steps": [],
+                      "done": 0,
+                      "total": 0,
+                      "created": "2026-11-02T08:30:00.000Z",
+                      "updated": "2026-11-12T14:21:08.000Z"
                     }
                   }
                 }
@@ -2905,6 +3262,16 @@
           },
           "401": {
             "description": "Unauthorized",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorBody"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "An application user's key, for a user other than its own",
             "content": {
               "application/json": {
                 "schema": {
@@ -2934,7 +3301,7 @@
             }
           },
           "422": {
-            "description": "Unprocessible Entity, including a goal with completion none that would be completed or have no due time, a metric goal without a metric and target, or steps for a step",
+            "description": "Unprocessible Entity, including a goal with completion none that would be completed or have no due time, a metric goal without a metric and target, steps for a step, or a new key or parent",
             "content": {
               "application/json": {
                 "schema": {
@@ -3004,6 +3371,16 @@
           },
           "401": {
             "description": "Unauthorized",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorBody"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "An application user's key, for a user other than its own",
             "content": {
               "application/json": {
                 "schema": {
@@ -3174,6 +3551,16 @@
               }
             }
           },
+          "403": {
+            "description": "An application user's key, for a user other than its own",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorBody"
+                }
+              }
+            }
+          },
           "404": {
             "description": "Not Found",
             "content": {
@@ -3285,6 +3672,16 @@
           },
           "401": {
             "description": "Unauthorized",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorBody"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "An application user's key, with users other than its own",
             "content": {
               "application/json": {
                 "schema": {
@@ -3444,6 +3841,16 @@
               }
             }
           },
+          "403": {
+            "description": "An application user's key, for a user other than its own",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorBody"
+                }
+              }
+            }
+          },
           "404": {
             "description": "Not Found",
             "content": {
@@ -3568,6 +3975,16 @@
           },
           "401": {
             "description": "Unauthorized",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorBody"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "An application user's key, for a user other than its own",
             "content": {
               "application/json": {
                 "schema": {
@@ -3767,6 +4184,16 @@
               }
             }
           },
+          "403": {
+            "description": "An application user's key, for a user other than its own",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorBody"
+                }
+              }
+            }
+          },
           "404": {
             "description": "Not Found",
             "content": {
@@ -3937,6 +4364,16 @@
           },
           "401": {
             "description": "Unauthorized",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorBody"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "An application user's key, for a user other than its own",
             "content": {
               "application/json": {
                 "schema": {
@@ -4240,6 +4677,16 @@
           },
           "401": {
             "description": "Unauthorized",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorBody"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "An application user's key, for a user other than its own",
             "content": {
               "application/json": {
                 "schema": {
@@ -9290,11 +9737,27 @@
         ],
         "description": "How a goal is completed. `manual`: you mark it completed, for something the user finishes, like an essay. `none`: never completed, for a date the user works towards, like an exam. `metric`: completed when a metric's total since `start` reaches `target`, like 50 lessons."
       },
+      "GoalStatus": {
+        "title": "GoalStatus",
+        "type": "string",
+        "enum": [
+          "active",
+          "completed",
+          "missed",
+          "ended"
+        ],
+        "description": "`completed` when `completedAt` is set. Otherwise, once `dueAt` has passed, `missed` for a goal with `completion: manual` or `metric` and `ended` for one with `completion: none`. Otherwise `active`."
+      },
       "GoalResponse": {
         "title": "GoalResponse",
         "type": "object",
         "description": "A user's goal or step.",
         "properties": {
+          "id": {
+            "type": "string",
+            "description": "The goal's unique ID. A goal deleted and created again with the same key gets a new one.",
+            "example": "0f9a5c1e-6c3b-4f43-9f63-2f3e3a7c9d10"
+          },
           "key": {
             "type": "string",
             "description": "The goal's key, unique per user.",
@@ -9323,31 +9786,23 @@
             "description": "When the user completed the goal, or null if they haven't."
           },
           "status": {
-            "type": "string",
-            "enum": [
-              "active",
-              "completed",
-              "missed",
-              "ended"
-            ],
-            "description": "`completed` when `completedAt` is set. Otherwise, once `dueAt` has passed, `missed` for a goal with `completion: manual` or `metric` and `ended` for one with `completion: none`. Otherwise `active`.",
-            "example": "active"
+            "$ref": "#/components/schemas/GoalStatus"
           },
           "steps": {
             "type": "array",
-            "description": "A goal with steps only. Its steps, in order.",
+            "description": "Its steps, in order. Empty for a goal without steps, and for a step.",
             "items": {
               "$ref": "#/components/schemas/GoalResponse"
             }
           },
           "done": {
             "type": "integer",
-            "description": "A goal with steps only. How many of its steps are completed.",
+            "description": "How many of its steps are completed.",
             "example": 3
           },
           "total": {
             "type": "integer",
-            "description": "A goal with steps only. How many steps it has.",
+            "description": "How many steps it has.",
             "example": 8
           },
           "metric": {
@@ -9370,15 +9825,33 @@
             "type": "number",
             "description": "`completion: metric` only. The metric total since `start`.",
             "example": 30
+          },
+          "created": {
+            "type": "string",
+            "format": "date-time",
+            "description": "When the goal was created.",
+            "example": "2026-11-01T10:15:00.000Z"
+          },
+          "updated": {
+            "type": "string",
+            "format": "date-time",
+            "description": "When the goal was last changed.",
+            "example": "2026-11-09T19:12:44.000Z"
           }
         },
         "required": [
+          "id",
           "key",
           "label",
           "completion",
           "dueAt",
           "completedAt",
-          "status"
+          "status",
+          "steps",
+          "done",
+          "total",
+          "created",
+          "updated"
         ]
       },
       "GoalStepRequest": {
@@ -9414,10 +9887,11 @@
             "description": "When the step is due, as an ISO 8601 date and time. Without an offset, it's in the user's timezone.",
             "example": "2026-11-10T09:00:00Z"
           },
-          "completed": {
-            "type": "boolean",
-            "description": "Whether the user has completed the step.",
-            "example": false
+          "completedAt": {
+            "type": "string",
+            "nullable": true,
+            "description": "When the user completed the step, as an ISO 8601 date and time. Without an offset, it's in the user's timezone, and a time after now is read as now. Null uncompletes it. Not with `completion: none`, which is never completed, or `completion: metric`, which completes when its metric reaches the target.",
+            "example": "2026-11-09T19:12:44Z"
           },
           "metric": {
             "type": "string",
@@ -9479,10 +9953,11 @@
             "description": "When the goal is due, as an ISO 8601 date and time. Without an offset, it's in the user's timezone. Required with `completion: none`.",
             "example": "2026-11-20T09:00:00Z"
           },
-          "completed": {
-            "type": "boolean",
-            "description": "Whether the user has already completed the goal. Defaults to `false`, the only value allowed with `completion: none`. Not with `completion: metric`, which completes when its metric reaches the target.",
-            "example": false
+          "completedAt": {
+            "type": "string",
+            "nullable": true,
+            "description": "When the user completed the goal, if they already have, as an ISO 8601 date and time. Without an offset, it's in the user's timezone, and a time after now is read as now. Not with `completion: none`, which is never completed, or `completion: metric`, which completes when its metric reaches the target.",
+            "example": "2026-11-12T14:21:08Z"
           },
           "metric": {
             "type": "string",
@@ -9517,7 +9992,7 @@
       "UpdateGoalRequest": {
         "title": "UpdateGoalRequest",
         "type": "object",
-        "description": "Changes to a goal or step. Fields left out stay as they are; at least one is needed.",
+        "description": "Changes to a goal or step. Fields left out stay as they are; at least one is needed. A goal's `key` can't change, and it can't move to another goal with `parent`.",
         "properties": {
           "label": {
             "type": "string",
@@ -9541,10 +10016,11 @@
             "description": "When the goal is due, as an ISO 8601 date and time. Without an offset, it's in the user's timezone. Null clears it, except with `completion: none`.",
             "example": "2026-11-13T17:00:00Z"
           },
-          "completed": {
-            "type": "boolean",
-            "description": "Whether the user has completed the goal. `true` on a completed goal keeps when it was completed. Only `false` with `completion: none`, and not with `completion: metric`.",
-            "example": true
+          "completedAt": {
+            "type": "string",
+            "nullable": true,
+            "description": "When the user completed the goal, as an ISO 8601 date and time. Without an offset, it's in the user's timezone, and a time after now is read as now. Null uncompletes it. Not with `completion: none`, which is never completed, or `completion: metric`, which completes when its metric reaches the target.",
+            "example": "2026-11-12T14:21:08Z"
           },
           "metric": {
             "type": "string",

@@ -4,13 +4,13 @@ curl -X PATCH https://api.trophy.so/v1/users/user-123/goals/first-essay \
      -H "X-API-KEY: <api-key>" \
      -H "Content-Type: application/json" \
      -d '{
-  "completed": true
+  "completedAt": "2026-11-12T14:21:08Z"
 }'
 ```
 
 ```typescript Node
 trophy.users.updateGoal("user-123", "first-essay", {
-  completed: true,
+  completedAt: "2026-11-12T14:21:08Z",
 });
 ```
 
@@ -18,13 +18,13 @@ trophy.users.updateGoal("user-123", "first-essay", {
 client.users.update_goal(
     id="user-123",
     key="first-essay",
-    completed=True,
+    completed_at="2026-11-12T14:21:08Z",
 )
 ```
 
 ```php PHP
 $request = new UpdateGoalRequest([
-    'completed' => true
+    'completedAt' => '2026-11-12T14:21:08Z'
 ]);
 
 $trophy->users->updateGoal("user-123", "first-essay", $request);
@@ -32,7 +32,7 @@ $trophy->users->updateGoal("user-123", "first-essay", $request);
 
 ```java Java
 UpdateGoalRequest request = UpdateGoalRequest.builder()
-      .completed(true)
+      .completedAt("2026-11-12T14:21:08Z")
       .build();
 
 GoalResponse response = client.users().updateGoal("user-123", "first-essay", request);
@@ -44,14 +44,14 @@ response, err := client.Users.UpdateGoal(
     "user-123",
     "first-essay",
     &api.UpdateGoalRequest{
-        Completed: api.Bool(true),
+        CompletedAt: api.String("2026-11-12T14:21:08Z"),
     },
 )
 ```
 
 ```csharp C#
 var request = new UpdateGoalRequest {
-   Completed = true
+   CompletedAt = "2026-11-12T14:21:08Z"
 };
 
 await trophy.Users.UpdateGoalAsync("user-123", "first-essay", request);
@@ -61,7 +61,7 @@ await trophy.Users.UpdateGoalAsync("user-123", "first-essay", request);
 result = client.users.update_goal(
   :id => 'user-123',
   :key => 'first-essay',
-  :completed => true
+  :completed_at => '2026-11-12T14:21:08Z'
 )
 ```
 

@@ -17,7 +17,7 @@ import UserGoalsResponseBlock from "../../snippets/user-goals-response-block.mdx
 
 Una meta es algo que persigue un usuario: un ensayo que entregar el viernes, un examen el 20 de noviembre o 50 lecciones este mes. Informas a Trophy de las metas de cada usuario a través de la [Application API](/es/api-reference/endpoints/users/create-a-goal-for-a-user), y la [mensajería agéntica](/es/agentic-messaging/overview) las usa para recordar a los usuarios una meta antes de su vencimiento, animarlos cuando no cumplen una y celebrar las que completan.
 
-Las metas pertenecen a un único usuario. Cada una tiene una `key` que eliges tú, única para ese usuario, que usas para actualizarla o eliminarla. El usuario ya debe existir en Trophy, así que [identifica al usuario](/es/data-sources/users) antes de crear sus metas.
+Las metas pertenecen a un único usuario. Cada una tiene una `key` que eliges tú, única para ese usuario, que usas para obtenerla, actualizarla o eliminarla. El usuario ya debe existir en Trophy, así que [identifica al usuario](/es/data-sources/users) antes de crear sus metas.
 
 ## Atributos clave {#key-attributes}
 
@@ -44,9 +44,11 @@ Las metas pertenecen a un único usuario. Cada una tiene una `key` que eliges t�
   Obligatorio para las metas con `completion: none`.
 </ParamField>
 
-<ParamField path="completed" type="boolean" default="false">
-  Si el usuario ha completado la meta. Solo para metas con `completion:
-  manual`.
+<ParamField path="completedAt" type="string">
+  Cuándo completó el usuario la meta, como fecha y hora ISO 8601. Como con
+  `dueAt`, una hora sin desfase se interpreta en la zona horaria del usuario, y
+  una hora posterior a ahora se interpreta como ahora. Solo para metas con
+  `completion: manual`.
 </ParamField>
 
 <ParamField path="metric" type="string">
@@ -81,7 +83,7 @@ El campo `completion` de una meta indica cómo se completa.
 
 ### Metas manuales {#manual-goals}
 
-Las metas manuales son para cosas que el usuario termina en tu app, como entregar un ensayo. Marca la meta como completada con `completed: true` cuando lo haga, y define `completed: false` para deshacerlo.
+Las metas manuales son para cosas que el usuario termina en tu app, como entregar un ensayo. Marca la meta como completada definiendo `completedAt` con el momento en que lo hizo, y defínelo como `null` para deshacerlo.
 
 ### Fechas hacia las que trabajar {#dates-to-work-towards}
 
@@ -91,7 +93,7 @@ Las metas con `completion: none` son fechas para las que el usuario se prepara, 
 
 Las metas de métricas se completan solas. Cada meta cuenta el total del usuario para su `metric` a partir de `start`, y Trophy la marca como completada en cuanto un [evento](/es/data-sources/events) lleva ese total hasta el `target`.
 
-Cambiar la `metric`, el `target` o el `start` de una meta de métrica vuelve a compararla con su objetivo, lo que puede completarla o, si el nuevo total no llega, descompletarla. Las metas de métricas no se pueden marcar como completadas con `completed`.
+Cambiar la `metric`, el `target` o el `start` de una meta de métrica vuelve a compararla con su objetivo, lo que puede completarla o, si el nuevo total no llega, descompletarla. Las metas de métricas no se pueden marcar como completadas con `completedAt`.
 
 ## Pasos {#steps}
 
@@ -136,7 +138,7 @@ Una meta puede tener hasta 100 pasos, y los pasos no pueden tener pasos propios.
 
 ### Actualizar metas {#updating-goals}
 
-Actualiza una meta o un paso con el endpoint [actualizar meta](/es/api-reference/endpoints/users/update-a-goal-for-a-user). Los campos que omitas se mantienen como están, y `null` borra una `label` o un `dueAt`. Así se marca una meta como completada:
+Actualiza una meta o un paso con el endpoint [actualizar meta](/es/api-reference/endpoints/users/update-a-goal-for-a-user). Los campos que omitas se mantienen como están, y `null` borra una `label`, un `dueAt` o un `completedAt`. La `key` de una meta no puede cambiar, y una meta no puede pasar a otra con `parent`. Así se marca una meta como completada:
 
 <UpdateGoalRequestBlock />
 
@@ -158,9 +160,13 @@ Elimina una meta o un paso con el endpoint [eliminar meta](/es/api-reference/end
 
 ### Recuperar metas {#retrieving-goals}
 
-El endpoint [metas del usuario](/es/api-reference/endpoints/users/get-a-users-goals) devuelve todas las metas de un usuario, primero las que vencen antes y después las que no tienen hora de vencimiento. Cada meta incluye su `status` y sus pasos; una meta con pasos añade `done` y `total`, y una meta de métrica añade su `metric`, `target`, `start` y el total `current`:
+El endpoint [metas del usuario](/es/api-reference/endpoints/users/get-a-users-goals) devuelve las metas de un usuario, primero las que vencen antes y después las que no tienen hora de vencimiento. Pasa `status` para obtener solo las metas con ese estado, como `active`, y `skip` y `limit` para recorrerlas por páginas, hasta 100 a la vez. Cada meta incluye todos sus pasos, sea cual sea el estado de cada uno.
+
+Cada meta y cada paso tiene un `id`, su `status`, las horas `created` y `updated`, sus `steps`, y `done` y `total`: cuántos de sus pasos están completados de cuántos tiene. Una meta sin pasos, y un paso, tienen `steps` vacío y `done` y `total` en 0. Una meta de métrica añade su `metric`, `target`, `start` y el total `current`:
 
 <UserGoalsResponseBlock />
+
+Para obtener una sola meta o un solo paso por su clave, usa el endpoint [meta del usuario](/es/api-reference/endpoints/users/get-a-users-goal).
 
 ## Cómo usan los agentes las metas {#how-agents-use-goals}
 
@@ -193,8 +199,8 @@ Las metas creadas ya completadas o vencidas, o movidas a una hora de vencimiento
   </Accordion>
 
   <Accordion title="¿Puedo reutilizar una clave tras eliminar una meta?" id="reusing-keys">
-    Sí. Una meta creada con la clave de una meta eliminada es una meta nueva, así
-    que sus mensajes se planifican desde cero.
+    Sí. Una meta creada con la clave de una meta eliminada es una meta nueva, con
+    un `id` nuevo, así que sus mensajes se planifican desde cero.
   </Accordion>
 
   <Accordion title="¿Cuántas metas puede tener un usuario?" id="goal-limits">
