@@ -1,7 +1,7 @@
 ---
 title: Recompensas
-description: Aprende a usar las recompensas en una experiencia de producto
-  gamificada con Trophy.
+description: Aprende a dar a los usuarios bonificaciones y premios canjeables en
+  tu app web o móvil con las recompensas de Trophy.
 og:description: Otorga a los usuarios premios, puntos extra o ventajas
   personalizadas cuando alcancen hitos, y deja que canjeen esas recompensas
   cuando quieran.
@@ -22,7 +22,7 @@ import AdminCreateRewardTriggerRequest from "../../snippets/admin-create-reward-
 
 Las recompensas te permiten dar algo a los usuarios cuando alcanzan un hito, y dejar que elijan cuándo reclamarlo.
 
-Una recompensa se **otorga** automáticamente cuando un usuario cumple uno de sus [desencadenadores](#reward-triggers), por ejemplo, al desbloquear un logro o alcanzar una racha de cierta duración. Solo se **entrega** cuando se **canjea**, lo cual haces llamando al [endpoint de canje](/es/api-reference/endpoints/rewards/redeem-a-reward) cuando el usuario la reclama en tu producto.
+Una recompensa se **otorga** automáticamente cuando un usuario cumple uno de sus [desencadenadores](#reward-triggers), por ejemplo, al completar un hito o alcanzar una racha de cierta duración. Solo se **entrega** cuando se **canjea**, lo cual haces llamando al [endpoint de canje](/es/api-reference/endpoints/rewards/redeem-a-reward) cuando el usuario la reclama en tu producto.
 
 Otorgar una recompensa nunca modifica por sí solo el saldo de puntos de un usuario.
 
@@ -103,7 +103,7 @@ También puedes crear recompensas y sus activadores de forma programática con l
 Las recompensas se otorgan mediante activadores. Puedes añadir tantos activadores como quieras a una recompensa, y cada uno se puede activar y desactivar de forma independiente.
 
 <Note>
-  Los activadores funcionan de forma independiente entre sí. Cada activador activo puede otorgar la recompensa por sí solo, por lo que el usuario **no** necesita cumplir todos los activadores de una recompensa. Por ejemplo, una recompensa con un activador de racha y un activador de logro se otorga cuando el usuario alcanza la longitud de la racha y de nuevo cuando completa el logro. Cualquier [límite de canje](#redemption-limits) se aplica a todos los activadores de la recompensa en conjunto.
+  Los activadores funcionan de forma independiente entre sí. Cada activador activo puede otorgar la recompensa por sí solo, por lo que el usuario **no** necesita cumplir todos los activadores de una recompensa. Por ejemplo, una recompensa con un activador de racha y un activador de hito se otorga cuando el usuario alcanza la longitud de la racha y de nuevo cuando completa el hito. Cualquier [límite de canje](#redemption-limits) se aplica a todos los activadores de la recompensa en conjunto.
 </Note>
 
 ### Tipos de disparadores {#types-of-triggers}
@@ -124,9 +124,9 @@ Una racha que terminó antes de activarse el disparador, o que se interrumpió d
   Los disparadores de racha otorgan la recompensa de forma repetida. Establece un [límite de canjes](#redemption-limits) de 1 para otorgarla solo una vez.
 </Tip>
 
-#### Disparadores de logro {#achievement-triggers}
+#### Disparadores de hito {#achievement-triggers}
 
-La recompensa se otorga una sola vez, cuando el usuario completa un [logro](/es/features/milestones) específico. No se otorga a los usuarios que completaron el logro antes de que existiera el disparador.
+La recompensa se otorga una sola vez, cuando el usuario completa un [hito](/es/features/milestones) específico. No se otorga a los usuarios que completaron el hito antes de que existiera el disparador.
 
 #### Disparadores de clasificación {#leaderboard-triggers}
 
@@ -147,7 +147,7 @@ Para añadir un disparador, abre la recompensa desde la [página de recompensas]
   <Step title="Configura el activador">
     - Para un activador de **Métrica**, elige la métrica y el umbral.
     - Para un activador de **Racha**, define la duración de la racha.
-    - Para un activador de **Logro**, elige el logro.
+    - Para un activador de **Milestone**, elige el hito.
     - Para un activador de **Clasificación**, elige la clasificación y la posición.
   </Step>
   <Step title="Añade filtros de atributos (opcional)">
@@ -167,8 +167,8 @@ Los activadores también se pueden añadir con la API de administración:
 
 Las recompensas solo se otorgan por las acciones que los usuarios realizan después de que un activador esté activo. Esto significa que:
 
-- **Los logros ya completados no otorgan recompensas.** Si un usuario completó un logro antes de que añadieras un activador de logro, no recibe la recompensa.
-- **Los logros retroactivos no otorgan recompensas.** Cuando activas o editas un logro, o estableces el `signUpDate` de un usuario, Trophy [completa los logros de los usuarios que ya cumplen los requisitos](/es/features/milestones#backdating-achievements). Estas finalizaciones silenciosas no otorgan recompensas.
+- **Los hitos ya completados no otorgan recompensas.** Si un usuario completó un hito antes de que añadieras un activador de hito, no recibe la recompensa.
+- **Los hitos retroactivos no otorgan recompensas.** Cuando activas o editas un hito, o estableces el `signUpDate` de un usuario, Trophy [completa los hitos de los usuarios que ya cumplen los requisitos](/es/features/milestones#backdating-achievements). Estas finalizaciones silenciosas no otorgan recompensas.
 - **El progreso anterior no cuenta.** Los activadores de métrica y de racha cuentan desde el momento en que se activó el activador, por lo que el progreso que los usuarios lograron antes no se recompensa.
 
 Las recompensas inactivas y los activadores inactivos detienen la concesión de nuevas recompensas, pero las recompensas ya concedidas aún se pueden canjear. Las recompensas archivadas no se conceden, no se listan ni se canjean.
@@ -185,7 +185,7 @@ Añade filtros de atributos de usuario a una recompensa, o a activadores individ
 
 ### Recompensas concedidas por un evento {#rewards-awarded-by-an-event}
 
-Cuando un [evento de métrica](/es/api-reference/endpoints/events/submit-a-metric-event) o la [finalización de un logro](/es/api-reference/endpoints/achievements/mark-an-achievement-as-completed) concede una recompensa, la respuesta la incluye en el array `rewards`. Tiene el mismo formato que la respuesta del endpoint de recompensas del usuario. Si se repite un evento con la misma [clave de idempotencia](/es/api-reference/idempotency), se devuelve un array vacío.
+Cuando un [evento de métrica](/es/api-reference/endpoints/events/submit-a-metric-event) o la [finalización de un hito](/es/api-reference/endpoints/achievements/mark-an-achievement-as-completed) concede una recompensa, la respuesta la incluye en el array `rewards`. Tiene el mismo formato que la respuesta del endpoint de recompensas del usuario. Si se repite un evento con la misma [clave de idempotencia](/es/api-reference/idempotency), se devuelve un array vacío.
 
 Úsalo para mostrar un mensaje del tipo "Has obtenido una recompensa" en el mismo momento en que ocurre.
 
@@ -239,7 +239,7 @@ Los puntos concedidos al canjear una recompensa se comportan como cualquier otro
 
 - Aparecen en el historial de puntos del usuario y en su [resumen de puntos](/es/api-reference/endpoints/users/get-a-users-points-summary).
 - Actualizan las [clasificaciones de puntos](/es/features/leaderboards) de ese sistema de puntos.
-- No se incluyen en el `points` devuelto por los eventos de métrica ni al completar un Logro, ya que no se concede nada hasta el canje.
+- No se incluyen en el `points` devuelto por los eventos de métrica ni al completar un hito, ya que no se concede nada hasta el canje.
 
 ## Analíticas de recompensas {#rewards-analytics}
 
@@ -251,6 +251,10 @@ Cada recompensa del panel de Trophy incluye analíticas integradas, como:
 - En las recompensas de puntos, una estimación de los puntos otorgados y de los puntos realmente canjeados (incluidos los potenciadores y el máximo de puntos)
 
 Filtra por atributos de usuario para comparar cómo interactúan con una recompensa distintos grupos de usuarios. Los puntos otorgados por las recompensas también aparecen como una fila independiente en el gráfico de fuentes de puntos.
+
+## Recompensas en la mensajería agéntica {#rewards-in-agentic-messaging}
+
+Las recompensas dan a los usuarios un motivo concreto para volver. Los agentes de ciclo de vida de la [mensajería agéntica](/es/agentic-messaging/overview) pueden usar los datos de recompensas para recordar a los usuarios lo que han ganado, eligiendo el mejor mensaje para cada usuario en el mejor momento.
 
 ## Obtener soporte {#get-support}
 

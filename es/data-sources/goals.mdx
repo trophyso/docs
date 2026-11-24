@@ -1,0 +1,207 @@
+---
+title: Metas
+description: Aprende a informar a Trophy de las metas que persiguen tus usuarios, desde fechas límite y exámenes hasta planes de estudio y objetivos de métricas.
+og:description: Las metas son las fechas límite, los planes y los objetivos que
+  persiguen tus usuarios. Informa de ellas a Trophy y los agentes recordarán,
+  animarán y celebrarán en los momentos adecuados.
+icon: target
+---
+
+import CreateGoalRequestBlock from "../../snippets/create-goal-request-block.mdx";
+import CreateGoalPlanRequestBlock from "../../snippets/create-goal-plan-request-block.mdx";
+import CreateGoalStepRequestBlock from "../../snippets/create-goal-step-request-block.mdx";
+import UpdateGoalRequestBlock from "../../snippets/update-goal-request-block.mdx";
+import UserGoalsResponseBlock from "../../snippets/user-goals-response-block.mdx";
+
+## ¿Qué son las metas? {#what-are-goals}
+
+Una meta es algo que persigue un usuario: un ensayo que entregar el viernes, un examen el 20 de noviembre o 50 lecciones este mes. Informas a Trophy de las metas de cada usuario a través de la [Application API](/es/api-reference/endpoints/users/create-a-goal-for-a-user), y la [mensajería agéntica](/es/agentic-messaging/overview) las usa para recordar a los usuarios una meta antes de su vencimiento, animarlos cuando no cumplen una y celebrar las que completan.
+
+Las metas pertenecen a un único usuario. Cada una tiene una `key` que eliges tú, única para ese usuario, que usas para actualizarla o eliminarla. El usuario ya debe existir en Trophy, así que [identifica al usuario](/es/data-sources/users) antes de crear sus metas.
+
+## Atributos clave {#key-attributes}
+
+<ParamField path="key" type="string" required={true}>
+  La clave de la meta, única por usuario. De 1 a 100 letras, números, guiones o
+  guiones bajos. `plural` y `singular` están reservadas.
+</ParamField>
+
+<ParamField path="label" type="string">
+  Qué es la meta, hasta 200 caracteres. Los mensajes nombran la meta por su
+  etiqueta, así que escríbela tal como quieras que se lea en un mensaje, por
+  ejemplo "Examen de español B1".
+</ParamField>
+
+<ParamField path="completion" type="string" default="manual">
+  Cómo se completa la meta: `manual`, `none` o `metric`. Consulta los [tipos de
+  compleción](#completion-types).
+</ParamField>
+
+<ParamField path="dueAt" type="string">
+  Cuándo vence la meta, como fecha y hora ISO 8601. Una hora sin desfase, como
+  `2026-11-20T09:00:00`, se interpreta en la zona horaria del usuario, así que
+  define el [`tz`](/es/data-sources/users#optional-attributes) del usuario.
+  Obligatorio para las metas con `completion: none`.
+</ParamField>
+
+<ParamField path="completed" type="boolean" default="false">
+  Si el usuario ha completado la meta. Solo para metas con `completion:
+  manual`.
+</ParamField>
+
+<ParamField path="metric" type="string">
+  Solo para metas con `completion: metric`. La clave de la
+  [métrica](/es/data-sources/metrics) que cuenta para la meta.
+</ParamField>
+
+<ParamField path="target" type="number">
+  Solo para metas con `completion: metric`. El total de la métrica que completa
+  la meta. Debe ser mayor que 0.
+</ParamField>
+
+<ParamField path="start" type="string">
+  Solo para metas con `completion: metric`. La fecha, en formato `YYYY-MM-DD` en
+  la zona horaria del usuario, desde la que se cuenta el total de la métrica. De
+  forma predeterminada es el día actual del usuario.
+</ParamField>
+
+<ParamField path="steps" type="array">
+  Los [pasos](#steps) de la meta, en orden, hasta 100.
+</ParamField>
+
+## Tipos de compleción {#completion-types}
+
+El campo `completion` de una meta indica cómo se completa.
+
+| `completion` | Se completa                                                                        | Por ejemplo                      |
+| ------------ | ---------------------------------------------------------------------------------- | -------------------------------- |
+| `manual`     | Cuando la marcas como completada                                                   | Un ensayo que entregar el viernes |
+| `none`       | Nunca. Es una fecha hacia la que trabaja el usuario                                | Un examen el 20 de noviembre     |
+| `metric`     | Automáticamente, cuando el total de una métrica desde `start` alcanza `target`     | 50 lecciones antes del 20 de noviembre |
+
+### Metas manuales {#manual-goals}
+
+Las metas manuales son para cosas que el usuario termina en tu app, como entregar un ensayo. Marca la meta como completada con `completed: true` cuando lo haga, y define `completed: false` para deshacerlo.
+
+### Fechas hacia las que trabajar {#dates-to-work-towards}
+
+Las metas con `completion: none` son fechas para las que el usuario se prepara, como un examen o una carrera. No hay nada que marcar como hecho, así que necesitan un `dueAt` y nunca se completan. Los mensajes sobre ellas ayudan al usuario a prepararse, en lugar de instarle a terminar.
+
+### Metas de métricas {#metric-goals}
+
+Las metas de métricas se completan solas. Cada meta cuenta el total del usuario para su `metric` a partir de `start`, y Trophy la marca como completada en cuanto un [evento](/es/data-sources/events) lleva ese total hasta el `target`.
+
+Cambiar la `metric`, el `target` o el `start` de una meta de métrica vuelve a compararla con su objetivo, lo que puede completarla o, si el nuevo total no llega, descompletarla. Las metas de métricas no se pueden marcar como completadas con `completed`.
+
+## Pasos {#steps}
+
+Una meta puede tener pasos, lo que la convierte en un plan. Por ejemplo, un plan de estudio para un examen podría tener un paso por cada unidad, cada uno con su propia hora de vencimiento.
+
+Los pasos tienen un solo nivel de profundidad y cada uno es una meta en sí misma. Un paso tiene su propia `key`, única entre todas las metas del usuario, y su propia `label`, `completion`, `dueAt` y métrica. Actualizas, completas y eliminas un paso mediante su propia clave, igual que cualquier otra meta.
+
+Una meta con pasos también registra cuántos de ellos están completados, algo que los mensajes usan para mostrar el progreso del usuario en el plan.
+
+## Estado {#status}
+
+Cada meta tiene un `status`, que Trophy calcula a partir de la meta cada vez que la recuperas:
+
+| `status`    | Cuándo                                                                                    |
+| ----------- | ----------------------------------------------------------------------------------------- |
+| `active`    | La meta no está completada y aún no ha vencido, o no tiene hora de vencimiento            |
+| `completed` | La meta está completada, aunque se completara después de su vencimiento                   |
+| `missed`    | Ha pasado la hora de vencimiento de una meta `manual` o `metric` sin que se completara    |
+| `ended`     | Ha pasado la hora de vencimiento de una meta `none`                                       |
+
+## Gestionar metas {#managing-goals}
+
+### Crear metas {#creating-goals}
+
+Crea una meta con el endpoint [crear meta](/es/api-reference/endpoints/users/create-a-goal-for-a-user). Esta es una meta para un examen para el que se prepara el usuario:
+
+<CreateGoalRequestBlock />
+
+Una solicitud con una clave que el usuario ya tiene, ya sea de una meta o de un paso, falla con un `409`.
+
+### Crear un plan {#creating-a-plan}
+
+Pasa `steps` para crear una meta y sus pasos en una sola solicitud:
+
+<CreateGoalPlanRequestBlock />
+
+Para añadir un único paso al final de los pasos de una meta existente, créalo con la clave de la meta como su `parent`:
+
+<CreateGoalStepRequestBlock />
+
+Una meta puede tener hasta 100 pasos, y los pasos no pueden tener pasos propios.
+
+### Actualizar metas {#updating-goals}
+
+Actualiza una meta o un paso con el endpoint [actualizar meta](/es/api-reference/endpoints/users/update-a-goal-for-a-user). Los campos que omitas se mantienen como están, y `null` borra una `label` o un `dueAt`. Así se marca una meta como completada:
+
+<UpdateGoalRequestBlock />
+
+Pasar `steps` reemplaza todos los pasos de la meta, en el orden indicado: los pasos cuya clave ya tiene la meta se actualizan, las claves nuevas se añaden y los pasos que omitas se eliminan. Úsalo para reordenar o reconstruir un plan, y el campo `parent` al [crear](#creating-a-plan) para añadir pasos de uno en uno.
+
+```json Replace a goal's steps
+{
+  "steps": [
+    { "key": "unit-1" },
+    { "key": "unit-2", "dueAt": "2026-11-15T09:00:00Z" },
+    { "key": "unit-3", "label": "Unit 3 listening" }
+  ]
+}
+```
+
+### Eliminar metas {#deleting-goals}
+
+Elimina una meta o un paso con el endpoint [eliminar meta](/es/api-reference/endpoints/users/delete-a-users-goal). Eliminar una meta también elimina sus pasos. Una vez eliminada, su clave queda libre para usarla en una meta nueva.
+
+### Recuperar metas {#retrieving-goals}
+
+El endpoint [metas del usuario](/es/api-reference/endpoints/users/get-a-users-goals) devuelve todas las metas de un usuario, primero las que vencen antes y después las que no tienen hora de vencimiento. Cada meta incluye su `status` y sus pasos; una meta con pasos añade `done` y `total`, y una meta de métrica añade su `metric`, `target`, `start` y el total `current`:
+
+<UserGoalsResponseBlock />
+
+## Cómo usan los agentes las metas {#how-agents-use-goals}
+
+Los agentes leen las metas de cada usuario y deciden cuándo vale la pena enviar un mensaje sobre una de ellas, igual que deciden sobre todo lo demás. Cada meta les da tres momentos con los que trabajar:
+
+- **Antes de que venza**: los agentes pueden recordar al usuario una meta que no está completada. Los recordatorios son más frecuentes a medida que se acerca la fecha de vencimiento y, el mismo día, un recordatorio puede llegar unas horas antes de la hora de vencimiento. Las metas sin hora de vencimiento pueden mencionarse mientras el usuario está activo en tu app.
+- **Cuando no se cumple**: en cuanto pasa la hora de vencimiento de una meta `manual` o `metric` sin que se haya completado, los agentes pueden animar al usuario a retomar el rumbo.
+- **Cuando se completa**: los agentes pueden celebrar una meta completada, una vez por meta.
+
+Los mensajes sobre una meta incluyen el progreso del usuario: cuántos pasos ha hecho y cuáles son los siguientes, o cuánto le falta a una meta de métrica para alcanzar su objetivo. Los emails también pueden mostrar el tiempo restante de la meta, una barra de progreso y sus próximos pasos.
+
+Los mensajes sobre una meta se escriben según su tipo de compleción. Una meta `manual` o `metric` es algo que terminar, mientras que una meta `none` es una fecha para la que prepararse.
+
+Antes de que se envíe un mensaje programado sobre una meta, Trophy comprueba que sigue siendo pertinente. Un recordatorio se cancela si la meta se ha completado, si han cambiado su hora de vencimiento o su tipo de compleción, o si ya ha pasado su hora de vencimiento. Consulta las [comprobaciones en el momento del envío](/es/agentic-messaging/guardrails#send-time-checks).
+
+Las metas creadas ya completadas o vencidas, o movidas a una hora de vencimiento que ya ha pasado, no reciben un mensaje de compleción ni de incumplimiento. Esto significa que puedes importar las metas pasadas de un usuario sin enviarle mensajes sobre ellas. Los pasos de una meta completada tampoco reciben mensajes.
+
+## Preguntas frecuentes {#frequently-asked-questions}
+
+<AccordionGroup>
+  <Accordion title="¿Tengo que configurar las metas en el panel?" id="dashboard-setup">
+    No. Las metas se crean por usuario a través de la API. La única
+    configuración es para las metas de métricas, cuya `metric` debe ser una
+    [métrica](/es/data-sources/metrics) que ya hayas creado.
+  </Accordion>
+
+  <Accordion title="¿Qué pasa si muevo la hora de vencimiento de una meta?" id="moving-due-time">
+    Los recordatorios ya programados para la hora de vencimiento anterior se
+    cancelan, y los agentes planifican en torno a la nueva.
+  </Accordion>
+
+  <Accordion title="¿Puedo reutilizar una clave tras eliminar una meta?" id="reusing-keys">
+    Sí. Una meta creada con la clave de una meta eliminada es una meta nueva, así
+    que sus mensajes se planifican desde cero.
+  </Accordion>
+
+  <Accordion title="¿Cuántas metas puede tener un usuario?" id="goal-limits">
+    Tantas como quieras. Cada meta puede tener hasta 100 pasos.
+  </Accordion>
+</AccordionGroup>
+
+## Obtener soporte {#get-support}
+
+¿Quieres ponerte en contacto con el equipo de Trophy? Escríbenos por [correo electrónico](mailto:support@trophy.so). ¡Estamos aquí para ayudarte!

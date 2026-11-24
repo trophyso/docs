@@ -38,7 +38,7 @@ Aquí hay un ejemplo de cómo se ve el uso de una clave de idempotencia:
 
 Cuando Trophy detecta que se ha enviado una clave de idempotencia con un evento, primero verificará si el usuario al que se refiere el evento la ha utilizado antes. Luego procederá a tomar una de las siguientes acciones:
 
-- Si el usuario ha utilizado la clave de idempotencia anteriormente, Trophy no procesará el evento y devolverá una respuesta `202 Accepted`. La respuesta reflejará el estado actual del sistema, pero no incrementará el total de métricas del usuario, no completará ningún logro, no otorgará puntos, no extenderá la racha, etc.
+- Si el usuario ha utilizado la clave de idempotencia anteriormente, Trophy no procesará el evento y devolverá una respuesta `202 Accepted`. La respuesta reflejará el estado actual del sistema, pero no incrementará el total de métricas del usuario, no completará ningún hito, no otorgará puntos, no extenderá la racha, etc.
 - Si en cambio Trophy detecta que el usuario no ha utilizado la clave de idempotencia anteriormente, procesará el evento de forma habitual y devolverá una respuesta `201 Created`. Finalmente, Trophy almacenará la clave de idempotencia para su búsqueda durante solicitudes posteriores.
 
 <Note>

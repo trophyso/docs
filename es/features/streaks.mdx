@@ -1,6 +1,6 @@
 ---
 title: Rachas
-description: Aprende a usar rachas en una experiencia de producto gamificada con Trophy.
+description: Aprende a crear hábitos de uso diarios, semanales o mensuales en tu app web o móvil con las rachas de Trophy.
 og:description: Usa rachas diarias, semanales o mensuales para crear patrones de
   uso habituales y lograr que los usuarios vuelvan a tu app.
 icon: flame
@@ -84,7 +84,7 @@ Puedes configurar cualquier número de congelaciones para otorgar a los nuevos u
     muted
     loop
     playsInline
-    className="w-full aspect-15/4"
+    className="w-full aspect-video"
     src="../../assets/features/streaks/freeze_grants.mp4"
   ></video>
 </Frame>
@@ -99,7 +99,7 @@ Para configurarlo, define el número de días durante los cuales se otorgarán c
     muted
     loop
     playsInline
-    className="w-full aspect-15/4"
+    className="w-full aspect-video"
     src="../../assets/features/streaks/freeze_accumulation.mp4"
   ></video>
 </Frame>
@@ -143,10 +143,6 @@ No se requiere ningún trabajo adicional para hacer el seguimiento de las rachas
 
 También puedes consultar y actualizar la configuración de rachas de la organización (frecuencia, modo de evaluación, métricas, días libres, personalización y congelaciones) con la [API de administración de configuración de rachas](/es/admin-api/endpoints/streaks/update-streak-settings).
 
-<Tip>
-Para ver una guía completa sobre cómo configurar una función de rachas con Trophy, consulta nuestra [guía oficial](/es/guides/how-to-build-a-streaks-feature).
-</Tip>
-
 ## Personalización de rachas {#streak-personalization}
 
 Trophy permite que los usuarios personalicen el funcionamiento de su racha dentro de los límites que tú establezcas. Para ello, activa la personalización de rachas en la [página de rachas](https://app.trophy.so/streaks) del panel de Trophy.
@@ -163,7 +159,7 @@ Para obtener más información sobre cómo establecer las preferencias de un usu
     muted
     loop
     playsInline
-    className="w-full aspect-15/4"
+    className="w-full aspect-video"
     height="200"
     width="100%"
     noZoom
@@ -189,7 +185,7 @@ También puedes usar la [API de administración para restaurar rachas](/es/admin
     muted
     loop
     playsInline
-    className="w-full aspect-15/4"
+    className="w-full aspect-video"
     src="../../assets/features/streaks/restoring_streaks.mp4"
   ></video>
 </Frame>
@@ -209,11 +205,6 @@ Cuando se restablece una racha, el período correspondiente en el campo `streakH
 ## Mostrar rachas {#displaying-streaks}
 
 Trophy expone los datos de rachas de dos maneras, que puedes usar para crear elementos de interfaz en tus aplicaciones y mostrar las rachas a los usuarios.
-
-<Tip>
-  Consulta nuestra [guía completa](/es/guides/how-to-build-a-streaks-feature) sobre cómo agregar una
-  función de rachas a tu app para obtener más detalles.
-</Tip>
 
 ### Respuesta del evento de métrica {#metric-event-response}
 
@@ -331,9 +322,13 @@ Si quieres mostrar las rachas de varios usuarios a la vez, por ejemplo, para adm
 ]
 ```
 
-## Obtener soporte {#rewarding-streaks}
+## Recompensar las rachas {#rewarding-streaks}
 
-¿Quieres ponerte en contacto con el equipo de Trophy? Escríbenos por [correo electrónico](mailto:support@trophy.so). ¡Estamos aquí para ayudarte!
+Para dar algo a los usuarios cuando alcanzan una duración de racha, como puntos extra que reclaman o un premio que entregas tú mismo, añade un activador de racha a una [recompensa](/es/features/rewards#streak-triggers). Si solo quieres que se sumen puntos automáticamente, usa en su lugar un [activador de puntos](/es/features/points#streak-triggers).
+
+## Rachas en la mensajería agéntica {#streaks-in-agentic-messaging}
+
+Los datos de rachas son una de las señales más fuertes que tiene la [mensajería agéntica](/es/agentic-messaging/overview) sobre los hábitos de cada usuario. Los agentes de ciclo de vida los usan para enviar recordatorios de racha oportunos y personalizados y para celebrar las rachas que lo merecen, eligiendo el mejor mensaje para cada usuario en el mejor momento.
 
 ## Obtener soporte {#get-support}
 

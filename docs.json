@@ -539,13 +539,26 @@
                 "pages": [
                   "es/data-sources/metrics",
                   "es/data-sources/events",
-                  "es/data-sources/users"
+                  "es/data-sources/users",
+                  "es/data-sources/goals"
                 ]
               },
               {
                 "group": "Contexto",
                 "pages": [
                   "es/context/brand-kit"
+                ]
+              },
+              {
+                "group": "Mensajería agéntica",
+                "pages": [
+                  "es/agentic-messaging/overview",
+                  "es/agentic-messaging/objectives",
+                  "es/agentic-messaging/channels",
+                  "es/agentic-messaging/guardrails",
+                  "es/agentic-messaging/user-preferences",
+                  "es/agentic-messaging/measuring-impact",
+                  "es/agentic-messaging/rollout"
                 ]
               },
               {
@@ -656,6 +669,10 @@
                   "es/api-reference/endpoints/users/get-a-users-points-summary",
                   "es/api-reference/endpoints/users/get-a-users-leaderboard",
                   "es/api-reference/endpoints/users/get-a-users-rewards",
+                  "es/api-reference/endpoints/users/get-a-users-goals",
+                  "es/api-reference/endpoints/users/create-a-goal-for-a-user",
+                  "es/api-reference/endpoints/users/update-a-goal-for-a-user",
+                  "es/api-reference/endpoints/users/delete-a-users-goal",
                   "es/api-reference/endpoints/users/get-a-users-wrapped",
                   "es/api-reference/endpoints/users/get-user-preferences",
                   "es/api-reference/endpoints/users/update-user-preferences"

@@ -1,6 +1,6 @@
 ---
 title: Puntos
-description: Aprende a construir sistemas basados en puntos usando Trophy
+description: Aprende a convertir las acciones dentro de la app en progreso con los sistemas de puntos de Trophy.
 og:description: Usa sistemas de puntos para recompensar a los usuarios por
   acciones dentro de la aplicación.
 icon: sparkle
@@ -18,7 +18,7 @@ import WebhookPointsLevelChangedPayload from "../../snippets/webhook-points-leve
 
 ## ¿Qué es un Sistema de Puntos? {#what-is-a-points-system}
 
-Los sistemas de puntos se utilizan para crear contadores que rastrean las interacciones de los usuarios con [Métricas](/es/data-sources/metrics), [Logros](/es/features/milestones) y [Rachas](/es/features/streaks). Luego puedes construir funcionalidades como 'XP' y 'Energía' alrededor de estos contadores dentro de tu producto.
+Los sistemas de puntos se utilizan para crear contadores que rastrean las interacciones de los usuarios con [Métricas](/es/data-sources/metrics), [Hitos](/es/features/milestones) y [Rachas](/es/features/streaks). Luego puedes construir funcionalidades como 'XP' y 'Energía' alrededor de estos contadores dentro de tu producto.
 
 ## Casos de Uso {#use-cases}
 
@@ -101,9 +101,9 @@ Los puntos se pueden otorgar o deducir de forma continua a medida que los usuari
 
 Los puntos se pueden otorgar o deducir al alcanzar cualquier duración de una [Racha](/es/features/streaks), por ejemplo: "otorga 50 puntos por cada racha de 7 días".
 
-#### Activadores de logros {#achievement-triggers}
+#### Activadores de hitos {#achievement-triggers}
 
-Los puntos se pueden otorgar o deducir cuando los usuarios desbloquean [Logros](/es/features/milestones) específicos, por ejemplo: "otorgar 100 puntos cuando los usuarios completen el logro `profile-completed`".
+Los puntos se pueden otorgar o deducir cuando los usuarios completan [Hitos](/es/features/milestones) específicos, por ejemplo: "otorgar 100 puntos cuando los usuarios completen el hito `profile-completed`".
 
 #### Activadores basados en tiempo {#time-based-triggers}
 
@@ -145,7 +145,7 @@ Para crear un nuevo activador de puntos, ve al sistema de puntos para el que qui
 
 - Si elegiste el activador de **Racha**, deberás establecer la duración de la racha que debe otorgar o deducir puntos.
 
-- Si elegiste el activador de **Logro**, deberás elegir el logro que debe otorgar o deducir puntos al completarse.
+- Si elegiste el activador de **Milestone**, deberás elegir el hito que debe otorgar o deducir puntos al completarse.
 
 - Si elegiste el activador de **Tiempo**, deberás elegir la unidad de tiempo en la que quieres otorgar o deducir puntos (horas o días) y el número de esas unidades de tiempo tras el cual quieres otorgar o deducir puntos.
 
@@ -228,7 +228,7 @@ Para crear un boost de puntos global en el panel de Trophy, sigue estos pasos.
     muted
     loop
     playsInline
-    className="w-full aspect-15/4"
+    className="w-full aspect-video"
     src="../../assets/features/points/create_points_boost.mp4"
   ></video>
 </Frame>
@@ -376,7 +376,7 @@ if (pts?.level) {
 }
 ```
 
-El mismo comportamiento de `level` se aplica cuando los puntos cambian desde la [finalización de un logro](/es/api-reference/endpoints/achievements/mark-an-achievement-as-completed).
+El mismo comportamiento de `level` se aplica cuando los puntos cambian desde la [finalización de un hito](/es/api-reference/endpoints/achievements/mark-an-achievement-as-completed).
 
 Para notificaciones impulsadas por el servidor (correo electrónico, push, CRM) que no deben depender de que el cliente vea la respuesta HTTP, suscríbete al webhook [`points.level_changed`](/es/webhooks/events/points/points-level-changed) en su lugar.
 
@@ -391,12 +391,6 @@ La [API de resumen de niveles](/es/api-reference/endpoints/points/get-points-lev
 ## Mostrar Puntos {#displaying-points}
 
 Existen varias formas de usar Trophy para obtener y mostrar puntos en tu aplicación.
-
-<Note>
-  Para ver ejemplos prácticos, consulta nuestras guías sobre cómo agregar una [función de
-  XP](/es/guides/how-to-build-an-xp-feature) o una [función de
-  energía](/es/guides/how-to-build-an-energy-feature) a tu aplicación web o móvil.
-</Note>
 
 <Frame>
   <video
@@ -413,7 +407,7 @@ Existen varias formas de usar Trophy para obtener y mostrar puntos en tu aplicac
 
 En primer lugar, los puntos otorgados a los usuarios o deducidos de ellos como resultado de un evento de cambio de métrica se devuelven en la respuesta al usar la [API de eventos de cambio de métrica](/es/api-reference/endpoints/events/submit-a-metric-event).
 
-La respuesta incluye el nuevo total de puntos del usuario, cuántos puntos se otorgaron o dedujeron como resultado del evento, y los detalles de los activadores de puntos específicos que se dispararon. Cuando los [Niveles de Puntos](#points-levels) están habilitados, cada objeto de puntos en esa respuesta también puede incluir **`level`**: Trophy incluye el **nuevo** nivel del usuario **solo cuando cambió** como resultado de ese evento. El mismo comportamiento opcional de `level` se aplica cuando los puntos cambian debido a la [finalización de un logro](/es/api-reference/endpoints/achievements/mark-an-achievement-as-completed).
+La respuesta incluye el nuevo total de puntos del usuario, cuántos puntos se otorgaron o dedujeron como resultado del evento, y los detalles de los activadores de puntos específicos que se dispararon. Cuando los [Niveles de Puntos](#points-levels) están habilitados, cada objeto de puntos en esa respuesta también puede incluir **`level`**: Trophy incluye el **nuevo** nivel del usuario **solo cuando cambió** como resultado de ese evento. El mismo comportamiento opcional de `level` se aplica cuando los puntos cambian debido a la [finalización de un hito](/es/api-reference/endpoints/achievements/mark-an-achievement-as-completed).
 
 Ejemplo de respuesta `POST /metrics/{key}/event` (los campos coinciden con la especificación de la API de Trophy; tus claves bajo `points` e `leaderboards` dependen de tu cuenta):
 
@@ -508,6 +502,10 @@ Trophy cuenta con análisis integrado para rastrear la asignación de puntos de 
   />
 </Frame>
 
-## Obtener Soporte {#get-support}
+## Puntos en la mensajería agéntica {#points-in-agentic-messaging}
 
-¿Quieres ponerte en contacto con el equipo de Trophy? Contáctanos por [correo electrónico](mailto:support@trophy.so). ¡Estamos aquí para ayudarte!
+Los puntos y los niveles dan a la [mensajería agéntica](/es/agentic-messaging/overview) más formas de reconocer el progreso. Los agentes de ciclo de vida pueden felicitar a los usuarios por un nuevo nivel o animar a los que están cerca del siguiente, eligiendo el mejor mensaje para cada usuario en el mejor momento.
+
+## Obtener soporte {#get-support}
+
+¿Quieres ponerte en contacto con el equipo de Trophy? Escríbenos por [correo electrónico](mailto:support@trophy.so). ¡Estamos aquí para ayudarte!

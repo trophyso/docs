@@ -1,7 +1,7 @@
 ---
 title: Usuarios
-description: Aprende a hacer seguimiento de las interacciones de toda tu base de
-  usuarios con Trophy.
+description: Aprende a informar a Trophy sobre las personas que usan tu app web o
+  móvil.
 og:description: Los usuarios son las personas que usan tu plataforma. Aprende a
   informar a Trophy sobre ellos.
 icon: users
@@ -15,7 +15,7 @@ import UserStreakPreferencesResponseBlock from "../../snippets/user-streak-prefe
 
 ## ¿Qué son los usuarios? {#what-are-users}
 
-Los usuarios son las personas que utilizan tu producto. Informas a Trophy sobre tus usuarios mediante las API y usas el panel de control para diseñar experiencias de gamificación en torno a ellos.
+Los usuarios son las personas que utilizan tu producto. Informas a Trophy sobre tus usuarios mediante las API. Después, Trophy usa lo que sabe de cada usuario para impulsar las funciones dentro de la app y personalizar la [mensajería agéntica](/es/agentic-messaging/overview).
 
 Los usuarios deben ser personas individuales; no pueden ser empresas ni organizaciones. Para crear estructuras organizativas o agrupaciones de usuarios, considera usar un [atributo de usuario personalizado](#custom-user-attributes).
 
@@ -38,7 +38,7 @@ Trophy solo requiere un atributo clave: `id`. Todos los usuarios que registres e
 
 ### Atributos opcionales {#optional-attributes}
 
-Además, puedes informar a Trophy sobre cualquiera de los siguientes atributos clave opcionales, y los pondrá a tu disposición como parte de tu experiencia de gamificación:
+Además, puedes informar a Trophy sobre cualquiera de los siguientes atributos clave opcionales, y los pondrá a tu disposición en todo Trophy:
 
 <ParamField path="name" type="string">
   El nombre completo del usuario. Está disponible en las plantillas de correo electrónico y en otras áreas
@@ -46,15 +46,15 @@ Además, puedes informar a Trophy sobre cualquiera de los siguientes atributos c
 </ParamField>
 
 <ParamField path="email" type="string">
-  La dirección de correo electrónico del usuario. Se usará en todos los
-  [correos electrónicos](/es/features/emails) que configures como parte de tu
-  experiencia de gamificación con Trophy.
+  La dirección de correo electrónico del usuario. Se usa para enviar al usuario
+  [mensajes agénticos](/es/agentic-messaging/channels) y cualquier
+  [Email (heredado)](/es/features/emails).
 </ParamField>
 
 <ParamField path="tz" type="string">
   La zona horaria del usuario. Debe especificarse como un [identificador de zona
   horaria IANA](https://en.wikipedia.org/wiki/List_of_tz_database_time_zones).
-  Se usa para las rachas, las posiciones en la clasificación y el envío de correos electrónicos a los usuarios
+  Se usa para las rachas, las posiciones en la clasificación y el envío de mensajes a los usuarios
   según su hora local.
 
 En JavaScript, puedes obtener la zona horaria del usuario con este fragmento de código:
@@ -80,10 +80,32 @@ const timezone = Intl.DateTimeFormat().resolvedOptions().timeZone;
 </ParamField>
 
 <ParamField path="deviceTokens" type="array<string>">
-  La lista de tokens de dispositivo que se asociarán al usuario. Si has configurado
-  alguna de las [Notificaciones push](/es/features/push-notifications) de Trophy, solo se
-  enviarán a un usuario cuando se proporcione este campo.
+  La lista de tokens de dispositivo que se asociarán al usuario. Las notificaciones
+  push, tanto agénticas como [heredadas](/es/features/push-notifications), solo se
+  envían a usuarios con tokens de dispositivo. Consulta los [tokens de
+  dispositivo](/es/agentic-messaging/channels#device-tokens).
 </ParamField>
+
+### Atributos de solo lectura {#read-only-attributes}
+
+Trophy también define los siguientes atributos clave en cada usuario. Se devuelven cuando [obtienes un usuario](#retrieving-user-information), pero no se pueden definir al identificar usuarios.
+
+<ResponseField name="control" type="boolean">
+  Si el usuario está en el grupo de control. Los usuarios del grupo de control no
+  reciben mensajes de Trophy, y puedes usar este indicador para inscribir a los
+  usuarios de forma condicional en las funciones dentro de la app. Más
+  información sobre [experimentación](/es/platform/experimentation).
+</ResponseField>
+
+<ResponseField name="agenticMessagingEnabled" type="boolean">
+  Si el usuario recibe [mensajes agénticos](/es/agentic-messaging/overview).
+  Cuando es `true`, el usuario recibe mensajes agénticos en lugar de
+  [Emails (heredados)](/es/features/emails) y
+  [Notificaciones push (heredadas)](/es/features/push-notifications), nunca ambos.
+  Qué usuarios reciben mensajes agénticos depende de tu
+  [despliegue](/es/agentic-messaging/rollout). Siempre es `false` para los usuarios
+  del grupo de control.
+</ResponseField>
 
 ## Atributos de usuario personalizados {#custom-user-attributes}
 
@@ -99,11 +121,11 @@ Los atributos de usuario personalizados los gestionas tú y pueden ser lo que qu
 
 Por ejemplo, una aplicación de aprendizaje de idiomas podría usar un atributo personalizado para el idioma que estudia un usuario, o una plataforma de estudio podría usar uno para la asignatura favorita del usuario.
 
-Los atributos de usuario personalizados te permiten comunicar a Trophy esta información contextual y usarla para personalizar las funciones de gamificación.
+Los atributos de usuario personalizados te permiten comunicar a Trophy esta información contextual y usarla para personalizar las funciones dentro de la app y la mensajería.
 
 ### Crear atributos {#creating-attributes}
 
-Para crear un nuevo atributo de usuario personalizado, ve a la [pestaña de atributos](https://app.trophy.so/users/attributes) de la página de usuarios en el panel de Trophy y haz clic en el botón _Add User Attribute_.
+Para crear un nuevo atributo de usuario personalizado, ve a la [página Attributes](https://app.trophy.so/attributes), dentro de _Data sources_ en el panel de Trophy, y haz clic en el botón _Add User Attribute_.
 
 Asigna un nombre y una clave única al atributo. La clave es lo que usarás para hacer referencia al atributo en las llamadas a la API.
 
@@ -113,7 +135,7 @@ Asigna un nombre y una clave única al atributo. La clave es lo que usarás para
     muted
     loop
     playsInline
-    className="w-full aspect-15/4"
+    className="w-full aspect-video"
     src="../../assets/features/users/create_custom_user_attribute.mp4"
   ></video>
 </Frame>
@@ -156,19 +178,19 @@ En todas las API, el esquema para establecer los valores de los atributos es coh
 
 ### Usar atributos {#using-attributes}
 
-Usa los atributos de usuario personalizados en todo Trophy para personalizar las funciones de gamificación, agregar y filtrar los datos devueltos por las API, y segmentar y comparar cohortes de usuarios en analítica.
+Usa los atributos de usuario personalizados en todo Trophy para personalizar las funciones dentro de la app y la mensajería, agregar y filtrar los datos devueltos por las API, y segmentar y comparar cohortes de usuarios en analítica.
 
 #### Personalización de funciones {#feature-personalization}
 
-Los atributos personalizados de usuario se pueden usar para personalizar los logros, adaptar la forma en que distintos usuarios obtienen puntos y mucho más. Sigue los enlaces a las páginas correspondientes que aparecen a continuación para obtener más información.
+Los atributos personalizados de usuario se pueden usar para personalizar los hitos, adaptar la forma en que distintos usuarios obtienen puntos y mucho más. Sigue los enlaces a las páginas correspondientes que aparecen a continuación para obtener más información.
 
 <CardGroup>
   <Card
-    title="Personalización de logros"
+    title="Personalización de hitos"
     icon="trophy"
     href="/es/features/milestones#creating-achievements"
   >
-    Configura logros que solo pueden desbloquear usuarios específicos.
+    Configura hitos que solo pueden completar usuarios específicos.
   </Card>
   <Card
     title="Personalización de puntos"
@@ -182,7 +204,7 @@ Los atributos personalizados de usuario se pueden usar para personalizar los log
     icon="split"
     href="/es/features/emails#limiting-emails-to-specific-types-of-users"
   >
-    Controla qué usuarios reciben correos electrónicos de gamificación.
+    Controla qué usuarios reciben emails heredados.
   </Card>
   <Card
     title="Personalización de correos electrónicos"
@@ -202,7 +224,7 @@ Los atributos personalizados de usuario se pueden usar para personalizar los log
 
 #### Agregación y filtrado de datos {#data-aggregation-and-filtering}
 
-Puedes usar atributos personalizados de usuario para agregar y filtrar los datos que devuelven algunas API, y así admitir una amplia variedad de casos de uso de gamificación. En todos los casos, los atributos se incluyen en el parámetro de consulta `userAttributes` mediante un esquema coherente:
+Puedes usar atributos personalizados de usuario para agregar y filtrar los datos que devuelven algunas API, y así admitir una amplia variedad de casos de uso. En todos los casos, los atributos se incluyen en el parámetro de consulta `userAttributes` mediante un esquema coherente:
 
 `?userAttributes=city:london,subscription-plan:pro`
 
@@ -214,7 +236,7 @@ Esta es la lista de todas las API que admiten el parámetro de consulta `userAtt
 
 Los atributos personalizados de usuario se pueden usar para segmentar y comparar los gráficos de retención y participación entre grupos de usuarios.
 
-Esto es útil para saber qué cohortes aprovechan al máximo tus funciones de gamificación y cuáles tienen dificultades para participar y, por tanto, requieren atención.
+Esto es útil para saber qué cohortes aprovechan al máximo tus funciones dentro de la app y cuáles tienen dificultades para participar y, por tanto, requieren atención.
 
 <Frame>
   <video
@@ -222,7 +244,7 @@ Esto es útil para saber qué cohortes aprovechan al máximo tus funciones de ga
     muted
     loop
     playsInline
-    className="w-full aspect-15/4"
+    className="w-full aspect-video"
     src="../../assets/features/users/segmenting_analytics.mp4"
   ></video>
 </Frame>
@@ -320,13 +342,17 @@ Las propiedades que pases a Trophy se actualizarán con los nuevos valores que e
 
 ## Configurar las preferencias de usuario {#setting-user-preferences}
 
-Trophy ofrece APIs para ayudarte a crear un centro de preferencias que tus usuarios pueden utilizar para controlar y personalizar cómo interactúan con tus funciones de gamificación.
+Trophy ofrece APIs para ayudarte a crear un centro de preferencias que tus usuarios pueden utilizar para controlar y personalizar cómo interactúan con tus funciones dentro de la app y los mensajes que reciben.
 
 Esta sección describe todas las preferencias que puedes exponer a tus usuarios y su función.
 
 ### Preferencias de notificaciones {#notification-preferences}
 
-Puedes usar Trophy para enviar a tus usuarios [correos electrónicos](/es/features/emails) y [Notificaciones push](/es/features/push-notifications) gamificados.
+Las preferencias de notificaciones de esta sección se aplican a los [Emails (heredados)](/es/features/emails) y las [Notificaciones push (heredadas)](/es/features/push-notifications) basados en plantillas.
+
+<Info>
+  En su lugar, los usuarios de la cohorte de mensajería agéntica controlan con qué frecuencia y por qué canales reciben noticias tuyas. Consulta las [preferencias de usuario para la mensajería agéntica](/es/agentic-messaging/user-preferences).
+</Info>
 
 La [API de actualización de preferencias](/es/api-reference/endpoints/users/update-user-preferences) de Trophy te permite crear un centro de preferencias dentro de tu aplicación con el que tus usuarios pueden controlar qué notificaciones reciben y a través de qué canales.
 
@@ -340,7 +366,7 @@ La [API de actualización de preferencias](/es/api-reference/endpoints/users/upd
 
 La API te permite actualizar las preferencias de notificación de un usuario para distintos tipos de notificación:
 
-- **achievement_completed**: notificaciones que se envían cuando un usuario completa un Logro
+- **achievement_completed**: notificaciones que se envían cuando un usuario completa un hito
 - **recap**: notificaciones periódicas con un resumen del progreso del usuario
 - **reactivation**: notificaciones que se envían para volver a captar a usuarios inactivos
 - **streak_reminder**: recordatorios para ayudar a los usuarios a mantener sus Rachas
@@ -402,9 +428,9 @@ Una vez configuradas las preferencias de racha, la [API para obtener preferencia
 
 Para obtener los detalles de un usuario que ya has identificado en Trophy, usa la [API Get User](/es/api-reference/endpoints/users/get-a-single-user).
 
-Esto devolverá todos los detalles del usuario junto con el atributo `control`, que puedes usar para inscribir a los usuarios de forma condicional en cualquier función de gamificación. Más información sobre [Experimentación](/es/platform/experimentation).
+Esto devolverá todos los detalles del usuario, incluidos los [atributos de solo lectura](#read-only-attributes) `control` y `agenticMessagingEnabled`. Usa `control` para inscribir a los usuarios de forma condicional en las funciones dentro de la app, y `agenticMessagingEnabled` para comprobar si el usuario recibe mensajes agénticos.
 
-```json Response {3}
+```json Response {3-4}
 {
   "id": "user-id",
   "control": false,

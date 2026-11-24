@@ -1,30 +1,31 @@
 ---
 title: Experimentación
-description: Aprende a usar Trophy para experimentar con la experiencia de
-  gamificación y aumentar la retención y el engagement de los usuarios.
-og:description: Aprende a usar Trophy para experimentar con la experiencia de
-  gamificación y aumentar la retención y el engagement de los usuarios.
+description: Aprende a usar Trophy para experimentar con tu experiencia de
+  engagement y aumentar la retención y el engagement de los usuarios.
+og:description: Aprende a usar Trophy para experimentar con tu experiencia de
+  engagement y aumentar la retención y el engagement de los usuarios.
 icon: flask-conical
 ---
 
 import ControlFlagBlock from "../../snippets/control-flag-block.mdx";
 
-Trophy proporciona un conjunto básico de primitivas para ayudarte a implementar experiencias de gamificación más rápido. Pero la gamificación no es algo que puedas configurar y olvidar.
+Trophy proporciona un conjunto básico de primitivas para ayudarte a implementar experiencias de engagement más rápido. Pero el engagement no es algo que puedas configurar y olvidar.
 
-Una parte clave de gestionar una plataforma gamificada es la experimentación: ajustar y optimizar la experiencia del usuario para asegurar que los usuarios sigan regresando.
+Una parte clave de gestionar un producto que genere engagement es la experimentación: ajustar y optimizar la experiencia del usuario para asegurar que los usuarios sigan regresando.
 
 Normalmente, tendrías que construir estas herramientas tú mismo, pero con Trophy obtienes un stack de experimentación simple listo para usar.
 
-<Tip>
-  Tenemos planes para extender las capacidades de experimentación de Trophy en el futuro para
-  soportar pruebas A/B más granulares de tus funciones de gamificación.
-</Tip>
+<Note>
+  La [mensajería agéntica](/es/agentic-messaging/overview) incluye grupos de control
+  de serie, así que puedes medir su impacto sin configurar tus propios
+  experimentos. Consulta [Medir el impacto](/es/agentic-messaging/measuring-impact).
+</Note>
 
 ## Ratio de Control {#control-ratio}
 
-Trophy tiene una capacidad integrada para realizar pruebas A/B automáticas de funciones de gamificación usando un ratio de control.
+Trophy tiene una capacidad integrada para realizar pruebas A/B automáticas de funciones dentro de la app usando un ratio de control.
 
-Disponible en la [página de integración](https://app.trophy.so/integration/configure) del panel de Trophy, el ratio de control ajusta el porcentaje de usuarios que se asignan al grupo de 'control' frente al grupo 'experimental'.
+Disponible en la [página Settings](https://app.trophy.so/settings) del panel de Trophy, el ratio de control ajusta el porcentaje de usuarios que se asignan al grupo de 'control' frente al grupo 'experimental'.
 
 También puedes leer y actualizar `controlRatio` y `userActivationWindow` con la [API de administración de configuración de organización](/es/admin-api/endpoints/settings/update-organization-settings).
 
@@ -34,14 +35,14 @@ También puedes leer y actualizar `controlRatio` y `userActivationWindow` con la
     muted
     loop
     playsInline
-    className="w-full aspect-15/4"
+    className="w-full aspect-video"
     src="../../assets/platform/experimentation/control_ratio.mp4"
   ></video>
 </Frame>
 
-Trophy devuelve el atributo `control` como `true` o `false` en la mayoría de las APIs relacionadas con datos de usuario, permitiéndote mostrar condicionalmente funciones de gamificación a usuarios que están en el grupo experimental.
+Trophy devuelve el atributo `control` como `true` o `false` en la mayoría de las APIs relacionadas con datos de usuario, permitiéndote mostrar condicionalmente funciones dentro de la app a usuarios que están en el grupo experimental.
 
-Si planeas medir el impacto general de las funciones de gamificación, asegúrate de mostrar esas funciones solo a usuarios con `control` establecido en `false`.
+Si planeas medir el impacto general de las funciones dentro de la app, asegúrate de mostrar esas funciones solo a usuarios con `control` establecido en `false`.
 
 <ControlFlagBlock />
 
@@ -75,7 +76,7 @@ Trophy incluye un gráfico de retención para cada métrica en su dashboard de m
   />
 </Frame>
 
-La [página de integración](https://app.trophy.so/integration/configure) te permite controlar el marco de tiempo sobre el cual deseas medir la retención a través de la configuración 'Ventana de activación de nuevos usuarios'.
+La [página Settings](https://app.trophy.so/settings) te permite controlar el marco de tiempo sobre el cual deseas medir la retención a través de la configuración 'New user activation window'.
 
 <Frame>
   <img
@@ -119,7 +120,7 @@ Trophy también muestra gráficos que presentan la participación de usuario den
   />
 </Frame>
 
-Nos referimos a esto como 'participación temprana' y es la participación de usuario medida por Trophy solo para usuarios dentro del período de tiempo establecido en la configuración 'Ventana de activación de nuevos usuarios' en la [página de integración](https://app.trophy.so/integration/configure).
+Nos referimos a esto como 'participación temprana' y es la participación de usuario medida por Trophy solo para usuarios dentro del período de tiempo establecido en la configuración 'New user activation window' en la [página Settings](https://app.trophy.so/settings).
 
 <Frame>
   <img

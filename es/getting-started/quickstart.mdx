@@ -12,7 +12,7 @@ import TrophyClientInitBlock from "../../snippets/trophy-client-init-block.mdx";
 import MetricChangeResponseBlock from "../../snippets/metric-change-response-block.mdx";
 import VerifiedFirstEvent from "../../snippets/verified-first-event.mdx";
 
-Aquí integrarás tu aplicación con Trophy y comenzarás a construir tu primera función gamificada en aproximadamente cinco minutos.
+Aquí integrarás tu aplicación con Trophy y enviarás tu primer evento de métrica en aproximadamente cinco minutos. Todo en Trophy se basa en la actividad de los usuarios que envías como eventos, así que este es el primer paso, construyas lo que construyas.
 
 <Tabs>
   <Tab title="Usando IA" icon="bot">
@@ -45,7 +45,7 @@ Aquí integrarás tu aplicación con Trophy y comenzarás a construir tu primera
           iconType="solid"
           actions={["copy", "cursor"]}
         >
-          Estoy agregando gamificación a mi aplicación usando Trophy.
+          Estoy integrando Trophy en mi app.
 
           Antes de realizar cambios, verifica que los servidores MCP de Trophy conectados estén disponibles. Usa el servidor MCP de documentación como la fuente principal de verdad para los detalles de integración de Trophy, y el servidor MCP de cuenta para configurar mi cuenta.
 
@@ -62,128 +62,16 @@ Aquí integrarás tu aplicación con Trophy y comenzarás a construir tu primera
           - Mantén los secretos fuera del control de código fuente.
           - Usa los patrones y convenciones de nomenclatura existentes del proyecto.
           - Muestra un resumen conciso de los archivos modificados y cómo probar la configuración.
-          - Sugiere los siguientes pasos basados en las funciones de gamificación que Trophy soporta y el caso de uso.
+          - Sugiere los siguientes pasos según mi caso de uso: mensajería agéntica, funciones dentro de la app o ambas.
         </Prompt>
 
         Esto hará lo siguiente:
 
         1. Agregará el [SDK de Trophy](/es/api-reference/client-libraries) correspondiente a tu aplicación según tu stack tecnológico
         2. Agregará una nueva variable `TROPHY_API_KEY` a tu configuración de entorno
-        3. Agregará código para rastrear eventos de métricas para la actividad de usuario elegida usando el cliente del SDK de Trophy - requerido para todas las funciones de gamificación.
-      </Step>
-      <Step title="Construye tu primera función de gamificación">
-        Una vez completada la configuración inicial, elige un caso de uso común y pega el prompt correspondiente en tu asistente de IA:
+        3. Agregará código para rastrear eventos de métricas para la actividad de usuario elegida usando el cliente del SDK de Trophy, algo necesario para todas las funciones de Trophy.
 
-        <Prompt
-          description="Racha diaria"
-          icon="paperclip"
-          iconType="solid"
-          actions={["copy", "cursor"]}
-        >
-          Crea una funcionalidad de racha diaria con Trophy.
-
-          Usa el MCP de Documentación como fuente de verdad para cómo funcionan las rachas, y el MCP de Cuenta para configurar mi cuenta.
-
-          Objetivos:
-          1. Impulsar la racha desde una actividad principal del usuario que ya se rastree (o que deberíamos rastrear) como una métrica de Trophy.
-          2. Asegurar que cada identificación/actualización de usuario y evento de métrica incluya el atributo `tz` del usuario (zona horaria IANA). Esto es necesario para que las rachas evalúen correctamente los días calendario para cada usuario.
-          3. Configurar la funcionalidad de racha en Trophy usando un umbral sensato para la métrica elegida.
-          4. Habilitar congelaciones de racha y pausas de racha si encajan con este producto; de lo contrario, omitirlas y explicar por qué.
-          5. Conectar cualquier lectura del lado de la aplicación o interfaz necesaria para mostrar la racha actual del usuario, congelaciones y estado de pausa.
-          6. Resumir qué se configuró, qué código cambió y cómo verificar la racha de principio a fin. Explicar explícitamente por qué enviar `tz` es importante para que funcione correctamente la funcionalidad de racha.
-        </Prompt>
-
-        <Prompt
-          description="Biblioteca de logros"
-          icon="paperclip"
-          iconType="solid"
-          actions={["copy", "cursor"]}
-        >
-          Crea una biblioteca de logros con Trophy.
-
-          Usa el MCP de Documentación como fuente de verdad para tipos de logros y activadores, y el MCP de Cuenta para configurar mi cuenta.
-
-          Objetivos:
-          1. Crear un conjunto de logros vinculados a acciones principales del usuario rastreadas como eventos de métrica de Trophy.
-          2. Agregar cualquier logro activado por API de una sola vez (y otros tipos de logros) que encajen con el producto.
-          3. Conectar el manejo del lado de la aplicación para desbloqueos y una forma mínima de listar logros completados vs incompletos.
-          4. Resumir qué se configuró, qué código cambió y cómo verificar los desbloqueos de principio a fin.
-        </Prompt>
-
-        <Prompt
-          description="Sistema XP"
-          icon="paperclip"
-          iconType="solid"
-          actions={["copy", "cursor"]}
-        >
-          Crea un sistema de puntos XP con Trophy.
-
-          Usa el MCP de Documentación como fuente de verdad para sistemas de puntos, activadores y niveles, y el MCP de Cuenta para configurar mi cuenta.
-
-          Objetivos:
-          1. Crear un sistema de puntos que otorgue XP por algunas acciones clave del usuario rastreadas como métricas de Trophy.
-          2. Configurar activadores en el sistema de puntos para otorgar XP por las acciones de usuario elegidas.
-          3. Configurar niveles y bonificaciones si son relevantes para el caso de uso.
-          4. Implementar las lecturas del lado de la aplicación o la interfaz necesarias para mostrar el total de XP del usuario y el progreso de nivel.
-          5. Resumir qué se configuró, qué código cambió y cómo verificar las asignaciones de puntos de extremo a extremo.
-        </Prompt>
-
-        <Prompt
-          description="Clasificación semanal"
-          icon="paperclip"
-          iconType="solid"
-          actions={["copy", "cursor"]}
-        >
-          Crea una clasificación semanal recurrente con Trophy.
-
-          Usa el MCP de Documentación como fuente de verdad para clasificaciones, y el MCP de Cuenta para configurar mi cuenta.
-
-          Objetivos:
-          1. Crear una clasificación recurrente semanal impulsada por una acción central del usuario rastreada como una métrica de Trophy.
-          2. Configurar la lógica de clasificación basada en la métrica elegida y configurar el calendario de reinicio semanal para la clasificación.
-          3. Implementar las lecturas del lado de la aplicación o la interfaz necesarias para mostrar las clasificaciones de la semana actual y la posición del usuario actual.
-          4. Resumir qué se configuró, qué código cambió y cómo verificar las clasificaciones de extremo a extremo.
-        </Prompt>
-
-        Para más ideas sobre qué construir a continuación, explora:
-
-        <CardGroup>
-          <Card title="Logros" icon="trophy" href="/es/features/milestones">
-            Recompensa a los usuarios por el progreso continuo o por realizar acciones específicas.
-          </Card>
-          <Card title="Rachas" icon="flame" href="/es/features/streaks">
-            Motiva a los usuarios a crear hábitos de uso regular.
-          </Card>
-          <Card title="Puntos" icon="sparkle" href="/es/features/points">
-            Crea sistemas de puntos sofisticados para recompensar y retener usuarios.
-          </Card>
-          <Card
-            title="Clasificaciones"
-            icon={
-              <svg
-                width="20"
-                height="18"
-                viewBox="0 0 20 18"
-                fill="none"
-                xmlns="http://www.w3.org/2000/svg"
-                className="text-primary dark:text-primary-light"
-              >
-                <path
-                  d="M2 16H6V8H2V16ZM8 16H12V2H8V16ZM14 16H18V10H14V16ZM0 16V8C0 7.45 0.195833 6.97917 0.5875 6.5875C0.979167 6.19583 1.45 6 2 6H6V2C6 1.45 6.19583 0.979167 6.5875 0.5875C6.97917 0.195833 7.45 0 8 0H12C12.55 0 13.0208 0.195833 13.4125 0.5875C13.8042 0.979167 14 1.45 14 2V8H18C18.55 8 19.0208 8.19583 19.4125 8.5875C19.8042 8.97917 20 9.45 20 10V16C20 16.55 19.8042 17.0208 19.4125 17.4125C19.0208 17.8042 18.55 18 18 18H2C1.45 18 0.979167 17.8042 0.5875 17.4125C0.195833 17.0208 0 16.55 0 16Z"
-                  fill="currentColor"
-                />
-              </svg>
-            }
-            href="/es/features/leaderboards">
-            Crea competencias amistosas para aumentar la participación de los usuarios.
-          </Card>
-          <Card title="Correos electrónicos" icon="mail" href="/es/features/emails">
-            Envía correos electrónicos de ciclo de vida personalizados a los usuarios en el momento perfecto.
-          </Card>
-          <Card title="Notificaciones push" icon="bell" href="/es/features/push-notifications">
-            Impulsa flujos de notificación automatizados usando datos de gamificación personalizados.
-          </Card>
-        </CardGroup>
+        Una vez enviado tu primer evento, consulta los [siguientes pasos](#next-steps) para elegir qué construir.
       </Step>
     </Steps>
   </Tab>
@@ -219,7 +107,7 @@ Aquí integrarás tu aplicación con Trophy y comenzarás a construir tu primera
         Asegúrate de que todas las llamadas del SDK de Trophy usen este cliente para la autenticación.
       </Step>
       <Step title="Crea tu primera métrica">
-        Todas las funciones de gamificación se basan en las interacciones de los usuarios. En Trophy, usas [Métricas](/es/data-sources/metrics) para definir y modelar esas interacciones y [Eventos](/es/data-sources/events) para rastrearlos.
+        Todo en Trophy se basa en las interacciones de los usuarios. En Trophy, usas [Métricas](/es/data-sources/metrics) para definir y modelar esas interacciones y [Eventos](/es/data-sources/events) para rastrearlos.
         
         Aquí crearás tu primera métrica para comenzar. En el panel de Trophy, dirígete a la [página de métricas](https://app.trophy.so/metrics) y haz clic en el botón _Nueva Métrica_:
 
@@ -255,63 +143,139 @@ Aquí integrarás tu aplicación con Trophy y comenzarás a construir tu primera
 
         <VerifiedFirstEvent />
 
-        Al realizar esta llamada, le estás indicando a Trophy que un usuario específico realizó una interacción con tu producto. Como resultado, Trophy procesará automáticamente cualquier función de gamificación como logros o rachas que hayas configurado para la métrica.
+        Al realizar esta llamada, le estás indicando a Trophy que un usuario específico realizó una interacción con tu producto. Trophy registra la actividad del usuario y procesa automáticamente todo lo que hayas configurado para la métrica.
+
+        <Tip>
+          Incluye los atributos `email` y `tz` (zona horaria IANA) del usuario siempre que puedas. Trophy los usa para llegar a los usuarios y para calcular el día local de cada usuario.
+        </Tip>
         
-        Utiliza la respuesta para reaccionar a los cambios en el estado de gamificación del usuario y alimentar elementos de la interfaz:
+        Utiliza la respuesta para reaccionar a los cambios en el progreso del usuario y alimentar elementos de la interfaz:
 
         <MetricChangeResponseBlock />
 
-      </Step>
-      <Step title="Continúa construyendo tu experiencia de gamificación">
-        Con una métrica integrada en tu backend, estás listo para comenzar a agregar funciones de gamificación a tu producto.
-        
-        Sigue los enlaces a continuación para conocer más sobre cada función que puedes construir con Trophy:
-
-        <CardGroup>
-          <Card title="Logros" icon="trophy" href="/es/features/milestones">
-            Recompensa a los usuarios por su progreso continuo o por realizar acciones específicas.
-          </Card>
-          <Card title="Rachas" icon="flame" href="/es/features/streaks">
-            Motiva a los usuarios a desarrollar hábitos de uso regulares.
-          </Card>
-          <Card title="Puntos" icon="sparkle" href="/es/features/points">
-            Construye sistemas de puntos sofisticados para recompensar y retener usuarios.
-          </Card>
-          <Card
-            title="Tablas de clasificación"
-            icon={
-              <svg
-                width="20"
-                height="18"
-                viewBox="0 0 20 18"
-                fill="none"
-                xmlns="http://www.w3.org/2000/svg"
-                className="text-primary dark:text-primary-light"
-              >
-                <path
-                  d="M2 16H6V8H2V16ZM8 16H12V2H8V16ZM14 16H18V10H14V16ZM0 16V8C0 7.45 0.195833 6.97917 0.5875 6.5875C0.979167 6.19583 1.45 6 2 6H6V2C6 1.45 6.19583 0.979167 6.5875 0.5875C6.97917 0.195833 7.45 0 8 0H12C12.55 0 13.0208 0.195833 13.4125 0.5875C13.8042 0.979167 14 1.45 14 2V8H18C18.55 8 19.0208 8.19583 19.4125 8.5875C19.8042 8.97917 20 9.45 20 10V16C20 16.55 19.8042 17.0208 19.4125 17.4125C19.0208 17.8042 18.55 18 18 18H2C1.45 18 0.979167 17.8042 0.5875 17.4125C0.195833 17.0208 0 16.55 0 16Z"
-                  fill="currentColor"
-                />
-              </svg>
-            }
-            href="/es/features/leaderboards">
-            Crea competencias amistosas para aumentar la participación de los usuarios.
-          </Card>
-          <Card title="Correos electrónicos" icon="mail" href="/es/features/emails">
-            Envía correos electrónicos personalizados del ciclo de vida a los usuarios en el momento perfecto.
-          </Card>
-          <Card title="Notificaciones push" icon="bell" href="/es/features/push-notifications">
-            Impulsa flujos de notificaciones automatizadas utilizando datos de gamificación personalizados.
-          </Card>
-        </CardGroup>
-
-        O explora nuestra [referencia de API](/es/api-reference/introduction) para familiarizarte con lo que Trophy puede hacer.
-
+        Una vez enviado tu primer evento, consulta los [siguientes pasos](#next-steps) para elegir qué construir.
       </Step>
     </Steps>
   </Tab>
 </Tabs>
 
-## Obtener Soporte {#get-support}
+## Siguientes pasos {#next-steps}
 
-¿Quieres ponerte en contacto con el equipo de Trophy? Contáctanos por [correo electrónico](mailto:support@trophy.so). ¡Estamos aquí para ayudarte!
+Ahora que Trophy está recibiendo eventos, elige qué quieres construir. Puedes usar la mensajería agéntica, las funciones dentro de la app o ambas con los mismos eventos.
+
+### Enviar mensajes agénticos {#send-agentic-messages}
+
+Despliega un agente de marketing de ciclo de vida con IA para cada usuario que envíe emails y notificaciones push personalizados en el momento adecuado. La mensajería agéntica se configura junto con el equipo de Trophy. [Reserva una llamada](https://trophy.so/contact-sales?utm_source=docs&utm_medium=quickstart) para empezar.
+
+<CardGroup cols={3}>
+  <Card title="Mensajería agéntica" icon="bot" href="/es/agentic-messaging/overview">
+    Cómo los agentes de marketing de ciclo de vida con IA reemplazan las secuencias y los recorridos.
+  </Card>
+  <Card title="Despliegue" icon="rocket" href="/es/agentic-messaging/rollout">
+    Lo que configurarás con el equipo de Trophy antes del lanzamiento.
+  </Card>
+  <Card title="Canales" icon="send" href="/es/agentic-messaging/channels">
+    Conecta el email y las notificaciones push para que los agentes puedan llegar a tus usuarios.
+  </Card>
+</CardGroup>
+
+### Construir funciones dentro de la app {#build-in-app-features}
+
+Añade a tu app funciones que den a los usuarios un motivo para volver, impulsadas por los eventos que ya estás enviando.
+
+<CardGroup cols={2}>
+  <Card title="Hitos" icon="trophy" href="/es/features/milestones">
+    Celebra el progreso continuo o acciones concretas.
+  </Card>
+  <Card title="Rachas" icon="flame" href="/es/features/streaks">
+    Motiva a los usuarios a crear hábitos de uso regulares.
+  </Card>
+  <Card title="Puntos" icon="sparkle" href="/es/features/points">
+    Crea sistemas de puntos con niveles y potenciadores.
+  </Card>
+  <Card title="Clasificaciones" icon="chart-bar" href="/es/features/leaderboards">
+    Crea una competencia amistosa entre usuarios.
+  </Card>
+</CardGroup>
+
+¿Usas un asistente de IA? Pega uno de estos prompts para construir tu primera función dentro de la app:
+
+<AccordionGroup>
+  <Accordion title="Prompts para asistentes de IA" id="in-app-feature-prompts">
+    <Prompt
+      description="Racha diaria"
+      icon="paperclip"
+      iconType="solid"
+      actions={["copy", "cursor"]}
+    >
+      Crea una funcionalidad de racha diaria con Trophy.
+
+      Usa el MCP de Documentación como fuente de verdad para cómo funcionan las rachas, y el MCP de Cuenta para configurar mi cuenta.
+
+      Objetivos:
+      1. Impulsar la racha desde una actividad principal del usuario que ya se rastree (o que deberíamos rastrear) como una métrica de Trophy.
+      2. Asegurar que cada identificación/actualización de usuario y evento de métrica incluya el atributo `tz` del usuario (zona horaria IANA). Esto es necesario para que las rachas evalúen correctamente los días calendario para cada usuario.
+      3. Configurar la funcionalidad de racha en Trophy usando un umbral sensato para la métrica elegida.
+      4. Habilitar congelaciones de racha y pausas de racha si encajan con este producto; de lo contrario, omitirlas y explicar por qué.
+      5. Conectar cualquier lectura del lado de la aplicación o interfaz necesaria para mostrar la racha actual del usuario, congelaciones y estado de pausa.
+      6. Resumir qué se configuró, qué código cambió y cómo verificar la racha de principio a fin. Explicar explícitamente por qué enviar `tz` es importante para que funcione correctamente la funcionalidad de racha.
+    </Prompt>
+
+    <Prompt
+      description="Biblioteca de hitos"
+      icon="paperclip"
+      iconType="solid"
+      actions={["copy", "cursor"]}
+    >
+      Crea una biblioteca de hitos con Trophy. En la API, los SDK y las herramientas MCP de Trophy, los hitos se llaman achievements.
+
+      Usa el MCP de Documentación como fuente de verdad para los tipos de achievements y sus activadores, y el MCP de Cuenta para configurar mi cuenta.
+
+      Objetivos:
+      1. Crear un conjunto de achievements vinculados a acciones principales del usuario rastreadas como eventos de métrica de Trophy.
+      2. Agregar cualquier achievement de una sola vez activado por API (y otros tipos de achievements) que encaje con el producto.
+      3. Conectar el manejo del lado de la aplicación para desbloqueos y una forma mínima de listar achievements completados vs incompletos.
+      4. Resumir qué se configuró, qué código cambió y cómo verificar los desbloqueos de principio a fin.
+    </Prompt>
+
+    <Prompt
+      description="Sistema XP"
+      icon="paperclip"
+      iconType="solid"
+      actions={["copy", "cursor"]}
+    >
+      Crea un sistema de puntos XP con Trophy.
+
+      Usa el MCP de Documentación como fuente de verdad para sistemas de puntos, activadores y niveles, y el MCP de Cuenta para configurar mi cuenta.
+
+      Objetivos:
+      1. Crear un sistema de puntos que otorgue XP por algunas acciones clave del usuario rastreadas como métricas de Trophy.
+      2. Configurar activadores en el sistema de puntos para otorgar XP por las acciones de usuario elegidas.
+      3. Configurar niveles y potenciadores si son relevantes para el caso de uso.
+      4. Implementar las lecturas del lado de la aplicación o la interfaz necesarias para mostrar el total de XP del usuario y el progreso de nivel.
+      5. Resumir qué se configuró, qué código cambió y cómo verificar las asignaciones de puntos de extremo a extremo.
+    </Prompt>
+
+    <Prompt
+      description="Clasificación semanal"
+      icon="paperclip"
+      iconType="solid"
+      actions={["copy", "cursor"]}
+    >
+      Crea una clasificación semanal recurrente con Trophy.
+
+      Usa el MCP de Documentación como fuente de verdad para clasificaciones, y el MCP de Cuenta para configurar mi cuenta.
+
+      Objetivos:
+      1. Crear una clasificación recurrente semanal impulsada por una acción central del usuario rastreada como una métrica de Trophy.
+      2. Configurar la lógica de clasificación basada en la métrica elegida y configurar el calendario de reinicio semanal para la clasificación.
+      3. Implementar las lecturas del lado de la aplicación o la interfaz necesarias para mostrar las clasificaciones de la semana actual y la posición del usuario actual.
+      4. Resumir qué se configuró, qué código cambió y cómo verificar las clasificaciones de extremo a extremo.
+    </Prompt>
+  </Accordion>
+</AccordionGroup>
+
+O explora la [referencia de API](/es/api-reference/introduction) para familiarizarte con lo que Trophy puede hacer.
+## Obtener soporte {#get-support}
+
+¿Quieres ponerte en contacto con el equipo de Trophy? Escríbenos por [correo electrónico](mailto:support@trophy.so). ¡Estamos aquí para ayudarte!

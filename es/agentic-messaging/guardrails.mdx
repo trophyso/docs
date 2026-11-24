@@ -1,0 +1,56 @@
+---
+title: Salvaguardas
+description: Conoce los límites dentro de los que siempre trabajan los agentes de ciclo de vida de Trophy.
+og:description: Los límites de envío, las horas de silencio, las reglas de
+  contenido y las revisiones de seguridad mantienen cada mensaje agéntico fiel a
+  tu marca y la bandeja de entrada de cada usuario bajo control.
+icon: shield-check
+---
+
+Los agentes toman cada decisión individual, pero siempre dentro de los límites que tú y tus usuarios establecéis. Tú defines las reglas, los usuarios ajustan su propia experiencia y los agentes nunca envían fuera de ninguno de los dos.
+
+## Límites de envío {#sending-limits}
+
+Los límites de envío fijan cuántos mensajes puede recibir cada usuario como máximo:
+
+- Emails por usuario al día y a la semana.
+- Notificaciones push por usuario al día y a la semana.
+- Un **estilo de mensaje** máximo: el punto más cercano a "todo, conversacional" que cualquier usuario puede elegir. Consulta las [preferencias de usuario](/es/agentic-messaging/user-preferences#temperature).
+
+Los agentes tratan estos límites como un presupuesto, no como un objetivo. Lo invierten en los momentos con más probabilidades de impulsar una acción y a menudo envían menos mensajes de los que permite el límite. Un recorrido sigue enviando hasta que el usuario sale de él; un agente solo contacta cuando tiene algo que valga la pena decir.
+
+Los agentes también espacian los mensajes de un mismo canal para que no lleguen en ráfagas, y evitan repetirse sobre el mismo tema.
+
+<Note>
+  Los límites de envío se configuran con el equipo de Trophy. Contacta con tu
+  persona de contacto en Trophy o [escríbenos](mailto:support@trophy.so) para
+  cambiarlos.
+</Note>
+
+## Horas de silencio {#quiet-hours}
+
+Los agentes solo envían durante las horas de vigilia en la zona horaria local de cada usuario. Define el atributo `tz` cuando [identifiques usuarios](/es/data-sources/users#optional-attributes) para que los agentes conozcan la hora local de cada usuario.
+
+## Salvaguardas de contenido {#content-guardrails}
+
+Cada mensaje que escriben los agentes debe cumplir una serie de reglas de contenido antes de poder enviarse:
+
+- **Tu kit de marca**: los mensajes siguen tu [voz](/es/context/brand-kit#voice) y nunca usan tus frases de la lista [never say](/es/context/brand-kit#never-say).
+- **Bloques aprobados**: los emails se construyen a partir de un conjunto fijo de bloques de email y variables aprobados.
+- **Enlaces restringidos**: los mensajes solo enlazan a tu app y a los enlaces del [contexto de métricas](/es/context/brand-kit#metrics) de tu kit de marca.
+- **Sin afirmaciones inventadas**: los agentes no pueden inventarse ofertas, recompensas ni cifras. Los datos de un mensaje provienen de los datos reales del usuario.
+- **Límites de longitud y estilo**: los asuntos, los títulos push y los cuerpos push tienen una longitud máxima, y el uso de emojis está limitado.
+
+Además, cada mensaje pasa por una revisión de seguridad independiente antes de enviarse. Un mensaje que no supera alguna de estas comprobaciones no se envía.
+
+## Comprobaciones en el momento del envío {#send-time-checks}
+
+Un mensaje puede programarse antes de enviarse. Si el motivo para enviarlo ya no se cumple cuando llega su hora, por ejemplo porque el usuario ya ha vuelto y ha hecho aquello de lo que trataba el mensaje, el mensaje se cancela en lugar de enviarse.
+
+## Pausa automática {#automatic-pausing}
+
+Trophy supervisa la mensajería agéntica y la pausa automáticamente si las bajas o los rechazos de la revisión de seguridad aumentan muy por encima de los niveles normales. Mientras está en pausa, las páginas de mensajería agéntica del panel muestran un aviso **Agentic messaging is paused**, y el equipo de Trophy investiga antes de reanudarla.
+
+## Obtener soporte {#get-support}
+
+¿Quieres ponerte en contacto con el equipo de Trophy? Escríbenos por [correo electrónico](mailto:support@trophy.so). ¡Estamos aquí para ayudarte!
