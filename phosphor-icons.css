@@ -93,6 +93,11 @@ html [style*="/lucide/"][style*="/cog.svg"] {
   mask-image: url("/icons/phosphor/gear.svg") !important;
 }
 
+html [style*="/lucide/"][style*="/crosshair.svg"] {
+  -webkit-mask-image: url("/icons/phosphor/crosshair.svg") !important;
+  mask-image: url("/icons/phosphor/crosshair.svg") !important;
+}
+
 html [style*="/lucide/"][style*="/database.svg"] {
   -webkit-mask-image: url("/icons/phosphor/database.svg") !important;
   mask-image: url("/icons/phosphor/database.svg") !important;
@@ -251,6 +256,11 @@ html [style*="/lucide/"][style*="/star.svg"] {
 html [style*="/lucide/"][style*="/tag.svg"] {
   -webkit-mask-image: url("/icons/phosphor/tag.svg") !important;
   mask-image: url("/icons/phosphor/tag.svg") !important;
+}
+
+html [style*="/lucide/"][style*="/target.svg"] {
+  -webkit-mask-image: url("/icons/phosphor/target.svg") !important;
+  mask-image: url("/icons/phosphor/target.svg") !important;
 }
 
 html [style*="/lucide/"][style*="/trophy.svg"] {

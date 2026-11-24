@@ -1,0 +1,75 @@
+---
+title: Medir el impacto
+description: Aprende a medir el impacto de la mensajería agéntica frente a un grupo de control.
+og:description: Trophy compara a los usuarios que reciben mensajes agénticos con los
+  grupos heredado y de control, para que puedas demostrar la mejora en tus
+  objetivos, no solo en clics.
+icon: chart-line
+---
+
+Trophy mide la mensajería agéntica frente a un grupo de control, para que veas la mejora incremental en tus [objetivos](/es/agentic-messaging/objectives), no solo aperturas y clics.
+
+Encontrarás todo lo de esta página en la página [Analytics](https://app.trophy.so/agentic-messaging), dentro de **Agentic messaging** en el panel de Trophy.
+
+## Cohortes {#cohorts}
+
+La analítica compara tres grupos de usuarios:
+
+| Cohorte | Qué reciben |
+| --- | --- |
+| **Agent** | Mensajes agénticos. |
+| **Legacy** | [Emails](/es/features/emails) y [notificaciones push](/es/features/push-notifications) basados en plantillas, si los envías. |
+| **Control** | Ningún mensaje de Trophy. Son los usuarios de tu [grupo de control](/es/platform/experimentation#control-ratio). |
+
+Comparar la cohorte de agentes con la cohorte de control muestra el impacto total de la mensajería agéntica. Compararla con la cohorte heredada muestra su rendimiento frente a la mensajería basada en plantillas a la que reemplaza.
+
+## Retención {#retention}
+
+El gráfico de retención muestra la proporción de usuarios de cada cohorte que siguen activos un número determinado de días después de su creación, agrupados según cuándo se creó el usuario.
+
+## Impacto {#impact}
+
+La tabla de impacto muestra cómo se compara la cohorte de agentes con las cohortes heredada y de control en cada medida:
+
+- **Retention**: la proporción de usuarios que siguen activos tras un número determinado de días.
+- **Streaks continued**: con qué frecuencia los usuarios mantienen sus [rachas](/es/features/streaks).
+- **Reactivated**: con qué frecuencia los usuarios vuelven tras unos días sin actividad.
+- **{Metric} per active user**: una fila por cada métrica ponderada en tus [objetivos](/es/agentic-messaging/objectives).
+- **Emails per active user** y **Push notifications per active user**: cuántos mensajes reciben los usuarios.
+- **Unsubscribes per 1,000 emails**: bajas por cada 1000 emails.
+
+Cada comparación se muestra con un intervalo de confianza del 95 %. Los resultados se resaltan en verde o rojo solo cuando el intervalo descarta que no haya diferencia, para que puedas distinguir una mejora real del ruido.
+
+<Tip>
+  La mensajería agéntica suele enviar menos mensajes que la mensajería basada en
+  plantillas y, aun así, mejora la retención. Fíjate en las filas de mensajes por
+  usuario activo junto con tus objetivos.
+</Tip>
+
+## Interacción con los mensajes {#message-engagement}
+
+La tabla de interacción con los mensajes desglosa el rendimiento por canal y según si los mensajes los enviaron los agentes o las plantillas heredadas:
+
+- **Open rate**: aperturas de email, o notificaciones push que abrieron tu app.
+- **Click rate**: mensajes en los que el usuario hizo clic en un enlace.
+- **Reengage rate**: mensajes tras los cuales el usuario volvió a tu app.
+- **👍 rate** y **👎 rate**: cómo valoraron los usuarios tus emails.
+
+### Valoraciones de mensajes {#message-ratings}
+
+Los usuarios pueden valorar cada email agéntico con un 👍 o un 👎. Las valoraciones te indican qué opinan los usuarios de los mensajes que reciben, y los agentes también aprenden de ellas: envían más de lo que gusta a los usuarios y menos de lo que no.
+
+## Ver los mensajes {#viewing-messages}
+
+La página [Queue](https://app.trophy.so/agentic-messaging/queue) muestra los mensajes agénticos en dos pestañas:
+
+- **Scheduled**: mensajes que los agentes tienen previsto enviar, con el usuario, el canal y la hora de envío.
+- **Sent**: mensajes que ya se han enviado.
+
+Haz clic en cualquier mensaje para ver una vista previa. Las vistas previas se rellenan con los datos de hoy, así que los valores pueden diferir de lo que se envió o se enviará.
+
+También puedes ver los mensajes agénticos programados para un usuario concreto y los que se le han enviado en su perfil, en la página [Users](https://app.trophy.so/users).
+
+## Obtener soporte {#get-support}
+
+¿Quieres ponerte en contacto con el equipo de Trophy? Escríbenos por [correo electrónico](mailto:support@trophy.so). ¡Estamos aquí para ayudarte!

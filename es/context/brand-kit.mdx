@@ -1,28 +1,81 @@
 ---
-title: Marca
-description: Configura tu logotipo y colores de marca utilizados en las
-  funciones creadas con Trophy.
-og:description: Descubre cómo Trophy rastrea el uso según el número de usuarios
-  que utilizan tu producto.
+title: Kit de marca
+description: Aprende a configurar la identidad de marca y el contexto que Trophy usa en todo lo que envía a tus usuarios.
+og:description: Usa el kit de marca para definir el nombre, el logotipo, el icono y
+  el color de marca de tu app, y para enseñar a la mensajería agéntica sobre tu
+  app, tu voz y lo que nunca debe decir.
 icon: palette
 ---
 
-## Configurar la marca {#configure-branding}
 
-La [página de marca](https://app.trophy.so/branding) en el panel de Trophy te permite configurar los siguientes ajustes a nivel de cuenta. Estos ajustes se utilizarán en cualquier comunicación que configures para que Trophy envíe a los usuarios, como [correos electrónicos](/es/features/emails).
+El kit de marca contiene la identidad de marca y el contexto que Trophy usa en todo lo que envía a tus usuarios. Se comparte en todo Trophy, así que la misma configuración se aplica a la [mensajería agéntica](/es/agentic-messaging/overview), a los [Emails (heredados)](/es/features/emails) y a las [Notificaciones push (heredadas)](/es/features/push-notifications).
 
-También puedes obtener y actualizar los ajustes de marca, experimentación y agregación con la [API de administración de configuración de organización](/es/admin-api/endpoints/settings/get-organization-settings).
+Lo encontrarás en la página [Brand kit](https://app.trophy.so/brand-kit), dentro de **Context** en el panel de Trophy. La página tiene dos secciones:
+
+- [Identidad de marca](#branding): el nombre, la URL, el logotipo, el icono y el color de marca de tu app.
+- [Mensajería agéntica](#agentic-messaging): lo que los agentes saben sobre tu app y cómo escriben. Esta sección solo aparece cuando la mensajería agéntica está disponible en tu cuenta.
+
+## Identidad de marca {#branding}
 
 <Frame>
   <img height="200" noZoom src="../../assets/account/branding/branding_page.png" />
 </Frame>
 
-- **Logotipo**: Sube el logotipo de tu marca para mostrarlo en el encabezado de los correos electrónicos de Trophy. Recomendamos usar un logotipo horizontal con fondo transparente o un color de fondo liso con esquinas redondeadas.
-- **Fuente**: La fuente predeterminada utilizada en los correos electrónicos de Trophy.
-- **Color de marca**: Elige un color principal para tu marca. Trophy utilizará este color para botones y otros elementos en tus correos electrónicos.
-- **Nombre de la aplicación**: Introduce el nombre de tu aplicación o servicio. Trophy utilizará este nombre en varios lugares de tus correos electrónicos.
-- **URL de la aplicación**: Introduce una URL predeterminada para usar cuando no se anule por correo electrónico. Normalmente, esta es la URL de la página de inicio de sesión de tu aplicación o servicio.
+- **App name**: el nombre de tu app o plataforma. Trophy lo usa en los mensajes que envía a tus usuarios.
+- **App URL**: la URL de tu app o plataforma. Trophy la usa como enlace predeterminado en los mensajes, salvo que se sustituya. Normalmente es la página de inicio de sesión de tu app.
+- **Company logo**: se muestra en el encabezado de cada email que envía Trophy. Recomendamos un logotipo horizontal con fondo transparente, o con un color de fondo liso y esquinas redondeadas.
+- **App icon**: se muestra en las vistas previas de las notificaciones push.
+- **Brand color**: el color principal de tu marca. Trophy lo usa para los botones y otros elementos de tus emails.
+
+<Tip>
+  Si usas [multi-tenancy](/es/platform/multi-tenancy), cada cliente puede tener su
+  propia identidad de marca, de modo que los mensajes salen con la marca de cada
+  cliente.
+</Tip>
+
+La fuente de los emails heredados se configura por separado, en la [página de configuración de emails](/es/features/emails#font-style).
+
+También puedes obtener y actualizar tu identidad de marca con la [API de administración de configuración de organización](/es/admin-api/endpoints/settings/get-organization-settings).
+
+## Mensajería agéntica {#agentic-messaging}
+
+Esta sección explica a los agentes cómo es tu app y cómo te expresas. Los agentes escriben cada mensaje dentro del contexto y las reglas que definas aquí, para que todos los mensajes sean fieles a tu marca.
+
+### Sobre tu app {#about-your-app}
+
+Una breve **Description** de qué es tu app y quién la usa. Por ejemplo: "Una app de aprendizaje de idiomas para adultos que aprenden español con lecciones diarias cortas".
+
+### Voz {#voice}
+
+- **Example messages**: de dos a cinco mensajes que suenen como tú, para cada canal. Los agentes imitan su tono sin copiarlos.
+- **Use emoji**: si los agentes pueden usar emojis en los mensajes.
+
+### Métricas {#metrics}
+
+El **Metric context** explica cada una de tus [métricas](/es/data-sources/metrics) a los agentes, para que puedan hablar de la actividad de un usuario en tus propios términos. Para cada métrica, añade:
+
+| Campo | Para qué sirve | Ejemplo |
+| --- | --- | --- |
+| What it means | Qué representa una unidad de la métrica | Una lección completada en el reproductor del curso |
+| Action | La acción que se pide a los usuarios | Termina una lección |
+| Link | Dónde ocurre esa acción en tu app | `https://example.com/lessons` |
+
+Los agentes solo pueden enlazar a tu app y a los enlaces que añadas aquí, así que añade un enlace para cada acción hacia la que quieras que los agentes dirijan a los usuarios.
+
+### Never say {#never-say}
+
+**Phrases** que los agentes nunca deben usar: términos que evitas, promesas que no puedes hacer, nombres de competidores y cualquier otra cosa prohibida. Si un agente escribe algo que no te gusta, añádelo aquí y los agentes dejarán de hacerlo a partir de ese momento.
+
+### Atributos de usuario {#user-attributes}
+
+Los **Shared attributes** son los [atributos de usuario personalizados](/es/data-sources/users#custom-user-attributes) que los agentes pueden ver de cada usuario, como su plan o su meta. Añade una breve descripción de cada uno para que los agentes entiendan qué significan sus valores.
+
+<Warning>
+  Los valores de los atributos compartidos se comparten con el proveedor del
+  modelo de IA que escribe los mensajes. Comparte solo los atributos que no te
+  importe enviar a un tercero y nunca compartas datos personales sensibles.
+</Warning>
 
 ## Obtener soporte {#get-support}
 
-¿Quieres contactar con el equipo de Trophy? Comunícate con nosotros por [correo electrónico](mailto:support@trophy.so). ¡Estamos aquí para ayudarte!
+¿Quieres ponerte en contacto con el equipo de Trophy? Escríbenos por [correo electrónico](mailto:support@trophy.so). ¡Estamos aquí para ayudarte!

@@ -47,6 +47,8 @@ const ICONS = {
   box: 'cube', // metrics
   'radio-tower': 'broadcast', // events, status
   radio: 'broadcast', // events
+  target: 'target', // goals
+  crosshair: 'crosshair', // objectives
   users: 'users',
   user: 'user',
   'user-plus': 'user-plus',

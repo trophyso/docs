@@ -12,6 +12,7 @@
 
 import fs from "node:fs";
 import path from "node:path";
+import { sourceLocale, targetLocales } from "./locales.mjs";
 
 const args = process.argv.slice(2);
 
@@ -36,9 +37,7 @@ const filters = pathFilter
   : [];
 
 const ROOT = process.cwd();
-const config = JSON.parse(fs.readFileSync(path.join(ROOT, "i18n.json"), "utf8"));
-const sourceLocale = config.locale?.source || "en";
-const configuredTargets = Array.isArray(config.locale?.targets) ? config.locale.targets : [];
+const configuredTargets = targetLocales;
 
 const targets = targetArg
   ? targetArg.split(",").map((s) => s.trim()).filter(Boolean)
@@ -89,10 +88,24 @@ function plainForSlug(title) {
   return s.trim();
 }
 
+/** Explicit `{#slug}` at the end of a heading title, if any. */
+function explicitAnchor(title) {
+  const m = title.match(/\{#([^#}]+)\}\s*$/);
+  return m ? m[1].trim() : null;
+}
+
 function uniqueSlugsFromTitles(titles) {
   const seen = new Map();
   const slugs = [];
   for (const title of titles) {
+    // Keep anchors already set on source headings so existing deep links survive
+    // when a heading is reworded (for example `## Milestone emails {#achievement-emails}`).
+    const explicit = explicitAnchor(title);
+    if (explicit) {
+      seen.set(explicit, (seen.get(explicit) ?? 0) + 1);
+      slugs.push(explicit);
+      continue;
+    }
     const base = mintlifySlugBase(plainForSlug(title));
     let count = seen.get(base) ?? 0;
     seen.set(base, count + 1);
@@ -216,7 +229,7 @@ const excludedSourceDirs = new Set([
   "node_modules",
   "scripts",
   "snippets",
-  "lingo",
+  "i18n",
   "styles",
   ".cursor",
 ]);

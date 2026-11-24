@@ -1,7 +1,7 @@
 ---
-title: Logros
-description: Aprende a usar Logros en una experiencia de producto gamificada con Trophy.
-og:description: Usa logros de métrica, API, racha, aniversario y compuestos para
+title: Hitos
+description: Aprende a celebrar el progreso de los usuarios con hitos en tu app web o móvil con Trophy.
+og:description: Usa hitos de métrica, API, racha, aniversario y compuestos para
   recompensar a los usuarios por su progreso continuo y animarlos a descubrir
   nuevas partes de tu app.
 icon: trophy
@@ -10,43 +10,35 @@ icon: trophy
 import MetricChangeResponseBlock from "../../snippets/metric-change-response-block.mdx";
 import AllAchievementsResponseBlock from "../../snippets/all-achievements-response-block.mdx";
 
-## ¿Qué son los Logros? {#what-are-achievements}
+{/* TODO(media): re-create in the new dashboard theme: assets/features/achievements/displaying_trophy_cabinet.mp4 */}
 
-Los logros son recompensas que los usuarios pueden desbloquear mientras usan tu plataforma. Se pueden utilizar para recompensar a los usuarios por el progreso continuo en los recorridos principales del usuario, o para motivarlos a explorar funcionalidades más recientes.
+## ¿Qué son los hitos? {#what-are-achievements}
 
-Los logros funcionan mejor cuando están diseñados para incentivar a los usuarios a realizar acciones que probablemente conduzcan a un aumento de la retención.
+<Note>
+  En la API, los SDK y los webhooks de Trophy, los hitos se llaman achievements. Por ejemplo, consulta el [endpoint de todos los achievements](/es/api-reference/endpoints/achievements/all-achievements) y el [webhook `achievement.completed`](/es/webhooks/events/achievements/achievement-completed). Los nombres de los campos y endpoints mantienen la denominación `achievement`.
+</Note>
+
+Los hitos celebran el progreso que hacen los usuarios mientras usan tu plataforma. Se pueden utilizar para recompensar a los usuarios por el progreso continuo en los recorridos principales del usuario, o para motivarlos a explorar funcionalidades más recientes.
+
+Los hitos funcionan mejor cuando están diseñados para incentivar a los usuarios a realizar acciones que probablemente conduzcan a un aumento de la retención.
 
 <Tip>
   Usa las [analíticas de métricas](/es/data-sources/metrics#metric-analytics) de Trophy para comparar
-  la retención de cada interacción del usuario, luego configura logros en torno a
+  la retención de cada interacción del usuario, luego configura hitos en torno a
   estas interacciones para maximizar el impacto en la retención.
 </Tip>
 
-Aquí examinaremos los tipos de logros que puedes crear con Trophy, las diferentes formas de usarlos y cómo integrarlos en tu plataforma.
+Aquí examinaremos los tipos de hitos que puedes crear con Trophy, las diferentes formas de usarlos y cómo integrarlos en tu plataforma.
 
-Mira a Charlie mientras explica el uso de logros en una aplicación NextJS:
+## Tipos de hitos {#achievement-types}
 
-<Frame>
-  <iframe
-    width="560"
-    height="315"
-    src="https://www.youtube.com/embed/U6TRxV036Lk?si=pAX37TXL8rNeFzz7"
-    title="YouTube video player"
-    frameborder="0"
-    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-    allowfullscreen
-  ></iframe>
-</Frame>
+Trophy ofrece cinco tipos de hitos: [Métrica](#metric-achievements), [API](#api-achievements), [Racha](#streak-achievements), [Aniversario](#anniversary-achievements) e [hitos compuestos](#composite-achievements), que se detallan a continuación.
 
-## Tipos de Logros {#achievement-types}
+### Hitos de métrica {#metric-achievements}
 
-Trophy ofrece cinco tipos de logros: [Métrica](#metric-achievements), [API](#api-achievements), [Racha](#streak-achievements), [Aniversario](#anniversary-achievements) y [Logros compuestos](#composite-achievements), que se detallan a continuación.
+Los hitos de métrica están vinculados a [Métricas](/es/data-sources/metrics) y se utilizan mejor cuando quieres incentivar a los usuarios a realizar la misma acción una y otra vez.
 
-### Logros de Métrica {#metric-achievements}
-
-Los logros de métrica están vinculados a [Métricas](/es/data-sources/metrics) y se utilizan mejor cuando quieres incentivar a los usuarios a realizar la misma acción una y otra vez.
-
-Tomemos el ejemplo de una plataforma de estudio que usa Trophy para animar a los usuarios a ver más tarjetas de estudio con logros de métrica de la siguiente manera:
+Tomemos el ejemplo de una plataforma de estudio que usa Trophy para animar a los usuarios a ver más tarjetas de estudio con hitos de métrica de la siguiente manera:
 
 - 1.000 tarjetas de estudio
 - 2.500 tarjetas de estudio
@@ -55,17 +47,17 @@ Tomemos el ejemplo de una plataforma de estudio que usa Trophy para animar a los
 - 25.000 tarjetas de estudio
 - 50.000 tarjetas de estudio
 
-En este caso crearías una métrica llamada _Tarjetas Volteadas_ y crearías logros vinculados a la métrica para cada hito.
+En este caso crearías una métrica llamada _Tarjetas Volteadas_ y crearías un hito vinculado a la métrica para cada umbral.
 
-Dado que estos logros están directamente vinculados a la métrica _Tarjetas Volteadas_, Trophy rastreará automáticamente cuándo los usuarios desbloquean estos logros a medida que [incrementan la métrica](/es/data-sources/events#tracking-metric-events).
+Dado que estos hitos están directamente vinculados a la métrica _Tarjetas Volteadas_, Trophy rastreará automáticamente cuándo los usuarios desbloquean estos hitos a medida que [incrementan la métrica](/es/data-sources/events#tracking-metric-events).
 
-Cuando se desbloquean logros, Trophy incluye información sobre ellos en la respuesta de la [API de eventos](/es/api-reference/endpoints/events/submit-a-metric-event) y, si está configurado, activa automáticamente los [correos de logros](/es/features/emails#achievement-emails).
+Cuando se desbloquean hitos, Trophy incluye información sobre ellos en la respuesta de la [API de eventos](/es/api-reference/endpoints/events/submit-a-metric-event) y, si está configurado, activa automáticamente los [emails de hitos](/es/features/emails#achievement-emails).
 
 <MetricChangeResponseBlock />
 
-### Logros de API {#api-achievements}
+### Hitos de API {#api-achievements}
 
-Los logros de API solo se pueden completar una vez y son útiles para recompensar a los usuarios por realizar acciones específicas.
+Los hitos de API solo se pueden completar una vez y son útiles para recompensar a los usuarios por realizar acciones específicas.
 
 Ejemplos comunes incluyen:
 
@@ -73,47 +65,47 @@ Ejemplos comunes incluyen:
 - Un usuario que vincula su cuenta de redes sociales a una plataforma
 - Un usuario que comparte su experiencia con el producto en redes sociales
 
-Los logros de API sirven como una manera fácil de recompensar a los usuarios por completar cualquier acción que consideres importante para la retención.
+Los hitos de API sirven como una manera fácil de recompensar a los usuarios por completar cualquier acción que consideres importante para la retención.
 
-Al igual que los logros de métrica, los logros de API también pueden activar [Emails de Logros](/es/features/emails#achievement-emails) automatizados si están configurados.
+Al igual que los hitos de métrica, los hitos de API también pueden activar [emails de hitos](/es/features/emails#achievement-emails) automatizados si están configurados.
 
-### Logros de Racha {#streak-achievements}
+### Hitos de racha {#streak-achievements}
 
-Los logros de racha están directamente vinculados a la [Racha](/es/features/streaks) de un usuario y se desbloquean automáticamente cuando los usuarios alcanzan una duración de racha particular.
+Los hitos de racha están directamente vinculados a la [Racha](/es/features/streaks) de un usuario y se desbloquean automáticamente cuando los usuarios alcanzan una duración de racha particular.
 
-Puedes crear tantos logros de racha como desees para duraciones de racha cada vez mayores, por ejemplo 7 días, 30 días y 365 días para motivar a los usuarios a usar tu aplicación cada vez más.
+Puedes crear tantos hitos de racha como desees para duraciones de racha cada vez mayores, por ejemplo 7 días, 30 días y 365 días para motivar a los usuarios a usar tu aplicación cada vez más.
 
-Al igual que los logros de métrica y API, puedes agregar un nombre personalizado y asignar una insignia a los logros de racha.
+Al igual que los hitos de métrica y API, puedes agregar un nombre personalizado y asignar una insignia a los hitos de racha.
 
-### Logros de aniversario {#anniversary-achievements}
+### Hitos de aniversario {#anniversary-achievements}
 
-Los logros de aniversario se desbloquean automáticamente cuando un usuario cumple un aniversario concreto de su fecha de registro.
+Los hitos de aniversario se desbloquean automáticamente cuando un usuario cumple un aniversario concreto de su fecha de registro.
 
-Crea un logro por cada año que quieras celebrar, por ejemplo 1 año, 2 años y 5 años. Trophy desbloquea cada logro cuando se alcanza el [`signUpDate`](/es/data-sources/users#optional-attributes) del usuario más ese número de años.
+Crea un hito por cada año que quieras celebrar, por ejemplo 1 año, 2 años y 5 años. Trophy desbloquea cada hito cuando se alcanza el [`signUpDate`](/es/data-sources/users#optional-attributes) del usuario más ese número de años.
 
 Los usuarios sin `signUpDate` no son elegibles. Define `signUpDate` cuando [identifiques](/es/data-sources/users#identifying-users) o [actualices](/es/data-sources/users#keeping-users-up-to-date) a los usuarios para que Trophy pueda detectar los aniversarios.
 
-Trophy evalúa el aniversario en el día del calendario de la [`tz`](/es/data-sources/users#optional-attributes) del usuario. Define `tz` para que el logro se desbloquee en el día local correcto.
+Trophy evalúa el aniversario en el día del calendario de la [`tz`](/es/data-sources/users#optional-attributes) del usuario. Define `tz` para que el hito se desbloquee en el día local correcto.
 
-Al igual que otros tipos de logros, los logros de aniversario pueden activar [correos de logros](/es/features/emails#achievement-emails) cuando se desbloquean.
+Al igual que otros tipos de hitos, los hitos de aniversario pueden activar [emails de hitos](/es/features/emails#achievement-emails) cuando se desbloquean.
 
-### Logros compuestos {#composite-achievements}
+### Hitos compuestos {#composite-achievements}
 
-Los logros compuestos se desbloquean automáticamente cuando un usuario ha completado todos los logros requisitos que selecciones. Son ideales para crear recompensas escalonadas o de nivel de maestría que reconozcan a los usuarios que han alcanzado un conjunto específico de hitos.
+Los hitos compuestos se desbloquean automáticamente cuando un usuario ha completado todos los hitos prerrequisito que selecciones. Son ideales para crear recompensas escalonadas o de nivel de maestría que reconozcan a los usuarios que han alcanzado un conjunto específico de hitos.
 
-Por ejemplo, podrías crear un logro compuesto "Maestro del estudio" que se desbloquee cuando un usuario haya completado:
+Por ejemplo, podrías crear un hito compuesto "Maestro del estudio" que se desbloquee cuando un usuario haya completado:
 - 1000 tarjetas de estudio
 - Racha de 7 días
 - Onboarding completo
 
-Los logros compuestos son útiles para crear rutas de progresión y animar a los usuarios a participar en distintas áreas de tu app. Al igual que otros tipos de logros, pueden activar [correos de logros](/es/features/emails#achievement-emails) cuando se desbloquean.
+Los hitos compuestos son útiles para crear rutas de progresión y animar a los usuarios a participar en distintas áreas de tu app. Al igual que otros tipos de hitos, pueden activar [emails de hitos](/es/features/emails#achievement-emails) cuando se desbloquean.
 
-## Crear logros {#creating-achievements}
+## Crear hitos {#creating-achievements}
 
-Para crear nuevos logros, ve a la [página de logros](https://app.trophy.so/achievements) en el panel de Trophy y haz clic en el botón **Nuevo logro**:
+Para crear nuevos hitos, ve a la [página de hitos](https://app.trophy.so/milestones) en el panel de Trophy y haz clic en el botón **New milestone**:
 
 <Tip>
-También puedes crear, actualizar y eliminar logros mediante programación con la [Admin API](/es/admin-api/endpoints/achievements/create-achievements).
+También puedes crear, actualizar y eliminar hitos mediante programación con la [Admin API](/es/admin-api/endpoints/achievements/create-achievements).
 </Tip>
 
 <Frame>
@@ -129,11 +121,11 @@ También puedes crear, actualizar y eliminar logros mediante programación con l
 
 <Steps>
 <Step title="Introduce un nombre">
-  Introduce un nombre para el logro. Las API lo devolverán y estará disponible para usarlo en correos electrónicos y en otras áreas de Trophy cuando corresponda.
+  Introduce un nombre para el hito. Las API lo devolverán y estará disponible para usarlo en correos electrónicos y en otras áreas de Trophy cuando corresponda.
 </Step>
 
 <Step title="Introduce una descripción (opcional)">
-  Introduce una breve descripción del logro. Las API la devolverán
+  Introduce una breve descripción del hito. Las API la devolverán
   y estará disponible para usarla en correos electrónicos y en otras áreas de Trophy
   cuando corresponda.
 </Step>
@@ -145,80 +137,80 @@ También puedes crear, actualizar y eliminar logros mediante programación con l
 </Step>
 
 <Step title="Elige un tipo de activador">
-  Elige cómo quieres que se desbloquee este logro.
+  Elige cómo quieres que se desbloquee este hito.
   
-- Si eliges **Métrica**, el logro se desbloqueará automáticamente cuando el total de la métrica del usuario alcance el valor de activación del logro.
+- Si eliges **Metric**, el hito se desbloqueará automáticamente cuando el total de la métrica del usuario alcance el valor de activación del hito.
 
-- Si eliges **Racha**, el logro se desbloqueará automáticamente cuando la duración de la racha del usuario alcance el valor de activación del logro.
+- Si eliges **Streak**, el hito se desbloqueará automáticamente cuando la duración de la racha del usuario alcance el valor de activación del hito.
 
-- Si eliges **Aniversario**, el logro se desbloqueará automáticamente cuando el usuario alcance el aniversario especificado de su [`signUpDate`](/es/data-sources/users#optional-attributes).
+- Si eliges **Anniversary**, el hito se desbloqueará automáticamente cuando el usuario alcance el aniversario especificado de su [`signUpDate`](/es/data-sources/users#optional-attributes).
 
-- Si eliges **Llamada a la API**, el logro solo se desbloqueará cuando tu código lo marque explícitamente como completado mediante una solicitud a la [API para completar logros](/es/api-reference/endpoints/achievements/mark-an-achievement-as-completed).
+- Si eliges **API Call**, el hito solo se desbloqueará cuando tu código lo marque explícitamente como completado mediante una solicitud a la [API para completar achievements](/es/api-reference/endpoints/achievements/mark-an-achievement-as-completed).
 
-- Si eliges **Compuesto**, el logro se desbloqueará automáticamente cuando el usuario haya completado todos los logros prerrequisito que selecciones.
-
-</Step>
-
-<Step title="Configurar el activador">
-  Una vez que hayas elegido el tipo de activador para el logro, debes configurar sus ajustes.
-
-- Si elegiste el activador **Métrica**, deberás seleccionar la métrica y el valor total del usuario que, al alcanzarse, desbloqueará el logro.
-
-- Si elegiste el activador **Racha**, deberás definir la duración de la racha que desbloqueará el logro.
-
-- Si elegiste el activador **Aniversario**, deberás definir el número de años desde el registro que desbloqueará el logro.
-
-- Si elegiste el activador **Llamada a la API**, deberás definir una referencia única `key` que usarás para completar el logro mediante la [API](/es/api-reference/endpoints/achievements/mark-an-achievement-as-completed).
-
-- Si elegiste el activador **Compuesto**, deberás seleccionar los logros prerrequisito que deben completarse para desbloquear este logro. El logro compuesto se desbloqueará automáticamente cuando un usuario complete el último prerrequisito.
+- Si eliges **Composite**, el hito se desbloqueará automáticamente cuando el usuario haya completado todos los hitos prerrequisito que selecciones.
 
 </Step>
 
-<Step title="Añadir filtros de atributos (opcional)">
-Puedes asignar filtros de atributos a un logro para restringir aún más quién puede desbloquearlo y cuándo.
+<Step title="Configura el activador">
+  Una vez que hayas elegido el tipo de activador para el hito, debes configurar sus ajustes.
 
-- Para limitar un logro de tipo **Métrica** de modo que solo se aplique a eventos con [atributos de evento personalizados](/es/data-sources/events#custom-event-attributes) específicos, añade uno o más filtros en la sección **Atributos de evento**.
+- Si elegiste el activador **Metric**, deberás seleccionar la métrica y el valor total del usuario que, al alcanzarse, desbloqueará el hito.
 
-- Para limitar cualquier tipo de logro de modo que solo se aplique a usuarios con uno o más [atributos de usuario personalizados](/es/data-sources/users#custom-user-attributes) específicos, añade los atributos y los valores deseados en la sección **Atributos de usuario**.
+- Si elegiste el activador **Streak**, deberás definir la duración de la racha que desbloqueará el hito.
+
+- Si elegiste el activador **Anniversary**, deberás definir el número de años desde el registro que desbloqueará el hito.
+
+- Si elegiste el activador **API Call**, deberás definir una referencia única `key` que usarás para completar el hito mediante la [API](/es/api-reference/endpoints/achievements/mark-an-achievement-as-completed).
+
+- Si elegiste el activador **Composite**, deberás seleccionar los hitos prerrequisito que deben completarse para desbloquear este hito. El hito compuesto se desbloqueará automáticamente cuando un usuario complete el último prerrequisito.
+
+</Step>
+
+<Step title="Añade filtros de atributos (opcional)">
+Puedes asignar filtros de atributos a un hito para restringir aún más quién puede desbloquearlo y cuándo.
+
+- Para limitar un hito de tipo **Metric** de modo que solo se aplique a eventos con [atributos de evento personalizados](/es/data-sources/events#custom-event-attributes) específicos, añade uno o más filtros en la sección **Event Attributes**.
+
+- Para limitar cualquier tipo de hito de modo que solo se aplique a usuarios con uno o más [atributos de usuario personalizados](/es/data-sources/users#custom-user-attributes) específicos, añade los atributos y los valores deseados en la sección **User Attributes**.
 
 <Note>
   Si estableces varios filtros de atributos de evento, todos deben coincidir para que se aplique el
-  logro de métrica. En las respuestas de la API, `eventAttributes` es el
+  hito de métrica. En las respuestas de la API, `eventAttributes` es el
   campo canónico e `eventAttribute` está obsoleto y se mantiene por compatibilidad con versiones anteriores.
 </Note>
 
 </Step>
 
 <Step title="Haz clic en Guardar">
-  Guarda el nuevo logro.
+  Guarda el nuevo hito.
 </Step>
 </Steps>
 
-## Gestión de logros {#managing-achievements}
+## Gestión de hitos {#managing-achievements}
 
-Trophy incluye herramientas integradas para ayudarte a probar y controlar qué logros se pueden desbloquear, quién puede hacerlo y cuándo, sin afectar a producción.
+Trophy incluye herramientas integradas para ayudarte a probar y controlar qué hitos se pueden desbloquear, quién puede hacerlo y cuándo, sin afectar a producción.
 
-### Estados de los logros {#achievement-statuses}
+### Estados de los hitos {#achievement-statuses}
 
-Esta es una descripción general de los distintos estados de los logros y de lo que significan.
+Esta es una descripción general de los distintos estados de los hitos y de lo que significan.
 
 **Inactivo**
 
-Todos los logros se crean como inactivos. Los logros inactivos no se pueden completar y no se devuelven en ninguna API de logros. Los usuarios no los verán hasta que los actives.
+Todos los hitos se crean como inactivos. Los hitos inactivos no se pueden completar y no se devuelven en ninguna API de hitos. Los usuarios no los verán hasta que los actives.
 
 **Activo**
 
-Cuando activas un logro, pasa a estar «en vivo». Los usuarios pueden completarlo y se devuelve en todas las API de logros.
+Cuando activas un hito, pasa a estar «en vivo». Los usuarios pueden completarlo y se devuelve en todas las API de hitos.
 
 **Bloqueado**
 
-Cuando bloqueas un logro, los usuarios que aún no lo han desbloqueado ya no podrán hacerlo, pero los usuarios que ya lo desbloquearon no se verán afectados.
+Cuando bloqueas un hito, los usuarios que aún no lo han desbloqueado ya no podrán hacerlo, pero los usuarios que ya lo desbloquearon no se verán afectados.
 
-Los logros bloqueados solo se devuelven en las API para los usuarios que ya los han conseguido.
+Los hitos bloqueados solo se devuelven en las API para los usuarios que ya los han conseguido.
 
-### Flujo de trabajo de los logros {#achievement-workflow}
+### Flujo de trabajo de los hitos {#achievement-workflow}
 
-Los logros pueden pasar por distintos estados según el siguiente flujo de trabajo:
+Los hitos pueden pasar por distintos estados según el siguiente flujo de trabajo:
 
 ```mermaid
 flowchart LR
@@ -227,25 +219,25 @@ flowchart LR
     C@{ shape: rounded, label: "Locked" }
     A-->B
     B<-->C
-    style A fill:#FDFDEA,stroke:#F7F0D5
-    style B fill:#F2FAF7,stroke:#E2F6E6
-    style C fill:#eee,stroke:#ddd
+    class A milestoneInactive
+    class B milestoneActive
+    class C milestoneLocked
 
 ```
 
-## Cómo completar logros {#completing-achievements}
+## Cómo completar hitos {#completing-achievements}
 
-Si utilizas logros de métrica, no es necesario _completar_ los logros de forma explícita. Una vez que hayas configurado el [seguimiento de métricas](/es/data-sources/events#tracking-metric-events) en tu código, se hará un seguimiento automático de todos los logros vinculados a la métrica.
+Si utilizas hitos de métrica, no es necesario _completar_ los hitos de forma explícita. Una vez que hayas configurado el [seguimiento de métricas](/es/data-sources/events#tracking-metric-events) en tu código, se hará un seguimiento automático de todos los hitos vinculados a la métrica.
 
-Del mismo modo, si utilizas logros de racha, todos los logros relacionados con la racha del usuario se desbloquearán automáticamente cuando este alcance la longitud de racha correspondiente.
+Del mismo modo, si utilizas hitos de racha, todos los hitos relacionados con la racha del usuario se desbloquearán automáticamente cuando este alcance la longitud de racha correspondiente.
 
-Los logros de aniversario también se completan automáticamente. Se desbloquean cuando un usuario alcanza el aniversario configurado de su [`signUpDate`](/es/data-sources/users#optional-attributes). Los usuarios que no tengan `signUpDate` no pueden desbloquearlos.
+Los hitos de aniversario también se completan automáticamente. Se desbloquean cuando un usuario alcanza el aniversario configurado de su [`signUpDate`](/es/data-sources/users#optional-attributes). Los usuarios que no tengan `signUpDate` no pueden desbloquearlos.
 
-Los logros compuestos también se completan automáticamente. Se desbloquean en cuanto un usuario ha completado todos los logros que son requisito previo. No se necesitan llamadas adicionales a la API.
+Los hitos compuestos también se completan automáticamente. Se desbloquean en cuanto un usuario ha completado todos los hitos que son requisito previo. No se necesitan llamadas adicionales a la API.
 
-Sin embargo, si usas logros de API, tendrás que marcarlos como completados para cada usuario según corresponda. Para ello, puedes usar la [API de completar logro](/es/api-reference/endpoints/achievements/mark-an-achievement-as-completed) con el `key` del logro que quieras completar.
+Sin embargo, si usas hitos de API, tendrás que marcarlos como completados para cada usuario según corresponda. Para ello, puedes usar la [API para completar achievements](/es/api-reference/endpoints/achievements/mark-an-achievement-as-completed) con el `key` del hito que quieras completar.
 
-Esto devolverá una respuesta con los detalles del logro completado, que puedes usar en cualquier flujo de trabajo posterior a la finalización, como mostrar una notificación dentro de la aplicación.
+Esto devolverá una respuesta con los detalles del hito completado, que puedes usar en cualquier flujo de trabajo posterior a la finalización, como mostrar una notificación dentro de la aplicación.
 
 {/* vale off */}
 
@@ -266,21 +258,21 @@ Esto devolverá una respuesta con los detalles del logro completado, que puedes 
 
 {/* vale on */}
 
-## Aplicación retroactiva de logros {#backdating-achievements}
+## Aplicación retroactiva de hitos {#backdating-achievements}
 
-De forma predeterminada, cada vez que cambias un logro al [estado](#managing-achievements) 'Activo', Trophy comprueba si algún usuario existente cumple los requisitos del logro y se lo completa en segundo plano.
+De forma predeterminada, cada vez que cambias un hito al [estado](#managing-achievements) 'Activo', Trophy comprueba si algún usuario existente cumple los requisitos del hito y se lo completa en segundo plano.
 
-Esto significa que, cuando lanzas nuevos logros a producción o editas un logro activo existente, la aplicación retroactiva se realiza automáticamente.
+Esto significa que, cuando lanzas nuevos hitos a producción o editas un hito activo existente, la aplicación retroactiva se realiza automáticamente.
 
-Lo mismo ocurre cuando estableces o cambias el [`signUpDate`](/es/data-sources/users#optional-attributes) de un usuario. Si el usuario ya cumple los requisitos de algún logro de aniversario activo, Trophy lo completa de forma silenciosa.
+Lo mismo ocurre cuando estableces o cambias el [`signUpDate`](/es/data-sources/users#optional-attributes) de un usuario. Si el usuario ya cumple los requisitos de algún hito de aniversario activo, Trophy lo completa de forma silenciosa.
 
 <Note>
-  Cuando los logros se completan de esta manera, los usuarios no reciben
-  ninguna notificación. Así se evita que los cambios en tus logros de Trophy
+  Cuando los hitos se completan de esta manera, los usuarios no reciben
+  ninguna notificación. Así se evita que los cambios en tus hitos de Trophy
   provoquen que los usuarios reciban muchas notificaciones.
 </Note>
 
-Puedes comprobar cuántos usuarios han completado logros en cualquier momento en la [página de logros](https://app.trophy.so/achievements) del panel de Trophy. La columna _Usuarios_ de los logros puede actualizarse durante la aplicación retroactiva.
+Puedes comprobar cuántos usuarios han completado hitos en cualquier momento en la [página de hitos](https://app.trophy.so/milestones) del panel de Trophy. La columna _Users_ de los hitos puede actualizarse durante la aplicación retroactiva.
 
 <Frame>
   <img
@@ -303,7 +295,7 @@ Puedes comprobar cuántos usuarios han completado logros en cualquier momento en
   ></video>
 </Frame>
 
-Puedes asignar una insignia a cualquier logro subiendo una imagen (Trophy la aloja y devuelve la URL) o proporcionando tu propia URL de imagen. Las respuestas de API relevantes incluyen ese valor en `badgeUrl` para usarlo como `src` en las etiquetas `<img>`.
+Puedes asignar una insignia a cualquier hito subiendo una imagen (Trophy la aloja y devuelve la URL) o proporcionando tu propia URL de imagen. Las respuestas de API relevantes incluyen ese valor en `badgeUrl` para usarlo como `src` en las etiquetas `<img>`.
 
 ```json Response {8}
 {
@@ -320,18 +312,13 @@ Puedes asignar una insignia a cualquier logro subiendo una imagen (Trophy la alo
 }
 ```
 
-## Mostrar logros {#displaying-achievements}
+## Mostrar hitos {#displaying-achievements}
 
-Trophy ofrece varias API que permiten mostrar logros dentro de tus aplicaciones. Aquí veremos las distintas formas de usarlas y los tipos de interfaces que puedes crear.
+Trophy ofrece varias API que permiten mostrar hitos dentro de tus aplicaciones. Aquí veremos las distintas formas de usarlas y los tipos de interfaces que puedes crear.
 
-<Tip>
-  Consulta nuestra [guía completa](/es/guides/how-to-build-a-milestones-feature) sobre
-  cómo añadir una función de logros a tu app para obtener más detalles.
-</Tip>
+### Todos los hitos {#all-achievements}
 
-### Todos los logros {#all-achievements}
-
-Para mostrar una visión general de todos los logros que los usuarios pueden completar, usa el [endpoint de todos los logros](/es/api-reference/endpoints/achievements/all-achievements). Usa estos datos para crear una interfaz que dé a los usuarios una idea de las rutas de progresión dentro de tu aplicación.
+Para mostrar una visión general de todos los hitos que los usuarios pueden completar, usa el [endpoint de todos los achievements](/es/api-reference/endpoints/achievements/all-achievements). Usa estos datos para crear una interfaz que dé a los usuarios una idea de las rutas de progresión dentro de tu aplicación.
 
 <Frame>
   <video
@@ -344,16 +331,16 @@ Para mostrar una visión general de todos los logros que los usuarios pueden com
   ></video>
 </Frame>
 
-El endpoint de todos los logros devuelve una lista de todos los logros de tu cuenta de Trophy. Cada logro devuelto también incluye `completions` (el número de usuarios que han completado el logro) e `rarity` (el porcentaje de usuarios que han completado el logro) de la siguiente manera:
+El endpoint de todos los hitos devuelve una lista de todos los hitos de tu cuenta de Trophy. Cada hito devuelto también incluye `completions` (el número de usuarios que han completado el hito) y `rarity` (el porcentaje de usuarios que han completado el hito) de la siguiente manera:
 
 <AllAchievementsResponseBlock />
 
-### Logros del usuario {#user-achievements}
+### Hitos del usuario {#user-achievements}
 
-Si, en cambio, estás creando elementos de interfaz específicos de cada usuario, usa el [endpoint de logros del usuario](/es/api-reference/endpoints/users/get-a-users-completed-achievements) para obtener los logros que un usuario concreto ha completado.
+Si, en cambio, estás creando elementos de interfaz específicos de cada usuario, usa el [endpoint de achievements del usuario](/es/api-reference/endpoints/users/get-a-users-completed-achievements) para obtener los hitos que un usuario concreto ha completado.
 
 <Tip>
-  También puedes incluir los logros que un usuario aún no ha completado
+  También puedes incluir los hitos que un usuario aún no ha completado
   añadiendo el parámetro de consulta `includeIncomplete=true`.
 </Tip>
 
@@ -365,9 +352,9 @@ Si, en cambio, estás creando elementos de interfaz específicos de cada usuario
   />
 </Frame>
 
-## Analíticas de logros {#achievement-analytics}
+## Analíticas de hitos {#achievement-analytics}
 
-Si tienes logros configurados para alguna de tus [Métricas](/es/data-sources/metrics), la página de analíticas de la métrica muestra un gráfico con el progreso actual de todos los usuarios, como se muestra a continuación:
+Si tienes hitos configurados para alguna de tus [Métricas](/es/data-sources/metrics), la página de analíticas de la métrica muestra un gráfico con el progreso actual de todos los usuarios, como se muestra a continuación:
 
 <Frame>
   <img
@@ -380,31 +367,35 @@ Si tienes logros configurados para alguna de tus [Métricas](/es/data-sources/me
 ## Preguntas frecuentes {#frequently-asked-questions}
 
 <AccordionGroup>
-  <Accordion title="¿Qué tipo de logros debo usar?">
-    Usa logros de métricas para recompensar a los usuarios por realizar la misma acción una y otra vez, y para incentivarlos a hacerlo más.
+  <Accordion title="¿Qué tipo de hitos debo usar?">
+    Usa hitos de métrica para recompensar a los usuarios por realizar la misma acción una y otra vez, y para incentivarlos a hacerlo más.
 
-    Usa logros de racha para recompensar a los usuarios por mantener su racha.
+    Usa hitos de racha para recompensar a los usuarios por mantener su racha.
 
-    Usa logros de aniversario para recompensar a los usuarios por permanecer en tu plataforma a lo largo del tiempo.
+    Usa hitos de aniversario para recompensar a los usuarios por permanecer en tu plataforma a lo largo del tiempo.
 
-    Usa logros de API cuando quieras recompensar a los usuarios por realizar acciones específicas que solo necesitan realizar una vez.
+    Usa hitos de API cuando quieras recompensar a los usuarios por realizar acciones específicas que solo necesitan realizar una vez.
 
-    Usa logros compuestos cuando quieras crear recompensas escalonadas o de nivel de maestría que se desbloqueen cuando los usuarios completen un conjunto específico de logros prerequisitos.
+    Usa hitos compuestos cuando quieras crear recompensas escalonadas o de nivel de maestría que se desbloqueen cuando los usuarios completen un conjunto específico de hitos prerrequisito.
 
   </Accordion>
 
-    <Accordion title="¿Qué logros debería crear?">
-    Los logros, como toda la gamificación, ofrecen la mejor retención cuando están estrechamente alineados con la razón principal por la que el usuario usa tu plataforma.
+    <Accordion title="¿Qué hitos debería crear?">
+    Los hitos ofrecen la mejor retención cuando están estrechamente alineados con la razón principal por la que el usuario usa tu plataforma.
 
-    Usa los [análisis de métricas](/es/data-sources/metrics#metric-analytics) de Trophy para comparar la retención de cada interacción del usuario, luego configura logros en torno a estas interacciones para maximizar el impacto en la retención.
+    Usa las [analíticas de métricas](/es/data-sources/metrics#metric-analytics) de Trophy para comparar la retención de cada interacción del usuario, luego configura hitos en torno a estas interacciones para maximizar el impacto en la retención.
 
 </Accordion>
 
 </AccordionGroup>
 
-## Obtener soporte {#rewarding-achievements}
+## Recompensar hitos {#rewarding-achievements}
 
-¿Quieres contactar con el equipo de Trophy? Comunícate con nosotros por [correo electrónico](mailto:support@trophy.so). ¡Estamos aquí para ayudarte!
+Para dar algo a los usuarios cuando desbloquean un hito, como puntos extra que reclaman o un premio que entregas tú mismo, añade un activador de hito a una [recompensa](/es/features/rewards#achievement-triggers). Si solo quieres que se sumen puntos automáticamente, usa en su lugar un [activador de puntos](/es/features/points#achievement-triggers).
+
+## Hitos en la mensajería agéntica {#milestones-in-agentic-messaging}
+
+Los hitos también dan a la [mensajería agéntica](/es/agentic-messaging/overview) un motivo para contactar. Los agentes de ciclo de vida pueden celebrar los hitos que los usuarios acaban de completar, o animar a los usuarios que están cerca del siguiente, eligiendo el mejor mensaje para cada usuario en el mejor momento.
 
 ## Obtener soporte {#get-support}
 

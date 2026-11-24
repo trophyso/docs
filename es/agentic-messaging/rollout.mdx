@@ -1,0 +1,80 @@
+---
+title: Despliegue
+description: Aprende cómo se despliega la mensajería agéntica, desde la integración hasta el lanzamiento completo.
+og:description: La mensajería agéntica se despliega con el equipo de Trophy a un
+  porcentaje creciente de usuarios nuevos y se mide frente a un grupo de control.
+icon: rocket
+---
+
+La mensajería agéntica se despliega junto con el equipo de Trophy. La mayor parte del trabajo consiste en dar a los agentes buenos datos y reglas claras. Una vez hecho esto, no hay código que cambiar: los agentes se ponen a trabajar en todo el ciclo de vida.
+
+<Note>
+  ¿Listo para empezar? [Reserva una
+  llamada](https://trophy.so/contact-sales?utm_source=docs) con el equipo de
+  Trophy.
+</Note>
+
+## Lista de comprobación del despliegue {#rollout-checklist}
+
+<Steps>
+  <Step title="Integra tus datos">
+    Los agentes son tan buenos como los datos que ven. Envía a Trophy los
+    [eventos](/es/data-sources/events) que importan en tu app asociados a
+    [métricas](/es/data-sources/metrics), e [identifica a los usuarios](/es/data-sources/users#identifying-users)
+    con su dirección de email y su zona horaria (`tz`).
+
+    Si eres nuevo en Trophy, empieza por el [inicio rápido](/es/getting-started/quickstart).
+
+  </Step>
+  <Step title="Añade funciones dentro de la app (opcional)">
+    Las [rachas](/es/features/streaks), los [hitos](/es/features/milestones), los
+    [puntos](/es/features/points) y las [clasificaciones](/es/features/leaderboards)
+    dan a los usuarios un motivo para volver, y a los agentes más sobre lo que
+    escribir.
+  </Step>
+  <Step title="Configura los canales">
+    Verifica tu dominio de email y configura tu proveedor push. Consulta
+    [canales](/es/agentic-messaging/channels).
+  </Step>
+  <Step title="Completa tu kit de marca">
+    Describe tu app, comparte mensajes de ejemplo, explica tus métricas y enumera
+    todo lo que los agentes nunca deben decir. Consulta [kit de
+    marca](/es/context/brand-kit).
+  </Step>
+  <Step title="Acuerda los objetivos y las salvaguardas">
+    Trabaja con el equipo de Trophy para definir tus
+    [objetivos](/es/agentic-messaging/objectives) y tus [límites de
+    envío](/es/agentic-messaging/guardrails#sending-limits).
+  </Step>
+  <Step title="Empieza con un porcentaje de usuarios nuevos">
+    El equipo de Trophy activa la mensajería agéntica para un pequeño porcentaje
+    de los usuarios que se registran a partir del día del lanzamiento, mientras
+    que un [grupo de control](/es/platform/experimentation#control-ratio) no recibe
+    mensajes.
+  </Step>
+  <Step title="Mide y amplía">
+    Compara la cohorte de agentes con tus cohortes de control y heredada en la
+    página [Analytics](/es/agentic-messaging/measuring-impact) y, después, aumenta
+    con el tiempo el porcentaje de usuarios nuevos.
+  </Step>
+</Steps>
+
+## Cómo se añaden los usuarios {#how-users-are-added}
+
+La mensajería agéntica se despliega solo para usuarios nuevos. Desde el lanzamiento, un porcentaje determinado de los usuarios que se registran recibe mensajes agénticos, y ese porcentaje crece con el tiempo a medida que ves resultados. Los usuarios se asignan al azar, así que la cohorte de agentes es directamente comparable con el resto de usuarios nuevos.
+
+Los usuarios existentes no se migran. Siguen recibiendo tus [emails heredados](/es/features/emails) y [notificaciones push heredadas](/es/features/push-notifications) como hasta ahora.
+
+Los usuarios nuevos de la cohorte de agentes reciben mensajes agénticos en lugar de mensajes heredados, nunca ambos. El resto de usuarios nuevos recibe tus mensajes heredados. Los usuarios de tu grupo de control nunca reciben mensajes de Trophy.
+
+Puedes comprobar qué usuarios reciben mensajes agénticos con el campo `agenticMessagingEnabled` del [objeto de usuario](/es/agentic-messaging/user-preferences#who-receives-agentic-messages).
+
+## Antes del lanzamiento {#before-you-launch}
+
+- Comprueba que tus usuarios tienen definida la zona horaria, para que los mensajes lleguen a horas locales razonables.
+- Asegúrate de que cada métrica tiene un [contexto de métrica](/es/context/brand-kit#metrics) con un enlace, para que los agentes puedan llevar a los usuarios al lugar correcto de tu app.
+- Revisa la [lista de comprobación de producción](/es/getting-started/production-checklist) de tu integración.
+
+## Obtener soporte {#get-support}
+
+¿Quieres ponerte en contacto con el equipo de Trophy? Escríbenos por [correo electrónico](mailto:support@trophy.so). ¡Estamos aquí para ayudarte!

@@ -16,7 +16,7 @@ import ParallelEventsValueExample from "../../snippets/parallel-events-value-exa
 
 Los eventos representan interacciones individuales de usuarios contra [Métricas](/es/data-sources/metrics) en Trophy. Un evento corresponde a una única interacción realizada por un único usuario.
 
-Cuando [integras métricas](#tracking-metric-events) en tu plataforma, estás configurando tu plataforma para transmitir continuamente eventos a tus métricas de Trophy para cada interacción de usuario. Estas interacciones luego impulsan todas las funcionalidades de gamificación que configures alrededor de estas métricas.
+Cuando [integras métricas](#tracking-metric-events) en tu plataforma, estás configurando tu plataforma para transmitir continuamente eventos a tus métricas de Trophy para cada interacción de usuario. Estas interacciones luego impulsan todas las funciones dentro de la app que configures alrededor de estas métricas, y dan a la [mensajería agéntica](/es/agentic-messaging/overview) una imagen actualizada de la actividad de cada usuario.
 
 ## Atributos clave {#key-attributes}
 
@@ -48,11 +48,11 @@ Por ejemplo, una aplicación de aprendizaje de idiomas podría tener una métric
 
 De manera similar, una aplicación de fitness podría usar una métrica de 'Ejercicios completados' y usar un atributo personalizado de evento para almacenar el peso que se utilizó en cada ejercicio y otro atributo personalizado de evento para almacenar cuánto duró el ejercicio.
 
-Usar atributos de eventos personalizados de esta manera te permite enriquecer eventos en Trophy con contexto adicional relevante para tu caso de uso y utilizarlo para impulsar características de gamificación aún más atractivas.
+Usar atributos de eventos personalizados de esta manera te permite enriquecer eventos en Trophy con contexto adicional relevante para tu caso de uso y utilizarlo para impulsar funciones dentro de la app aún más atractivas.
 
 ### Crear Atributos {#creating-attributes}
 
-Para crear un nuevo atributo de evento personalizado, dirígete a la página de métricas en el panel de Trophy y haz clic en el botón _Agregar Atributo de Evento_.
+Para crear un nuevo atributo de evento personalizado, dirígete a la [página Attributes](https://app.trophy.so/attributes), dentro de _Data sources_ en el panel de Trophy, y haz clic en el botón _Add event attribute_.
 
 Asigna un nombre y una clave única al atributo; usarás la clave cuando hagas referencia al atributo en las llamadas a la API.
 
@@ -62,7 +62,7 @@ Asigna un nombre y una clave única al atributo; usarás la clave cuando hagas r
     muted
     loop
     playsInline
-    className="w-full aspect-15/4"
+    className="w-full aspect-video"
     src="../../assets/features/events/create_custom_event_attribute.mp4"
   ></video>
 </Frame>
@@ -104,19 +104,19 @@ Aquí hay un ejemplo de un payload de evento donde se establecen los valores de 
 
 ### Usar Atributos {#using-attributes}
 
-Los atributos de eventos personalizados pueden utilizarse para impulsar desencadenadores más avanzados para logros y puntos, y pueden usarse en plantillas de correo electrónico para personalizar el texto y controlar los datos mostrados en gráficos.
+Los atributos de eventos personalizados pueden utilizarse para impulsar desencadenadores más avanzados para hitos y puntos, y pueden usarse en plantillas de correo electrónico para personalizar el texto y controlar los datos mostrados en gráficos.
 
 #### Desencadenadores Avanzados de Características {#advanced-feature-triggers}
 
-Los atributos de eventos personalizados pueden utilizarse para configurar desencadenadores de logros o puntos que solo rastreen eventos con valores de atributos específicos. Sigue los enlaces a las páginas relevantes a continuación para obtener más información.
+Los atributos de eventos personalizados pueden utilizarse para configurar desencadenadores de hitos o puntos que solo rastreen eventos con valores de atributos específicos. Sigue los enlaces a las páginas relevantes a continuación para obtener más información.
 
 <CardGroup>
   <Card
-    title="Disparadores de Logros"
+    title="Disparadores de hitos"
     icon="trophy"
     href="/es/features/milestones#creating-achievements"
   >
-    Configura logros que solo se pueden desbloquear mediante eventos con ciertos
+    Configura hitos que solo se pueden completar mediante eventos con ciertos
     valores de atributos.
   </Card>
   <Card
@@ -143,7 +143,7 @@ Por ejemplo, aquí hay un caso donde usamos una variable de correo electrónico 
     muted
     loop
     playsInline
-    className="w-full aspect-15/4"
+    className="w-full aspect-video"
     src="../../assets/features/events/using_attributes_in_emails.mp4"
   ></video>
 </Frame>
@@ -156,7 +156,7 @@ En segundo lugar, aquí hay un ejemplo donde agregamos un gráfico a un correo e
     muted
     loop
     playsInline
-    className="w-full aspect-15/4"
+    className="w-full aspect-video"
     src="../../assets/features/events/using_attributes_in_email_charts.mp4"
   ></video>
 </Frame>
@@ -175,13 +175,13 @@ Aquí hay un ejemplo donde una plataforma de estudio ficticia está usando una m
 
 <MetricChangeRequestBlock />
 
-Cualquier [Logro](/es/features/milestones), [Racha](/es/features/streaks), [Puntos](/es/features/points) o [Clasificación](/es/features/leaderboards) que se haya configurado para esta métrica se procesará automáticamente, y la respuesta contendrá cualquier actualización del progreso del usuario que sea resultado directo del evento que ocurrió:
+Cualquier [Hito](/es/features/milestones), [Racha](/es/features/streaks), [Puntos](/es/features/points) o [Clasificación](/es/features/leaderboards) que se haya configurado para esta métrica se procesará automáticamente, y la respuesta contendrá cualquier actualización del progreso del usuario que sea resultado directo del evento que ocurrió:
 
 <MetricChangeResponseBlock />
 
 En este ejemplo, la respuesta incluye lo siguiente:
 
-- Los logros recién desbloqueados del usuario como resultado del evento
+- Los hitos recién completados del usuario (`achievements` en la respuesta) como resultado del evento
 - La racha más reciente del usuario como resultado del evento
 - Los puntos más recientes del usuario para cada sistema de puntos que cambió como resultado del evento
 - Los datos más recientes de clasificación del usuario para cada clasificación que cambió como resultado del evento
@@ -191,21 +191,6 @@ Con un poco de código personalizado, estos datos de respuesta pueden utilizarse
 - Activar notificaciones dentro de la aplicación
 - Efectos de sonido
 - Animaciones
-
-Observa a Charlie integrar el seguimiento de métricas en una aplicación NextJS simple usando el SDK de [Node.js](/es/api-reference/client-libraries) de Trophy:
-
-<Frame>
-  <iframe
-    width="560"
-    height="315"
-    src="https://www.youtube.com/embed/ZxbOylQ6kQU?si=2C8IvN0trlIzLeO7"
-    title="YouTube video player"
-    frameborder="0"
-    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-    referrerpolicy="strict-origin-when-cross-origin"
-    allowfullscreen
-  ></iframe>
-</Frame>
 
 ### Eventos Idempotentes {#idempotent-events}
 

@@ -1,7 +1,7 @@
 #!/usr/bin/env node
 
 /**
- * localize-mdx-paths.mjs — After Lingo, normalize MDX paths per file location and locale:
+ * localize-mdx-paths.mjs — Normalize MDX paths per file location and locale:
  * 1) `import ... from ".../<locale>/components/*.jsx|tsx"` → active target locale.
  * 2) `import ... from ".../snippets/..."` relative depth → repo-root `snippets/`.
  * 3) JSX `src=".../assets/..."` relative depth → repo-root `assets/`.
@@ -9,6 +9,7 @@
 
 import fs from "node:fs";
 import path from "node:path";
+import { sourceLocale, targetLocales } from "./locales.mjs";
 
 const args = process.argv.slice(2);
 
@@ -22,9 +23,6 @@ function hasFlag(name) {
   return args.includes(name);
 }
 
-const config = JSON.parse(fs.readFileSync("i18n.json", "utf8"));
-const sourceLocale = config.locale?.source || "en";
-const targetLocales = Array.isArray(config.locale?.targets) ? config.locale.targets : [];
 const knownLocales = [sourceLocale, ...targetLocales];
 
 const targetArg = getArg("--target");
@@ -38,7 +36,7 @@ const locales = allLocales
       : targetLocales);
 
 if (locales.length === 0) {
-  console.error("No locales to process. Use --target or ensure i18n.json locale.targets exists.");
+  console.error("No locales to process. Use --target or add a language to docs.json navigation.languages.");
   process.exit(1);
 }
 
@@ -133,7 +131,7 @@ const excludedTop = new Set([
   ".git",
   ".github",
   "scripts",
-  "lingo",
+  "i18n",
   "styles",
   ".cursor",
   "snippets",

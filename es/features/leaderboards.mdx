@@ -1,11 +1,11 @@
 ---
 title: Clasificaciones
-description: Aprende a usar Clasificaciones en una experiencia de producto
-  gamificada con Trophy.
+description: Aprende a crear competencia entre los usuarios de tu app web o móvil
+  con las clasificaciones de Trophy.
 og:description: Crea competencias diarias, semanales o mensuales que clasifican
   a los usuarios según métricas, puntos o rachas y aumenta la participación de
   los usuarios.
-icon: /icons/leaderboard.svg
+icon: chart-bar
 ---
 
 import LeaderboardSingleAttributeRequest from "../../snippets/leaderboard-rankings-request-single-attribute.mdx";
@@ -17,8 +17,7 @@ Las Clasificaciones son competencias sociales entre usuarios de tu aplicación. 
 
 <Frame>
   <img
-    height="100"
-    width="100%"
+    style={{ maxWidth: "480px", margin: "0 auto" }}
     noZoom
     src="../../assets/features/leaderboards/hero.png"
   />
@@ -85,7 +84,7 @@ Utiliza clasificaciones por métrica si solo deseas ordenar a los usuarios segú
 
 Las clasificaciones por puntos están vinculadas a un [Sistema de Puntos](/es/features/points) existente de Trophy y ordenan automáticamente a los usuarios según sus puntos totales.
 
-Utiliza una clasificación por puntos si deseas ordenar a los usuarios según una combinación de métricas, logros u otras funciones de Trophy.
+Utiliza una clasificación por puntos si deseas ordenar a los usuarios según una combinación de métricas, hitos u otras funciones de Trophy.
 
 #### Clasificaciones de Racha {#streak-rankings}
 
@@ -116,7 +115,7 @@ Trophy comenzará automáticamente a agrupar usuarios en clasificaciones más pe
     muted
     loop
     playsInline
-    className="w-full aspect-15/4"
+    className="w-full aspect-video"
     src="../../assets/features/leaderboards/breakdowns.mp4"
   ></video>
 </Frame>
@@ -269,7 +268,7 @@ Para crear una clasificación, ve a la [página de clasificaciones](https://app.
     muted
     loop
     playsInline
-    className="w-full aspect-15/4"
+    className="w-full aspect-video"
     src="../../assets/features/leaderboards/creating_leaderboards.mp4"
   ></video>
 </Frame>
@@ -326,11 +325,6 @@ Las clasificaciones configuradas con una [fecha de inicio](#start-dates) en el f
 Si una clasificación tiene una [fecha de finalización](#end-dates), cuando esta pase, Trophy la pasará automáticamente al estado `Finished` y dejará de monitorizar la actividad de los usuarios. Una vez finalizada, la clasificación no será visible para los usuarios, pero aún puedes consultar las API para obtener las posiciones de ejecuciones históricas.
 
 ## Mostrar clasificaciones {#displaying-leaderboards}
-
-<Tip>
-  Consulta nuestra [guía completa](/es/guides/how-to-build-a-leaderboards-feature) sobre
-  cómo añadir clasificaciones a tu app para obtener más detalles.
-</Tip>
 
 ## Analíticas de la clasificación {#leaderboard-analytics}
 
@@ -425,9 +419,13 @@ Este gráfico es un histograma de las puntuaciones de los usuarios en una clasif
 </Accordion>
 </AccordionGroup>
 
-## Obtener soporte {#rewarding-leaderboard-winners}
+## Recompensar a los ganadores de las clasificaciones {#rewarding-leaderboard-winners}
 
-¿Quieres ponerte en contacto con el equipo de Trophy? Comunícate con nosotros por [correo electrónico](mailto:support@trophy.so). ¡Estamos aquí para ayudarte!
+Para dar algo a los usuarios cuando terminan una ejecución de clasificación en una posición concreta, añade un activador de clasificación a una [recompensa](/es/features/rewards#leaderboard-triggers). Los ganadores podrán canjear la recompensa en tu producto.
+
+## Clasificaciones en la mensajería agéntica {#leaderboards-in-agentic-messaging}
+
+Los cambios de posición dan a la [mensajería agéntica](/es/agentic-messaging/overview) un motivo para que los usuarios vuelvan a la competición. Los agentes de ciclo de vida usan los datos de las clasificaciones, junto con todo lo que saben de cada usuario, para elegir el mejor mensaje en el mejor momento.
 
 ## Obtener soporte {#get-support}
 

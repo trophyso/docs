@@ -1,0 +1,89 @@
+<CodeGroup>
+```bash cURL
+curl -X POST https://api.trophy.so/v1/users/user-123/goals \
+     -H "X-API-KEY: <api-key>" \
+     -H "Content-Type: application/json" \
+     -d '{
+  "key": "unit-3",
+  "parent": "spanish-exam",
+  "label": "Unit 3 listening",
+  "dueAt": "2026-11-17T09:00:00Z"
+}'
+```
+
+```typescript Node
+trophy.users.createGoal("user-123", {
+  key: "unit-3",
+  parent: "spanish-exam",
+  label: "Unit 3 listening",
+  dueAt: "2026-11-17T09:00:00Z",
+});
+```
+
+```python Python
+client.users.create_goal(
+    id="user-123",
+    key="unit-3",
+    parent="spanish-exam",
+    label="Unit 3 listening",
+    due_at="2026-11-17T09:00:00Z",
+)
+```
+
+```php PHP
+$request = new CreateGoalRequest([
+    'key' => 'unit-3',
+    'parent' => 'spanish-exam',
+    'label' => 'Unit 3 listening',
+    'dueAt' => '2026-11-17T09:00:00Z'
+]);
+
+$trophy->users->createGoal("user-123", $request);
+```
+
+```java Java
+CreateGoalRequest request = CreateGoalRequest.builder()
+      .key("unit-3")
+      .parent("spanish-exam")
+      .label("Unit 3 listening")
+      .dueAt("2026-11-17T09:00:00Z")
+      .build();
+
+GoalResponse response = client.users().createGoal("user-123", request);
+```
+
+```go Go
+response, err := client.Users.CreateGoal(
+    context.TODO(),
+    "user-123",
+    &api.CreateGoalRequest{
+        Key:    "unit-3",
+        Parent: api.String("spanish-exam"),
+        Label:  api.String("Unit 3 listening"),
+        DueAt:  api.String("2026-11-17T09:00:00Z"),
+    },
+)
+```
+
+```csharp C#
+var request = new CreateGoalRequest {
+   Key = "unit-3",
+   Parent = "spanish-exam",
+   Label = "Unit 3 listening",
+   DueAt = "2026-11-17T09:00:00Z"
+};
+
+await trophy.Users.CreateGoalAsync("user-123", request);
+```
+
+```ruby Ruby
+result = client.users.create_goal(
+  :id => 'user-123',
+  :key => 'unit-3',
+  :parent => 'spanish-exam',
+  :label => 'Unit 3 listening',
+  :due_at => '2026-11-17T09:00:00Z'
+)
+```
+
+</CodeGroup>

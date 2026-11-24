@@ -1,0 +1,335 @@
+---
+title: Canales
+description: Aprende a configurar el email y las notificaciones push para que Trophy pueda llegar a tus usuarios.
+og:description: Envía emails desde tu propio dominio y notificaciones push de forma
+  nativa a través de APNs, Firebase Cloud Messaging o Expo.
+icon: send
+---
+
+import IdentifyUserWithDeviceTokensRequestBlock from "../../snippets/identify-user-with-device-tokens-request-block.mdx";
+import MetricEventWithDeviceTokensRequestBlock from "../../snippets/metric-event-with-device-tokens-request-block.mdx";
+
+Los agentes envían mensajes por dos canales: email y notificaciones push. Eligen el canal que mejor funciona para cada usuario, según cómo interactúa ese usuario y qué canales ha elegido en sus [preferencias](/es/agentic-messaging/user-preferences).
+
+Ambos canales se gestionan en la página [Channels](https://app.trophy.so/agentic-messaging/channels), dentro de **Agentic messaging** en el panel de Trophy, que tiene una pestaña **Emails** y una pestaña **Push**.
+
+<Note>
+  Los canales se comparten en todo Trophy. El dominio y los proveedores push que
+  configures aquí también los usan los [emails heredados](/es/features/emails) y las
+  [notificaciones push heredadas](/es/features/push-notifications), así que solo
+  tienes que configurarlos una vez.
+</Note>
+
+## Email {#email}
+
+Trophy envía emails desde tu propio dominio, con tu [identidad de marca](/es/context/brand-kit#branding).
+
+Para enviar emails, Trophy necesita:
+
+<Steps>
+  <Step title="Un dominio de envío verificado">
+    Verifica tu dominio en la pestaña **Emails**. Consulta la [verificación del
+    dominio](#domain-verification) más abajo.
+  </Step>
+  <Step title="Una dirección de email para cada usuario">
+    Define el atributo `email` cuando [identifiques
+    usuarios](/es/data-sources/users#identifying-users). Los usuarios sin dirección
+    de email, o que se hayan dado de baja, no reciben emails.
+  </Step>
+</Steps>
+
+### Verificación del dominio {#domain-verification}
+
+Trophy permite enviar correos desde tu propio dominio de forma nativa. Hay dos maneras de configurarlo: Verificación del remitente único y Verificación de DNS.
+
+Todos los ajustes de dominio están en la pestaña **Emails** de la página [Channels](https://app.trophy.so/agentic-messaging/channels) del panel de Trophy.
+
+<Tip>
+  Si quieres configurarlo rápidamente, te recomendamos empezar con la
+  Verificación del remitente único y configurar la Verificación de DNS cuando
+  estés listo para pasar a producción.
+</Tip>
+
+<CardGroup cols={2}>
+  <Card
+    title="Verificación del remitente"
+    icon="check"
+    href="#sender-verification-basic"
+  >
+    Verifica rápidamente una única dirección de correo electrónico
+  </Card>
+  <Card title="Verificación de DNS" icon="lock" href="#dns-verification-advanced">
+    Recomendada para uso en producción
+  </Card>
+</CardGroup>
+
+#### Verificación del remitente (básica) {#sender-verification-basic}
+
+La Verificación del remitente es una forma rápida de verificar una única dirección de correo electrónico que quieras usar con Trophy, sin necesidad de cambiar código ni ajustes de DNS.
+
+Introduce la dirección de correo electrónico, el nombre del remitente y el correo de respuesta que quieres que Trophy use al enviar correos:
+
+<Frame>
+  <img
+    height="200"
+    width="75%"
+    noZoom
+    src="../../assets/features/emails/sender_verification.jpg"
+  />
+</Frame>
+
+Trophy enviará un correo de verificación a esa dirección. Solo tienes que hacer clic en el enlace del correo para confirmar a Trophy que eres el propietario de la dirección, y ya estará todo listo.
+
+<Note>
+  El correo que recibirás procederá de nuestro proveedor de correo electrónico,
+  Postmark. ¡Así que busca «Postmark Support» en tu bandeja de entrada!
+</Note>
+
+La Verificación del remitente es ideal para empezar, pero tiene limitaciones: no te beneficiarás de la reputación de tu correo electrónico actual y solo podrás enviar correos desde una dirección.
+
+Además, si en el futuro quieres cambiar la dirección, tendrás que volver a realizar la Verificación del remitente en la pestaña **Emails** de la página [Channels](https://app.trophy.so/agentic-messaging/channels).
+
+#### Verificación de DNS (avanzada) {#dns-verification-advanced}
+
+Para uso en producción, recomendamos la verificación de DNS. Una vez configurada, te permite configurar Trophy para enviar correos electrónicos desde cualquier dirección de tu dominio. Así, si quieres cambiar la dirección en el futuro, no tendrás que volver a verificarla.
+
+Completar la verificación de DNS también te permite aprovechar al máximo la reputación que ya tenga tu dominio y es la mejor forma de asegurarte de que tus correos electrónicos no acaben en la carpeta de spam.
+
+Sin embargo, esto requiere añadir un par de entradas nuevas en tu DNS para que Trophy pueda verificar que eres el propietario del dominio.
+
+Sigue los pasos a continuación para configurar la verificación de DNS:
+
+<Steps>
+<Step title="Ve a la página Channels">
+    Abre la pestaña **Emails** de la página [Channels](https://app.trophy.so/agentic-messaging/channels). Aquí configurarás todo lo relacionado con el dominio de correo que Trophy usará para enviar correos electrónicos en tu nombre.
+</Step>
+
+<Step title="Configura tu dominio">
+    Ve a la sección de verificación de DNS e introduce el dominio que quieres configurar con Trophy.
+
+    También puedes configurar una Return Path personalizada. Es la dirección a la que Trophy reenviará las notificaciones de correos rebotados para ayudarte a investigar problemas de entregabilidad:
+
+    <Frame>
+      <img
+        height="200"
+        width="75%"
+        noZoom
+        src="../../assets/features/emails/dns-verification-1.png"
+      />
+    </Frame>
+
+</Step>
+
+<Step title="Configura tus registros DNS">
+
+    Una vez que hayas introducido el dominio de correo, Trophy te proporcionará los datos de dos nuevos registros DNS que deberás añadir en tu proveedor de DNS.
+
+    <Frame>
+      <img
+        height="200"
+        width="75%"
+        noZoom
+        src="../../assets/features/emails/dns-verification-2.png"
+      />
+    </Frame>
+
+    - El primero es el registro **DKIM**, que los proveedores de bandeja de entrada, como Google, utilizan para verificar la autenticidad de los correos electrónicos. Introduce el nombre y el valor proporcionados como un nuevo registro **TXT** en tu proveedor de DNS.
+    - El segundo es el registro **Return Path**. Se utiliza para reenviar a tu dominio las notificaciones de correos rebotados. Introduce el nombre y el valor proporcionados como un nuevo registro **CNAME** en tu proveedor de DNS.
+
+    Estas son las páginas de los proveedores de DNS más comunes con instrucciones para configurar nuevos registros:
+
+    <AccordionGroup>
+      <Accordion title='GoDaddy'>
+          [Añadir un registro TXT](https://www.godaddy.com/en-uk/help/add-a-txt-record-19232)
+          [Añadir un registro CNAME](https://www.godaddy.com/en-uk/help/add-a-cname-record-19236)
+      </Accordion>
+      <Accordion title='Cloudflare'>
+          [Añadir registros DNS](https://developers.cloudflare.com/dns/manage-dns-records/how-to/create-dns-records/#create-dns-records)
+      </Accordion>
+      <Accordion title="NameCheap">
+          [Añadir un registro CNAME](https://www.namecheap.com/support/knowledgebase/article.aspx/9646/2237/how-to-create-a-cname-record-for-your-domain/)
+          [Añadir un registro TXT](https://www.namecheap.com/support/knowledgebase/article.aspx/317/2237how-do-i-add-txtspfdkimdmarc-records-for-my-domain/#:~:text=this%20guide%20.-,DKIM%20records,-DKIM%20(DomainKeys%20Identified))
+      </Accordion>
+    </AccordionGroup>
+
+    <Warning>Nota: si usas un proxy como Cloudflare, asegúrate de desactivarlo para estos registros; de lo contrario, Trophy no podrá verificarlos correctamente.</Warning>
+
+</Step>
+
+<Step title="Verificar los registros DNS">
+
+    Una vez que hayas añadido los dos registros en la configuración de tu DNS, haz clic en el icono de actualizar y Trophy intentará verificarlos por ti.
+
+    Normalmente, Trophy puede verificar los registros en unos minutos, pero ten en cuenta que los cambios de DNS pueden tardar hasta unas horas en propagarse por completo.
+
+    Si ves la siguiente alerta, es posible que los registros aún no se hayan propagado o que haya un problema en tu configuración.
+
+    <Frame>
+      <img
+        height="200"
+        width="75%"
+        noZoom
+        src="../../assets/features/emails/dns-verification-3.png"
+      />
+    </Frame>
+
+    Cuando te asegures de que todo está configurado correctamente en tu proveedor de DNS, haz clic en actualizar y Trophy intentará verificar tus registros DNS de nuevo.
+
+    En cuanto veas el siguiente mensaje, sabrás que todo está verificado:
+
+    <Frame>
+      <img
+        height="200"
+        width="75%"
+        noZoom
+        src="../../assets/features/emails/dns-verification-4.png"
+      />
+    </Frame>
+
+</Step>
+
+<Step title="Configurar tu dirección de envío">
+
+    Una vez verificados tus registros DNS, es el momento de elegir la dirección de correo electrónico desde la que quieres enviar los correos. Ten en cuenta que, ahora que has verificado completamente tu dominio, puedes cambiar esta dirección cuando quieras sin afectar a la entregabilidad.
+
+    Simplemente introduce la dirección de correo electrónico desde la que quieres que Trophy envíe los mensajes, el nombre que verán los usuarios en la bandeja de entrada cuando reciban los correos y una dirección de correo de soporte que puedan usar para contactarte si lo necesitan:
+
+    <Frame>
+      <img
+        height="200"
+        width="75%"
+        noZoom
+        src="../../assets/features/emails/dns-verification-5.png"
+      />
+    </Frame>
+
+</Step>
+
+</Steps>
+
+## Notificaciones push {#push-notifications}
+
+Trophy entrega las notificaciones push de forma nativa a través de tu propia configuración push.
+
+Para enviar notificaciones push, Trophy necesita:
+
+<Steps>
+  <Step title="Un proveedor push configurado">
+    Añade las credenciales de tu proveedor en la pestaña **Push**. Consulta los
+    [proveedores compatibles](#supported-channels) más abajo.
+  </Step>
+  <Step title="Tokens de dispositivo para cada usuario">
+    Asocia tokens de dispositivo con cada usuario cuando lo identifiques o envíes
+    eventos de métricas. Consulta los [tokens de dispositivo](#device-tokens) más
+    abajo.
+  </Step>
+</Steps>
+
+### Proveedores compatibles {#supported-channels}
+
+Trophy admite el envío de notificaciones push a través de 3 proveedores, que pueden configurarse todos en la pestaña **Push** de la página [Channels](https://app.trophy.so/agentic-messaging/channels/push) del panel de Trophy.
+
+<Frame>
+  <video
+    autoPlay
+    muted
+    loop
+    playsInline
+    className="w-full aspect-video"
+    src="../../assets/agentic-messaging/push_provider.mp4"
+  ></video>
+</Frame>
+
+#### Apple Push Notification Service (APNs) {#apple-push-notification-service-apns}
+
+Trophy admite el envío de notificaciones push a los usuarios a través de APNs mediante una conexión basada en certificados.
+
+Para enviar notificaciones push usando APNs, deberás proporcionar a Trophy las siguientes credenciales de tu cuenta de Apple Developer:
+
+- **Clave de firma de APN**: Trophy la usa para enviar notificaciones de forma segura a través de APNs
+- **ID de equipo**: El ID de equipo de tu cuenta de Apple Developer
+- **ID de clave**: El ID de tu clave de autenticación de APNs
+- **ID de paquete**: El identificador de paquete único de tu aplicación
+
+<Note>
+  Para más información sobre cómo configurar una conexión basada en certificados
+  a APNs desde un servicio de terceros, consulta la [guía de configuración
+  oficial](https://developer.apple.com/documentation/usernotifications/establishing-a-certificate-based-connection-to-apns).
+</Note>
+
+#### Firebase Cloud Messaging (FCM) {#firebase-cloud-messaging-fcm}
+
+Trophy admite el envío de notificaciones push a los usuarios a través de FCM. Para lograrlo, deberás proporcionar a Trophy tu JSON de cuenta de servicio de Firebase en el siguiente formato:
+
+{/* vale off */}
+
+```json FCM Service Account JSON
+{
+  "type": "service_account",
+  "project_id": "XXX",
+  "private_key_id": "XXX",
+  "private_key": "-----BEGIN PRIVATE KEY-----\n\n-----END PRIVATE KEY-----\n",
+  "client_email": "XXX@XXX.com",
+  "client_id": "XXX",
+  "auth_uri": "https://accounts.google.com/o/oauth2/auth",
+  "token_uri": "https://oauth2.googleapis.com/token",
+  "auth_provider_x509_cert_url": "https://www.googleapis.com/oauth2/v1/certs",
+  "client_x509_cert_url": "https://www.googleapis.com/robot/v1/metadata/x509/XXX"
+}
+```
+
+{/* vale on */}
+
+<Note>
+  Para más información sobre las cuentas de servicio de Firebase y cómo
+  autenticar servicios externos para usar FCM, consulta la [guía oficial de
+  cuentas de servicio](https://firebase.google.com/support/guides/service-accounts).
+</Note>
+
+#### Expo Push Service {#expo-push-service}
+
+Trophy admite el envío de notificaciones push a los usuarios a través de Expo Push Service.
+
+Expo Push Service te ahorra tener que integrarte con FCM y APNs individualmente y dirige automáticamente las notificaciones a través del servicio correspondiente según la plataforma de tus usuarios.
+
+Para lograrlo, debes proporcionar a Trophy algunos detalles clave de tu cuenta de Expo:
+
+- **Nombre del proyecto Expo**: El nombre de tu proyecto Expo
+- **Token push de Expo**: Tu token de autenticación para enviar notificaciones a través de Expo (requerido si usas [seguridad mejorada](https://docs.expo.dev/push-notifications/sending-notifications/#additional-security)).
+
+<Note>
+  Para más información sobre Expo Push Service y cómo autenticar proveedores
+  externos, consulta la [guía
+  oficial](https://docs.expo.dev/push-notifications/sending-notifications).
+</Note>
+
+### Tokens de dispositivo {#device-tokens}
+
+Para enviar notificaciones a los usuarios, Trophy necesita conocer los tokens únicos asignados a sus dispositivos. Le indicas a Trophy qué dispositivos tiene cada usuario asociando tokens de dispositivo con cada usuario que identificas.
+
+Trophy utilizará los tokens de dispositivo que asocies con cada usuario al comunicarse con tu [proveedor push](#supported-channels) para enrutar las notificaciones al dispositivo correcto.
+
+Para asociar un token de dispositivo con un usuario en Trophy, asigna `deviceTokens` al [identificar usuarios explícitamente](/es/api-reference/endpoints/users/identify-a-user), o al [enviar eventos de métricas](/es/api-reference/endpoints/events/submit-a-metric-event).
+
+Así es como se asocian tokens de dispositivo al identificar usuarios:
+
+<IdentifyUserWithDeviceTokensRequestBlock />
+
+Y aquí se muestra cómo asociar tokens de dispositivo al enviar eventos de métricas:
+
+<MetricEventWithDeviceTokensRequestBlock />
+
+<Tip>
+  Cada usuario puede tener múltiples tokens de dispositivo asociados, para dar
+  soporte a usuarios que utilizan varios dispositivos.
+</Tip>
+
+## Usuarios alcanzables {#reachable-users}
+
+Los agentes solo tienen en cuenta a los usuarios a los que pueden llegar por al menos un canal. Un usuario con dirección de email pero sin tokens de dispositivo solo recibe emails, y un usuario con tokens de dispositivo pero sin dirección de email solo recibe notificaciones push.
+
+Configura ambos canales para que los agentes tengan el mayor margen posible para elegir el adecuado para cada usuario.
+
+## Obtener soporte {#get-support}
+
+¿Quieres ponerte en contacto con el equipo de Trophy? Escríbenos por [correo electrónico](mailto:support@trophy.so). ¡Estamos aquí para ayudarte!

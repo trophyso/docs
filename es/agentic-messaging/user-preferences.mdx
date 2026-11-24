@@ -1,0 +1,78 @@
+---
+title: Preferencias de usuario
+description: Aprende cómo los usuarios ajustan los mensajes agénticos que reciben.
+og:description: Los usuarios eligen qué tipo de mensajes reciben, si quieren saber
+  de promociones y qué canales usan los agentes, a través de la página de
+  preferencias alojada por Trophy o de tu propio centro de preferencias.
+icon: sliders-horizontal
+---
+
+Los usuarios ajustan su propia experiencia. Cada usuario elige qué tipo de mensajes recibe y si quiere saber de promociones, y los agentes nunca envían fuera de esas elecciones.
+
+## Preferencias de mensajería {#messaging-preferences}
+
+Cada usuario tiene las siguientes preferencias de mensajería agéntica.
+
+### Estilo de mensaje {#temperature}
+
+El estilo de mensaje define qué tipo de mensajes quiere un usuario, en una escala del 1 al 5. En la API se llama `temperature`.
+
+- **1, lo esencial y directo**: solo los mensajes que más le importan al usuario, como su propio progreso, breves y al grano.
+- **3**: el valor predeterminado.
+- **5, todo y conversacional**: toda la variedad de mensajes que pueden enviar los agentes, con un tono más conversacional.
+
+Acercarse a "todo" también significa que los agentes pueden contactar un poco más a menudo. El estilo de mensaje de un usuario no puede superar el máximo definido en tus [límites de envío](/es/agentic-messaging/guardrails#sending-limits).
+
+### Mensajes promocionales {#promotional-messages}
+
+Indica si el usuario quiere saber de promociones, como ofertas y anuncios. Los usuarios que desactivan los mensajes promocionales siguen recibiendo mensajes sobre su propio progreso en tu app.
+
+### Canales {#channels}
+
+Los canales que los agentes pueden usar con este usuario: `email` y/o `push`. Ambos están activados de forma predeterminada. Una lista vacía desactiva los mensajes agénticos para el usuario.
+
+## Página de preferencias alojada {#hosted-preferences-page}
+
+Cada email agéntico enlaza a una página de preferencias alojada por Trophy, donde los usuarios pueden definir sus propias preferencias:
+
+- **What kind of messages do you like?**: un control deslizante que va de **Essentials, direct** a **Everything, conversational** y que define el estilo de mensaje del usuario.
+- **Promotional messages**: un interruptor para activar o desactivar las promociones.
+- **Unsubscribe from all**: un interruptor para dejar de recibir todos los emails. Volver a desactivarlo suscribe de nuevo al usuario.
+
+No necesitas construir nada para que los usuarios gestionen sus preferencias de esta forma.
+
+## Crear tu propio centro de preferencias {#building-your-own-preference-center}
+
+Para que los usuarios gestionen sus preferencias dentro de tu app, usa los endpoints [obtener las preferencias de un usuario](/es/api-reference/endpoints/users/get-user-preferences) y [actualizar las preferencias de un usuario](/es/api-reference/endpoints/users/update-user-preferences). Las preferencias de mensajería agéntica están en el objeto `messaging`:
+
+```json
+{
+  "messaging": {
+    "channels": ["email", "push"],
+    "temperature": 3
+  }
+}
+```
+
+Por ejemplo, para enviar a un usuario solo emails, con un estilo más esencial y directo, actualiza sus preferencias con:
+
+```json
+{
+  "messaging": {
+    "channels": ["email"],
+    "temperature": 2
+  }
+}
+```
+
+## Quién recibe mensajes agénticos {#who-receives-agentic-messages}
+
+Cada usuario recibe mensajes agénticos o bien [emails heredados](/es/features/emails) y [notificaciones push heredadas](/es/features/push-notifications), nunca ambos. Cuál recibe un usuario depende de tu [despliegue](/es/agentic-messaging/rollout).
+
+Puedes comprobar cuál se aplica a un usuario con el campo `agenticMessagingEnabled` del objeto de usuario, que devuelve el endpoint [obtener un usuario](/es/api-reference/endpoints/users/get-a-single-user). Vale `true` para los usuarios que reciben mensajes agénticos.
+
+Los usuarios de tu [grupo de control](/es/platform/experimentation#control-ratio) no reciben ningún mensaje de Trophy, así que su campo `agenticMessagingEnabled` siempre vale `false`.
+
+## Obtener soporte {#get-support}
+
+¿Quieres ponerte en contacto con el equipo de Trophy? Escríbenos por [correo electrónico](mailto:support@trophy.so). ¡Estamos aquí para ayudarte!

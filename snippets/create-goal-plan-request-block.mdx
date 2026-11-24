@@ -1,0 +1,187 @@
+<CodeGroup>
+```bash cURL
+curl -X POST https://api.trophy.so/v1/users/user-123/goals \
+     -H "X-API-KEY: <api-key>" \
+     -H "Content-Type: application/json" \
+     -d '{
+  "key": "spanish-exam",
+  "label": "Spanish B1 exam",
+  "completion": "none",
+  "dueAt": "2026-11-20T09:00:00Z",
+  "steps": [
+    {
+      "key": "unit-1",
+      "label": "Unit 1 vocabulary",
+      "dueAt": "2026-11-10T09:00:00Z"
+    },
+    {
+      "key": "unit-2",
+      "label": "Unit 2 grammar",
+      "dueAt": "2026-11-14T09:00:00Z"
+    }
+  ]
+}'
+```
+
+```typescript Node
+trophy.users.createGoal("user-123", {
+  key: "spanish-exam",
+  label: "Spanish B1 exam",
+  completion: "none",
+  dueAt: "2026-11-20T09:00:00Z",
+  steps: [
+    {
+      key: "unit-1",
+      label: "Unit 1 vocabulary",
+      dueAt: "2026-11-10T09:00:00Z",
+    },
+    {
+      key: "unit-2",
+      label: "Unit 2 grammar",
+      dueAt: "2026-11-14T09:00:00Z",
+    },
+  ],
+});
+```
+
+```python Python
+from trophy import GoalStepRequest
+
+client.users.create_goal(
+    id="user-123",
+    key="spanish-exam",
+    label="Spanish B1 exam",
+    completion="none",
+    due_at="2026-11-20T09:00:00Z",
+    steps=[
+        GoalStepRequest(
+            key="unit-1",
+            label="Unit 1 vocabulary",
+            due_at="2026-11-10T09:00:00Z",
+        ),
+        GoalStepRequest(
+            key="unit-2",
+            label="Unit 2 grammar",
+            due_at="2026-11-14T09:00:00Z",
+        ),
+    ],
+)
+```
+
+```php PHP
+$request = new CreateGoalRequest([
+    'key' => 'spanish-exam',
+    'label' => 'Spanish B1 exam',
+    'completion' => GoalCompletion::None->value,
+    'dueAt' => '2026-11-20T09:00:00Z',
+    'steps' => [
+        new GoalStepRequest([
+            'key' => 'unit-1',
+            'label' => 'Unit 1 vocabulary',
+            'dueAt' => '2026-11-10T09:00:00Z'
+        ]),
+        new GoalStepRequest([
+            'key' => 'unit-2',
+            'label' => 'Unit 2 grammar',
+            'dueAt' => '2026-11-14T09:00:00Z'
+        ])
+    ]
+]);
+
+$trophy->users->createGoal("user-123", $request);
+```
+
+```java Java
+CreateGoalRequest request = CreateGoalRequest.builder()
+      .key("spanish-exam")
+      .label("Spanish B1 exam")
+      .completion(GoalCompletion.NONE)
+      .dueAt("2026-11-20T09:00:00Z")
+      .steps(List.of(
+        GoalStepRequest.builder()
+          .key("unit-1")
+          .label("Unit 1 vocabulary")
+          .dueAt("2026-11-10T09:00:00Z")
+          .build(),
+        GoalStepRequest.builder()
+          .key("unit-2")
+          .label("Unit 2 grammar")
+          .dueAt("2026-11-14T09:00:00Z")
+          .build()
+      ))
+      .build();
+
+GoalResponse response = client.users().createGoal("user-123", request);
+```
+
+```go Go
+response, err := client.Users.CreateGoal(
+    context.TODO(),
+    "user-123",
+    &api.CreateGoalRequest{
+        Key:        "spanish-exam",
+        Label:      api.String("Spanish B1 exam"),
+        Completion: api.GoalCompletionNone.Ptr(),
+        DueAt:      api.String("2026-11-20T09:00:00Z"),
+        Steps: []*api.GoalStepRequest{
+            {
+                Key:   "unit-1",
+                Label: api.String("Unit 1 vocabulary"),
+                DueAt: api.String("2026-11-10T09:00:00Z"),
+            },
+            {
+                Key:   "unit-2",
+                Label: api.String("Unit 2 grammar"),
+                DueAt: api.String("2026-11-14T09:00:00Z"),
+            },
+        },
+    },
+)
+```
+
+```csharp C#
+var request = new CreateGoalRequest {
+   Key = "spanish-exam",
+   Label = "Spanish B1 exam",
+   Completion = GoalCompletion.None,
+   DueAt = "2026-11-20T09:00:00Z",
+   Steps = new[] {
+      new GoalStepRequest {
+         Key = "unit-1",
+         Label = "Unit 1 vocabulary",
+         DueAt = "2026-11-10T09:00:00Z"
+      },
+      new GoalStepRequest {
+         Key = "unit-2",
+         Label = "Unit 2 grammar",
+         DueAt = "2026-11-14T09:00:00Z"
+      }
+   }
+};
+
+await trophy.Users.CreateGoalAsync("user-123", request);
+```
+
+```ruby Ruby
+result = client.users.create_goal(
+  :id => 'user-123',
+  :key => 'spanish-exam',
+  :label => 'Spanish B1 exam',
+  :completion => 'none',
+  :due_at => '2026-11-20T09:00:00Z',
+  :steps => [
+    {
+      :key => 'unit-1',
+      :label => 'Unit 1 vocabulary',
+      :due_at => '2026-11-10T09:00:00Z'
+    },
+    {
+      :key => 'unit-2',
+      :label => 'Unit 2 grammar',
+      :due_at => '2026-11-14T09:00:00Z'
+    }
+  ]
+)
+```
+
+</CodeGroup>

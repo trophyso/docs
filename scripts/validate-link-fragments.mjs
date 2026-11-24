@@ -11,7 +11,7 @@ const EXCLUDED_TOP_DIRS = new Set([
   "node_modules",
   "scripts",
   "styles",
-  "lingo",
+  "i18n",
 ]);
 
 function walkMdx(root) {
