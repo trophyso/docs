@@ -165,7 +165,7 @@ Elimina una meta o un paso con el endpoint [eliminar meta](/es/api-reference/end
 
 ### Recuperar metas {#retrieving-goals}
 
-El endpoint [metas del usuario](/es/api-reference/endpoints/users/get-a-users-goals) devuelve las metas de un usuario, primero las que vencen antes y después las que no tienen hora de vencimiento. Pasa `status` para obtener solo las metas con ese estado, como `active`, y `skip` y `limit` para recorrerlas por páginas, hasta 100 a la vez. Cada meta incluye todos sus pasos, sea cual sea el estado de cada uno.
+El endpoint [metas del usuario](/es/api-reference/endpoints/users/get-a-users-goals) devuelve las metas de un usuario, primero las que vencen antes y después las que no tienen hora de vencimiento. Pasa `status` para obtener solo las metas con ese estado, como `active`. Para recorrerlas por páginas, hasta 100 a la vez, pasa `skip` y `limit`. Cada meta incluye todos sus pasos, sea cual sea el estado de cada uno.
 
 Cada meta y cada paso tiene un `id`, su `parent` (la clave de la meta de la que es un paso, o `null`), su `status`, las horas `created` y `updated`, sus `steps`, y `done` y `total`: cuántos de sus pasos están completados de cuántos tiene. Una meta sin pasos, y un paso, tienen `steps` vacío y `done` y `total` en 0. Una meta de métrica añade su `metric`, `target`, `start` y el total `current`:
 

@@ -15,6 +15,7 @@ Flippin
 api
 badgeUrl
 achievedAt
+completedAt
 transactionally
 tz
 APNs
