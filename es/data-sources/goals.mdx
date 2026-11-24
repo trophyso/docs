@@ -12,6 +12,7 @@ import CreateGoalPlanRequestBlock from "../../snippets/create-goal-plan-request-
 import CreateGoalStepRequestBlock from "../../snippets/create-goal-step-request-block.mdx";
 import UpdateGoalRequestBlock from "../../snippets/update-goal-request-block.mdx";
 import UserGoalsResponseBlock from "../../snippets/user-goals-response-block.mdx";
+import MetricEventGoalsResponseExcerpt from "../../snippets/metric-event-goals-response-excerpt-block.mdx";
 
 ## ¿Qué son las metas? {#what-are-goals}
 
@@ -94,6 +95,10 @@ Las metas con `completion: none` son fechas para las que el usuario se prepara, 
 Las metas de métricas se completan solas. Cada meta cuenta el total del usuario para su `metric` a partir de `start`, y Trophy la marca como completada en cuanto un [evento](/es/data-sources/events) lleva ese total hasta el `target`.
 
 Cambiar la `metric`, el `target` o el `start` de una meta de métrica vuelve a compararla con su objetivo, lo que puede completarla o, si el nuevo total no llega, descompletarla. Otros cambios dejan completada una meta de métrica completada, aunque su total haya bajado desde entonces. Las metas de métricas no se pueden marcar como completadas con `completedAt`, y solo las metas de métricas aceptan `metric`, `target` o `start`.
+
+La respuesta de un [evento de métrica](/es/api-reference/endpoints/events/submit-a-metric-event) incluye en `goals`, por clave, las metas y los pasos de métricas a los que contó el evento: los de su métrica que no estaban completados antes de él y cuyo `start` es igual o anterior a él, incluidos los que completó. Cada uno tiene el mismo formato que una meta del endpoint [meta del usuario](/es/api-reference/endpoints/users/get-a-users-goal). Si se repite un evento con la misma [clave de idempotencia](/es/api-reference/idempotency), se devuelve un objeto vacío.
+
+<MetricEventGoalsResponseExcerpt />
 
 ## Pasos {#steps}
 

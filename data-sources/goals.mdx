@@ -12,6 +12,7 @@ import CreateGoalPlanRequestBlock from "../snippets/create-goal-plan-request-blo
 import CreateGoalStepRequestBlock from "../snippets/create-goal-step-request-block.mdx";
 import UpdateGoalRequestBlock from "../snippets/update-goal-request-block.mdx";
 import UserGoalsResponseBlock from "../snippets/user-goals-response-block.mdx";
+import MetricEventGoalsResponseExcerpt from "../snippets/metric-event-goals-response-excerpt-block.mdx";
 
 ## What are goals? {#what-are-goals}
 
@@ -92,6 +93,10 @@ Goals with `completion: none` are dates the user prepares for, like an exam or a
 Metric goals complete themselves. Each goal counts the user's total for its `metric` from `start` onwards, and Trophy marks it completed as soon as an [event](/data-sources/events) brings that total to the `target`.
 
 Changing a metric goal's `metric`, `target` or `start` checks it against its target again, which can complete it or, if the new total falls short, uncomplete it. Other changes leave a completed metric goal completed, even if its total has since fallen. Metric goals can't be marked completed with `completedAt`, and only metric goals take a `metric`, `target` or `start`.
+
+The [metric event](/api-reference/endpoints/events/submit-a-metric-event) response includes the metric goals and steps the event counted towards in `goals`, by key: those for its metric that weren't completed before it and whose `start` is on or before it, including any it completed. Each one is the same shape as a goal from the [user goal](/api-reference/endpoints/users/get-a-users-goal) endpoint. Replaying an event with the same [idempotency key](/api-reference/idempotency) returns an empty object.
+
+<MetricEventGoalsResponseExcerpt />
 
 ## Steps {#steps}
 

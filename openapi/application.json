@@ -718,6 +718,27 @@
                           "rank": 100
                         }
                       },
+                      "goals": {
+                        "words-5000": {
+                          "id": "3c7e9a1b-5d2f-4b8e-9a6c-1e3f5a7b9d2c",
+                          "key": "words-5000",
+                          "parent": null,
+                          "label": "5,000 words this month",
+                          "completion": "metric",
+                          "dueAt": "2025-04-30T23:59:00.000Z",
+                          "completedAt": null,
+                          "status": "active",
+                          "steps": [],
+                          "done": 0,
+                          "total": 0,
+                          "metric": "words-written",
+                          "target": 5000,
+                          "start": "2025-04-01",
+                          "current": 750,
+                          "created": "2025-04-01T08:00:00.000Z",
+                          "updated": "2025-04-01T08:00:00.000Z"
+                        }
+                      },
                       "rewards": [
                         {
                           "id": "7a3c1e52-9f1d-4c8e-a6b2-3d5e7f9a1b2c",
@@ -8986,6 +9007,13 @@
             },
             "description": "A map of leaderboards by key. Only contains leaderboards that were affected by the event."
           },
+          "goals": {
+            "type": "object",
+            "additionalProperties": {
+              "$ref": "#/components/schemas/GoalResponse"
+            },
+            "description": "A map of the user's metric goals and steps by key. Only contains those for the event's metric that weren't completed before the event and whose total it counted towards, including any it completed."
+          },
           "rewards": {
             "type": "array",
             "items": {
@@ -9010,6 +9038,7 @@
           "currentStreak",
           "points",
           "leaderboards",
+          "goals",
           "rewards"
         ]
       },
