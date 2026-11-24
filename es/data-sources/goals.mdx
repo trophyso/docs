@@ -93,13 +93,13 @@ Las metas con `completion: none` son fechas para las que el usuario se prepara, 
 
 Las metas de métricas se completan solas. Cada meta cuenta el total del usuario para su `metric` a partir de `start`, y Trophy la marca como completada en cuanto un [evento](/es/data-sources/events) lleva ese total hasta el `target`.
 
-Cambiar la `metric`, el `target` o el `start` de una meta de métrica vuelve a compararla con su objetivo, lo que puede completarla o, si el nuevo total no llega, descompletarla. Las metas de métricas no se pueden marcar como completadas con `completedAt`.
+Cambiar la `metric`, el `target` o el `start` de una meta de métrica vuelve a compararla con su objetivo, lo que puede completarla o, si el nuevo total no llega, descompletarla. Otros cambios dejan completada una meta de métrica completada, aunque su total haya bajado desde entonces. Las metas de métricas no se pueden marcar como completadas con `completedAt`, y solo las metas de métricas aceptan `metric`, `target` o `start`.
 
 ## Pasos {#steps}
 
 Una meta puede tener pasos, lo que la convierte en un plan. Por ejemplo, un plan de estudio para un examen podría tener un paso por cada unidad, cada uno con su propia hora de vencimiento.
 
-Los pasos tienen un solo nivel de profundidad y cada uno es una meta en sí misma. Un paso tiene su propia `key`, única entre todas las metas del usuario, y su propia `label`, `completion`, `dueAt` y métrica. Actualizas, completas y eliminas un paso mediante su propia clave, igual que cualquier otra meta.
+Los pasos tienen un solo nivel de profundidad y cada uno es una meta en sí misma. Un paso tiene su propia `key`, única entre todas las metas del usuario, y su propia `label`, `completion`, `dueAt` y métrica. Actualizas, completas y eliminas un paso mediante su propia clave, igual que cualquier otra meta, y su `parent` es la clave de su meta.
 
 Una meta con pasos también registra cuántos de ellos están completados, algo que los mensajes usan para mostrar el progreso del usuario en el plan.
 
@@ -162,7 +162,7 @@ Elimina una meta o un paso con el endpoint [eliminar meta](/es/api-reference/end
 
 El endpoint [metas del usuario](/es/api-reference/endpoints/users/get-a-users-goals) devuelve las metas de un usuario, primero las que vencen antes y después las que no tienen hora de vencimiento. Pasa `status` para obtener solo las metas con ese estado, como `active`, y `skip` y `limit` para recorrerlas por páginas, hasta 100 a la vez. Cada meta incluye todos sus pasos, sea cual sea el estado de cada uno.
 
-Cada meta y cada paso tiene un `id`, su `status`, las horas `created` y `updated`, sus `steps`, y `done` y `total`: cuántos de sus pasos están completados de cuántos tiene. Una meta sin pasos, y un paso, tienen `steps` vacío y `done` y `total` en 0. Una meta de métrica añade su `metric`, `target`, `start` y el total `current`:
+Cada meta y cada paso tiene un `id`, su `parent` (la clave de la meta de la que es un paso, o `null`), su `status`, las horas `created` y `updated`, sus `steps`, y `done` y `total`: cuántos de sus pasos están completados de cuántos tiene. Una meta sin pasos, y un paso, tienen `steps` vacío y `done` y `total` en 0. Una meta de métrica añade su `metric`, `target`, `start` y el total `current`:
 
 <UserGoalsResponseBlock />
 

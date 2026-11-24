@@ -2679,6 +2679,7 @@
                       {
                         "id": "7d1c4e2a-3b5f-4a8e-9c6d-1e2f3a4b5c6d",
                         "key": "first-essay",
+                        "parent": null,
                         "label": "First essay",
                         "completion": "manual",
                         "dueAt": "2026-11-12T17:00:00.000Z",
@@ -2693,6 +2694,7 @@
                       {
                         "id": "0f9a5c1e-6c3b-4f43-9f63-2f3e3a7c9d10",
                         "key": "spanish-exam",
+                        "parent": null,
                         "label": "Spanish B1 exam",
                         "completion": "none",
                         "dueAt": "2026-11-20T09:00:00.000Z",
@@ -2702,6 +2704,7 @@
                           {
                             "id": "2b8e6f1d-4c7a-4e9b-8d3f-5a6b7c8d9e0f",
                             "key": "unit-1",
+                            "parent": "spanish-exam",
                             "label": "Unit 1 vocabulary",
                             "completion": "manual",
                             "dueAt": "2026-11-10T09:00:00.000Z",
@@ -2716,6 +2719,7 @@
                           {
                             "id": "9c4d2e7f-1a3b-4c5d-8e6f-7a8b9c0d1e2f",
                             "key": "unit-2",
+                            "parent": "spanish-exam",
                             "label": "Unit 2 grammar",
                             "completion": "manual",
                             "dueAt": "2026-11-14T09:00:00.000Z",
@@ -2736,6 +2740,7 @@
                       {
                         "id": "5e6f7a8b-9c0d-4e1f-a2b3-c4d5e6f7a8b9",
                         "key": "lessons",
+                        "parent": null,
                         "label": "50 lessons",
                         "completion": "metric",
                         "dueAt": null,
@@ -2919,6 +2924,7 @@
                     "value": {
                       "id": "0f9a5c1e-6c3b-4f43-9f63-2f3e3a7c9d10",
                       "key": "spanish-exam",
+                      "parent": null,
                       "label": "Spanish B1 exam",
                       "completion": "none",
                       "dueAt": "2026-11-20T09:00:00.000Z",
@@ -3066,6 +3072,7 @@
                     "value": {
                       "id": "0f9a5c1e-6c3b-4f43-9f63-2f3e3a7c9d10",
                       "key": "spanish-exam",
+                      "parent": null,
                       "label": "Spanish B1 exam",
                       "completion": "none",
                       "dueAt": "2026-11-20T09:00:00.000Z",
@@ -3075,6 +3082,7 @@
                         {
                           "id": "2b8e6f1d-4c7a-4e9b-8d3f-5a6b7c8d9e0f",
                           "key": "unit-1",
+                          "parent": "spanish-exam",
                           "label": "Unit 1 vocabulary",
                           "completion": "manual",
                           "dueAt": "2026-11-10T09:00:00.000Z",
@@ -3244,6 +3252,7 @@
                     "value": {
                       "id": "7d1c4e2a-3b5f-4a8e-9c6d-1e2f3a4b5c6d",
                       "key": "first-essay",
+                      "parent": null,
                       "label": "First essay",
                       "completion": "manual",
                       "dueAt": "2026-11-12T17:00:00.000Z",
@@ -3301,7 +3310,7 @@
             }
           },
           "422": {
-            "description": "Unprocessible Entity, including a goal with completion none that would be completed or have no due time, a metric goal without a metric and target, steps for a step, or a new key or parent",
+            "description": "Unprocessible Entity, including a goal with completion none that would be completed or have no due time, a metric goal without a metric and target or with a completedAt, a metric, target or start for a goal without completion metric, steps for a step, or a new key or parent",
             "content": {
               "application/json": {
                 "schema": {
@@ -9763,6 +9772,11 @@
             "description": "The goal's key, unique per user.",
             "example": "spanish-exam"
           },
+          "parent": {
+            "type": "string",
+            "nullable": true,
+            "description": "The key of the goal it's a step of, or null if it has no parent."
+          },
           "label": {
             "type": "string",
             "nullable": true,
@@ -9842,6 +9856,7 @@
         "required": [
           "id",
           "key",
+          "parent",
           "label",
           "completion",
           "dueAt",
@@ -9895,19 +9910,19 @@
           },
           "metric": {
             "type": "string",
-            "description": "The metric's key, required with `completion: metric`.",
+            "description": "The metric's key. Required with `completion: metric`, and only for it.",
             "example": "lessons"
           },
           "target": {
             "type": "number",
             "exclusiveMinimum": 0,
-            "description": "The metric total that completes it, required with `completion: metric`.",
+            "description": "The metric total that completes it. Required with `completion: metric`, and only for it.",
             "example": 10
           },
           "start": {
             "type": "string",
             "format": "date",
-            "description": "With `completion: metric`, the date, in the user's timezone, the metric total counts from. Defaults to today.",
+            "description": "`completion: metric` only. The date, in the user's timezone, the metric total counts from. Defaults to today.",
             "example": "2026-11-01"
           }
         },
@@ -9961,19 +9976,19 @@
           },
           "metric": {
             "type": "string",
-            "description": "The metric's key, required with `completion: metric`.",
+            "description": "The metric's key. Required with `completion: metric`, and only for it.",
             "example": "lessons"
           },
           "target": {
             "type": "number",
             "exclusiveMinimum": 0,
-            "description": "The metric total that completes it, required with `completion: metric`.",
+            "description": "The metric total that completes it. Required with `completion: metric`, and only for it.",
             "example": 50
           },
           "start": {
             "type": "string",
             "format": "date",
-            "description": "With `completion: metric`, the date, in the user's timezone, the metric total counts from. Defaults to today.",
+            "description": "`completion: metric` only. The date, in the user's timezone, the metric total counts from. Defaults to today.",
             "example": "2026-11-01"
           },
           "steps": {
@@ -10024,19 +10039,19 @@
           },
           "metric": {
             "type": "string",
-            "description": "The metric's key, with `completion: metric`. Changing the metric, target or start checks the goal against its target again.",
+            "description": "`completion: metric` only. The metric's key. Changing the metric, target or start checks the goal against its target again, which can complete or uncomplete it; other changes leave a completed goal completed.",
             "example": "lessons"
           },
           "target": {
             "type": "number",
             "exclusiveMinimum": 0,
-            "description": "The metric total that completes it, with `completion: metric`.",
+            "description": "`completion: metric` only. The metric total that completes it.",
             "example": 50
           },
           "start": {
             "type": "string",
             "format": "date",
-            "description": "With `completion: metric`, the date, in the user's timezone, the metric total counts from.",
+            "description": "`completion: metric` only. The date, in the user's timezone, the metric total counts from.",
             "example": "2026-11-01"
           },
           "steps": {

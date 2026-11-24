@@ -91,13 +91,13 @@ Goals with `completion: none` are dates the user prepares for, like an exam or a
 
 Metric goals complete themselves. Each goal counts the user's total for its `metric` from `start` onwards, and Trophy marks it completed as soon as an [event](/data-sources/events) brings that total to the `target`.
 
-Changing a metric goal's `metric`, `target` or `start` checks it against its target again, which can complete it or, if the new total falls short, uncomplete it. Metric goals can't be marked completed with `completedAt`.
+Changing a metric goal's `metric`, `target` or `start` checks it against its target again, which can complete it or, if the new total falls short, uncomplete it. Other changes leave a completed metric goal completed, even if its total has since fallen. Metric goals can't be marked completed with `completedAt`, and only metric goals take a `metric`, `target` or `start`.
 
 ## Steps {#steps}
 
 A goal can have steps, which turns it into a plan. For example, a study plan for an exam might have a step for each unit, each with its own due time.
 
-Steps are one level deep and each one is a goal in its own right. A step has its own `key`, unique among all of the user's goals, and its own `label`, `completion`, `dueAt` and metric. You update, complete and delete a step through its own key, just like any other goal.
+Steps are one level deep and each one is a goal in its own right. A step has its own `key`, unique among all of the user's goals, and its own `label`, `completion`, `dueAt` and metric. You update, complete and delete a step through its own key, just like any other goal, and its `parent` is its goal's key.
 
 A goal with steps also tracks how many of them are completed, which messages use to show the user's progress through the plan.
 
@@ -160,7 +160,7 @@ Delete a goal or a step with the [delete goal](/api-reference/endpoints/users/de
 
 The [user goals](/api-reference/endpoints/users/get-a-users-goals) endpoint returns a user's goals, soonest due first and then those with no due time. Pass `status` to only get goals with that status, like `active`, and `skip` and `limit` to page through them, up to 100 at a time. Each goal comes with all of its steps, whatever their own status.
 
-Every goal and step has an `id`, its `status`, `created` and `updated` times, its `steps`, and `done` and `total`, how many of its steps are completed out of how many it has. A goal without steps, and a step, has an empty `steps` and a `done` and `total` of 0. A metric goal adds its `metric`, `target`, `start` and `current` total:
+Every goal and step has an `id`, its `parent` (the key of the goal it's a step of, or `null`), its `status`, `created` and `updated` times, its `steps`, and `done` and `total`, how many of its steps are completed out of how many it has. A goal without steps, and a step, has an empty `steps` and a `done` and `total` of 0. A metric goal adds its `metric`, `target`, `start` and `current` total:
 
 <UserGoalsResponseBlock />
 
