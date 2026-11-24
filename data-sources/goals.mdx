@@ -12,12 +12,13 @@ import CreateGoalPlanRequestBlock from "../snippets/create-goal-plan-request-blo
 import CreateGoalStepRequestBlock from "../snippets/create-goal-step-request-block.mdx";
 import UpdateGoalRequestBlock from "../snippets/update-goal-request-block.mdx";
 import UserGoalsResponseBlock from "../snippets/user-goals-response-block.mdx";
+import MetricEventGoalsResponseExcerpt from "../snippets/metric-event-goals-response-excerpt-block.mdx";
 
 ## What are goals? {#what-are-goals}
 
 A goal is something one user is working towards: an essay due on Friday, an exam on November 20, or 50 lessons this month. You tell Trophy about each user's goals through the [Application API](/api-reference/endpoints/users/create-a-goal-for-a-user), and [agentic messaging](/agentic-messaging/overview) uses them to remind users before a goal is due, encourage them when they miss one and celebrate the ones they complete.
 
-Goals belong to a single user. Each one has a `key` that you choose, unique for that user, which you use to update or delete it. The user must already exist in Trophy, so [identify the user](/data-sources/users) before creating their goals.
+Goals belong to a single user. Each one has a `key` that you choose, unique for that user, which you use to retrieve, update or delete it. The user must already exist in Trophy, so [identify the user](/data-sources/users) before creating their goals.
 
 ## Key attributes {#key-attributes}
 
@@ -44,9 +45,10 @@ Goals belong to a single user. Each one has a `key` that you choose, unique for 
   `completion: none`.
 </ParamField>
 
-<ParamField path="completed" type="boolean" default="false">
-  Whether the user has completed the goal. Only for goals with `completion:
-  manual`.
+<ParamField path="completedAt" type="string">
+  When the user completed the goal, as an ISO 8601 date and time. Like `dueAt`,
+  a time without an offset is in the user's time zone, and a time after now is
+  read as now. Only for goals with `completion: manual`.
 </ParamField>
 
 <ParamField path="metric" type="string">
@@ -80,7 +82,7 @@ A goal's `completion` says how it's completed.
 
 ### Manual goals {#manual-goals}
 
-Manual goals are for things the user finishes in your app, like submitting an essay. Mark the goal completed with `completed: true` when they do, and set `completed: false` to undo it.
+Manual goals are for things the user finishes in your app, like submitting an essay. Mark the goal completed by setting `completedAt` to when they did it, and set it to `null` to undo it.
 
 ### Dates to work towards {#dates-to-work-towards}
 
@@ -90,13 +92,17 @@ Goals with `completion: none` are dates the user prepares for, like an exam or a
 
 Metric goals complete themselves. Each goal counts the user's total for its `metric` from `start` onwards, and Trophy marks it completed as soon as an [event](/data-sources/events) brings that total to the `target`.
 
-Changing a metric goal's `metric`, `target` or `start` checks it against its target again, which can complete it or, if the new total falls short, uncomplete it. Metric goals can't be marked completed with `completed`.
+Changing a metric goal's `metric`, `target` or `start` checks it against its target again, which can complete it or, if the new total falls short, undo its completion. Other changes leave a completed metric goal completed, even if its total has since fallen. Metric goals can't be marked completed with `completedAt`, and only metric goals take a `metric`, `target` or `start`.
+
+The [metric event](/api-reference/endpoints/events/submit-a-metric-event) response includes the metric goals and steps the event counted towards in `goals`, by key: those for its metric that weren't completed before it and whose `start` is on or before it, including any it completed. Each one is the same shape as a goal from the [user goal](/api-reference/endpoints/users/get-a-users-goal) endpoint. Replaying an event with the same [idempotency key](/api-reference/idempotency) returns an empty object.
+
+<MetricEventGoalsResponseExcerpt />
 
 ## Steps {#steps}
 
 A goal can have steps, which turns it into a plan. For example, a study plan for an exam might have a step for each unit, each with its own due time.
 
-Steps are one level deep and each one is a goal in its own right. A step has its own `key`, unique among all of the user's goals, and its own `label`, `completion`, `dueAt` and metric. You update, complete and delete a step through its own key, just like any other goal.
+Steps are one level deep and each one is a goal in its own right. A step has its own `key`, unique among all of the user's goals, and its own `label`, `completion`, `dueAt` and metric. You update, complete and delete a step through its own key, just like any other goal, and its `parent` is its goal's key.
 
 A goal with steps also tracks how many of them are completed, which messages use to show the user's progress through the plan.
 
@@ -135,7 +141,7 @@ A goal can have up to 100 steps, and steps can't have steps of their own.
 
 ### Updating goals {#updating-goals}
 
-Update a goal or a step with the [update goal](/api-reference/endpoints/users/update-a-goal-for-a-user) endpoint. Fields you leave out stay as they are, and `null` clears a `label` or `dueAt`. Here's a goal being marked completed:
+Update a goal or a step with the [update goal](/api-reference/endpoints/users/update-a-goal-for-a-user) endpoint. Fields you leave out stay as they are, and `null` clears a `label`, `dueAt` or `completedAt`. A goal's `key` can't change, and it can't move to another goal with `parent`. Here's a goal being marked completed:
 
 <UpdateGoalRequestBlock />
 
@@ -157,9 +163,13 @@ Delete a goal or a step with the [delete goal](/api-reference/endpoints/users/de
 
 ### Retrieving goals {#retrieving-goals}
 
-The [user goals](/api-reference/endpoints/users/get-a-users-goals) endpoint returns all of a user's goals, soonest due first and then those with no due time. Each goal includes its `status` and its steps, a goal with steps adds `done` and `total`, and a metric goal adds its `metric`, `target`, `start` and `current` total:
+The [user goals](/api-reference/endpoints/users/get-a-users-goals) endpoint returns a user's goals, soonest due first and then those with no due time. Pass `status` to only get goals with that status, like `active`. To page through them, up to 100 at a time, pass `skip` and `limit`. Each goal comes with all of its steps, whatever their own status.
+
+Every goal and step has an `id`, its `parent` (the key of the goal it's a step of, or `null`), its `status`, `created` and `updated` times, its `steps`, and `done` and `total`, how many of its steps are completed out of how many it has. A goal without steps, and a step, has an empty `steps` and a `done` and `total` of 0. A metric goal adds its `metric`, `target`, `start` and `current` total:
 
 <UserGoalsResponseBlock />
+
+To get a single goal or step by its key, use the [user goal](/api-reference/endpoints/users/get-a-users-goal) endpoint.
 
 ## How agents use goals {#how-agents-use-goals}
 
@@ -192,8 +202,8 @@ Goals created already completed or past due, or moved to a due time that has alr
   </Accordion>
 
   <Accordion title="Can I reuse a key after deleting a goal?" id="reusing-keys">
-    Yes. A goal created with a deleted goal's key is a new goal, so its
-    messages are planned from scratch.
+    Yes. A goal created with a deleted goal's key is a new goal with a new
+    `id`, so its messages are planned from scratch.
   </Accordion>
 
   <Accordion title="How many goals can a user have?" id="goal-limits">
