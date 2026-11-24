@@ -89,10 +89,24 @@ function plainForSlug(title) {
   return s.trim();
 }
 
+/** Explicit `{#slug}` at the end of a heading title, if any. */
+function explicitAnchor(title) {
+  const m = title.match(/\{#([^#}]+)\}\s*$/);
+  return m ? m[1].trim() : null;
+}
+
 function uniqueSlugsFromTitles(titles) {
   const seen = new Map();
   const slugs = [];
   for (const title of titles) {
+    // Keep anchors already set on source headings so existing deep links survive
+    // when a heading is reworded (for example `## Milestone emails {#achievement-emails}`).
+    const explicit = explicitAnchor(title);
+    if (explicit) {
+      seen.set(explicit, (seen.get(explicit) ?? 0) + 1);
+      slugs.push(explicit);
+      continue;
+    }
     const base = mintlifySlugBase(plainForSlug(title));
     let count = seen.get(base) ?? 0;
     seen.set(base, count + 1);
