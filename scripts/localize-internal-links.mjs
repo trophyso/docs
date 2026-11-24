@@ -2,6 +2,7 @@
 
 import fs from "node:fs";
 import path from "node:path";
+import { sourceLocale, targetLocales } from "./locales.mjs";
 
 const args = process.argv.slice(2);
 
@@ -15,9 +16,6 @@ function hasFlag(name) {
   return args.includes(name);
 }
 
-const config = JSON.parse(fs.readFileSync("i18n.json", "utf8"));
-const sourceLocale = config.locale?.source || "en";
-const targetLocales = Array.isArray(config.locale?.targets) ? config.locale.targets : [];
 const knownLocales = [sourceLocale, ...targetLocales];
 
 const targetArg = getArg("--target");
@@ -31,7 +29,7 @@ const locales = allLocales
       : targetLocales);
 
 if (locales.length === 0) {
-  console.error("No locales to process. Use --target or ensure i18n.json locale.targets exists.");
+  console.error("No locales to process. Use --target or add a language to docs.json navigation.languages.");
   process.exit(1);
 }
 
@@ -202,7 +200,7 @@ const checkFindings = [];
 
 for (const locale of locales) {
   const files = locale === sourceLocale
-    ? walkRootMdx(".", new Set([sourceLocale, ...targetLocales, "node_modules", ".git", ".github", "scripts", "lingo", "styles", ".cursor"]))
+    ? walkRootMdx(".", new Set([sourceLocale, ...targetLocales, "node_modules", ".git", ".github", "scripts", "i18n", "styles", ".cursor"]))
     : walkMdx(locale);
   for (const file of files) {
     const raw = fs.readFileSync(file, "utf8");

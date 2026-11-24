@@ -2,3 +2,6 @@
 scripts/media-mocks/
 scripts/media-videos/
 .claude/
+
+# Translation glossary and rules (reference, not a page)
+i18n/

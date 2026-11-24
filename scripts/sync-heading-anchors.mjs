@@ -12,6 +12,7 @@
 
 import fs from "node:fs";
 import path from "node:path";
+import { sourceLocale, targetLocales } from "./locales.mjs";
 
 const args = process.argv.slice(2);
 
@@ -36,9 +37,7 @@ const filters = pathFilter
   : [];
 
 const ROOT = process.cwd();
-const config = JSON.parse(fs.readFileSync(path.join(ROOT, "i18n.json"), "utf8"));
-const sourceLocale = config.locale?.source || "en";
-const configuredTargets = Array.isArray(config.locale?.targets) ? config.locale.targets : [];
+const configuredTargets = targetLocales;
 
 const targets = targetArg
   ? targetArg.split(",").map((s) => s.trim()).filter(Boolean)
@@ -230,7 +229,7 @@ const excludedSourceDirs = new Set([
   "node_modules",
   "scripts",
   "snippets",
-  "lingo",
+  "i18n",
   "styles",
   ".cursor",
 ]);

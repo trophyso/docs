@@ -5,7 +5,7 @@
  * (matches what Mintlify infers when title is omitted).
  *
  * - Source locale (repo root): always rewrite title to match the spec.
- * - Target locales: only add `title` when missing or blank (keeps Lingo translations).
+ * - Target locales: only add `title` when missing or blank (keeps existing translations).
  *
  * Expects frontmatter with an explicit local OpenAPI source:
  * - `openapi: "/openapi/application.json GET /path"`
@@ -17,6 +17,7 @@
 import fs from "node:fs";
 import path from "node:path";
 import { parse as parseYaml } from "yaml";
+import { sourceLocale, targetLocales } from "./locales.mjs";
 
 const args = process.argv.slice(2);
 
@@ -26,7 +27,6 @@ function hasFlag(name) {
 
 const checkOnly = hasFlag("--check");
 const ROOT = process.cwd();
-const CONFIG_PATH = path.join(ROOT, "i18n.json");
 const specCache = new Map();
 const APP_SPEC = "openapi/application.json";
 const ADMIN_SPEC = "openapi/admin.json";
@@ -276,9 +276,7 @@ function expectedTitle(spec, ref) {
   return resolveHttpTitle(spec, ref.path, ref.method);
 }
 
-const config = JSON.parse(fs.readFileSync(CONFIG_PATH, "utf8"));
-const sourceLocale = config.locale?.source || "en";
-const targets = Array.isArray(config.locale?.targets) ? config.locale.targets : [];
+const targets = targetLocales;
 
 const excludedSourceDirs = new Set([
   sourceLocale,
@@ -288,7 +286,7 @@ const excludedSourceDirs = new Set([
   "node_modules",
   "scripts",
   "snippets",
-  "lingo",
+  "i18n",
   "styles",
   ".cursor",
 ]);
