@@ -16,19 +16,17 @@ trophy.users.createGoal("user-123", {
   key: "unit-3",
   parent: "spanish-exam",
   label: "Unit 3 listening",
-  dueAt: new Date("2026-11-17T09:00:00Z"),
+  dueAt: "2026-11-17T09:00:00Z",
 });
 ```
 
 ```python Python
-import datetime
-
 client.users.create_goal(
     id="user-123",
     key="unit-3",
     parent="spanish-exam",
     label="Unit 3 listening",
-    due_at=datetime.datetime(2026, 11, 17, 9, 0, tzinfo=datetime.timezone.utc),
+    due_at="2026-11-17T09:00:00Z",
 )
 ```
 
@@ -37,7 +35,7 @@ $request = new CreateGoalRequest([
     'key' => 'unit-3',
     'parent' => 'spanish-exam',
     'label' => 'Unit 3 listening',
-    'dueAt' => new DateTime('2026-11-17T09:00:00Z')
+    'dueAt' => '2026-11-17T09:00:00Z'
 ]);
 
 $trophy->users->createGoal("user-123", $request);
@@ -48,7 +46,7 @@ CreateGoalRequest request = CreateGoalRequest.builder()
       .key("unit-3")
       .parent("spanish-exam")
       .label("Unit 3 listening")
-      .dueAt(OffsetDateTime.parse("2026-11-17T09:00:00Z"))
+      .dueAt("2026-11-17T09:00:00Z")
       .build();
 
 GoalResponse response = client.users().createGoal("user-123", request);
@@ -62,7 +60,7 @@ response, err := client.Users.CreateGoal(
         Key:    "unit-3",
         Parent: api.String("spanish-exam"),
         Label:  api.String("Unit 3 listening"),
-        DueAt:  api.Time(time.Date(2026, time.November, 17, 9, 0, 0, 0, time.UTC)),
+        DueAt:  api.String("2026-11-17T09:00:00Z"),
     },
 )
 ```
@@ -72,7 +70,7 @@ var request = new CreateGoalRequest {
    Key = "unit-3",
    Parent = "spanish-exam",
    Label = "Unit 3 listening",
-   DueAt = new DateTime(2026, 11, 17, 9, 0, 0, DateTimeKind.Utc)
+   DueAt = "2026-11-17T09:00:00Z"
 };
 
 await trophy.Users.CreateGoalAsync("user-123", request);

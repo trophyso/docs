@@ -28,25 +28,23 @@ trophy.users.createGoal("user-123", {
   key: "spanish-exam",
   label: "Spanish B1 exam",
   completion: "none",
-  dueAt: new Date("2026-11-20T09:00:00Z"),
+  dueAt: "2026-11-20T09:00:00Z",
   steps: [
     {
       key: "unit-1",
       label: "Unit 1 vocabulary",
-      dueAt: new Date("2026-11-10T09:00:00Z"),
+      dueAt: "2026-11-10T09:00:00Z",
     },
     {
       key: "unit-2",
       label: "Unit 2 grammar",
-      dueAt: new Date("2026-11-14T09:00:00Z"),
+      dueAt: "2026-11-14T09:00:00Z",
     },
   ],
 });
 ```
 
 ```python Python
-import datetime
-
 from trophy import GoalStepRequest
 
 client.users.create_goal(
@@ -54,17 +52,17 @@ client.users.create_goal(
     key="spanish-exam",
     label="Spanish B1 exam",
     completion="none",
-    due_at=datetime.datetime(2026, 11, 20, 9, 0, tzinfo=datetime.timezone.utc),
+    due_at="2026-11-20T09:00:00Z",
     steps=[
         GoalStepRequest(
             key="unit-1",
             label="Unit 1 vocabulary",
-            due_at=datetime.datetime(2026, 11, 10, 9, 0, tzinfo=datetime.timezone.utc),
+            due_at="2026-11-10T09:00:00Z",
         ),
         GoalStepRequest(
             key="unit-2",
             label="Unit 2 grammar",
-            due_at=datetime.datetime(2026, 11, 14, 9, 0, tzinfo=datetime.timezone.utc),
+            due_at="2026-11-14T09:00:00Z",
         ),
     ],
 )
@@ -75,17 +73,17 @@ $request = new CreateGoalRequest([
     'key' => 'spanish-exam',
     'label' => 'Spanish B1 exam',
     'completion' => GoalCompletion::None->value,
-    'dueAt' => new DateTime('2026-11-20T09:00:00Z'),
+    'dueAt' => '2026-11-20T09:00:00Z',
     'steps' => [
         new GoalStepRequest([
             'key' => 'unit-1',
             'label' => 'Unit 1 vocabulary',
-            'dueAt' => new DateTime('2026-11-10T09:00:00Z')
+            'dueAt' => '2026-11-10T09:00:00Z'
         ]),
         new GoalStepRequest([
             'key' => 'unit-2',
             'label' => 'Unit 2 grammar',
-            'dueAt' => new DateTime('2026-11-14T09:00:00Z')
+            'dueAt' => '2026-11-14T09:00:00Z'
         ])
     ]
 ]);
@@ -98,17 +96,17 @@ CreateGoalRequest request = CreateGoalRequest.builder()
       .key("spanish-exam")
       .label("Spanish B1 exam")
       .completion(GoalCompletion.NONE)
-      .dueAt(OffsetDateTime.parse("2026-11-20T09:00:00Z"))
+      .dueAt("2026-11-20T09:00:00Z")
       .steps(List.of(
         GoalStepRequest.builder()
           .key("unit-1")
           .label("Unit 1 vocabulary")
-          .dueAt(OffsetDateTime.parse("2026-11-10T09:00:00Z"))
+          .dueAt("2026-11-10T09:00:00Z")
           .build(),
         GoalStepRequest.builder()
           .key("unit-2")
           .label("Unit 2 grammar")
-          .dueAt(OffsetDateTime.parse("2026-11-14T09:00:00Z"))
+          .dueAt("2026-11-14T09:00:00Z")
           .build()
       ))
       .build();
@@ -124,17 +122,17 @@ response, err := client.Users.CreateGoal(
         Key:        "spanish-exam",
         Label:      api.String("Spanish B1 exam"),
         Completion: api.GoalCompletionNone.Ptr(),
-        DueAt:      api.Time(time.Date(2026, time.November, 20, 9, 0, 0, 0, time.UTC)),
+        DueAt:      api.String("2026-11-20T09:00:00Z"),
         Steps: []*api.GoalStepRequest{
             {
                 Key:   "unit-1",
                 Label: api.String("Unit 1 vocabulary"),
-                DueAt: api.Time(time.Date(2026, time.November, 10, 9, 0, 0, 0, time.UTC)),
+                DueAt: api.String("2026-11-10T09:00:00Z"),
             },
             {
                 Key:   "unit-2",
                 Label: api.String("Unit 2 grammar"),
-                DueAt: api.Time(time.Date(2026, time.November, 14, 9, 0, 0, 0, time.UTC)),
+                DueAt: api.String("2026-11-14T09:00:00Z"),
             },
         },
     },
@@ -146,17 +144,17 @@ var request = new CreateGoalRequest {
    Key = "spanish-exam",
    Label = "Spanish B1 exam",
    Completion = GoalCompletion.None,
-   DueAt = new DateTime(2026, 11, 20, 9, 0, 0, DateTimeKind.Utc),
+   DueAt = "2026-11-20T09:00:00Z",
    Steps = new[] {
       new GoalStepRequest {
          Key = "unit-1",
          Label = "Unit 1 vocabulary",
-         DueAt = new DateTime(2026, 11, 10, 9, 0, 0, DateTimeKind.Utc)
+         DueAt = "2026-11-10T09:00:00Z"
       },
       new GoalStepRequest {
          Key = "unit-2",
          Label = "Unit 2 grammar",
-         DueAt = new DateTime(2026, 11, 14, 9, 0, 0, DateTimeKind.Utc)
+         DueAt = "2026-11-14T09:00:00Z"
       }
    }
 };
